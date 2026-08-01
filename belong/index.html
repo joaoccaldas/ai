@@ -72,12 +72,24 @@
 
 <style>
   :root{
-    --sand:#f3e6cf; --gold:#e0b25c; --gold-deep:#c8934a; --clay:#bd6a4c;
+    --sand:#f3e6cf; --accent-rgb:224,178,92; --gold:rgb(var(--accent-rgb)); --gold-deep:#c8934a; --clay:#bd6a4c;
     --rose:#f0879a; --violet:#8f7bc4; --night:#0b0a1e; --night-2:#14113a;
-    --ink:#1a1508; --cream:#faf3e6;
+    --ink:#1a1508; --cream:#faf3e6; --text-rgb:250,243,230;
     --serif:'Cormorant Garamond',Georgia,serif;
     --sans:'Jost',system-ui,-apple-system,sans-serif;
   }
+  /* PLAYFUL / "original palette" mode — electric indigo + magenta + teal, echoing thebelongfestival.com */
+  body.playful{
+    --accent-rgb:255,62,201;   /* #ff3ec9 magenta */
+    --gold:rgb(var(--accent-rgb));
+    --rose:#fe1f60;            /* hot pink for "mad love" */
+    --violet:#5eead4;          /* teal accent */
+    --night:#0c0028;           /* deep indigo backdrop */
+    --ink:#12002e;
+    --cream:#f7f2ff;
+    --text-rgb:247,242,255;
+  }
+  body,#loader{transition:background-color .9s ease, background .9s ease}
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:auto}
   body{font-family:var(--sans);background:var(--night);color:var(--cream);
@@ -116,7 +128,7 @@
   h2.lead{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,6vw,4.7rem);line-height:1.03;
     letter-spacing:-.01em;max-width:16ch}
   .body{font-weight:300;font-size:clamp(1rem,2.1vw,1.35rem);line-height:1.75;max-width:44ch;
-    color:rgba(250,243,230,.86);margin-top:1.8rem}
+    color:rgba(var(--text-rgb),.86);margin-top:1.8rem}
   .body.wide{max-width:56ch}
   .accent{color:var(--gold);font-style:italic;font-family:var(--serif)}
   /* shimmering gold sweep on hero accent */
@@ -138,45 +150,45 @@
   .nav{display:flex;gap:2rem;align-items:center;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;font-weight:400}
   .nav a{opacity:.72;transition:opacity .3s,color .3s}
   .nav a:hover{opacity:1;color:var(--gold)}
-  .nav .cta{border:1px solid rgba(224,178,92,.55);padding:.6rem 1.15rem;border-radius:40px;color:var(--gold);opacity:1;
+  .nav .cta{border:1px solid rgba(var(--accent-rgb),.55);padding:.6rem 1.15rem;border-radius:40px;color:var(--gold);opacity:1;
     transition:background .3s,color .3s,border-color .3s}
   .nav .cta:hover{background:var(--gold);color:var(--ink)}
   @media(max-width:860px){.nav a:not(.cta){display:none}header{padding:1.1rem 7vw}}
 
   #rail{position:fixed;right:2.1vw;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:.85rem;align-items:center}
   @media(max-width:860px){#rail{display:none}}
-  .dot{width:7px;height:7px;border-radius:50%;background:rgba(250,243,230,.28);transition:background .4s,transform .4s}
+  .dot{width:7px;height:7px;border-radius:50%;background:rgba(var(--text-rgb),.28);transition:background .4s,transform .4s}
   .dot.active{background:var(--gold);transform:scale(1.7);box-shadow:0 0 12px var(--gold)}
 
   .hint{position:absolute;bottom:5vh;left:50%;transform:translateX(-50%);font-size:.66rem;letter-spacing:.34em;
-    text-transform:uppercase;color:rgba(250,243,230,.7);display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center}
+    text-transform:uppercase;color:rgba(var(--text-rgb),.7);display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center}
   .hint .line{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);transform-origin:top;animation:drip 2.4s ease-in-out infinite}
   @keyframes drip{0%,100%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}}
 
   .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;margin-top:3rem;
-    border:1px solid rgba(224,178,92,.18);border-radius:14px;overflow:hidden;background:rgba(224,178,92,.1);max-width:1100px}
+    border:1px solid rgba(var(--accent-rgb),.18);border-radius:14px;overflow:hidden;background:rgba(var(--accent-rgb),.1);max-width:1100px}
   .pillar{background:rgba(11,10,30,.5);backdrop-filter:blur(6px);padding:2.2rem 1.8rem;transition:background .5s,transform .5s}
   .pillar:hover{background:rgba(20,17,58,.72);transform:translateY(-4px)}
   .pillar .num{font-family:var(--serif);font-style:italic;font-size:2.4rem;color:var(--gold);opacity:.8}
   .pillar h3{font-weight:400;letter-spacing:.2em;text-transform:uppercase;font-size:.82rem;margin:.7rem 0 .9rem;color:var(--cream)}
-  .pillar p{font-size:.92rem;font-weight:300;color:rgba(250,243,230,.72);line-height:1.6}
+  .pillar p{font-size:.92rem;font-weight:300;color:rgba(var(--text-rgb),.72);line-height:1.6}
 
   .marquee{overflow:hidden;white-space:nowrap;margin:2.5rem 0 0;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
     mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
   .marquee .track{display:inline-block;animation:slide 40s linear infinite}
-  .marquee .track span{font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,4.5vw,3rem);color:rgba(250,243,230,.5);margin:0 1.4rem}
+  .marquee .track span{font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,4.5vw,3rem);color:rgba(var(--text-rgb),.5);margin:0 1.4rem}
   .marquee .track span .b{color:var(--gold);opacity:1}
   @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
   .split{display:grid;grid-template-columns:1fr 1fr;gap:3vw;margin-top:2.5rem;max-width:1000px}
   @media(max-width:720px){.split{grid-template-columns:1fr}}
-  .split .card{border:1px solid rgba(224,178,92,.2);border-radius:16px;padding:2.4rem;background:rgba(11,10,30,.4);backdrop-filter:blur(8px)}
+  .split .card{border:1px solid rgba(var(--accent-rgb),.2);border-radius:16px;padding:2.4rem;background:rgba(11,10,30,.4);backdrop-filter:blur(8px)}
   .split .card .t{font-family:var(--serif);font-style:italic;font-size:1.9rem;margin-bottom:1rem}
   .split .card.day .t{color:var(--gold)}
   .split .card.night .t{color:var(--violet)}
-  .split .card ul{list-style:none;font-weight:300;color:rgba(250,243,230,.8)}
-  .split .card li{padding:.42rem 0;border-bottom:1px solid rgba(250,243,230,.08);font-size:.98rem}
+  .split .card ul{list-style:none;font-weight:300;color:rgba(var(--text-rgb),.8)}
+  .split .card li{padding:.42rem 0;border-bottom:1px solid rgba(var(--text-rgb),.08);font-size:.98rem}
   .split .card li:last-child{border:0}
 
   .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2.5rem;margin-top:3rem;max-width:1000px}
@@ -184,42 +196,42 @@
   .fact .v{font-family:var(--serif);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:400;margin-top:.5rem;line-height:1.1}
 
   .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.6rem;margin-top:3rem;max-width:1000px}
-  .tier{border:1px solid rgba(224,178,92,.22);border-radius:18px;padding:2.4rem 2rem;position:relative;
+  .tier{border:1px solid rgba(var(--accent-rgb),.22);border-radius:18px;padding:2.4rem 2rem;position:relative;
     background:linear-gradient(180deg,rgba(20,17,58,.48),rgba(11,10,30,.48));backdrop-filter:blur(8px);
     transition:transform .5s,border-color .5s,box-shadow .5s}
-  .tier:hover{transform:translateY(-6px);border-color:rgba(224,178,92,.6);box-shadow:0 30px 60px -30px rgba(224,178,92,.4)}
+  .tier:hover{transform:translateY(-6px);border-color:rgba(var(--accent-rgb),.6);box-shadow:0 30px 60px -30px rgba(var(--accent-rgb),.4)}
   .tier .name{letter-spacing:.28em;text-transform:uppercase;font-size:.78rem;color:var(--gold)}
   .tier .price{font-family:var(--serif);font-size:2.8rem;margin:.7rem 0 .3rem;font-weight:400}
   .tier .price small{font-size:1rem;opacity:.6}
-  .tier .note{font-size:.8rem;color:rgba(250,243,230,.55)}
-  .tier.platinum{border-color:rgba(224,178,92,.5)}
+  .tier .note{font-size:.8rem;color:rgba(var(--text-rgb),.55)}
+  .tier.platinum{border-color:rgba(var(--accent-rgb),.5)}
 
   .steps{margin-top:3rem;max-width:760px}
-  .step{display:flex;gap:1.5rem;padding:1.4rem 0;border-bottom:1px solid rgba(250,243,230,.08);align-items:baseline}
+  .step{display:flex;gap:1.5rem;padding:1.4rem 0;border-bottom:1px solid rgba(var(--text-rgb),.08);align-items:baseline}
   .step .n{font-family:var(--serif);font-style:italic;font-size:1.8rem;color:var(--gold);min-width:2.2rem}
-  .step p{font-weight:300;font-size:1.08rem;color:rgba(250,243,230,.85)}
+  .step p{font-weight:300;font-size:1.08rem;color:rgba(var(--text-rgb),.85)}
 
   .chips{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem;max-width:760px}
-  .chip{border:1px solid rgba(224,178,92,.3);border-radius:40px;padding:.5rem 1.1rem;font-size:.82rem;font-weight:300;color:rgba(250,243,230,.85)}
+  .chip{border:1px solid rgba(var(--accent-rgb),.3);border-radius:40px;padding:.5rem 1.1rem;font-size:.82rem;font-weight:300;color:rgba(var(--text-rgb),.85)}
 
   .cta-big{display:inline-flex;align-items:center;gap:.8rem;margin-top:2.6rem;background:var(--gold);color:var(--ink);
     font-weight:500;letter-spacing:.16em;text-transform:uppercase;font-size:.82rem;padding:1.1rem 2.2rem;border-radius:50px;
     transition:transform .4s,box-shadow .4s,background .4s}
-  .cta-big:hover{transform:translateY(-3px);box-shadow:0 24px 48px -18px rgba(224,178,92,.7);background:var(--cream)}
-  .cta-ghost{display:inline-flex;align-items:center;gap:.7rem;margin-top:2.6rem;margin-left:1rem;border:1px solid rgba(250,243,230,.4);
+  .cta-big:hover{transform:translateY(-3px);box-shadow:0 24px 48px -18px rgba(var(--accent-rgb),.7);background:var(--cream)}
+  .cta-ghost{display:inline-flex;align-items:center;gap:.7rem;margin-top:2.6rem;margin-left:1rem;border:1px solid rgba(var(--text-rgb),.4);
     padding:1.1rem 2rem;border-radius:50px;font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;transition:border-color .4s,color .4s}
   .cta-ghost:hover{border-color:var(--gold);color:var(--gold)}
   @media(max-width:520px){.cta-ghost{margin-left:0;margin-top:1rem}}
 
-  footer{position:relative;z-index:2;padding:9vh 8vw 5vh;border-top:1px solid rgba(224,178,92,.16);
+  footer{position:relative;z-index:2;padding:9vh 8vw 5vh;border-top:1px solid rgba(var(--accent-rgb),.16);
     background:linear-gradient(180deg,transparent,rgba(6,5,18,.82))}
   .foot-lead{font-family:var(--serif);font-style:italic;font-size:clamp(1.8rem,5vw,3.2rem);max-width:22ch;line-height:1.15;margin-bottom:2.5rem}
   .socials{display:flex;gap:1.4rem;margin:2rem 0;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase}
   .socials a{opacity:.75;transition:color .3s,opacity .3s}
   .socials a:hover{color:var(--gold);opacity:1}
-  .copyright{font-size:.72rem;color:rgba(250,243,230,.4);letter-spacing:.06em}
+  .copyright{font-size:.72rem;color:rgba(var(--text-rgb),.4);letter-spacing:.06em}
   .home-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.4rem;font-size:.7rem;letter-spacing:.2em;
-    text-transform:uppercase;color:rgba(250,243,230,.5);transition:color .3s}
+    text-transform:uppercase;color:rgba(var(--text-rgb),.5);transition:color .3s}
   .home-link:hover{color:var(--gold)}
 
   /* loader */
@@ -228,17 +240,17 @@
   #loader.done{opacity:0;visibility:hidden}
   #loader .mark{font-family:var(--serif);font-size:2.4rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cream)}
   #loader .mark span{color:var(--gold)}
-  #loader .bar{width:min(220px,50vw);height:1px;background:rgba(250,243,230,.15);overflow:hidden}
+  #loader .bar{width:min(220px,50vw);height:1px;background:rgba(var(--text-rgb),.15);overflow:hidden}
   #loader .bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s ease}
-  #loader .sub{font-size:.64rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(250,243,230,.5)}
+  #loader .sub{font-size:.64rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(var(--text-rgb),.5)}
 
   /* time-of-day + sound */
   #tod{position:fixed;left:6vw;bottom:4vh;z-index:20;font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;
-    color:rgba(250,243,230,.55);display:flex;align-items:center;gap:.7rem;transition:opacity .5s}
+    color:rgba(var(--text-rgb),.55);display:flex;align-items:center;gap:.7rem;transition:opacity .5s}
   #tod .orb{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold);transition:background .8s,box-shadow .8s}
   @media(max-width:860px){#tod{display:none}}
   #sound{position:fixed;right:6vw;bottom:4vh;z-index:21;display:flex;align-items:center;gap:.6rem;background:rgba(11,10,30,.5);
-    border:1px solid rgba(224,178,92,.35);color:var(--cream);border-radius:40px;padding:.55rem 1rem;font-family:var(--sans);
+    border:1px solid rgba(var(--accent-rgb),.35);color:var(--cream);border-radius:40px;padding:.55rem 1rem;font-family:var(--sans);
     font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;backdrop-filter:blur(8px);transition:border-color .3s,background .3s}
   #sound:hover{border-color:var(--gold);background:rgba(20,17,58,.6)}
   #sound .eq{display:flex;align-items:flex-end;gap:2px;height:12px}
@@ -249,13 +261,23 @@
   #sound.on .eq i:nth-child(4){animation-delay:.15s}
   @keyframes eq{0%,100%{height:3px}50%{height:12px}}
   @media(max-width:860px){#sound{right:5vw;bottom:3vh}}
+  /* palette toggle */
+  #mode{position:fixed;right:6vw;bottom:calc(4vh + 52px);z-index:21;display:flex;align-items:center;gap:.6rem;
+    background:rgba(11,10,30,.5);border:1px solid rgba(var(--accent-rgb),.35);color:var(--cream);border-radius:40px;
+    padding:.55rem 1rem;font-family:var(--sans);font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;
+    backdrop-filter:blur(8px);transition:border-color .3s,background .3s}
+  #mode:hover{border-color:var(--gold);background:rgba(20,17,58,.6)}
+  #mode .swatch{width:13px;height:13px;border-radius:50%;
+    background:conic-gradient(from 0deg,#e0b25c,#f0879a,#8f7bc4,#e0b25c);box-shadow:0 0 9px rgba(var(--accent-rgb),.6)}
+  body.playful #mode .swatch{background:conic-gradient(from 0deg,#ff3ec9,#5eead4,#fdef71,#ff3ec9)}
+  @media(max-width:860px){#mode{right:5vw;bottom:calc(3vh + 48px)}}
 
   /* custom cursor */
   #cur-dot,#cur-ring{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;border-radius:50%;
     transform:translate(-50%,-50%);mix-blend-mode:screen}
   #cur-dot{width:7px;height:7px;background:var(--gold);box-shadow:0 0 10px var(--gold)}
-  #cur-ring{width:34px;height:34px;border:1px solid rgba(224,178,92,.6);transition:width .25s ease,height .25s ease,border-color .25s ease,background .25s ease}
-  #cur-ring.big{width:64px;height:64px;border-color:rgba(224,178,92,.9);background:rgba(224,178,92,.08)}
+  #cur-ring{width:34px;height:34px;border:1px solid rgba(var(--accent-rgb),.6);transition:width .25s ease,height .25s ease,border-color .25s ease,background .25s ease}
+  #cur-ring.big{width:64px;height:64px;border-color:rgba(var(--accent-rgb),.9);background:rgba(var(--accent-rgb),.08)}
   @media(hover:none),(pointer:coarse){#cur-dot,#cur-ring{display:none}}
 
   .reduce *{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
@@ -289,6 +311,7 @@
 
 <div id="rail"></div>
 <div id="tod"><span class="orb"></span><span id="todlabel">Golden dawn</span></div>
+<button id="mode" aria-label="Switch colour palette"><span class="swatch"></span><span id="modelabel">Palette</span></button>
 <button id="sound" aria-label="Toggle ambient sound"><span class="eq"><i></i><i></i><i></i><i></i></span><span id="soundlabel">Sound</span></button>
 
 <main id="content">
@@ -413,7 +436,7 @@
     <a href="#top">Back to the dawn</a>
   </div>
   <a class="home-link" href="../">&larr; Return to joaoccaldas.github.io/ai</a>
-  <p class="copyright" style="margin-top:1.4rem">An independent <strong style="color:rgba(224,178,92,.75);font-weight:500">concept redesign</strong> created as a design proposal for The Belong Festival — not an official page. Festival name &amp; content © The Belong Festival. Explore the official site at <a href="https://thebelongfestival.com/" target="_blank" rel="noopener" style="color:rgba(224,178,92,.75)">thebelongfestival.com</a>.</p>
+  <p class="copyright" style="margin-top:1.4rem">An independent <strong style="color:rgba(var(--accent-rgb),.75);font-weight:500">concept redesign</strong> created as a design proposal for The Belong Festival — not an official page. Festival name &amp; content © The Belong Festival. Explore the official site at <a href="https://thebelongfestival.com/" target="_blank" rel="noopener" style="color:rgba(var(--accent-rgb),.75)">thebelongfestival.com</a>.</p>
   <p class="copyright" style="margin-top:.6rem">Belong · Magic · Acceptance · Art · Freedom · Love</p>
 </footer>
 
@@ -445,6 +468,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(reduceMotion) document.body.classList.add('reduce');
 const isMobile = innerWidth < 760;
+let themeMix = 0, themeTarget = 0;   // 0 = cinematic desert, 1 = playful "original" neon palette
 
 /* ---------- scroll + pointer state ---------- */
 const S = { scroll:0, target:0, w:innerWidth, h:innerHeight,
@@ -470,6 +494,7 @@ const camera = new THREE.PerspectiveCamera(58, S.w/S.h, 0.1, 2200);
 camera.position.set(0,24,60);
 
 /* ---- day→night→dawn palette (keyed to scroll) ---- */
+// cinematic desert cycle
 const SKIES=[
   {p:0.00,top:[0.86,0.55,0.35],hor:[0.98,0.78,0.45],dune:[0.80,0.55,0.30]},
   {p:0.12,top:[0.44,0.62,0.86],hor:[0.95,0.82,0.60],dune:[0.86,0.66,0.38]},
@@ -482,18 +507,38 @@ const SKIES=[
   {p:0.90,top:[0.72,0.50,0.42],hor:[0.96,0.72,0.46],dune:[0.74,0.52,0.32]},
   {p:1.00,top:[0.44,0.62,0.86],hor:[0.96,0.84,0.62],dune:[0.88,0.68,0.40]},
 ];
+// playful "original palette" cycle — electric indigo / magenta / teal / cyan
+const SKIES_PLAY=[
+  {p:0.00,top:[0.85,0.20,0.60],hor:[1.00,0.45,0.60],dune:[0.45,0.10,0.42]},
+  {p:0.12,top:[0.35,0.30,0.82],hor:[0.45,0.85,0.82],dune:[0.55,0.15,0.55]},
+  {p:0.24,top:[0.24,0.66,0.92],hor:[0.66,0.90,0.92],dune:[0.66,0.18,0.58]},
+  {p:0.35,top:[0.42,0.12,0.56],hor:[1.00,0.24,0.70],dune:[0.42,0.08,0.42]},
+  {p:0.45,top:[0.18,0.05,0.42],hor:[0.86,0.14,0.52],dune:[0.28,0.05,0.36]},
+  {p:0.57,top:[0.10,0.03,0.30],hor:[0.46,0.06,0.44],dune:[0.14,0.04,0.32]},
+  {p:0.68,top:[0.05,0.00,0.17],hor:[0.22,0.03,0.32],dune:[0.09,0.02,0.22]},
+  {p:0.80,top:[0.20,0.05,0.46],hor:[0.92,0.22,0.62],dune:[0.35,0.07,0.44]},
+  {p:0.90,top:[0.80,0.22,0.60],hor:[1.00,0.42,0.58],dune:[0.48,0.10,0.44]},
+  {p:1.00,top:[0.35,0.55,0.92],hor:[0.55,0.88,0.84],dune:[0.58,0.15,0.55]},
+];
 const L3=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];
-function skyAt(p){ let i=0; while(i<SKIES.length-2 && p>SKIES[i+1].p)i++; const a=SKIES[i],b=SKIES[i+1];
+function skyArr(p,A){ let i=0; while(i<A.length-2 && p>A[i+1].p)i++; const a=A[i],b=A[i+1];
   const t=Math.max(0,Math.min(1,(p-a.p)/(b.p-a.p))); return {top:L3(a.top,b.top,t),hor:L3(a.hor,b.hor,t),dune:L3(a.dune,b.dune,t)}; }
+function skyAt(p){ const d=skyArr(p,SKIES); if(themeMix<=0.001) return d; const q=skyArr(p,SKIES_PLAY);
+  const m=themeMix; return {top:L3(d.top,q.top,m),hor:L3(d.hor,q.hor,m),dune:L3(d.dune,q.dune,m)}; }
 const nightAt=p=>Math.max(0,Math.min(1,1-Math.abs(p-0.62)/0.28));
 
-/* soul colour keyframes (gold → lilac → rose → night blue → dawn) */
-const SOULK=[
+/* soul colour keyframes */
+const SOULK=[  // desert: gold → lilac → rose → night blue → dawn
   {p:0.00,c:[1.00,0.78,0.42]},{p:0.24,c:[1.00,0.83,0.50]},{p:0.42,c:[0.86,0.74,0.98]},
   {p:0.60,c:[1.00,0.46,0.62]},{p:0.76,c:[0.64,0.74,1.00]},{p:0.90,c:[1.00,0.55,0.55]},{p:1.00,c:[1.00,0.74,0.46]},
 ];
-function soulColorAt(p){ let i=0; while(i<SOULK.length-2 && p>SOULK[i+1].p)i++; const a=SOULK[i],b=SOULK[i+1];
+const SOULK_PLAY=[  // playful: magenta → teal → yellow → hot pink → cyan
+  {p:0.00,c:[1.00,0.24,0.79]},{p:0.24,c:[0.37,0.92,0.83]},{p:0.42,c:[0.99,0.94,0.44]},
+  {p:0.60,c:[1.00,0.16,0.42]},{p:0.76,c:[0.37,0.92,0.86]},{p:0.90,c:[1.00,0.24,0.79]},{p:1.00,c:[1.00,0.45,0.62]},
+];
+function soulArr(p,A){ let i=0; while(i<A.length-2 && p>A[i+1].p)i++; const a=A[i],b=A[i+1];
   const t=Math.max(0,Math.min(1,(p-a.p)/(b.p-a.p))); return L3(a.c,b.c,t); }
+function soulColorAt(p){ const d=soulArr(p,SOULK); if(themeMix<=0.001) return d; return L3(d,soulArr(p,SOULK_PLAY),themeMix); }
 
 /* ---- sky dome ---- */
 const skyMat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,uniforms:{
@@ -614,8 +659,10 @@ function frame(){
   const t=clock.elapsedTime; clock.getDelta();
   S.scroll += (S.target-S.scroll)*(reduceMotion?1:0.06);
   S.mx += (S.tmx-S.mx)*0.05; S.my += (S.tmy-S.my)*0.05;
+  themeMix += (themeTarget-themeMix)*0.05;
   const p=Math.max(0,Math.min(1,S.scroll));
   const night=nightAt(p), moon=night>0.35;
+  bloom.strength = (isMobile?0.42:0.55) + themeMix*0.22;   // a touch more glow in neon mode
 
   // sky + dunes
   const sk=skyAt(p);
@@ -626,11 +673,14 @@ function frame(){
   let elev; if(moon){elev=Math.sin(Math.PI*Math.max(0,Math.min(1,(p-.40)/.44)));}
   else if(p<.44){elev=Math.sin(Math.PI*(p/.44));} else {elev=Math.sin(Math.PI*Math.max(0,(p-.80)/.20)/2);}
   _sp.set(90+Math.cos(p*Math.PI)*250, elev*150+4, -430); sun.position.copy(_sp);
-  if(moon)_s.setRGB(.42,.48,.64); else _s.setRGB(1,.86,.58);
+  // sun/moon colour blends between desert and playful palettes
+  const dS = moon?[.42,.48,.64]:[1,.86,.58], pS = moon?[.45,.90,.82]:[1,.85,.35];
+  const bS = L3(dS,pS,themeMix); _s.setRGB(bS[0],bS[1],bS[2]);
   sun.material.color.copy(_s); sun.scale.setScalar(moon?24:50);
   skyMat.uniforms.uSun.value.copy(_sp).normalize(); skyMat.uniforms.uSunColor.value.copy(_s); skyMat.uniforms.uSunGlow.value=moon?.2:.75;
   duneMat.uniforms.uSunColor.value.copy(_s); duneMat.uniforms.uLight.value.copy(_sp).normalize();
   starMat.opacity=Math.min(1,night*1.5);
+  starMat.color.setRGB(1, 0.957-themeMix*0.14, 0.847+themeMix*0.11);   // warm white → soft pink
   duneMat.uniforms.uTravel.value=p*900+t*1.4;
 
   // camera path + mouse parallax
@@ -773,6 +823,21 @@ addEventListener('pointermove',e=>{ cdx=e.clientX; cdy=e.clientY; },{passive:tru
 document.querySelectorAll('a,button,.dot,.pillar,.tier').forEach(el=>{
   el.addEventListener('pointerenter',()=>cr.classList.add('big'));
   el.addEventListener('pointerleave',()=>cr.classList.remove('big')); });
+
+// palette mode — cinematic desert (default) vs playful "original" neon
+const modeBtn=document.getElementById('mode'), modeLabel=document.getElementById('modelabel');
+const themeMeta=document.querySelector('meta[name=theme-color]');
+function applyMode(playful, animate){
+  document.body.classList.toggle('playful', playful);
+  themeTarget = playful?1:0;
+  if(!animate) themeMix = themeTarget;
+  modeLabel.textContent = playful?'Neon':'Desert';
+  if(themeMeta) themeMeta.content = playful?'#0c0028':'#0b0a1e';
+  try{ localStorage.setItem('belong-palette', playful?'playful':'desert'); }catch(e){}
+}
+let savedPalette=null; try{ savedPalette=localStorage.getItem('belong-palette'); }catch(e){}
+applyMode(savedPalette==='playful', false);
+modeBtn.addEventListener('click',()=>applyMode(!document.body.classList.contains('playful'), true));
 
 // ambient sound — a warm generative pad, off by default (respects autoplay policy)
 const sBtn=document.getElementById('sound'), sLabel=document.getElementById('soundlabel');
