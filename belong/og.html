@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:630px;overflow:hidden}
+  body{
+    font-family:Georgia,'Times New Roman',serif;
+    background:
+      radial-gradient(120% 90% at 78% 34%, rgba(70,50,120,.55), transparent 55%),
+      linear-gradient(160deg,#0b0a1e 0%,#171232 46%,#3a2350 74%,#5a3352 100%);
+    color:#faf3e6;position:relative;
+  }
+  .wrap{position:absolute;inset:0;display:flex;align-items:center;padding:74px 84px}
+  .left{max-width:560px;z-index:2}
+  .kicker{font-family:'Jost',Arial,sans-serif;font-size:19px;letter-spacing:.32em;text-transform:uppercase;
+    color:#e0b25c;margin-bottom:26px;display:flex;align-items:center;gap:16px}
+  .kicker::before{content:"";width:44px;height:1px;background:linear-gradient(90deg,#e0b25c,transparent)}
+  .word{font-style:italic;font-weight:400;font-size:150px;line-height:.9;letter-spacing:-2px;color:#faf3e6}
+  .tag{font-size:34px;font-style:italic;color:rgba(250,243,230,.9);margin-top:20px;line-height:1.25}
+  .meta{font-family:'Jost',Arial,sans-serif;font-size:20px;letter-spacing:.16em;text-transform:uppercase;
+    color:rgba(250,243,230,.72);margin-top:34px}
+  .meta b{color:#e0b25c;font-weight:600}
+  .note{position:absolute;left:84px;bottom:40px;font-family:'Jost',Arial,sans-serif;font-size:14px;
+    letter-spacing:.2em;text-transform:uppercase;color:rgba(250,243,230,.4)}
+  canvas{position:absolute;right:0;top:0;z-index:1}
+  ::selection{background:#e0b25c;color:#1a1508}
+</style>
+</head>
+<body>
+  <canvas id="c" width="1200" height="630"></canvas>
+  <div class="wrap">
+    <div class="left">
+      <div class="kicker">Immersive Experience · Concept</div>
+      <div class="word">Belong</div>
+      <div class="tag">Sunlit connections by day.<br>Starlit rhythms by night.</div>
+      <div class="meta">Jaisalmer &middot; <b>27&ndash;29 Nov 2026</b></div>
+    </div>
+  </div>
+  <div class="note">A luxury immersive music experience · concept redesign</div>
+<script>
+  const ctx=document.getElementById('c').getContext('2d');
+  const cx=880, cy=300, s=11.4, N=96, pts=[];
+  for(let i=0;i<N;i++){
+    const t=i/N*Math.PI*2;
+    const hx=16*Math.pow(Math.sin(t),3);
+    const hy=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+    pts.push([cx+hx*s+(Math.random()-.5)*4, cy-hy*s+(Math.random()-.5)*4]);
+  }
+  // connecting outline
+  ctx.strokeStyle='rgba(240,135,154,.38)'; ctx.lineWidth=1.1;
+  for(let i=0;i<N;i++){ const a=pts[i], b=pts[(i+1)%N];
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke(); }
+  // a few soft interior threads
+  ctx.strokeStyle='rgba(224,178,92,.14)';
+  for(let k=0;k<60;k++){ const a=pts[(Math.random()*N)|0], b=pts[(Math.random()*N)|0];
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke(); }
+  // glowing soul dots
+  for(let i=0;i<N;i++){ const [x,y]=pts[i];
+    const g=ctx.createRadialGradient(x,y,0,x,y,9);
+    const rose=i%3===0; g.addColorStop(0,'#fff'); g.addColorStop(.35, rose?'#ffb9c8':'#ffe0a8');
+    g.addColorStop(1,'rgba(255,220,170,0)');
+    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,9,0,7); ctx.fill();
+    ctx.fillStyle=rose?'#ffd0da':'#fff3d6'; ctx.beginPath(); ctx.arc(x,y,1.8,0,7); ctx.fill(); }
+</script>
+</body>
+</html>
