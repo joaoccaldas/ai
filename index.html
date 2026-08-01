@@ -1271,5 +1271,51 @@ function runIntro(){
 }
 runIntro();
 </script>
+
+<!-- Entry portal → Belong immersive experience -->
+<a id="belong-portal" href="./belong/" aria-label="Enter the Belong immersive experience">
+  <span class="bp-dot"></span>
+  <span class="bp-text">Enter <strong>Belong</strong> — the immersive experience</span>
+  <span class="bp-arrow">&rarr;</span>
+</a>
+<style>
+  #belong-portal{
+    position:fixed;right:24px;bottom:24px;z-index:99999;
+    display:inline-flex;align-items:center;gap:.7rem;
+    padding:.85rem 1.3rem;border-radius:50px;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:.8rem;letter-spacing:.04em;text-decoration:none;
+    color:#faf3e6;
+    background:linear-gradient(120deg, rgba(20,17,58,.86), rgba(11,10,30,.86));
+    border:1px solid rgba(224,178,92,.55);
+    box-shadow:0 18px 40px -18px rgba(224,178,92,.6), inset 0 0 0 1px rgba(255,255,255,.04);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+    opacity:0;transform:translateY(14px);
+    animation:bpIn .9s cubic-bezier(.2,.7,.2,1) 1.4s forwards;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+  #belong-portal:hover{
+    transform:translateY(-3px);
+    border-color:rgba(224,178,92,.9);
+    box-shadow:0 26px 54px -18px rgba(224,178,92,.8);
+  }
+  #belong-portal .bp-text strong{color:#e0b25c;font-weight:600;letter-spacing:.08em}
+  #belong-portal .bp-arrow{color:#e0b25c;font-size:1rem;transition:transform .35s ease}
+  #belong-portal:hover .bp-arrow{transform:translateX(4px)}
+  #belong-portal .bp-dot{
+    width:8px;height:8px;border-radius:50%;background:#e0b25c;
+    box-shadow:0 0 12px #e0b25c;animation:bpPulse 2.2s ease-in-out infinite;
+  }
+  @keyframes bpIn{to{opacity:1;transform:translateY(0)}}
+  @keyframes bpPulse{0%,100%{opacity:.55;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
+  @media(max-width:560px){
+    #belong-portal{right:12px;bottom:12px;padding:.7rem 1rem;font-size:.72rem}
+    #belong-portal .bp-text strong{letter-spacing:.05em}
+  }
+  @media(prefers-reduced-motion:reduce){
+    #belong-portal{animation:none;opacity:1;transform:none}
+    #belong-portal .bp-dot{animation:none}
+  }
+</style>
 </body>
 </html>
