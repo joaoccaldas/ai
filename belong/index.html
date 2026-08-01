@@ -8,7 +8,7 @@
 <meta name="keywords" content="Belong Festival, immersive music festival, Jaisalmer festival, luxury desert festival, boutique music experience, wellness festival India, house music festival, immersive web experience" />
 <meta name="author" content="Concept redesign — João Caldas" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
-<meta name="theme-color" content="#0b0a1e" />
+<meta name="theme-color" content="#0a0018" />
 <link rel="canonical" href="https://joaoccaldas.github.io/ai/belong/" />
 
 <!-- Open Graph -->
@@ -471,6 +471,14 @@
 </script>
 
 <script>
+/* Set the saved (or default) palette before first paint so the loader matches */
+(function(){
+  var m; try{ m=localStorage.getItem('belong-palette'); }catch(e){}
+  if(m==='playful'||m==='neon'||m==='prism') m='rainbow';
+  if(m!=='desert'&&m!=='aurora'&&m!=='rainbow') m='rainbow';   // Rainbow is the default
+  if(m==='rainbow') document.body.classList.add('rainbow');
+  else if(m==='aurora') document.body.classList.add('aurora');
+})();
 /* Resilient loader — reveals content even if the 3D module never loads */
 (function(){
   var loader=document.getElementById('loader'), bar=document.getElementById('loadbar'), lp=0;
@@ -922,7 +930,7 @@ function applyMode(mode, animate){
 }
 let savedPalette=null; try{ savedPalette=localStorage.getItem('belong-palette'); }catch(e){}
 if(savedPalette==='playful'||savedPalette==='neon'||savedPalette==='prism') savedPalette='rainbow'; // migrate old values
-applyMode(savedPalette||'desert', false);
+applyMode(savedPalette||'rainbow', false);   // Rainbow is the default first impression
 modeBtn.addEventListener('click',()=>applyMode(MODES[(MODES.indexOf(currentMode)+1)%MODES.length], true));
 
 // ambient sound — a warm generative pad, off by default (respects autoplay policy)
