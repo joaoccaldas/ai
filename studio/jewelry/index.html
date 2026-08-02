@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Aurelia — Fine Jewellery Atelier · Stockholm</title>
+<meta name="description" content="Aurelia — a fine jewellery atelier. Hand-cut stones, recycled gold, and pieces made to be kept for a lifetime. Book a private viewing." />
+<meta name="theme-color" content="#0a0806" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../kit.css">
+<style>
+  :root{ --bg:#0a0806; --ink:#f6ecd8; --muted:rgba(246,236,216,.6); --accent:#e7c15c; --accent-2:#b98a3e;
+         --line:rgba(231,193,92,.18); --serif:'Cormorant Garamond',Georgia,serif; }
+  #gem{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:4vw;align-items:center}
+  @media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+  .plate{border-radius:22px;overflow:hidden;border:1px solid var(--line);position:relative;aspect-ratio:16/10;background:#140f0a}
+  .plate img{width:100%;height:100%;object-fit:cover;display:block;animation:imgin 1.1s ease both}
+  @keyframes imgin{from{opacity:0}to{opacity:1}}
+  .plate .fallback{position:absolute;inset:0;background:radial-gradient(120% 120% at 65% 35%,#5a4118,#0a0806)}
+  .piece{display:flex;gap:2rem;align-items:center;padding:2.4rem 0;border-bottom:1px solid var(--line)}
+  .piece .idx{font-family:var(--serif);font-style:italic;font-size:3rem;color:var(--accent);opacity:.8;min-width:3rem}
+  .piece .meta h3{margin-bottom:.4rem}
+  @media(max-width:600px){.piece{flex-direction:column;align-items:flex-start;gap:.8rem}}
+</style>
+</head>
+<body>
+<div class="loader"><div class="mk">AUR<b>ELIA</b></div><div class="bar"><i></i></div></div>
+<canvas id="gem"></canvas>
+<div class="studio-scrim"></div><div class="studio-grain"></div>
+<div class="badge"><i></i><span>Stockholm · Fine jewellery atelier</span></div>
+<div class="rail"></div>
+
+<header class="nav">
+  <a class="brand" href="#top">AUR<b>·</b>ELIA</a>
+  <nav class="nav-links">
+    <a href="#collection">Collection</a><a href="#craft">The Craft</a><a href="#visit">Visit</a>
+    <a class="btn btn-ghost" href="#book">Private viewing</a>
+  </nav>
+</header>
+
+<main>
+  <section id="top" class="panel wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker reveal">Fine Jewellery · Hand-cut Stones</div>
+        <h1 class="display" data-kin>Aurelia</h1>
+        <h2 class="lead reveal d1" style="margin-top:1.2rem;font-size:clamp(1.4rem,4vw,2.6rem)">Light, made to keep.</h2>
+        <p class="lede reveal d2" style="margin-top:1.4rem">Stones cut by hand, set in recycled gold, and made one at a time. Not fashion — heirloom.</p>
+        <div class="reveal d3" style="margin-top:2.2rem"><a class="btn btn-solid magnetic" href="#book">Book a private viewing &rarr;</a></div>
+      </div>
+      <div class="reveal d2" aria-hidden="true"><!-- the gem renders behind, this keeps the column height on desktop --></div>
+    </div>
+  </section>
+
+  <section id="collection" class="wrap">
+    <div class="kicker reveal">I · The Collection</div>
+    <h2 class="lead reveal d1">Three houses of light.</h2>
+    <div class="reveal d2 plate" style="margin-top:2.4rem;max-width:1000px">
+      <div class="fallback"></div>
+      <img id="hero-img" src="img/hero.png" alt="A gold ring set with a champagne diamond on black silk" />
+    </div>
+    <div class="list reveal d3" style="margin-top:2.5rem;max-width:900px">
+      <div class="piece"><div class="idx">I</div><div class="meta"><h3>Solitaire — Champagne</h3><p class="lede" style="font-size:1rem">Emerald-cut champagne diamond, 18k recycled gold. Made to order in 6–8 weeks.</p></div></div>
+      <div class="piece"><div class="idx">II</div><div class="meta"><h3>The Ribbon</h3><p class="lede" style="font-size:1rem">A single line of light — a hand-forged band that catches the room.</p></div></div>
+      <div class="piece"><div class="idx">III</div><div class="meta"><h3>Aurora Drops</h3><p class="lede" style="font-size:1rem">Rose-cut sapphires that shift from teal to violet as you turn.</p></div></div>
+    </div>
+  </section>
+
+  <section id="craft" class="wrap">
+    <div class="kicker reveal">II · The Craft</div>
+    <h2 class="lead reveal d1">From rough stone to kept light.</h2>
+    <div class="grid g4 reveal d2" style="margin-top:2.5rem">
+      <div class="card"><div class="n">01</div><h3>Source</h3><p>Traceable stones and 100% recycled gold. Nothing new is mined for you.</p></div>
+      <div class="card"><div class="n">02</div><h3>Cut</h3><p>Each stone is cut by hand to its own character — never to a machine's average.</p></div>
+      <div class="card"><div class="n">03</div><h3>Set</h3><p>Forged, filed and set at the bench in Gamla Stan. One piece at a time.</p></div>
+      <div class="card"><div class="n">04</div><h3>Keep</h3><p>Lifetime care, resizing and re-polishing. A piece to hand down.</p></div>
+    </div>
+    <div class="stats reveal d3" style="margin-top:3rem">
+      <div class="stat"><div class="v"><span data-count="100" data-suffix="%">0</span></div><div class="k">Recycled gold</div></div>
+      <div class="stat"><div class="v"><span data-count="6" data-suffix="–8 wk">0</span></div><div class="k">Made to order</div></div>
+      <div class="stat"><div class="v serif italic accent">∞</div><div class="k">Lifetime care</div></div>
+    </div>
+  </section>
+
+  <section id="book" class="wrap panel" style="text-align:center;align-items:center">
+    <div class="kicker reveal" style="justify-content:center">Private Viewings</div>
+    <h2 class="display reveal d1" style="font-size:clamp(2.4rem,8vw,6rem)">Come and turn it in the light.</h2>
+    <p class="lede reveal d2" style="margin:1.6rem auto 0">By appointment at the atelier, or a video viewing from anywhere.</p>
+    <div class="reveal d3" style="margin-top:2.4rem">
+      <a class="btn btn-solid magnetic" href="mailto:atelier@aurelia.se">Book a viewing</a>
+      <a class="btn btn-ghost" href="#top" style="margin-left:.6rem">Bespoke commissions</a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <p class="big">Not fashion. <span class="accent italic">Heirloom.</span></p>
+  <div class="brand" style="font-size:1.1rem">AUR<b>·</b>ELIA</div>
+  <div class="socials"><a href="#">Instagram</a><a href="#">Book</a><a href="../">← Caldas Studio</a></div>
+  <p class="copy">Gamla Stan, Stockholm · A Caldas Studio concept — sample site for demonstration.</p>
+</div></footer>
+
+<script type="importmap">
+{ "imports": {
+  "three": "../../vendor/three.module.js",
+  "three/addons/": "../../vendor/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const S={sc:0,tsc:0,mx:0,my:0,tmx:0,tmy:0};
+addEventListener('scroll',()=>{const h=document.body.scrollHeight-innerHeight;S.tsc=h>0?scrollY/h:0;},{passive:true});
+addEventListener('pointermove',e=>{S.tmx=(e.clientX/innerWidth)*2-1;S.tmy=(e.clientY/innerHeight)*2-1;},{passive:true});
+
+try{
+const canvas=document.getElementById('gem');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.0;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,0.1,100); camera.position.set(0,0,6);
+
+// ---- the gem: a faceted crystal with fresnel edges, fake refraction & sparkle ----
+let geo=new THREE.IcosahedronGeometry(1.35,0).toNonIndexed(); geo.computeVertexNormals();
+const gemMat=new THREE.ShaderMaterial({transparent:true,uniforms:{
+  uTime:{value:0}, uCore:{value:new THREE.Color(0x6a4a1c)}, uEdge:{value:new THREE.Color(0xfff0c0)}, uTint:{value:new THREE.Color(0xe7c15c)}},
+  vertexShader:`varying vec3 vN; varying vec3 vV; varying vec3 vP;
+    void main(){ vec4 wp=modelMatrix*vec4(position,1.); vP=position; vN=normalize(mat3(modelMatrix)*normal);
+      vV=normalize(cameraPosition-wp.xyz); gl_Position=projectionMatrix*viewMatrix*wp; }`,
+  fragmentShader:`varying vec3 vN; varying vec3 vV; varying vec3 vP; uniform float uTime; uniform vec3 uCore,uEdge,uTint;
+    float hash(vec3 p){ return fract(sin(dot(p,vec3(12.9,78.2,37.7)))*43758.5); }
+    void main(){ vec3 n=normalize(vN); float fres=pow(1.0-max(dot(n,normalize(vV)),0.0),2.3);
+      // interior tinted by facet direction (fake refraction)
+      vec3 col=mix(uCore, uTint, smoothstep(-0.3,0.6,n.y));
+      col=mix(col, uEdge, fres);
+      // sparkle: per-facet flashes
+      float s=hash(floor(n*7.0)+floor(uTime*1.5));
+      col+=uEdge*step(0.93,s)*0.9;
+      float a=0.62+fres*0.5;
+      gl_FragColor=vec4(col, clamp(a,0.,1.)); }`});
+const gem=new THREE.Mesh(geo,gemMat); scene.add(gem);
+// inner bright core for glow
+const core=new THREE.Mesh(new THREE.IcosahedronGeometry(0.5,1), new THREE.MeshBasicMaterial({color:0xfff1cf,transparent:true,opacity:.5}));
+gem.add(core);
+
+// sparkle field
+const N=140, sg=new THREE.BufferGeometry(), sp=new Float32Array(N*3), ss=new Float32Array(N);
+for(let i=0;i<N;i++){ const r=2.4+Math.random()*3; const t=Math.random()*6.28, p=Math.acos(2*Math.random()-1);
+  sp[i*3]=r*Math.sin(p)*Math.cos(t); sp[i*3+1]=r*Math.cos(p); sp[i*3+2]=r*Math.sin(p)*Math.sin(t); ss[i]=Math.random()*100; }
+sg.setAttribute('position',new THREE.BufferAttribute(sp,3)); sg.setAttribute('seed',new THREE.BufferAttribute(ss,1));
+const sMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uTime:{value:0},uSize:{value:innerHeight/9}},
+  vertexShader:`attribute float seed; uniform float uTime,uSize; varying float vA;
+    void main(){ vec4 mv=modelViewMatrix*vec4(position,1.); gl_Position=projectionMatrix*mv;
+      vA=0.4+0.6*sin(uTime*2.0+seed*6.0); gl_PointSize=uSize*vA/max(-mv.z,1.); }`,
+  fragmentShader:`varying float vA; void main(){ vec2 c=gl_PointCoord-.5; float d=length(c);
+    gl_FragColor=vec4(1.0,0.94,0.75, smoothstep(.5,0.,d)*vA*0.8); }`});
+scene.add(new THREE.Points(sg,sMat));
+
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.9,0.5,0.62); composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+const clock=new THREE.Clock();
+function frame(){ requestAnimationFrame(frame); const t=clock.elapsedTime;
+  S.sc+=(S.tsc-S.sc)*0.06; S.mx+=(S.tmx-S.mx)*0.05; S.my+=(S.tmy-S.my)*0.05;
+  gem.rotation.y=t*0.25+S.sc*6.0+S.mx*0.6; gem.rotation.x=0.3+Math.sin(t*0.3)*0.15-S.my*0.4;
+  gem.position.x=1.6 - S.sc*0.4; gem.position.y=Math.sin(t*0.4)*0.12;
+  gem.scale.setScalar(1.0 - S.sc*0.25);
+  gemMat.uniforms.uTime.value=t; sMat.uniforms.uTime.value=t;
+  // the gem is the hero centrepiece, then recedes to a faint ambient glow
+  canvas.style.opacity = String(1 - Math.min(1, Math.max(0,(S.sc-0.05))/0.15)*0.8);
+  composer.render(); if(reduce) return; }
+frame();
+addEventListener('resize',()=>{ camera.aspect=innerWidth/innerHeight; camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight); composer.setSize(innerWidth,innerHeight); bloom.setSize(innerWidth,innerHeight); });
+}catch(e){ console.warn('gem disabled',e&&e.message); document.getElementById('gem').style.display='none';
+  document.body.style.background='radial-gradient(120% 120% at 70% 30%,#3a2a10,#0a0806)'; }
+</script>
+<script src="../kit.js"></script>
+</body>
+</html>

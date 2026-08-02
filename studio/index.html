@@ -7,13 +7,14 @@
 <meta name="description" content="Caldas Studio designs and builds immersive, WebGL-powered websites for restaurants, gyms, salons, hotels and cafés — delivered ready to launch. Explore the portfolio." />
 <meta name="theme-color" content="#07060e" />
 <meta property="og:title" content="Caldas Studio — Immersive Websites for Local Business" />
-<meta property="og:description" content="We build the site first. You approve it, then go live. Explore seven immersive concepts." />
+<meta property="og:description" content="We build the site first. You approve it, then go live. Explore six immersive concepts." />
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="kit.css">
 <style>
   :root{ --bg:#07060e; --ink:#f4f1ea; --muted:rgba(244,241,234,.6); --accent:#c9a24e; --accent-2:#8f7bc4;
          --line:rgba(244,241,234,.14); --serif:'Cormorant Garamond',Georgia,serif; }
+  /* project grid */
   .work{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.6rem;margin-top:3rem}
   .proj{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);min-height:340px;
     display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;isolation:isolate;
@@ -38,7 +39,6 @@
   .spectrum{background:linear-gradient(90deg,#ff2d9b,#ff8a00,#ffe600,#38e06b,#22d3ee,#7c5cff,#ff2d9b);
     background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
     animation:spectrum 7s linear infinite}
-  .innergroup-title{background:linear-gradient(90deg,#f4f7f1,#9bdfca);-webkit-background-clip:text;background-clip:text;color:transparent!important;-webkit-text-fill-color:transparent}
 </style>
 </head>
 <body>
@@ -57,6 +57,7 @@
 </header>
 
 <main>
+  <!-- HERO -->
   <section id="top" class="panel wrap">
     <div class="kicker reveal">Immersive websites for local business</div>
     <h1 class="display" data-kin>We build it first.</h1>
@@ -67,13 +68,14 @@
       <a class="btn btn-solid magnetic" href="#work">See the work &rarr;</a>
       <a class="btn btn-ghost" href="#how" style="margin-left:.6rem">How it works</a>
     </div>
-    <div class="hint reveal d4" style="margin-top:3rem;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)">Scroll to explore seven concepts</div>
+    <div class="hint reveal d4" style="margin-top:3rem;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)">Scroll to explore six concepts</div>
   </section>
 
+  <!-- WORK -->
   <section id="work" class="wrap">
     <div class="kicker reveal">The Work</div>
-    <h2 class="lead reveal d1">Seven concepts. One engine.</h2>
-    <p class="lede reveal d2" style="margin-top:1rem">Every site below is live and built from the same reusable immersive kit — re-skinned, re-themed, and tuned to each business. Open any of them.</p>
+    <h2 class="lead reveal d1">Eight concepts. Every one tells its story differently.</h2>
+    <p class="lede reveal d2" style="margin-top:1rem">All live. Some share the reusable immersive kit, re-skinned per business; others run bespoke <span class="accent">Three.js / WebGL</span> scenes — a refractive gem, flowing wine caustics, a heart of souls. Different content, different mechanics. Open any of them.</p>
 
     <div class="work">
       <a class="proj feat reveal" href="../belong/">
@@ -85,13 +87,20 @@
         <span class="go">Enter experience &rarr;</span>
       </a>
 
-      <a class="proj feat reveal" href="innergroup/">
-        <div class="bgc" style="background:radial-gradient(100% 130% at 78% 22%,#168f86,#041716 58%),linear-gradient(120deg,#9bdfca,#061817)"></div>
-        <div class="veil" style="background:linear-gradient(90deg,rgba(2,14,14,.92),rgba(2,14,14,.12) 70%),linear-gradient(0deg,rgba(2,14,14,.75),transparent 65%)"></div><span class="live">● Live · product</span>
-        <div class="tag">Workshop PWA · WebGL · phased content</div>
-        <h3 class="innergroup-title">Inner Group Workshop</h3>
-        <p>A mobile-first workshop companion for Vattenfall L&amp;D. One link that evolves from preparation to the live room and post-work practice.</p>
-        <span class="go">Open workshop &rarr;</span>
+      <a class="proj reveal" href="jewelry/">
+        <div class="bgc" style="background:radial-gradient(120% 120% at 65% 30%,#e7c15c,#0a0806 62%)"></div>
+        <div class="veil"></div><span class="live">● Live · Three.js</span>
+        <div class="tag">Fine jewellery · Stockholm</div>
+        <h3>Aurelia</h3><p>A refractive gem you orbit as you scroll. Bloom, sparkle, and AI-shot campaign imagery.</p>
+        <span class="go">Open site &rarr;</span>
+      </a>
+
+      <a class="proj reveal" href="wine/">
+        <div class="bgc" style="background:radial-gradient(120% 120% at 55% 40%,#e8607a,#120207 60%)"></div>
+        <div class="veil"></div><span class="live">● Live · WebGL</span>
+        <div class="tag">Natural wine bar · Stockholm</div>
+        <h3>Vinöra</h3><p>Liquid caustics and a tasting flight that scrolls sideways as you scroll down.</p>
+        <span class="go">Open site &rarr;</span>
       </a>
 
       <a class="proj reveal" href="restaurant/">
@@ -136,6 +145,7 @@
     </div>
   </section>
 
+  <!-- HOW -->
   <section id="how" class="wrap">
     <div class="kicker reveal">How it works</div>
     <h2 class="lead reveal d1">You never start from a blank page.</h2>
@@ -147,6 +157,7 @@
     </div>
   </section>
 
+  <!-- PRICING -->
   <section id="pricing" class="wrap">
     <div class="kicker reveal">Pricing</div>
     <h2 class="lead reveal d1">Three tiers. Match it to the moment.</h2>
@@ -158,6 +169,7 @@
     </div>
   </section>
 
+  <!-- CONTACT -->
   <section id="contact" class="wrap panel" style="text-align:center;align-items:center">
     <div class="kicker reveal" style="justify-content:center">Get your site</div>
     <h2 class="display reveal d1" style="font-size:clamp(2.4rem,8vw,6rem)">Yours might be <span class="spectrum">next.</span></h2>
