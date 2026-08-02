@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Caldas Studio — Immersive Websites for Local Business</title>
+<meta name="description" content="Caldas Studio designs and builds immersive, WebGL-powered websites for restaurants, gyms, salons, hotels and cafés — delivered ready to launch. Explore the portfolio." />
+<meta name="theme-color" content="#07060e" />
+<meta property="og:title" content="Caldas Studio — Immersive Websites for Local Business" />
+<meta property="og:description" content="We build the site first. You approve it, then go live. Explore six immersive concepts." />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="kit.css">
+<style>
+  :root{ --bg:#07060e; --ink:#f4f1ea; --muted:rgba(244,241,234,.6); --accent:#c9a24e; --accent-2:#8f7bc4;
+         --line:rgba(244,241,234,.14); --serif:'Cormorant Garamond',Georgia,serif; }
+  /* project grid */
+  .work{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.6rem;margin-top:3rem}
+  .proj{position:relative;border-radius:22px;overflow:hidden;border:1px solid var(--line);min-height:340px;
+    display:flex;flex-direction:column;justify-content:flex-end;padding:2rem;isolation:isolate;
+    transition:transform .5s,border-color .5s,box-shadow .5s}
+  .proj .bgc{position:absolute;inset:0;z-index:-1;transition:transform .8s ease}
+  .proj:hover{transform:translateY(-8px);border-color:var(--accent);box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+  .proj:hover .bgc{transform:scale(1.08)}
+  .proj .veil{position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(0,0,0,.72),rgba(0,0,0,.15) 55%,transparent)}
+  .proj .tag{font-size:.62rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:.6rem}
+  .proj h3{font-size:clamp(1.6rem,3vw,2.3rem);color:#fff}
+  .proj p{color:rgba(255,255,255,.72);font-weight:300;font-size:.92rem;margin-top:.3rem}
+  .proj .go{margin-top:1rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;opacity:.85;
+    display:inline-flex;gap:.5rem;transition:gap .3s}
+  .proj:hover .go{gap:1rem;color:var(--accent)}
+  .proj .live{position:absolute;top:1.2rem;left:1.2rem;font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;
+    background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.25);padding:.35rem .7rem;border-radius:30px;backdrop-filter:blur(6px)}
+  .feat{grid-column:1/-1}
+  @media(min-width:900px){.feat{min-height:420px}}
+  .steps4{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.2rem;margin-top:2.8rem}
+  .tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.4rem;margin-top:2.8rem}
+  @keyframes spectrum{to{background-position:300% 0}}
+  .spectrum{background:linear-gradient(90deg,#ff2d9b,#ff8a00,#ffe600,#38e06b,#22d3ee,#7c5cff,#ff2d9b);
+    background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+    animation:spectrum 7s linear infinite}
+</style>
+</head>
+<body>
+<div class="loader"><div class="mk">CALDAS <b>STUDIO</b></div><div class="bar"><i></i></div></div>
+<canvas class="studio-bg" data-bg data-colors="#07060e,#1a1140,#c9a24e" data-mode="aurora"></canvas>
+<div class="studio-scrim"></div><div class="studio-grain"></div>
+<div class="badge"><i></i><span>Immersive web · Made in Sweden</span></div>
+<div class="rail"></div>
+
+<header class="nav">
+  <a class="brand" href="#top">CALDAS<b>·</b>STUDIO</a>
+  <nav class="nav-links">
+    <a href="#work">Work</a><a href="#how">How it works</a><a href="#pricing">Pricing</a>
+    <a class="btn btn-ghost" href="#contact">Get your site</a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section id="top" class="panel wrap">
+    <div class="kicker reveal">Immersive websites for local business</div>
+    <h1 class="display" data-kin>We build it first.</h1>
+    <h2 class="lead reveal d1" style="margin-top:1.2rem;font-size:clamp(1.5rem,4.5vw,3rem)">
+      Then you decide. A finished, <span class="accent italic serif">immersive</span> website — delivered ready to launch.</h2>
+    <p class="lede reveal d2" style="margin-top:1.6rem">Restaurants, gyms, salons, hotels, cafés. We scout local businesses that deserve better than a template, design them something unforgettable, and hand it over already built. No brief. No blank page. Just say yes.</p>
+    <div class="reveal d3" style="margin-top:2.4rem">
+      <a class="btn btn-solid magnetic" href="#work">See the work &rarr;</a>
+      <a class="btn btn-ghost" href="#how" style="margin-left:.6rem">How it works</a>
+    </div>
+    <div class="hint reveal d4" style="margin-top:3rem;font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted)">Scroll to explore six concepts</div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work" class="wrap">
+    <div class="kicker reveal">The Work</div>
+    <h2 class="lead reveal d1">Six concepts. One engine.</h2>
+    <p class="lede reveal d2" style="margin-top:1rem">Every site below is live and built from the same reusable immersive kit — re-skinned, re-themed, and tuned to each business. Open any of them.</p>
+
+    <div class="work">
+      <a class="proj feat reveal" href="../belong/">
+        <div class="bgc" style="background:radial-gradient(120% 120% at 75% 30%,#7c5cff,#0a0018 60%),linear-gradient(120deg,#ff2d9b,#22d3ee)"></div>
+        <div class="veil"></div><span class="live">● Live · flagship</span>
+        <div class="tag">Festival · WebGL · 3 palette modes</div>
+        <h3 class="spectrum">Belong Festival</h3>
+        <p>A scroll-driven desert that gathers glowing souls into a heart of light. Desert, Rainbow &amp; Aurora modes. The immersive tier, in full.</p>
+        <span class="go">Enter experience &rarr;</span>
+      </a>
+
+      <a class="proj reveal" href="restaurant/">
+        <div class="bgc" style="background:radial-gradient(120% 120% at 40% 25%,#d8a24e,#0c0a08 65%)"></div>
+        <div class="veil"></div><span class="live">● Live</span>
+        <div class="tag">Fine dining · Stockholm</div>
+        <h3>Maison Lumen</h3><p>Candlelit tasting-menu restaurant. Warm embers, a menu that changes with the light.</p>
+        <span class="go">Open site &rarr;</span>
+      </a>
+
+      <a class="proj reveal" href="gym/">
+        <div class="bgc" style="background:radial-gradient(120% 120% at 60% 30%,#c6ff2e,#08090c 60%)"></div>
+        <div class="veil"></div><span class="live">● Live</span>
+        <div class="tag">Fitness · Gothenburg</div>
+        <h3>PULSE</h3><p>Strength &amp; conditioning studio. Kinetic, electric, built to make you press "join".</p>
+        <span class="go">Open site &rarr;</span>
+      </a>
+
+      <a class="proj reveal" href="salon/">
+        <div class="bgc" style="background:radial-gradient(120% 120% at 45% 30%,#e6a58f,#14100e 62%)"></div>
+        <div class="veil"></div><span class="live">● Live</span>
+        <div class="tag">Hair &amp; beauty · Malmö</div>
+        <h3>Éden</h3><p>A hair &amp; beauty atelier. Soft aurora light, editorial calm, slow beauty.</p>
+        <span class="go">Open site &rarr;</span>
+      </a>
+
+      <a class="proj reveal" href="hotel/">
+        <div class="bgc" style="background:radial-gradient(120% 120% at 55% 35%,#3fb6a8,#061318 62%)"></div>
+        <div class="veil"></div><span class="live">● Live</span>
+        <div class="tag">Boutique hotel · Bohuslän</div>
+        <h3>Dunhaven</h3><p>A cliffside coastal retreat. Oceanic light, sea-view rooms, a cantilevered sauna.</p>
+        <span class="go">Open site &rarr;</span>
+      </a>
+
+      <a class="proj reveal" href="cafe/">
+        <div class="bgc" style="background:radial-gradient(120% 120% at 50% 30%,#e07a3c,#120b07 62%)"></div>
+        <div class="veil"></div><span class="live">● Live</span>
+        <div class="tag">Coffee roaster · Uppsala</div>
+        <h3>Ember &amp; Oak</h3><p>Specialty roastery &amp; café. Warm haze, a slow bar, a monthly subscription.</p>
+        <span class="go">Open site &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section id="how" class="wrap">
+    <div class="kicker reveal">How it works</div>
+    <h2 class="lead reveal d1">You never start from a blank page.</h2>
+    <div class="steps4 reveal d2">
+      <div class="card"><div class="n">01</div><h3>We find you</h3><p>We scout local businesses and score who's underserved by a weak or missing website.</p></div>
+      <div class="card"><div class="n">02</div><h3>We build it</h3><p>We design and code an immersive concept — with your name, your vibe — before you ever pay.</p></div>
+      <div class="card"><div class="n">03</div><h3>You approve</h3><p>You see the real, live site on a private link. Tweaks are free. If you love it, you own it.</p></div>
+      <div class="card"><div class="n">04</div><h3>You go live</h3><p>We connect your domain, add your photos, and handle hosting &amp; care. You just run your business.</p></div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="wrap">
+    <div class="kicker reveal">Pricing</div>
+    <h2 class="lead reveal d1">Three tiers. Match it to the moment.</h2>
+    <p class="lede reveal d2" style="margin-top:1rem">Every tier is fast, responsive, and SEO-ready. We recommend the right one for your business — heavy 3D isn't always the goal.</p>
+    <div class="tiers reveal d3">
+      <div class="card"><div class="kicker">Clean &amp; Fast</div><div class="v serif" style="font-size:2.6rem;margin:.4rem 0">from 8 900 kr</div><p>Static, lightning-fast, animated with taste. Perfect for restaurants &amp; salons that live on mobile search.</p></div>
+      <div class="card" style="border-color:var(--accent)"><div class="kicker">Premium</div><div class="v serif" style="font-size:2.6rem;margin:.4rem 0">from 18 900 kr</div><p>Scroll storytelling and subtle 3D. For hotels &amp; venues that want to feel special.</p></div>
+      <div class="card"><div class="kicker">Immersive</div><div class="v serif spectrum" style="font-size:2.6rem;margin:.4rem 0">from 34 900 kr</div><p>Full WebGL, Belong-level. A flagship experience people share. Plus hosting &amp; care from 390 kr/mo.</p></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="wrap panel" style="text-align:center;align-items:center">
+    <div class="kicker reveal" style="justify-content:center">Get your site</div>
+    <h2 class="display reveal d1" style="font-size:clamp(2.4rem,8vw,6rem)">Yours might be <span class="spectrum">next.</span></h2>
+    <p class="lede reveal d2" style="margin:1.6rem auto 0">Tell us your business. We'll build the first draft — free — and send you a private link.</p>
+    <div class="reveal d3" style="margin-top:2.4rem">
+      <a class="btn btn-solid magnetic" href="mailto:hello@caldas.studio?subject=Build%20my%20site">Request my concept</a>
+      <a class="btn btn-ghost" href="../" style="margin-left:.6rem">← Back to /ai</a>
+    </div>
+  </section>
+</main>
+
+<footer class="foot"><div class="wrap">
+  <p class="big">We build it first. You just say <span class="accent italic">yes.</span></p>
+  <div class="brand" style="font-size:1.1rem">CALDAS<b>·</b>STUDIO</div>
+  <div class="socials"><a href="../belong/">Belong</a><a href="#work">Work</a><a href="mailto:hello@caldas.studio">Contact</a></div>
+  <p class="copy">Caldas Studio · Immersive websites for local business · Sample concepts for demonstration.</p>
+</div></footer>
+
+<script src="kit.js"></script>
+</body>
+</html>
