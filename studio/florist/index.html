@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Wild Stem — Florist & Botanical Studio · Stockholm</title>
+<meta name="description" content="Wild Stem — a florist and botanical studio. Seasonal arrangements, wedding flowers, and a weekly bloom subscription. Order for today." />
+<meta name="theme-color" content="#0a0308" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0308; --ink:#f7e9ec; --muted:rgba(247,233,236,.62); --accent:#e8496b; --line:rgba(232,73,107,.2);
+    --card:rgba(255,255,255,.04); --serif:'Fraunces',Georgia,serif; --sans:'Jost',system-ui,sans-serif;
+  }
+  body.light{ --bg:#f6eef0; --ink:#2a1620; --muted:rgba(42,22,32,.6); --accent:#c23a5c; --line:rgba(194,58,92,.22); --card:rgba(0,0,0,.03); }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);overflow-x:hidden;line-height:1.6;-webkit-font-smoothing:antialiased;transition:background .8s,color .8s}
+  a{color:inherit;text-decoration:none} img{max-width:100%;display:block}
+  #rose{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
+  .scrim{position:fixed;inset:0;z-index:1;pointer-events:none;transition:background .8s;
+    background:radial-gradient(120% 90% at 30% 30%,transparent 40%,rgba(0,0,0,.4)),linear-gradient(100deg,rgba(0,0,0,.4),transparent 55%)}
+  body.light .scrim{background:radial-gradient(120% 90% at 30% 30%,transparent 45%,rgba(255,240,244,.35)),linear-gradient(100deg,rgba(255,240,244,.5),transparent 55%)}
+  main,header,footer{position:relative;z-index:2}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 6vw}
+  section{padding:13vh 0}
+  .kicker{font-size:.64rem;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);display:inline-flex;gap:.8rem;align-items:center;margin-bottom:1.2rem}
+  .kicker::before{content:"";width:32px;height:1px;background:var(--accent)}
+  h1,h2,h3{font-family:var(--serif);font-weight:300;line-height:1.02;letter-spacing:-.01em}
+  .display{font-size:clamp(3rem,11vw,8.5rem);font-style:italic}
+  h2{font-size:clamp(2rem,6vw,4rem);max-width:16ch}
+  .lede{font-weight:300;font-size:clamp(1rem,2.1vw,1.35rem);max-width:46ch;color:var(--muted);margin-top:1.4rem;line-height:1.7}
+  .btn{display:inline-flex;align-items:center;gap:.6rem;background:var(--accent);color:#fff;font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:.74rem;padding:1rem 2rem;border-radius:50px;transition:transform .4s,box-shadow .4s}
+  .btn:hover{transform:translateY(-3px);box-shadow:0 20px 40px -18px var(--accent)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent)}
+  header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 6vw}
+  .brand{font-family:var(--serif);font-style:italic;font-size:1.5rem;letter-spacing:.04em}
+  .nav-r{display:flex;gap:1.6rem;align-items:center;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
+  .nav-r a{opacity:.75}.nav-r a:hover{opacity:1;color:var(--accent)}
+  #mode{cursor:pointer;border:1px solid var(--line);border-radius:40px;width:52px;height:26px;position:relative;transition:.3s;background:var(--card)}
+  #mode i{position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--accent);transition:.3s}
+  body.light #mode i{left:28px}
+  .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+  .hero .lede{opacity:0;animation:fade 1s ease .6s forwards}
+  @keyframes fade{to{opacity:1}}
+  /* carousel */
+  .rail{display:flex;gap:1.5rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:1rem 0 2rem;scrollbar-width:none}
+  .rail::-webkit-scrollbar{display:none}
+  .bloom{scroll-snap-align:center;flex:0 0 min(78vw,360px);border-radius:20px;overflow:hidden;border:1px solid var(--line);position:relative;aspect-ratio:3/4;background:var(--card)}
+  .bloom .art{position:absolute;inset:0}
+  .bloom .cap{position:absolute;left:0;right:0;bottom:0;padding:1.4rem;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);color:#fff}
+  .bloom .cap .n{font-family:var(--serif);font-style:italic;font-size:1.5rem}
+  .bloom .cap .p{font-size:.8rem;opacity:.85}
+  .carbtns{display:flex;gap:.6rem;margin-top:.5rem}
+  .carbtns button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-size:1rem;transition:.3s}
+  .carbtns button:hover{border-color:var(--accent);color:var(--accent)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.4rem;margin-top:2.5rem}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:2rem;backdrop-filter:blur(8px);transition:transform .5s,border-color .5s}
+  .card:hover{transform:translateY(-6px);border-color:var(--accent)}
+  .card .n{font-family:var(--serif);font-style:italic;font-size:2rem;color:var(--accent)}
+  .card h3{margin:.4rem 0 .6rem;font-size:1.3rem}.card p{color:var(--muted);font-weight:300;font-size:.94rem}
+  .row{display:flex;justify-content:space-between;gap:1.5rem;align-items:baseline;padding:1rem 0;border-bottom:1px solid var(--line)}
+  .row .name{font-family:var(--serif);font-size:1.25rem}.row .desc{color:var(--muted);font-size:.88rem;font-weight:300}.row .price{color:var(--accent);font-family:var(--serif);font-size:1.2rem}
+  footer{border-top:1px solid var(--line);padding:8vh 0 5vh;margin-top:6vh}
+  .foot-big{font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,4vw,2.6rem);max-width:22ch;line-height:1.15}
+  .copy{font-size:.72rem;color:var(--muted);margin-top:2rem}
+  /* petal loader */
+  #loader{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.2rem;transition:opacity 1s,visibility 1s}
+  #loader.done{opacity:0;visibility:hidden}
+  #loader .petal{width:22px;height:30px;background:var(--accent);border-radius:60% 60% 60% 60%/80% 80% 40% 40%;animation:spin 1.4s ease-in-out infinite;transform-origin:center bottom}
+  @keyframes spin{0%,100%{transform:rotate(-30deg) scale(.9);opacity:.6}50%{transform:rotate(30deg) scale(1.1);opacity:1}}
+  #loader .mk{font-family:var(--serif);font-style:italic;letter-spacing:.05em;font-size:1.4rem}
+  #loader .sub{font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 1s,transform 1s}.reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
+</style>
+</head>
+<body>
+<div id="loader"><div class="petal"></div><div class="mk">Wild Stem</div><div class="sub">Cutting the stems</div></div>
+<canvas id="rose"></canvas>
+<div class="scrim"></div>
+
+<header>
+  <a class="brand" href="#top">Wild Stem</a>
+  <div class="nav-r">
+    <a href="#seasonal">Seasonal</a><a href="#order">Order</a>
+    <div id="mode" title="Toggle light / dark"><i></i></div>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap" id="top">
+    <div class="kicker">Florist · Botanical Studio · Stockholm</div>
+    <h1 class="display">Wild Stem</h1>
+    <p class="lede">Flowers with a heartbeat. Seasonal, foraged where we can, arranged by hand — and delivered across the city the same day.</p>
+    <div class="lede" style="margin-top:2rem;animation-delay:.9s">
+      <a class="btn" href="#order">Order for today &rarr;</a>
+      <a class="btn ghost" href="#seasonal" style="margin-left:.6rem">This week's blooms</a>
+    </div>
+  </section>
+
+  <section id="seasonal" class="wrap">
+    <div class="kicker reveal">Seasonal</div>
+    <h2 class="reveal">This week, in bloom.</h2>
+    <div class="rail reveal" id="rail">
+      <div class="bloom"><div class="art" style="background:radial-gradient(120% 120% at 50% 30%,#e8496b,#3a0a18)"></div><div class="cap"><div class="n">The Ember</div><div class="p">Roses, ranunculus, smoke bush</div></div></div>
+      <div class="bloom"><div class="art" style="background:radial-gradient(120% 120% at 50% 30%,#f2a25a,#3a1c0a)"></div><div class="cap"><div class="n">Golden Hour</div><div class="p">Marigold, amber craspedia, grasses</div></div></div>
+      <div class="bloom"><div class="art" style="background:radial-gradient(120% 120% at 50% 30%,#b58cff,#1e1230)"></div><div class="cap"><div class="n">Dusk Violet</div><div class="p">Lisianthus, scabiosa, sweet pea</div></div></div>
+      <div class="bloom"><div class="art" style="background:radial-gradient(120% 120% at 50% 30%,#7ad0a8,#0c241a)"></div><div class="cap"><div class="n">Fresh Cut</div><div class="p">Foliage-forward, herbs, single stem</div></div></div>
+      <div class="bloom"><div class="art" style="background:radial-gradient(120% 120% at 50% 30%,#ffd3dd,#3a1420)"></div><div class="cap"><div class="n">First Blush</div><div class="p">Garden roses, astilbe, jasmine</div></div></div>
+    </div>
+    <div class="carbtns"><button id="prev" aria-label="Previous">&larr;</button><button id="next" aria-label="Next">&rarr;</button></div>
+  </section>
+
+  <section class="wrap">
+    <div class="kicker reveal">What we do</div>
+    <h2 class="reveal">Beyond the bouquet.</h2>
+    <div class="grid reveal">
+      <div class="card"><div class="n">01</div><h3>Weekly subscription</h3><p>A fresh, seasonal arrangement to your door or desk, every week. Pause anytime.</p></div>
+      <div class="card"><div class="n">02</div><h3>Weddings & events</h3><p>Installations, bouquets and table flowers, designed around your season and palette.</p></div>
+      <div class="card"><div class="n">03</div><h3>Same-day delivery</h3><p>Order before 13:00 and we'll hand-deliver across Stockholm today.</p></div>
+    </div>
+  </section>
+
+  <section id="order" class="wrap">
+    <div class="kicker reveal">Order</div>
+    <h2 class="reveal">Send something alive.</h2>
+    <div class="reveal" style="max-width:760px;margin-top:2rem">
+      <div class="row"><div><div class="name">The Wild Stem bouquet</div><div class="desc">Our seasonal signature, wrapped by hand</div></div><div class="price">from 495 kr</div></div>
+      <div class="row"><div><div class="name">Single rose, single stem</div><div class="desc">Sometimes one says it all</div></div><div class="price">from 95 kr</div></div>
+      <div class="row"><div><div class="name">Weekly subscription</div><div class="desc">4 weeks, free delivery</div></div><div class="price">from 1 590 kr</div></div>
+    </div>
+    <div class="reveal" style="margin-top:2.4rem"><a class="btn" href="mailto:hej@wildstem.se">Order &amp; delivery</a></div>
+  </section>
+
+  <footer class="wrap">
+    <p class="foot-big">Flowers with a heartbeat.</p>
+    <div class="brand" style="font-size:1.2rem">Wild Stem</div>
+    <p class="copy">Vasastan, Stockholm · A Caldas Studio concept — sample site for demonstration. · <a href="../" style="color:var(--accent)">← Caldas Studio</a></p>
+  </footer>
+</main>
+
+<script type="importmap">
+{ "imports": { "three": "../../vendor/three.module.js", "three/addons/": "../../vendor/jsm/" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const S={mx:0,my:0,tmx:0,tmy:0,sc:0};
+addEventListener('pointermove',e=>{S.tmx=(e.clientX/innerWidth)*2-1;S.tmy=(e.clientY/innerHeight)*2-1;},{passive:true});
+addEventListener('scroll',()=>{const h=document.body.scrollHeight-innerHeight;S.sc=h>0?scrollY/h:0;},{passive:true});
+
+try{
+const canvas=document.getElementById('rose');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2)); renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.05;
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,0.1,100); camera.position.set(0,0,10);
+
+// volumetric halo behind the rose
+const haloTex=(()=>{const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');
+  const r=g.createRadialGradient(128,128,0,128,128,128);r.addColorStop(0,'rgba(255,120,150,.75)');r.addColorStop(.4,'rgba(180,40,80,.35)');r.addColorStop(1,'rgba(0,0,0,0)');
+  g.fillStyle=r;g.fillRect(0,0,256,256);return new THREE.CanvasTexture(c);})();
+const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:haloTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:.9}));
+halo.scale.set(9,9,1); halo.position.set(0.6,0.2,-2); scene.add(halo);
+
+// the rose — a plane, with a chroma-key shader that removes the flattened checkerboard
+const tex=new THREE.TextureLoader().load('img/rose.jpg'); tex.colorSpace=THREE.SRGBColorSpace;
+const roseMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,uniforms:{map:{value:tex},uTime:{value:0}},
+  vertexShader:`varying vec2 vUv; uniform float uTime;
+    void main(){ vUv=uv; vec3 p=position;
+      float up=clamp(uv.y-0.2,0.,1.);
+      p.x+=sin(uv.y*3.0+uTime*0.9)*0.05*up;          // gentle sway, stronger at the bloom
+      p.y+=sin(uv.x*4.0+uTime*0.7)*0.015*up;
+      gl_Position=projectionMatrix*modelViewMatrix*vec4(p,1.); }`,
+  fragmentShader:`varying vec2 vUv; uniform sampler2D map; uniform float uTime;
+    void main(){ vec4 t=texture2D(map,vUv);
+      float mx=max(t.r,max(t.g,t.b)), mn=min(t.r,min(t.g,t.b));
+      float sat=mx-mn;                                  // checkerboard = grey = ~0 saturation
+      float a=smoothstep(0.09,0.20,sat);                // key it out
+      // faint self-glow on the reds
+      vec3 col=t.rgb + t.r*vec3(0.12,0.0,0.03)*(0.5+0.5*sin(uTime*1.5));
+      gl_FragColor=vec4(col, a); }`});
+const roseAspect=1400/760;
+const rose=new THREE.Mesh(new THREE.PlaneGeometry(7.4,7.4/roseAspect,60,40),roseMat);
+rose.scale.setScalar(1.7); rose.position.set(0.6,0.1,0); scene.add(rose);
+
+// drifting petals + pollen
+function field(count,size,color,spread,fall){
+  const g=new THREE.BufferGeometry(), pos=new Float32Array(count*3), sd=new Float32Array(count);
+  for(let i=0;i<count;i++){ pos[i*3]=(Math.random()-.5)*spread; pos[i*3+1]=(Math.random()-.5)*spread*0.7; pos[i*3+2]=(Math.random()-.5)*6; sd[i]=Math.random()*100; }
+  g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setAttribute('seed',new THREE.BufferAttribute(sd,1));
+  const m=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,
+    uniforms:{uTime:{value:0},uSize:{value:innerHeight*size},uColor:{value:new THREE.Color(color)},uFall:{value:fall}},
+    vertexShader:`attribute float seed;uniform float uTime,uSize,uFall;varying float vA;
+      void main(){ vec3 p=position; p.y-=mod(uTime*uFall+seed*3.0, 9.0)-4.5; p.x+=sin(uTime*0.5+seed*2.0)*0.6;
+        vec4 mv=modelViewMatrix*vec4(p,1.); gl_Position=projectionMatrix*mv; vA=.4+.6*sin(uTime*1.2+seed*5.0);
+        gl_PointSize=uSize*vA/max(-mv.z,1.); }`,
+    fragmentShader:`uniform vec3 uColor;varying float vA;void main(){vec2 c=gl_PointCoord-.5;float d=length(c);
+      gl_FragColor=vec4(uColor, smoothstep(.5,0.,d)*vA*0.85);}`});
+  const pts=new THREE.Points(g,m); scene.add(pts); return m;
+}
+const petalMat=field(70,0.9/60,0xff5e82,12,0.5);
+const pollenMat=field(120,0.5/60,0xffd9a0,14,0.2);
+
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.7,0.6,0.55); composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+const clock=new THREE.Clock();
+function frame(){ requestAnimationFrame(frame); const t=clock.elapsedTime;
+  S.mx+=(S.tmx-S.mx)*0.05; S.my+=(S.tmy-S.my)*0.05;
+  roseMat.uniforms.uTime.value=t; petalMat.uniforms.uTime.value=t; pollenMat.uniforms.uTime.value=t;
+  rose.position.x=0.6+S.mx*0.5; rose.position.y=0.1-S.my*0.35 - S.sc*3.0; rose.rotation.z=S.mx*0.04;
+  halo.position.x=0.6+S.mx*0.25; halo.position.y=0.2-S.my*0.2 - S.sc*3.0;
+  camera.position.x=S.mx*0.4; camera.position.y=-S.my*0.3; camera.lookAt(0,-S.sc*2,0);
+  composer.render(); if(reduce) return; }
+frame();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);bloom.setSize(innerWidth,innerHeight);
+  petalMat.uniforms.uSize.value=innerHeight*0.9/60;pollenMat.uniforms.uSize.value=innerHeight*0.5/60;});
+}catch(e){ console.warn('rose scene disabled',e&&e.message); document.getElementById('rose').style.display='none'; }
+
+/* ---- UI: loader, reveals, light/dark, carousel ---- */
+const loader=document.getElementById('loader');
+setTimeout(()=>loader.classList.add('done'),2600); addEventListener('load',()=>setTimeout(()=>loader.classList.add('done'),700));
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// light/dark (persisted)
+const mode=document.getElementById('mode'); const meta=document.querySelector('meta[name=theme-color]');
+function setMode(light){ document.body.classList.toggle('light',light); if(meta) meta.content=light?'#f6eef0':'#0a0308';
+  try{localStorage.setItem('wildstem-mode',light?'light':'dark');}catch(e){} }
+let saved=null; try{saved=localStorage.getItem('wildstem-mode');}catch(e){}
+setMode(saved==='light');
+mode.onclick=()=>setMode(!document.body.classList.contains('light'));
+// carousel
+const rail=document.getElementById('rail');
+document.getElementById('next').onclick=()=>rail.scrollBy({left:rail.clientWidth*0.8,behavior:'smooth'});
+document.getElementById('prev').onclick=()=>rail.scrollBy({left:-rail.clientWidth*0.8,behavior:'smooth'});
+</script>
+</body>
+</html>
