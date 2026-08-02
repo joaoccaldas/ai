@@ -8,10 +8,10 @@ page = Path(__file__).with_name("index.html").read_text(encoding="utf-8")
 required = [
     "localStorage",
     "parseICS",
-    "data-view=\"timeline\"",
-    "data-view=\"actions\"",
-    "data-view=\"wardrobe\"",
-    "data-view=\"sources\"",
+    "['timeline','◷','Timeline']",
+    "['actions','✓','Actions']",
+    "['wardrobe','◇','Wardrobe']",
+    "['sources','⇄','Sources']",
     "data-export",
     "data-reset",
 ]
