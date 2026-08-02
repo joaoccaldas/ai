@@ -1,326 +1,109 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Caldas Studio — The Exposition · Immersive Websites for Local Business</title>
-<meta name="description" content="Caldas Studio — walk through a bright, spacious exposition of immersive websites for local businesses. Restaurants, gyms, salons, hotels, cafés, jewellery, wine bars, florists. Each a different way to tell a story." />
-<meta name="theme-color" content="#f2f0ea" />
-<meta property="og:title" content="Caldas Studio — The Exposition" />
-<meta property="og:description" content="Walk through a light-filled gallery of immersive websites. Each piece, a different story." />
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  :root{
-    --paper:#f2f0ea;--ink:#1c1b16;--muted:#6f6b62;--line:rgba(28,27,22,.14);--accent:#b06a45;
-  }
-  html{scroll-behavior:auto}
-  body{font-family:'Jost',system-ui,sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
-  #hall{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
-  /* barely-there softening at the very edges — keeps the airy feel */
-  #vign{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(125% 120% at 50% 42%,transparent 60%,rgba(28,27,22,.06) 100%)}
-  #grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.03;mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 6s steps(6) infinite}
-  @keyframes gr{0%{transform:translate(0,0)}50%{transform:translate(4%,-4%)}100%{transform:translate(0,0)}}
-  #track{height:820vh;position:relative;z-index:2;pointer-events:none}
-  header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 6vw}
-  .brand{font-family:'Cormorant Garamond',serif;font-size:1.45rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500}
-  .brand b{color:var(--accent)}
-  header .r{display:flex;gap:1.5rem;align-items:center;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase}
-  header a.cta{background:var(--ink);color:var(--paper);padding:.6rem 1.15rem;border-radius:40px;transition:.3s}
-  header a.cta:hover{background:var(--accent)}
-  #listbtn{opacity:.72;cursor:pointer}#listbtn:hover{opacity:1;color:var(--accent)}
-  #intro{position:fixed;left:0;right:0;top:34%;z-index:15;text-align:center;pointer-events:none;transition:opacity .6s}
-  #intro .k{font-size:.68rem;letter-spacing:.42em;text-transform:uppercase;color:var(--accent);margin-bottom:1.3rem}
-  #intro h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2.6rem,8vw,6.2rem);line-height:1;color:var(--ink)}
-  #intro p{margin-top:1.4rem;font-size:.68rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
-  #intro .drip{width:1px;height:44px;margin:1.5rem auto 0;background:linear-gradient(var(--ink),transparent);transform-origin:top;animation:drip 2.4s ease-in-out infinite}
-  @keyframes drip{0%,100%{transform:scaleY(.3);opacity:.25}50%{transform:scaleY(1);opacity:.7}}
-  #cap{position:fixed;left:6vw;bottom:9vh;z-index:15;max-width:min(32ch,82vw);opacity:0;transform:translateY(16px);transition:opacity .5s,transform .5s}
-  #cap.on{opacity:1;transform:none}
-  #cap .idx{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--accent);font-size:1.05rem;letter-spacing:.1em}
-  #cap h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.9rem,4.6vw,3rem);line-height:1.02;margin:.1rem 0 .4rem;color:var(--ink)}
-  #cap .tag{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
-  #cap a.enter{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.2rem;pointer-events:auto;background:var(--ink);color:var(--paper);
-    font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;padding:.85rem 1.6rem;border-radius:40px;transition:.35s}
-  #cap a.enter:hover{background:var(--accent);transform:translateY(-2px)}
-  /* dot nav (mobile-friendly jump) */
-  #dots{position:fixed;left:50%;transform:translateX(-50%);bottom:3.2vh;z-index:16;display:flex;gap:.7rem;padding:.6rem .95rem;border-radius:40px;
-    background:rgba(255,255,255,.55);backdrop-filter:blur(10px);border:1px solid var(--line);box-shadow:0 8px 30px -18px rgba(28,27,22,.5)}
-  #dots b{width:8px;height:8px;border-radius:50%;background:rgba(28,27,22,.24);transition:.3s;cursor:pointer;display:block}
-  #dots b.on{background:var(--accent);transform:scale(1.6)}
-  #hint{position:fixed;right:6vw;bottom:9vh;z-index:15;font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:.98rem;text-align:right}
-  @media(max-width:820px){#hint{display:none}#cap{bottom:12vh}}
-  @media(max-width:600px){
-    header{padding:1.1rem 5vw}
-    .brand{font-size:1.02rem;letter-spacing:.16em}
-    header .r{gap:.7rem;font-size:.6rem;letter-spacing:.14em}
-    header a.cta{padding:.5rem .85rem}
-    #listbtn{display:none}
-    #intro h1{font-size:clamp(2.2rem,13vw,4rem)}
-    #intro .k,#intro p{font-size:.58rem;letter-spacing:.28em}
-    #cap{left:5vw;max-width:88vw}
-    #dots{bottom:2.4vh;gap:.55rem;padding:.55rem .8rem}
-    #dots b{width:9px;height:9px}
-  }
-  #end{position:relative;z-index:2;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:14vh 8vw;pointer-events:auto;
-    background:linear-gradient(180deg,rgba(242,240,234,0) 0%,rgba(242,240,234,.7) 42%,var(--paper) 74%)}
-  #end .k{font-size:.66rem;letter-spacing:.4em;text-transform:uppercase;color:var(--accent);margin-bottom:1.3rem}
-  #end h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,7vw,5rem);line-height:1.02;max-width:16ch;color:var(--ink)}
-  #end p{margin-top:1.5rem;max-width:52ch;color:var(--muted);font-weight:300;font-size:clamp(1rem,2vw,1.28rem);line-height:1.75}
-  #end .btns{margin-top:2.6rem;display:flex;gap:.8rem;flex-wrap:wrap}
-  #end a.solid{background:var(--ink);color:var(--paper);padding:1.05rem 2.1rem;border-radius:50px;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:.35s}
-  #end a.solid:hover{background:var(--accent);transform:translateY(-3px)}
-  #end a.ghost{border:1px solid var(--line);padding:1.05rem 2.1rem;border-radius:50px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;transition:.35s;color:var(--ink)}
-  #end a.ghost:hover{border-color:var(--ink)}
-  footer{position:relative;z-index:2;padding:8vh 8vw 5vh;border-top:1px solid var(--line);background:var(--paper);pointer-events:auto}
-  footer .big{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.6rem,4vw,2.6rem);max-width:22ch;line-height:1.15;color:var(--ink)}
-  footer .copy{font-size:.72rem;color:var(--muted);margin-top:2rem}
-  #list{position:fixed;inset:0;z-index:40;background:rgba(242,240,234,.98);display:none;flex-direction:column;padding:8vh 8vw;overflow:auto}
-  #list.on{display:flex}
-  #list .x{align-self:flex-end;cursor:pointer;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem}
-  #list h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2rem;margin-bottom:1.5rem;color:var(--ink)}
-  #list a{display:flex;justify-content:space-between;padding:1rem 0;border-bottom:1px solid var(--line);font-family:'Cormorant Garamond',serif;font-size:1.4rem;transition:.3s;color:var(--ink)}
-  #list a:hover{color:var(--accent);padding-left:1rem}
-  #list a span{font-family:'Jost';font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);align-self:center}
-  #loader{position:fixed;inset:0;z-index:60;background:var(--paper);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.6rem;transition:opacity 1s,visibility 1s}
-  #loader.done{opacity:0;visibility:hidden}
-  #loader .frame{width:120px;height:150px;border:1px solid var(--line);position:relative;overflow:hidden;background:#fff;box-shadow:0 24px 50px -30px rgba(28,27,22,.4)}
-  #loader .frame i{position:absolute;inset:0;background:linear-gradient(180deg,rgba(176,106,69,.14),rgba(176,106,69,.42));transform:translateY(100%);animation:fill 1.9s ease-in-out infinite}
-  @keyframes fill{0%{transform:translateY(100%)}60%,100%{transform:translateY(0)}}
-  #loader .mk{font-family:'Cormorant Garamond',serif;letter-spacing:.3em;text-transform:uppercase;font-size:1.25rem;color:var(--ink)}#loader .mk b{color:var(--accent)}
-  #loader .sub{font-size:.62rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
-  @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a09">
+  <meta name="description" content="Caldas Studio — an immersive, room-by-room exhibition of digital experiences.">
+  <meta property="og:title" content="Caldas Studio — The Exposition">
+  <meta property="og:description" content="Walk through a cinematic gallery where every portfolio concept becomes its own world.">
+  <title>Caldas Studio — The Exposition</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./gallery-shell.css">
 </head>
 <body>
-<div id="loader"><div class="frame"><i></i></div><div class="mk">THE <b>EXPOSITION</b></div><div class="sub">Hanging the works</div></div>
+  <div id="loader" class="loader" aria-live="polite">
+    <div class="loader-mark"><i></i><b></b></div>
+    <p>Preparing the rooms</p>
+    <div class="loader-track"><span id="loaderBar"></span></div>
+    <small id="loaderStatus">Architecture · light · artworks</small>
+  </div>
 
-<canvas id="hall"></canvas>
-<div id="vign"></div><div id="grain"></div>
+  <canvas id="gallery" aria-label="Immersive three-dimensional portfolio gallery"></canvas>
+  <div class="film" aria-hidden="true"></div>
+  <div id="transitionVeil" class="transition-veil" aria-hidden="true"></div>
 
-<header>
-  <a class="brand" href="#">CALDAS<b>·</b>STUDIO</a>
-  <div class="r"><span id="listbtn">Index</span><a class="cta" href="mailto:hello@caldas.studio?subject=Commission">Get your site</a></div>
-</header>
-
-<div id="intro">
-  <div class="k">Caldas Studio presents</div>
-  <h1>The Exposition</h1>
-  <p>Scroll to walk · tap a work to enter</p>
-  <div class="drip"></div>
-</div>
-
-<div id="cap">
-  <div class="idx" id="cap-idx">I</div>
-  <h2 id="cap-name">—</h2>
-  <div class="tag" id="cap-tag">—</div>
-  <a class="enter" id="cap-go" href="#">Enter the site &rarr;</a>
-</div>
-<div id="hint">walk the hall</div>
-<div id="dots"></div>
-
-<div id="track"></div>
-
-<main>
-  <section id="end">
-    <div class="k">Commission a piece</div>
-    <h2>Your business, hung in this hall.</h2>
-    <p>Every work here was built for a real kind of business, before anyone asked. Tell us yours — we'll build the first draft free and add it to the gallery on a private link.</p>
-    <div class="btns">
-      <a class="solid" href="mailto:hello@caldas.studio?subject=Commission%20my%20site">Request my concept</a>
-      <a class="ghost" href="../belong/">See the flagship — Belong</a>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Caldas Studio home">CALDAS <b>STUDIO</b></a>
+    <div class="topbar-center"><span>THE EXPOSITION</span><i></i><span id="roomCounter">00 / 10</span></div>
+    <div class="topbar-actions">
+      <button id="soundToggle" class="quiet-button" type="button" aria-label="Toggle ambient sound" aria-pressed="false">Sound off</button>
+      <button id="indexToggle" class="quiet-button" type="button">Rooms</button>
+      <a class="commission" href="mailto:hello@caldas.studio?subject=Commission">Commission</a>
     </div>
+  </header>
+
+  <main id="top">
+    <section class="hero-ui" aria-labelledby="heroTitle">
+      <p class="eyebrow">Caldas Studio presents</p>
+      <h1 id="heroTitle">The<br><em>Exposition.</em></h1>
+      <p class="hero-copy">Ten living rooms. Ten distinct worlds. One continuous journey through the full portfolio.</p>
+      <button id="enterGallery" class="enter-gallery" type="button"><span>Enter the gallery</span><b>↘</b></button>
+      <div class="hero-foot"><span>Scroll to walk</span><i></i><span>Move to look</span></div>
+    </section>
+
+    <aside id="roomLabel" class="room-label" aria-live="polite">
+      <div class="room-kicker"><span id="roomNumber">Room 01</span><i></i><span id="roomType">Workshop companion</span></div>
+      <h2 id="roomName">Inner Group</h2>
+      <p id="roomLine">Unity in diversity. Strength in connection.</p>
+      <div class="room-actions">
+        <a id="roomLink" class="room-enter" href="innergroup/">Enter this room <span>↗</span></a>
+        <button id="studyToggle" class="study-toggle" type="button">Visual studies</button>
+      </div>
+    </aside>
+
+    <div id="journeyHint" class="journey-hint"><span>Walk the exhibition</span><i></i></div>
+    <nav id="roomRail" class="room-rail" aria-label="Gallery rooms"></nav>
+
+    <div id="scrollTrack" class="scroll-track" aria-hidden="true"></div>
+
+    <section id="closing" class="closing">
+      <p class="eyebrow">The next room is yours</p>
+      <h2>Turn a business into<br><em>a place people remember.</em></h2>
+      <p>Every concept in this exhibition began as a blank page. Caldas Studio turns strategy, identity and technology into an experience with atmosphere, movement and purpose.</p>
+      <div>
+        <a href="mailto:hello@caldas.studio?subject=Commission%20a%20room">Commission a concept</a>
+        <button id="restartTour" type="button">Walk again</button>
+      </div>
+    </section>
+  </main>
+
+  <section id="roomIndex" class="room-index" aria-hidden="true">
+    <div class="index-head">
+      <div><p class="eyebrow">Index of rooms</p><h2>The full portfolio</h2></div>
+      <button id="indexClose" type="button">Close ×</button>
+    </div>
+    <div id="indexGrid" class="index-grid"></div>
   </section>
-  <footer>
-    <p class="big">We build it first. You just say <span style="color:var(--accent);font-style:italic">yes.</span></p>
-    <p class="copy">Caldas Studio · An exposition of immersive websites for local business · Sample concepts for demonstration.</p>
-  </footer>
-</main>
 
-<div id="list"><div class="x" id="list-x">Close ✕</div><h2>Index of works</h2><div id="list-items"></div></div>
+  <section id="studyDrawer" class="study-drawer" aria-hidden="true">
+    <div class="study-copy">
+      <button id="studyClose" type="button">Close ×</button>
+      <p class="eyebrow">Alternative directions</p>
+      <h2 id="studyName">Inner Group</h2>
+      <p id="studyDescription">The room translates the strongest ingredients of the concept into architecture, light and motion.</p>
+      <a id="studyLink" href="innergroup/">Open the live concept ↗</a>
+    </div>
+    <div id="studyGrid" class="study-grid"></div>
+  </section>
 
-<script type="importmap">
-{ "imports": { "three": "../vendor/three.module.js", "three/addons/": "../vendor/jsm/" } }
-</script>
-<script type="module">
-import * as THREE from 'three';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+  <div id="fallback" class="fallback" hidden>
+    <p class="eyebrow">The Exposition</p>
+    <h1>Your browser cannot render the 3D gallery.</h1>
+    <p>The complete portfolio remains available through the room index.</p>
+    <button id="fallbackOpen" type="button">Open room index</button>
+  </div>
 
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const isMobile = innerWidth < 760;
-
-const WORKS=[
-  {name:'Aurelia',      tag:'Fine jewellery · Three.js gem',    url:'jewelry/',    img:'gallery/jewelry.jpg'},
-  {name:'Maison Lumen', tag:'Fine dining · Stockholm',          url:'restaurant/', img:'gallery/restaurant.jpg'},
-  {name:'PULSE',        tag:'Strength studio · Gothenburg',     url:'gym/',        img:'gallery/gym.jpg'},
-  {name:'Vinöra',       tag:'Natural wine · horizontal scroll', url:'wine/',       img:'gallery/wine.jpg'},
-  {name:'Wild Stem',    tag:'Florist · rose in WebGL',          url:'florist/',    img:'gallery/florist.jpg'},
-  {name:'Éden',         tag:'Hair & beauty · Malmö',            url:'salon/',      img:'gallery/salon.jpg'},
-  {name:'Dunhaven',     tag:'Coastal retreat · Bohuslän',       url:'hotel/',      img:'gallery/hotel.jpg'},
-  {name:'Ember & Oak',  tag:'Coffee roaster · Uppsala',         url:'cafe/',       img:'gallery/cafe.jpg'},
-];
-const FINALE={name:'Belong Festival', tag:'Flagship · WebGL · 3 palette modes', url:'../belong/', img:'gallery/belong.jpg'};
-const ALL=[...WORKS,FINALE];
-const ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX'];
-
-/* index / fallback */
-const li=document.getElementById('list-items');
-ALL.forEach((w,i)=>{const a=document.createElement('a');a.href=w.url;a.innerHTML=`<span style="min-width:2.4rem">${String(i+1).padStart(2,'0')}</span> ${w.name} <span>${w.tag}</span>`;li.appendChild(a);});
-document.getElementById('listbtn').onclick=()=>document.getElementById('list').classList.add('on');
-document.getElementById('list-x').onclick=()=>document.getElementById('list').classList.remove('on');
-(function(){const l=document.getElementById('loader');setTimeout(()=>l.classList.add('done'),3200);addEventListener('load',()=>setTimeout(()=>l.classList.add('done'),900));})();
-
-const S={sc:0,tsc:0,mx:0,my:0,tmx:0,tmy:0};
-addEventListener('scroll',()=>{const h=document.body.scrollHeight-innerHeight;S.tsc=h>0?scrollY/h:0;},{passive:true});
-addEventListener('pointermove',e=>{S.tmx=(e.clientX/innerWidth)*2-1;S.tmy=(e.clientY/innerHeight)*2-1;},{passive:true});
-
-// layout constants (shared with scroll-to-jump)
-const SPAN=12, START=-5, finZ=START-WORKS.length*SPAN-7;
-function camZAt(sc){ const walk=Math.min(1,sc/0.86); return 9+walk*(finZ+6-9); }
-function scrollForPiece(i){ const z=(i<WORKS.length)?(START-i*SPAN):finZ;
-  const walk=(z-9)/(finZ+6-9), sc=Math.max(0,Math.min(0.86,walk*0.86)); return sc*(document.body.scrollHeight-innerHeight); }
-
-// ---- small canvas-texture helpers (soft gradients give the flat white cube real depth) ----
-function vgrad(stops,w=8,h=512){const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');
-  const gr=g.createLinearGradient(0,0,0,h);stops.forEach(s=>gr.addColorStop(s[0],s[1]));g.fillStyle=gr;g.fillRect(0,0,w,h);
-  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;}
-function softDisc(col='rgba(0,0,0,0.5)'){const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
-  const r=g.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,col);r.addColorStop(1,col.replace(/[\d.]+\)$/,'0)'));g.fillStyle=r;g.fillRect(0,0,128,128);
-  return new THREE.CanvasTexture(c);}
-
-let pieces=[];
-try{
-const canvas=document.getElementById('hall');
-const renderer=new THREE.WebGLRenderer({canvas,antialias:!isMobile});
-renderer.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.5:2)); renderer.setSize(innerWidth,innerHeight);
-renderer.toneMapping=THREE.ACESFilmicToneMapping; renderer.toneMappingExposure=1.06;
-const scene=new THREE.Scene(); const AIR=0xe9e6de; scene.background=new THREE.Color(AIR); scene.fog=new THREE.FogExp2(AIR,0.009);
-const camera=new THREE.PerspectiveCamera(isMobile?76:60,innerWidth/innerHeight,0.1,240); camera.position.set(0,2.4,9);
-const loader=new THREE.TextureLoader();
-
-// spacious room: wider walls, higher ceiling
-const WALLX=8.2, ART_X=7.9, CEIL=9.6, FLOORY=-0.6;
-const Z0=14,Z1=finZ-9,len=Z0-Z1,midZ=(Z0+Z1)/2;
-
-// walls — subtle vertical gradient (brighter up near the skylights, softly grounded below)
-const wallTex=vgrad([[0,'#f7f6f1'],[0.55,'#efece5'],[1,'#e0ddd4']]);
-const wallMat=new THREE.MeshBasicMaterial({map:wallTex});
-[[-WALLX,Math.PI/2],[WALLX,-Math.PI/2]].forEach(([x,r])=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(len,CEIL+2),wallMat.clone());m.position.set(x,(CEIL+FLOORY)/2,midZ);m.rotation.y=r;scene.add(m);});
-// pale polished floor
-const floorTex=vgrad([[0,'#e7e4dc'],[0.5,'#eeebe3'],[1,'#e4e1d8']]);
-const floor=new THREE.Mesh(new THREE.PlaneGeometry(WALLX*2,len),new THREE.MeshBasicMaterial({map:floorTex,transparent:true,opacity:.92}));
-floor.rotation.x=-Math.PI/2; floor.position.set(0,FLOORY,midZ); scene.add(floor);
-// ceiling
-const ceil=new THREE.Mesh(new THREE.PlaneGeometry(WALLX*2,len),new THREE.MeshBasicMaterial({color:0xf4f2ec})); ceil.rotation.x=Math.PI/2; ceil.position.set(0,CEIL,midZ); scene.add(ceil);
-
-// skylight coffers down the centre + warm sun pools on the floor (the "bright & spacious" cue)
-const skyMat=new THREE.MeshBasicMaterial({color:0xfffaf0});
-const poolTex=softDisc('rgba(255,250,235,0.9)');
-const nSky=Math.ceil(len/9);
-for(let i=0;i<nSky;i++){const z=Z0-4-i*9;
-  const panel=new THREE.Mesh(new THREE.PlaneGeometry(2.6,4.4),skyMat);panel.rotation.x=Math.PI/2;panel.position.set(0,CEIL-0.02,z);scene.add(panel);
-  const pool=new THREE.Sprite(new THREE.SpriteMaterial({map:poolTex,transparent:true,opacity:.26,depthWrite:false,blending:THREE.AdditiveBlending}));
-  pool.scale.set(6.5,6.5,1);pool.position.set(0,FLOORY+0.05,z);scene.add(pool);
-}
-
-const raycaster=new THREE.Raycaster(); const pointer=new THREE.Vector2();
-const shadowTex=softDisc('rgba(28,26,20,0.55)');
-function hangPainting(w,z,side,opts={}){
-  const x=(opts.x!==undefined)?opts.x : (side<0?-ART_X:ART_X);
-  const y=opts.y!==undefined?opts.y:2.75;
-  const ry=opts.ry!==undefined?opts.ry:(side<0?Math.PI/2:-Math.PI/2);
-  const grp=new THREE.Group(); grp.position.set(x,y,z); grp.rotation.y=ry; scene.add(grp);
-  const AR=3/4, W=opts.W||3.9, H=W/AR; // portrait 3:4
-  // soft cast shadow on the wall behind → grounds the frame in the bright room
-  const sh=new THREE.Sprite(new THREE.SpriteMaterial({map:shadowTex,transparent:true,opacity:.5,depthWrite:false}));
-  sh.scale.set(W+2.2,H+2.2,1); sh.position.set(0,-0.25,-0.05); grp.add(sh);
-  // thin dark frame line
-  const frame=new THREE.Mesh(new THREE.PlaneGeometry(W+0.34,H+0.34),new THREE.MeshBasicMaterial({color:0x1c1b16})); frame.position.z=0.02; grp.add(frame);
-  // white mat inside the frame
-  const mat=new THREE.Mesh(new THREE.PlaneGeometry(W+0.24,H+0.24),new THREE.MeshBasicMaterial({color:0xfbfaf6})); mat.position.z=0.03; grp.add(mat);
-  const artMat=new THREE.MeshBasicMaterial({color:0xdddddd,transparent:true});
-  const art=new THREE.Mesh(new THREE.PlaneGeometry(W,H),artMat); art.position.z=0.05; art.userData.url=w.url; grp.add(art);
-  loader.load(w.img,t=>{t.colorSpace=THREE.SRGBColorSpace;artMat.map=t;artMat.color.set(0xffffff);artMat.needsUpdate=true;
-    // faint reflection on the polished floor
-    const rMat=new THREE.MeshBasicMaterial({map:t,transparent:true,opacity:.1,depthWrite:false});
-    const refl=new THREE.Mesh(new THREE.PlaneGeometry(W,H),rMat); refl.scale.y=-1;
-    refl.position.set(x, FLOORY+0.02 - (y-FLOORY) , z); refl.rotation.y=ry; scene.add(refl);
-  });
-  pieces.push({mesh:art,z,work:w,x});
-}
-WORKS.forEach((w,i)=>hangPainting(w,START-i*SPAN,i%2===0?-1:1));
-
-// end wall + Belong painting (centred, larger) + iridescent sculpture on a pale plinth
-const endWall=new THREE.Mesh(new THREE.PlaneGeometry(WALLX*2,CEIL+2),wallMat.clone()); endWall.position.set(0,(CEIL+FLOORY)/2,finZ-2.4); scene.add(endWall);
-hangPainting(FINALE,finZ-2.3,0,{x:0,y:3.5,ry:0,W:4.7});
-
-const plinth=new THREE.Mesh(new THREE.CylinderGeometry(0.95,1.15,1.0,32),new THREE.MeshBasicMaterial({color:0xe6e3da})); plinth.position.set(0,0.0,finZ+2.6); scene.add(plinth);
-let cg=new THREE.IcosahedronGeometry(0.95,0).toNonIndexed(); cg.computeVertexNormals();
-const crystalMat=new THREE.ShaderMaterial({transparent:true,uniforms:{uTime:{value:0}},
-  vertexShader:`varying vec3 vN,vV;void main(){vec4 wp=modelMatrix*vec4(position,1.);vN=normalize(mat3(modelMatrix)*normal);vV=normalize(cameraPosition-wp.xyz);gl_Position=projectionMatrix*viewMatrix*wp;}`,
-  fragmentShader:`varying vec3 vN,vV;uniform float uTime;vec3 hsv(float h){h=fract(h);return clamp(abs(mod(h*6.+vec3(0,4,2),6.)-3.)-1.,0.,1.);}
-    void main(){vec3 n=normalize(vN);float f=pow(1.-max(dot(n,normalize(vV)),0.),2.0);vec3 c=hsv(uTime*0.05+n.y*0.3);c=mix(c*.65,vec3(1.),f);gl_FragColor=vec4(c,0.72+f*.28);}`});
-const crystal=new THREE.Mesh(cg,crystalMat); crystal.position.set(0,1.55,finZ+2.6); scene.add(crystal);
-
-// gentle dust drifting in the skylight — soft & sparse
-const ND=isMobile?60:120, dg=new THREE.BufferGeometry(), dp=new Float32Array(ND*3), dsd=new Float32Array(ND);
-for(let i=0;i<ND;i++){dp[i*3]=(Math.random()-.5)*WALLX*1.6;dp[i*3+1]=Math.random()*CEIL;dp[i*3+2]=midZ+(Math.random()-.5)*len;dsd[i]=Math.random()*100;}
-dg.setAttribute('position',new THREE.BufferAttribute(dp,3));dg.setAttribute('seed',new THREE.BufferAttribute(dsd,1));
-const dustMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.NormalBlending,uniforms:{uTime:{value:0},uSize:{value:innerHeight/20}},
-  vertexShader:`attribute float seed;uniform float uTime,uSize;varying float vA;void main(){vec3 p=position;p.y+=sin(uTime*0.25+seed)*0.4;p.x+=cos(uTime*0.18+seed)*0.4;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;vA=.25+.4*sin(uTime+seed*4.);gl_PointSize=uSize*vA/max(-mv.z,1.);}`,
-  fragmentShader:`varying float vA;void main(){vec2 c=gl_PointCoord-.5;gl_FragColor=vec4(.55,.5,.42,smoothstep(.5,0.,length(c))*vA*.28);}`});
-scene.add(new THREE.Points(dg,dustMat));
-
-const composer=new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene,camera));
-// soft, high-threshold bloom — only the skylights & sculpture glow, the room stays crisp
-const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.2,0.7,0.9); composer.addPass(bloom);
-composer.addPass(new OutputPass());
-
-// dots
-const dotsEl=document.getElementById('dots');
-ALL.forEach((w,i)=>{const d=document.createElement('b');d.title=w.name;d.onclick=()=>window.scrollTo({top:scrollForPiece(i),behavior:'smooth'});dotsEl.appendChild(d);});
-const dots=[...dotsEl.children];
-
-// caption
-const capEl=document.getElementById('cap'),capIdx=document.getElementById('cap-idx'),capName=document.getElementById('cap-name'),
-  capTag=document.getElementById('cap-tag'),capGo=document.getElementById('cap-go'),intro=document.getElementById('intro');
-let curIdx=-1;
-// tap a painting → enter its site
-addEventListener('pointerdown',e=>{pointer.x=(e.clientX/innerWidth)*2-1;pointer.y=-(e.clientY/innerHeight)*2+1;
-  raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects(pieces.map(p=>p.mesh));
-  if(hits.length&&hits[0].object.userData.url)location.href=hits[0].object.userData.url;});
-
-const clock=new THREE.Clock();
-let camLookX=0;
-function frame(){requestAnimationFrame(frame);const t=clock.elapsedTime;
-  S.sc+=(S.tsc-S.sc)*(isMobile?0.09:0.06);S.mx+=(S.tmx-S.mx)*0.05;S.my+=(S.tmy-S.my)*0.05;
-  camera.position.z=camZAt(S.sc);
-  camera.position.x=S.mx*0.9;camera.position.y=2.4-S.my*0.45;
-  // gently turn to face the nearest artwork's wall
-  let best=1e9,bi=0;pieces.forEach((p,i)=>{const d=Math.abs(p.z-camera.position.z);if(d<best){best=d;bi=i;}});
-  const targetLookX=(pieces[bi]?pieces[bi].x:0)*0.30;
-  camLookX+=(targetLookX-camLookX)*0.04;
-  camera.lookAt(camLookX+S.mx*1.2, 2.6-S.my*0.5, camera.position.z-6);
-  crystal.rotation.y=t*0.4;crystal.rotation.x=0.2+Math.sin(t*0.3)*0.1;crystalMat.uniforms.uTime.value=t;dustMat.uniforms.uTime.value=t;
-  if(bi!==curIdx&&best<10){curIdx=bi;const w=pieces[bi].work;
-    capIdx.textContent=ROMAN[bi]||'';capName.textContent=w.name;capTag.textContent=w.tag;capGo.href=w.url;
-    dots.forEach((d,i)=>d.classList.toggle('on',i===bi));}
-  capEl.classList.toggle('on',S.tsc>0.02&&S.tsc<0.82);
-  intro.style.opacity=S.tsc<0.02?1:0;
-  composer.render();if(reduce)return;}
-frame();
-addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);bloom.setSize(innerWidth,innerHeight);dustMat.uniforms.uSize.value=innerHeight/20;});
-}catch(e){console.warn('gallery disabled',e&&e.message);
-  document.getElementById('hall').style.display='none';document.getElementById('intro').style.display='none';
-  document.getElementById('dots').style.display='none';document.getElementById('list').classList.add('on');}
-</script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "../vendor/three.module.js",
+      "three/addons/": "../vendor/jsm/"
+    }
+  }
+  </script>
+  <script type="module" src="./gallery-engine.js"></script>
 </body>
 </html>

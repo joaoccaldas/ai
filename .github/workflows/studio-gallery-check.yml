@@ -1,0 +1,92 @@
+name: Studio Gallery Check
+
+on:
+  pull_request:
+    paths:
+      - 'studio/**'
+      - '.github/workflows/studio-gallery-check.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'studio/**'
+      - '.github/workflows/studio-gallery-check.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate JavaScript syntax
+        run: |
+          node --check studio/gallery-engine.js
+          node --check studio/gallery-rooms.js
+
+      - name: Validate room system contract
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          import sys
+
+          root = Path('studio')
+          required = [
+              root / 'index.html',
+              root / 'gallery-shell.css',
+              root / 'gallery-engine.js',
+              root / 'gallery-rooms.js',
+              root / 'ROOM_SYSTEM.md',
+          ]
+          missing = [str(path) for path in required if not path.is_file()]
+          if missing:
+              raise SystemExit('Missing required files: ' + ', '.join(missing))
+
+          html = (root / 'index.html').read_text(encoding='utf-8')
+          for reference in ('gallery-shell.css', 'gallery-engine.js'):
+              if reference not in html:
+                  raise SystemExit(f'index.html does not reference {reference}')
+
+          source = (root / 'gallery-rooms.js').read_text(encoding='utf-8')
+          slugs = re.findall(r"slug:\s*'([^']+)'", source)
+          urls = re.findall(r"url:\s*'([^']+)'", source)
+          centerpieces = re.findall(r"centerpiece:\s*'([^']+)'", source)
+          studies = source.count('studies: [')
+
+          if len(slugs) != 10 or len(set(slugs)) != len(slugs):
+              raise SystemExit(f'Expected 10 unique rooms, found {len(slugs)}: {slugs}')
+          if len(urls) != len(slugs) or len(centerpieces) != len(slugs) or studies != len(slugs):
+              raise SystemExit('Every room must define url, centerpiece and studies')
+
+          expected_dirs = ['innergroup', 'jewelry', 'restaurant', 'gym', 'wine', 'florist', 'salon', 'hotel', 'cafe']
+          missing_dirs = [name for name in expected_dirs if not (root / name / 'index.html').is_file()]
+          if missing_dirs:
+              raise SystemExit('Missing linked concept pages: ' + ', '.join(missing_dirs))
+          if not (Path('belong') / 'index.html').is_file():
+              raise SystemExit('Missing linked Belong page')
+
+          local_images = ['jewelry.jpg', 'restaurant.jpg', 'gym.jpg', 'wine.jpg', 'florist.jpg', 'salon.jpg', 'hotel.jpg', 'cafe.jpg', 'belong.jpg']
+          missing_images = [name for name in local_images if not (root / 'gallery' / name).is_file()]
+          if missing_images:
+              raise SystemExit('Missing gallery artwork: ' + ', '.join(missing_images))
+
+          print(f'Validated {len(slugs)} rooms, {len(centerpieces)} centerpieces and required portfolio links.')
+
+      - name: Check for accidental oversized front-end files
+        run: |
+          max_bytes=1048576
+          for file in studio/index.html studio/gallery-shell.css studio/gallery-engine.js studio/gallery-rooms.js; do
+            size=$(wc -c < "$file")
+            if [ "$size" -gt "$max_bytes" ]; then
+              echo "$file is unexpectedly large: $size bytes"
+              exit 1
+            fi
+          done
