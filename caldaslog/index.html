@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>CaldasLog — Family Command Center</title>
+<meta name="description" content="One calm view of school, sports, and what the kids need. CaldasLog unifies Infomentor, MyClub, and the home wardrobe so nothing is missed." />
+<meta name="theme-color" content="#0b2a3a" />
+<meta property="og:title" content="CaldasLog — Family Command Center" />
+<meta property="og:description" content="School, sports, clothes. One calm view for the Caldas family." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --void:#061018;
+    --void-2:#0b2a3a;
+    --void-3:#14394d;
+    --ink:#0a1418;
+    --cream:#f4efe6;
+    --cream-soft:#d8d2c6;
+    --gold:#c8a35f;
+    --gold-light:#e8d5a3;
+    --teal:#4ecdc4;
+    --teal-deep:#0d7377;
+    --rose:#f0879a;
+    --sky:#7dd3fc;
+    --lukas:#7dd3fc;
+    --noah:#f0879a;
+    --infomentor:#4ecdc4;
+    --myclub:#c8a35f;
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Jost',system-ui,-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--void);color:var(--cream);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em}
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--gold);color:var(--ink)}
+  @media(hover:hover) and (pointer:fine){ *{cursor:none} }
+
+  #scene{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
+  #atmos{position:fixed;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.55;
+    background:
+      radial-gradient(120% 90% at 50% -10%, rgba(78,205,196,.18), transparent 55%),
+      radial-gradient(140% 120% at 50% 110%, rgba(200,163,95,.16), transparent 50%)}
+  #grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.04;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 6s steps(6) infinite}
+  @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-6%,4%)}40%{transform:translate(4%,-6%)}60%{transform:translate(-4%,-4%)}80%{transform:translate(6%,6%)}100%{transform:translate(0,0)}}
+
+  #content{position:relative;z-index:2}
+  .panel{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:14vh 8vw;position:relative}
+  @media(max-width:720px){.panel{padding:12vh 7vw}}
+
+  .kicker{font-weight:400;font-size:clamp(.62rem,1.4vw,.8rem);letter-spacing:.42em;text-transform:uppercase;
+    color:var(--gold);margin-bottom:1.6rem;opacity:.92;display:flex;align-items:center;gap:.9rem}
+  .kicker::before{content:"";width:34px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+
+  .word{font-family:var(--serif);font-weight:300;font-style:italic;font-size:clamp(3.8rem,14vw,11rem);
+    line-height:.9;letter-spacing:-.01em;display:flex;flex-wrap:wrap;gap:.12em}
+  .word span{display:inline-block;opacity:0;transform:translateY(.5em) rotate(6deg);
+    animation:letterIn 1s cubic-bezier(.2,.8,.2,1) forwards}
+  @keyframes letterIn{to{opacity:1;transform:none}}
+
+  h2.lead{font-family:var(--serif);font-weight:300;font-size:clamp(2rem,6vw,4.7rem);line-height:1.03;
+    letter-spacing:-.01em;max-width:18ch}
+  .body{font-weight:300;font-size:clamp(1rem,2.1vw,1.35rem);line-height:1.75;max-width:44ch;
+    color:rgba(244,239,230,.86);margin-top:1.8rem}
+  .body.wide{max-width:56ch}
+  .accent{color:var(--gold);font-style:italic;font-family:var(--serif)}
+  .shimmer{background:linear-gradient(100deg,var(--gold) 20%,var(--gold-light) 42%,var(--gold) 64%);
+    background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    font-style:italic;font-family:var(--serif);animation:sweep 5.5s linear infinite}
+  @keyframes sweep{to{background-position:220% 0}}
+
+  .rise{opacity:0;transform:translateY(40px);filter:blur(7px);
+    transition:opacity 1.15s cubic-bezier(.2,.7,.2,1),transform 1.15s cubic-bezier(.2,.7,.2,1),filter 1.15s ease}
+  .rise.in{opacity:1;transform:none;filter:none}
+  .rise.d1{transition-delay:.12s}.rise.d2{transition-delay:.26s}.rise.d3{transition-delay:.4s}.rise.d4{transition-delay:.54s}
+
+  header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+    padding:1.5rem 6vw;transition:background .4s ease,padding .4s ease;background:linear-gradient(180deg,rgba(6,16,24,.75),transparent)}
+  .brand{font-family:var(--serif);font-size:1.5rem;letter-spacing:.24em;text-transform:uppercase;font-weight:500;color:var(--cream)}
+  .brand span{color:var(--gold)}
+  .nav{display:flex;gap:2rem;align-items:center;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;font-weight:400}
+  .nav a{opacity:.72;transition:opacity .3s,color .3s}
+  .nav a:hover{opacity:1;color:var(--gold)}
+  .nav .cta{border:1px solid rgba(200,163,95,.55);padding:.6rem 1.15rem;border-radius:40px;color:var(--gold);opacity:1;
+    transition:background .3s,color .3s,border-color .3s}
+  .nav .cta:hover{background:var(--gold);color:var(--ink)}
+  @media(max-width:860px){.nav a:not(.cta){display:none}header{padding:1.1rem 7vw}}
+
+  #rail{position:fixed;right:2.1vw;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:.85rem;align-items:center}
+  @media(max-width:860px){#rail{display:none}}
+  .dot{width:7px;height:7px;border-radius:50%;background:rgba(244,239,230,.28);transition:background .4s,transform .4s}
+  .dot.active{background:var(--gold);transform:scale(1.7);box-shadow:0 0 12px var(--gold)}
+
+  .hint{position:absolute;bottom:5vh;left:50%;transform:translateX(-50%);font-size:.66rem;letter-spacing:.34em;
+    text-transform:uppercase;color:rgba(244,239,230,.7);display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center}
+  .hint .line{width:1px;height:46px;background:linear-gradient(var(--gold),transparent);transform-origin:top;animation:drip 2.4s ease-in-out infinite}
+  @keyframes drip{0%,100%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.4rem;margin-top:3rem;max-width:1100px}
+  .card{border:1px solid rgba(200,163,95,.18);border-radius:18px;padding:2rem;background:rgba(11,42,58,.32);backdrop-filter:blur(10px);
+    transition:transform .5s,border-color .5s,background .5s}
+  .card:hover{transform:translateY(-5px);border-color:rgba(200,163,95,.5);background:rgba(20,57,77,.42)}
+  .card .eyebrow{font-size:.62rem;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);opacity:.85;margin-bottom:.8rem}
+  .card h3{font-family:var(--serif);font-weight:400;font-size:1.8rem;line-height:1.1;margin-bottom:.8rem}
+  .card p{font-size:.98rem;font-weight:300;color:rgba(244,239,230,.72);line-height:1.6}
+  .card .meta{display:flex;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
+  .tag{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;padding:.35rem .7rem;border-radius:40px;border:1px solid rgba(244,239,230,.18);color:rgba(244,239,230,.85)}
+
+  .timeline{position:relative;margin-top:3rem;max-width:900px;padding-left:2rem}
+  .timeline::before{content:"";position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(var(--gold),transparent)}
+  .event{position:relative;padding:1.4rem 0 1.4rem 2rem;border-bottom:1px solid rgba(244,239,230,.08)}
+  .event::before{content:"";position:absolute;left:-2rem;top:1.7rem;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+  .event.lukas::before{background:var(--lukas);box-shadow:0 0 10px var(--lukas)}
+  .event.noah::before{background:var(--noah);box-shadow:0 0 10px var(--noah)}
+  .event .time{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem}
+  .event h4{font-family:var(--serif);font-size:1.45rem;font-weight:400;margin-bottom:.3rem}
+  .event .detail{font-size:.92rem;color:rgba(244,239,230,.72)}
+  .event .source{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;margin-top:.6rem;display:inline-block;padding:.2rem .5rem;border-radius:4px;background:rgba(244,239,230,.08)}
+  .source.infomentor{color:var(--infomentor)}
+  .source.myclub{color:var(--myclub)}
+
+  .carousel-wrap{position:relative;margin-top:3rem;max-width:1200px}
+  .carousel{display:flex;gap:1.4rem;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:1.5rem;scrollbar-width:thin;scrollbar-color:var(--gold) transparent}
+  .carousel::-webkit-scrollbar{height:4px}
+  .carousel::-webkit-scrollbar-thumb{background:var(--gold);border-radius:4px}
+  .carousel .item{flex:0 0 260px;scroll-snap-align:start;border:1px solid rgba(200,163,95,.2);border-radius:18px;padding:1.4rem;
+    background:linear-gradient(180deg,rgba(20,57,77,.45),rgba(11,42,58,.38));backdrop-filter:blur(8px);transition:transform .4s,border-color .4s}
+  .carousel .item:hover{transform:translateY(-5px);border-color:rgba(200,163,95,.55)}
+  .carousel .photo{width:100%;aspect-ratio:1;border-radius:12px;background:rgba(244,239,230,.1);margin-bottom:1rem;display:flex;align-items:center;justify-content:center;font-size:2.4rem;overflow:hidden}
+  .carousel .photo img{width:100%;height:100%;object-fit:cover}
+  .carousel .who{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+  .carousel .name{font-family:var(--serif);font-size:1.35rem;margin-bottom:.2rem}
+  .carousel .loc{font-size:.8rem;color:rgba(244,239,230,.6);margin-bottom:.6rem}
+  .carousel .chips{display:flex;gap:.4rem;flex-wrap:wrap}
+  .chip{font-size:.64rem;padding:.25rem .55rem;border-radius:40px;border:1px solid rgba(244,239,230,.18);color:rgba(244,239,230,.85)}
+  .chip.activity{background:rgba(78,205,196,.14);border-color:rgba(78,205,196,.35);color:var(--teal)}
+
+  .add-item{display:inline-flex;align-items:center;gap:.7rem;margin-top:2rem;border:1px dashed rgba(200,163,95,.5);padding:1rem 1.8rem;border-radius:50px;font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;transition:background .3s,border-color .3s}
+  .add-item:hover{background:rgba(200,163,95,.12);border-color:var(--gold)}
+
+  .checklist{margin-top:3rem;max-width:760px}
+  .check{display:flex;gap:1rem;padding:1.2rem 0;border-bottom:1px solid rgba(244,239,230,.08);align-items:flex-start}
+  .check input[type=checkbox]{appearance:none;width:22px;height:22px;border:1px solid rgba(200,163,95,.6);border-radius:6px;margin-top:.2rem;cursor:pointer;position:relative;transition:background .3s,border-color .3s}
+  .check input[type=checkbox]:checked{background:var(--gold);border-color:var(--gold)}
+  .check input[type=checkbox]:checked::after{content:"✓";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--ink);font-size:.85rem;font-weight:700}
+  .check label{font-size:1.05rem;font-weight:300;color:rgba(244,239,230,.9)}
+  .check small{display:block;font-size:.76rem;color:rgba(244,239,230,.55);margin-top:.2rem}
+
+  footer{position:relative;z-index:2;padding:9vh 8vw 5vh;border-top:1px solid rgba(200,163,95,.16);
+    background:linear-gradient(180deg,transparent,rgba(6,16,24,.82))}
+  .foot-lead{font-family:var(--serif);font-style:italic;font-size:clamp(1.8rem,5vw,3.2rem);max-width:22ch;line-height:1.15;margin-bottom:2.5rem}
+  .copyright{font-size:.72rem;color:rgba(244,239,230,.4);letter-spacing:.06em}
+
+  #weather{position:fixed;left:6vw;bottom:4vh;z-index:20;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;
+    color:rgba(244,239,230,.55);display:flex;align-items:center;gap:.7rem;transition:opacity .5s}
+  #weather strong{color:var(--gold);font-weight:500}
+  @media(max-width:860px){#weather{display:none}}
+
+  #cur-dot,#cur-ring{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;border-radius:50%;transform:translate(-50%,-50%);mix-blend-mode:screen}
+  #cur-dot{width:7px;height:7px;background:var(--gold);box-shadow:0 0 10px var(--gold)}
+  #cur-ring{width:34px;height:34px;border:1px solid rgba(200,163,95,.55);transition:width .2s,height .2s,border-color .2s}
+  #cur-ring.big{width:56px;height:56px;border-color:var(--gold)}
+
+  .marquee{overflow:hidden;white-space:nowrap;margin:2.5rem 0 0;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+  .marquee .track{display:inline-block;animation:slide 40s linear infinite}
+  .marquee .track span{font-family:var(--serif);font-style:italic;font-size:clamp(1.6rem,4.5vw,3rem);color:rgba(244,239,230,.5);margin:0 1.4rem}
+  .marquee .track span .b{color:var(--gold);opacity:1}
+  @keyframes slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+</style>
+</head>
+<body>
+<canvas id="scene"></canvas>
+<div id="atmos"></div>
+<div id="grain"></div>
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+
+<header id="topbar">
+  <div class="brand">Caldas<span>Log</span></div>
+  <nav class="nav">
+    <a href="#today">Today</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#clothes">Clothes</a>
+    <a href="#prep">Prep</a>
+    <a class="cta" href="#today">Open</a>
+  </nav>
+</header>
+
+<div id="rail">
+  <a href="#today" class="dot" data-sec="today"></a>
+  <a href="#schedule" class="dot" data-sec="schedule"></a>
+  <a href="#clothes" class="dot" data-sec="clothes"></a>
+  <a href="#prep" class="dot" data-sec="prep"></a>
+</div>
+
+<div id="weather">Stockholm <strong>+18°</strong> partly cloudy</div>
+
+<main id="content">
+
+<section id="today" class="panel">
+  <div class="kicker">Family Command Center</div>
+  <h1 class="word"><span>C</span><span>a</span><span>l</span><span>d</span><span>a</span><span>s</span><span>L</span><span>o</span><span>g</span></h1>
+  <h2 class="lead rise d1">One calm view of <span class="shimmer">school, sports, and home.</span></h2>
+  <p class="body rise d2">Today is Sunday, 2 August 2026. No school. Handball practice at 14:00 for Lukas. Noah is free until Monday. Weather is mild — pack light layers.</p>
+  <div class="card-grid rise d3">
+    <div class="card">
+      <div class="eyebrow">Lukas · 11</div>
+      <h3>Handball practice</h3>
+      <p>14:00–15:30 · Hässelbyhallen. Red jersey, water bottle, indoor shoes ready.</p>
+      <div class="meta"><span class="tag" style="color:var(--myclub)">MyClub</span><span class="tag">Sports bag packed</span></div>
+    </div>
+    <div class="card">
+      <div class="eyebrow">Noah · 9</div>
+      <h3>Sommarlov</h3>
+      <p>No scheduled activities. Free play day. Check wardrobe for clean t-shirts.</p>
+      <div class="meta"><span class="tag" style="color:var(--infomentor)">Infomentor</span><span class="tag">Holiday</span></div>
+    </div>
+    <div class="card">
+      <div class="eyebrow">House</div>
+      <h3>Laundry status</h3>
+      <p>3 sports items drying. 2 school shirts folded in Noah’s room.</p>
+      <div class="meta"><span class="tag">Needs folding: 1</span></div>
+    </div>
+  </div>
+  <div class="hint rise d4"><span>Scroll to begin</span><span class="line"></span></div>
+</section>
+
+<section id="schedule" class="panel">
+  <div class="kicker">Unified Timeline</div>
+  <h2 class="lead rise">Infomentor + MyClub, <span class="accent">merged.</span></h2>
+  <p class="body rise d1">See everything for the week ahead. School events from Hässelby Villastads skola and handball from MyClub in one scroll.</p>
+  <div class="timeline rise d2">
+    <div class="event lukas">
+      <div class="time">Mon 10 Aug · 14:00</div>
+      <h4>Lukas — Handball practice</h4>
+      <div class="detail">Hässelbyhallen · Red group</div>
+      <span class="source myclub">MyClub</span>
+    </div>
+    <div class="event noah">
+      <div class="time">Tue 11 Aug · 08:10</div>
+      <h4>Noah — School starts</h4>
+      <div class="detail">Hässelby Villastads skola · Year 3</div>
+      <span class="source infomentor">Infomentor</span>
+    </div>
+    <div class="event lukas">
+      <div class="time">Tue 11 Aug · 08:10</div>
+      <h4>Lukas — School starts</h4>
+      <div class="detail">Hässelby Villastads skola · Year 6</div>
+      <span class="source infomentor">Infomentor</span>
+    </div>
+    <div class="event noah">
+      <div class="time">Wed 12 Aug · 09:00</div>
+      <h4>Noah — Handball mini-camp</h4>
+      <div class="detail">Outdoor pitch · bring water + cap</div>
+      <span class="source myclub">MyClub</span>
+    </div>
+    <div class="event lukas">
+      <div class="time">Fri 14 Aug · 16:30</div>
+      <h4>Lukas — Match vs Kungsängen</h4>
+      <div class="detail">Away · full kit + packed lunch</div>
+      <span class="source myclub">MyClub</span>
+    </div>
+  </div>
+  <div class="marquee rise d3">
+    <div class="track">
+      <span>School</span><span class="b">Sports</span><span>Home</span><span class="b">Calm</span><span>Ready</span><span class="b">Logistics</span>
+      <span>School</span><span class="b">Sports</span><span>Home</span><span class="b">Calm</span><span>Ready</span><span class="b">Logistics</span>
+    </div>
+  </div>
+</section>
+
+<section id="clothes" class="panel">
+  <div class="kicker">Wardrobe Intelligence</div>
+  <h2 class="lead rise">Clothes by <span class="accent">activity.</span></h2>
+  <p class="body rise d1">Take a photo, tag the location, and CaldasLog knows what’s ready for school, sports, or rain. Scroll the carousel.</p>
+  <div class="carousel-wrap rise d2">
+    <div class="carousel" id="wardrobe-carousel">
+      <div class="item">
+        <div class="photo">👕</div>
+        <div class="who">Lukas · School</div>
+        <div class="name">Blue polo shirt</div>
+        <div class="loc">Drawer B, Lukas room</div>
+        <div class="chips"><span class="chip activity">School</span><span class="chip">Clean</span></div>
+      </div>
+      <div class="item">
+        <div class="photo">🩳</div>
+        <div class="who">Lukas · Sports</div>
+        <div class="name">Handball shorts</div>
+        <div class="loc">Sports bag</div>
+        <div class="chips"><span class="chip activity">Handball</span><span class="chip">Packed</span></div>
+      </div>
+      <div class="item">
+        <div class="photo">🧥</div>
+        <div class="who">Noah · Outerwear</div>
+        <div class="name">Rain jacket</div>
+        <div class="loc">Hall closet, hook #2</div>
+        <div class="chips"><span class="chip activity">Rain</span><span class="chip">Ready</span></div>
+      </div>
+      <div class="item">
+        <div class="photo">👟</div>
+        <div class="who">Lukas · Sports</div>
+        <div class="name">Indoor shoes</div>
+        <div class="loc">Shoe rack, basement</div>
+        <div class="chips"><span class="chip activity">Sports</span><span class="chip">Clean</span></div>
+      </div>
+      <div class="item">
+        <div class="photo">🎒</div>
+        <div class="who">Noah · School</div>
+        <div class="name">Backpack</div>
+        <div class="loc">Noah’s desk chair</div>
+        <div class="chips"><span class="chip activity">School</span><span class="chip">Ready</span></div>
+      </div>
+      <div class="item">
+        <div class="photo">🧢</div>
+        <div class="who">Noah · Sports</div>
+        <div class="name">Cap</div>
+        <div class="loc">Hall closet shelf</div>
+        <div class="chips"><span class="chip activity">Outdoor</span><span class="chip">Clean</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="rise d3"><button class="add-item" onclick="alert('Add-item flow: camera → tag location → classify activity → done.')">+ Add a clothing item</button></div>
+</section>
+
+<section id="prep" class="panel">
+  <div class="kicker">Morning Briefing</div>
+  <h2 class="lead rise">Prepared before <span class="accent">breakfast.</span></h2>
+  <p class="body rise d1">A smart checklist built from today’s schedule, the weather, and the wardrobe. Check off as you go.</p>
+  <div class="checklist rise d2">
+    <label class="check">
+      <input type="checkbox" checked>
+      <div><label>Lukas sports bag packed</label><small>Jersey, shorts, shoes, water bottle</small></div>
+    </label>
+    <label class="check">
+      <input type="checkbox">
+      <div><label>Confirm Noah has clean clothes</label><small>Two t-shirts and trousers in Drawer A</small></div>
+    </label>
+    <label class="check">
+      <input type="checkbox">
+      <div><label>Check Monday school messages</label><small>Infomentor digest at 07:00</small></div>
+    </label>
+    <label class="check">
+      <input type="checkbox">
+      <div><label>Pack rain gear</label><small>Forecast: light rain after 16:00</small></div>
+    </label>
+    <label class="check">
+      <input type="checkbox">
+      <div><label>Move laundry to dryer</label><small>Sports kit from yesterday still wet</small></div>
+    </label>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="foot-lead">Everything in one calm place.</div>
+  <p class="copyright">CaldasLog · built for the Caldas family · mock data for MVP</p>
+</footer>
+
+<script>
+const canvas=document.getElementById('scene');
+const gl=canvas.getContext('webgl',{alpha:true,antialias:true});
+function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;gl.viewport(0,0,canvas.width,canvas.height);}
+resize();window.addEventListener('resize',resize);
+
+const vs=`attribute vec2 a_position;void main(){gl_Position=vec4(a_position,0.0,1.0);}`;
+const fs=`precision mediump float;uniform float u_time;uniform vec2 u_resolution;
+float rand(vec2 st){return fract(sin(dot(st.xy,vec2(12.9898,78.233)))*43758.5453123);}
+void main(){
+  vec2 uv=gl_FragCoord.xy/u_resolution;
+  float twinkle=0.0;
+  for(int i=0;i<60;i++){
+    vec2 p=vec2(rand(vec2(float(i),1.0)),rand(vec2(1.0,float(i))));
+    float d=distance(uv,p);
+    float s=0.0015+rand(vec2(float(i)))*0.002;
+    twinkle+=smoothstep(s,0.0,d)*(0.5+0.5*sin(u_time*2.0+float(i)));
+  }
+  vec3 base=vec3(0.024,0.063,0.094);
+  vec3 glow=vec3(0.784,0.639,0.373)*twinkle*0.6;
+  vec3 teal=vec3(0.306,0.804,0.769)*smoothstep(0.6,1.0,uv.y)*0.08;
+  gl_FragColor=vec4(base+glow+teal,1.0);
+}`;
+function compile(type,src){const s=gl.createShader(type);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+const prog=gl.createProgram();
+const v=compile(gl.VERTEX_SHADER,vs),f=compile(gl.FRAGMENT_SHADER,fs);
+gl.attachShader(prog,v);gl.attachShader(prog,f);gl.linkProgram(prog);gl.useProgram(prog);
+const buf=gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,-1,1,1,-1,1,1]),gl.STATIC_DRAW);
+const pos=gl.getAttribLocation(prog,'a_position');
+gl.enableVertexAttribArray(pos);gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+const uTime=gl.getUniformLocation(prog,'u_time');
+const uRes=gl.getUniformLocation(prog,'u_resolution');
+function draw(t){gl.uniform1f(uTime,t*0.001);gl.uniform2f(uRes,canvas.width,canvas.height);gl.drawArrays(gl.TRIANGLES,0,6);requestAnimationFrame(draw);}
+requestAnimationFrame(draw);
+
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}});
+},{threshold:0.15});
+document.querySelectorAll('.rise').forEach(el=>obs.observe(el));
+
+const dots=document.querySelectorAll('.dot');
+const panels=document.querySelectorAll('.panel');
+const secObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){dots.forEach(d=>d.classList.toggle('active',d.dataset.sec===e.target.id));}});
+},{threshold:0.5});
+panels.forEach(p=>secObs.observe(p));
+
+const topbar=document.getElementById('topbar');
+window.addEventListener('scroll',()=>topbar.classList.toggle('solid',scrollY>50));
+
+const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+  window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+  function cur(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;dot.style.left=mx+'px';dot.style.top=my+'px';ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(cur);}
+  cur();
+  document.querySelectorAll('a,button,.card,.item').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('big'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('big'));
+  });
+}
+</script>
+</body>
+</html>
