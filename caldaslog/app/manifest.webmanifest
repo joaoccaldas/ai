@@ -1,0 +1,11 @@
+{
+  "name": "CaldasLog",
+  "short_name": "CaldasLog",
+  "description": "One calm place for school, sports, actions and clothing.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#07111f",
+  "theme_color": "#07111f",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
