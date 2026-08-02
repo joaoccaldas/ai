@@ -1,0 +1,9 @@
+{
+  "name": "Inner Group Workshop",
+  "short_name": "Inner Group",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#061817",
+  "theme_color": "#061817",
+  "icons": [{"src":"./assets/app-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
