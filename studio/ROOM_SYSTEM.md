@@ -1,34 +1,57 @@
-# Caldas Studio immersive room system
+# Caldas Studio cinematic room system
 
-`/studio/` is a data-driven Three.js exhibition. The visitor does not browse a grid of portfolio cards: the camera travels through a continuous building in which every concept becomes a distinct architectural room.
+`/studio/` is a hybrid gallery: photorealistic set-extension imagery supplies architectural realism, while Three.js provides atmosphere, depth, particles, a transition portal and subtle interactive motion. This avoids the toy-like result produced by building every room from primitive geometry.
 
 ## Files
 
 | File | Responsibility |
 | --- | --- |
-| `index.html` | Accessible interface shell, loader, room labels, index, visual-studies drawer and fallback. |
-| `gallery-shell.css` | Fixed gallery UI, responsive behavior, overlays and non-WebGL fallback. |
-| `gallery-rooms.js` | The source of truth for room order, portfolio metadata, theme tokens and alternative visual studies. |
-| `gallery-engine.js` | Three.js renderer, architecture, centerpieces, camera path, transitions, interactions, loading and synthesized ambience. |
-| `gallery/` | Local artwork textures used inside the 3D rooms. Prefer optimized `.jpg` or `.webp` images. |
+| `index.html` | Accessible gallery shell, hero, room information, index and concept-variation drawer. |
+| `gallery-shell.css` | Art direction, cinematic backplates, parallax, overlays, responsive layout and transition treatments. |
+| `gallery-rooms.js` | Portfolio metadata, room order, concept links, palettes and alternative visual studies. |
+| `gallery-engine.js` | Scene selection, crossfades, scroll journey, WebGL atmosphere, portal transitions, sound and interaction. |
+| `gallery/` | Local portfolio artwork used by individual concepts and as reliable fallback media. |
+| `.github/workflows/studio-visual-check.yml` | Launches the real page in Chromium and stores desktop/mobile screenshots as CI evidence. |
+
+## Rendering model
+
+Each room has two visual layers:
+
+1. **Set extension:** a high-resolution architectural or concept image displayed full-screen. It carries realism, materials, lighting and spatial composition.
+2. **WebGL atmosphere:** dust, bloom, a subtle sculptural orb and a portal that appears while crossing into the next room.
+
+The set extension is deliberately dominant. Three.js supports the illusion rather than attempting to model every chair, plant, wall and light from simple geometry.
 
 ## Add a new room
 
-### 1. Add the portfolio experience
+### 1. Build the independent concept
 
-Create the new concept under `studio/<slug>/`. It should work as an independent page before it is added to the exhibition.
+Create the experience under:
 
-### 2. Add a local gallery image
+```text
+studio/<slug>/
+```
 
-Add a landscape or portrait image to:
+The linked page must work independently before being added to the exhibition.
+
+### 2. Add portfolio artwork
+
+Add a representative image to:
 
 ```text
 studio/gallery/<slug>.jpg
 ```
 
-Recommended source size: 1600–2400 px on the longest edge. Export at 75–85% quality and keep the file below roughly 500 KB where practical. The 3D engine applies its own frame and lighting, so avoid adding a decorative frame inside the image.
+Recommended export:
 
-### 3. Register the room
+- 1600–2400 px on the longest edge
+- JPEG or WebP
+- 75–85% quality
+- preferably below 500 KB
+
+This image remains the dependable local portfolio asset even when the cinematic room uses a separate set extension.
+
+### 3. Register the concept
 
 Add one object to the `rooms` array in `gallery-rooms.js`:
 
@@ -40,15 +63,15 @@ Add one object to the `rooms` array in `gallery-rooms.js`:
   url: 'new-concept/',
   image: 'gallery/new-concept.jpg',
   line: 'One memorable sentence.',
-  description: 'How the digital concept translates into architecture, light and movement.',
+  description: 'How the concept should feel as a physical environment.',
   palette: ['#background', '#mid', '#accent', '#light'],
   wall: '#wall',
   floor: '#floor',
   ceiling: '#ceiling',
   accent: '#accent',
   fog: '#fog',
-  centerpiece: 'gem',
-  transition: 'iris',
+  centerpiece: 'optional-future-3d-type',
+  transition: 'transition-name',
   studies: [
     { title: 'Direction one', note: 'What makes it different.', src: 'https://…', position: 'center' },
     { title: 'Direction two', note: 'What makes it different.', src: 'https://…', position: 'center' },
@@ -57,82 +80,72 @@ Add one object to the `rooms` array in `gallery-rooms.js`:
 }
 ```
 
-The array order is the physical order of the rooms. Moving an object changes both the camera journey and the index.
+The array order defines the physical journey, the room rail and the full index.
 
-### 4. Choose or build a centerpiece
+### 4. Assign the cinematic backplate
 
-The `centerpiece` value maps to a builder in `gallery-engine.js`:
-
-- `forum`: circular seating and a living centre
-- `gem`: faceted object on a plinth
-- `table`: ceremonial dining table and candlelight
-- `pulse`: kinetic performance sculpture and neon bars
-- `wine`: translucent vessels and liquid halo
-- `bloom`: botanical stem and sculptural flower
-- `mirror`: repeated arches and reflective planes
-- `tide`: shallow water plane and coastal rocks
-- `coffee`: copper rings and cup ritual
-- `belong`: floating orb, spectral rings and particles
-
-For a genuinely new spatial idea, add a function with this signature:
+Add the room to `ROOM_BACKPLATES` in `gallery-engine.js`:
 
 ```js
-function addNewCenterpiece(group, room, z) {
-  // Add Three.js objects to `group` around the room centre `z`.
-  // Use room.accent and the other room tokens instead of hard-coded brand colors.
-}
-```
-
-Then register it in `centerpieceBuilders`:
-
-```js
-const centerpieceBuilders = {
-  // existing builders
-  newCenterpiece: addNewCenterpiece
+const ROOM_BACKPLATES = {
+  // existing rooms
+  'new-concept': 'https://images.example.com/new-concept-room.webp'
 };
 ```
 
-### 5. Tune material and light
+Use an image that already feels like a complete room, not a product cut-out. The strongest backplates have:
 
-The room object controls the base architecture:
+- clear foreground, middle ground and background
+- a visible path or architectural opening
+- restrained lighting with one focal zone
+- enough negative space for the interface
+- no embedded text or decorative browser chrome
 
-- `wall`, `floor`, `ceiling`: material colors
-- `accent`: frames, highlights, local lights and UI accent
-- `fog`: atmospheric transition color
-- `palette`: supporting colors available to room-specific geometry
+A room without an explicit entry falls back to its first visual study and then to its local portfolio image.
 
-Keep adjacent rooms visibly different. The transition should feel like crossing a threshold, not merely changing the background color.
+### 5. Tune the composition
 
-### 6. Test the journey
+Use the room's `accent` for interface highlights and WebGL transition color. If the important subject is being cropped, set a room-specific background position in `gallery-shell.css` or extend the room schema with a positioning token.
 
-Test these paths before merging:
+Adjacent rooms should differ in at least three of these dimensions:
 
-1. Fresh desktop load on Chrome and Safari.
-2. Mobile portrait with the device throttled.
-3. Scroll from lobby through every room without jumping.
-4. Use the room rail and full index to jump between rooms.
-5. Click both framed artworks in each room.
-6. Open and close Visual studies.
-7. Disable WebGL and verify the fallback opens the portfolio index.
-8. Enable reduced motion and verify the experience remains usable.
+- dominant material
+- color temperature
+- spatial proportion
+- focal object
+- lighting direction
+- density versus emptiness
+
+### 6. Validate the actual render
+
+A source-code check is not visual validation. Before merging:
+
+1. Run the Studio Visual Render workflow.
+2. Download the `studio-visual-evidence` artifact.
+3. Inspect desktop lobby, desktop room and mobile lobby screenshots.
+4. Compare them against the approved art-direction target.
+5. Test the public GitHub Pages URL after deployment, not only the branch source.
+6. Confirm that every room link, index card and concept-variation drawer works.
+7. Verify reduced-motion and non-WebGL fallback behavior.
 
 ## Performance guardrails
 
-- Keep each room under roughly 50 simple meshes unless it is the current flagship room.
-- Reuse geometry and materials where possible.
-- Avoid shadow-casting point lights. One directional shadow plus baked/fake local shadows is usually enough.
-- Use `mobile` to reduce subdivisions, particles and expensive effects.
-- Do not add video textures to every room. Load them only after a visitor explicitly enters a room or visual study.
-- Prefer local optimized artwork for the 3D scene. External images are acceptable for optional visual studies, not for essential navigation.
+- Keep essential room imagery at 1600–2400 px, compressed for web delivery.
+- Preload only the lobby and room backplates, not every optional study image.
+- Keep WebGL decorative: low particle counts, one portal and one subtle sculptural object.
+- Reduce pixel ratio and particle count on mobile.
+- Avoid video textures in the main walk. Load video only after explicit interaction.
+- External images are acceptable for experiments, but flagship rooms should eventually use locally controlled optimized assets.
 
 ## Design principles
 
-1. **Architecture first.** Each concept must change the room itself, not only the framed image.
-2. **One memorable object.** Every room needs a clear spatial protagonist.
-3. **Thresholds matter.** The visitor should feel the transition between concepts.
-4. **The portfolio remains usable.** Every room is available through the index and direct URL.
-5. **Luxury comes from restraint.** Use fewer, stronger lights and deliberate materials rather than constant visual noise.
-6. **The gallery is not the product page.** It creates desire and context; the linked concept contains the complete experience.
+1. **The approved image is an acceptance target, not loose inspiration.**
+2. **Realism comes from composition, materials and light before effects.**
+3. **WebGL should deepen the room, not advertise itself.**
+4. **Transitions must feel architectural, not like a slide carousel.**
+5. **Every concept needs its own spatial identity.**
+6. **The portfolio remains accessible through normal links and the room index.**
+7. **Never call the gallery complete without screenshots of the deployed experience.**
 
 ## Current room order
 
