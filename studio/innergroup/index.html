@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#061817">
+  <meta name="description" content="Inner Group workshop companion for Vattenfall L&D">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta property="og:title" content="Leading from within · Inner Group">
+  <meta property="og:description" content="Your workshop journey before, during and after the session.">
+  <title>Leading from within · Inner Group</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="loader" aria-hidden="true">
+    <div class="loader-mark"><img src="./assets/innergroup-logo-white.png" alt=""></div>
+    <div class="loader-line"><i></i></div>
+    <span>Preparing your workshop space</span>
+  </div>
+
+  <canvas id="livingCanvas" class="living-canvas" aria-hidden="true"></canvas>
+  <div class="ambient-scrim" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div id="app" class="app" data-phase="pre_work">
+    <header class="topbar">
+      <a class="wordmark" href="#top" aria-label="Inner Group workshop home">
+        <img src="./assets/innergroup-logo-white.png" alt="Inner Group">
+      </a>
+      <div class="topbar-center" aria-hidden="true">
+        <span>Vattenfall L&amp;D</span><i></i><span>14 September 2026</span>
+      </div>
+      <button id="phaseChip" class="phase-chip" type="button" aria-label="Current workshop phase">
+        <span class="phase-pulse"></span>
+        <span id="phaseChipLabel">Pre-work open</span>
+      </button>
+    </header>
+
+    <main>
+      <section id="top" class="hero">
+        <div class="hero-copy">
+          <p id="eyebrow" class="kicker reveal">Inner Group · Vattenfall L&amp;D</p>
+          <h1 class="hero-title" aria-label="Leading from within">
+            <span class="hero-line"><span class="kin-word" data-word="Leading">Leading</span></span>
+            <span class="hero-line hero-line-offset"><em>from</em> <span class="kin-word" data-word="within">within.</span></span>
+          </h1>
+          <p id="welcomeText" class="hero-lede reveal delay-1">A private space to prepare, participate and continue the work after we meet.</p>
+          <div class="hero-actions reveal delay-2">
+            <button id="enterApp" class="button button-primary magnetic" type="button">Enter workshop <span>↘</span></button>
+            <div class="micro-proof"><strong>No login.</strong><span>No app. One link.</span></div>
+          </div>
+        </div>
+
+        <div class="hero-object reveal delay-1" aria-label="Workshop journey overview">
+          <div class="portrait-shell">
+            <img src="./assets/hero-stage.webp" alt="Inner Group facilitator speaking on stage">
+            <div class="portrait-gradient"></div>
+            <div class="portrait-caption">
+              <span>Workshop companion</span>
+              <strong id="workshopDate">14 September 2026</strong>
+            </div>
+          </div>
+          <div class="journey-orbit" aria-hidden="true">
+            <i class="orbit orbit-one"></i><i class="orbit orbit-two"></i><i class="orbit orbit-three"></i>
+            <b class="orbit-seed"></b>
+          </div>
+          <div class="phase-instrument">
+            <span class="instrument-label">Journey</span>
+            <ol>
+              <li class="is-open is-current"><b>01</b><span>Prepare</span></li>
+              <li><b>02</b><span>Participate</span></li>
+              <li><b>03</b><span>Continue</span></li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="hero-index" aria-hidden="true"><span>01</span><i></i><span>03</span></div>
+        <a class="scroll-signal" href="#workshop" aria-label="Scroll to workshop">
+          <span>Scroll to begin</span><i></i>
+        </a>
+      </section>
+
+      <section id="workshop" class="workspace-wrap">
+        <div class="section-intro wrap reveal">
+          <div>
+            <p class="kicker">One link · three moments</p>
+            <h2>Your workshop,<br><em>in motion.</em></h2>
+          </div>
+          <p>Content opens when it becomes useful. Earlier material remains available, so the experience grows without losing its roots.</p>
+        </div>
+
+        <div class="workspace wrap">
+          <div class="workspace-head">
+            <div class="workspace-meta">
+              <span class="workspace-badge">Workshop space</span>
+              <div><strong id="workshopTitle">Leading from within</strong><span id="clientLine">Vattenfall L&amp;D · Inner Group</span></div>
+            </div>
+            <div class="workspace-status"><span id="phaseCounter">01 / 03</span><i></i><span id="phaseStatus">Pre-work is open</span></div>
+          </div>
+
+          <nav class="phase-tabs" aria-label="Workshop phases">
+            <button class="phase-tab is-active" type="button" data-phase-target="pre_work">
+              <span class="tab-no">01</span><span class="tab-label"><strong>Pre-work</strong><small>Prepare</small></span><span class="tab-state">Open</span>
+            </button>
+            <button class="phase-tab" type="button" data-phase-target="live">
+              <span class="tab-no">02</span><span class="tab-label"><strong>Live session</strong><small>Participate</small></span><span class="tab-state">Locked</span>
+            </button>
+            <button class="phase-tab" type="button" data-phase-target="post_work">
+              <span class="tab-no">03</span><span class="tab-label"><strong>Post-work</strong><small>Continue</small></span><span class="tab-state">Locked</span>
+            </button>
+          </nav>
+
+          <div class="panels">
+            <section class="phase-panel is-active" data-panel="pre_work">
+              <div class="panel-intro">
+                <div><span class="panel-number">01</span><p class="kicker">Before we meet</p><h3>Arrive with<br><em>curiosity.</em></h3></div>
+                <div class="panel-intro-copy"><p id="preIntro">Set aside ten quiet minutes. Watch the welcome and let the questions travel with you.</p><div class="duration"><span>10</span><small>minutes<br>at your pace</small></div></div>
+              </div>
+
+              <article class="video-card surface reveal">
+                <div class="video-media">
+                  <img src="./assets/hero-stage.webp" alt="Inner Group workshop facilitator">
+                  <div class="video-shade"></div>
+                  <a id="videoFallback" class="play-button" href="https://www.innergroup.se/" target="_blank" rel="noopener"><span>▶</span><small>Play introduction</small></a>
+                  <div class="video-duration">04:18</div>
+                </div>
+                <div class="video-copy">
+                  <p class="kicker">Welcome video</p>
+                  <h4 id="videoTitle">Before we begin</h4>
+                  <p id="videoDescription">Linn and Maria introduce the intention for the workshop and invite you to arrive with curiosity rather than perfect answers.</p>
+                  <a id="videoTextLink" class="text-link" href="https://www.innergroup.se/" target="_blank" rel="noopener">Open video in a new window <span>↗</span></a>
+                </div>
+              </article>
+
+              <div class="reflection-block reveal">
+                <div class="reflection-head">
+                  <div><p class="kicker">Quiet prompts</p><h4>Notice what is already here.</h4></div>
+                  <div class="reflection-count"><span id="reflectionCurrent">01</span><i></i><span id="reflectionTotal">04</span></div>
+                </div>
+                <div id="reflectionRail" class="reflection-rail" tabindex="0" aria-label="Reflection questions"></div>
+                <div class="reflection-controls">
+                  <p>No submission. Nothing is stored.</p>
+                  <div><button id="prevReflection" type="button" aria-label="Previous reflection">←</button><button id="nextReflection" type="button" aria-label="Next reflection">→</button></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="phase-panel" data-panel="live" hidden>
+              <div class="panel-intro">
+                <div><span class="panel-number">02</span><p class="kicker">Together in the room</p><h3>Turn insight<br><em>into action.</em></h3></div>
+                <div class="panel-intro-copy"><p id="liveIntro">Use this page as the quiet backbone of the day: your agenda, preparation prompts and live exercise in one place.</p><div class="duration"><span>3</span><small>shared<br>hours</small></div></div>
+              </div>
+
+              <div class="live-grid">
+                <article class="agenda-card surface reveal">
+                  <div class="surface-head"><div><p class="kicker">Today’s rhythm</p><h4 id="agendaTitle">The inner conditions for sustainable performance</h4></div><span>09:00–12:00</span></div>
+                  <p id="agendaDescription" class="surface-copy">A participatory journey from awareness to concrete behaviour, connecting personal self-leadership with the culture around us.</p>
+                  <div id="agendaList" class="agenda-list"></div>
+                </article>
+
+                <article class="exercise-card surface reveal">
+                  <div class="exercise-visual">
+                    <div class="cloud" aria-hidden="true"><span>Trust</span><span>Clarity</span><span>Safety</span><span>Purpose</span><span>Belonging</span><span>Energy</span></div>
+                    <div class="cloud-pulse"></div>
+                  </div>
+                  <div class="exercise-copy"><p class="kicker">Live exercise</p><h4 id="exerciseTitle">What helps people thrive?</h4><p id="exerciseDescription">Join the live word cloud when invited by the facilitators.</p><a id="exerciseFallback" class="button button-primary" href="https://www.mentimeter.com/" target="_blank" rel="noopener">Open exercise <span>↗</span></a><small>If the embed is blocked by your network, this opens it directly.</small></div>
+                </article>
+              </div>
+            </section>
+
+            <section class="phase-panel" data-panel="post_work" hidden>
+              <div class="panel-intro">
+                <div><span class="panel-number">03</span><p class="kicker">After the workshop</p><h3>Keep the work<br><em>growing.</em></h3></div>
+                <div class="panel-intro-copy"><p id="postIntro">The workshop ends. The practice does not. Revisit the core ideas and choose one action that can survive a busy week.</p><div class="duration"><span>7</span><small>days of<br>practice</small></div></div>
+              </div>
+
+              <article class="seed-card surface reveal">
+                <div class="seed-copy"><p class="kicker">Workshop summary</p><h4 id="summaryTitle">The Seed and the Soil</h4><p id="summaryText">We strengthen the person and the system together. Awareness and values-led action grow further when the workplace also offers clarity, safety and support.</p><a id="summaryLink" class="text-link" href="https://www.innergroup.se/" target="_blank" rel="noopener">Open the summary <span>↗</span></a></div>
+                <div class="seed-image"><img src="./assets/seedling.webp" alt="A seedling growing from soil"><div class="seed-rings" aria-hidden="true"><i></i><i></i><i></i></div></div>
+              </article>
+
+              <div id="resourceGrid" class="resource-grid reveal"></div>
+
+              <article class="feedback-card reveal">
+                <div><p class="kicker">Two-minute feedback</p><h4 id="feedbackTitle">What should we keep, change or deepen?</h4><p id="feedbackDescription">Your feedback helps Inner Group improve the experience for future participants.</p></div>
+                <a id="feedbackLink" class="button button-light" href="https://forms.google.com/" target="_blank" rel="noopener">Share feedback <span>↗</span></a>
+              </article>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="closing wrap reveal">
+        <p class="kicker">Inner Group</p>
+        <h2>Stronger inside.<br><em>Healthier outside.</em></h2>
+        <div class="closing-bottom"><p>A workshop companion designed to get out of the way and keep the important things close.</p><a href="https://www.innergroup.se/" target="_blank" rel="noopener">Visit innergroup.se <span>↗</span></a></div>
+      </section>
+    </main>
+
+    <nav class="mobile-tabs" aria-label="Workshop navigation">
+      <button class="is-active" type="button" data-mobile-target="pre_work"><span>01</span><strong>Pre-work</strong></button>
+      <button type="button" data-mobile-target="live"><span>02</span><strong>Live</strong><i>Locked</i></button>
+      <button type="button" data-mobile-target="post_work"><span>03</span><strong>After</strong><i>Locked</i></button>
+    </nav>
+
+    <div class="browser-note"><span>Best opened in Safari or Chrome</span><button id="dismissBrowserNote" type="button" aria-label="Dismiss">×</button></div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="./app.js" defer></script>
+</body>
+</html>
