@@ -1,0 +1,75 @@
+name: Studio Visual Render
+
+on:
+  pull_request:
+    paths:
+      - 'studio/**'
+      - '.github/workflows/studio-visual-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install browser
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.54.1 --silent
+          npx playwright install --with-deps chromium
+
+      - name: Start static server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/studio-server.log 2>&1 &
+          echo $! > /tmp/studio-server.pid
+          sleep 2
+
+      - name: Render desktop and mobile evidence
+        run: |
+          node <<'JS'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const errors = [];
+            async function capture(name, viewport, scrollY = 0) {
+              const page = await browser.newPage({ viewportSize: viewport, deviceScaleFactor: 1 });
+              page.on('console', msg => { if (msg.type() === 'error') errors.push(`${name}: ${msg.text()}`); });
+              page.on('pageerror', error => errors.push(`${name}: ${error.message}`));
+              await page.goto('http://127.0.0.1:4173/studio/', { waitUntil: 'networkidle', timeout: 90000 });
+              await page.waitForSelector('.loader.done', { timeout: 90000 });
+              await page.waitForTimeout(1800);
+              if (scrollY) {
+                await page.evaluate(y => window.scrollTo(0, y), scrollY);
+                await page.waitForTimeout(1800);
+              }
+              const title = await page.locator('#heroTitle').textContent();
+              if (!title || !title.includes('Imagine')) throw new Error(`${name}: hero did not render`);
+              await page.screenshot({ path: `visual-evidence/${name}.png`, fullPage: false });
+              await page.close();
+            }
+            fs.mkdirSync('visual-evidence', { recursive: true });
+            await capture('desktop-lobby', { width: 1440, height: 900 });
+            await capture('desktop-room', { width: 1440, height: 900 }, 1500);
+            await capture('mobile-lobby', { width: 390, height: 844 });
+            await browser.close();
+            if (errors.length) throw new Error(`Browser errors:\n${errors.join('\n')}`);
+          })();
+          JS
+
+      - name: Upload rendered evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: studio-visual-evidence
+          path: visual-evidence
+          if-no-files-found: error
