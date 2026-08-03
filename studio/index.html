@@ -31,6 +31,18 @@
   a.commission{border:1px solid var(--line);color:var(--ink);padding:.6rem 1.2rem;border-radius:40px;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;transition:.3s}
   a.commission:hover{border-color:var(--gold);color:var(--gold)}
   #menubtn{display:none;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);cursor:pointer}
+  body{cursor:none}@media(pointer:coarse){body{cursor:auto}#cursor{display:none}}
+  #sound{display:flex;align-items:center;gap:.55rem;background:none;border:1px solid var(--line);border-radius:40px;padding:.5rem .9rem;color:var(--ink);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;transition:.3s}
+  #sound:hover{border-color:var(--gold);color:var(--gold)}
+  #sound .eq{display:flex;gap:2px;align-items:flex-end;height:12px}
+  #sound .eq i{width:2px;height:3px;background:currentColor}
+  #sound.on .eq i{animation:eq .9s ease-in-out infinite}
+  #sound.on .eq i:nth-child(2){animation-delay:.2s}#sound.on .eq i:nth-child(3){animation-delay:.4s}#sound.on .eq i:nth-child(4){animation-delay:.1s}
+  @keyframes eq{0%,100%{height:3px}50%{height:12px}}
+  #cursor{position:fixed;top:0;left:0;z-index:60;width:30px;height:30px;border:1px solid rgba(242,237,227,.6);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s,border-color .3s;display:grid;place-items:center;font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;mix-blend-mode:difference}
+  #cursor.enter{width:92px;height:92px;background:rgba(242,237,227,.12);border-color:var(--gold)}
+  #cursor b{opacity:0;transition:.3s;color:#fff}#cursor.enter b{opacity:1}
+  @media(max-width:760px){#sound{display:none}}
   /* intro */
   #intro{position:fixed;left:0;right:0;top:0;height:100vh;z-index:12;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 6vw;pointer-events:none;transition:opacity .6s}
   #intro .kick{font-size:.66rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.3rem}
@@ -121,8 +133,9 @@
 <header id="hd">
   <a class="brand" href="#" onclick="scrollTo({top:0,behavior:'smooth'});return false">CALDAS <b>STUDIO</b></a>
   <nav class="mid"><a href="#" onclick="scrollTo({top:0,behavior:'smooth'});return false">Gallery</a><a href="#studio">Process</a><a href="#cta">Commission</a></nav>
-  <div class="r"><a class="commission" href="mailto:hello@caldas.studio?subject=Commission">Commission</a><span id="menubtn">Menu</span></div>
+  <div class="r"><button id="sound"><span class="eq"><i></i><i></i><i></i><i></i></span> Sound</button><a class="commission" href="mailto:hello@caldas.studio?subject=Commission">Commission</a><span id="menubtn">Menu</span></div>
 </header>
+<div id="cursor"><b>Enter</b></div>
 
 <div id="intro">
   <div class="kick">Welcome to the gallery</div>
@@ -182,9 +195,13 @@
 
 <div id="list"><div class="x" id="list-x">Close ✕</div><div id="list-items"></div></div>
 
-<script type="importmap">{ "imports": { "three": "../vendor/three.module.js" } }</script>
+<script type="importmap">{ "imports": { "three": "../vendor/three.module.js", "three/addons/": "../vendor/jsm/" } }</script>
 <script type="module">
 import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile=innerWidth<760;
 
@@ -277,6 +294,11 @@ const dustMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blendi
   fragmentShader:`varying float a;void main(){vec2 c=gl_PointCoord-.5;gl_FragColor=vec4(1.,.94,.8,smoothstep(.5,0.,length(c))*a*.35);}`});
 scene.add(new THREE.Points(dg,dustMat));
 
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.5,0.7,0.62);composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
 const AW=3.4,AH=AW*4/3;
 ROOMS.forEach((r,i)=>{
   const grp=new THREE.Group();scene.add(grp);
@@ -305,9 +327,14 @@ addEventListener('pointerdown',e=>{
 });
 
 let af=0, lastT=performance.now()/1000;
+// cinematic intro dolly + mouse parallax + custom cursor
+let intro=0, tmx=0,tmy=0, mx=0,my=0, pcx=innerWidth/2,pcy=innerHeight/2, ccx=pcx,ccy=pcy;
+const cursor=document.getElementById('cursor');
+addEventListener('pointermove',e=>{tmx=(e.clientX/innerWidth)*2-1;tmy=(e.clientY/innerHeight)*2-1;pcx=e.clientX;pcy=e.clientY;},{passive:true});
 const SP=isMobile?3.5:4.3, DEP=2.4, ANG=0.5;
 function frame(){requestAnimationFrame(frame);const t=performance.now()/1000;
   const dt=Math.min(0.25,t-lastT);lastT=t;
+  intro+=(1-intro)*(1-Math.exp(-dt*1.5));
   const target=clamp(scrollY/scrollable(),0,1)*(N-1);
   af+=(target-af)*(1-Math.exp(-dt*9));     // frame-rate independent easing
   dustMat.uniforms.uT.value=t;
@@ -323,18 +350,57 @@ function frame(){requestAnimationFrame(frame);const t=performance.now()/1000;
     // floor reflection (mirrored across the floor plane)
     p.refl.position.set(x,2*FLOORY-0.2,z);p.refl.rotation.y=ry;p.refl.scale.set(sc,-sc,sc);p.rm.opacity=op*0.14;
   });
-  camera.lookAt(0,0.1,0);
+  // cinematic camera: dolly in on load, gentle mouse parallax
+  mx+=(tmx-mx)*0.045;my+=(tmy-my)*0.045;
+  const ie=intro, px=mx*0.85, py=my*0.42;
+  camera.position.set(px, 0.2+py+(1-ie)*3.0, 11+(1-ie)*13);
+  camera.lookAt(px*0.34, 0.1+py*0.4, 0);
+  // custom cursor
+  ccx+=(pcx-ccx)*0.3;ccy+=(pcy-ccy)*0.3;
+  if(cursor){cursor.style.transform=`translate(${ccx}px,${ccy}px) translate(-50%,-50%)`;
+    const overArt=gz&&Math.abs(pcx-innerWidth/2)<innerWidth*0.26&&pcy>innerHeight*0.12&&pcy<innerHeight*0.82;
+    cursor.classList.toggle('enter',overArt);}
   // ui state — everything follows the visual centre
   curActive=clamp(Math.round(af),0,N-1); const ai=curActive;
   if(gz){capEl.classList.add('on');dotsEl.classList.add('on');document.getElementById('prev').classList.add('on');document.getElementById('next').classList.add('on');
     const r=ROOMS[ai];capIdx.textContent=ROMAN[ai];capName.textContent=r.n;capTag.textContent=r.tag;
     dots.forEach((d,i)=>d.classList.toggle('on',i===ai));
   }else{capEl.classList.remove('on');dotsEl.classList.remove('on');document.getElementById('prev').classList.remove('on');document.getElementById('next').classList.remove('on');}
-  document.getElementById('intro').style.opacity=scrollY<innerHeight*0.16?1:0;
-  renderer.render(scene,camera);if(reduce)return;}
+  document.getElementById('intro').style.opacity=(scrollY<innerHeight*0.16&&intro>0.85)?1:0;
+  composer.render();if(reduce)return;}
 frame();
-addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);dustMat.uniforms.uS.value=innerHeight/24;});
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);bloom.setSize(innerWidth,innerHeight);dustMat.uniforms.uS.value=innerHeight/24;});
 }catch(e){console.warn('gallery disabled',e&&e.message);document.getElementById('hall').style.background='radial-gradient(60% 60% at 50% 40%,#1a1712,#0c0b0a 72%)';}
+
+/* ---- generative ambient soundscape (ethereal gallery) ---- */
+(function(){
+  let actx,master,playing=false,chimeTimer;const btn=document.getElementById('sound');if(!btn)return;
+  function initAudio(){
+    actx=new (window.AudioContext||window.webkitAudioContext)();
+    master=actx.createGain();master.gain.value=0;master.connect(actx.destination);
+    // warm low drone
+    [55,82.4,110.5].forEach((f,i)=>{const o=actx.createOscillator();o.type='sine';o.frequency.value=f;const g=actx.createGain();g.gain.value=i===0?0.05:0.025;
+      const lfo=actx.createOscillator();lfo.frequency.value=0.05+i*0.02;const lg=actx.createGain();lg.gain.value=0.012;lfo.connect(lg);lg.connect(g.gain);lfo.start();
+      o.connect(g);g.connect(master);o.start();});
+    // airy shimmer (filtered noise)
+    const len=actx.sampleRate*3,buf=actx.createBuffer(1,len,actx.sampleRate),d=buf.getChannelData(0);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*0.5;
+    const ns=actx.createBufferSource();ns.buffer=buf;ns.loop=true;const bp=actx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=2200;bp.Q.value=0.7;
+    const ng=actx.createGain();ng.gain.value=0.03;ns.connect(bp);bp.connect(ng);ng.connect(master);ns.start();
+    scheduleChime();
+  }
+  function scheduleChime(){const next=4000+Math.random()*7000;chimeTimer=setTimeout(()=>{if(playing&&Math.random()<0.7)chime();scheduleChime();},next);}
+  function chime(){const t=actx.currentTime;const scale=[220,277.2,329.6,440,554.4];const f=scale[Math.floor(Math.random()*scale.length)]*(Math.random()<0.5?1:2);
+    const o=actx.createOscillator();o.type='sine';o.frequency.value=f;const g=actx.createGain();
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.05,t+0.4);g.gain.exponentialRampToValueAtTime(0.0001,t+4.5);
+    const o2=actx.createOscillator();o2.type='sine';o2.frequency.value=f*2.001;const g2=actx.createGain();g2.gain.value=0.02;o2.connect(g2);g2.connect(g);
+    o.connect(g);g.connect(master);o.start(t);o2.start(t);o.stop(t+4.6);o2.stop(t+4.6);}
+  btn.addEventListener('click',()=>{
+    if(!actx)initAudio();if(actx.state==='suspended')actx.resume();
+    playing=!playing;const now=actx.currentTime;master.gain.cancelScheduledValues(now);
+    master.gain.linearRampToValueAtTime(playing?0.3:0.0,now+(playing?1.8:0.7));
+    btn.classList.toggle('on',playing);
+  });
+})();
 </script>
 </body>
 </html>
