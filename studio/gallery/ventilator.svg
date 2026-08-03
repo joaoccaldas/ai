@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1600" viewBox="0 0 1200 1600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#04131b"/><stop offset=".58" stop-color="#0b3441"/><stop offset="1" stop-color="#071a24"/></linearGradient>
+    <radialGradient id="glow" cx="72%" cy="20%" r="55%"><stop stop-color="#38c9d5" stop-opacity=".42"/><stop offset="1" stop-color="#38c9d5" stop-opacity="0"/></radialGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="16"/></filter>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse"><path d="M64 0H0V64" fill="none" stroke="#fff" stroke-opacity=".055" stroke-width="2"/></pattern>
+  </defs>
+  <rect width="1200" height="1600" fill="url(#bg)"/><rect width="1200" height="1600" fill="url(#glow)"/><rect width="1200" height="1600" fill="url(#grid)"/>
+  <g transform="translate(126 130)"><circle cx="11" cy="11" r="8" fill="#38c9d5"/><text x="38" y="18" fill="#b8d0d6" font-family="Arial,sans-serif" font-size="24" letter-spacing="5">LUFTBEHANDLING SEDAN 1931</text></g>
+  <g transform="translate(110 370)"><text fill="#fff" font-family="Arial,sans-serif" font-size="124" font-weight="700"><tspan x="0" y="0">RÄTT LUFT.</tspan><tspan x="0" y="142" fill="#9ee9ee">RÄTT FUNKTION.</tspan><tspan x="0" y="284">HELA VÄGEN.</tspan></text></g>
+  <g transform="translate(145 900)" fill="none" stroke-linecap="round">
+    <path d="M0 132h210c66 0 68-105 134-105h132c62 0 63 102 124 102h330" stroke="#60d9e2" stroke-width="9" stroke-dasharray="24 23"/>
+    <path d="M60 263h190c61 0 56 81 123 81h145c62 0 65-79 128-79h226" stroke="#60d9e2" stroke-width="9" stroke-dasharray="24 23"/>
+    <g fill="#9ee9ee" stroke="none"><circle cx="213" cy="132" r="15"/><circle cx="475" cy="27" r="15"/><circle cx="602" cy="129" r="15"/><circle cx="251" cy="263" r="15"/><circle cx="520" cy="344" r="15"/><circle cx="650" cy="265" r="15"/></g>
+  </g>
+  <g transform="translate(110 1390)"><rect width="980" height="2" fill="#fff" opacity=".16"/><text y="70" fill="#fff" font-family="Arial,sans-serif" font-size="34" font-weight="700" letter-spacing="8">VENTILATOR</text><text x="980" y="70" fill="#9ee9ee" text-anchor="end" font-family="Arial,sans-serif" font-size="22" letter-spacing="4">B2B · TECHNICAL · LIFECYCLE</text></g>
+</svg>
