@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Caldas Studio — The Exposition · Ten Immersive Rooms</title>
-<meta name="description" content="Caldas Studio — The Exposition. Ten curated rooms, infinite ways to see. An immersive dark gallery of concept websites for real businesses, where artificial intelligence meets human imagination." />
+<title>Caldas Studio — The Exposition · Eleven Immersive Rooms</title>
+<meta name="description" content="Caldas Studio — The Exposition. Eleven curated rooms, infinite ways to see. An immersive dark gallery of concept websites for real businesses, where artificial intelligence meets human imagination." />
 <meta name="theme-color" content="#0c0b0a" />
 <meta property="og:title" content="Caldas Studio — The Exposition" />
-<meta property="og:description" content="Ten curated rooms. Infinite ways to see. An immersive gallery of concept websites." />
+<meta property="og:description" content="Eleven curated rooms. Infinite ways to see. An immersive gallery of concept websites." />
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -159,14 +159,14 @@
 <section id="hero">
   <div class="kick">Welcome to the gallery</div>
   <h1 class="serif">The<br>Exposition</h1>
-  <p class="sub">Ten curated rooms. Infinite ways to see. An immersive gallery of concept websites where artificial intelligence meets human imagination.</p>
+  <p class="sub">Eleven curated rooms. Infinite ways to see. An immersive gallery of concept websites where artificial intelligence meets human imagination.</p>
   <div class="cta-row">
     <a class="enterG" href="#rooms"><span class="arw">→</span> Enter the gallery</a>
   </div>
   <div class="scroll"><i></i> Scroll to explore</div>
 </section>
 
-<div id="pager"><span class="n" id="pg-cur">01</span><div class="track" id="pg-track"></div><span class="n" id="pg-tot">10</span></div>
+<div id="pager"><span class="n" id="pg-cur">01</span><div class="track" id="pg-track"></div><span class="n" id="pg-tot"></span></div>
 
 <main>
   <section class="block">
@@ -229,6 +229,7 @@ const isMobile = innerWidth < 760;
 const ROOMS=[
   {n:'Inner Group', room:'Workshop companion', tag:'Unity in diversity.',       desc:'A space for shared perspective and collective growth — where human insight shapes everything.', url:'innergroup/', img:'gallery/innergroup.jpg'},
   {n:'Aurelia',     room:'Fine jewellery',     tag:'Light, made to keep.',       desc:'A refractive gem cut and lit live in the browser — jewellery as pure, held light.',              url:'jewelry/',    img:'gallery/jewelry.jpg'},
+  {n:'Éclat',       room:'Diamond maison',     tag:'One perfect light.',         desc:'A diamond maison in white glove — a living, cursor-lit stone and a configurator that cuts your piece to order.', url:'eclat/', img:'gallery/eclat.jpg'},
   {n:'Maison Lumen',room:'Fine dining',        tag:'Light. Atmosphere. Living beautifully.', desc:'A seven-course Nordic tasting room where the whole day is set by candlelight.',        url:'restaurant/', img:'gallery/restaurant.jpg'},
   {n:'PULSE',       room:'Strength studio',    tag:'Energy in motion. Driven by data.', desc:'A strength studio that moves — kinetic, electric and relentless from the first scroll.',   url:'gym/',        img:'gallery/gym.jpg'},
   {n:'Vinöra',      room:'Natural wine',       tag:'Savor the moment.',          desc:'Natural wine poured sideways — a horizontal-scroll tasting flight through liquid caustics.',      url:'wine/',       img:'gallery/wine.jpg'},
@@ -239,6 +240,7 @@ const ROOMS=[
   {n:'Belong',      room:'Flagship festival',  tag:'Be yourself. Together.',     desc:'The flagship — a festival rendered as light and belonging, in three living palettes.',           url:'../belong/',  img:'gallery/belong.jpg'},
 ];
 const two=(i)=>String(i+1).padStart(2,'0');
+document.getElementById('pg-tot').textContent=two(ROOMS.length-1);
 
 /* ---------- DOM: rooms rail, detail, menu ---------- */
 const rail=document.getElementById('rail'), strip=document.getElementById('strip'), listItems=document.getElementById('list-items');
