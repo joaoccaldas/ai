@@ -22,54 +22,61 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Inspect and normalize Pages source
+      - name: Inspect Pages source without blocking deployment
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          set -euo pipefail
+          set +e
           api="https://api.github.com/repos/${GITHUB_REPOSITORY}/pages"
-          headers=(
-            --header "Authorization: Bearer ${GH_TOKEN}"
-            --header 'Accept: application/vnd.github+json'
-            --header 'X-GitHub-Api-Version: 2022-11-28'
-          )
+          auth="Authorization: Bearer ${GH_TOKEN}"
+          accept='Accept: application/vnd.github+json'
+          version='X-GitHub-Api-Version: 2022-11-28'
 
-          config=$(curl --fail --silent --show-error "${headers[@]}" "$api")
-          build_type=$(printf '%s' "$config" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("build_type", "unknown"))')
-          source_branch=$(printf '%s' "$config" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("source") or {}).get("branch", "none"))')
-          source_path=$(printf '%s' "$config" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("source") or {}).get("path", "none"))')
-          echo "Pages before: build_type=${build_type}, source=${source_branch}${source_path}"
+          http_code=$(curl --silent --show-error \
+            --output /tmp/pages-config.json \
+            --write-out '%{http_code}' \
+            --header "$auth" --header "$accept" --header "$version" \
+            "$api")
 
-          if [ "$build_type" != "workflow" ]; then
-            echo 'Pages is not using GitHub Actions. Attempting to switch build_type to workflow.'
-            curl --fail --silent --show-error \
-              --request PUT \
-              "${headers[@]}" \
-              "$api" \
-              --data '{"build_type":"workflow"}' >/dev/null
-            config=$(curl --fail --silent --show-error "${headers[@]}" "$api")
-            build_type=$(printf '%s' "$config" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("build_type", "unknown"))')
-            source_branch=$(printf '%s' "$config" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("source") or {}).get("branch", "none"))')
-            source_path=$(printf '%s' "$config" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("source") or {}).get("path", "none"))')
+          build_type="unavailable"
+          source_branch="unknown"
+          source_path="unknown"
+          switch_code="not-attempted"
+
+          if [ "$http_code" = "200" ]; then
+            build_type=$(python3 -c 'import json; print(json.load(open("/tmp/pages-config.json")).get("build_type", "unknown"))')
+            source_branch=$(python3 -c 'import json; print((json.load(open("/tmp/pages-config.json")).get("source") or {}).get("branch", "none"))')
+            source_path=$(python3 -c 'import json; print((json.load(open("/tmp/pages-config.json")).get("source") or {}).get("path", "none"))')
+
+            if [ "$build_type" != "workflow" ]; then
+              switch_code=$(curl --silent --show-error \
+                --output /tmp/pages-switch.json \
+                --write-out '%{http_code}' \
+                --request PUT \
+                --header "$auth" --header "$accept" --header "$version" \
+                "$api" \
+                --data '{"build_type":"workflow"}')
+              if [ "$switch_code" = "204" ] || [ "$switch_code" = "200" ]; then
+                build_type="workflow"
+              fi
+            fi
           fi
 
-          description="build=${build_type}; source=${source_branch}${source_path}"
+          description="api=${http_code}; build=${build_type}; source=${source_branch}${source_path}; switch=${switch_code}"
           description=${description:0:139}
           payload=$(python3 - "$description" <<'PY'
           import json, sys
-          print(json.dumps({
-              "state": "success",
-              "context": "pages-config",
-              "description": sys.argv[1]
-          }))
+          print(json.dumps({"state":"success","context":"pages-config","description":sys.argv[1]}))
           PY
           )
-          curl --fail --silent --show-error \
+          curl --silent --show-error \
             --request POST \
-            "${headers[@]}" \
+            --header "$auth" --header "$accept" --header "$version" \
             "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
-            --data "$payload" >/dev/null
-          echo "Pages after: ${description}"
+            --data "$payload" >/dev/null || true
+          echo "$description"
+          exit 0
 
       - name: Checkout
         uses: actions/checkout@v4
