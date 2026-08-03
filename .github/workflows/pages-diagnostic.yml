@@ -1,4 +1,4 @@
-name: Legacy Pages Build Diagnostic
+name: Legacy Pages Build and Public Verification
 
 on:
   push:
@@ -11,10 +11,10 @@ permissions:
   statuses: write
 
 jobs:
-  inspect:
+  verify:
     runs-on: ubuntu-latest
     steps:
-      - name: Request and inspect legacy Pages build
+      - name: Rebuild legacy Pages and verify public Studio
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -26,13 +26,13 @@ jobs:
             --header 'X-GitHub-Api-Version: 2026-03-10'
           )
           run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          public_page="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/studio/?build=${GITHUB_SHA}"
 
           site=$(curl --fail --silent --show-error "${headers[@]}" "$api")
-          echo 'PAGES SITE CONFIGURATION'
-          printf '%s\n' "$site"
           build_type=$(printf '%s' "$site" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("build_type", "unknown"))')
           branch=$(printf '%s' "$site" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("source") or {}).get("branch", "none"))')
           path=$(printf '%s' "$site" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("source") or {}).get("path", "none"))')
+          echo "Pages mode: ${build_type}; source=${branch}${path}"
 
           request_code=$(curl --silent --show-error \
             --output /tmp/build-request.json \
@@ -52,22 +52,43 @@ jobs:
             latest_status=$(printf '%s' "$latest" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("status", "unknown"))')
             latest_commit=$(printf '%s' "$latest" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("commit", "unknown"))')
             latest_error=$(printf '%s' "$latest" | python3 -c 'import json,sys; e=json.load(sys.stdin).get("error") or {}; print(e.get("message") or "none")')
-            echo "Attempt ${attempt}: status=${latest_status}; commit=${latest_commit}; error=${latest_error}"
-            if [ "$latest_status" = "built" ] || [ "$latest_status" = "errored" ]; then
+            echo "Build attempt ${attempt}: status=${latest_status}; commit=${latest_commit}; error=${latest_error}"
+            if [ "$latest_status" = "built" ] && [ "$latest_commit" = "$GITHUB_SHA" ]; then
+              break
+            fi
+            if [ "$latest_status" = "errored" ]; then
               break
             fi
             sleep 5
           done
 
-          description="build=${build_type}; source=${branch}${path}; latest=${latest_status}; commit=${latest_commit:0:7}; error=${latest_error}"
-          description=${description:0:139}
+          public_ok=0
+          for attempt in $(seq 1 36); do
+            body=$(curl --fail --silent --show-error --location \
+              --header 'Cache-Control: no-cache, no-store, must-revalidate' \
+              --header 'Pragma: no-cache' \
+              "$public_page" || true)
+            if printf '%s' "$body" | grep -q 'Imagine' \
+              && printf '%s' "$body" | grep -q 'gallery-shell.css?v=7' \
+              && printf '%s' "$body" | grep -q 'plates/lobby.js'; then
+              public_ok=1
+              echo "Canonical cinematic Studio verified on attempt ${attempt}."
+              break
+            fi
+            echo "Public attempt ${attempt}: canonical page is not cinematic yet."
+            sleep 5
+          done
+
           state="success"
-          if [ "$latest_status" = "errored" ]; then state="failure"; fi
+          description="legacy=${latest_status}; commit=${latest_commit:0:7}; public=${public_ok}"
+          if [ "$latest_status" != "built" ] || [ "$latest_commit" != "$GITHUB_SHA" ] || [ "$public_ok" != "1" ]; then
+            state="failure"
+          fi
           payload=$(python3 - "$state" "$description" "$run_url" <<'PY'
           import json, sys
           print(json.dumps({
               "state": sys.argv[1],
-              "context": "pages-legacy-build",
+              "context": "studio-public",
               "description": sys.argv[2],
               "target_url": sys.argv[3]
           }))
@@ -80,4 +101,4 @@ jobs:
             --data "$payload" >/dev/null
 
           echo "SUMMARY: ${description}"
-          test "$latest_status" = "built"
+          test "$state" = "success"
