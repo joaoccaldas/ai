@@ -25,6 +25,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Stamp exact deployment identity
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from datetime import datetime, timezone
+          payload = {
+              "sha": os.environ["GITHUB_SHA"],
+              "deployed_at": datetime.now(timezone.utc).isoformat(),
+              "experience": "studio-cinematic-v2"
+          }
+          with open("studio/deployment.json", "w", encoding="utf-8") as f:
+              json.dump(payload, f, separators=(",", ":"))
+          PY
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -37,29 +51,61 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: Verify cinematic Studio deployment
+      - name: Verify exact canonical deployment
         env:
-          PAGE_URL: ${{ steps.deployment.outputs.page_url }}
-          BUILD_SHA: ${{ github.sha }}
+          EXPECTED_SHA: ${{ github.sha }}
+          OWNER: ${{ github.repository_owner }}
+          REPOSITORY: ${{ github.event.repository.name }}
         run: |
-          target="${PAGE_URL}studio/?build=${BUILD_SHA}"
-          echo "Verifying ${target}"
-          for attempt in $(seq 1 24); do
-            body=$(curl --fail --silent --show-error --location \
-              --header 'Cache-Control: no-cache' \
+          base="https://${OWNER}.github.io/${REPOSITORY}"
+          marker="${base}/studio/deployment.json?build=${EXPECTED_SHA}"
+          page="${base}/studio/?build=${EXPECTED_SHA}"
+
+          echo "Expected commit: ${EXPECTED_SHA}"
+          echo "Canonical marker: ${marker}"
+          echo "Canonical page: ${page}"
+
+          verified=0
+          for attempt in $(seq 1 30); do
+            marker_body=$(curl --fail --silent --show-error --location \
+              --header 'Cache-Control: no-cache, no-store, must-revalidate' \
               --header 'Pragma: no-cache' \
-              "$target" || true)
-            if printf '%s' "$body" | grep -q 'Imagine'; then
-              echo "Cinematic Studio is live on attempt ${attempt}."
-              exit 0
+              "$marker" || true)
+            page_body=$(curl --fail --silent --show-error --location \
+              --header 'Cache-Control: no-cache, no-store, must-revalidate' \
+              --header 'Pragma: no-cache' \
+              "$page" || true)
+
+            marker_sha=$(printf '%s' "$marker_body" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("sha", ""))' 2>/dev/null || true)
+
+            if [ "$marker_sha" = "$EXPECTED_SHA" ] \
+              && printf '%s' "$marker_body" | grep -q 'studio-cinematic-v2' \
+              && printf '%s' "$page_body" | grep -q 'Imagine' \
+              && printf '%s' "$page_body" | grep -q 'plates/lobby.js'; then
+              verified=1
+              echo "Exact cinematic deployment verified on attempt ${attempt}."
+              break
             fi
-            echo "Attempt ${attempt}: deployment not visible yet; retrying in 10 seconds."
+
+            echo "Attempt ${attempt}: canonical site is not on ${EXPECTED_SHA} yet. Observed marker: ${marker_sha:-missing}."
             sleep 10
           done
-          echo 'The deployed Studio page did not contain the cinematic hero after four minutes.' >&2
-          exit 1
 
-      - name: Mark live verification success
+          if [ "$verified" != "1" ]; then
+            echo 'Canonical GitHub Pages did not publish the exact expected cinematic commit.' >&2
+            exit 1
+          fi
+
+          # Guard against a queued older deployment replacing this one immediately.
+          sleep 30
+          final_sha=$(curl --fail --silent --show-error --location \
+            --header 'Cache-Control: no-cache, no-store, must-revalidate' \
+            --header 'Pragma: no-cache' \
+            "$marker" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("sha", ""))')
+          test "$final_sha" = "$EXPECTED_SHA"
+          echo "Canonical deployment remained stable at ${final_sha}."
+
+      - name: Mark canonical verification success
         if: success()
         env:
           GH_TOKEN: ${{ github.token }}
@@ -70,9 +116,9 @@ jobs:
             --header 'Accept: application/vnd.github+json' \
             --header 'X-GitHub-Api-Version: 2022-11-28' \
             "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
-            --data '{"state":"success","context":"studio-live","description":"Cinematic Studio is deployed and verified"}'
+            --data '{"state":"success","context":"studio-live","description":"Canonical Pages serves this exact cinematic commit"}'
 
-      - name: Mark live verification failure
+      - name: Mark canonical verification failure
         if: failure()
         env:
           GH_TOKEN: ${{ github.token }}
@@ -83,4 +129,4 @@ jobs:
             --header 'Accept: application/vnd.github+json' \
             --header 'X-GitHub-Api-Version: 2022-11-28' \
             "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
-            --data '{"state":"failure","context":"studio-live","description":"Cinematic Studio deployment verification failed"}'
+            --data '{"state":"failure","context":"studio-live","description":"Canonical Pages is not serving this commit"}'
