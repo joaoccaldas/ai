@@ -19,85 +19,85 @@
   @media(pointer:coarse){body{cursor:auto}#cursor{display:none}}
   a{color:inherit;text-decoration:none}
   .serif{font-family:'Cormorant Garamond',serif}
-  /* overlays */
-  #grain{position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:.06;mix-blend-mode:overlay;
+  #gl{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
+  #grain{position:fixed;inset:-50%;z-index:6;pointer-events:none;opacity:.06;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 5s steps(5) infinite}
   @keyframes gr{0%{transform:translate(0,0)}50%{transform:translate(3%,-3%)}100%{transform:translate(0,0)}}
-  #vig{position:fixed;inset:0;z-index:5;pointer-events:none;background:radial-gradient(130% 120% at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%)}
   #cursor{position:fixed;top:0;left:0;z-index:70;width:34px;height:34px;border:1px solid rgba(240,239,233,.7);border-radius:50%;pointer-events:none;
     transform:translate(-50%,-50%);transition:width .3s,height .3s,background .3s,border-color .3s;display:grid;place-items:center;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;mix-blend-mode:difference}
   #cursor.watch{width:88px;height:88px;background:rgba(240,239,233,.12);border-color:var(--gold)}
   #cursor b{opacity:0;transition:.3s;color:#fff}#cursor.watch b{opacity:1}
-  /* nav */
-  header{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:1.6rem 5vw;
-    transition:opacity .5s;mix-blend-mode:difference;color:#fff}
+  header{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;padding:1.6rem 5vw;transition:opacity .5s}
+  header .l,.brand{mix-blend-mode:difference;color:#fff}
   .brand{font-family:'Cormorant Garamond',serif;font-size:1.15rem;letter-spacing:.22em;text-transform:uppercase}
-  header nav{display:flex;gap:2rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase}
+  header .r{display:flex;gap:1.8rem;align-items:center}
+  header nav{display:flex;gap:1.8rem;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;mix-blend-mode:difference;color:#fff}
   header nav a{opacity:.75;transition:.3s}header nav a:hover{opacity:1}
-  /* generic full-bleed scene */
-  .scene{position:relative;height:100vh;overflow:hidden;display:flex;align-items:flex-end}
-  .scene .layer{position:absolute;inset:-8% -4%;width:108%;height:116%;will-change:transform}
-  .scene .layer img{width:100%;height:100%;object-fit:cover}
-  .scene .shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,transparent 22%,transparent 45%,rgba(0,0,0,.8) 100%)}
-  .bars::before,.bars::after{content:'';position:absolute;left:0;right:0;height:9vh;background:#000;z-index:3;transition:height .9s cubic-bezier(.2,.7,.2,1)}
-  .bars::before{top:0}.bars::after{bottom:0}
-  .bars.open::before,.bars.open::after{height:0}
-  /* hero */
-  #hero .t{position:relative;z-index:4;padding:0 5vw 12vh;max-width:min(46ch,92vw)}
-  #hero .k{font-size:.66rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.6rem;opacity:0;transform:translateY(16px);transition:.9s .3s}
-  #hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2.2rem,5.4vw,4.7rem);line-height:1.04;opacity:0;transform:translateY(24px);transition:1s .5s}
-  #hero .sub{margin-top:1.6rem;max-width:40ch;color:rgba(240,239,233,.82);font-weight:300;font-size:clamp(1rem,1.6vw,1.2rem);line-height:1.6;opacity:0;transform:translateY(16px);transition:.9s .8s}
-  #hero.in .k,#hero.in h1,#hero.in .sub{opacity:1;transform:none}
-  .scroll-cue{position:absolute;left:50%;bottom:4vh;transform:translateX(-50%);z-index:4;font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--faint);display:flex;flex-direction:column;align-items:center;gap:.8rem}
-  .scroll-cue i{width:1px;height:40px;background:linear-gradient(var(--faint),transparent);animation:cue 2.2s ease-in-out infinite;transform-origin:top}
+  #sound{display:flex;align-items:center;gap:.6rem;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:#fff;cursor:none;background:none;border:1px solid rgba(255,255,255,.28);border-radius:40px;padding:.5rem .9rem;transition:.3s;mix-blend-mode:difference}
+  #sound:hover{border-color:#fff}
+  #sound .eq{display:flex;gap:2px;align-items:flex-end;height:12px}
+  #sound .eq i{width:2px;height:4px;background:currentColor;transition:height .2s}
+  #sound.on .eq i{animation:eq .9s ease-in-out infinite}
+  #sound.on .eq i:nth-child(2){animation-delay:.2s}#sound.on .eq i:nth-child(3){animation-delay:.4s}#sound.on .eq i:nth-child(4){animation-delay:.1s}
+  @keyframes eq{0%,100%{height:3px}50%{height:12px}}
+  /* fixed cinematic stage over the WebGL */
+  #stage{position:fixed;inset:0;z-index:5;pointer-events:none;transition:opacity .6s}
+  #stage.hide{opacity:0}
+  #bars::before,#bars::after{content:'';position:absolute;left:0;right:0;height:0;background:#000;transition:height .8s cubic-bezier(.2,.7,.2,1);z-index:2}
+  #bars::before{top:0}#bars::after{bottom:0}
+  #stage.film #bars::before,#stage.film #bars::after{height:7vh}
+  #shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.36) 0%,transparent 24%,transparent 42%,rgba(0,0,0,.82) 100%)}
+  #cap{position:absolute;left:0;bottom:0;padding:0 5vw 12vh;max-width:min(46ch,92vw);z-index:3}
+  #cap .k{font-size:.66rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+  #cap h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2.1rem,5.2vw,4.6rem);line-height:1.05}
+  #cap .no{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1rem;letter-spacing:.1em;display:block}
+  #cap h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,5.4vw,4.4rem);line-height:.98;margin:.15rem 0 .5rem}
+  #cap .loc{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mut)}
+  #cap .sub,#cap .blurb{margin-top:1rem;color:rgba(240,239,233,.8);font-weight:300;line-height:1.6;max-width:40ch}
+  #cap .watch{display:inline-flex;align-items:center;gap:.8rem;margin-top:1.6rem;background:rgba(240,239,233,.1);border:1px solid var(--line);backdrop-filter:blur(6px);
+    color:#fff;border-radius:40px;padding:.85rem 1.6rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;cursor:none;transition:.3s;pointer-events:auto}
+  #cap .watch:hover{background:var(--gold);color:#0a0b0a;border-color:var(--gold)}
+  #cap .watch .pl{width:22px;height:22px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font-size:.6rem}
+  #cap>*{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
+  #cap.show>*{opacity:1;transform:none}
+  #cap.show .no{transition-delay:.05s}#cap.show h1,#cap.show h2{transition-delay:.12s}#cap.show .loc{transition-delay:.2s}#cap.show .sub,#cap.show .blurb{transition-delay:.28s}#cap.show .watch{transition-delay:.36s}
+  #cue{position:absolute;left:50%;bottom:4vh;transform:translateX(-50%);z-index:3;font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--faint);display:flex;flex-direction:column;align-items:center;gap:.8rem;transition:opacity .5s}
+  #cue i{width:1px;height:40px;background:linear-gradient(var(--faint),transparent);animation:cue 2.2s ease-in-out infinite;transform-origin:top}
   @keyframes cue{0%,100%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}}
-  /* film scenes */
-  .film .meta{position:relative;z-index:4;padding:0 5vw 11vh;width:100%;max-width:34ch}
-  .film .no{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1rem;letter-spacing:.1em;display:block;opacity:0;transform:translateY(14px);transition:.7s}
-  .film h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,5.4vw,4.4rem);line-height:.98;margin:.2rem 0 .5rem;opacity:0;transform:translateY(22px);transition:.9s .1s}
-  .film .loc{font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mut);opacity:0;transform:translateY(14px);transition:.8s .2s}
-  .film .blurb{margin-top:1rem;color:rgba(240,239,233,.78);font-weight:300;line-height:1.6;max-width:38ch;opacity:0;transform:translateY(14px);transition:.8s .3s}
-  .film .watch{display:inline-flex;align-items:center;gap:.8rem;margin-top:1.6rem;background:rgba(240,239,233,.1);border:1px solid var(--line);backdrop-filter:blur(6px);
-    color:#fff;border-radius:40px;padding:.85rem 1.6rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;cursor:none;transition:.3s;opacity:0;transform:translateY(14px)}
-  .film .watch:hover{background:var(--gold);color:#0a0b0a;border-color:var(--gold)}
-  .film .watch .pl{width:22px;height:22px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font-size:.6rem}
-  .film.in .no,.film.in h2,.film.in .loc,.film.in .blurb,.film.in .watch{opacity:1;transform:none}
-  .film.in .watch{transition:.8s .4s,background .3s,color .3s}
-  /* about */
-  #about{padding:16vh 5vw;position:relative;z-index:2}
-  #about .k{font-size:.64rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem}
+  #dots{position:fixed;right:4vw;top:50%;transform:translateY(-50%);z-index:8;display:flex;flex-direction:column;gap:.7rem;transition:opacity .5s}
+  #dots b{width:6px;height:6px;border-radius:50%;background:rgba(240,239,233,.28);display:block;cursor:none;transition:.3s;pointer-events:auto}
+  #dots b.on{background:var(--gold);transform:scale(1.7)}
+  #track{position:relative;z-index:2;pointer-events:none;height:800vh}
+  /* content sections (scroll over the fixed stage) */
+  .block{position:relative;z-index:10;background:var(--bg)}
+  #about{padding:16vh 5vw}
+  #about .k,#clients .k,#contact .k{font-size:.64rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem}
   #about .lead{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,4.4vw,3.4rem);line-height:1.18;max-width:24ch}
   #about .lead em{font-style:italic;color:var(--gold)}
   #about .grid{margin-top:5rem;display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center}
   #about .txt p{color:var(--mut);line-height:1.85;font-weight:300;margin-bottom:1.2rem;max-width:52ch}
-  #about .imgs{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:1rem}
+  #about .imgs{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
   #about .imgs figure{overflow:hidden;border-radius:4px}
   #about .imgs img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
   #about .imgs figure:hover img{transform:scale(1.05)}
   #about .imgs .tall{grid-row:span 2;aspect-ratio:3/4}#about .imgs .wide{aspect-ratio:4/3}
-  /* clients */
   #clients{padding:12vh 5vw;border-top:1px solid var(--line);text-align:center}
-  #clients .k{font-size:.62rem;letter-spacing:.36em;text-transform:uppercase;color:var(--mut);margin-bottom:2.4rem}
   #clients .row{display:flex;flex-wrap:wrap;gap:2.6rem 3.4rem;justify-content:center;align-items:center}
   #clients .row span{font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,2.6vw,1.9rem);color:rgba(240,239,233,.7);transition:.3s}
   #clients .row span:hover{color:var(--gold)}
-  /* contact */
   #contact{position:relative;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;text-align:center}
-  #contact .layer{position:absolute;inset:-8% -4%;width:108%;height:116%}
-  #contact .layer img{width:100%;height:100%;object-fit:cover;filter:brightness(.5)}
+  #contact img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.5)}
   #contact .shade{position:absolute;inset:0;background:radial-gradient(120% 100% at 50% 50%,transparent,rgba(0,0,0,.7))}
   #contact .c{position:relative;z-index:3;padding:0 6vw}
-  #contact .k{font-size:.64rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.6rem}
   #contact h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-style:italic;font-size:clamp(2.4rem,7vw,5.6rem);line-height:1.04;max-width:18ch;margin:0 auto}
   #contact .mail{display:inline-block;margin-top:2.4rem;font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,3vw,2rem);border-bottom:1px solid var(--line);padding-bottom:.3rem;transition:.3s}
   #contact .mail:hover{border-color:var(--gold);color:var(--gold)}
   #contact .soc{margin-top:2.6rem;display:flex;gap:2rem;justify-content:center;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
   #contact .soc a:hover{color:var(--gold)}
-  footer{padding:4vh 5vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem;font-size:.62rem;letter-spacing:.12em;color:var(--faint);position:relative;z-index:2;text-transform:uppercase}
-  /* film modal */
+  footer{padding:4vh 5vw;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.6rem;font-size:.62rem;letter-spacing:.12em;color:var(--faint);position:relative;z-index:10;text-transform:uppercase;background:var(--bg)}
   #player{position:fixed;inset:0;z-index:80;background:rgba(4,5,4,.96);display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .5s,visibility .5s}
   #player.on{opacity:1;visibility:visible}
-  body.playing header{opacity:0;pointer-events:none}
+  body.playing header,body.playing #stage,body.playing #dots{opacity:0;pointer-events:none}
   #player .bar{display:flex;justify-content:space-between;align-items:center;padding:1.2rem 4vw;color:#fff}
   #player .bar .t{font-family:'Cormorant Garamond',serif;font-size:1.4rem}
   #player .bar button{background:none;border:1px solid var(--line);color:#fff;border-radius:40px;padding:.55rem 1.2rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;cursor:none}
@@ -111,38 +111,37 @@
   #loader .ln i{position:absolute;inset:0;background:var(--gold);transform:translateX(-100%);animation:ld 1.6s ease-in-out infinite}
   @keyframes ld{to{transform:translateX(100%)}}
   #loader .sub{font-size:.58rem;letter-spacing:.34em;text-transform:uppercase;color:var(--mut)}
-  @media(max-width:820px){
-    header nav{gap:1.1rem;font-size:.6rem}
-    #about .grid{grid-template-columns:1fr;gap:2.4rem}
-    .film .meta,#hero .t{max-width:none}
-  }
-  @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.2s!important}.scene .layer{transform:none!important}}
+  @media(max-width:820px){header nav{gap:1.1rem;font-size:.6rem}header .r{gap:1rem}#about .grid{grid-template-columns:1fr;gap:2.4rem}#dots{display:none}}
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important}}
 </style>
 </head>
 <body>
 <div id="loader"><div class="nm serif">Laurie Hedges</div><div class="ln"><i></i></div><div class="sub">Conservation Filmmaker</div></div>
-<div id="grain"></div><div id="vig"></div>
+<canvas id="gl"></canvas>
+<div id="grain"></div>
 <div id="cursor"><b>Watch</b></div>
 
 <header id="hd">
   <a class="brand" href="#top">Laurie Hedges</a>
-  <nav><a href="#films">Films</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+  <div class="r">
+    <nav><a href="#films-first">Films</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+    <button id="sound"><span class="eq"><i></i><i></i><i></i><i></i></span> Sound</button>
+  </div>
 </header>
 
-<section class="scene bars" id="hero"><span id="top"></span>
-  <div class="layer"><img src="img/bts1.jpg" alt="A lone figure on a clifftop above a wild coast"></div>
-  <div class="shade"></div>
-  <div class="t">
-    <div class="k">Wildlife &amp; environmental films</div>
-    <h1 class="serif">I make films inspired by, and for, nature.</h1>
-    <p class="sub">Laurie Hedges — a conservation filmmaker telling the stories that move people to protect wild places.</p>
-  </div>
-  <div class="scroll-cue">Enter the field<i></i></div>
-</section>
+<!-- fixed cinematic stage rendered over the WebGL -->
+<div id="stage">
+  <div id="bars"></div>
+  <div id="shade"></div>
+  <div id="cap"></div>
+  <div id="cue">Enter the field<i></i></div>
+</div>
+<div id="dots"></div>
 
-<div id="films"></div>
+<span id="top"></span>
+<div id="track"><span id="films-first"></span></div>
 
-<section id="about">
+<section class="block" id="about">
   <div class="k">About</div>
   <p class="lead">Biologist, cinematographer, storyteller — I go <em>where the story is.</em></p>
   <div class="grid">
@@ -159,15 +158,13 @@
   </div>
 </section>
 
-<section id="clients">
+<section class="block" id="clients">
   <div class="k">Selected partners</div>
-  <div class="row">
-    <span>re:wild</span><span>Wildlife Conservation Society</span><span>Fauna &amp; Flora</span><span>African Parks</span><span>Nyungwe National Park</span><span>iFootage</span><span>Rewild Foundation</span>
-  </div>
+  <div class="row"><span>re:wild</span><span>Wildlife Conservation Society</span><span>Fauna &amp; Flora</span><span>African Parks</span><span>Nyungwe National Park</span><span>iFootage</span><span>Rewild Foundation</span></div>
 </section>
 
-<section id="contact">
-  <div class="layer"><img src="img/islands.jpg" alt="Islands at dusk"></div>
+<section class="block" id="contact">
+  <img src="img/islands.jpg" alt="Islands at dusk">
   <div class="shade"></div>
   <div class="c">
     <div class="k">Let's work together</div>
@@ -185,66 +182,161 @@
 
 <div id="player"><div class="bar"><div class="t" id="p-title">—</div><button id="p-close">Close ✕</button></div><div class="frame"><iframe id="p-frame" title="Film" allow="autoplay; fullscreen; encrypted-media" allowfullscreen></iframe></div></div>
 
-<script>
-const FILMS=[
-  {t:'Embaka',loc:'Central Africa · African Golden Cat',id:'wOMCR5DQfjw',img:'embaka.jpg',b:'Into the forest after Africa’s least-known wild cat — a ghost most scientists will never see.'},
-  {t:'Amazonian Tapirs',loc:'The Amazon Basin',id:'xUUquAIOMaA',img:'tapir.jpg',b:'A gardener of the rainforest, quietly seeding the very forest that shelters it.'},
-  {t:'The Return of the Lion &amp; Rhino',loc:'Akagera N.P., Rwanda · African Parks',id:'blmhCxAJaYk',img:'akagera.jpg',b:'How a park brought back from the brink welcomed its giants home.'},
-  {t:'Myanmar’s Hoolock Gibbons',loc:'Myanmar · Fauna &amp; Flora',id:'ufmVZuPTeNI',img:'gibbon.jpg',b:'A love song in the canopy of a forest that is vanishing beneath it.'},
-  {t:'Islands of Diversity',loc:'Myanmar · Fauna &amp; Flora',id:'X99BEwKFzA8',img:'islands.jpg',b:'Mapping the wild life of an archipelago few people will ever set foot on.'},
-  {t:'Rio Celeste',loc:'Costa Rica · Hideaway',id:'6drhTGm_Y4c',img:'rio.jpg',b:'Where the river runs impossibly, electrically blue.'},
-  {t:'Floods in Malaysia',loc:'Malaysia · Climate',id:'STgP8Fxk8CQ',img:'floods.jpg',b:'When the rains change their mind, everything downstream changes with them.'},
+<script type="importmap">{ "imports": { "three": "../vendor/three.module.js" } }</script>
+<script type="module">
+import * as THREE from 'three';
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const SCENES=[
+  {img:'bts1.jpg',hero:true,k:'Wildlife &amp; environmental films',
+   h:'I make films inspired by, and for, nature.',
+   sub:'Laurie Hedges — a conservation filmmaker telling the stories that move people to protect wild places.'},
+  {img:'embaka.jpg',t:'Embaka',loc:'Central Africa · African Golden Cat',id:'wOMCR5DQfjw',b:'Into the forest after Africa’s least-known wild cat — a ghost most scientists will never see.'},
+  {img:'tapir.jpg',t:'Amazonian Tapirs',loc:'The Amazon Basin',id:'xUUquAIOMaA',b:'A gardener of the rainforest, quietly seeding the very forest that shelters it.'},
+  {img:'akagera.jpg',t:'The Return of the Lion &amp; Rhino',loc:'Akagera N.P., Rwanda · African Parks',id:'blmhCxAJaYk',b:'How a park brought back from the brink welcomed its giants home.'},
+  {img:'gibbon.jpg',t:'Myanmar’s Hoolock Gibbons',loc:'Myanmar · Fauna &amp; Flora',id:'ufmVZuPTeNI',b:'A love song in the canopy of a forest that is vanishing beneath it.'},
+  {img:'islands.jpg',t:'Islands of Diversity',loc:'Myanmar · Fauna &amp; Flora',id:'X99BEwKFzA8',b:'Mapping the wild life of an archipelago few people will ever set foot on.'},
+  {img:'rio.jpg',t:'Rio Celeste',loc:'Costa Rica · Hideaway',id:'6drhTGm_Y4c',b:'Where the river runs impossibly, electrically blue.'},
+  {img:'floods.jpg',t:'Floods in Malaysia',loc:'Malaysia · Climate',id:'STgP8Fxk8CQ',b:'When the rains change their mind, everything downstream changes with them.'},
 ];
-const wrap=document.getElementById('films');
-FILMS.forEach((f,i)=>{
-  const s=document.createElement('section');s.className='scene bars film';s.dataset.id=f.id;s.dataset.title=f.t;
-  s.innerHTML=`<div class="layer"><img src="img/${f.img}" alt="${f.t}"></div><div class="shade"></div>
-    <div class="meta"><span class="no">Film ${String(i+1).padStart(2,'0')}</span><h2 class="serif">${f.t}</h2>
-    <div class="loc">${f.loc}</div><p class="blurb">${f.b}</p>
-    <button class="watch"><span class="pl">▶</span> Watch film</button></div>`;
-  wrap.appendChild(s);
-  s.querySelector('.watch').addEventListener('click',e=>{e.stopPropagation();openFilm(f);});
-  s.addEventListener('click',()=>openFilm(f));
+const NS=SCENES.length;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+
+/* ---------- caption (updates per active scene) ---------- */
+const capEl=document.getElementById('cap'),cueEl=document.getElementById('cue'),stageEl=document.getElementById('stage');
+let capIdx=-1;
+function setCap(i){ if(i===capIdx)return; capIdx=i; const s=SCENES[i];
+  capEl.classList.remove('show');
+  setTimeout(()=>{
+    if(s.hero){ stageEl.classList.remove('film');
+      capEl.innerHTML=`<div class="k">${s.k}</div><h1 class="serif">${s.h}</h1><p class="sub">${s.sub}</p>`;
+    }else{ stageEl.classList.add('film');
+      capEl.innerHTML=`<span class="no">Film ${String(i).padStart(2,'0')}</span><h2 class="serif">${s.t}</h2><div class="loc">${s.loc}</div><p class="blurb">${s.b}</p><button class="watch"><span class="pl">▶</span> Watch film</button>`;
+      capEl.querySelector('.watch').addEventListener('click',e=>{e.stopPropagation();openFilm(s);});
+    }
+    requestAnimationFrame(()=>capEl.classList.add('show'));
+  },160);
+}
+/* dots */
+const dotsEl=document.getElementById('dots');
+SCENES.forEach((s,i)=>{const b=document.createElement('b');b.title=s.hero?'Intro':s.t;b.onclick=()=>window.scrollTo({top:i*innerHeight,behavior:'smooth'});dotsEl.appendChild(b);});
+const dots=[...dotsEl.children];
+
+/* click centre to open active film */
+addEventListener('pointerdown',e=>{
+  if(document.getElementById('player').classList.contains('on'))return;
+  if(e.target.closest('#sound,#dots,#cap .watch,header'))return;
+  if(scrollY>NS*innerHeight-innerHeight*0.5)return;
+  const s=SCENES[Math.round(pe)]; if(s&&!s.hero&&e.clientY<innerHeight*0.62)openFilm(s);
 });
 
-/* reveal + letterbox on enter */
-const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in','open');}else{e.target.classList.remove('in','open');}});},{threshold:.35});
-document.querySelectorAll('.scene').forEach(s=>io.observe(s));
+/* ---------- WebGL depth engine ---------- */
+let pe=0;
+const loader=new THREE.TextureLoader();
+try{
+const canvas=document.getElementById('gl');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);
+const scene=new THREE.Scene();const cam=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+const texs=SCENES.map(s=>{const t=loader.load('img/'+s.img,tx=>{tx.userData.aspect=tx.image.width/tx.image.height;});t.colorSpace=THREE.SRGBColorSpace;t.minFilter=THREE.LinearFilter;t.userData.aspect=1.777;return t;});
+const uni={uTexA:{value:texs[0]},uTexB:{value:texs[1]},uMix:{value:0},uAspA:{value:1.777},uAspB:{value:1.777},uScr:{value:innerWidth/innerHeight},uMouse:{value:new THREE.Vector2()},uTime:{value:0}};
+const mat=new THREE.ShaderMaterial({uniforms:uni,
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position.xy,0.,1.);}`,
+  fragmentShader:`precision highp float;varying vec2 vUv;
+    uniform sampler2D uTexA,uTexB;uniform float uMix,uAspA,uAspB,uScr,uTime;uniform vec2 uMouse;
+    vec2 cover(vec2 uv,float ia,float sa){vec2 o=uv;if(sa<ia){o.x=(uv.x-0.5)*(sa/ia)+0.5;}else{o.y=(uv.y-0.5)*(ia/sa)+0.5;}return o;}
+    vec3 samp(sampler2D tex,float ia,vec2 uv,float zoom,vec2 par){
+      vec2 c=cover(uv,ia,uScr); c=(c-0.5)/zoom+0.5;
+      vec3 base=texture2D(tex,c).rgb; float lum=dot(base,vec3(.299,.587,.114));
+      vec2 off=par*(0.30+lum*0.80);              // parallax by pseudo-depth (luminance)
+      return texture2D(tex,c+off).rgb;
+    }
+    void main(){vec2 uv=vUv;float t=smoothstep(0.0,1.0,uMix);
+      float breath=1.0+0.028*sin(uTime*0.18);
+      vec3 a=samp(uTexA,uAspA,uv,breath*(1.0+t*0.55),uMouse*0.045);   // dive INTO A
+      vec3 b=samp(uTexB,uAspB,uv,breath*(1.28-t*0.28),uMouse*0.045);  // B settles from depth
+      vec3 col=mix(a,b,t);
+      float d=distance(uv,vec2(0.5));col*=1.0-smoothstep(0.5,0.98,d)*0.55;   // vignette
+      col=pow(clamp(col,0.0,1.0),vec3(1.03));
+      gl_FragColor=vec4(col,1.0);
+    }`});
+scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),mat));
 
-/* parallax + dolly on the full-bleed layers */
-const layers=[...document.querySelectorAll('.scene .layer, #contact .layer')].map(l=>({el:l,sec:l.closest('section')}));
-let mx=0,my=0,tmx=0,tmy=0;
+let tmx=0,tmy=0,mx=0,my=0;
 addEventListener('pointermove',e=>{tmx=(e.clientX/innerWidth)*2-1;tmy=(e.clientY/innerHeight)*2-1;},{passive:true});
-function raf(){
-  mx+=(tmx-mx)*0.06;my+=(tmy-my)*0.06;
-  const vh=innerHeight;
-  for(const {el,sec} of layers){
-    const r=sec.getBoundingClientRect();
-    if(r.bottom<-100||r.top>vh+100)continue;
-    const prog=(r.top+r.height/2-vh/2)/vh;         // -0.5..0.5 across viewport
-    el.style.transform=`scale(1.14) translate3d(${mx*14}px, ${prog*46 + my*12}px, 0)`;
-  }
-  requestAnimationFrame(raf);
-}
-raf();
+let lastT=performance.now()/1000;
+function frame(){requestAnimationFrame(frame);const now=performance.now()/1000;const dt=Math.min(0.05,now-lastT);lastT=now;
+  const pTarget=clamp(scrollY/innerHeight,0,NS-1);
+  pe+=(pTarget-pe)*(1-Math.exp(-dt*7));
+  const base=clamp(Math.floor(pe),0,NS-2),frac=clamp(pe-base,0,1);
+  uni.uTexA.value=texs[base];uni.uTexB.value=texs[base+1];
+  uni.uAspA.value=texs[base].userData.aspect;uni.uAspB.value=texs[base+1].userData.aspect;
+  uni.uMix.value=frac;
+  // mouse eased + gentle auto-drift so it breathes even without a pointer
+  mx+=(tmx-mx)*0.05;my+=(tmy-my)*0.05;
+  uni.uMouse.value.set(mx+Math.sin(now*0.13)*0.22, my+Math.cos(now*0.1)*0.16);
+  uni.uScr.value=innerWidth/innerHeight;uni.uTime.value=now;
+  renderer.render(scene,cam);
+  // ui
+  const act=clamp(Math.round(pe),0,NS-1);setCap(act);
+  dots.forEach((d,i)=>d.classList.toggle('on',i===act));
+  const inJourney=scrollY<NS*innerHeight-innerHeight*0.6;
+  stageEl.classList.toggle('hide',!inJourney);dotsEl.style.opacity=inJourney?'':'0';
+  cueEl.style.opacity=(scrollY<innerHeight*0.3)?'1':'0';
+  if(reduce)return;}
+frame();
+addEventListener('resize',()=>{renderer.setSize(innerWidth,innerHeight);uni.uScr.value=innerWidth/innerHeight;});
+}catch(e){console.warn('gl off',e&&e.message);document.getElementById('gl').style.background='#111';setCap(0);}
 
-/* custom cursor */
-const cur=document.getElementById('cursor');let cx=0,cy=0,tx=0,ty=0;
-addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;});
-(function cc(){cx+=(tx-cx)*0.25;cy+=(ty-cy)*0.25;cur.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`;requestAnimationFrame(cc);})();
-document.querySelectorAll('.film').forEach(s=>{s.addEventListener('pointerenter',()=>cur.classList.add('watch'));s.addEventListener('pointerleave',()=>cur.classList.remove('watch'));});
+/* ---------- custom cursor ---------- */
+const cur=document.getElementById('cursor');let cx=0,cy=0,tx2=0,ty2=0;
+addEventListener('pointermove',e=>{tx2=e.clientX;ty2=e.clientY;const overFilm=(Math.round(pe)>0)&&e.clientY<innerHeight*0.62&&scrollY<NS*innerHeight-innerHeight;cur.classList.toggle('watch',overFilm&&!e.target.closest('header,#cap .watch,#sound'));});
+(function cc(){cx+=(tx2-cx)*0.25;cy+=(ty2-cy)*0.25;cur.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`;requestAnimationFrame(cc);})();
 
-/* nav hide near top of contact for legibility handled by mix-blend; header fade when player open */
-/* film player */
+/* ---------- film player ---------- */
 const player=document.getElementById('player'),pf=document.getElementById('p-frame'),pt=document.getElementById('p-title');
-function openFilm(f){pt.innerHTML=f.t;pf.src=`https://www.youtube-nocookie.com/embed/${f.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;player.classList.add('on');document.body.classList.add('playing');document.body.style.overflow='hidden';}
+function openFilm(s){pt.innerHTML=s.t;pf.src=`https://www.youtube-nocookie.com/embed/${s.id}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;player.classList.add('on');document.body.classList.add('playing');document.body.style.overflow='hidden';}
 function closeFilm(){player.classList.remove('on');document.body.classList.remove('playing');document.body.style.overflow='';setTimeout(()=>pf.src='',500);}
 document.getElementById('p-close').addEventListener('click',closeFilm);
 addEventListener('keydown',e=>{if(e.key==='Escape')closeFilm();});
 
-/* loader + hero reveal */
-addEventListener('load',()=>setTimeout(()=>{document.getElementById('loader').classList.add('done');document.getElementById('hero').classList.add('in','open');},600));
-setTimeout(()=>{document.getElementById('loader').classList.add('done');document.getElementById('hero').classList.add('in','open');},2600);
+/* ---------- generative nature soundscape ---------- */
+let actx,master,playing=false,birdTimer;
+const soundBtn=document.getElementById('sound');
+function brown(len){const b=actx.createBuffer(1,len,actx.sampleRate),d=b.getChannelData(0);let last=0;for(let i=0;i<len;i++){const w=Math.random()*2-1;last=(last+0.02*w)/1.02;d[i]=last*3.2;}return b;}
+function initAudio(){
+  actx=new (window.AudioContext||window.webkitAudioContext)();
+  master=actx.createGain();master.gain.value=0;master.connect(actx.destination);
+  const buf=brown(actx.sampleRate*4);
+  // wind
+  const wind=actx.createBufferSource();wind.buffer=buf;wind.loop=true;
+  const lp=actx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=420;
+  const wl=actx.createOscillator();wl.frequency.value=0.05;const wg=actx.createGain();wg.gain.value=230;wl.connect(wg);wg.connect(lp.frequency);wl.start();
+  const wgain=actx.createGain();wgain.gain.value=0.55;wind.connect(lp);lp.connect(wgain);wgain.connect(master);wind.start();
+  // leaves / hiss
+  const lv=actx.createBufferSource();lv.buffer=buf;lv.loop=true;const bp=actx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=3200;bp.Q.value=0.5;
+  const lg=actx.createGain();lg.gain.value=0.05;lv.connect(bp);bp.connect(lg);lg.connect(master);lv.start();
+  // warm drone
+  [110,110.4,164.8].forEach((f,i)=>{const o=actx.createOscillator();o.type='sine';o.frequency.value=f;const g=actx.createGain();g.gain.value=i===2?0.018:0.028;o.connect(g);g.connect(master);o.start();});
+  scheduleBird();
+}
+function scheduleBird(){const next=1400+Math.random()*4200;birdTimer=setTimeout(()=>{if(playing&&Math.random()<0.72)chirp();scheduleBird();},next);}
+function chirp(){const t=actx.currentTime,notes=2+Math.floor(Math.random()*3),baseF=1700+Math.random()*1700;
+  for(let i=0;i<notes;i++){const o=actx.createOscillator();o.type='sine';const g=actx.createGain();const st=t+i*0.085;const f=baseF*(1+(Math.random()*0.28-0.12));
+    o.frequency.setValueAtTime(f,st);o.frequency.exponentialRampToValueAtTime(f*1.28,st+0.05);
+    g.gain.setValueAtTime(0.0001,st);g.gain.linearRampToValueAtTime(0.045,st+0.01);g.gain.exponentialRampToValueAtTime(0.0001,st+0.13);
+    o.connect(g);g.connect(master);o.start(st);o.stop(st+0.16);}}
+soundBtn.addEventListener('click',()=>{
+  if(!actx)initAudio(); if(actx.state==='suspended')actx.resume();
+  playing=!playing;const now=actx.currentTime;master.gain.cancelScheduledValues(now);
+  master.gain.linearRampToValueAtTime(playing?0.22:0.0,now+(playing?1.6:0.6));
+  soundBtn.classList.toggle('on',playing);
+});
+
+/* ---------- loader ---------- */
+addEventListener('load',()=>setTimeout(()=>document.getElementById('loader').classList.add('done'),600));
+setTimeout(()=>document.getElementById('loader').classList.add('done'),2600);
+setCap(0);
 </script>
 </body>
 </html>
