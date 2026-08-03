@@ -8,11 +8,11 @@
   <meta property="og:title" content="Caldas Studio — The Exposition">
   <meta property="og:description" content="Move through ten distinct portfolio worlds in one continuous gallery.">
   <title>Caldas Studio — The Exposition</title>
+  <link rel="icon" href="data:,">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./gallery-shell.css?v=2">
+  <link rel="stylesheet" href="./gallery-shell.css?v=3">
 </head>
 <body>
   <div id="loader" class="loader" aria-live="polite">
@@ -37,7 +37,7 @@
     <nav class="topnav" aria-label="Primary">
       <button id="indexToggle" type="button">Gallery</button>
       <a href="#about">About</a>
-      <a href="#process">Process</a>
+      <a href="#about">Process</a>
     </nav>
     <div class="topbar-actions">
       <button id="soundToggle" class="quiet-button" type="button" aria-label="Toggle ambient sound" aria-pressed="false">Sound off</button>
@@ -112,9 +112,45 @@
     <button id="fallbackOpen" type="button">Open room index</button>
   </div>
 
+  <script>
+  (() => {
+    const replacements = [
+      ['photo-1765940717433-cc42c13bfa88','gallery/belong.jpg'],
+      ['photo-1774267916884-afae166d49b3','gallery/hotel.jpg'],
+      ['photo-1617038260897-41a1f14a8ca0','gallery/jewelry.jpg'],
+      ['photo-1517248135467-4c7edcad34c5','gallery/restaurant.jpg'],
+      ['photo-1534438327276-14e5300c3a48','gallery/gym.jpg'],
+      ['photo-1510812431401-41d2bd2722f3','gallery/wine.jpg'],
+      ['photo-1490750967868-88aa4486c946','gallery/florist.jpg'],
+      ['photo-1560066984-138dadb4c035','gallery/salon.jpg'],
+      ['photo-1566073771259-6a8506099945','gallery/hotel.jpg'],
+      ['photo-1445116572660-236099ec97a0','gallery/cafe.jpg'],
+      ['photo-1501386761578-eac5c94b800a','gallery/belong.jpg']
+    ];
+    const localize = value => {
+      const text = String(value || '');
+      const match = replacements.find(([key]) => text.includes(key));
+      return match ? match[1] : value;
+    };
+    const imageSrc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+    if (imageSrc?.set) Object.defineProperty(HTMLImageElement.prototype, 'src', {
+      configurable: true,
+      enumerable: imageSrc.enumerable,
+      get: imageSrc.get,
+      set(value) { imageSrc.set.call(this, localize(value)); }
+    });
+    const backgroundImage = Object.getOwnPropertyDescriptor(CSSStyleDeclaration.prototype, 'backgroundImage');
+    if (backgroundImage?.set) Object.defineProperty(CSSStyleDeclaration.prototype, 'backgroundImage', {
+      configurable: true,
+      enumerable: backgroundImage.enumerable,
+      get: backgroundImage.get,
+      set(value) { backgroundImage.set.call(this, localize(value)); }
+    });
+  })();
+  </script>
   <script type="importmap">
   {"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/jsm/"}}
   </script>
-  <script type="module" src="./gallery-engine.js?v=2"></script>
+  <script type="module" src="./gallery-engine.js?v=3"></script>
 </body>
 </html>
