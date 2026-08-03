@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Éclat — Fine Diamonds, Cut for a Single Perfect Light</title>
+<meta name="description" content="Éclat — a diamond maison. One perfect light, held. Compose your stone: shape, metal and carat, cut to order. A luxurious, minimal jewellery concept by Caldas Studio." />
+<meta name="theme-color" content="#f2eee7" />
+<meta property="og:title" content="Éclat — Fine Diamonds" />
+<meta property="og:description" content="One perfect light, held. Compose your stone." />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--paper:#f2eee7;--ink:#191712;--muted:#6f695d;--line:rgba(25,23,18,.13);--gold:#a98545;--plat:#8b8d92}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',system-ui,sans-serif;background:var(--paper);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .serif{font-family:'Cormorant Garamond',serif}
+  #stage{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
+  #grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.028;mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+  header{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:1.6rem 5vw;
+    transition:background .4s,backdrop-filter .4s,border-color .4s,color .4s;border-bottom:1px solid transparent;color:#f4f0e8}
+  header.solid{background:rgba(242,238,231,.82);backdrop-filter:blur(12px);border-color:var(--line);color:var(--ink)}
+  .brand{font-family:'Cormorant Garamond',serif;font-size:1.5rem;letter-spacing:.42em;font-weight:500;text-indent:.42em;color:inherit}
+  nav{display:flex;gap:2rem;font-size:.66rem;letter-spacing:.24em;text-transform:uppercase}
+  nav a{color:inherit;opacity:.72;transition:.3s}nav a:hover{opacity:1}
+  .book{border:1px solid currentColor;color:inherit;opacity:.85;padding:.6rem 1.15rem;border-radius:40px;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;transition:.3s}
+  .book:hover{opacity:1}
+  #menub{display:none;font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;color:inherit}
+  /* hero */
+  #hero{position:relative;z-index:2;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    text-align:center;padding:0 6vw 8vh;pointer-events:none;background:transparent!important}
+  #hero .kick{font-size:.64rem;letter-spacing:.44em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
+  #hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,5.2vw,4.2rem);line-height:1.02;max-width:20ch;color:#f6f2ea;text-shadow:0 2px 40px rgba(0,0,0,.5)}
+  #hero h1 em{font-style:italic}
+  #hero .cta{margin-top:2rem;pointer-events:auto;display:inline-flex;align-items:center;gap:.8rem;background:#f4f0e8;color:var(--ink);
+    border-radius:50px;padding:.95rem 1.9rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;transition:.35s}
+  #hero .cta:hover{background:var(--gold);color:#fff}
+  #hero .scrl{margin-top:2.4rem;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(246,242,234,.6);display:flex;align-items:center;gap:.6rem}
+  #hero .scrl i{width:1px;height:34px;background:rgba(246,242,234,.6);display:inline-block;animation:dp 2.2s ease-in-out infinite;transform-origin:top}
+  @keyframes dp{0%,100%{transform:scaleY(.3);opacity:.4}50%{transform:scaleY(1);opacity:1}}
+  /* sections */
+  section{position:relative;z-index:2;background:var(--paper)}
+  .pad{padding:14vh 6vw}
+  .lede{max-width:26ch;font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,4.6vw,3.4rem);line-height:1.12}
+  .lede em{font-style:italic;color:var(--gold)}
+  .k{font-size:.62rem;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem}
+  /* four C's */
+  .cs{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:4rem;border-top:1px solid var(--line)}
+  .cs .c{padding:2.2rem 1.4rem 2.2rem 0;border-right:1px solid var(--line)}
+  .cs .c:last-child{border-right:0}
+  .cs .c .n{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--gold)}
+  .cs .c h3{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.7rem;margin:.3rem 0 .6rem}
+  .cs .c p{font-size:.9rem;color:var(--muted);line-height:1.6;font-weight:300}
+  /* configurator */
+  #compose{background:#ece7de}
+  .cfg{display:grid;grid-template-columns:1.1fr .9fr;gap:5rem;align-items:center;margin-top:3rem}
+  .cfg .opt{margin-bottom:2.2rem}
+  .cfg .opt .lab{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin-bottom:.9rem}
+  .chips{display:flex;flex-wrap:wrap;gap:.6rem}
+  .chip{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:40px;padding:.6rem 1.1rem;font-family:'Jost';font-size:.8rem;letter-spacing:.04em;cursor:pointer;transition:.25s}
+  .chip:hover{border-color:var(--ink)}
+  .chip.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .chip .sw{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:.5rem;vertical-align:middle;border:1px solid rgba(0,0,0,.15)}
+  .carat{display:flex;align-items:center;gap:1.2rem}
+  input[type=range]{-webkit-appearance:none;appearance:none;height:2px;background:var(--line);flex:1;border-radius:2px}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--ink);cursor:pointer;transition:.2s}
+  input[type=range]::-webkit-slider-thumb:hover{background:var(--gold)}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border:none;border-radius:50%;background:var(--ink);cursor:pointer}
+  .carat .val{font-family:'Cormorant Garamond',serif;font-size:1.6rem;min-width:3.4ch}
+  .summary{border:1px solid var(--line);border-radius:10px;padding:2.4rem;background:var(--paper)}
+  .summary .ring{width:120px;height:120px;border-radius:50%;margin:0 auto 1.6rem;display:grid;place-items:center;
+    background:radial-gradient(circle at 38% 32%,#fff,var(--metal,#e9e4da) 62%,#c9c2b4);box-shadow:0 18px 40px -20px rgba(0,0,0,.4)}
+  .summary .ring b{width:34px;height:34px;transform:rotate(45deg);background:linear-gradient(135deg,#fff,#cdd2da);box-shadow:0 0 14px rgba(255,255,255,.9)}
+  .summary .r{display:flex;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid var(--line);font-size:.86rem}
+  .summary .r span:first-child{color:var(--muted);letter-spacing:.06em}
+  .summary .r.total{border-bottom:0;padding-top:1.2rem}
+  .summary .r.total span:last-child{font-family:'Cormorant Garamond',serif;font-size:1.7rem}
+  .summary .req{display:block;text-align:center;margin-top:1.6rem;background:var(--ink);color:var(--paper);border-radius:40px;padding:.9rem;
+    font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;transition:.3s}
+  .summary .req:hover{background:var(--gold)}
+  /* maison split */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+  .split .txt p{margin-top:1.4rem;max-width:42ch;color:var(--muted);line-height:1.8;font-weight:300}
+  .plate{aspect-ratio:4/5;border-radius:8px;background:linear-gradient(160deg,#e7e1d6,#d8d1c4);position:relative;overflow:hidden;border:1px solid var(--line)}
+  .plate::after{content:'';position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 42%,rgba(255,255,255,.7),transparent 70%)}
+  .plate .cap{position:absolute;left:1.4rem;bottom:1.2rem;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--ink)}
+  /* enquire */
+  #enquire{background:var(--ink);color:var(--paper)}
+  #enquire .k{color:var(--gold)}
+  #enquire h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,6vw,4.4rem);line-height:1;max-width:16ch}
+  form{margin-top:3rem;max-width:640px;display:grid;gap:1.6rem}
+  form .row{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
+  form input,form textarea{width:100%;background:transparent;border:0;border-bottom:1px solid rgba(242,238,231,.24);color:var(--paper);
+    padding:.8rem 0;font-family:'Jost';font-size:1rem;transition:.3s}
+  form input:focus,form textarea:focus{outline:none;border-color:var(--gold)}
+  form input::placeholder,form textarea::placeholder{color:rgba(242,238,231,.4)}
+  form button{justify-self:start;margin-top:1rem;background:var(--paper);color:var(--ink);border:0;border-radius:40px;padding:1rem 2.2rem;
+    font-family:'Jost';font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:.3s}
+  form button:hover{background:var(--gold);color:var(--paper)}
+  footer{position:relative;z-index:2;background:var(--ink);color:var(--paper);padding:5vh 5vw;border-top:1px solid rgba(242,238,231,.12);
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+  footer .b{font-family:'Cormorant Garamond',serif;letter-spacing:.4em;text-indent:.4em}
+  footer .c{font-size:.64rem;color:rgba(242,238,231,.5);letter-spacing:.05em}
+  footer a{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,238,231,.7)}footer a:hover{color:var(--gold)}
+  #back{position:fixed;left:5vw;bottom:2.4vh;z-index:25;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);mix-blend-mode:difference}
+  #back:hover{color:var(--gold)}
+  #loader{position:fixed;inset:0;z-index:60;background:#100f14;display:grid;place-items:center;transition:opacity .9s,visibility .9s}
+  #loader.done{opacity:0;visibility:hidden}
+  #loader .d{width:26px;height:26px;transform:rotate(45deg);background:linear-gradient(135deg,#fff,#c7ccd6);box-shadow:0 0 20px rgba(180,190,210,.8);animation:pl 1.4s ease-in-out infinite}
+  @keyframes pl{0%,100%{transform:rotate(45deg) scale(.8);opacity:.6}50%{transform:rotate(225deg) scale(1);opacity:1}}
+  @media(max-width:860px){
+    nav,.book{display:none}#menub{display:block}
+    .cs{grid-template-columns:1fr 1fr}.cs .c{border-bottom:1px solid var(--line)}.cs .c:nth-child(2n){border-right:0}
+    .cfg,.split{grid-template-columns:1fr;gap:2.6rem}
+    form .row{grid-template-columns:1fr}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important}}
+</style>
+</head>
+<body>
+<div id="loader"><div class="d"></div></div>
+<canvas id="stage"></canvas>
+<div id="grain"></div>
+
+<header id="hd">
+  <a class="brand serif" href="#">ÉCLAT</a>
+  <nav><a href="#four">The Stone</a><a href="#compose">Compose</a><a href="#maison">Maison</a><a href="#enquire">Enquire</a></nav>
+  <a class="book" href="#enquire">Private viewing</a>
+  <span id="menub">Menu</span>
+</header>
+
+<section id="hero">
+  <div class="kick">Fine Diamonds · Cut to order</div>
+  <h1 class="serif">One perfect light,<br><em>held</em> in a single stone.</h1>
+  <a class="cta" href="#compose">Compose your stone →</a>
+  <div class="scrl"><i></i> Scroll</div>
+</section>
+
+<main>
+  <section id="four" class="pad">
+    <div class="k">The four c's</div>
+    <p class="lede">A diamond is not bought. It is <em>read</em> — light by light, angle by angle.</p>
+    <div class="cs">
+      <div class="c"><div class="n">01</div><h3 class="serif">Cut</h3><p>The only C shaped by human hands. Proportions tuned so light returns to the eye, not the floor.</p></div>
+      <div class="c"><div class="n">02</div><h3 class="serif">Colour</h3><p>Graded D to Z. We work the icy, quiet end — where the stone stays out of the way of its own fire.</p></div>
+      <div class="c"><div class="n">03</div><h3 class="serif">Clarity</h3><p>Read at 10×. Inclusions become a fingerprint — proof that no two of ours are ever the same.</p></div>
+      <div class="c"><div class="n">04</div><h3 class="serif">Carat</h3><p>Weight, not size. We cut for brilliance first, so a lighter stone can outshine a heavier one.</p></div>
+    </div>
+  </section>
+
+  <section id="compose" class="pad">
+    <div class="k">Compose your stone</div>
+    <p class="lede">Built to order. Choose the <em>shape</em>, the metal and the weight — and watch the piece come together.</p>
+    <div class="cfg">
+      <div class="controls">
+        <div class="opt"><div class="lab">Shape</div><div class="chips" id="shape">
+          <button class="chip on" data-v="Round brilliant">Round brilliant</button>
+          <button class="chip" data-v="Cushion">Cushion</button>
+          <button class="chip" data-v="Oval">Oval</button>
+          <button class="chip" data-v="Emerald">Emerald</button>
+        </div></div>
+        <div class="opt"><div class="lab">Metal</div><div class="chips" id="metal">
+          <button class="chip on" data-v="Platinum"    data-col="#e5e7ea" data-mul="1.35"><span class="sw" style="background:#e5e7ea"></span>Platinum</button>
+          <button class="chip" data-v="White gold"     data-col="#e9e6df" data-mul="1.0"><span class="sw" style="background:#e9e6df"></span>White gold</button>
+          <button class="chip" data-v="Yellow gold"    data-col="#e8cf94" data-mul="1.0"><span class="sw" style="background:#e8cf94"></span>Yellow gold</button>
+          <button class="chip" data-v="Rose gold"      data-col="#e7bfa9" data-mul="1.0"><span class="sw" style="background:#e7bfa9"></span>Rose gold</button>
+        </div></div>
+        <div class="opt"><div class="lab">Carat</div><div class="carat">
+          <input id="carat" type="range" min="0.5" max="3" step="0.1" value="1.2">
+          <div class="val serif"><span id="ctv">1.2</span>ct</div>
+        </div></div>
+      </div>
+      <div class="summary">
+        <div class="ring"><b></b></div>
+        <div class="r"><span>Shape</span><span id="sv">Round brilliant</span></div>
+        <div class="r"><span>Metal</span><span id="mv">Platinum</span></div>
+        <div class="r"><span>Carat</span><span id="cv">1.2 ct</span></div>
+        <div class="r total"><span>From</span><span id="price">£12,400</span></div>
+        <a class="req" href="#enquire">Request this stone →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="maison" class="pad">
+    <div class="split">
+      <div class="txt"><div class="k">The maison</div>
+        <p class="lede" style="max-width:18ch">Cut in <em>Antwerp.</em> Set by hand.</p>
+        <p>Every Éclat stone is traceable to a single, conflict-free source and cut by one master to a signature 57-facet proportion. What leaves our bench is not a product — it is a small, permanent piece of light you will hand to someone else one day.</p>
+      </div>
+      <div class="plate"><span class="cap">The bench, Antwerp</span></div>
+    </div>
+  </section>
+
+  <section id="enquire" class="pad">
+    <div class="k">Enquire</div>
+    <h2 class="serif">Request a private viewing.</h2>
+    <form onsubmit="return false">
+      <div class="row"><input placeholder="Your name" required><input placeholder="Email" type="email" required></div>
+      <input placeholder="The stone you have in mind (optional)" id="wish">
+      <textarea placeholder="Anything we should know" rows="2"></textarea>
+      <button type="submit">Request viewing</button>
+    </form>
+  </section>
+
+  <footer>
+    <span class="b serif">ÉCLAT</span>
+    <span class="c">Concept by Caldas Studio · Fine diamonds, cut for a single perfect light</span>
+    <span><a href="../">← Back to the Exposition</a></span>
+  </footer>
+</main>
+<a id="back" href="../">Caldas Studio</a>
+
+<script type="importmap">{ "imports": { "three": "../../vendor/three.module.js", "three/addons/": "../../vendor/jsm/" } }</script>
+<script type="module">
+import * as THREE from 'three';
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---- configurator (functional) ---- */
+const basePrice={ 'Round brilliant':9000,'Cushion':8200,'Oval':8600,'Emerald':7800 };
+let cfg={shape:'Round brilliant',metal:'Platinum',mul:1.35,carat:1.2};
+const fmt=n=>'£'+Math.round(n).toLocaleString('en-GB');
+function price(){ const per=basePrice[cfg.shape]*cfg.mul; const p=per*Math.pow(cfg.carat,1.7); return p; }
+function render(){
+  document.getElementById('sv').textContent=cfg.shape;
+  document.getElementById('mv').textContent=cfg.metal;
+  document.getElementById('cv').textContent=cfg.carat.toFixed(1)+' ct';
+  document.getElementById('ctv').textContent=cfg.carat.toFixed(1);
+  document.getElementById('price').textContent=fmt(price());
+  document.getElementById('wish').value=`${cfg.carat.toFixed(1)}ct ${cfg.shape}, ${cfg.metal}`;
+}
+document.querySelectorAll('#shape .chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('#shape .chip').forEach(c=>c.classList.remove('on'));b.classList.add('on');cfg.shape=b.dataset.v;render();});
+document.querySelectorAll('#metal .chip').forEach(b=>b.onclick=()=>{document.querySelectorAll('#metal .chip').forEach(c=>c.classList.remove('on'));b.classList.add('on');cfg.metal=b.dataset.v;cfg.mul=parseFloat(b.dataset.mul);document.querySelector('.ring').style.setProperty('--metal',b.dataset.col);render();});
+document.getElementById('carat').oninput=e=>{cfg.carat=parseFloat(e.target.value);render();};
+render();
+document.getElementById('menub').onclick=()=>document.getElementById('four').scrollIntoView({behavior:'smooth'});
+addEventListener('scroll',()=>document.getElementById('hd').classList.toggle('solid',scrollY>innerHeight*0.7),{passive:true});
+(function(){const l=document.getElementById('loader');setTimeout(()=>l.classList.add('done'),1500);addEventListener('load',()=>setTimeout(()=>l.classList.add('done'),500));})();
+
+/* ---- hero: the living diamond ---- */
+const M={mx:0,my:-0.1,tmx:0,tmy:-0.1};
+addEventListener('pointermove',e=>{M.tmx=(e.clientX/innerWidth)*2-1;M.tmy=(e.clientY/innerHeight)*2-1;},{passive:true});
+try{
+const canvas=document.getElementById('stage');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);
+renderer.setClearColor(0x100f14,1);
+const scene=new THREE.Scene();
+let aspect=innerWidth/innerHeight, H=2;
+const camera=new THREE.OrthographicCamera(-H*aspect/2,H*aspect/2,H/2,-H/2,0.1,10);camera.position.z=3;
+// dark, faintly warm backdrop so the stone reads as luminous
+const bgTex=(()=>{const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');
+  const r=g.createRadialGradient(128,120,10,128,128,190);r.addColorStop(0,'#1d1826');r.addColorStop(.5,'#120e19');r.addColorStop(1,'#08060c');
+  g.fillStyle=r;g.fillRect(0,0,256,256);return new THREE.CanvasTexture(c);})();
+const bg=new THREE.Mesh(new THREE.PlaneGeometry(1,1),new THREE.MeshBasicMaterial({map:bgTex,depthWrite:false}));bg.position.z=-1;scene.add(bg);
+const tex=new THREE.TextureLoader().load('img/diamond.png',t=>{t.colorSpace=THREE.SRGBColorSpace;});
+const DAR=341/225;
+const uni={uTex:{value:tex},uTime:{value:0},uLight:{value:new THREE.Vector2(0.5,0.5)}};
+const mat=new THREE.ShaderMaterial({transparent:true,uniforms:uni,
+  vertexShader:`varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+  fragmentShader:`precision highp float;varying vec2 vUv;uniform sampler2D uTex;uniform float uTime;uniform vec2 uLight;
+    float hash(vec2 p){return fract(sin(dot(p,vec2(41.3,289.1)))*43758.5453);}
+    void main(){vec4 t=texture2D(uTex,vUv); if(t.a<0.02) discard;
+      float b=max(t.r,max(t.g,t.b));
+      // twinkling glints on the brightest facets
+      vec2 gp=floor(vUv*vec2(64.0,36.0));
+      float ph=hash(gp)*30.0; float cell=step(0.8,hash(gp+floor(uTime*0.9)));
+      float spark=smoothstep(0.80,1.0,b)*cell*(0.5+0.5*sin(uTime*4.0+ph));
+      // specular that follows the cursor
+      float d=distance(vUv,uLight); float spec=smoothstep(0.30,0.0,d)*smoothstep(0.55,1.0,b);
+      vec3 col=t.rgb + spark*vec3(1.0,0.97,0.86)*0.9 + spec*vec3(0.95,0.9,0.75)*0.6;
+      gl_FragColor=vec4(col,t.a);}`});
+const plane=new THREE.Mesh(new THREE.PlaneGeometry(1,1),mat);scene.add(plane);
+// sparkle sprites for extra bloom-free glow
+function star(){const c=document.createElement('canvas');c.width=c.height=64;const g=c.getContext('2d');
+  const gr=g.createRadialGradient(32,32,0,32,32,32);gr.addColorStop(0,'rgba(255,255,255,.9)');gr.addColorStop(.5,'rgba(255,250,235,.25)');gr.addColorStop(1,'rgba(255,255,255,0)');
+  g.fillStyle=gr;g.fillRect(0,0,64,64);return new THREE.CanvasTexture(c);}
+const starTex=star(),sparks=[];
+for(let i=0;i<8;i++){const s=new THREE.Sprite(new THREE.SpriteMaterial({map:starTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:0}));
+  s.userData={seed:Math.random()*10,r:0.16+Math.random()*0.5,a:Math.random()*6.28};scene.add(s);sparks.push(s);}
+function fit(){aspect=innerWidth/innerHeight;camera.left=-H*aspect/2;camera.right=H*aspect/2;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+  const worldW=H*aspect; bg.scale.set(worldW+0.3,H+0.3,1);
+  let dh=Math.min(1.32, (worldW*0.86)/DAR); dh=Math.max(dh,0.5);
+  plane.scale.set(dh*DAR,dh,1);plane.userData.dh=dh;}
+fit();addEventListener('resize',fit);
+const clock=new THREE.Clock();
+function frame(){requestAnimationFrame(frame);const t=clock.elapsedTime;
+  M.mx+=(M.tmx-M.mx)*0.05;M.my+=(M.tmy-M.my)*0.05;
+  uni.uTime.value=t; uni.uLight.value.set(0.5+M.mx*0.35, 0.5-M.my*0.35);
+  const dh=plane.userData.dh||1;
+  plane.position.set(M.mx*0.12, 0.12+Math.sin(t*0.6)*0.03 - M.my*0.06, 0);
+  plane.rotation.z=M.mx*0.03;
+  sparks.forEach((s,i)=>{const u=s.userData;const a=u.a+t*0.25;
+    s.position.set(plane.position.x+Math.cos(a)*u.r*DAR*dh*0.9, plane.position.y+Math.sin(a*1.3)*u.r*dh*0.9,0.1);
+    const tw=0.5+0.5*Math.sin(t*3.0+u.seed*5.0);s.material.opacity=tw*0.5;const sc=(0.03+tw*0.045)*dh;s.scale.set(sc,sc,1);});
+  renderer.render(scene,camera);if(reduce)return;}
+frame();
+}catch(e){console.warn('diamond hero disabled',e&&e.message);
+  document.getElementById('stage').style.background='radial-gradient(60% 60% at 50% 42%,#232028,#0c0b10 72%)';}
+</script>
+</body>
+</html>
