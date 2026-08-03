@@ -222,10 +222,18 @@ const dotsEl=document.getElementById('dots');
 SCENES.forEach((s,i)=>{const b=document.createElement('b');b.title=s.hero?'Intro':s.t;b.onclick=()=>window.scrollTo({top:i*innerHeight,behavior:'smooth'});dotsEl.appendChild(b);});
 const dots=[...dotsEl.children];
 
-/* click centre to open active film */
+/* tap (not scroll) the centre to open the active film */
+let downX=0,downY=0,downT=0,downOK=false;
 addEventListener('pointerdown',e=>{
+  downOK=false;
   if(document.getElementById('player').classList.contains('on'))return;
-  if(e.target.closest('#sound,#dots,#cap .watch,header'))return;
+  if(e.target.closest&&e.target.closest('#sound,#dots,#cap .watch,header'))return;
+  downX=e.clientX;downY=e.clientY;downT=performance.now();downOK=true;
+});
+addEventListener('pointerup',e=>{
+  if(!downOK)return;downOK=false;
+  const moved=Math.hypot(e.clientX-downX,e.clientY-downY), dtms=performance.now()-downT;
+  if(moved>12||dtms>500)return;                    // it was a scroll/drag, not a tap
   if(scrollY>NS*innerHeight-innerHeight*0.5)return;
   const s=SCENES[Math.round(pe)]; if(s&&!s.hero&&e.clientY<innerHeight*0.62)openFilm(s);
 });
