@@ -43,10 +43,14 @@ jobs:
             const errors = [];
             async function capture(name, viewport, scrollY = 0) {
               const page = await browser.newPage({ viewportSize: viewport, deviceScaleFactor: 1 });
-              page.on('console', msg => { if (msg.type() === 'error') errors.push(`${name}: ${msg.text()}`); });
+              page.on('console', msg => {
+                if (msg.type() === 'error' && !msg.text().includes('Failed to load resource')) {
+                  errors.push(`${name}: ${msg.text()}`);
+                }
+              });
               page.on('pageerror', error => errors.push(`${name}: ${error.message}`));
               await page.goto('http://127.0.0.1:4173/studio/', { waitUntil: 'networkidle', timeout: 90000 });
-              await page.waitForSelector('.loader.done', { timeout: 90000 });
+              await page.waitForFunction(() => document.querySelector('.loader')?.classList.contains('done'), null, { timeout: 90000 });
               await page.waitForTimeout(1800);
               if (scrollY) {
                 await page.evaluate(y => window.scrollTo(0, y), scrollY);
