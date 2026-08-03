@@ -74,6 +74,26 @@ jobs:
                 throw new Error(`${name}: no rendered scene background: ${JSON.stringify(scene)}`);
               }
               await page.screenshot({ path: `visual-evidence/${name}.png`, fullPage: false });
+
+              if (name === 'desktop-lobby') {
+                await page.evaluate(() => {
+                  const style = document.createElement('style');
+                  style.textContent = '.scene-layer::after{display:none!important}.scene-layer{filter:none!important}.scene-depth,.film,#gallery,#transitionVeil{display:none!important}';
+                  document.head.appendChild(style);
+                });
+                await page.waitForTimeout(250);
+                await page.screenshot({ path: 'visual-evidence/desktop-background-only.png', fullPage: false });
+
+                await page.evaluate(() => {
+                  const raw = document.createElement('img');
+                  raw.id = 'rawPlateDebug';
+                  raw.src = window.STUDIO_PLATES.lobby;
+                  Object.assign(raw.style, {position:'fixed',inset:'0',width:'100vw',height:'100vh',objectFit:'cover',zIndex:'9999'});
+                  document.body.appendChild(raw);
+                });
+                await page.waitForSelector('#rawPlateDebug', { state: 'visible' });
+                await page.screenshot({ path: 'visual-evidence/desktop-raw-plate.png', fullPage: false });
+              }
               await page.close();
             }
             fs.mkdirSync('visual-evidence', { recursive: true });
