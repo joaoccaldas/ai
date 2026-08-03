@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./gallery-shell.css?v=3">
+  <link rel="stylesheet" href="./gallery-shell.css?v=4">
 </head>
 <body>
   <div id="loader" class="loader" aria-live="polite">
@@ -127,30 +127,33 @@
       ['photo-1445116572660-236099ec97a0','gallery/cafe.jpg'],
       ['photo-1501386761578-eac5c94b800a','gallery/belong.jpg']
     ];
-    const localize = value => {
+    const findLocal = value => {
       const text = String(value || '');
       const match = replacements.find(([key]) => text.includes(key));
-      return match ? match[1] : value;
+      return match ? match[1] : null;
     };
     const imageSrc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
     if (imageSrc?.set) Object.defineProperty(HTMLImageElement.prototype, 'src', {
       configurable: true,
       enumerable: imageSrc.enumerable,
       get: imageSrc.get,
-      set(value) { imageSrc.set.call(this, localize(value)); }
+      set(value) { imageSrc.set.call(this, findLocal(value) || value); }
     });
     const backgroundImage = Object.getOwnPropertyDescriptor(CSSStyleDeclaration.prototype, 'backgroundImage');
     if (backgroundImage?.set) Object.defineProperty(CSSStyleDeclaration.prototype, 'backgroundImage', {
       configurable: true,
       enumerable: backgroundImage.enumerable,
       get: backgroundImage.get,
-      set(value) { backgroundImage.set.call(this, localize(value)); }
+      set(value) {
+        const local = findLocal(value);
+        backgroundImage.set.call(this, local ? `url("${local}")` : value);
+      }
     });
   })();
   </script>
   <script type="importmap">
   {"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/jsm/"}}
   </script>
-  <script type="module" src="./gallery-engine.js?v=3"></script>
+  <script type="module" src="./gallery-engine.js?v=4"></script>
 </body>
 </html>
