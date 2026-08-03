@@ -56,7 +56,7 @@
   #dots.on{opacity:1}
   #dots b{width:7px;height:7px;border-radius:50%;background:rgba(242,237,227,.24);cursor:pointer;transition:.3s;display:block}
   #dots b.on{background:var(--gold);transform:scale(1.5);box-shadow:0 0 8px var(--gold)}
-  #track{position:relative;z-index:2;pointer-events:none;height:860vh}
+  #track{position:relative;z-index:2;pointer-events:none;height:920vh}
   /* content */
   section.block{position:relative;z-index:3;background:var(--bg)}
   #cta{padding:16vh 6vw;text-align:center;border-top:1px solid var(--line)}
@@ -189,6 +189,7 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile=innerWidth<760;
 
 const ROOMS=[
+  {n:'Laurie Hedges',room:'Conservation filmmaker', tag:'Inspired by, and for, nature.', url:'../laurie/', img:'gallery/laurie.jpg'},
   {n:'Inner Group', room:'Workshop companion', tag:'Unity in diversity.',       url:'innergroup/', img:'gallery/innergroup.jpg'},
   {n:'Aurelia',     room:'Fine jewellery',     tag:'Light, made to keep.',       url:'jewelry/',    img:'gallery/jewelry.jpg'},
   {n:'Éclat',       room:'Diamond maison',     tag:'One perfect light.',         url:'eclat/',      img:'gallery/eclat.jpg'},
@@ -206,7 +207,7 @@ const ROOMS=[
   {n:'Wander',      room:'Adventure travel',   tag:'Where the map ends.',        url:'wander/',     img:'gallery/wander.jpg'},
   {n:'Belong',      room:'Flagship festival',  tag:'Be yourself. Together.',     url:'../belong/',  img:'gallery/belong.jpg'},
 ];
-const N=ROOMS.length, ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI'];
+const N=ROOMS.length, ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII'];
 
 /* ---- chrome: dots, menu, caption refs ---- */
 const dotsEl=document.getElementById('dots'), listItems=document.getElementById('list-items');
