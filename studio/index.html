@@ -1,176 +1,387 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#080807">
-  <meta name="description" content="Caldas Studio — a cinematic, room-by-room exhibition of immersive digital experiences.">
-  <meta property="og:title" content="Caldas Studio — The Exposition">
-  <meta property="og:description" content="Move through ten distinct portfolio worlds in one continuous gallery.">
-  <title>Caldas Studio — The Exposition</title>
-  <link rel="icon" href="data:,">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./gallery-shell.css?v=7">
-  <style>#gallery{mix-blend-mode:screen}</style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Caldas Studio — The Exposition · Ten Immersive Rooms</title>
+<meta name="description" content="Caldas Studio — The Exposition. Ten curated rooms, infinite ways to see. An immersive dark gallery of concept websites for real businesses, where artificial intelligence meets human imagination." />
+<meta name="theme-color" content="#0c0b0a" />
+<meta property="og:title" content="Caldas Studio — The Exposition" />
+<meta property="og:description" content="Ten curated rooms. Infinite ways to see. An immersive gallery of concept websites." />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --bg:#0c0b0a;--panel:#141210;--ink:#f2ede3;--muted:rgba(242,237,227,.56);--faint:rgba(242,237,227,.34);
+    --gold:#c9a86a;--line:rgba(242,237,227,.13);
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .serif{font-family:'Cormorant Garamond',serif}
+  #hall{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
+  #vign{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 120% at 50% 38%,transparent 46%,rgba(0,0,0,.72) 100%)}
+  #grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 6s steps(6) infinite}
+  @keyframes gr{0%{transform:translate(0,0)}50%{transform:translate(4%,-4%)}100%{transform:translate(0,0)}}
+  /* header */
+  header{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 5vw;
+    transition:background .4s,backdrop-filter .4s}
+  header.solid{background:rgba(12,11,10,.78);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+  .brand{font-size:.98rem;letter-spacing:.28em;font-weight:500}
+  .brand b{color:var(--muted);font-weight:300}
+  nav.mid{display:flex;gap:2.2rem;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+  nav.mid a{position:relative;transition:.3s}nav.mid a:hover{color:var(--ink)}
+  nav.mid a.active{color:var(--ink)}nav.mid a.active::after{content:'';position:absolute;left:0;right:0;bottom:-.5rem;height:1px;background:var(--gold)}
+  header .r{display:flex;gap:1.3rem;align-items:center}
+  a.commission{border:1px solid var(--line);color:var(--ink);padding:.6rem 1.2rem;border-radius:40px;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;transition:.3s}
+  a.commission:hover{border-color:var(--gold);color:var(--gold)}
+  #menubtn{display:none;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);cursor:pointer;align-items:center;gap:.5rem}
+  /* hero */
+  #hero{position:relative;z-index:2;height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;pointer-events:none}
+  #hero .kick{font-size:.66rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem}
+  #hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3.2rem,10vw,8rem);line-height:.94;letter-spacing:.01em}
+  #hero h1 em{font-style:italic;font-weight:300}
+  #hero .sub{margin-top:1.6rem;max-width:34ch;color:var(--muted);font-weight:300;font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.6}
+  #hero .cta-row{margin-top:2.6rem;display:flex;align-items:center;gap:1.6rem;pointer-events:auto}
+  a.enterG{display:inline-flex;align-items:center;gap:.9rem;border:1px solid var(--line);border-radius:50px;padding:1rem 1.9rem;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;transition:.35s}
+  a.enterG .arw{width:34px;height:34px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;color:var(--gold);transition:.35s;margin-left:-.4rem}
+  a.enterG:hover{border-color:var(--gold)}a.enterG:hover .arw{background:var(--gold);color:#0c0b0a}
+  #hero .scroll{margin-top:2.4rem;font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);display:flex;align-items:center;gap:.7rem}
+  #hero .scroll i{width:26px;height:1px;background:var(--faint);display:inline-block}
+  /* right vertical pager */
+  #pager{position:fixed;right:4vw;top:50%;transform:translateY(-50%);z-index:15;display:flex;flex-direction:column;align-items:center;gap:.8rem;transition:opacity .5s}
+  #pager .n{font-size:.6rem;letter-spacing:.2em;color:var(--faint)}
+  #pager .track{display:flex;flex-direction:column;gap:.55rem}
+  #pager b{width:6px;height:6px;border-radius:50%;background:rgba(242,237,227,.22);display:block}
+  #pager b.on{background:var(--gold);box-shadow:0 0 8px var(--gold)}
+  /* sections */
+  section.block{position:relative;z-index:2;background:var(--bg)}
+  .rooms-wrap{padding:8vh 0 9vh}
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;padding:0 5vw;margin-bottom:2.6rem}
+  .sec-head .t{font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+  .sec-head .nav{display:flex;gap:.6rem}
+  .rbtn{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:.3s;font-size:1rem}
+  .rbtn:hover{border-color:var(--gold);color:var(--gold)}
+  .rail{display:flex;gap:1.4rem;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 5vw 1.4rem;scrollbar-width:none}
+  .rail::-webkit-scrollbar{display:none}
+  .card{flex:0 0 auto;width:min(340px,74vw);scroll-snap-align:start;cursor:pointer;position:relative}
+  .card .ph{position:relative;height:440px;border-radius:6px;overflow:hidden;border:1px solid var(--line);background:#100e0c}
+  .card .ph::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.72) 100%)}
+  .card .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1s cubic-bezier(.2,.7,.2,1);filter:brightness(.86) saturate(.94)}
+  .card:hover .ph img{transform:scale(1.06)}
+  .card .no{position:absolute;top:1rem;left:1.1rem;z-index:2;font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--gold)}
+  .card .meta{position:absolute;left:1.1rem;right:1.1rem;bottom:1.1rem;z-index:2}
+  .card .meta h3{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.5rem;line-height:1}
+  .card .meta p{margin-top:.3rem;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  /* detail */
+  #detail{padding:9vh 5vw;display:grid;grid-template-columns:1fr 1.25fr auto;gap:3.2rem;align-items:center}
+  #detail .txt .rm{font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem}
+  #detail .txt h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,5vw,4rem);line-height:1}
+  #detail .txt .tag{margin-top:.7rem;color:var(--ink);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem}
+  #detail .txt .desc{margin-top:1.4rem;max-width:40ch;color:var(--muted);font-weight:300;line-height:1.75;font-size:1.02rem}
+  #detail .txt .acts{margin-top:2.2rem;display:flex;gap:1.6rem;align-items:center;flex-wrap:wrap}
+  a.enterRoom{display:inline-flex;align-items:center;gap:.8rem;background:var(--ink);color:#0c0b0a;border-radius:50px;padding:.95rem 1.8rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;transition:.35s}
+  a.enterRoom:hover{background:var(--gold)}
+  #detail .txt .concept{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);cursor:default}
+  #detail .big{position:relative;height:min(62vh,560px);border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+  #detail .big img{width:100%;height:100%;object-fit:cover;filter:brightness(.9)}
+  #detail .big .grad{position:absolute;inset:0;background:linear-gradient(120deg,rgba(12,11,10,.5),transparent 55%)}
+  #detail .strip{display:flex;flex-direction:column;gap:.7rem;max-height:min(62vh,560px);overflow:auto;scrollbar-width:none}
+  #detail .strip::-webkit-scrollbar{display:none}
+  #detail .strip .th{width:82px;height:104px;border-radius:4px;overflow:hidden;border:1px solid var(--line);cursor:pointer;opacity:.5;transition:.3s;flex:0 0 auto}
+  #detail .strip .th.on{opacity:1;border-color:var(--gold)}
+  #detail .strip .th img{width:100%;height:100%;object-fit:cover}
+  /* cta */
+  #cta{padding:16vh 5vw;text-align:center;position:relative;overflow:hidden;border-top:1px solid var(--line)}
+  #cta .k{font-size:.64rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem}
+  #cta h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.02}
+  #cta p{margin:1.4rem auto 0;max-width:44ch;color:var(--muted);font-weight:300;line-height:1.7}
+  #cta .btns{margin-top:2.6rem;display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
+  #cta a.solid{background:var(--gold);color:#0c0b0a;padding:1.05rem 2.1rem;border-radius:50px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;transition:.35s}
+  #cta a.solid:hover{transform:translateY(-3px);box-shadow:0 20px 44px -18px var(--gold)}
+  #cta a.ghost{border:1px solid var(--line);padding:1.05rem 2.1rem;border-radius:50px;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;transition:.35s}
+  #cta a.ghost:hover{border-color:var(--gold);color:var(--gold)}
+  footer{position:relative;z-index:2;background:var(--bg);padding:6vh 5vw 4vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.2rem}
+  footer .b{font-size:.9rem;letter-spacing:.24em}
+  footer .c{font-size:.66rem;color:var(--faint);letter-spacing:.06em}
+  footer .s{display:flex;gap:1.4rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  footer .s a:hover{color:var(--gold)}
+  /* menu overlay */
+  #list{position:fixed;inset:0;z-index:50;background:rgba(10,9,8,.98);display:none;flex-direction:column;padding:8vh 6vw;overflow:auto}
+  #list.on{display:flex}
+  #list .x{align-self:flex-end;cursor:pointer;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2rem}
+  #list a{display:flex;justify-content:space-between;align-items:baseline;padding:1.1rem 0;border-bottom:1px solid var(--line);font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,4vw,2.2rem);transition:.3s}
+  #list a:hover{color:var(--gold);padding-left:1rem}
+  #list a span{font-family:'Jost';font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+  /* loader */
+  #loader{position:fixed;inset:0;z-index:60;background:var(--bg);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:1.5rem;transition:opacity 1s,visibility 1s}
+  #loader.done{opacity:0;visibility:hidden}
+  #loader .ring{width:60px;height:60px;border-radius:50%;border:1px solid var(--line);border-top-color:var(--gold);animation:spin 1.1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  #loader .mk{font-family:'Cormorant Garamond',serif;letter-spacing:.34em;text-transform:uppercase;font-size:1.15rem}#loader .mk b{color:var(--gold);font-weight:400}
+  #loader .sub{font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;color:var(--muted)}
+  @media(max-width:960px){
+    #detail{grid-template-columns:1fr;gap:2rem}
+    #detail .strip{flex-direction:row;max-height:none;overflow-x:auto}
+    #detail .big{height:46vh}
+  }
+  @media(max-width:760px){
+    nav.mid{display:none}a.commission{display:none}#menubtn{display:flex}
+    #pager{display:none}
+    #hero{padding:0 6vw}
+    .card .ph{height:380px}
+  }
+  @media (max-height:520px){
+    #hero{justify-content:flex-start;padding-top:22vh}
+    #hero h1{font-size:clamp(2.4rem,9vh,4.2rem)}
+    #hero .sub{margin-top:1rem}#hero .cta-row{margin-top:1.4rem}#hero .scroll{margin-top:1.2rem}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important}}
+</style>
 </head>
 <body>
-  <div id="loader" class="loader" aria-live="polite">
-    <div class="loader-mark"><i></i><b></b></div>
-    <p>Opening the exhibition</p>
-    <div class="loader-track"><span id="loaderBar"></span></div>
-    <small id="loaderStatus">Light · architecture · atmosphere</small>
-  </div>
+<div id="loader"><div class="ring"></div><div class="mk">THE <b>EXPOSITION</b></div><div class="sub">Opening the rooms</div></div>
 
-  <div id="sceneStage" class="scene-stage" aria-hidden="true">
-    <div id="sceneA" class="scene-layer is-visible"></div>
-    <div id="sceneB" class="scene-layer"></div>
-    <div class="scene-reflection"></div>
-    <div class="scene-depth"></div>
-  </div>
-  <canvas id="gallery" aria-label="Cinematic WebGL gallery atmosphere"></canvas>
-  <div class="film" aria-hidden="true"></div>
-  <div id="transitionVeil" class="transition-veil" aria-hidden="true"></div>
+<canvas id="hall"></canvas>
+<div id="vign"></div><div id="grain"></div>
 
-  <header class="topbar">
-    <a class="brand" href="#top" aria-label="Caldas Studio home">CALDAS <b>STUDIO</b></a>
-    <nav class="topnav" aria-label="Primary">
-      <button id="indexToggle" type="button">Gallery</button>
-      <a href="#about">About</a>
-      <a href="#about">Process</a>
-    </nav>
-    <div class="topbar-actions">
-      <button id="soundToggle" class="quiet-button" type="button" aria-label="Toggle ambient sound" aria-pressed="false">Sound off</button>
-      <a class="commission" href="mailto:hello@caldas.studio?subject=Commission">Commission</a>
+<header id="hd">
+  <a class="brand" href="#">CALDAS <b>STUDIO</b></a>
+  <nav class="mid"><a class="active" href="#rooms">Gallery</a><a href="#detail">Rooms</a><a href="#cta">Process</a></nav>
+  <div class="r">
+    <a class="commission" href="mailto:hello@caldas.studio?subject=Commission">Commission</a>
+    <span id="menubtn">Menu ▾</span>
+  </div>
+</header>
+
+<section id="hero">
+  <div class="kick">Welcome to the gallery</div>
+  <h1 class="serif">The<br>Exposition</h1>
+  <p class="sub">Ten curated rooms. Infinite ways to see. An immersive gallery of concept websites where artificial intelligence meets human imagination.</p>
+  <div class="cta-row">
+    <a class="enterG" href="#rooms"><span class="arw">→</span> Enter the gallery</a>
+  </div>
+  <div class="scroll"><i></i> Scroll to explore</div>
+</section>
+
+<div id="pager"><span class="n" id="pg-cur">01</span><div class="track" id="pg-track"></div><span class="n" id="pg-tot">10</span></div>
+
+<main>
+  <section class="block">
+    <div class="rooms-wrap">
+      <div class="sec-head">
+        <div class="t">Explore the rooms</div>
+        <div class="nav"><button class="rbtn" id="prev">←</button><button class="rbtn" id="next">→</button></div>
+      </div>
+      <div class="rail" id="rail"></div>
     </div>
-  </header>
 
-  <main id="top">
-    <section class="hero-ui" aria-labelledby="heroTitle">
-      <p class="eyebrow">Welcome to the gallery</p>
-      <h1 id="heroTitle">Imagine.<br>Explore.<br><em>Create.</em></h1>
-      <p class="hero-copy">Immersive digital experiences where strategy, technology and human imagination become places you can enter.</p>
-      <button id="enterGallery" class="enter-gallery" type="button"><span>Enter the experience</span><b>→</b></button>
-      <div class="hero-foot"><span>Scroll to explore</span><i></i></div>
-    </section>
-
-    <aside id="roomLabel" class="room-label" aria-live="polite">
-      <button id="previousRoom" class="room-step room-step-prev" type="button" aria-label="Previous room">←</button>
-      <div class="room-copy">
-        <div class="room-kicker"><span id="roomNumber">Room 01</span><i></i><span id="roomType">Workshop companion</span></div>
-        <h2 id="roomName">Inner Group</h2>
-        <p id="roomLine">Unity in diversity. Strength in connection.</p>
-        <div class="room-actions">
-          <a id="roomLink" class="room-enter" href="innergroup/">Enter this room <span>↗</span></a>
-          <button id="studyToggle" class="study-toggle" type="button">Concept variations</button>
+    <div id="detail">
+      <div class="txt">
+        <div class="rm" id="d-rm">Room 01 · Workshop companion</div>
+        <h2 class="serif" id="d-name">Inner Group</h2>
+        <div class="tag" id="d-tag">Unity in diversity.</div>
+        <p class="desc" id="d-desc">—</p>
+        <div class="acts">
+          <a class="enterRoom" id="d-go" href="#">Enter this room →</a>
+          <span class="concept" id="d-idx">01 / 10</span>
         </div>
       </div>
-      <button id="nextRoom" class="room-step room-step-next" type="button" aria-label="Next room">→</button>
-    </aside>
-
-    <div class="room-progress">
-      <span id="roomCounter">00 / 10</span>
-      <div id="roomRail" class="room-rail" aria-label="Gallery rooms"></div>
+      <div class="big"><img id="d-img" alt="" /><div class="grad"></div></div>
+      <div class="strip" id="strip"></div>
     </div>
-
-    <div id="scrollTrack" class="scroll-track" aria-hidden="true"></div>
-
-    <section id="about" class="closing">
-      <p class="eyebrow">The next room is yours</p>
-      <h2>Turn a business into<br><em>a place people remember.</em></h2>
-      <p>Every concept begins with strategy, then becomes atmosphere, interaction and a reason to stay.</p>
-      <div>
-        <a href="mailto:hello@caldas.studio?subject=Commission%20a%20room">Commission a concept</a>
-        <button id="restartTour" type="button">Walk again</button>
-      </div>
-    </section>
-  </main>
-
-  <section id="roomIndex" class="room-index" aria-hidden="true">
-    <div class="index-head">
-      <div><p class="eyebrow">Explore the rooms</p><h2>The full portfolio</h2></div>
-      <button id="indexClose" type="button">Close ×</button>
-    </div>
-    <div id="indexGrid" class="index-grid"></div>
   </section>
 
-  <section id="studyDrawer" class="study-drawer" aria-hidden="true">
-    <div class="study-copy">
-      <button id="studyClose" type="button">Close ×</button>
-      <p class="eyebrow">A different view</p>
-      <h2 id="studyName">Inner Group</h2>
-      <p id="studyDescription">Alternative visual directions for the same concept.</p>
-      <a id="studyLink" href="innergroup/">Open the live concept ↗</a>
+  <section class="block" id="cta">
+    <div class="k">The journey continues</div>
+    <h2 class="serif">Step into the full experience</h2>
+    <p>Every room here was built for a real kind of business, before anyone asked. Tell us yours — we build the first draft free and hang it in the gallery on a private link.</p>
+    <div class="btns">
+      <a class="solid" href="mailto:hello@caldas.studio?subject=Commission%20my%20site">Commission a room</a>
+      <a class="ghost" href="../belong/">See the flagship — Belong</a>
     </div>
-    <div id="studyGrid" class="study-grid"></div>
   </section>
 
-  <div id="fallback" class="fallback" hidden>
-    <p class="eyebrow">The Exposition</p>
-    <h1>Your browser cannot render the WebGL atmosphere.</h1>
-    <p>The complete portfolio remains available through the room index.</p>
-    <button id="fallbackOpen" type="button">Open room index</button>
-  </div>
+  <footer>
+    <span class="b">CALDAS STUDIO</span>
+    <span class="c">© 2026 João Caldas · The Exposition · Concept works for demonstration</span>
+    <span class="s"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="mailto:hello@caldas.studio">Email</a></span>
+  </footer>
+</main>
 
-  <script src="./plates/lobby.js?v=1"></script>
-  <script src="./plates/innergroup.js?v=1"></script>
-  <script>
-  (() => {
-    const replacements = [
-      ['photo-1765940717433-cc42c13bfa88','gallery/belong.jpg'],
-      ['photo-1774267916884-afae166d49b3','gallery/hotel.jpg'],
-      ['photo-1617038260897-41a1f14a8ca0','gallery/jewelry.jpg'],
-      ['photo-1517248135467-4c7edcad34c5','gallery/restaurant.jpg'],
-      ['photo-1534438327276-14e5300c3a48','gallery/gym.jpg'],
-      ['photo-1510812431401-41d2bd2722f3','gallery/wine.jpg'],
-      ['photo-1490750967868-88aa4486c946','gallery/florist.jpg'],
-      ['photo-1560066984-138dadb4c035','gallery/salon.jpg'],
-      ['photo-1566073771259-6a8506099945','gallery/hotel.jpg'],
-      ['photo-1445116572660-236099ec97a0','gallery/cafe.jpg'],
-      ['photo-1501386761578-eac5c94b800a','gallery/belong.jpg']
-    ];
-    const localByKey = {
-      lobby:'gallery/belong.jpg', innergroup:'gallery/hotel.jpg', aurelia:'gallery/jewelry.jpg',
-      'maison-lumen':'gallery/restaurant.jpg', pulse:'gallery/gym.jpg', vinora:'gallery/wine.jpg',
-      'wild-stem':'gallery/florist.jpg', eden:'gallery/salon.jpg', dunhaven:'gallery/hotel.jpg',
-      'ember-oak':'gallery/cafe.jpg', belong:'gallery/belong.jpg'
-    };
-    const findLocal = value => {
-      const text = String(value || '');
-      const match = replacements.find(([key]) => text.includes(key));
-      return match ? match[1] : null;
-    };
-    const imageSrc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
-    if (imageSrc?.set) Object.defineProperty(HTMLImageElement.prototype, 'src', {
-      configurable: true,
-      enumerable: imageSrc.enumerable,
-      get: imageSrc.get,
-      set(value) { imageSrc.set.call(this, findLocal(value) || value); }
-    });
-    const layers = [document.getElementById('sceneA'), document.getElementById('sceneB')];
-    let applying = false;
-    const enforceLocalLayers = () => {
-      if (applying) return;
-      applying = true;
-      for (const layer of layers) {
-        if (!layer) continue;
-        const key = layer.dataset.key;
-        const local = window.STUDIO_PLATES?.[key] || localByKey[key];
-        if (!local) continue;
-        const desired = `url("${local}")`;
-        if (layer.style.backgroundImage !== desired) layer.style.setProperty('background-image', desired, 'important');
-      }
-      applying = false;
-    };
-    const observer = new MutationObserver(enforceLocalLayers);
-    layers.forEach(layer => observer.observe(layer, {attributes:true, attributeFilter:['style','data-key']}));
-    requestAnimationFrame(enforceLocalLayers);
-  })();
-  </script>
-  <script type="importmap">
-  {"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/jsm/"}}
-  </script>
-  <script type="module" src="./gallery-engine.js?v=7"></script>
+<div id="list"><div class="x" id="list-x">Close ✕</div><div id="list-items"></div></div>
+
+<script type="importmap">
+{ "imports": { "three": "../vendor/three.module.js", "three/addons/": "../vendor/jsm/" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobile = innerWidth < 760;
+
+const ROOMS=[
+  {n:'Inner Group', room:'Workshop companion', tag:'Unity in diversity.',       desc:'A space for shared perspective and collective growth — where human insight shapes everything.', url:'innergroup/', img:'gallery/innergroup.jpg'},
+  {n:'Aurelia',     room:'Fine jewellery',     tag:'Light, made to keep.',       desc:'A refractive gem cut and lit live in the browser — jewellery as pure, held light.',              url:'jewelry/',    img:'gallery/jewelry.jpg'},
+  {n:'Maison Lumen',room:'Fine dining',        tag:'Light. Atmosphere. Living beautifully.', desc:'A seven-course Nordic tasting room where the whole day is set by candlelight.',        url:'restaurant/', img:'gallery/restaurant.jpg'},
+  {n:'PULSE',       room:'Strength studio',    tag:'Energy in motion. Driven by data.', desc:'A strength studio that moves — kinetic, electric and relentless from the first scroll.',   url:'gym/',        img:'gallery/gym.jpg'},
+  {n:'Vinöra',      room:'Natural wine',       tag:'Savor the moment.',          desc:'Natural wine poured sideways — a horizontal-scroll tasting flight through liquid caustics.',      url:'wine/',       img:'gallery/wine.jpg'},
+  {n:'Wild Stem',   room:'Florist',            tag:'Rooted in nature.',          desc:'A single rose, recovered from a flat photo and grown again in WebGL, petal by petal.',            url:'florist/',    img:'gallery/florist.jpg'},
+  {n:'Éden',        room:'Hair & beauty',      tag:'Wellness reimagined.',       desc:'Hair and beauty as a slow ritual of light, calm and quiet confidence.',                          url:'salon/',      img:'gallery/salon.jpg'},
+  {n:'Dunhaven',    room:'Coastal retreat',    tag:'Strength in serenity.',      desc:'A coastal retreat on the Bohuslän rocks — quiet luxury measured in tides and light.',             url:'hotel/',      img:'gallery/hotel.jpg'},
+  {n:'Ember & Oak', room:'Coffee roaster',     tag:'Warmth. Crafted.',           desc:'A coffee roaster where every cup is a small, warm ceremony worth slowing down for.',              url:'cafe/',       img:'gallery/cafe.jpg'},
+  {n:'Belong',      room:'Flagship festival',  tag:'Be yourself. Together.',     desc:'The flagship — a festival rendered as light and belonging, in three living palettes.',           url:'../belong/',  img:'gallery/belong.jpg'},
+];
+const two=(i)=>String(i+1).padStart(2,'0');
+
+/* ---------- DOM: rooms rail, detail, menu ---------- */
+const rail=document.getElementById('rail'), strip=document.getElementById('strip'), listItems=document.getElementById('list-items');
+ROOMS.forEach((r,i)=>{
+  const c=document.createElement('div');c.className='card';c.dataset.i=i;
+  c.innerHTML=`<div class="ph"><img src="${r.img}" alt="${r.n}" loading="lazy"></div><div class="no serif">${two(i)}</div>
+    <div class="meta"><h3 class="serif">${r.n}</h3><p>${r.tag}</p></div>`;
+  c.onclick=()=>{select(i);document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'center'});};
+  rail.appendChild(c);
+  const th=document.createElement('div');th.className='th';th.dataset.i=i;th.innerHTML=`<img src="${r.img}" alt="">`;th.onclick=()=>select(i);strip.appendChild(th);
+  const a=document.createElement('a');a.href=r.url;a.innerHTML=`${r.n} <span>${two(i)} · ${r.room}</span>`;listItems.appendChild(a);
+});
+const dRm=document.getElementById('d-rm'),dName=document.getElementById('d-name'),dTag=document.getElementById('d-tag'),
+  dDesc=document.getElementById('d-desc'),dGo=document.getElementById('d-go'),dImg=document.getElementById('d-img'),dIdx=document.getElementById('d-idx');
+let sel=-1;
+function select(i){ if(i===sel)return; sel=i; const r=ROOMS[i];
+  dRm.textContent=`Room ${two(i)} · ${r.room}`; dName.textContent=r.n; dTag.textContent=r.tag; dDesc.textContent=r.desc;
+  dGo.href=r.url; dImg.src=r.img; dIdx.textContent=`${two(i)} / 10`;
+  [...strip.children].forEach((t,j)=>t.classList.toggle('on',j===i));
+  [...document.getElementById('pg-track').children].forEach((b,j)=>b.classList.toggle('on',j===i));
+  document.getElementById('pg-cur').textContent=two(i);
+}
+document.getElementById('next').onclick=()=>rail.scrollBy({left:isMobile?260:380,behavior:'smooth'});
+document.getElementById('prev').onclick=()=>rail.scrollBy({left:isMobile?-260:-380,behavior:'smooth'});
+// pager dots
+const pgt=document.getElementById('pg-track');
+ROOMS.forEach((r,i)=>{const b=document.createElement('b');b.title=r.n;b.onclick=()=>{select(i);document.getElementById('detail').scrollIntoView({behavior:'smooth',block:'center'});};pgt.appendChild(b);});
+select(0);
+// menu + header solidify
+document.getElementById('menubtn').onclick=()=>document.getElementById('list').classList.add('on');
+document.getElementById('list-x').onclick=()=>document.getElementById('list').classList.remove('on');
+[...listItems.children].forEach(a=>a.addEventListener('click',()=>document.getElementById('list').classList.remove('on')));
+const hd=document.getElementById('hd'),pager=document.getElementById('pager');
+addEventListener('scroll',()=>{const y=scrollY;hd.classList.toggle('solid',y>innerHeight*0.6);pager.style.opacity=(y<innerHeight*0.5)?0:1;},{passive:true});
+pager.style.opacity=0;
+(function(){const l=document.getElementById('loader');setTimeout(()=>l.classList.add('done'),2600);addEventListener('load',()=>setTimeout(()=>l.classList.add('done'),700));})();
+
+/* ---------- WebGL atrium ---------- */
+const P={mx:0,my:0,tmx:0,tmy:0,sc:0,tsc:0};
+addEventListener('pointermove',e=>{P.tmx=(e.clientX/innerWidth)*2-1;P.tmy=(e.clientY/innerHeight)*2-1;},{passive:true});
+addEventListener('scroll',()=>{P.tsc=Math.min(1,scrollY/innerHeight);},{passive:true});
+
+function softDisc(col){const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
+  const r=g.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,col);r.addColorStop(1,col.replace(/[\d.]+\)$/,'0)'));g.fillStyle=r;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);}
+function vgrad(stops){const c=document.createElement('canvas');c.width=8;c.height=256;const g=c.getContext('2d');const gr=g.createLinearGradient(0,0,0,256);stops.forEach(s=>gr.addColorStop(s[0],s[1]));g.fillStyle=gr;g.fillRect(0,0,8,256);const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;return t;}
+
+try{
+const canvas=document.getElementById('hall');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:!isMobile});
+renderer.setPixelRatio(Math.min(devicePixelRatio,isMobile?1.5:2));renderer.setSize(innerWidth,innerHeight);
+renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.0;
+const scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x0c0b0a,0.028);
+const camera=new THREE.PerspectiveCamera(isMobile?62:52,innerWidth/innerHeight,0.1,200);
+const loader=new THREE.TextureLoader();
+
+const R=16, CY=12;   // room radius, ceiling height
+// floor (dark polished)
+const floor=new THREE.Mesh(new THREE.CircleGeometry(R,64),new THREE.MeshStandardMaterial({color:0x0a0908,roughness:.35,metalness:.6}));
+floor.rotation.x=-Math.PI/2;scene.add(floor);
+// cylindrical wall
+const wallTex=vgrad([[0,'#0a0908'],[0.5,'#1a1712'],[1,'#0d0b09']]);
+const wall=new THREE.Mesh(new THREE.CylinderGeometry(R,R,CY,64,1,true),new THREE.MeshStandardMaterial({map:wallTex,side:THREE.BackSide,roughness:.9,metalness:.1}));
+wall.position.y=CY/2;scene.add(wall);
+// ceiling ring with oculus hole
+const ceil=new THREE.Mesh(new THREE.RingGeometry(3,R,64),new THREE.MeshStandardMaterial({color:0x0a0908,side:THREE.DoubleSide,roughness:1}));
+ceil.rotation.x=Math.PI/2;ceil.position.y=CY;scene.add(ceil);
+// oculus sky disc (bright)
+const sky=new THREE.Mesh(new THREE.CircleGeometry(3,48),new THREE.MeshBasicMaterial({color:0xaeb6c2}));
+sky.rotation.x=Math.PI/2;sky.position.y=CY+0.15;scene.add(sky);
+// light shaft (additive cone of light from oculus)
+const shaftMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uT:{value:0}},
+  vertexShader:`varying float vy;void main(){vy=uv.y;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+  fragmentShader:`varying float vy;uniform float uT;void main(){float a=smoothstep(0.05,1.0,vy);gl_FragColor=vec4(1.0,0.94,0.8,a*0.17);}`});
+const shaft=new THREE.Mesh(new THREE.CylinderGeometry(1.4,3.6,CY,40,1,true),shaftMat);shaft.position.y=CY/2;scene.add(shaft);
+
+// monolith rock on a pedestal + reflecting pool
+function rockGeo(){const g=new THREE.IcosahedronGeometry(1.9,4);const p=g.attributes.position;const v=new THREE.Vector3();
+  for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i);
+    const d=0.34*Math.sin(v.x*3.0+v.y*2.0)+0.24*Math.sin(v.y*4.0+v.z*3.0)+0.2*Math.sin(v.z*5.0+v.x*2.0);
+    v.multiplyScalar(1+d*0.32);p.setXYZ(i,v.x,v.y,v.z);}g.computeVertexNormals();return g;}
+const rgeo=rockGeo();
+const rockMat=new THREE.MeshStandardMaterial({color:0x2a2620,roughness:1,metalness:0,flatShading:true});
+const monolith=new THREE.Mesh(rgeo,rockMat);monolith.scale.set(1,2.5,1);monolith.position.y=3.6;monolith.rotation.y=0.6;scene.add(monolith);
+const refRock=new THREE.Mesh(rgeo,rockMat.clone());refRock.material.transparent=true;refRock.material.opacity=.45;refRock.scale.set(1,-2.5,1);refRock.position.y=-3.6;refRock.rotation.y=0.6;scene.add(refRock);
+const pedestal=new THREE.Mesh(new THREE.CylinderGeometry(2.2,2.4,0.5,48),new THREE.MeshStandardMaterial({color:0x151210,roughness:.8}));pedestal.position.y=0.25;scene.add(pedestal);
+const pool=new THREE.Mesh(new THREE.CircleGeometry(6.4,64),new THREE.MeshStandardMaterial({color:0x05070a,roughness:.12,metalness:.9,transparent:true,opacity:.82}));
+pool.rotation.x=-Math.PI/2;pool.position.y=0.02;scene.add(pool);
+const poolRing=new THREE.Mesh(new THREE.RingGeometry(6.3,6.55,64),new THREE.MeshBasicMaterial({color:0xc9a86a,transparent:true,opacity:.5,side:THREE.DoubleSide}));
+poolRing.rotation.x=-Math.PI/2;poolRing.position.y=0.03;scene.add(poolRing);
+
+// framed artworks around the wall (the rooms), with warm picture lights
+const artGrp=[];
+const frameCount=ROOMS.length;
+ROOMS.forEach((r,i)=>{
+  const a=(i/frameCount)*Math.PI*2 + 0.28;
+  const x=Math.sin(a)*(R-0.4), z=Math.cos(a)*(R-0.4);
+  const g=new THREE.Group();g.position.set(x,3.5,z);g.lookAt(0,3.5,0);scene.add(g);
+  const AW=2.6,AH=AW*4/3;
+  const fr=new THREE.Mesh(new THREE.PlaneGeometry(AW+0.28,AH+0.28),new THREE.MeshBasicMaterial({color:0x0d0b09}));fr.position.z=0.02;g.add(fr);
+  const gd=new THREE.Mesh(new THREE.PlaneGeometry(AW+0.12,AH+0.12),new THREE.MeshBasicMaterial({color:0x8a7038}));gd.position.z=0.03;g.add(gd);
+  const m=new THREE.MeshBasicMaterial({color:0x111,transparent:true});
+  const art=new THREE.Mesh(new THREE.PlaneGeometry(AW,AH),m);art.position.z=0.05;g.add(art);
+  loader.load(r.img,t=>{t.colorSpace=THREE.SRGBColorSpace;m.map=t;m.color.set(0xdedede);m.needsUpdate=true;});
+  const lt=new THREE.Sprite(new THREE.SpriteMaterial({map:softDisc('rgba(255,206,140,0.75)'),transparent:true,opacity:.42,depthWrite:false,blending:THREE.AdditiveBlending}));
+  lt.scale.set(3.6,3.6,1);lt.position.set(x*0.95,5.0,z*0.95);scene.add(lt);
+  artGrp.push(g);
+});
+
+// lights
+scene.add(new THREE.HemisphereLight(0x3a3a44,0x0a0806,0.5));
+scene.add(new THREE.AmbientLight(0x1a1720,0.5));
+const spot=new THREE.SpotLight(0xfff0d6,60,60,0.5,1,1.2);spot.position.set(0,CY-0.5,0);spot.target.position.set(0,2,0);scene.add(spot);scene.add(spot.target);
+const warm=new THREE.PointLight(0xffcf8f,20,40,2);warm.position.set(0,5,7);scene.add(warm);
+
+// dust in the shaft
+const ND=isMobile?60:130,dg=new THREE.BufferGeometry(),dp=new Float32Array(ND*3),ds=new Float32Array(ND);
+for(let i=0;i<ND;i++){const rr=Math.random()*3;const an=Math.random()*6.28;dp[i*3]=Math.cos(an)*rr;dp[i*3+1]=Math.random()*CY;dp[i*3+2]=Math.sin(an)*rr;ds[i]=Math.random()*100;}
+dg.setAttribute('position',new THREE.BufferAttribute(dp,3));dg.setAttribute('seed',new THREE.BufferAttribute(ds,1));
+const dustMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,uniforms:{uT:{value:0},uS:{value:innerHeight/26}},
+  vertexShader:`attribute float seed;uniform float uT,uS;varying float vA;void main(){vec3 p=position;p.y=mod(p.y - uT*0.25,12.0);p.x+=sin(uT*0.3+seed)*0.3;vec4 mv=modelViewMatrix*vec4(p,1.);gl_Position=projectionMatrix*mv;vA=.3+.4*sin(uT+seed*3.);gl_PointSize=uS*vA/max(-mv.z,1.);}`,
+  fragmentShader:`varying float vA;void main(){vec2 c=gl_PointCoord-.5;gl_FragColor=vec4(1.,.93,.78,smoothstep(.5,0.,length(c))*vA*.4);}`});
+scene.add(new THREE.Points(dg,dustMat));
+
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.7,0.75,0.62);composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+const clock=new THREE.Clock();
+function frame(){requestAnimationFrame(frame);const t=clock.elapsedTime;
+  P.mx+=(P.tmx-P.mx)*0.045;P.my+=(P.tmy-P.my)*0.045;P.sc+=(P.tsc-P.sc)*0.06;
+  // slow orbit + gentle push-in on hero scroll
+  const ang=t*0.045 + P.mx*0.35, rad=12.2 - P.sc*3.4;
+  camera.position.set(Math.sin(ang)*rad, 2.5 - P.my*0.5 + P.sc*1.2, Math.cos(ang)*rad);
+  camera.lookAt(0, 3.0 + P.my*0.3, 0);
+  monolith.rotation.y=0.6+t*0.03; refRock.rotation.y=monolith.rotation.y;
+  shaftMat.uniforms.uT.value=t; dustMat.uniforms.uT.value=t;
+  composer.render();if(reduce)return;}
+frame();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);bloom.setSize(innerWidth,innerHeight);dustMat.uniforms.uS.value=innerHeight/26;});
+}catch(e){console.warn('atrium disabled',e&&e.message);document.getElementById('hall').style.display='none';
+  document.body.style.background='radial-gradient(120% 120% at 50% 30%,#1a1712,#0c0b0a 70%)';}
+</script>
 </body>
 </html>
