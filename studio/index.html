@@ -3,66 +3,83 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0a0a09">
-  <meta name="description" content="Caldas Studio — an immersive, room-by-room exhibition of digital experiences.">
+  <meta name="theme-color" content="#080807">
+  <meta name="description" content="Caldas Studio — a cinematic, room-by-room exhibition of immersive digital experiences.">
   <meta property="og:title" content="Caldas Studio — The Exposition">
-  <meta property="og:description" content="Walk through a cinematic gallery where every portfolio concept becomes its own world.">
+  <meta property="og:description" content="Move through ten distinct portfolio worlds in one continuous gallery.">
   <title>Caldas Studio — The Exposition</title>
+  <link rel="icon" href="data:,">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./gallery-shell.css">
+  <link rel="stylesheet" href="./gallery-shell.css?v=7">
+  <style>#gallery{mix-blend-mode:screen}</style>
 </head>
 <body>
   <div id="loader" class="loader" aria-live="polite">
     <div class="loader-mark"><i></i><b></b></div>
-    <p>Preparing the rooms</p>
+    <p>Opening the exhibition</p>
     <div class="loader-track"><span id="loaderBar"></span></div>
-    <small id="loaderStatus">Architecture · light · artworks</small>
+    <small id="loaderStatus">Light · architecture · atmosphere</small>
   </div>
 
-  <canvas id="gallery" aria-label="Immersive three-dimensional portfolio gallery"></canvas>
+  <div id="sceneStage" class="scene-stage" aria-hidden="true">
+    <div id="sceneA" class="scene-layer is-visible"></div>
+    <div id="sceneB" class="scene-layer"></div>
+    <div class="scene-reflection"></div>
+    <div class="scene-depth"></div>
+  </div>
+  <canvas id="gallery" aria-label="Cinematic WebGL gallery atmosphere"></canvas>
   <div class="film" aria-hidden="true"></div>
   <div id="transitionVeil" class="transition-veil" aria-hidden="true"></div>
 
   <header class="topbar">
     <a class="brand" href="#top" aria-label="Caldas Studio home">CALDAS <b>STUDIO</b></a>
-    <div class="topbar-center"><span>THE EXPOSITION</span><i></i><span id="roomCounter">00 / 10</span></div>
+    <nav class="topnav" aria-label="Primary">
+      <button id="indexToggle" type="button">Gallery</button>
+      <a href="#about">About</a>
+      <a href="#about">Process</a>
+    </nav>
     <div class="topbar-actions">
       <button id="soundToggle" class="quiet-button" type="button" aria-label="Toggle ambient sound" aria-pressed="false">Sound off</button>
-      <button id="indexToggle" class="quiet-button" type="button">Rooms</button>
       <a class="commission" href="mailto:hello@caldas.studio?subject=Commission">Commission</a>
     </div>
   </header>
 
   <main id="top">
     <section class="hero-ui" aria-labelledby="heroTitle">
-      <p class="eyebrow">Caldas Studio presents</p>
-      <h1 id="heroTitle">The<br><em>Exposition.</em></h1>
-      <p class="hero-copy">Ten living rooms. Ten distinct worlds. One continuous journey through the full portfolio.</p>
-      <button id="enterGallery" class="enter-gallery" type="button"><span>Enter the gallery</span><b>↘</b></button>
-      <div class="hero-foot"><span>Scroll to walk</span><i></i><span>Move to look</span></div>
+      <p class="eyebrow">Welcome to the gallery</p>
+      <h1 id="heroTitle">Imagine.<br>Explore.<br><em>Create.</em></h1>
+      <p class="hero-copy">Immersive digital experiences where strategy, technology and human imagination become places you can enter.</p>
+      <button id="enterGallery" class="enter-gallery" type="button"><span>Enter the experience</span><b>→</b></button>
+      <div class="hero-foot"><span>Scroll to explore</span><i></i></div>
     </section>
 
     <aside id="roomLabel" class="room-label" aria-live="polite">
-      <div class="room-kicker"><span id="roomNumber">Room 01</span><i></i><span id="roomType">Workshop companion</span></div>
-      <h2 id="roomName">Inner Group</h2>
-      <p id="roomLine">Unity in diversity. Strength in connection.</p>
-      <div class="room-actions">
-        <a id="roomLink" class="room-enter" href="innergroup/">Enter this room <span>↗</span></a>
-        <button id="studyToggle" class="study-toggle" type="button">Visual studies</button>
+      <button id="previousRoom" class="room-step room-step-prev" type="button" aria-label="Previous room">←</button>
+      <div class="room-copy">
+        <div class="room-kicker"><span id="roomNumber">Room 01</span><i></i><span id="roomType">Workshop companion</span></div>
+        <h2 id="roomName">Inner Group</h2>
+        <p id="roomLine">Unity in diversity. Strength in connection.</p>
+        <div class="room-actions">
+          <a id="roomLink" class="room-enter" href="innergroup/">Enter this room <span>↗</span></a>
+          <button id="studyToggle" class="study-toggle" type="button">Concept variations</button>
+        </div>
       </div>
+      <button id="nextRoom" class="room-step room-step-next" type="button" aria-label="Next room">→</button>
     </aside>
 
-    <div id="journeyHint" class="journey-hint"><span>Walk the exhibition</span><i></i></div>
-    <nav id="roomRail" class="room-rail" aria-label="Gallery rooms"></nav>
+    <div class="room-progress">
+      <span id="roomCounter">00 / 10</span>
+      <div id="roomRail" class="room-rail" aria-label="Gallery rooms"></div>
+    </div>
 
     <div id="scrollTrack" class="scroll-track" aria-hidden="true"></div>
 
-    <section id="closing" class="closing">
+    <section id="about" class="closing">
       <p class="eyebrow">The next room is yours</p>
       <h2>Turn a business into<br><em>a place people remember.</em></h2>
-      <p>Every concept in this exhibition began as a blank page. Caldas Studio turns strategy, identity and technology into an experience with atmosphere, movement and purpose.</p>
+      <p>Every concept begins with strategy, then becomes atmosphere, interaction and a reason to stay.</p>
       <div>
         <a href="mailto:hello@caldas.studio?subject=Commission%20a%20room">Commission a concept</a>
         <button id="restartTour" type="button">Walk again</button>
@@ -72,7 +89,7 @@
 
   <section id="roomIndex" class="room-index" aria-hidden="true">
     <div class="index-head">
-      <div><p class="eyebrow">Index of rooms</p><h2>The full portfolio</h2></div>
+      <div><p class="eyebrow">Explore the rooms</p><h2>The full portfolio</h2></div>
       <button id="indexClose" type="button">Close ×</button>
     </div>
     <div id="indexGrid" class="index-grid"></div>
@@ -81,9 +98,9 @@
   <section id="studyDrawer" class="study-drawer" aria-hidden="true">
     <div class="study-copy">
       <button id="studyClose" type="button">Close ×</button>
-      <p class="eyebrow">Alternative directions</p>
+      <p class="eyebrow">A different view</p>
       <h2 id="studyName">Inner Group</h2>
-      <p id="studyDescription">The room translates the strongest ingredients of the concept into architecture, light and motion.</p>
+      <p id="studyDescription">Alternative visual directions for the same concept.</p>
       <a id="studyLink" href="innergroup/">Open the live concept ↗</a>
     </div>
     <div id="studyGrid" class="study-grid"></div>
@@ -91,19 +108,69 @@
 
   <div id="fallback" class="fallback" hidden>
     <p class="eyebrow">The Exposition</p>
-    <h1>Your browser cannot render the 3D gallery.</h1>
+    <h1>Your browser cannot render the WebGL atmosphere.</h1>
     <p>The complete portfolio remains available through the room index.</p>
     <button id="fallbackOpen" type="button">Open room index</button>
   </div>
 
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "../vendor/three.module.js",
-      "three/addons/": "../vendor/jsm/"
-    }
-  }
+  <script src="./plates/lobby.js?v=1"></script>
+  <script src="./plates/innergroup.js?v=1"></script>
+  <script>
+  (() => {
+    const replacements = [
+      ['photo-1765940717433-cc42c13bfa88','gallery/belong.jpg'],
+      ['photo-1774267916884-afae166d49b3','gallery/hotel.jpg'],
+      ['photo-1617038260897-41a1f14a8ca0','gallery/jewelry.jpg'],
+      ['photo-1517248135467-4c7edcad34c5','gallery/restaurant.jpg'],
+      ['photo-1534438327276-14e5300c3a48','gallery/gym.jpg'],
+      ['photo-1510812431401-41d2bd2722f3','gallery/wine.jpg'],
+      ['photo-1490750967868-88aa4486c946','gallery/florist.jpg'],
+      ['photo-1560066984-138dadb4c035','gallery/salon.jpg'],
+      ['photo-1566073771259-6a8506099945','gallery/hotel.jpg'],
+      ['photo-1445116572660-236099ec97a0','gallery/cafe.jpg'],
+      ['photo-1501386761578-eac5c94b800a','gallery/belong.jpg']
+    ];
+    const localByKey = {
+      lobby:'gallery/belong.jpg', innergroup:'gallery/hotel.jpg', aurelia:'gallery/jewelry.jpg',
+      'maison-lumen':'gallery/restaurant.jpg', pulse:'gallery/gym.jpg', vinora:'gallery/wine.jpg',
+      'wild-stem':'gallery/florist.jpg', eden:'gallery/salon.jpg', dunhaven:'gallery/hotel.jpg',
+      'ember-oak':'gallery/cafe.jpg', belong:'gallery/belong.jpg'
+    };
+    const findLocal = value => {
+      const text = String(value || '');
+      const match = replacements.find(([key]) => text.includes(key));
+      return match ? match[1] : null;
+    };
+    const imageSrc = Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src');
+    if (imageSrc?.set) Object.defineProperty(HTMLImageElement.prototype, 'src', {
+      configurable: true,
+      enumerable: imageSrc.enumerable,
+      get: imageSrc.get,
+      set(value) { imageSrc.set.call(this, findLocal(value) || value); }
+    });
+    const layers = [document.getElementById('sceneA'), document.getElementById('sceneB')];
+    let applying = false;
+    const enforceLocalLayers = () => {
+      if (applying) return;
+      applying = true;
+      for (const layer of layers) {
+        if (!layer) continue;
+        const key = layer.dataset.key;
+        const local = window.STUDIO_PLATES?.[key] || localByKey[key];
+        if (!local) continue;
+        const desired = `url("${local}")`;
+        if (layer.style.backgroundImage !== desired) layer.style.setProperty('background-image', desired, 'important');
+      }
+      applying = false;
+    };
+    const observer = new MutationObserver(enforceLocalLayers);
+    layers.forEach(layer => observer.observe(layer, {attributes:true, attributeFilter:['style','data-key']}));
+    requestAnimationFrame(enforceLocalLayers);
+  })();
   </script>
-  <script type="module" src="./gallery-engine.js"></script>
+  <script type="importmap">
+  {"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/jsm/"}}
+  </script>
+  <script type="module" src="./gallery-engine.js?v=7"></script>
 </body>
 </html>
