@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./gallery-shell.css?v=6">
+  <link rel="stylesheet" href="./gallery-shell.css?v=7">
   <style>#gallery{mix-blend-mode:screen}</style>
 </head>
 <body>
@@ -113,6 +113,8 @@
     <button id="fallbackOpen" type="button">Open room index</button>
   </div>
 
+  <script src="./plates/lobby.js?v=1"></script>
+  <script src="./plates/innergroup.js?v=1"></script>
   <script>
   (() => {
     const replacements = [
@@ -152,8 +154,10 @@
       if (applying) return;
       applying = true;
       for (const layer of layers) {
-        const local = localByKey[layer?.dataset?.key];
-        if (!layer || !local) continue;
+        if (!layer) continue;
+        const key = layer.dataset.key;
+        const local = window.STUDIO_PLATES?.[key] || localByKey[key];
+        if (!local) continue;
         const desired = `url("${local}")`;
         if (layer.style.backgroundImage !== desired) layer.style.setProperty('background-image', desired, 'important');
       }
@@ -167,6 +171,6 @@
   <script type="importmap">
   {"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/jsm/"}}
   </script>
-  <script type="module" src="./gallery-engine.js?v=6"></script>
+  <script type="module" src="./gallery-engine.js?v=7"></script>
 </body>
 </html>
