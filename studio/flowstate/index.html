@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Flowstate — Ship calm.</title>
+<meta name="description" content="Flowstate — the planning tool that keeps teams in flow. A clean SaaS product concept by Caldas Studio." />
+<meta name="theme-color" content="#f7f8fa" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--bg:#f7f8fa;--card:#fff;--ink:#0f1115;--mut:#5b6472;--line:#e6e8ee;--brand:#5b53ff;--brand2:#00c2a8}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 5vw}
+  header{position:sticky;top:0;z-index:30;background:rgba(247,248,250,.8);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .hd{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+  .brand{font-weight:700;font-size:1.15rem;letter-spacing:-.02em;display:flex;align-items:center;gap:.5rem}
+  .brand i{width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:block}
+  nav{display:flex;gap:1.8rem;font-size:.9rem;color:var(--mut)}nav a:hover{color:var(--ink)}
+  .hd .r{display:flex;gap:.8rem;align-items:center;font-size:.9rem}
+  .btn{background:var(--ink);color:#fff;border-radius:10px;padding:.6rem 1.1rem;font-weight:500;font-size:.9rem;transition:.2s;border:0;cursor:pointer}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.brand{background:var(--brand)}
+  .ghost{color:var(--mut)}
+  .hero{text-align:center;padding:7rem 0 3rem}
+  .pill{display:inline-flex;gap:.5rem;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:40px;padding:.4rem .9rem;font-size:.8rem;color:var(--mut);margin-bottom:1.8rem}
+  .pill b{color:var(--brand)}
+  .hero h1{font-size:clamp(2.6rem,6vw,4.6rem);letter-spacing:-.03em;line-height:1.02;font-weight:700}
+  .hero h1 span{background:linear-gradient(120deg,var(--brand),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{max-width:52ch;margin:1.4rem auto 0;color:var(--mut);font-size:1.15rem}
+  .hero .cta{margin-top:2rem;display:flex;gap:.8rem;justify-content:center}
+  /* dashboard mockup */
+  .mock{max-width:960px;margin:3.5rem auto 0;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 40px 80px -50px rgba(15,17,21,.3);overflow:hidden}
+  .mock .top{display:flex;align-items:center;gap:.5rem;padding:.8rem 1rem;border-bottom:1px solid var(--line)}
+  .mock .top i{width:11px;height:11px;border-radius:50%;background:var(--line)}
+  .mock .body{display:grid;grid-template-columns:180px 1fr;min-height:320px}
+  .mock .side{border-right:1px solid var(--line);padding:1rem;display:flex;flex-direction:column;gap:.5rem}
+  .mock .side .it{font-size:.82rem;color:var(--mut);padding:.5rem .6rem;border-radius:8px}
+  .mock .side .it.on{background:#f0f0ff;color:var(--brand);font-weight:600}
+  .mock .main{padding:1.4rem}
+  .mock .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.2rem}
+  .mock .stat{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.9rem}
+  .mock .stat b{font-size:1.5rem;letter-spacing:-.02em}.mock .stat span{font-size:.72rem;color:var(--mut);display:block}
+  .mock .stat em{font-style:normal;color:var(--brand2);font-size:.72rem;font-weight:600}
+  .mock .chart{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:1rem;height:150px;display:flex;align-items:flex-end;gap:8px}
+  .mock .chart .bar{flex:1;background:linear-gradient(180deg,var(--brand),#b9b6ff);border-radius:5px 5px 0 0;opacity:.85}
+  .logos{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;padding:2.5rem 0;opacity:.6;font-weight:600;color:var(--mut);letter-spacing:-.01em}
+  section{padding:6rem 0}
+  .k{text-align:center;color:var(--brand);font-weight:600;font-size:.82rem;letter-spacing:.1em;text-transform:uppercase}
+  .h2{text-align:center;font-size:clamp(1.9rem,4vw,3rem);letter-spacing:-.02em;margin-top:.7rem;font-weight:700}
+  .sub{text-align:center;color:var(--mut);max-width:52ch;margin:1rem auto 0}
+  /* bento */
+  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem}
+  .cell{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6rem}
+  .cell.wide{grid-column:span 2}
+  .cell .ic{width:38px;height:38px;border-radius:10px;background:#f0f0ff;color:var(--brand);display:grid;place-items:center;font-weight:700;margin-bottom:1rem}
+  .cell h3{font-size:1.15rem;letter-spacing:-.01em}.cell p{color:var(--mut);margin-top:.5rem;font-size:.95rem}
+  .cell .mini{margin-top:1.2rem;display:flex;gap:6px;align-items:flex-end;height:52px}
+  .cell .mini i{flex:1;background:var(--line);border-radius:4px 4px 0 0}
+  /* tabs */
+  .tabs{display:flex;gap:.5rem;justify-content:center;margin-top:2.5rem;flex-wrap:wrap}
+  .tab{border:1px solid var(--line);background:var(--card);border-radius:40px;padding:.6rem 1.2rem;font-size:.9rem;color:var(--mut);cursor:pointer;transition:.2s}
+  .tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .panel{display:none;margin-top:2rem;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;grid-template-columns:1fr 1fr;align-items:center}
+  .panel.on{display:grid}
+  .panel .tx{padding:2.5rem}.panel .tx h3{font-size:1.6rem;letter-spacing:-.02em}.panel .tx p{color:var(--mut);margin-top:.8rem}
+  .panel .im{height:100%;min-height:280px}.panel .im img{width:100%;height:100%;object-fit:cover}
+  /* metrics band */
+  .metrics{background:var(--ink);color:#fff;border-radius:20px;padding:3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;text-align:center}
+  .metrics b{font-size:2.4rem;letter-spacing:-.02em;display:block}.metrics span{color:rgba(255,255,255,.6);font-size:.85rem}
+  /* pricing */
+  .price{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:3rem}
+  .plan{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:2rem}
+  .plan.pop{border:2px solid var(--brand);position:relative}
+  .plan.pop::after{content:'Most popular';position:absolute;top:-11px;left:2rem;background:var(--brand);color:#fff;font-size:.68rem;padding:.25rem .7rem;border-radius:20px}
+  .plan h4{font-size:1.05rem}.plan .pr{font-size:2.4rem;font-weight:700;letter-spacing:-.02em;margin:.6rem 0}.plan .pr span{font-size:.9rem;color:var(--mut);font-weight:400}
+  .plan ul{list-style:none;margin:1.2rem 0;display:grid;gap:.6rem}
+  .plan li{font-size:.9rem;color:var(--mut);padding-left:1.4rem;position:relative}
+  .plan li::before{content:'✓';position:absolute;left:0;color:var(--brand2);font-weight:700}
+  .plan .btn{width:100%;text-align:center;margin-top:.5rem}
+  footer{border-top:1px solid var(--line);padding:3rem 0;color:var(--mut);font-size:.9rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+  @media(max-width:820px){nav{display:none}.mock .body{grid-template-columns:1fr}.mock .side{display:none}.bento,.price,.metrics{grid-template-columns:1fr}.panel.on{grid-template-columns:1fr}.metrics{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<header><div class="wrap hd"><a class="brand" href="../"><i></i>Flowstate</a><nav><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#">Docs</a><a href="#">Changelog</a></nav><div class="r"><a class="ghost" href="#">Sign in</a><a class="btn brand" href="#pricing">Start free</a></div></div></header>
+
+<div class="wrap">
+  <section class="hero">
+    <div class="pill"><b>New</b> · Flowstate 3.0 — now with AI standups</div>
+    <h1>Ship calm.<br>Stay in <span>flow.</span></h1>
+    <p>The planning tool that gets out of the way. Plan, track and ship — without the tab-storm, the status meetings, or the dread.</p>
+    <div class="cta"><a class="btn brand" href="#pricing">Start free — no card</a><a class="btn" style="background:var(--card);color:var(--ink);border:1px solid var(--line)" href="#features">See features</a></div>
+    <div class="mock">
+      <div class="top"><i></i><i></i><i></i></div>
+      <div class="body">
+        <div class="side"><div class="it on">◆ Board</div><div class="it">◷ Timeline</div><div class="it">✎ Docs</div><div class="it">⚑ Goals</div><div class="it">⚙ Automations</div></div>
+        <div class="main">
+          <div class="stats"><div class="stat"><b>128</b><span>In flow this week</span><em>▲ 12%</em></div><div class="stat"><b>4.2d</b><span>Avg cycle time</span><em>▼ 0.8d</em></div><div class="stat"><b>98%</b><span>On-time ship</span><em>▲ 3%</em></div></div>
+          <div class="chart" id="chart"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap"><div class="logos"><span>NORTHWIND</span><span>Aperture</span><span>Vela</span><span>Kinfolk</span><span>Monzo·ish</span><span>Loop</span></div></div>
+
+<div class="wrap">
+  <section id="features">
+    <div class="k">Everything, one surface</div>
+    <div class="h2">Less software. More shipping.</div>
+    <p class="sub">Six tools collapsed into one calm workspace your whole team actually opens.</p>
+    <div class="bento">
+      <div class="cell wide"><div class="ic">◆</div><h3>Boards that plan themselves</h3><p>Drag a card and Flowstate reflows the timeline, reassigns load and warns you before a deadline slips — quietly.</p><div class="mini"><i style="height:40%"></i><i style="height:65%"></i><i style="height:52%"></i><i style="height:80%;background:var(--brand)"></i><i style="height:70%"></i><i style="height:90%;background:var(--brand)"></i></div></div>
+      <div class="cell"><div class="ic">✦</div><h3>AI standups</h3><p>A daily digest of what moved, what's stuck and who's blocked — written for humans.</p></div>
+      <div class="cell"><div class="ic">◷</div><h3>Timelines</h3><p>Gantt without the guilt. Zoom from a day to a quarter in one gesture.</p></div>
+      <div class="cell wide"><div class="ic">⚡</div><h3>Automations that stay out of the way</h3><p>If-this-then-that for real teams. Route reviews, nudge owners, close the loop — set once, forget forever.</p><div class="mini"><i style="height:55%"></i><i style="height:75%;background:var(--brand2)"></i><i style="height:48%"></i><i style="height:88%;background:var(--brand2)"></i><i style="height:62%"></i><i style="height:70%"></i></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="k">How teams use it</div>
+    <div class="h2">One tool, every ritual.</div>
+    <div class="tabs"><button class="tab on" data-p="0">Planning</button><button class="tab" data-p="1">Standups</button><button class="tab" data-p="2">Retros</button></div>
+    <div class="panel on" data-p="0"><div class="tx"><h3>Plan the week in ten minutes</h3><p>Pull from the backlog, balance the load across the team automatically, and lock a realistic week — Flowstate flags over-commitment before it happens.</p></div><div class="im"><img src="img/office.jpg" alt=""></div></div>
+    <div class="panel" data-p="1"><div class="tx"><h3>Standups without the meeting</h3><p>Every morning, an AI digest lands in Slack: what shipped, what's blocked, and one clear ask per person. Reclaim 3 hours a week.</p></div><div class="im"><img src="img/team.jpg" alt=""></div></div>
+    <div class="panel" data-p="2"><div class="tx"><h3>Retros that actually close</h3><p>Turn retro notes into tracked actions in one click, then watch them not get forgotten. Improvement, compounded.</p></div><div class="im"><img src="img/work.jpg" alt=""></div></div>
+  </section>
+
+  <section><div class="metrics"><div><b>3 hrs</b><span>saved per person / week</span></div><div><b>98%</b><span>on-time ship rate</span></div><div><b>12k+</b><span>teams in flow</span></div><div><b>4.9★</b><span>on G2</span></div></div></section>
+
+  <section id="pricing">
+    <div class="k">Pricing</div>
+    <div class="h2">Start free. Scale when it clicks.</div>
+    <div class="price">
+      <div class="plan"><h4>Solo</h4><div class="pr">€0<span>/mo</span></div><ul><li>1 workspace</li><li>Unlimited tasks</li><li>Boards &amp; timeline</li><li>7-day history</li></ul><a class="btn" style="background:var(--card);color:var(--ink);border:1px solid var(--line)" href="#">Get started</a></div>
+      <div class="plan pop"><h4>Team</h4><div class="pr">€9<span>/user/mo</span></div><ul><li>Everything in Solo</li><li>AI standups &amp; digests</li><li>Automations</li><li>Unlimited history</li><li>Priority support</li></ul><a class="btn brand" href="#">Start 14-day trial</a></div>
+      <div class="plan"><h4>Scale</h4><div class="pr">Custom</div><ul><li>Everything in Team</li><li>SSO &amp; SCIM</li><li>Audit log</li><li>Dedicated success</li></ul><a class="btn" style="background:var(--card);color:var(--ink);border:1px solid var(--line)" href="#">Talk to sales</a></div>
+    </div>
+  </section>
+</div>
+
+<footer><div class="wrap" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:1rem"><span>© 2026 Flowstate — a concept by Caldas Studio</span><a href="../" style="color:var(--ink)">← The Exposition</a></div></footer>
+
+<script>
+  // chart bars
+  const ch=document.getElementById('chart');[38,55,47,68,60,82,74,90,66,78,85,96].forEach(h=>{const b=document.createElement('div');b.className='bar';b.style.height=h+'%';ch.appendChild(b);});
+  // tabs
+  const tabs=[...document.querySelectorAll('.tab')],panels=[...document.querySelectorAll('.panel')];
+  tabs.forEach(t=>t.onclick=()=>{tabs.forEach(x=>x.classList.remove('on'));panels.forEach(x=>x.classList.remove('on'));t.classList.add('on');panels[+t.dataset.p].classList.add('on');});
+</script>
+</body>
+</html>

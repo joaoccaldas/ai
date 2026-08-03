@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lumé — Skin, at Rest</title>
+<meta name="description" content="Lumé — quiet skincare made from few, honest ingredients. A calm beauty-brand concept by Caldas Studio." />
+<meta name="theme-color" content="#f3ece4" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--paper:#f3ece4;--card:#efe6db;--ink:#3a2f28;--mut:#8a7d70;--sage:#7f8a6a;--line:rgba(58,47,40,.14)}
+  html{scroll-behavior:smooth}
+  body{font-family:'Jost',system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .fr{font-family:'Fraunces',Georgia,serif;font-weight:300}
+  header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:1.4rem 5vw}
+  .brand{font-family:'Fraunces';font-size:1.5rem;letter-spacing:.2em}
+  header nav{display:flex;gap:1.8rem;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mut)}
+  header nav a:hover{color:var(--ink)}
+  .cart{border:1px solid var(--line);border-radius:40px;padding:.5rem 1.1rem;font-size:.64rem;letter-spacing:.16em;text-transform:uppercase}
+  .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:3rem;padding:8rem 5vw 4rem}
+  .hero .t .k{font-size:.66rem;letter-spacing:.34em;text-transform:uppercase;color:var(--sage);margin-bottom:1.4rem}
+  .hero h1{font-family:'Fraunces';font-weight:300;font-size:clamp(3rem,7vw,6rem);line-height:1;letter-spacing:-.01em}
+  .hero h1 em{font-style:italic}
+  .hero .t p{margin-top:1.4rem;max-width:34ch;color:var(--mut);line-height:1.7;font-size:1.05rem}
+  .btn{display:inline-flex;align-items:center;gap:.7rem;margin-top:2rem;background:var(--ink);color:var(--paper);border-radius:40px;padding:.95rem 1.9rem;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;transition:.3s}
+  .btn:hover{background:var(--sage)}
+  .hero .ph{aspect-ratio:4/5;border-radius:200px 200px 12px 12px;overflow:hidden;box-shadow:0 40px 80px -50px rgba(58,47,40,.6)}
+  .hero .ph img{width:100%;height:100%;object-fit:cover}
+  section{padding:12vh 5vw}
+  .k{font-size:.64rem;letter-spacing:.32em;text-transform:uppercase;color:var(--sage);margin-bottom:1.6rem}
+  .lede{font-family:'Fraunces';font-weight:300;font-size:clamp(1.8rem,4.4vw,3.4rem);line-height:1.14;max-width:20ch}
+  .lede em{font-style:italic;color:var(--sage)}
+  /* ingredient split */
+  .ing{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;background:var(--card);border-radius:16px;padding:4rem;margin-top:0}
+  .ing .im{aspect-ratio:1;border-radius:12px;overflow:hidden}.ing .im img{width:100%;height:100%;object-fit:cover}
+  .ing ul{list-style:none;margin-top:1.6rem}
+  .ing li{padding:1rem 0;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:baseline}
+  .ing li b{font-family:'Fraunces';font-weight:400;font-size:1.25rem}
+  .ing li span{font-size:.8rem;color:var(--mut);letter-spacing:.04em}
+  /* ritual */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:2.4rem;margin-top:3rem}
+  .step{border-top:1px solid var(--line);padding-top:1.4rem}
+  .step .n{font-family:'Fraunces';font-size:2rem;color:var(--sage)}
+  .step h4{font-family:'Fraunces';font-weight:400;font-size:1.4rem;margin:.3rem 0 .6rem}
+  .step p{color:var(--mut);line-height:1.65;font-size:.94rem}
+  /* band */
+  .band{height:70vh;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;border-radius:16px}
+  .band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .band::after{content:'';position:absolute;inset:0;background:rgba(58,47,40,.34)}
+  .band blockquote{position:relative;z-index:2;color:#fff;font-family:'Fraunces';font-weight:300;font-style:italic;font-size:clamp(1.4rem,3.5vw,2.6rem);max-width:24ch;line-height:1.3}
+  footer{padding:8vh 5vw 5vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1.4rem;align-items:end}
+  footer h2{font-family:'Fraunces';font-weight:300;font-size:clamp(2rem,6vw,4rem);max-width:14ch;line-height:1}
+  footer .r{text-align:right;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
+  @media(max-width:820px){.hero,.ing{grid-template-columns:1fr}.ing{padding:2rem}.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="../">LUMÉ</a><nav><a href="#shop">Shop</a><a href="#ingredients">Ingredients</a><a href="#ritual">Ritual</a></nav><a class="cart" href="#shop">Cart · 0</a></header>
+
+<section class="hero">
+  <div class="t">
+    <div class="k">Quiet skincare</div>
+    <h1 class="fr">Skin,<br><em>at rest.</em></h1>
+    <p>Five honest ingredients. No noise, no promises it can't keep — just skin that looks like it slept well.</p>
+    <a class="btn" href="#shop">Shop the edit →</a>
+  </div>
+  <div class="ph"><img src="img/hero.jpg" alt="Lumé serum"></div>
+</section>
+
+<section id="shop">
+  <div class="k">The edit</div>
+  <p class="lede">Three products. That's the <em>whole range</em> — and all it needs to be.</p>
+</section>
+
+<section id="ingredients" style="padding-top:0">
+  <div class="ing">
+    <div>
+      <div class="k">What's inside</div>
+      <h3 class="fr" style="font-weight:300;font-size:clamp(1.6rem,3.4vw,2.4rem);line-height:1.1">Grown, not <em style="color:var(--sage)">engineered.</em></h3>
+      <ul>
+        <li><b>Squalane</b><span>from olives · barrier</span></li>
+        <li><b>Niacinamide 5%</b><span>tone &amp; calm</span></li>
+        <li><b>Oat ceramides</b><span>quiet repair</span></li>
+        <li><b>Rosehip</b><span>cold-pressed · glow</span></li>
+        <li><b>Nothing else</b><span>no fragrance, no filler</span></li>
+      </ul>
+    </div>
+    <div class="im"><img src="img/botanical.jpg" alt="Botanical ingredients"></div>
+  </div>
+</section>
+
+<section id="ritual">
+  <div class="k">The ritual</div>
+  <p class="lede">Two minutes, morning and night.</p>
+  <div class="steps">
+    <div class="step"><div class="n fr">01</div><h4 class="fr">Cleanse</h4><p>A soft-water gel that leaves the barrier where it found it. No squeak, no tightness.</p></div>
+    <div class="step"><div class="n fr">02</div><h4 class="fr">Serum</h4><p>Three drops of the 5-ingredient serum, pressed in. This is the one that does the work.</p></div>
+    <div class="step"><div class="n fr">03</div><h4 class="fr">Seal</h4><p>A weightless squalane balm to hold it all overnight. Wake up looking rested.</p></div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="band"><img src="img/spa.jpg" alt="Calm ritual"><blockquote>"The first range I've finished a whole bottle of before buying something new."</blockquote></div>
+</section>
+
+<footer>
+  <h2 class="fr">Kind to skin.<br>Kinder to your shelf.</h2>
+  <div class="r">
+    <a href="mailto:hello@lume.example">hello@lume.example</a><br>Free returns · Carbon-neutral<br><br>
+    <a href="../" style="color:var(--ink)">← Caldas Studio · The Exposition</a>
+  </div>
+</footer>
+</body>
+</html>
