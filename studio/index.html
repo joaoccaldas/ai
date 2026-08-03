@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./gallery-shell.css?v=4">
+  <link rel="stylesheet" href="./gallery-shell.css?v=5">
 </head>
 <body>
   <div id="loader" class="loader" aria-live="polite">
@@ -127,6 +127,12 @@
       ['photo-1445116572660-236099ec97a0','gallery/cafe.jpg'],
       ['photo-1501386761578-eac5c94b800a','gallery/belong.jpg']
     ];
+    const localByKey = {
+      lobby:'gallery/belong.jpg', innergroup:'gallery/hotel.jpg', aurelia:'gallery/jewelry.jpg',
+      'maison-lumen':'gallery/restaurant.jpg', pulse:'gallery/gym.jpg', vinora:'gallery/wine.jpg',
+      'wild-stem':'gallery/florist.jpg', eden:'gallery/salon.jpg', dunhaven:'gallery/hotel.jpg',
+      'ember-oak':'gallery/cafe.jpg', belong:'gallery/belong.jpg'
+    };
     const findLocal = value => {
       const text = String(value || '');
       const match = replacements.find(([key]) => text.includes(key));
@@ -139,21 +145,27 @@
       get: imageSrc.get,
       set(value) { imageSrc.set.call(this, findLocal(value) || value); }
     });
-    const backgroundImage = Object.getOwnPropertyDescriptor(CSSStyleDeclaration.prototype, 'backgroundImage');
-    if (backgroundImage?.set) Object.defineProperty(CSSStyleDeclaration.prototype, 'backgroundImage', {
-      configurable: true,
-      enumerable: backgroundImage.enumerable,
-      get: backgroundImage.get,
-      set(value) {
-        const local = findLocal(value);
-        backgroundImage.set.call(this, local ? `url("${local}")` : value);
+    const layers = [document.getElementById('sceneA'), document.getElementById('sceneB')];
+    let applying = false;
+    const enforceLocalLayers = () => {
+      if (applying) return;
+      applying = true;
+      for (const layer of layers) {
+        const local = localByKey[layer?.dataset?.key];
+        if (!layer || !local) continue;
+        const desired = `url("${local}")`;
+        if (layer.style.backgroundImage !== desired) layer.style.setProperty('background-image', desired, 'important');
       }
-    });
+      applying = false;
+    };
+    const observer = new MutationObserver(enforceLocalLayers);
+    layers.forEach(layer => observer.observe(layer, {attributes:true, attributeFilter:['style','data-key']}));
+    requestAnimationFrame(enforceLocalLayers);
   })();
   </script>
   <script type="importmap">
   {"imports":{"three":"../vendor/three.module.js","three/addons/":"../vendor/jsm/"}}
   </script>
-  <script type="module" src="./gallery-engine.js?v=4"></script>
+  <script type="module" src="./gallery-engine.js?v=5"></script>
 </body>
 </html>
