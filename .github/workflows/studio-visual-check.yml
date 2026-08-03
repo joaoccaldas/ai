@@ -58,6 +58,21 @@ jobs:
               }
               const title = await page.locator('#heroTitle').textContent();
               if (!title || !title.includes('Imagine')) throw new Error(`${name}: hero did not render`);
+              const scene = await page.evaluate(() => {
+                const layer = document.querySelector('#sceneA');
+                return {
+                  key: layer?.dataset?.key || '',
+                  plateKeys: Object.keys(window.STUDIO_PLATES || {}),
+                  plateLength: window.STUDIO_PLATES?.[layer?.dataset?.key || '']?.length || 0,
+                  inlineBackground: layer?.style?.backgroundImage || '',
+                  computedBackground: layer ? getComputedStyle(layer).backgroundImage : '',
+                  opacity: layer ? getComputedStyle(layer).opacity : ''
+                };
+              });
+              console.log(`${name} scene state: ${JSON.stringify(scene)}`);
+              if (!scene.computedBackground || scene.computedBackground === 'none') {
+                throw new Error(`${name}: no rendered scene background: ${JSON.stringify(scene)}`);
+              }
               await page.screenshot({ path: `visual-evidence/${name}.png`, fullPage: false });
               await page.close();
             }
