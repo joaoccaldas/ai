@@ -132,7 +132,7 @@ function defaultChShare(baseShare, y) {
  */
 export function project(hist, mfpState = {}) {
   const { H, bud } = hist;
-  const ov = { growth:{}, pm:{}, price:{}, nsAbs:{}, chShare:{}, buShare:{}, ...mfpState };
+  const ov = { mode:'total', growth:{}, pm:{}, price:{}, nsAbs:{}, buGrowth:{}, chShare:{}, buShare:{}, ...mfpState };
 
   // --- actual + budget years, straight from history ---
   const years = {};
@@ -157,14 +157,49 @@ export function project(hist, mfpState = {}) {
     return { val:merged, edited:true };
   };
 
-  const defaults = { growth:{}, pm:{}, price:{}, chShare:{}, buShare:{} };
-  let prevNs = base.ns;
+  const defaults = { growth:{}, pm:{}, price:{}, chShare:{}, buShare:{}, buGrowth:{}, buCagr:{} };
+
+  // ---- BU-mode precompute: BU totals, per-BU CAGR, and each BU's channel split ----
+  const mode = ov.mode === 'bu' ? 'bu' : 'total';
+  const buTot = (yr) => Object.fromEntries(BUS.map(b => [b.id,
+    CH_IDS.reduce((s,c) => s + years[yr].byChBu[c][b.id].ns, 0)]));
+  const buBase = buTot(BASE_YEAR), bu22 = buTot(2022), bu25 = buTot(2025);
+  for (const b of BUS) defaults.buCagr[b.id] = Math.pow(bu25[b.id]/bu22[b.id], 1/3) - 1;
+  const chWithinBu = {};                                   // how each BU splits across channels (2025)
+  for (const b of BUS) { chWithinBu[b.id] = {}; const t = bu25[b.id] || 1;
+    for (const c of CH_IDS) chWithinBu[b.id][c] = years[2025].byChBu[c][b.id].ns / t; }
+
+  let prevNs = base.ns, prevBu = { ...buBase };
   for (const y of PLAN_YEARS) {
     const gDef = histCagr, pmDef = basePm + (y - BASE_YEAR) * 0.002, prDef = PRICE_CAGR;
     defaults.growth[y] = gDef; defaults.pm[y] = pmDef; defaults.price[y] = prDef;
-    const g  = ov.growth[y] != null ? ov.growth[y]/100 : gDef;
     const pm = ov.pm[y]     != null ? ov.pm[y]/100     : pmDef;
     const pr = ov.price[y]  != null ? ov.price[y]/100  : prDef;
+
+    /* ---- BU-growth mode: plan each BU's growth, allocate to channels by history ---- */
+    if (mode === 'bu') {
+      defaults.buGrowth[y] = {};
+      const buNsY = {};
+      for (const b of BUS) { const gd = defaults.buCagr[b.id]; defaults.buGrowth[y][b.id] = gd;
+        const gb = (ov.buGrowth[y]||{})[b.id] != null ? ov.buGrowth[y][b.id]/100 : gd;
+        buNsY[b.id] = prevBu[b.id] * (1 + gb); }
+      prevBu = buNsY;
+      const byChBu = {}; for (const c of CH_IDS) byChBu[c] = {};
+      const chNs = Object.fromEntries(CH_IDS.map(c => [c,
+        BUS.reduce((s,b) => s + buNsY[b.id]*chWithinBu[b.id][c], 0)]));
+      const totNs = BUS.reduce((s,b) => s + buNsY[b.id], 0);
+      const histBlend = totNs ? CH_IDS.reduce((a,c) => a + chNs[c]/totNs * CH_PM[c], 0) : 0;
+      const pmScale = histBlend ? pm/histBlend : 1;
+      for (const c of CH_IDS) { const rate = CH_PM[c]*pmScale;
+        for (const b of BUS) { const cellNs = buNsY[b.id]*chWithinBu[b.id][c];
+          const asp = ASP[b.id]*Math.pow(1+pr, y-2022);
+          byChBu[c][b.id] = { ns:cellNs, pm:cellNs*rate, pmRate:rate, vol: asp ? cellNs/asp : 0 }; } }
+      years[y] = { ...rollup(byChBu), byChBu, kind:'plan', mode:'bu' };
+      continue;
+    }
+
+    /* ---- total-growth mode: plan the top line, break down by channel & BU mix ---- */
+    const g  = ov.growth[y] != null ? ov.growth[y]/100 : gDef;
     const ns = ov.nsAbs[y] != null ? ov.nsAbs[y] : prevNs * (1 + g);
     prevNs = ns;
 

@@ -274,6 +274,18 @@ a.mark{text-decoration:none;color:inherit;cursor:pointer}
 .tutstep .tc h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:15px;margin:0 0 6px}
 .tutstep .tc p{margin:0 0 10px;font-size:13.5px;color:#45443f;max-width:80ch}
 
+/* ---------------------------- validate / versions ---------------------- */
+.checks{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.chk{display:flex;align-items:center;gap:10px;background:var(--paper);padding:10px 14px;font-size:12.5px}
+.chk .ci{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:10px;
+  color:#fff;flex:none}
+.chk.pass .ci{background:var(--good)} .chk.warn .ci{background:var(--brass)} .chk.fail .ci{background:var(--bad)}
+.chk.warn{color:#5a5124} .chk.fail{color:var(--bad)}
+.chk em{color:var(--steel);font-style:italic;font-size:11px}
+.saverow{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.saverow .search{flex:1;min-width:240px;padding:9px 12px;border:1px solid var(--rule);border-radius:2px;
+  font-family:"IBM Plex Sans",sans-serif;font-size:13px;background:var(--paper)}
+
 /* ------------------------------ MFP / budget --------------------------- */
 .navsep{width:1px;height:18px;background:var(--rule);margin:0 4px}
 .nav button.lt{color:var(--brass);border-color:transparent}
