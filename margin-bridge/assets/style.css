@@ -215,6 +215,21 @@ table.pnl td.soft{color:var(--steel)}
 table.pnl td.tot{font-weight:700}
 table.pnl th,table.pnl td.num{padding-left:10px}
 
+/* ------------------------- consolidation tree -------------------------- */
+table.tree tr.tnode{cursor:pointer}
+table.tree tr.tnode.leaf{cursor:default}
+table.tree tr.tnode:hover td{background:var(--paper)}
+table.tree tr.lvl0 td{font-weight:700;border-bottom:1px solid var(--ink)}
+table.tree tr.lvl1 td.rowlab{font-weight:600}
+table.tree tr.leaf td{color:var(--steel)}
+table.tree tr.leaf td.rowlab{font-family:"IBM Plex Mono",monospace;font-size:10px}
+.tw{display:inline-block;width:14px;color:var(--bad);font-size:9px}
+.tw.leaf{color:transparent}
+.okpill{display:inline-block;font-family:"Archivo",sans-serif;font-weight:600;font-size:9px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--good);border:1px solid var(--good);
+  border-radius:2px;padding:2px 7px;margin-left:6px}
+.okpill.bad{color:var(--bad);border-color:var(--bad)}
+
 /* --------------------------------- mix --------------------------------- */
 .mixbar{display:flex;height:46px;border:1px solid var(--rule);overflow:hidden}
 .mseg{display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;

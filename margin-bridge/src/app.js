@@ -6,7 +6,8 @@
 import { generateAll, MARKETS, BUS, CLASSES, MONTH_NAMES, N_MONTHS, CY_START,
          priorYearStart, HIST_YEARS, isCY, monthOf, label } from './data.js';
 import { DRIVERS, newState, ovKey, resolve, summarise, buildForecast,
-         stampPY, stampBUD, fxOf, agg, byMonth, meas, pnl, OPEX_LINES } from './model.js';
+         stampPY, stampBUD, fxOf, agg, byMonth, meas, pnl, leafAgg, pnlFromLeaves,
+         OPEX_LINES } from './model.js';
 import { bridge, bridgeBy, groupParts, reconciled, movers } from './bridge.js';
 import { sigmas, gradients, scenarios, tornado, monteCarlo, histogram } from './risk.js';
 import * as views from './views.js';
@@ -23,6 +24,7 @@ const S = {
   pnlGran: 'fy',         // P&L period grain: fy | q | m
   pnlShow: 'val',        // P&L cell content: val | bud | py (variance)
   focusBu: 'ALL',        // P&L / mix business-unit focus
+  expanded: new Set(['ALL']),   // consolidation tree: open nodes
   rho: 0.35, k: 1.28
 };
 const SCEN = [];         // saved scenarios for compare (in-memory session store)
@@ -110,6 +112,58 @@ function compute() {
     fc: pnl(rowsFC, inM(pd.months)), bud: pnl(rowsBUD, inM(pd.months)), py: pnl(rowsPY, inMpy(pd.months)) }));
   const pnlFY = { fc: pnl(rowsFC, inM(CYM)), bud: pnl(rowsBUD, inM(CYM)), py: pnl(rowsPY, inMpy(CYM)) };
   const pnlData = { gran:S.pnlGran, show:S.pnlShow, focusBu:S.focusBu, periods:pnlPeriods, fy:pnlFY };
+
+  /* ---- consolidation drill-down: Nordics → market → BU → SKU ----
+     Every node is a SUM of the same market×BU×SKU leaves, so a parent always
+     equals the sum of its children — consolidation is exact by construction. */
+  const Lfc  = leafAgg(rowsFC, true);
+  const Lbud = leafAgg(rowsBUD);
+  const Lpy  = leafAgg(rowsPY);
+  const treeBase = S.cmp === 'BUD' ? Lbud : Lpy;
+  const nodeOf = (id, label, level, pred) => {
+    const fc = pnlFromLeaves(Lfc, pred), base = pnlFromLeaves(treeBase, pred);
+    return { id, label, level, fc, base, dEbit: fc.ebit - base.ebit, open: S.expanded.has(id),
+             leaf: level === 3 };
+  };
+  const skusIn = (k, bu) => [...new Set(Object.values(Lfc)
+    .filter(o => o.k === k && o.bu === bu).map(o => o.s))].sort();
+  const childrenOf = (node) => {
+    if (node.level === 0) return MARKETS.map(m => nodeOf(m.id, m.name, 1, o => o.k === m.id));
+    if (node.level === 1) { const k = node.id;
+      return BUS.map(b => nodeOf(`${k}|${b.id}`, b.name, 2, o => o.k === k && o.bu === b.id)); }
+    if (node.level === 2) { const [k, bu] = node.id.split('|');
+      return skusIn(k, bu).map(s => nodeOf(`${k}|${bu}|${s}`, s, 3, o => o.k === k && o.bu === bu && o.s === s)); }
+    return [];
+  };
+  // build only the expanded paths, flattened for rendering
+  const treeRows = [];
+  (function walk(node) {
+    treeRows.push(node);
+    if (node.open && !node.leaf) childrenOf(node).forEach(walk);
+  })(nodeOf('ALL', 'Nordics', 0, () => true));
+  // consolidation proof: root vs sum of markets, and FY vs Σ months (EBIT)
+  const rootE = pnlFromLeaves(Lfc, () => true).ebit;
+  const mktSum = MARKETS.reduce((s, m) => s + pnlFromLeaves(Lfc, o => o.k === m.id).ebit, 0);
+  const monSum = CYM.reduce((s, i) => s + pnl(rowsFC, r => r.i === i).ebit, 0);
+  const consolidated = Math.abs(rootE - mktSum) < 1 && Math.abs(rootE - monSum) < 1;
+  const treeData = { rows: treeRows, cmp: S.cmp, consolidated, resid: rootE - mktSum };
+
+  /* ---- EBIT bridge: base EBIT → forecast EBIT, product-margin buckets then
+     the opex lines. Reconciles because ΔEBIT = ΔPM − Δopex exactly. ---- */
+  const brGm = S.measure === 'gm' ? br : bridge(base, FC, 'gm');
+  const opexBase = pnl(base, () => true), opexFc = pnl(FC, () => true);
+  const ebitParts = [
+    ...brGm.parts.map(p => ({ ...p })),
+    { id:'anp',  lab:'A&P',       v:-(opexFc.anp  - opexBase.anp),  grp:'Opex' },
+    { id:'sell', lab:'Selling',   v:-(opexFc.sell - opexBase.sell), grp:'Opex' },
+    { id:'logi', lab:'Logistics', v:-(opexFc.logi - opexBase.logi), grp:'Opex' },
+    { id:'sga',  lab:'SG&A',      v:-(opexFc.sga  - opexBase.sga),  grp:'Opex' },
+    { id:'da',   lab:'D&A',       v:-(opexFc.da   - opexBase.da),   grp:'Opex' }
+  ];
+  const ebitFrom = brGm.from - opexBase.opex, ebitTo = brGm.to - opexFc.opex;
+  const ebitResid = (ebitTo - ebitFrom) - ebitParts.reduce((a, p) => a + p.v, 0);
+  const ebitBridge = { from:ebitFrom, to:ebitTo, total:ebitTo - ebitFrom, parts:ebitParts,
+    resid:ebitResid, reconciled: Math.abs(ebitResid) < Math.max(1, Math.abs(ebitTo-ebitFrom)*1e-9) };
 
   /* ---- BU mix: how business-unit mix moves blended profitability & price ---- */
   const mixBase = S.cmp === 'BUD' ? BUD : PY;    // FC vs the comparison, full-year, market-focused
@@ -253,7 +307,7 @@ function compute() {
     pick:S.pick, drill, rho:S.rho, k:S.k, sig:SIG,
     br, brGroups: groupParts(br.parts), isolate: S.isolate,
     priceSweep, histBr, histSeries, yearSummary, savedScenarios: SCEN,
-    pnl: pnlData, mix: mixData, opexLines: OPEX_LINES,
+    pnl: pnlData, mix: mixData, opexLines: OPEX_LINES, tree: treeData, ebitBridge,
     reconciled:reconciled(br), grad, sc, torn, mc, hist,
     histMarks: [
       { v:sc.likely, lab:'forecast', col:C.ink },
@@ -293,6 +347,7 @@ const A = {
   setPnlGran:v => { S.pnlGran = v; go(); },
   setPnlShow:v => { S.pnlShow = v; go(); },
   setFocusBu:v => { S.focusBu = v; go(); },
+  toggleNode:id => { S.expanded.has(id) ? S.expanded.delete(id) : S.expanded.add(id); go(); },
   saveScenario: () => {
     const a = agg(ctx.FC);
     SCEN.push({ name: presetName(), gm:a.gm, ns:a.ns, rate:a.rate, units:a.units,

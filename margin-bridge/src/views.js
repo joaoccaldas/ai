@@ -582,6 +582,49 @@ export function renderPnl(root, ctx, A) {
   }
   st.appendChild(t); root.appendChild(st);
 
+  /* EBIT bridge — the full variance walk, product-margin buckets then opex lines */
+  const eb = ctx.ebitBridge;
+  const ebP = h('section', 'panel hero');
+  ebP.appendChild(h('div', 'phead', `<h2>EBIT bridge · ${ctx.cmp === 'BUD' ? 'budget' : 'prior year'} to forecast</h2>
+    <p>Product-margin levers, then each operating-cost line, walking base EBIT to forecast EBIT.
+       ΔEBIT = Δ product margin − Δ operating costs, and it reconciles to the cent.</p>`));
+  const ebrd = h('div', 'readout');
+  ebrd.innerHTML = `
+    <div><span class="k">Base EBIT</span><span class="v num">${eur(eb.from)}</span></div>
+    <div><span class="k">Forecast EBIT</span><span class="v num">${eur(eb.to)}</span></div>
+    <div><span class="k">Delta</span><span class="v num ${eb.total>=0?'up':'down'}">${seur(eb.total)}</span></div>
+    <div class="${eb.reconciled ? 'seal' : 'seal broken'}"><span class="ring">${eb.reconciled?'✓':'!'}</span>
+      <span>${eb.reconciled?'Reconciled':'Residual'}<br><b class="num">Δ ${eb.resid.toFixed(2)}</b></span></div>`;
+  ebP.appendChild(ebrd);
+  const ebc = h('div', 'chart'); ebP.appendChild(ebc); root.appendChild(ebP);
+  ch.waterfall(ebc, { from:eb.from, to:eb.to, parts:eb.parts, fromLab:'Base EBIT', toLab:'Fcst EBIT', height:300 });
+
+  /* consolidation drill-down: Nordics → market → BU → SKU */
+  const T = ctx.tree;
+  const dp = h('section', 'panel');
+  dp.appendChild(h('div', 'phead', `<h2>Consolidation · Nordics → market → BU → SKU</h2>
+    <p>Click any row to open it — every level is the sum of the one beneath.
+      <span class="okpill${T.consolidated ? '' : ' bad'}">${T.consolidated
+        ? '✓ Consolidated — markets and months both tie to the Nordics total'
+        : '! residual ' + T.resid.toFixed(2)}</span></p>`));
+  const dt = h('table', 'grid tree');
+  dt.innerHTML = `<tr><th>Scope</th><th>Units</th><th>Net sales</th><th>Product margin</th>
+    <th>EBIT</th><th>EBIT %</th><th>Δ EBIT ${ctx.cmp==='BUD'?'vs bud':'vs PY'}</th></tr>` +
+    T.rows.map(n => {
+      const tw = n.leaf ? '<span class="tw leaf"></span>' : `<span class="tw">${n.open ? '▾' : '▸'}</span>`;
+      return `<tr class="tnode lvl${n.level}${n.leaf ? ' leaf' : ''}" data-id="${n.id}">
+        <td class="rowlab" style="padding-left:${4 + n.level*16}px">${tw}${n.label}</td>
+        <td class="num">${Math.round(n.fc.units/1000)}k</td>
+        <td class="num">${eur(n.fc.ns)}</td>
+        <td class="num">${eur(n.fc.pm)} · ${pct(n.fc.pmRate,0)}</td>
+        <td class="num"><b>${eur(n.fc.ebit)}</b></td>
+        <td class="num">${pct(n.fc.ebitRate)}</td>
+        <td class="num ${n.dEbit>=0?'up':'down'}">${seur(n.dEbit)}</td></tr>`;
+    }).join('');
+  dp.appendChild(dt); root.appendChild(dp);
+  dt.querySelectorAll('tr.tnode:not(.leaf)').forEach(tr =>
+    tr.onclick = () => A.toggleNode(tr.dataset.id));
+
   const nt = h('section', 'panel');
   nt.appendChild(h('p', 'note', `Operating costs below product margin — advertising & promotion,
     selling, logistics, SG&A and D&A — are modelled as business-unit-specific shares of net sales, so
@@ -634,6 +677,22 @@ export function renderMix(root, ctx, A) {
     title="${r.name} ${pct(r.wF)}"><span>${r.name}</span><span class="mini">${pct(r.wF,0)}</span></div>`).join('');
   shP.appendChild(bar);
   root.appendChild(shP);
+
+  /* visuals: contribution + landscape, side by side */
+  const g = h('div', 'g2');
+  const cP = h('section', 'panel');
+  cP.appendChild(h('div', 'phead', `<h2>Contribution to the blended-margin move</h2>
+    <p>Each business unit's mix effect and rate effect, in points. Total on the right.</p>`));
+  const cc = h('div', 'chart'); cP.appendChild(cc); g.appendChild(cP);
+
+  const bP = h('section', 'panel');
+  bP.appendChild(h('div', 'phead', `<h2>The mix landscape</h2>
+    <p>Where each unit sits: net-sales share against product-margin rate, bubble sized by net sales.
+       Big-and-thin bottom-right, small-and-rich top-left.</p>`));
+  const bb = h('div', 'chart'); bP.appendChild(bb); g.appendChild(bP);
+  root.appendChild(g);
+  ch.contribBars(cc, M.rows.map(r => ({ name:r.name, me:r.me, re:r.re })));
+  ch.buBubble(bb, { pts: M.rows.map(r => ({ x:r.wF, y:r.pmRate, z:r.ns, col:BU_COL[r.id], lab:r.id })) });
 
   /* the BU table */
   const tP = h('section', 'panel');

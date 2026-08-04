@@ -265,7 +265,9 @@ walk by market.
 | Price-response curve (**Sensitivity** page) | **The price question.** Margin, net sales and volume as price sweeps a range; marks the margin-maximising price, with the elasticity volume offset made explicit. |
 | Scenario compare strip | **Holding options side by side.** Snapshot the current adjustments, then compare each saved scenario's margin, band and P(≥ budget) against the live one. |
 | Interactive **P&L** to EBIT | **The whole statement.** Volume → gross sales → net sales → product margin → operating costs → EBIT, by full year / quarter / month, with variance vs budget and prior year and favourable/unfavourable colouring. |
-| **Mix** decomposition | **BU mix vs profitability.** Splits the blended-margin move into a mix effect (selling a different balance of units) and a rate effect (each unit's own margin), with share, pricing and EBIT per business unit. |
+| **EBIT bridge** | **The full variance walk.** Base EBIT to forecast EBIT through the product-margin buckets and then each operating-cost line — ΔEBIT = Δ product margin − Δ opex, reconciled to the cent. |
+| **Consolidation drill-down** | **Totals that tie out.** Nordics → market → BU → SKU, every level the exact sum of the one beneath (built from shared leaves, proven in the tests and shown by a consolidation seal). Click any row to open it. |
+| **Mix** decomposition + visuals | **BU mix vs profitability.** Splits the blended-margin move into a mix effect and a rate effect, with a net-sales share bar, a per-BU contribution chart (mix vs rate, in points) and a share-vs-margin bubble landscape sized by net sales. |
 | KPI strip with split sparklines | Orientation. Solid to the cut-off, dashed after. |
 | Trajectory + risk band | Where the year is going, and how confidently. |
 | Outcome distribution | Range, and P(≥ budget). |
@@ -380,8 +382,10 @@ delists, horizon-based volatility, a two-block correlation structure, three
 years of history with a year-on-year actuals bridge, a price-sensitivity view,
 in-session scenario compare, a product-margin lever isolation, **a landing-page
 method walkthrough, an interactive P&L from volume to EBIT with quarter/month
-granularity and variance vs budget and prior year, and a business-unit mix
-decomposition (mix effect vs rate effect) of profitability and pricing**.
+granularity and variance vs budget and prior year, a business-unit mix
+decomposition (mix effect vs rate effect) with a contribution chart and a
+share-vs-margin bubble, an EBIT bridge, and a Nordics → market → BU → SKU
+consolidation drill-down where every level provably sums to its parent**.
 
 ---
 
