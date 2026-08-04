@@ -19,11 +19,20 @@ walkthrough of how the forecast and budget are built; the model itself lives at
 `app.html` (the "Open the model" button). It must be served, not opened as a
 `file://` URL — ES modules need an origin. GitHub Pages works as-is.
 
-The model has seven pages: **History** (the actuals and a year-on-year walk),
-**Plan** (assumptions), **Cockpit** (the bridge, scenarios, risk), **P&L**
-(volume to EBIT, by full year / quarter / month, variance vs budget and prior
-year), **Mix** (how business-unit mix moves profitability and pricing),
-**Sensitivity** (the price-response curve) and **Report** (exports).
+The model has two areas. The **monthly margin engine** — **History**, **Plan**,
+**Cockpit**, **P&L** (volume to EBIT, by full year / quarter / month, with an EBIT
+bridge and a Nordics→market→BU→SKU consolidation drill-down), **Mix**,
+**Sensitivity** and **Report**. And the **long-term plan** —
+
+- **MFP · Long-term** — the Miele Financial Plan. Four years of actuals, the 2026
+  budget (actual through July) and a five-year plan (2027–2031) you own: net
+  sales, product margin, margin % and volume, with **editable future years** and
+  a breakdown by **sales channel** (ERT, KRT, Direct Projects, D2C, Customer
+  Service) and by **business unit**, each with adjustable mix. Everything
+  consolidates — Nordics = Σ channels = Σ (channel × BU) — for every year.
+- **Budget 2027** — the long-term plan's 2027 slice spread to months, with a page
+  per sales channel showing the monthly budget by business unit that ties back to
+  the MFP.
 
 ---
 
@@ -335,6 +344,7 @@ app.html              the model: shell + nav
 assets/style.css      tokens, layout, print rules
 src/
   data.js             dimensions, calendar, actuals, budget, FX  ← swap this for real data
+  mfp.js              long-term plan: annual channel×BU history + editable projection
   model.js            calendar split, driver inheritance, forecast build, opex→EBIT, aggregation
   bridge.js           PVM decomposition + reconciliation + drill + movers
   risk.js             historical sigma, gradients, scenario bands, Monte Carlo

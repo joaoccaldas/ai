@@ -11,6 +11,7 @@ import { DRIVERS, newState, ovKey, resolve, summarise, buildForecast,
 import { bridge, bridgeBy, groupParts, reconciled, movers } from './bridge.js';
 import { sigmas, gradients, scenarios, tornado, monteCarlo, histogram } from './risk.js';
 import * as views from './views.js';
+import { buildHistory, project } from './mfp.js';
 import { eur, seur, pct, spp, C } from './charts.js';
 import { exportFacts, exportAssumptions, exportPdf, exportPptx } from './exports.js';
 
@@ -28,6 +29,8 @@ const S = {
   rho: 0.35, k: 1.28
 };
 const SCEN = [];         // saved scenarios for compare (in-memory session store)
+const HIST = buildHistory();   // MFP history is deterministic; build once
+S.mfp = { growth:{}, pm:{}, price:{}, nsAbs:{}, chShare:{}, buShare:{}, planYear:2027, budCh:'ALL' };
 
 /* ------------------------------- compute -------------------------------- */
 function compute() {
@@ -183,6 +186,9 @@ function compute() {
   });
   const mixData = { rows:mixRows, mixEff, rateEff, crossEff,
     blendedF: agg(FC).rate, blendedB: agg(mixBase).rate, cmp:S.cmp };
+
+  /* ---- MFP: long-term plan (annual, channel × BU, 2022–2031) ---- */
+  const mfp = project(HIST, S.mfp);
   const budTotal = agg(BUD)[S.measure === 'gm' ? 'gm' : 'ns'];
   const mc   = monteCarlo(grad, SIG, { n:5000, rho:S.rho, target:budTotal });
   const hist = histogram(mc.samples);
@@ -308,6 +314,7 @@ function compute() {
     br, brGroups: groupParts(br.parts), isolate: S.isolate,
     priceSweep, histBr, histSeries, yearSummary, savedScenarios: SCEN,
     pnl: pnlData, mix: mixData, opexLines: OPEX_LINES, tree: treeData, ebitBridge,
+    mfp, mfpState: S.mfp, hist: HIST,
     reconciled:reconciled(br), grad, sc, torn, mc, hist,
     histMarks: [
       { v:sc.likely, lab:'forecast', col:C.ink },
@@ -348,6 +355,16 @@ const A = {
   setPnlShow:v => { S.pnlShow = v; go(); },
   setFocusBu:v => { S.focusBu = v; go(); },
   toggleNode:id => { S.expanded.has(id) ? S.expanded.delete(id) : S.expanded.add(id); go(); },
+  mfpSet: (kind, year, v) => { const m = S.mfp[kind];
+    if (v === null || v === '' || Number.isNaN(v)) delete m[year]; else m[year] = v; go(); },
+  mfpChShare: (year, ch, v) => { (S.mfp.chShare[year] ??= {});
+    if (v === null || v === '' || Number.isNaN(v)) delete S.mfp.chShare[year][ch]; else S.mfp.chShare[year][ch] = v; go(); },
+  mfpBuShare: (ch, bu, v) => { (S.mfp.buShare[ch] ??= {});
+    if (v === null || v === '' || Number.isNaN(v)) delete S.mfp.buShare[ch][bu]; else S.mfp.buShare[ch][bu] = v; go(); },
+  mfpPlanYear: y => { S.mfp.planYear = y; go(); },
+  mfpBudCh: c => { S.mfp.budCh = c; go(); },
+  mfpReset: () => { S.mfp = { growth:{}, pm:{}, price:{}, nsAbs:{}, chShare:{}, buShare:{},
+    planYear:S.mfp.planYear, budCh:S.mfp.budCh }; go(); },
   saveScenario: () => {
     const a = agg(ctx.FC);
     SCEN.push({ name: presetName(), gm:a.gm, ns:a.ns, rate:a.rate, units:a.units,
@@ -410,7 +427,8 @@ const A = {
 /* -------------------------------- routing ------------------------------- */
 const PAGES = { history:views.renderHistory, plan:views.renderPlan, cockpit:views.renderCockpit,
                 pnl:views.renderPnl, mix:views.renderMix,
-                sensitivity:views.renderSensitivity, report:views.renderReport };
+                sensitivity:views.renderSensitivity, report:views.renderReport,
+                mfp:views.renderMfp, budget:views.renderBudget };
 
 function go() {
   ctx = compute();

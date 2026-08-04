@@ -363,6 +363,70 @@ export function buBubble(host, { pts }, height = 232) {
   return s;
 }
 
+/* --------------------------- MFP: multi-year line ------------------------ */
+export function mfpLine(host, { labels, series, splitAt, height = 250, fmt = eur }) {
+  clear(host);
+  const W = Math.max(460, host.clientWidth || 780), H = height;
+  const s = svg(W, H); host.appendChild(s);
+  const pad = { l:52, r:52, t:16, b:26 }, iw = W-pad.l-pad.r, ih = H-pad.t-pad.b;
+  const all = series.flatMap(se => se.vals).filter(v => v != null);
+  const lo = Math.min(...all) * 0.9, hi = Math.max(...all) * 1.06;
+  const X = i => pad.l + i/(labels.length-1)*iw, Y = v => pad.t + ih - (v-lo)/((hi-lo)||1)*ih;
+  for (let i = 0; i <= 3; i++) { const v = lo + (hi-lo)*i/3;
+    s.appendChild(el('line', { x1:pad.l, x2:W-pad.r, y1:Y(v), y2:Y(v), stroke:C.rule }));
+    s.appendChild(tx(pad.l-6, Y(v)+3, fmt(v), { 'text-anchor':'end', 'font-size':9 })); }
+  if (splitAt != null) {
+    const x = X(splitAt);
+    s.appendChild(el('line', { x1:x, x2:x, y1:pad.t, y2:pad.t+ih, stroke:C.ink, 'stroke-width':1, 'stroke-dasharray':'3 3' }));
+    s.appendChild(tx(x+4, pad.t+10, 'plan →', { 'font-size':9, fill:C.ink }));
+  }
+  series.forEach(se => {
+    // solid up to split, dashed after
+    const solid = se.vals.map((v,i)=> splitAt==null||i<=splitAt ? (v==null?null:`${X(i)},${Y(v)}`):null).filter(Boolean);
+    const dash  = se.vals.map((v,i)=> splitAt==null||i>=splitAt ? (v==null?null:`${X(i)},${Y(v)}`):null).filter(Boolean);
+    if (solid.length) s.appendChild(el('polyline',{points:solid.join(' '),fill:'none',stroke:se.col,'stroke-width':se.w||2.2,'stroke-linejoin':'round'}));
+    if (dash.length)  s.appendChild(el('polyline',{points:dash.join(' '),fill:'none',stroke:se.col,'stroke-width':se.w||2.2,'stroke-dasharray':'5 3','stroke-linejoin':'round'}));
+    se.vals.forEach((v,i)=>{ if(v!=null) s.appendChild(el('circle',{cx:X(i),cy:Y(v),r:2.4,fill:se.col})); });
+  });
+  labels.forEach((l,i)=> s.appendChild(tx(X(i), H-8, l, { 'text-anchor':'middle', 'font-size':9,
+    fill: (splitAt!=null && i>splitAt) ? C.steel : C.ink })));
+  if (series.length>1) series.forEach((se,i)=> s.appendChild(tx(W-pad.r+4, pad.t+10+i*13, se.label, { 'font-size':9, fill:se.col })));
+  return s;
+}
+
+/* ------------------------- MFP: stacked columns -------------------------- */
+export function stackCols(host, { labels, keys, series, cols, names, height = 240, pct = false, splitAt = null }) {
+  clear(host);
+  const W = Math.max(420, host.clientWidth || 720), H = height;
+  const s = svg(W, H); host.appendChild(s);
+  const pad = { l:46, r:12, t:14, b:36 }, iw = W-pad.l-pad.r, ih = H-pad.t-pad.b;
+  const totals = labels.map((_, i) => keys.reduce((a, k) => a + (series[k][i]||0), 0));
+  const max = pct ? 1 : Math.max(...totals) * 1.05;
+  const bw = iw/labels.length, gap = bw*0.32, X = i => pad.l + i*bw + gap/2;
+  const Y = v => pad.t + ih - v/(max||1)*ih;
+  for (let i = 0; i <= 4; i++) { const y = pad.t + ih - ih*i/4;
+    s.appendChild(el('line',{x1:pad.l,x2:W-pad.r,y1:y,y2:y,stroke:C.rule}));
+    s.appendChild(tx(pad.l-6,y+3, pct? (i*25)+'%' : eur(max*i/4), {'text-anchor':'end','font-size':9})); }
+  labels.forEach((lab, i) => {
+    let run = 0; const t = totals[i] || 1;
+    keys.forEach(k => {
+      const raw = series[k][i]||0, v = pct ? raw/t : raw; if (v<=0) return;
+      const y0 = Y(run+v), h = Y(run)-Y(run+v);
+      s.appendChild(el('rect',{ x:X(i), y:y0, width:bw-gap, height:Math.max(0,h), fill:cols[k], opacity:.92 }));
+      run += v;
+    });
+    s.appendChild(tx(X(i)+(bw-gap)/2, H-20, lab, { 'text-anchor':'middle', 'font-size':9,
+      fill:(splitAt!=null && i>splitAt)?C.steel:C.ink }));
+  });
+  if (splitAt!=null){ const x = pad.l + (splitAt+1)*bw;
+    s.appendChild(el('line',{x1:x,x2:x,y1:pad.t,y2:pad.t+ih,stroke:C.ink,'stroke-dasharray':'3 3'})); }
+  // legend
+  const lg = names||{}; let lx = pad.l;
+  keys.forEach(k => { s.appendChild(el('rect',{x:lx,y:H-11,width:9,height:9,fill:cols[k]}));
+    s.appendChild(tx(lx+12,H-3, lg[k]||k, {'font-size':9})); lx += 12 + ((lg[k]||k).length*6.2) + 12; });
+  return s;
+}
+
 /* ------------------------------- sparkline ------------------------------- */
 export function spark(vals, w, h, col, split) {
   const s = svg(w, h); s.setAttribute('width', w);
