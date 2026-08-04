@@ -6,7 +6,7 @@
 import { generateAll, MARKETS, BUS, CLASSES, MONTH_NAMES, N_MONTHS, CY_START,
          priorYearStart, HIST_YEARS, isCY, monthOf, label } from './data.js';
 import { DRIVERS, newState, ovKey, resolve, summarise, buildForecast,
-         stampPY, stampBUD, fxOf, agg, byMonth, meas } from './model.js';
+         stampPY, stampBUD, fxOf, agg, byMonth, meas, pnl, OPEX_LINES } from './model.js';
 import { bridge, bridgeBy, groupParts, reconciled, movers } from './bridge.js';
 import { sigmas, gradients, scenarios, tornado, monteCarlo, histogram } from './risk.js';
 import * as views from './views.js';
@@ -20,6 +20,9 @@ const S = {
   page: 'plan', tab: 'all', gridDrv: 'growth',
   cmp: 'BUD', measure: 'gm', focusMkt: 'ALL', pick: null,
   isolate: false,        // cockpit: collapse the walk onto lever groups
+  pnlGran: 'fy',         // P&L period grain: fy | q | m
+  pnlShow: 'val',        // P&L cell content: val | bud | py (variance)
+  focusBu: 'ALL',        // P&L / mix business-unit focus
   rho: 0.35, k: 1.28
 };
 const SCEN = [];         // saved scenarios for compare (in-memory session store)
@@ -91,6 +94,41 @@ function compute() {
     return { y, lab: y === HIST_YEARS ? 'CY · forecast' : y === HIST_YEARS - 1 ? 'PY' : `Y-${HIST_YEARS - y}`,
              units:a.units, ns:a.ns, gm:a.gm, rate:a.rate };
   });
+
+  /* ---- interactive P&L: volume → EBIT, by period, with variance ---- */
+  const bf = r => S.focusBu === 'ALL' || r.bu === S.focusBu;
+  const sf = r => mf(r) && bf(r);
+  const CYM = Array.from({ length: 12 }, (_, m) => CY_START + m);
+  const periodDefs = S.pnlGran === 'm'
+    ? CYM.map((i, m) => ({ label: MONTH_NAMES[m], months: [i] }))
+    : S.pnlGran === 'q'
+      ? [0,1,2,3].map(q => ({ label: 'Q' + (q+1), months: CYM.slice(q*3, q*3+3) }))
+      : [{ label: 'Full year', months: CYM }];
+  const inM   = ms => r => ms.includes(r.i) && sf(r);
+  const inMpy = ms => r => ms.includes(r.i + 12) && sf(r);   // PY same calendar months
+  const pnlPeriods = periodDefs.map(pd => ({ label: pd.label,
+    fc: pnl(rowsFC, inM(pd.months)), bud: pnl(rowsBUD, inM(pd.months)), py: pnl(rowsPY, inMpy(pd.months)) }));
+  const pnlFY = { fc: pnl(rowsFC, inM(CYM)), bud: pnl(rowsBUD, inM(CYM)), py: pnl(rowsPY, inMpy(CYM)) };
+  const pnlData = { gran:S.pnlGran, show:S.pnlShow, focusBu:S.focusBu, periods:pnlPeriods, fy:pnlFY };
+
+  /* ---- BU mix: how business-unit mix moves blended profitability & price ---- */
+  const mixBase = S.cmp === 'BUD' ? BUD : PY;    // FC vs the comparison, full-year, market-focused
+  const totF = agg(FC).ns || 1, totB = agg(mixBase).ns || 1;
+  let mixEff = 0, rateEff = 0, crossEff = 0;
+  const mixRows = BUS.map(b => {
+    const f = agg(FC, r => r.bu === b.id), z = agg(mixBase, r => r.bu === b.id);
+    const wF = f.ns / totF, wB = z.ns / totB, rF = f.rate, rB = z.rate;
+    const me = (wF - wB) * rB, re = wB * (rF - rB), ce = (wF - wB) * (rF - rB);
+    mixEff += me; rateEff += re; crossEff += ce;
+    const pF = pnl(FC, r => r.bu === b.id);
+    return { id:b.id, name:b.name, wF, wB, rF, rB, dW:wF - wB,
+             units:f.units, ns:f.ns, asp:f.asp, disc:f.ns?f.disc/f.gs:0,
+             gsShareDisc: f.gs ? (f.disc)/f.gs : 0,
+             ebitRate: pF.ebitRate, pmRate: pF.pmRate, me, re, ce,
+             priceIdx: z.asp ? f.asp / z.asp - 1 : 0 };
+  });
+  const mixData = { rows:mixRows, mixEff, rateEff, crossEff,
+    blendedF: agg(FC).rate, blendedB: agg(mixBase).rate, cmp:S.cmp };
   const budTotal = agg(BUD)[S.measure === 'gm' ? 'gm' : 'ns'];
   const mc   = monteCarlo(grad, SIG, { n:5000, rho:S.rho, target:budTotal });
   const hist = histogram(mc.samples);
@@ -215,6 +253,7 @@ function compute() {
     pick:S.pick, drill, rho:S.rho, k:S.k, sig:SIG,
     br, brGroups: groupParts(br.parts), isolate: S.isolate,
     priceSweep, histBr, histSeries, yearSummary, savedScenarios: SCEN,
+    pnl: pnlData, mix: mixData, opexLines: OPEX_LINES,
     reconciled:reconciled(br), grad, sc, torn, mc, hist,
     histMarks: [
       { v:sc.likely, lab:'forecast', col:C.ink },
@@ -251,6 +290,9 @@ const A = {
   setFocusMkt:m => { S.focusMkt = m; go(); },
   pickBucket:b => { S.pick = S.pick === b ? null : b; go(); },
   setIsolate:v => { S.isolate = v; S.pick = null; go(); },
+  setPnlGran:v => { S.pnlGran = v; go(); },
+  setPnlShow:v => { S.pnlShow = v; go(); },
+  setFocusBu:v => { S.focusBu = v; go(); },
   saveScenario: () => {
     const a = agg(ctx.FC);
     SCEN.push({ name: presetName(), gm:a.gm, ns:a.ns, rate:a.rate, units:a.units,
@@ -312,6 +354,7 @@ const A = {
 
 /* -------------------------------- routing ------------------------------- */
 const PAGES = { history:views.renderHistory, plan:views.renderPlan, cockpit:views.renderCockpit,
+                pnl:views.renderPnl, mix:views.renderMix,
                 sensitivity:views.renderSensitivity, report:views.renderReport };
 
 function go() {

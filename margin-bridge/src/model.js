@@ -219,3 +219,41 @@ export function agg(rows, pred) {
 export function byMonth(rows, pred) {
   return Array.from({ length: N_MONTHS }, (_, i) => agg(rows, r => r.i === i && (!pred || pred(r))));
 }
+
+/* --------------------------- operating costs → EBIT ----------------------
+   Product margin is where the fact table stops. To reach EBIT we layer the
+   below-the-line operating costs the P&L actually carries, as a share of net
+   sales and — deliberately — different by business unit: small domestic
+   appliances spend far more on advertising and promotion than built-in
+   laundry, so business-unit mix moves EBIT, not just product margin. Rates are
+   the same across versions, so variance flows from what actually changed
+   (volume, mix, price, cost), not from re-planning overhead.                */
+export const OPEX = {
+  //            A&P     selling logistics SG&A    D&A
+  LAU: { anp:.074, sell:.049, logi:.045, sga:.055, da:.019 },
+  COO: { anp:.070, sell:.048, logi:.051, sga:.055, da:.021 },
+  REF: { anp:.072, sell:.050, logi:.056, sga:.056, da:.020 },
+  DIS: { anp:.078, sell:.049, logi:.045, sga:.055, da:.018 },
+  SDA: { anp:.115, sell:.061, logi:.038, sga:.061, da:.012 }   // SDA: heavy A&P, thin margin
+};
+export const OPEX_LINES = [
+  { key:'anp',  name:'Advertising & promotion' },
+  { key:'sell', name:'Selling & commercial' },
+  { key:'logi', name:'Logistics & distribution' },
+  { key:'sga',  name:'SG&A / overhead' },
+  { key:'da',   name:'Depreciation & amortisation' }
+];
+
+/** Full P&L from volume to EBIT for a set of rows (already period/scope filtered). */
+export function pnl(rows, pred) {
+  const a = agg(rows, pred);
+  const nsByBu = {};
+  for (const r of rows) { if (pred && !pred(r)) continue; nsByBu[r.bu] = (nsByBu[r.bu] ?? 0) + meas(r).ns; }
+  const line = k => Object.entries(nsByBu).reduce((s, [bu, ns]) => s + ns * (OPEX[bu]?.[k] ?? 0), 0);
+  const anp = line('anp'), sell = line('sell'), logi = line('logi'), sga = line('sga'), da = line('da');
+  const opex = anp + sell + logi + sga + da;
+  const ebit = a.gm - opex;
+  return { units:a.units, gs:a.gs, disc:a.disc, reb:a.reb, ns:a.ns, cogs:a.cogs, pm:a.gm,
+           anp, sell, logi, sga, da, opex, ebit,
+           pmRate: a.ns ? a.gm / a.ns : 0, ebitRate: a.ns ? ebit / a.ns : 0 };
+}

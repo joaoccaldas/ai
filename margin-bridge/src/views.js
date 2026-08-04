@@ -496,6 +496,170 @@ function groupPartsLocal(parts) {
   return order.filter(g => by[g]).map(g => by[g]);
 }
 
+/* =========================== PAGE — P&L (to EBIT) ======================== */
+const PNL_LINES = [
+  { k:'units', name:'Volume',                     u:'k', fav:1 },
+  { k:'gs',    name:'Gross sales',                 fav:1 },
+  { k:'disc',  name:'Discounts',        neg:1, ind:1, fav:-1 },
+  { k:'reb',   name:'Rebates & returns', neg:1, ind:1, fav:-1 },
+  { k:'ns',    name:'Net sales',        sub:1, fav:1 },
+  { k:'cogs',  name:'COGS',             neg:1, ind:1, fav:-1 },
+  { k:'pm',    name:'Product margin',   sub:1, fav:1 },
+  { k:'pmRate',name:'margin %',         pct:1, ind:1, mut:1, fav:1 },
+  { k:'anp',   name:'Advertising & promotion', neg:1, ind:1, fav:-1 },
+  { k:'sell',  name:'Selling & commercial',    neg:1, ind:1, fav:-1 },
+  { k:'logi',  name:'Logistics & distribution',neg:1, ind:1, fav:-1 },
+  { k:'sga',   name:'SG&A / overhead',         neg:1, ind:1, fav:-1 },
+  { k:'da',    name:'Depreciation & amortisation', neg:1, ind:1, fav:-1 },
+  { k:'ebit',  name:'EBIT',             tot:1, fav:1 },
+  { k:'ebitRate', name:'EBIT %',        pct:1, ind:1, mut:1, fav:1 }
+];
+const money = v => v < 0 ? '−' + eur(-v) : eur(v);
+const uk = v => Math.round(v/1000) + 'k';
+const cellFmt = (o, l) => l.pct ? pct(o[l.k]) : l.u === 'k' ? uk(o[l.k]) : money(l.neg ? -o[l.k] : o[l.k]);
+// dRaw already carries the P&L sign (deductions are flipped negative), so a
+// positive dRaw is always favourable to EBIT — sales up OR cost down. No
+// separate favourability multiplier is needed, or it double-counts.
+const dRaw = (o, b, l) => l.pct ? (o[l.k]-b[l.k]) : ((l.neg?-o[l.k]:o[l.k]) - (l.neg?-b[l.k]:b[l.k]));
+const dFmt = (o, b, l) => l.pct ? spp(o[l.k]-b[l.k]) : (l.u==='k' ? (dRaw(o,b,l)>=0?'+':'−')+uk(Math.abs(dRaw(o,b,l))) : seur(dRaw(o,b,l)));
+const dCls = (o, b, l) => (dRaw(o,b,l) >= 0 ? 'up' : 'down');
+const rowCls = l => [l.sub && 'sub', l.tot && 'tot', l.mut && 'mut', l.ind && 'ind'].filter(Boolean).join(' ');
+
+export function renderPnl(root, ctx, A) {
+  root.innerHTML = '';
+  const P = ctx.pnl;
+  const ctl = h('section', 'ctlbar');
+  const mk = (opts, cur, on) => { const g = h('div', 'seg');
+    opts.forEach(([v, l]) => { const b = h('button', 'sgb' + (cur === v ? ' on' : ''), l);
+      b.onclick = () => on(v); g.appendChild(b); }); return g; };
+  ctl.appendChild(mk([['fy','Full year'],['q','Quarterly'],['m','Monthly']], P.gran, A.setPnlGran));
+  ctl.appendChild(mk([['ALL','Nordics'],...MARKETS.map(m => [m.id, m.name])], ctx.focusMkt, A.setFocusMkt));
+  ctl.appendChild(mk([['ALL','All BUs'],...BUS.map(b => [b.id, b.name])], P.focusBu, A.setFocusBu));
+  if (P.gran !== 'fy')
+    ctl.appendChild(mk([['val','Values'],['bud','Δ vs budget'],['py','Δ vs prior year']], P.show, A.setPnlShow));
+  root.appendChild(ctl);
+
+  /* headline */
+  const f = P.fy.fc, bud = P.fy.bud, py = P.fy.py;
+  const kp = h('section', 'kpis');
+  [['Net sales', money(f.ns), dFmt(f,bud,{k:'ns',fav:1}), dCls(f,bud,{k:'ns',fav:1})],
+   ['Product margin', money(f.pm) + ` · ${pct(f.pmRate)}`, spp(f.pmRate-bud.pmRate), f.pmRate>=bud.pmRate?'up':'down'],
+   ['Operating costs', money(f.opex), dFmt(f,bud,{k:'opex',neg:1,fav:-1}), dCls(f,bud,{k:'opex',neg:1,fav:-1})],
+   ['EBIT', money(f.ebit) + ` · ${pct(f.ebitRate)}`, dFmt(f,bud,{k:'ebit',fav:1})+' vs bud', dCls(f,bud,{k:'ebit',fav:1})]
+  ].forEach(([k, v, d, cls]) => {
+    const c = h('div', 'kpi');
+    c.innerHTML = `<div class="k">${k}</div><div class="v num">${v}</div>
+      <div class="d num ${cls}">${d}</div>`;
+    kp.appendChild(c);
+  });
+  root.appendChild(kp);
+
+  /* statement */
+  const st = h('section', 'panel');
+  st.appendChild(h('div', 'phead', `<h2>Profit &amp; loss · volume to EBIT</h2>
+    <p>${P.gran === 'fy'
+      ? 'Full-year forecast against budget and prior year. Green is favourable to EBIT, red is not.'
+      : `By ${P.gran === 'q' ? 'quarter' : 'month'}, showing ${P.show === 'val' ? 'values' : P.show === 'bud' ? 'variance vs budget' : 'variance vs prior year'}. Actuals to the cut-off, forecast after.`}</p>`));
+  const t = h('table', 'grid pnl');
+
+  if (P.gran === 'fy') {
+    t.innerHTML = `<tr><th>Line</th><th>Forecast</th><th>Budget</th><th>Δ bud</th><th>Prior yr</th><th>Δ PY</th></tr>` +
+      PNL_LINES.map(l => `<tr class="${rowCls(l)}"><td class="rowlab">${l.name}</td>
+        <td class="num">${cellFmt(f, l)}</td>
+        <td class="num soft">${cellFmt(bud, l)}</td>
+        <td class="num ${dCls(f,bud,l)}">${dFmt(f,bud,l)}</td>
+        <td class="num soft">${cellFmt(py, l)}</td>
+        <td class="num ${dCls(f,py,l)}">${dFmt(f,py,l)}</td></tr>`).join('');
+  } else {
+    const per = P.periods, mode = P.show;
+    const cell = (pd, l) => mode === 'val' ? `<td class="num">${cellFmt(pd.fc, l)}</td>`
+      : `<td class="num ${dCls(pd.fc, mode==='bud'?pd.bud:pd.py, l)}">${dFmt(pd.fc, mode==='bud'?pd.bud:pd.py, l)}</td>`;
+    const fyCell = l => mode === 'val' ? `<td class="num tot">${cellFmt(f, l)}</td>`
+      : `<td class="num tot ${dCls(f, mode==='bud'?bud:py, l)}">${dFmt(f, mode==='bud'?bud:py, l)}</td>`;
+    t.innerHTML = `<tr><th>Line</th>${per.map(p => `<th>${p.label}</th>`).join('')}<th>FY</th></tr>` +
+      PNL_LINES.map(l => `<tr class="${rowCls(l)}"><td class="rowlab">${l.name}</td>` +
+        per.map(pd => cell(pd, l)).join('') + fyCell(l) + `</tr>`).join('');
+  }
+  st.appendChild(t); root.appendChild(st);
+
+  const nt = h('section', 'panel');
+  nt.appendChild(h('p', 'note', `Operating costs below product margin — advertising & promotion,
+    selling, logistics, SG&A and D&A — are modelled as business-unit-specific shares of net sales, so
+    a shift toward small domestic appliances (heavier promotion, thinner margin) lowers EBIT even when
+    product margin holds. Rates are constant across versions; every variance is a real change in volume,
+    mix, price or cost, not re-planned overhead.`));
+  root.appendChild(nt);
+}
+
+/* ============================ PAGE — BU MIX ============================== */
+const BU_COL = { LAU:'#2F5D50', COO:'#B08A3E', REF:'#3f6d8a', DIS:'#8a6d3f', SDA:'#9E1B1B' };
+
+export function renderMix(root, ctx, A) {
+  root.innerHTML = '';
+  const M = ctx.mix;
+  const ctl = h('section', 'ctlbar');
+  const mk = (opts, cur, on) => { const g = h('div', 'seg');
+    opts.forEach(([v, l]) => { const b = h('button', 'sgb' + (cur === v ? ' on' : ''), l);
+      b.onclick = () => on(v); g.appendChild(b); }); return g; };
+  ctl.appendChild(mk([['BUD','vs budget'],['PY','vs prior year']], ctx.cmp, A.setCmp));
+  ctl.appendChild(mk([['ALL','Nordics'],...MARKETS.map(m => [m.id, m.name])], ctx.focusMkt, A.setFocusMkt));
+  root.appendChild(ctl);
+
+  /* decomposition headline */
+  const total = M.mixEff + M.rateEff + M.crossEff;
+  const base = M.cmp === 'BUD' ? 'budget' : 'prior year';
+  const intro = h('section', 'panel');
+  intro.appendChild(h('div', 'phead', `<h2>What business-unit mix is doing to profitability</h2>
+    <p>The blended product-margin rate moved <b>${spp(M.blendedF - M.blendedB)}</b> versus ${base}.
+       That split into a <b>mix</b> effect — selling a different balance of business units — and a
+       <b>rate</b> effect — each unit's own margin moving.</p>`));
+  root.appendChild(intro);
+
+  const kp = h('section', 'kpis');
+  [['Blended margin Δ', spp(M.blendedF - M.blendedB), (M.blendedF-M.blendedB)>=0?'up':'down'],
+   ['Mix effect', spp(M.mixEff), M.mixEff>=0?'up':'down'],
+   ['Rate effect', spp(M.rateEff), M.rateEff>=0?'up':'down'],
+   ['Interaction', spp(M.crossEff), M.crossEff>=0?'up':'down']].forEach(([k, v, cls]) => {
+    const c = h('div', 'kpi'); c.innerHTML = `<div class="k">${k}</div><div class="v num ${cls}">${v}</div>`;
+    kp.appendChild(c);
+  });
+  root.appendChild(kp);
+
+  /* net-sales share bar */
+  const shP = h('section', 'panel');
+  shP.appendChild(h('div', 'phead', `<h2>Net-sales share by business unit</h2>
+    <p>Forecast weight. Bar width is share; the number under each is its product-margin rate.</p>`));
+  const bar = h('div', 'mixbar');
+  bar.innerHTML = M.rows.map(r => `<div class="mseg" style="flex:${Math.max(0.001,r.wF)};background:${BU_COL[r.id]}"
+    title="${r.name} ${pct(r.wF)}"><span>${r.name}</span><span class="mini">${pct(r.wF,0)}</span></div>`).join('');
+  shP.appendChild(bar);
+  root.appendChild(shP);
+
+  /* the BU table */
+  const tP = h('section', 'panel');
+  tP.appendChild(h('div', 'phead', `<h2>Business units, isolated</h2>
+    <p>Share, margin and pricing per unit, and each unit's contribution to the blended-margin move.</p>`));
+  const t = h('table', 'grid');
+  t.innerHTML = `<tr><th>Business unit</th><th>NS share</th><th>Δ share</th><th>Margin %</th>
+    <th>EBIT %</th><th>Price vs ${base}</th><th>Mix effect</th><th>Rate effect</th></tr>` +
+    M.rows.map(r => `<tr><td class="rowlab"><i class="dot" style="background:${BU_COL[r.id]}"></i>${r.name}</td>
+      <td class="num">${pct(r.wF)}</td>
+      <td class="num ${r.dW>=0?'up':'down'}">${(r.dW>=0?'+':'−')}${Math.abs(r.dW*100).toFixed(1)}pp</td>
+      <td class="num">${pct(r.pmRate)}</td>
+      <td class="num">${pct(r.ebitRate)}</td>
+      <td class="num ${r.priceIdx>=0?'up':'down'}">${(r.priceIdx>=0?'+':'−')}${Math.abs(r.priceIdx*100).toFixed(1)}%</td>
+      <td class="num ${r.me>=0?'up':'down'}">${spp(r.me)}</td>
+      <td class="num ${r.re>=0?'up':'down'}">${spp(r.re)}</td></tr>`).join('');
+  tP.appendChild(t); root.appendChild(tP);
+
+  const nt = h('section', 'panel');
+  nt.appendChild(h('p', 'note', `Read it as: a positive <b>mix effect</b> means the portfolio tilted toward
+    higher-margin business units; a positive <b>rate effect</b> means units earned more within themselves.
+    SDA is the swing factor — it carries the thinnest product margin and the heaviest promotion, so growing
+    its share lifts volume but drags blended margin and EBIT.`));
+  root.appendChild(nt);
+}
+
 /* ====================== PAGE 4 — SENSITIVITY (price) ===================== */
 export function renderSensitivity(root, ctx, A) {
   root.innerHTML = '';

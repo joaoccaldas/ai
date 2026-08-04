@@ -14,8 +14,16 @@ npm start           # python3 -m http.server 8080
 npm test            # engine assertions, including bridge reconciliation
 ```
 
-Open `http://localhost:8080`. It must be served, not opened as a `file://` URL —
-ES modules need an origin. GitHub Pages works as-is.
+Open `http://localhost:8080`. That serves the **landing page** — a visual
+walkthrough of how the forecast and budget are built; the model itself lives at
+`app.html` (the "Open the model" button). It must be served, not opened as a
+`file://` URL — ES modules need an origin. GitHub Pages works as-is.
+
+The model has seven pages: **History** (the actuals and a year-on-year walk),
+**Plan** (assumptions), **Cockpit** (the bridge, scenarios, risk), **P&L**
+(volume to EBIT, by full year / quarter / month, variance vs budget and prior
+year), **Mix** (how business-unit mix moves profitability and pricing),
+**Sensitivity** (the price-response curve) and **Report** (exports).
 
 ---
 
@@ -256,6 +264,8 @@ walk by market.
 | Waterfall, drillable | **Explanation.** Opens the page, because in a review nobody asks what net sales is — they ask why it moved. **Isolate levers** collapses it onto Volume / Mix / Pricing / Cost / Lifecycle / FX so the three commercial levers stand alone. |
 | Price-response curve (**Sensitivity** page) | **The price question.** Margin, net sales and volume as price sweeps a range; marks the margin-maximising price, with the elasticity volume offset made explicit. |
 | Scenario compare strip | **Holding options side by side.** Snapshot the current adjustments, then compare each saved scenario's margin, band and P(≥ budget) against the live one. |
+| Interactive **P&L** to EBIT | **The whole statement.** Volume → gross sales → net sales → product margin → operating costs → EBIT, by full year / quarter / month, with variance vs budget and prior year and favourable/unfavourable colouring. |
+| **Mix** decomposition | **BU mix vs profitability.** Splits the blended-margin move into a mix effect (selling a different balance of units) and a rate effect (each unit's own margin), with share, pricing and EBIT per business unit. |
 | KPI strip with split sparklines | Orientation. Solid to the cut-off, dashed after. |
 | Trajectory + risk band | Where the year is going, and how confidently. |
 | Outcome distribution | Range, and P(≥ budget). |
@@ -318,11 +328,12 @@ the bridge chart being editable in the deck.
 ## 9. Layout
 
 ```
-index.html            shell + nav
+index.html            landing page — the visual method walkthrough
+app.html              the model: shell + nav
 assets/style.css      tokens, layout, print rules
 src/
   data.js             dimensions, calendar, actuals, budget, FX  ← swap this for real data
-  model.js            calendar split, driver inheritance, forecast build, aggregation
+  model.js            calendar split, driver inheritance, forecast build, opex→EBIT, aggregation
   bridge.js           PVM decomposition + reconciliation + drill + movers
   risk.js             historical sigma, gradients, scenario bands, Monte Carlo
   charts.js           SVG primitives — no chart library
@@ -365,9 +376,12 @@ Honest list, in the order I would do them:
 Landed since the first cut: exactly units-neutral premiumisation, a split
 gross-to-net (on-invoice discount vs off-invoice rebate) as two bridge buckets, a
 per-BU price-elasticity dial, a dedicated lifecycle bucket for launches and
-delists, horizon-based volatility, a two-block correlation structure, **three
+delists, horizon-based volatility, a two-block correlation structure, three
 years of history with a year-on-year actuals bridge, a price-sensitivity view,
-in-session scenario compare, and a product-margin lever isolation**.
+in-session scenario compare, a product-margin lever isolation, **a landing-page
+method walkthrough, an interactive P&L from volume to EBIT with quarter/month
+granularity and variance vs budget and prior year, and a business-unit mix
+decomposition (mix effect vs rate effect) of profitability and pricing**.
 
 ---
 
