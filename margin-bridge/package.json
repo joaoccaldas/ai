@@ -1,0 +1,11 @@
+{
+  "name": "margin-bridge",
+  "version": "0.1.0",
+  "description": "Driver-based forecasting and price-volume-mix bridging for a multi-market, multi-BU portfolio.",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "test": "node test/engine.test.js && node test/static.test.js"
+  },
+  "license": "MIT"
+}
