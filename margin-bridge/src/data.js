@@ -54,11 +54,23 @@ export const CLASSES = [
 ];
 
 export const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-export const N_MONTHS = 24;
-export const CY_START = 12;
+/* Calendar: HIST_YEARS full years of monthly actuals, then the current year we
+   forecast. Two prior years give a real historical base — a year-on-year walk,
+   a trend to read, and enough series length for honest volatility. */
+export const HIST_YEARS = 2;
+export const N_MONTHS = 12 * (HIST_YEARS + 1);
+export const CY_START = 12 * HIST_YEARS;
 export const isCY = i => i >= CY_START;
 export const monthOf = i => i % 12;
-export const label = i => MONTH_NAMES[i % 12] + (isCY(i) ? ' CY' : ' PY');
+export const yearOf = i => Math.floor(i / 12);               // 0 … HIST_YEARS
+/* years before current: 0 = CY, 1 = PY (prior), 2 = PY-2 … */
+export const yearsBack = i => HIST_YEARS - yearOf(i);
+export const label = i => {
+  const yb = yearsBack(i);
+  return MONTH_NAMES[i % 12] + ' ' + (yb === 0 ? 'CY' : yb === 1 ? 'PY' : `Y-${yb}`);
+};
+/* the immediately-prior year's index for the same month */
+export const priorYearStart = CY_START - 12;
 
 /* --------------------------------- build --------------------------------- */
 function buildSkus(r) {
@@ -99,19 +111,21 @@ export function generateAll() {
       const mktVol   = s.vol * m.w * (0.80 + r() * 0.45) * 140;
 
       for (let i = 0; i < N_MONTHS; i++) {
-        const y = isCY(i) ? 1 : 0, mo = monthOf(i);
+        const y = yearOf(i), mo = monthOf(i);        // 0 … HIST_YEARS, year over year
+        // each year compounds a little price, cost and discount inflation, so the
+        // history has a real trend to read rather than two flat blocks.
         const units = mktVol * bu.seas[mo] * Math.pow(s.trend, y) * (0.88 + r() * 0.24);
-        const aspG  = mktPrice * (y ? 1.028 : 1) * (0.985 + r() * 0.030);
-        const deduct = s.baseDisc * (y ? 1.05 : 1) * (0.94 + r() * 0.12);
+        const aspG  = mktPrice * Math.pow(1.024, y) * (0.985 + r() * 0.030);
+        const deduct = s.baseDisc * Math.pow(1.03, y) * (0.94 + r() * 0.12);
         const discR = deduct * (1 - s.rebShare);     // on-invoice
-        const rebR  = deduct * s.rebShare * (y ? 1.06 : 1) * (0.97 + r() * 0.06); // off-invoice
-        const cogsU = mktPrice * s.baseCogsR * (y ? 1.019 : 1) * (0.99 + r() * 0.02);
+        const rebR  = deduct * s.rebShare * Math.pow(1.04, y) * (0.97 + r() * 0.06); // off-invoice
+        const cogsU = mktPrice * s.baseCogsR * Math.pow(1.017, y) * (0.99 + r() * 0.02);
         FACTS.push({ k:m.id, s:s.code, bu:s.bu, cls:s.cls, i, units, aspG, discR, rebR, cogsU,
                      mapped:s.mapped });
 
-        /* Budget: what was locked before the year started — PY plus the plan,
-           deliberately a touch optimistic so the variance story has content. */
-        if (y === 1) {
+        /* Budget: what was locked before the year started — prior year plus the
+           plan, deliberately a touch optimistic so the variance story has content. */
+        if (isCY(i)) {
           const p = FACTS[FACTS.length - 1 - 12];    // same month, prior year
           BUDGET.push({ k:m.id, s:s.code, bu:s.bu, cls:s.cls, i,
             units: p.units * 1.035,

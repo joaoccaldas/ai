@@ -99,18 +99,31 @@ export function bridge(base, comp, measure = 'gm') {
   const fx = VbA - VbC;
 
   const total = VbA - Va;
+  // grp isolates the operating levers: Volume, Mix and Pricing (list price net of
+  // discount and rebate) are the three the commercial team owns; Cost, Lifecycle
+  // and FX are separate. The cockpit can collapse the walk onto these groups.
   const parts = [
-    { id:'volume', lab:'Volume',    v:volume    },
-    { id:'mix',    lab:'Mix',       v:mix       },
-    { id:'price',  lab:'Price',     v:price     },
-    { id:'disc',   lab:'Discount',  v:disc      },
-    { id:'reb',    lab:'Rebate',    v:reb       },
-    ...(measure === 'gm' ? [{ id:'cogs', lab:'COGS', v:cogs }] : []),
-    { id:'life',   lab:'Lifecycle', v:lifecycle },
-    { id:'fx',     lab:'FX',        v:fx        }
+    { id:'volume', lab:'Volume',    v:volume,    grp:'Volume'    },
+    { id:'mix',    lab:'Mix',       v:mix,       grp:'Mix'       },
+    { id:'price',  lab:'Price',     v:price,     grp:'Pricing'   },
+    { id:'disc',   lab:'Discount',  v:disc,      grp:'Pricing'   },
+    { id:'reb',    lab:'Rebate',    v:reb,       grp:'Pricing'   },
+    ...(measure === 'gm' ? [{ id:'cogs', lab:'COGS', v:cogs, grp:'Cost' }] : []),
+    { id:'life',   lab:'Lifecycle', v:lifecycle, grp:'Lifecycle' },
+    { id:'fx',     lab:'FX',        v:fx,        grp:'FX'        }
   ];
   const resid = total - parts.reduce((a, p) => a + p.v, 0);
   return { from:Va, to:VbA, total, parts, resid, Qa, Qb, measure };
+}
+
+/* Collapse the detailed walk onto its lever groups — Volume, Mix, Pricing, Cost,
+   Lifecycle, FX — preserving order and summing within each. Used by the cockpit's
+   "isolate the product-margin levers" view. */
+export function groupParts(parts) {
+  const order = ['Volume', 'Mix', 'Pricing', 'Cost', 'Lifecycle', 'FX'];
+  const by = {};
+  for (const p of parts) (by[p.grp] ??= { id:p.grp.toLowerCase(), lab:p.grp, v:0, grp:p.grp }).v += p.v;
+  return order.filter(g => by[g]).map(g => by[g]);
 }
 
 /** Same walk, cut by a dimension — this is what the drill-down uses. */

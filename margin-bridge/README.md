@@ -74,11 +74,19 @@ table. Silently dropping them makes the model look cleaner than the business is.
 
 This is the part that makes it a forecasting tool rather than a what-if toy.
 
-Three versions coexist and never overwrite each other:
+The dataset is **three years** of monthly history-plus-forecast: two full prior
+years of actuals (a real base to read a trend and a year-on-year walk from) and
+the current year we forecast. Three versions then coexist and never overwrite
+each other:
 
-- **ACT** — actuals, immutable, months 0 … `cursor`
+- **ACT** — actuals, immutable, from the start of history through `cursor`
 - **BUD** — budget, locked before the year started, all 12 current-year months
 - **FC** — forecast = ACT for closed months **+** driven for open months
+
+The **History** page surfaces the actuals directly: a year table, the monthly
+trend across all three years, and a **year-on-year product-margin bridge on pure
+actuals** (prior year vs the year before it) — the same volume / mix / pricing
+isolation applied to what already happened, before any assumption is touched.
 
 `cursor` is a single number: the last closed month. Everything to its left is
 locked; everything to its right is built from assumptions. On the Plan page it is
@@ -245,7 +253,9 @@ walk by market.
 
 | Visual | Job |
 |---|---|
-| Waterfall, drillable | **Explanation.** Opens the page, because in a review nobody asks what net sales is — they ask why it moved. |
+| Waterfall, drillable | **Explanation.** Opens the page, because in a review nobody asks what net sales is — they ask why it moved. **Isolate levers** collapses it onto Volume / Mix / Pricing / Cost / Lifecycle / FX so the three commercial levers stand alone. |
+| Price-response curve (**Sensitivity** page) | **The price question.** Margin, net sales and volume as price sweeps a range; marks the margin-maximising price, with the elasticity volume offset made explicit. |
+| Scenario compare strip | **Holding options side by side.** Snapshot the current adjustments, then compare each saved scenario's margin, band and P(≥ budget) against the live one. |
 | KPI strip with split sparklines | Orientation. Solid to the cut-off, dashed after. |
 | Trajectory + risk band | Where the year is going, and how confidently. |
 | Outcome distribution | Range, and P(≥ budget). |
@@ -344,15 +354,20 @@ Honest list, in the order I would do them:
 - **Nested drill.** Bucket → market works; bucket → market → BU → SKU does not.
 - **Monthly FX curve.** Currently one rate for closed months and one for open,
   per market. Real hedging policy needs a monthly curve.
-- **Rolling horizon.** Fixed at prior year + current year. An 18-month rolling
-  view needs the calendar generalised.
-- **Save / load scenarios.** The assumption register exports but does not
-  re-import. A named scenario library is the obvious next step.
+- **Rolling horizon.** The calendar is now generalised to `HIST_YEARS` prior
+  years plus the current one (set to 2), but it is still anchored to whole
+  calendar years — a true 18-month rolling view is the next step.
+- **Persistent scenarios.** Scenarios can be snapshotted and compared **within a
+  session**, but the store is in memory and the assumption register exports
+  without re-importing. A saved, named, reloadable scenario library persisted to
+  disk or a backend is the obvious next step.
 
 Landed since the first cut: exactly units-neutral premiumisation, a split
 gross-to-net (on-invoice discount vs off-invoice rebate) as two bridge buckets, a
 per-BU price-elasticity dial, a dedicated lifecycle bucket for launches and
-delists, horizon-based volatility, and a two-block correlation structure.
+delists, horizon-based volatility, a two-block correlation structure, **three
+years of history with a year-on-year actuals bridge, a price-sensitivity view,
+in-session scenario compare, and a product-margin lever isolation**.
 
 ---
 

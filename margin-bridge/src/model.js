@@ -10,7 +10,7 @@
    humans only supply deltas, and those deltas resolve by specificity.
    ========================================================================== */
 
-import { MARKETS, BUS, CLASSES, ELAS, FX, N_MONTHS, CY_START, monthOf, isCY } from './data.js';
+import { MARKETS, BUS, CLASSES, ELAS, FX, N_MONTHS, CY_START, priorYearStart, monthOf, isCY } from './data.js';
 
 /* ------------------------------ driver spec ------------------------------ */
 export const DRIVERS = [
@@ -27,7 +27,7 @@ export const LEVELLED = DRIVERS.filter(d => d.lvl).map(d => d.id);
 
 /* State shape ------------------------------------------------------------- */
 export const newState = () => ({
-  cursor: 17,          // last closed CY month index (17 = Jun CY)
+  cursor: CY_START + 5, // last closed CY month index (Jun of the current year)
   carry: 0.5,          // how much YTD trend carries into the open months, 0..1
   ramp: true,          // price/COGS changes phase in over 3 months
   elast: 1,            // price-elasticity dial, 0 = ignore, 1 = full BU elasticity
@@ -184,8 +184,10 @@ export function buildForecast(FACTS, H, state) {
   return rows;
 }
 
-/* Stamp PY / BUD rows with the same shape so every consumer is identical. */
-export const stampPY  = (FACTS, state) => FACTS.filter(f => !isCY(f.i))
+/* Stamp PY / BUD rows with the same shape so every consumer is identical.
+   PY is the immediately-prior year only, so a forecast (12 months) is always
+   compared against 12 months — the deeper history is for trend and volatility. */
+export const stampPY  = (FACTS, state) => FACTS.filter(f => f.i >= priorYearStart && f.i < CY_START)
   .map(f => ({ ...f, ver:'PY', open:false, fx:fxOf(state,f.k,f.i) }));
 export const stampBUD = (BUDGET, state) => BUDGET
   .map(f => ({ ...f, ver:'BUD', open:false, fx:FX[f.k].py }));   // budget FX is plan FX
