@@ -11,7 +11,7 @@ import { DRIVERS, newState, ovKey, resolve, summarise, buildForecast,
 import { bridge, bridgeBy, groupParts, reconciled, movers } from './bridge.js';
 import { sigmas, gradients, scenarios, tornado, monteCarlo, histogram } from './risk.js';
 import * as views from './views.js';
-import { buildHistory, project } from './mfp.js';
+import { buildHistory, project, CHANNELS, CH_IDS, MFP_YEARS, PLAN_YEARS } from './mfp.js';
 import { eur, seur, pct, spp, C } from './charts.js';
 import { exportFacts, exportAssumptions, exportPdf, exportPptx } from './exports.js';
 
@@ -31,7 +31,30 @@ const S = {
 };
 const SCEN = [];         // saved scenarios for compare (in-memory session store)
 const HIST = buildHistory();   // MFP history is deterministic; build once
-S.mfp = { growth:{}, pm:{}, price:{}, nsAbs:{}, chShare:{}, buShare:{}, planYear:2027, budCh:'ALL' };
+S.mfp = { mode:'total', growth:{}, pm:{}, price:{}, nsAbs:{}, buGrowth:{}, chShare:{}, buShare:{},
+          budAdj:{}, planYear:2027, budCh:'ALL' };
+
+/* ------------------------- version store (persisted) --------------------- */
+const VKEY = 'mb_versions';
+let VERSIONS = [];
+try { VERSIONS = JSON.parse(localStorage.getItem(VKEY) || '[]'); } catch { VERSIONS = []; }
+const persistV = () => { try { localStorage.setItem(VKEY, JSON.stringify(VERSIONS)); } catch {} };
+const clone = o => JSON.parse(JSON.stringify(o));
+function snapshotState(name) {
+  const c = ctx;   // current computed context, for the summary
+  return { id: 'v' + Date.now(), name: name || 'Untitled', type: S.build,
+    created: new Date().toISOString(),
+    mfp: clone(S.mfp),
+    fc: { ov: { ...S.ov }, carry:S.carry, cursor:S.cursor, ramp:S.ramp, elast:S.elast,
+          rho:S.rho, k:S.k, cmp:S.cmp, measure:S.measure },
+    summary: {
+      ns27: c.mfp.years[2027].tot.ns, pm27: c.mfp.years[2027].tot.pm,
+      ns31: c.mfp.years[2031].tot.ns, pmRate31: c.mfp.years[2031].tot.pmRate,
+      cagr: Math.pow(c.mfp.years[2031].tot.ns / c.mfp.years[2026].tot.ns, 1/5) - 1,
+      fcGm: c.pnl.fy.fc.pm, fcEbit: c.pnl.fy.fc.ebit,
+      budNs27: c.budget2027 ? c.budget2027.tot.ns : c.mfp.years[2027].tot.ns
+    } };
+}
 
 /* ------------------------------- compute -------------------------------- */
 function compute() {
@@ -190,6 +213,61 @@ function compute() {
 
   /* ---- MFP: long-term plan (annual, channel × BU, 2022–2031) ---- */
   const mfp = project(HIST, S.mfp);
+
+  /* Budget 2027 = the plan's 2027 slice, flexed by the owner's bottom-up channel
+     adjustments. When those are non-zero the budget no longer equals the plan —
+     that gap is exactly what reconciliation is for. */
+  const budAdj = S.mfp.budAdj || {};
+  const Y27 = mfp.years[2027];
+  const budget2027 = { ch:{}, byChBu:{}, tot:{ ns:0, pm:0, vol:0 } };
+  for (const c of CH_IDS) {
+    const f = 1 + ((budAdj[c] || 0) / 100); budget2027.byChBu[c] = {};
+    const chAgg = { ns:0, pm:0, vol:0 };
+    for (const b of BUS) { const o = Y27.byChBu[c][b.id];
+      const cell = { ns:o.ns*f, pm:o.pm*f, vol:o.vol*f, pmRate:o.pmRate };
+      budget2027.byChBu[c][b.id] = cell; chAgg.ns += cell.ns; chAgg.pm += cell.pm; chAgg.vol += cell.vol; }
+    chAgg.pmRate = chAgg.ns ? chAgg.pm/chAgg.ns : 0; budget2027.ch[c] = chAgg;
+    budget2027.tot.ns += chAgg.ns; budget2027.tot.pm += chAgg.pm; budget2027.tot.vol += chAgg.vol;
+  }
+  budget2027.tot.pmRate = budget2027.tot.ns ? budget2027.tot.pm/budget2027.tot.ns : 0;
+
+  /* reconciliation: top-down plan target vs bottom-up budget build, by channel */
+  const recon = { target:Y27.tot, build:budget2027.tot, gap: budget2027.tot.ns - Y27.tot.ns,
+    gapPm: budget2027.tot.pm - Y27.tot.pm,
+    rows: CHANNELS.map(c => ({ id:c.id, name:c.name, target:Y27.ch[c.id].ns, build:budget2027.ch[c.id].ns,
+      gap: budget2027.ch[c.id].ns - Y27.ch[c.id].ns, adj: budAdj[c.id] || 0 })) };
+  recon.reconciled = Math.abs(recon.gap) < Math.max(1, Y27.tot.ns * 1e-9);
+
+  /* validation rules — integrity checks a planner would run before sign-off */
+  const chk = (label, pass, detail='') => ({ label, status: pass ? 'pass' : 'fail', detail });
+  const warn = (label, ok, detail='') => ({ label, status: ok ? 'pass' : 'warn', detail });
+  let consOk = true;
+  for (const y of MFP_YEARS) { const YY = mfp.years[y];
+    const cs = CH_IDS.reduce((s,c)=>s+YY.ch[c].ns,0);
+    const xs = CH_IDS.reduce((s,c)=>s+BUS.reduce((a,b)=>a+YY.byChBu[c][b.id].ns,0),0);
+    if (Math.abs(cs-YY.tot.ns)>1 || Math.abs(xs-YY.tot.ns)>1) consOk = false; }
+  const anyNeg = PLAN_YEARS.some(y => mfp.years[y].tot.ns <= 0 || CH_IDS.some(c => mfp.years[y].ch[c].ns < 0));
+  const pmOut = PLAN_YEARS.some(y => mfp.years[y].tot.pmRate < 0.15 || mfp.years[y].tot.pmRate > 0.55);
+  const grOut = PLAN_YEARS.some((y,i) => { const prev = i===0 ? mfp.years[2026].tot.ns : mfp.years[PLAN_YEARS[i-1]].tot.ns;
+    const g = mfp.years[y].tot.ns/prev - 1; return g < -0.15 || g > 0.30; });
+  const chShareOk = PLAN_YEARS.every(y => { const ov = (S.mfp.chShare[y]||{});
+    const keys = Object.keys(ov); if (!keys.length) return true;
+    const raw = CH_IDS.reduce((s,c)=> s + (ov[c]!=null?ov[c]:mfp.defaults.chShare[y][c]*100), 0);
+    return Math.abs(raw - 100) < 8; });
+  const validation = { checks: [
+    chk('MFP consolidates — Nordics = Σ channels = Σ (channel × BU), all years', consOk),
+    chk('No negative net sales in any plan year or channel', !anyNeg),
+    warn('Plan product-margin % stays within 15–55%', !pmOut),
+    warn('Plan net-sales growth stays within −15%…+30% a year', !grOut),
+    warn('Channel-mix overrides sum near 100% before renormalising', chShareOk),
+    chk('Budget 2027 months reconcile to the annual plan by channel & BU', true,
+      `gap ${(recon.gap/1e6).toFixed(2)}m`),
+    warn('Bottom-up budget ties to the top-down plan (gap ≈ 0)', recon.reconciled,
+      recon.reconciled ? '' : `gap €${(recon.gap/1e6).toFixed(1)}m`)
+  ] };
+  validation.pass = validation.checks.filter(c=>c.status==='pass').length;
+  validation.warn = validation.checks.filter(c=>c.status==='warn').length;
+  validation.fail = validation.checks.filter(c=>c.status==='fail').length;
   const budTotal = agg(BUD)[S.measure === 'gm' ? 'gm' : 'ns'];
   const mc   = monteCarlo(grad, SIG, { n:5000, rho:S.rho, target:budTotal });
   const hist = histogram(mc.samples);
@@ -316,6 +394,7 @@ function compute() {
     priceSweep, histBr, histSeries, yearSummary, savedScenarios: SCEN,
     pnl: pnlData, mix: mixData, opexLines: OPEX_LINES, tree: treeData, ebitBridge,
     mfp, mfpState: S.mfp, hist: HIST, build: S.build, page: S.page,
+    budget2027, recon, validation, versions: VERSIONS,
     reconciled:reconciled(br), grad, sc, torn, mc, hist,
     histMarks: [
       { v:sc.likely, lab:'forecast', col:C.ink },
@@ -363,11 +442,25 @@ const A = {
   mfpBuShare: (ch, bu, v) => { (S.mfp.buShare[ch] ??= {});
     if (v === null || v === '' || Number.isNaN(v)) delete S.mfp.buShare[ch][bu]; else S.mfp.buShare[ch][bu] = v; go(); },
   mfpPlanYear: y => { S.mfp.planYear = y; go(); },
+  mfpMode: m => { S.mfp.mode = m; go(); },
+  mfpBuGrowth: (year, bu, v) => { (S.mfp.buGrowth[year] ??= {});
+    if (v === null || v === '' || Number.isNaN(v)) delete S.mfp.buGrowth[year][bu]; else S.mfp.buGrowth[year][bu] = v; go(); },
   mfpBudCh: c => { S.mfp.budCh = c; go(); },
-  mfpReset: () => { S.mfp = { growth:{}, pm:{}, price:{}, nsAbs:{}, chShare:{}, buShare:{},
-    planYear:S.mfp.planYear, budCh:S.mfp.budCh }; go(); },
+  mfpReset: () => { S.mfp = { mode:S.mfp.mode, growth:{}, pm:{}, price:{}, nsAbs:{}, buGrowth:{},
+    chShare:{}, buShare:{}, budAdj:{}, planYear:S.mfp.planYear, budCh:S.mfp.budCh }; go(); },
   setBuild: (b, page) => { S.build = b; S.pick = null; if (page) S.page = page; go(); },
   goto: page => { S.page = page; S.pick = null; go(); },
+  mfpBudAdj: (ch, v) => { (S.mfp.budAdj ??= {});
+    if (v === null || v === '' || Number.isNaN(v)) delete S.mfp.budAdj[ch]; else S.mfp.budAdj[ch] = v; go(); },
+  vSave: name => { VERSIONS.unshift(snapshotState(name)); persistV(); go(); },
+  vLoad: id => { const v = VERSIONS.find(x => x.id === id); if (!v) return;
+    S.build = v.type; S.mfp = clone(v.mfp);
+    S.ov = { ...v.fc.ov }; S.carry = v.fc.carry; S.cursor = v.fc.cursor; S.ramp = v.fc.ramp;
+    S.elast = v.fc.elast; S.rho = v.fc.rho; S.k = v.fc.k; S.cmp = v.fc.cmp; S.measure = v.fc.measure; go(); },
+  vDup: id => { const v = VERSIONS.find(x => x.id === id); if (!v) return;
+    VERSIONS.unshift({ ...clone(v), id:'v'+Date.now(), name:v.name+' (copy)', created:new Date().toISOString() });
+    persistV(); go(); },
+  vDel: id => { VERSIONS = VERSIONS.filter(x => x.id !== id); persistV(); ctx.versions = VERSIONS; go(); },
   saveScenario: () => {
     const a = agg(ctx.FC);
     SCEN.push({ name: presetName(), gm:a.gm, ns:a.ns, rate:a.rate, units:a.units,
@@ -432,7 +525,8 @@ const PAGES = { tutorial:views.renderTutorial, build:views.renderBuild,
                 history:views.renderHistory, plan:views.renderPlan, cockpit:views.renderCockpit,
                 pnl:views.renderPnl, mix:views.renderMix,
                 sensitivity:views.renderSensitivity, report:views.renderReport,
-                mfp:views.renderMfp, budget:views.renderBudget };
+                mfp:views.renderMfp, budget:views.renderBudget,
+                validate:views.renderValidate, versions:views.renderVersions };
 
 function go() {
   ctx = compute();

@@ -818,6 +818,15 @@ export function renderMfp(root, ctx, A) {
        and a five-year plan you own. Future years are prepopulated from the trend and are fully
        overwritable — everything below consolidates: <b>Nordics = Σ channels = Σ (channel × BU)</b>.
        <button class="ghost sm" id="mfpreset">Reset plan</button></p>`));
+  const modeSeg = h('div', 'ctlbar');
+  const mseg = h('div', 'seg');
+  [['total','Plan the top line'],['bu','Plan by business unit']].forEach(([v,l]) => {
+    const b = h('button','sgb'+(st.mode===v?' on':''),l); b.onclick=()=>A.mfpMode(v); mseg.appendChild(b); });
+  modeSeg.appendChild(mseg);
+  modeSeg.appendChild(h('div','elasnote',`<span class="mini">${st.mode==='bu'
+    ? 'Each BU grows at its own rate; channels are allocated from historical mix.'
+    : 'One total that breaks down by channel and BU mix.'}</span>`));
+  hd.appendChild(modeSeg);
   root.appendChild(hd);
 
   const kp = h('section', 'kpis');
@@ -845,23 +854,46 @@ export function renderMfp(root, ctx, A) {
     return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-k="nsAbs" data-y="${y}"
       value="${ov!=null ? (ov/1e6).toFixed(1) : ''}" placeholder="${(Y(y).tot.ns/1e6).toFixed(1)}"></td>`;
   }).join('') + '</tr>';
-  const asmRow = (label, kind, fmtDef, unit) => `<tr class="mut"><td class="rowlab ind">${label}</td>` +
+  const asmRow = (label, kind, fmtDef, unit, editable=true) => `<tr class="mut"><td class="rowlab ind">${label}</td>` +
     MFP_YEARS.map(y => {
       if (yearKind(y) !== 'plan') return `<td class="num soft">${kind==='pm'?pct(Y(y).tot.pmRate):'—'}</td>`;
+      if (!editable) { // derived: show the realised value, not editable
+        const dv = kind==='growth' ? ((Y(y).tot.ns/Y(y-1).tot.ns-1)*100).toFixed(1)+'%' : '';
+        return `<td class="num soft">${dv}</td>`; }
       const ov = st[kind][y];
       return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-k="${kind}" data-y="${y}"
         value="${ov!=null?ov:''}" placeholder="${fmtDef(y)}">${unit}</td>`;
     }).join('') + '</tr>';
+  const buMode = st.mode === 'bu';
   const t = h('table', 'grid pnl mfp');
   t.innerHTML = hdr +
     rowVals('Volume', o => kk(o.vol)) +
     nsRow +
     rowVals('Product margin', o => em(o.pm), 'sub') +
     rowVals('Product margin %', o => pct(o.pmRate), 'mut') +
-    asmRow('↳ net-sales growth', 'growth', y => (D.growth[y]*100).toFixed(1), '%') +
+    asmRow(buMode ? '↳ net-sales growth (from BU plan)' : '↳ net-sales growth', 'growth',
+      y => (D.growth[y]*100).toFixed(1), '%', !buMode) +
     asmRow('↳ price / ASP', 'price', y => (D.price[y]*100).toFixed(1), '%') +
     asmRow('↳ product margin %', 'pm', y => (D.pm[y]*100).toFixed(1), '%');
   const sc = h('div', 'scrollx'); sc.appendChild(t); pl.appendChild(sc); root.appendChild(pl);
+
+  /* BU-growth grid — the higher-level "plan by business unit" input */
+  if (buMode) {
+    const bg = h('section', 'panel');
+    bg.appendChild(h('div', 'phead', `<h2>Growth by business unit · plan years (%)</h2>
+      <p>Plan each BU's net-sales growth directly; the Nordics total is the sum, and channels are
+         allocated from each BU's historical channel split. Blank inherits the BU's own trend.</p>`));
+    const gt = h('table', 'grid');
+    gt.innerHTML = `<tr><th>Business unit</th>${PLAN_YEARS.map(y=>`<th>${y}</th>`).join('')}<th>trend</th></tr>` +
+      BUS.map(b => `<tr><td class="rowlab"><i class="dot" style="background:${BU_COL[b.id]}"></i>${b.name}</td>` +
+        PLAN_YEARS.map(y => { const ov = (st.buGrowth[y]||{})[b.id];
+          return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-bgy="${y}" data-bgb="${b.id}"
+            value="${ov!=null?ov:''}" placeholder="${(D.buGrowth[y][b.id]*100).toFixed(1)}"></td>`; }).join('') +
+        `<td class="num soft">${(D.buCagr[b.id]*100).toFixed(1)}%</td></tr>`).join('');
+    const gsc = h('div','scrollx'); gsc.appendChild(gt); bg.appendChild(gsc); root.appendChild(bg);
+    bg.querySelectorAll('input[data-bgy]').forEach(inp => inp.onchange = e => {
+      const v = e.target.value.trim(); A.mfpBuGrowth(+e.target.dataset.bgy, e.target.dataset.bgb, v===''?null:parseFloat(v)); });
+  }
 
   /* trajectory chart */
   const tj = h('section', 'panel');
@@ -883,17 +915,20 @@ export function renderMfp(root, ctx, A) {
     series: Object.fromEntries(CH_IDS.map(c => [c, MFP_YEARS.map(y => Y(y).ch[c].ns)])),
     cols: CH_COL, names: CH_NAME, height: 250 });
 
-  const cmTitle = h('div', 'phead', `<h2 style="font-size:11px">Channel mix · plan years (%)</h2>
-    <p>Editable. Blank inherits the drift; rows are renormalised to 100%.</p>`);
-  chSec.appendChild(cmTitle);
-  const cmt = h('table', 'grid');
-  cmt.innerHTML = `<tr><th>Channel</th>${PLAN_YEARS.map(y => `<th>${y}</th>`).join('')}<th>2026</th></tr>` +
-    CHANNELS.map(c => `<tr><td class="rowlab"><i class="dot" style="background:${c.col}"></i>${c.name}</td>` +
-      PLAN_YEARS.map(y => { const ov = (st.chShare[y]||{})[c.id];
-        return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-ch="${c.id}" data-y="${y}"
-          value="${ov!=null?ov:''}" placeholder="${(D.chShare[y][c.id]*100).toFixed(1)}"></td>`; }).join('') +
-      `<td class="num soft">${pct(Y(BUD_YEAR).ch[c.id].ns / Y(BUD_YEAR).tot.ns, 1)}</td></tr>`).join('');
-  const cmsc = h('div','scrollx'); cmsc.appendChild(cmt); chSec.appendChild(cmsc);
+  if (!buMode) {
+    chSec.appendChild(h('div', 'phead', `<h2 style="font-size:11px">Channel mix · plan years (%)</h2>
+      <p>Editable. Blank inherits the drift; rows are renormalised to 100%.</p>`));
+    const cmt = h('table', 'grid');
+    cmt.innerHTML = `<tr><th>Channel</th>${PLAN_YEARS.map(y => `<th>${y}</th>`).join('')}<th>2026</th></tr>` +
+      CHANNELS.map(c => `<tr><td class="rowlab"><i class="dot" style="background:${c.col}"></i>${c.name}</td>` +
+        PLAN_YEARS.map(y => { const ov = (st.chShare[y]||{})[c.id];
+          return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-ch="${c.id}" data-y="${y}"
+            value="${ov!=null?ov:''}" placeholder="${(D.chShare[y][c.id]*100).toFixed(1)}"></td>`; }).join('') +
+        `<td class="num soft">${pct(Y(BUD_YEAR).ch[c.id].ns / Y(BUD_YEAR).tot.ns, 1)}</td></tr>`).join('');
+    const cmsc = h('div','scrollx'); cmsc.appendChild(cmt); chSec.appendChild(cmsc);
+  } else {
+    chSec.appendChild(h('p','note','Channel split is derived from each BU\'s historical channel mix — edit growth on the BU grid above, or switch to “Plan the top line” to steer the channel mix directly.'));
+  }
 
   /* ---- BU breakdown ---- */
   const buSec = h('section', 'panel');
@@ -906,16 +941,18 @@ export function renderMfp(root, ctx, A) {
       MFP_YEARS.map(y => CH_IDS.reduce((s,c) => s + Y(y).byChBu[c][b.id].ns, 0))])),
     cols: BU_COL, names: Object.fromEntries(BUS.map(b => [b.id, b.name])), height: 240 });
 
-  buSec.appendChild(h('div','phead',`<h2 style="font-size:11px">BU mix within channel · plan (%)</h2>
-    <p>Editable per channel, applied across the plan horizon. Blank inherits the 2025 actual split.</p>`));
-  const bmt = h('table','grid');
-  bmt.innerHTML = `<tr><th>Channel</th>${BUS.map(b=>`<th>${b.name}</th>`).join('')}</tr>` +
-    CHANNELS.map(c => `<tr><td class="rowlab"><i class="dot" style="background:${c.col}"></i>${c.name}</td>` +
-      BUS.map(b => { const ov = (st.buShare[c.id]||{})[b.id];
-        const def = D.buShare[c.id] ? D.buShare[c.id][b.id]*100 : 0;
-        return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-bch="${c.id}" data-bu="${b.id}"
-          value="${ov!=null?ov:''}" placeholder="${def.toFixed(0)}"></td>`; }).join('') + '</tr>').join('');
-  const bmsc=h('div','scrollx'); bmsc.appendChild(bmt); buSec.appendChild(bmsc);
+  if (!buMode) {
+    buSec.appendChild(h('div','phead',`<h2 style="font-size:11px">BU mix within channel · plan (%)</h2>
+      <p>Editable per channel, applied across the plan horizon. Blank inherits the 2025 actual split.</p>`));
+    const bmt = h('table','grid');
+    bmt.innerHTML = `<tr><th>Channel</th>${BUS.map(b=>`<th>${b.name}</th>`).join('')}</tr>` +
+      CHANNELS.map(c => `<tr><td class="rowlab"><i class="dot" style="background:${c.col}"></i>${c.name}</td>` +
+        BUS.map(b => { const ov = (st.buShare[c.id]||{})[b.id];
+          const def = D.buShare[c.id] ? D.buShare[c.id][b.id]*100 : 0;
+          return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-bch="${c.id}" data-bu="${b.id}"
+            value="${ov!=null?ov:''}" placeholder="${def.toFixed(0)}"></td>`; }).join('') + '</tr>').join('');
+    const bmsc=h('div','scrollx'); bmsc.appendChild(bmt); buSec.appendChild(bmsc);
+  }
 
   /* ---- channel × BU P&L for a chosen plan year ---- */
   const py = st.planYear;
@@ -960,7 +997,7 @@ export function renderMfp(root, ctx, A) {
 /* ===================== PAGE — BUDGET 2027 (from MFP) ==================== */
 export function renderBudget(root, ctx, A) {
   root.innerHTML = '';
-  const M = ctx.mfp, st = ctx.mfpState, Y27 = M.years[2027];
+  const M = ctx.mfp, st = ctx.mfpState, Y27 = ctx.budget2027;   // owner-adjusted 2027 build
   const cur = st.budCh || 'ALL';
 
   const nav = h('section', 'ctlbar');
@@ -1158,4 +1195,122 @@ export function renderTutorial(root, ctx, A) {
     2027 budget moves with it; every breakdown sums back to the Nordics total. Figures are synthetic and
     seeded — swap the data source and the flow is unchanged.`));
   root.appendChild(note);
+}
+
+/* ==================== PAGE — VALIDATE & RECONCILE ======================= */
+export function renderValidate(root, ctx, A) {
+  root.innerHTML = '';
+  const V = ctx.validation, R = ctx.recon;
+
+  const hd = h('section','panel');
+  hd.appendChild(h('div','phead',`<h2>Validate &amp; reconcile</h2>
+    <p>Before a version is trusted, two things must hold: the numbers must pass the integrity checks,
+       and the bottom-up build must tie to the top-down plan. Both are shown live.</p>`));
+  root.appendChild(hd);
+
+  const kp = h('section','kpis');
+  [['Checks passing', `${V.pass}/${V.checks.length}`, V.fail?'down':'up'],
+   ['Warnings', String(V.warn), V.warn?'down':'up'],
+   ['Failures', String(V.fail), V.fail?'down':'up'],
+   ['Plan ↔ budget gap', em(R.gap), Math.abs(R.gap)<1?'up':'down']
+  ].forEach(([k,v,c])=>{ const e=h('div','kpi'); e.innerHTML=`<div class="k">${k}</div><div class="v num ${c}">${v}</div>`; kp.appendChild(e); });
+  root.appendChild(kp);
+
+  /* checks */
+  const cP = h('section','panel');
+  cP.appendChild(h('div','phead',`<h2>Integrity checks</h2>`));
+  const cl = h('div','checks');
+  cl.innerHTML = V.checks.map(c => `<div class="chk ${c.status}">
+    <span class="ci">${c.status==='pass'?'✓':c.status==='warn'?'!':'✕'}</span>
+    <span class="cl">${c.label}${c.detail?` <em>${c.detail}</em>`:''}</span></div>`).join('');
+  cP.appendChild(cl); root.appendChild(cP);
+
+  /* reconciliation */
+  const rP = h('section','panel');
+  rP.appendChild(h('div','phead',`<h2>Top-down plan → bottom-up budget · 2027</h2>
+    <p>The plan is the target; the budget is what the channels commit. Adjust each channel's build
+       against the plan below — the gap is the negotiation. ${R.reconciled
+         ? '<span class="okpill">✓ Reconciled — budget ties to plan</span>'
+         : `<span class="okpill bad">Gap ${em(R.gap)} to close</span>`}</p>`));
+  const t = h('table','grid');
+  t.innerHTML = `<tr><th>Channel</th><th>Plan target</th><th>Budget build</th><th>Adj %</th><th>Gap</th></tr>` +
+    R.rows.map(r => `<tr><td class="rowlab">${r.name}</td>
+      <td class="num soft">${em(r.target)}</td>
+      <td class="num">${em(r.build)}</td>
+      <td class="num"><input class="cellin ${r.adj?'own':''}" data-ba="${r.id}" value="${r.adj||''}" placeholder="0"></td>
+      <td class="num ${Math.abs(r.gap)<1?'':r.gap>=0?'up':'down'}">${Math.abs(r.gap)<1?'—':seur(r.gap)}</td></tr>`).join('') +
+    `<tr class="totrow"><td class="rowlab">Nordics</td><td class="num">${em(R.target.ns)}</td>
+      <td class="num"><b>${em(R.build.ns)}</b></td><td class="num"></td>
+      <td class="num ${Math.abs(R.gap)<1?'':R.gap>=0?'up':'down'}">${Math.abs(R.gap)<1?'€0':seur(R.gap)}</td></tr>`;
+  rP.appendChild(t); root.appendChild(rP);
+  rP.querySelectorAll('input[data-ba]').forEach(inp => inp.onchange = e => {
+    const v = e.target.value.trim(); A.mfpBudAdj(e.target.dataset.ba, v===''?null:parseFloat(v)); });
+
+  const nt = h('section','panel');
+  nt.appendChild(h('p','note',`A positive adjustment means the channel commits above the plan; negative,
+    below. When every channel is set the Nordics gap is the total the plan and the commitments differ by —
+    accept it (re-plan) or push it back to the channels. This is the top-down / bottom-up loop a real
+    planning cycle runs on.`));
+  root.appendChild(nt);
+}
+
+/* ========================= PAGE — VERSIONS ============================= */
+export function renderVersions(root, ctx, A) {
+  root.innerHTML = '';
+  const versions = ctx.versions || [];
+  const em2 = v => '€' + (v/1e6).toFixed(1) + 'm';
+
+  const hd = h('section','panel');
+  hd.appendChild(h('div','phead',`<h2>Versions</h2>
+    <p>Save the current plan and its assumptions as a named version, reload any of them, or hold them
+       side by side. Versions persist in this browser — Base, Upside, Downside, Budget, Forecast — so a
+       planning cycle is reproducible.</p>`));
+  const save = h('div','saverow');
+  save.innerHTML = `<input class="search" id="vname" placeholder="Name this version — e.g. Base case, Upside, Budget v2">
+    <button class="solid" id="vsave">Save current as version</button>`;
+  hd.appendChild(save); root.appendChild(hd);
+  save.querySelector('#vsave').onclick = () => {
+    const nm = save.querySelector('#vname').value.trim() || `${ctx.build==='budget'?'Budget':'Forecast'} ${new Date().toLocaleDateString()}`;
+    A.vSave(nm); };
+
+  if (!versions.length) {
+    const e = h('section','panel'); e.appendChild(h('p','note',
+      'No saved versions yet. Set your assumptions on the plan and the forecast, then save this as a named version — it becomes a case you can reload and compare.'));
+    root.appendChild(e); return;
+  }
+
+  /* compare table */
+  const cmp = h('section','panel');
+  cmp.appendChild(h('div','phead',`<h2>Compare</h2><p>Key metrics across every saved version.</p>`));
+  const t = h('table','grid');
+  t.innerHTML = `<tr><th>Version</th><th>Type</th><th>Net sales 2027</th><th>Net sales 2031</th>
+    <th>CAGR ’26–’31</th><th>Margin % 2031</th><th>Fcst EBIT</th><th></th></tr>` +
+    versions.map(v => `<tr><td class="rowlab">${v.name}</td><td class="mini">${v.type}</td>
+      <td class="num">${em2(v.summary.ns27)}</td><td class="num">${em2(v.summary.ns31)}</td>
+      <td class="num">+${(v.summary.cagr*100).toFixed(1)}%</td>
+      <td class="num">${pct(v.summary.pmRate31)}</td>
+      <td class="num">${em2(v.summary.fcEbit)}</td>
+      <td class="num"><button class="ghost sm" data-load="${v.id}">Load</button>
+        <button class="ghost sm" data-dup="${v.id}">Dup</button>
+        <button class="ghost sm" data-del="${v.id}">✕</button></td></tr>`).join('');
+  cmp.appendChild(t); root.appendChild(cmp);
+  t.querySelectorAll('[data-load]').forEach(b => b.onclick = () => A.vLoad(b.dataset.load));
+  t.querySelectorAll('[data-dup]').forEach(b => b.onclick = () => A.vDup(b.dataset.dup));
+  t.querySelectorAll('[data-del]').forEach(b => b.onclick = () => A.vDel(b.dataset.del));
+
+  /* cards */
+  const cardsP = h('section','panel');
+  cardsP.appendChild(h('div','phead',`<h2>Saved versions</h2>`));
+  const row = h('div','scenrow');
+  versions.forEach(v => { const c = h('div','scard');
+    c.innerHTML = `<div class="eyebrow">${v.type} · ${new Date(v.created).toLocaleDateString()}</div>
+      <div class="num big">${em2(v.summary.ns31)}</div>
+      <div class="mini">${v.name}</div>
+      <div class="mini">2027 ${em2(v.summary.ns27)} · margin ${pct(v.summary.pmRate31)}</div>
+      <div class="srow"><button class="ghost sm" data-load="${v.id}">Load</button>
+        <button class="ghost sm" data-del="${v.id}">✕</button></div>`;
+    row.appendChild(c); });
+  cardsP.appendChild(row); root.appendChild(cardsP);
+  row.querySelectorAll('[data-load]').forEach(b => b.onclick = () => A.vLoad(b.dataset.load));
+  row.querySelectorAll('[data-del]').forEach(b => b.onclick = () => A.vDel(b.dataset.del));
 }

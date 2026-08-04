@@ -125,6 +125,19 @@ ok(mfpBad === 0, 'MFP: Nordics = Σ channels = Σ (channel×BU) for all ten year
 ok(proj.years[2031].tot.ns > proj.years[2022].tot.ns, 'MFP: plan grows the top line to 2031');
 const projUp = project(hist, { growth: { 2027: 12 } });
 ok(projUp.years[2027].tot.ns > proj.years[2027].tot.ns, 'MFP: a growth override lifts that plan year');
+// BU-growth planning mode consolidates and responds to per-BU growth
+const projBu = project(hist, { mode:'bu' });
+let buBad = 0;
+for (const y of MFP_YEARS) { const Y = projBu.years[y];
+  const cs = CH_IDS.reduce((s,c)=>s+Y.ch[c].ns,0);
+  if (Math.abs(cs - Y.tot.ns) > 1) buBad++; }
+ok(buBad === 0, 'MFP BU-mode: still consolidates to Nordics every year');
+const buLAU = BUS.find(b=>b.id==='LAU').id;
+const projBuG = project(hist, { mode:'bu', buGrowth:{ 2027:{ LAU: 15 } } });
+const lau27 = CH_IDS.reduce((s,c)=>s+projBuG.years[2027].byChBu[c].LAU.ns,0);
+const lau27base = CH_IDS.reduce((s,c)=>s+projBu.years[2027].byChBu[c].LAU.ns,0);
+ok(lau27 > lau27base, 'MFP BU-mode: a per-BU growth override lifts that BU');
+
 const projMix = project(hist, { chShare: { 2027: { D2C: 30 } } });
 const d2cDef = proj.years[2027].ch.D2C.ns / proj.years[2027].tot.ns;
 const d2cOv  = projMix.years[2027].ch.D2C.ns / projMix.years[2027].tot.ns;

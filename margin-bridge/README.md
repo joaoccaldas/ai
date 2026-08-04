@@ -28,11 +28,19 @@ bridge and a Nordics→market→BU→SKU consolidation drill-down), **Mix**,
   budget (actual through July) and a five-year plan (2027–2031) you own: net
   sales, product margin, margin % and volume, with **editable future years** and
   a breakdown by **sales channel** (ERT, KRT, Direct Projects, D2C, Customer
-  Service) and by **business unit**, each with adjustable mix. Everything
-  consolidates — Nordics = Σ channels = Σ (channel × BU) — for every year.
+  Service) and by **business unit**, each with adjustable mix. You can plan
+  **top-down** (one total that breaks down by mix) or **by business unit** (a
+  growth rate per BU that aggregates up and allocates to channels from history).
+  Everything consolidates — Nordics = Σ channels = Σ (channel × BU) — every year.
 - **Budget 2027** — the long-term plan's 2027 slice spread to months, with a page
   per sales channel showing the monthly budget by business unit that ties back to
   the MFP.
+- **Validate & reconcile** — the integrity checks (consolidation, no negatives,
+  margin and growth in bounds) plus the top-down/bottom-up loop: flex each
+  channel's budget against the plan and see the gap to close.
+- **Versions** — save the plan and its assumptions as named cases (Base, Upside,
+  Downside, Budget, Forecast), reload any, and compare them side by side.
+  Versions persist in the browser.
 
 ---
 
