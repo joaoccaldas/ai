@@ -241,6 +241,20 @@ table.tree tr.leaf td.rowlab{font-family:"IBM Plex Mono",monospace;font-size:10p
 i.dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
 a.mark{text-decoration:none;color:inherit;cursor:pointer}
 
+/* ------------------------------ MFP / budget --------------------------- */
+.navsep{width:1px;height:18px;background:var(--rule);margin:0 4px}
+.nav button.lt{color:var(--brass);border-color:transparent}
+.nav button.lt:hover{color:var(--bad)}
+.nav button.lt.on{border-color:var(--brass);color:var(--brass)}
+.scrollx{overflow-x:auto}
+table.mfp{min-width:820px}
+table.mfp th.plan,table.mfp td:nth-child(n){}
+th.plan{color:var(--brass)}
+th.budget{color:var(--ink)}
+.yk{display:inline-block;margin-left:4px;font-size:8px;color:var(--steel);vertical-align:super}
+table.grid.mfp td .cellin,table.grid td .cellin{min-width:48px}
+table.tree td .dot,td.rowlab .dot{flex:none}
+
 /* --------------------------------- print ------------------------------- */
 @media print{
   .topbar,.foot,.exportbar,.tabs,.ctlbar,.presets{display:none!important}

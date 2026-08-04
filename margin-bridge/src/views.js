@@ -3,6 +3,7 @@
    ========================================================================== */
 
 import { MARKETS, BUS, CLASSES, MONTH_NAMES, CY_START, N_MONTHS, HIST_YEARS, label } from './data.js';
+import { CHANNELS, CH_IDS, MFP_YEARS, ACTUAL_YEARS, BUD_YEAR, PLAN_YEARS, YTD_MONTH, SEAS, yearKind } from './mfp.js';
 import { DRIVERS, LEVELLED, ovKey, inherited } from './model.js';
 import * as ch from './charts.js';
 import { eur, seur, pct, spp, C } from './charts.js';
@@ -794,4 +795,246 @@ export function renderSensitivity(root, ctx, A) {
     <p>Each driver swung ±${sc.k}σ of its own history, alone. Sigma at the right.</p>`));
   const tc = h('div', 'chart'); tP.appendChild(tc); root.appendChild(tP);
   ch.tornadoChart(tc, torn, 220);
+}
+
+/* ===================== PAGE — MFP · LONG-TERM PLAN ======================= */
+const CH_COL  = Object.fromEntries(CHANNELS.map(c => [c.id, c.col]));
+const CH_NAME = Object.fromEntries(CHANNELS.map(c => [c.id, c.name]));
+const em = v => (Math.abs(v) >= 1e6 ? '€' + (v/1e6).toFixed(1) + 'm' : '€' + Math.round(v/1e3) + 'k');
+const kk = v => Math.round(v/1000) + 'k';
+const yrTag = y => ({ actual:'A', budget:'B', plan:'P' })[yearKind(y)];
+
+export function renderMfp(root, ctx, A) {
+  root.innerHTML = '';
+  const M = ctx.mfp, st = ctx.mfpState, D = M.defaults;
+  const Y = y => M.years[y];
+
+  /* header */
+  const hd = h('section', 'panel');
+  const ns31 = Y(2031).tot.ns, ns26 = Y(BUD_YEAR).tot.ns;
+  const cagr = Math.pow(ns31/ns26, 1/5) - 1;
+  hd.appendChild(h('div', 'phead', `<h2>Miele Financial Plan · long term</h2>
+    <p>Four years of actuals, the ${BUD_YEAR} budget (actual through ${MONTH_NAMES[YTD_MONTH-1]}),
+       and a five-year plan you own. Future years are prepopulated from the trend and are fully
+       overwritable — everything below consolidates: <b>Nordics = Σ channels = Σ (channel × BU)</b>.
+       <button class="ghost sm" id="mfpreset">Reset plan</button></p>`));
+  root.appendChild(hd);
+
+  const kp = h('section', 'kpis');
+  [['Net sales 2031', em(ns31), `+${(cagr*100).toFixed(1)}% CAGR ’26–’31`, 'up'],
+   ['Product margin 2031', em(Y(2031).tot.pm), pct(Y(2031).tot.pmRate), 'up'],
+   ['Plan uplift vs 2026', em(ns31-ns26), `+${((ns31/ns26-1)*100).toFixed(0)}% over 5y`, 'up'],
+   ['Volume 2031', kk(Y(2031).tot.vol), `+${((Y(2031).tot.vol/Y(BUD_YEAR).tot.vol-1)*100).toFixed(0)}% vs ’26`, 'up']
+  ].forEach(([k,v,d,c]) => { const e = h('div','kpi');
+    e.innerHTML = `<div class="k">${k}</div><div class="v num">${v}</div><div class="d num ${c}">${d}</div>`;
+    kp.appendChild(e); });
+  root.appendChild(kp);
+
+  /* consolidated P&L, all years — plan cells editable */
+  const pl = h('section', 'panel');
+  pl.appendChild(h('div', 'phead', `<h2>Nordics P&amp;L · 2022–2031</h2>
+    <p>Actuals and budget are locked; <b>plan years are editable</b>. Overwrite net sales directly, or
+       set the growth, price and margin assumptions beneath — blank inherits the trend.</p>`));
+  const hdr = `<tr><th>€ / units</th>${MFP_YEARS.map(y =>
+    `<th class="${yearKind(y)}">${y}<span class="yk">${yrTag(y)}</span></th>`).join('')}</tr>`;
+  const rowVals = (label, fn, cls='') => `<tr class="${cls}"><td class="rowlab">${label}</td>` +
+    MFP_YEARS.map(y => `<td class="num">${fn(Y(y).tot, y)}</td>`).join('') + '</tr>';
+  const nsRow = `<tr class="sub"><td class="rowlab">Net sales</td>` + MFP_YEARS.map(y => {
+    if (yearKind(y) !== 'plan') return `<td class="num">${em(Y(y).tot.ns)}</td>`;
+    const ov = st.nsAbs[y];
+    return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-k="nsAbs" data-y="${y}"
+      value="${ov!=null ? (ov/1e6).toFixed(1) : ''}" placeholder="${(Y(y).tot.ns/1e6).toFixed(1)}"></td>`;
+  }).join('') + '</tr>';
+  const asmRow = (label, kind, fmtDef, unit) => `<tr class="mut"><td class="rowlab ind">${label}</td>` +
+    MFP_YEARS.map(y => {
+      if (yearKind(y) !== 'plan') return `<td class="num soft">${kind==='pm'?pct(Y(y).tot.pmRate):'—'}</td>`;
+      const ov = st[kind][y];
+      return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-k="${kind}" data-y="${y}"
+        value="${ov!=null?ov:''}" placeholder="${fmtDef(y)}">${unit}</td>`;
+    }).join('') + '</tr>';
+  const t = h('table', 'grid pnl mfp');
+  t.innerHTML = hdr +
+    rowVals('Volume', o => kk(o.vol)) +
+    nsRow +
+    rowVals('Product margin', o => em(o.pm), 'sub') +
+    rowVals('Product margin %', o => pct(o.pmRate), 'mut') +
+    asmRow('↳ net-sales growth', 'growth', y => (D.growth[y]*100).toFixed(1), '%') +
+    asmRow('↳ price / ASP', 'price', y => (D.price[y]*100).toFixed(1), '%') +
+    asmRow('↳ product margin %', 'pm', y => (D.pm[y]*100).toFixed(1), '%');
+  const sc = h('div', 'scrollx'); sc.appendChild(t); pl.appendChild(sc); root.appendChild(pl);
+
+  /* trajectory chart */
+  const tj = h('section', 'panel');
+  tj.appendChild(h('div', 'phead', `<h2>Net sales &amp; product margin · 2022 → 2031</h2>
+    <p>Solid is actual and budget; dashed is the plan. The line breaks at the ${BUD_YEAR} plan launch.</p>`));
+  const tjc = h('div', 'chart'); tj.appendChild(tjc); root.appendChild(tj);
+  ch.mfpLine(tjc, { labels: MFP_YEARS.map(String), splitAt: ACTUAL_YEARS.length,
+    series: [ { label:'Net sales', col:C.ink, vals: MFP_YEARS.map(y => Y(y).tot.ns) },
+              { label:'Product margin', col:C.good, vals: MFP_YEARS.map(y => Y(y).tot.pm) } ] });
+
+  /* ---- sales-channel breakdown ---- */
+  const chSec = h('section', 'panel');
+  chSec.appendChild(h('div', 'phead', `<h2>By sales channel</h2>
+    <p>The plan split across ERT, KRT, Direct Projects, D2C and Customer Service, summing to Nordics.
+       Channel mix drifts toward the faster-growing channels; adjust the plan-year shares below.</p>`));
+  root.appendChild(chSec);
+  const chChart = h('div', 'chart'); chSec.appendChild(chChart);
+  ch.stackCols(chChart, { labels: MFP_YEARS.map(String), keys: CH_IDS, splitAt: ACTUAL_YEARS.length,
+    series: Object.fromEntries(CH_IDS.map(c => [c, MFP_YEARS.map(y => Y(y).ch[c].ns)])),
+    cols: CH_COL, names: CH_NAME, height: 250 });
+
+  const cmTitle = h('div', 'phead', `<h2 style="font-size:11px">Channel mix · plan years (%)</h2>
+    <p>Editable. Blank inherits the drift; rows are renormalised to 100%.</p>`);
+  chSec.appendChild(cmTitle);
+  const cmt = h('table', 'grid');
+  cmt.innerHTML = `<tr><th>Channel</th>${PLAN_YEARS.map(y => `<th>${y}</th>`).join('')}<th>2026</th></tr>` +
+    CHANNELS.map(c => `<tr><td class="rowlab"><i class="dot" style="background:${c.col}"></i>${c.name}</td>` +
+      PLAN_YEARS.map(y => { const ov = (st.chShare[y]||{})[c.id];
+        return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-ch="${c.id}" data-y="${y}"
+          value="${ov!=null?ov:''}" placeholder="${(D.chShare[y][c.id]*100).toFixed(1)}"></td>`; }).join('') +
+      `<td class="num soft">${pct(Y(BUD_YEAR).ch[c.id].ns / Y(BUD_YEAR).tot.ns, 1)}</td></tr>`).join('');
+  const cmsc = h('div','scrollx'); cmsc.appendChild(cmt); chSec.appendChild(cmsc);
+
+  /* ---- BU breakdown ---- */
+  const buSec = h('section', 'panel');
+  buSec.appendChild(h('div', 'phead', `<h2>By business unit</h2>
+    <p>Net sales by BU across the horizon, and the BU mix within each channel — adjustable for the plan.</p>`));
+  root.appendChild(buSec);
+  const buChart = h('div', 'chart'); buSec.appendChild(buChart);
+  ch.stackCols(buChart, { labels: MFP_YEARS.map(String), keys: BUS.map(b => b.id), splitAt: ACTUAL_YEARS.length,
+    series: Object.fromEntries(BUS.map(b => [b.id,
+      MFP_YEARS.map(y => CH_IDS.reduce((s,c) => s + Y(y).byChBu[c][b.id].ns, 0))])),
+    cols: BU_COL, names: Object.fromEntries(BUS.map(b => [b.id, b.name])), height: 240 });
+
+  buSec.appendChild(h('div','phead',`<h2 style="font-size:11px">BU mix within channel · plan (%)</h2>
+    <p>Editable per channel, applied across the plan horizon. Blank inherits the 2025 actual split.</p>`));
+  const bmt = h('table','grid');
+  bmt.innerHTML = `<tr><th>Channel</th>${BUS.map(b=>`<th>${b.name}</th>`).join('')}</tr>` +
+    CHANNELS.map(c => `<tr><td class="rowlab"><i class="dot" style="background:${c.col}"></i>${c.name}</td>` +
+      BUS.map(b => { const ov = (st.buShare[c.id]||{})[b.id];
+        const def = D.buShare[c.id] ? D.buShare[c.id][b.id]*100 : 0;
+        return `<td class="num"><input class="cellin ${ov!=null?'own':''}" data-bch="${c.id}" data-bu="${b.id}"
+          value="${ov!=null?ov:''}" placeholder="${def.toFixed(0)}"></td>`; }).join('') + '</tr>').join('');
+  const bmsc=h('div','scrollx'); bmsc.appendChild(bmt); buSec.appendChild(bmsc);
+
+  /* ---- channel × BU P&L for a chosen plan year ---- */
+  const py = st.planYear;
+  const cbSec = h('section', 'panel');
+  const seg = h('div','seg'); PLAN_YEARS.forEach(y => { const b=h('button','sgb'+(py===y?' on':''),String(y));
+    b.onclick=()=>A.mfpPlanYear(y); seg.appendChild(b); });
+  const ph = h('div','phead'); ph.innerHTML = `<h2>P&amp;L by channel × BU</h2>
+    <p>Net sales for each channel and business unit — the grid the budget is built from. Pick a plan year:</p>`;
+  cbSec.appendChild(ph); cbSec.appendChild(seg); root.appendChild(cbSec);
+  const cbChart = h('div','chart'); cbSec.appendChild(cbChart);
+  ch.stackCols(cbChart, { labels: CH_IDS, keys: BUS.map(b=>b.id),
+    series: Object.fromEntries(BUS.map(b => [b.id, CH_IDS.map(c => Y(py).byChBu[c][b.id].ns)])),
+    cols: BU_COL, names: Object.fromEntries(BUS.map(b=>[b.id,b.name])), height: 230 });
+  const cbt = h('table','grid');
+  cbt.innerHTML = `<tr><th>Channel ${py}</th>${BUS.map(b=>`<th>${b.name}</th>`).join('')}<th>Total</th><th>PM%</th></tr>` +
+    CHANNELS.map(c => { const row = BUS.map(b=>Y(py).byChBu[c.id][b.id].ns);
+      const tot = Y(py).ch[c.id];
+      return `<tr><td class="rowlab"><i class="dot" style="background:${c.col}"></i>${c.name}</td>` +
+        row.map(v=>`<td class="num">${em(v)}</td>`).join('') +
+        `<td class="num"><b>${em(tot.ns)}</b></td><td class="num">${pct(tot.pmRate,0)}</td></tr>`; }).join('') +
+    `<tr class="totrow"><td class="rowlab">Nordics</td>` +
+      BUS.map(b=>`<td class="num">${em(CH_IDS.reduce((s,c)=>s+Y(py).byChBu[c][b.id].ns,0))}</td>`).join('') +
+      `<td class="num"><b>${em(Y(py).tot.ns)}</b></td><td class="num">${pct(Y(py).tot.pmRate,0)}</td></tr>`;
+  const cbsc=h('div','scrollx'); cbsc.appendChild(cbt); cbSec.appendChild(cbsc);
+
+  cbSec.appendChild(h('p','note',`This channel × BU plan feeds <b>Budget 2027</b>: each cell is spread to
+    months by the appliance seasonality curve to prepopulate the monthly budget, one page per sales channel.`));
+
+  /* wire inputs */
+  root.querySelector('#mfpreset').onclick = A.mfpReset;
+  root.querySelectorAll('input.cellin[data-k]').forEach(inp => inp.onchange = e => {
+    const v = e.target.value.trim(); const y = +e.target.dataset.y, k = e.target.dataset.k;
+    A.mfpSet(k, y, v==='' ? null : (k==='nsAbs' ? parseFloat(v)*1e6 : parseFloat(v))); });
+  root.querySelectorAll('input.cellin[data-ch]').forEach(inp => inp.onchange = e => {
+    const v = e.target.value.trim();
+    A.mfpChShare(+e.target.dataset.y, e.target.dataset.ch, v==='' ? null : parseFloat(v)); });
+  root.querySelectorAll('input.cellin[data-bch]').forEach(inp => inp.onchange = e => {
+    const v = e.target.value.trim();
+    A.mfpBuShare(e.target.dataset.bch, e.target.dataset.bu, v==='' ? null : parseFloat(v)); });
+}
+
+/* ===================== PAGE — BUDGET 2027 (from MFP) ==================== */
+export function renderBudget(root, ctx, A) {
+  root.innerHTML = '';
+  const M = ctx.mfp, st = ctx.mfpState, Y27 = M.years[2027];
+  const cur = st.budCh || 'ALL';
+
+  const nav = h('section', 'ctlbar');
+  const seg = h('div', 'seg');
+  [['ALL','Overview'], ...CHANNELS.map(c => [c.id, c.name])].forEach(([v,l]) => {
+    const b = h('button', 'sgb' + (cur===v ? ' on' : ''), l); b.onclick = () => A.mfpBudCh(v); seg.appendChild(b); });
+  nav.appendChild(seg); root.appendChild(nav);
+
+  const intro = h('section','panel');
+  intro.appendChild(h('div','phead',`<h2>Budget 2027 · ${cur==='ALL'?'all channels':CHANNELS.find(c=>c.id===cur).long}</h2>
+    <p>Prepopulated from the long-term plan's 2027 slice, spread to months by the appliance seasonality
+       curve. This is the working budget — channel by BU by month, tying back to the MFP.</p>`));
+  root.appendChild(intro);
+
+  if (cur === 'ALL') {
+    /* overview: net sales by channel by month */
+    const kp = h('section','kpis');
+    [['Net sales 2027', em(Y27.tot.ns), '', ''],
+     ['Product margin', em(Y27.tot.pm), pct(Y27.tot.pmRate), 'up'],
+     ['Volume', kk(Y27.tot.vol), '', ''],
+     ['Channels', String(CHANNELS.length), 'ERT · KRT · DP · D2C · CS', '']
+    ].forEach(([k,v,d,c])=>{ const e=h('div','kpi');
+      e.innerHTML=`<div class="k">${k}</div><div class="v num">${v}</div><div class="d num ${c}">${d}</div>`; kp.appendChild(e); });
+    root.appendChild(kp);
+
+    const cP = h('section','panel');
+    cP.appendChild(h('div','phead',`<h2>Monthly net sales by channel</h2>
+      <p>Seasonalised from the 2027 plan; the twelve months sum back to each channel's annual total.</p>`));
+    const cc=h('div','chart'); cP.appendChild(cc); root.appendChild(cP);
+    ch.stackCols(cc,{ labels:MONTH_NAMES, keys:CH_IDS,
+      series:Object.fromEntries(CH_IDS.map(c=>[c, SEAS.map(sm=>Y27.ch[c].ns*sm)])),
+      cols:CH_COL, names:CH_NAME, height:250 });
+
+    const t=h('table','grid'); const scP=h('section','panel');
+    scP.appendChild(h('div','phead',`<h2>Channel × month · net sales</h2>`));
+    t.innerHTML = `<tr><th>Channel</th>${MONTH_NAMES.map(m=>`<th>${m}</th>`).join('')}<th>FY</th></tr>` +
+      CHANNELS.map(c=>`<tr><td class="rowlab"><i class="dot" style="background:${c.col}"></i>${c.name}</td>`+
+        SEAS.map(sm=>`<td class="num">${em(Y27.ch[c.id].ns*sm)}</td>`).join('')+
+        `<td class="num"><b>${em(Y27.ch[c.id].ns)}</b></td></tr>`).join('') +
+      `<tr class="totrow"><td class="rowlab">Nordics</td>`+
+        SEAS.map(sm=>`<td class="num">${em(Y27.tot.ns*sm)}</td>`).join('')+
+        `<td class="num"><b>${em(Y27.tot.ns)}</b></td></tr>`;
+    const sx=h('div','scrollx'); sx.appendChild(t); scP.appendChild(sx); root.appendChild(scP);
+  } else {
+    /* channel view: BU × month */
+    const chY = Y27.ch[cur], cells = Y27.byChBu[cur];
+    const kp = h('section','kpis');
+    [['Net sales 2027', em(chY.ns), pct(chY.ns/Y27.tot.ns,0)+' of Nordics',''],
+     ['Product margin', em(chY.pm), pct(chY.pmRate),'up'],
+     ['Volume', kk(chY.vol), '', ''],
+     ['Peak month', MONTH_NAMES[SEAS.indexOf(Math.max(...SEAS))], 'seasonal high','']
+    ].forEach(([k,v,d,c])=>{ const e=h('div','kpi');
+      e.innerHTML=`<div class="k">${k}</div><div class="v num">${v}</div><div class="d num ${c}">${d}</div>`; kp.appendChild(e); });
+    root.appendChild(kp);
+
+    const cP=h('section','panel');
+    cP.appendChild(h('div','phead',`<h2>${CHANNELS.find(c=>c.id===cur).name} · monthly net sales by BU</h2>`));
+    const cc=h('div','chart'); cP.appendChild(cc); root.appendChild(cP);
+    ch.stackCols(cc,{ labels:MONTH_NAMES, keys:BUS.map(b=>b.id),
+      series:Object.fromEntries(BUS.map(b=>[b.id, SEAS.map(sm=>cells[b.id].ns*sm)])),
+      cols:BU_COL, names:Object.fromEntries(BUS.map(b=>[b.id,b.name])), height:240 });
+
+    const tP=h('section','panel');
+    tP.appendChild(h('div','phead',`<h2>BU × month · net sales &amp; product margin</h2>
+      <p>The line the budget owner works. Months sum to the BU's 2027 total; BUs sum to the channel.</p>`));
+    const t=h('table','grid');
+    t.innerHTML = `<tr><th>BU</th>${MONTH_NAMES.map(m=>`<th>${m}</th>`).join('')}<th>FY ns</th><th>FY PM</th></tr>` +
+      BUS.map(b=>{ const cell=cells[b.id];
+        return `<tr><td class="rowlab"><i class="dot" style="background:${BU_COL[b.id]}"></i>${b.name}</td>`+
+        SEAS.map(sm=>`<td class="num">${em(cell.ns*sm)}</td>`).join('')+
+        `<td class="num"><b>${em(cell.ns)}</b></td><td class="num">${em(cell.pm)}</td></tr>`; }).join('') +
+      `<tr class="totrow"><td class="rowlab">${CHANNELS.find(c=>c.id===cur).name}</td>`+
+        SEAS.map(sm=>`<td class="num">${em(chY.ns*sm)}</td>`).join('')+
+        `<td class="num"><b>${em(chY.ns)}</b></td><td class="num">${em(chY.pm)}</td></tr>`;
+    const sx=h('div','scrollx'); sx.appendChild(t); tP.appendChild(sx); root.appendChild(tP);
+  }
 }
