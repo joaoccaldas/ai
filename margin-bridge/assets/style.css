@@ -241,6 +241,39 @@ table.tree tr.leaf td.rowlab{font-family:"IBM Plex Mono",monospace;font-size:10p
 i.dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
 a.mark{text-decoration:none;color:inherit;cursor:pointer}
 
+/* -------------------------------- flow --------------------------------- */
+.navstage{font-family:"Archivo",sans-serif;font-weight:700;font-size:8px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--steel);align-self:center;margin:0 2px}
+.version{display:flex;flex-direction:column;line-height:1.15;padding:0 12px;border-left:1px solid var(--rule)}
+.version b{font-family:"Archivo",sans-serif;font-weight:700;font-size:11px;letter-spacing:.04em}
+.version span{font-size:9px;color:var(--steel)}
+.buildcards{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:30px}
+.buildcard{background:var(--paper);border:1px solid var(--rule);padding:24px}
+.buildcard.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.buildcard h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:20px;margin:6px 0 10px}
+.buildcard p{font-size:13.5px;color:#45443f;margin:0 0 12px}
+.buildcard ul{margin:0 0 18px;padding-left:16px;font-size:12.5px;color:#45443f}
+.buildcard li{margin:3px 0}
+.btn2{font-family:"Archivo",sans-serif;font-weight:600;font-size:11px;letter-spacing:.05em;
+  text-transform:uppercase;border:1px solid var(--ink);border-radius:2px;cursor:pointer;
+  background:none;color:var(--ink);padding:9px 14px}
+.btn2.solid,.btn2:hover{background:var(--ink);color:var(--paper)}
+.flowstrip{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap}
+.flowstep{flex:1 1 150px;text-align:left;background:var(--paper);border:1px solid var(--rule);
+  border-radius:2px;cursor:pointer;padding:11px 12px}
+.flowstep.on{border-color:var(--brass);box-shadow:inset 0 0 0 1px var(--brass)}
+.flowstep:hover{border-color:var(--ink)}
+.flowstep .ft{font-family:"Archivo",sans-serif;font-weight:700;font-size:11px;margin-bottom:3px}
+.flowstep .fd{font-size:10.5px;color:var(--steel);line-height:1.35}
+.flowarrow{align-self:center;color:var(--steel);font-size:12px}
+.tutsteps{display:flex;flex-direction:column;gap:2px}
+.tutstep{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--rule)}
+.tutstep:first-child{border-top:none}
+.tutstep .tn{font-family:"Archivo",sans-serif;font-weight:800;font-size:22px;color:var(--brass);
+  width:36px;flex:none}
+.tutstep .tc h3{font-family:"Archivo",sans-serif;font-weight:800;font-size:15px;margin:0 0 6px}
+.tutstep .tc p{margin:0 0 10px;font-size:13.5px;color:#45443f;max-width:80ch}
+
 /* ------------------------------ MFP / budget --------------------------- */
 .navsep{width:1px;height:18px;background:var(--rule);margin:0 4px}
 .nav button.lt{color:var(--brass);border-color:transparent}

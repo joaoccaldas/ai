@@ -16,25 +16,32 @@
 <header class="topbar">
   <a class="mark" href="index.html" title="Back to the guide">Margin<span>Bridge</span></a>
   <nav class="nav">
-    <button data-p="history">History</button>
-    <button data-p="plan" class="on">Plan</button>
-    <button data-p="cockpit">Cockpit</button>
+    <button data-p="tutorial">Guide</button>
+    <span class="navsep"></span>
+    <span class="navstage">① Plan</span>
+    <button data-p="mfp" class="lt">Long-term</button>
+    <button data-p="build" class="lt">Build a version</button>
+    <span class="navsep"></span>
+    <span class="navstage">② Detail</span>
+    <button data-p="budget">Budget 2027</button>
+    <button data-p="plan">Forecast</button>
+    <span class="navsep"></span>
+    <span class="navstage">③ Analyse</span>
+    <button data-p="cockpit">Bridge</button>
     <button data-p="pnl">P&amp;L</button>
     <button data-p="mix">Mix</button>
     <button data-p="sensitivity">Sensitivity</button>
+    <button data-p="history">History</button>
     <button data-p="report">Report</button>
-    <span class="navsep"></span>
-    <button data-p="mfp" class="lt">MFP · Long-term</button>
-    <button data-p="budget" class="lt">Budget 2027</button>
   </nav>
   <div class="presets">
-    <span class="eyebrow">Presets</span>
     <button data-preset="down">Downside</button>
     <button data-preset="up">Upside</button>
-    <button data-preset="price">Price action</button>
+    <button data-preset="price">Price</button>
     <button id="btnReset">Reset</button>
   </div>
   <div class="spacer"></div>
+  <div id="version" class="version"></div>
   <div id="cutlabel" class="cut num">—</div>
   <div id="status" class="seal"></div>
 </header>

@@ -19,7 +19,8 @@ const { SKUS, FACTS, BUDGET } = generateAll();
 
 const S = {
   ...newState(),
-  page: 'plan', tab: 'all', gridDrv: 'growth',
+  page: 'mfp', tab: 'all', gridDrv: 'growth',
+  build: 'budget',       // the version being built: budget (full year) | forecast (rest of year)
   cmp: 'BUD', measure: 'gm', focusMkt: 'ALL', pick: null,
   isolate: false,        // cockpit: collapse the walk onto lever groups
   pnlGran: 'fy',         // P&L period grain: fy | q | m
@@ -314,7 +315,7 @@ function compute() {
     br, brGroups: groupParts(br.parts), isolate: S.isolate,
     priceSweep, histBr, histSeries, yearSummary, savedScenarios: SCEN,
     pnl: pnlData, mix: mixData, opexLines: OPEX_LINES, tree: treeData, ebitBridge,
-    mfp, mfpState: S.mfp, hist: HIST,
+    mfp, mfpState: S.mfp, hist: HIST, build: S.build, page: S.page,
     reconciled:reconciled(br), grad, sc, torn, mc, hist,
     histMarks: [
       { v:sc.likely, lab:'forecast', col:C.ink },
@@ -365,6 +366,8 @@ const A = {
   mfpBudCh: c => { S.mfp.budCh = c; go(); },
   mfpReset: () => { S.mfp = { growth:{}, pm:{}, price:{}, nsAbs:{}, chShare:{}, buShare:{},
     planYear:S.mfp.planYear, budCh:S.mfp.budCh }; go(); },
+  setBuild: (b, page) => { S.build = b; S.pick = null; if (page) S.page = page; go(); },
+  goto: page => { S.page = page; S.pick = null; go(); },
   saveScenario: () => {
     const a = agg(ctx.FC);
     SCEN.push({ name: presetName(), gm:a.gm, ns:a.ns, rate:a.rate, units:a.units,
@@ -425,7 +428,8 @@ const A = {
 };
 
 /* -------------------------------- routing ------------------------------- */
-const PAGES = { history:views.renderHistory, plan:views.renderPlan, cockpit:views.renderCockpit,
+const PAGES = { tutorial:views.renderTutorial, build:views.renderBuild,
+                history:views.renderHistory, plan:views.renderPlan, cockpit:views.renderCockpit,
                 pnl:views.renderPnl, mix:views.renderMix,
                 sensitivity:views.renderSensitivity, report:views.renderReport,
                 mfp:views.renderMfp, budget:views.renderBudget };
@@ -434,6 +438,10 @@ function go() {
   ctx = compute();
   document.querySelectorAll('.nav button').forEach(b =>
     b.classList.toggle('on', b.dataset.p === S.page));
+  const ver = document.getElementById('version');
+  if (ver) ver.innerHTML = S.build === 'budget'
+    ? `<b>Budget 2027</b><span>full year · from MFP</span>`
+    : `<b>Forecast ’26</b><span>actuals + rest of year</span>`;
   document.getElementById('cutlabel').textContent = 'actuals through ' + label(S.cursor);
   const stat = document.getElementById('status');
   stat.className = 'seal' + (ctx.reconciled ? '' : ' broken');
