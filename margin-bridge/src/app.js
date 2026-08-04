@@ -4,10 +4,10 @@
    ========================================================================== */
 
 import { generateAll, MARKETS, BUS, CLASSES, MONTH_NAMES, N_MONTHS, CY_START,
-         isCY, monthOf, label } from './data.js';
+         priorYearStart, HIST_YEARS, isCY, monthOf, label } from './data.js';
 import { DRIVERS, newState, ovKey, resolve, summarise, buildForecast,
-         stampPY, stampBUD, agg, byMonth, meas } from './model.js';
-import { bridge, bridgeBy, reconciled, movers } from './bridge.js';
+         stampPY, stampBUD, fxOf, agg, byMonth, meas } from './model.js';
+import { bridge, bridgeBy, groupParts, reconciled, movers } from './bridge.js';
 import { sigmas, gradients, scenarios, tornado, monteCarlo, histogram } from './risk.js';
 import * as views from './views.js';
 import { eur, seur, pct, spp, C } from './charts.js';
@@ -19,15 +19,17 @@ const S = {
   ...newState(),
   page: 'plan', tab: 'all', gridDrv: 'growth',
   cmp: 'BUD', measure: 'gm', focusMkt: 'ALL', pick: null,
+  isolate: false,        // cockpit: collapse the walk onto lever groups
   rho: 0.35, k: 1.28
 };
+const SCEN = [];         // saved scenarios for compare (in-memory session store)
 
 /* ------------------------------- compute -------------------------------- */
 function compute() {
   const H = summarise(FACTS, S.cursor);
   // dispersion is measured over the actual open-month horizon, so the risk
   // band narrows as the year closes and there is less left to be wrong about.
-  const SIG = sigmas(FACTS, 23 - S.cursor);
+  const SIG = sigmas(FACTS, N_MONTHS - 1 - S.cursor);
   const rowsFC  = buildForecast(FACTS, H, S);
   const rowsPY  = stampPY(FACTS, S);
   const rowsBUD = stampBUD(BUDGET, S);
@@ -55,6 +57,40 @@ function compute() {
   const grad = gradients(evalFn, S);
   const sc   = scenarios(grad, SIG, { k:S.k, rho:S.rho });
   const torn = tornado(grad, SIG, S.k);
+
+  /* price sensitivity: sweep the portfolio price assumption across a range and
+     read product margin, net sales and the elasticity-driven volume response at
+     each step. The margin-maximising point is where price gain and volume loss
+     cross. Holds every other override fixed. */
+  const priceSweep = (() => {
+    const saved = { ...S.ov }, key = ovKey('all','ALL','price');
+    const LO = -12, HI = 25;
+    const pts = [];
+    for (let p = LO; p <= HI; p += 1) {
+      S.ov[key] = p;
+      const a = agg(buildForecast(FACTS, H, S).filter(cy));
+      pts.push({ p, gm:a.gm, ns:a.ns, units:a.units, rate:a.rate });
+    }
+    S.ov = saved;
+    const best = pts.reduce((b, x) => x.gm > b.gm ? x : b, pts[0]);
+    const u0 = pts.find(x => x.p === 0) ?? pts[0];
+    return { pts, best, cur: saved[key] ?? 0, u0, lo:LO, hi:HI, atCeiling: best.p >= HI };
+  })();
+
+  /* history: a year-on-year product-margin walk on pure actuals — the prior year
+     versus the year before it — so the same volume/mix/price isolation applies to
+     what already happened, not only the forecast. */
+  const histRows = (lo, hi) => FACTS.filter(f => f.i >= lo && f.i < hi && mf(f))
+    .map(f => ({ ...f, ver:'H', open:false, fx: fxOf(S, f.k, f.i) }));
+  const histBr = HIST_YEARS >= 2
+    ? bridge(histRows(priorYearStart - 12, priorYearStart), histRows(priorYearStart, CY_START), S.measure)
+    : null;
+  const histSeries = byMonth(rowsFC, mf);            // full multi-year monthly actuals→forecast
+  const yearSummary = Array.from({ length: HIST_YEARS + 1 }, (_, y) => {
+    const a = agg(rowsFC, r => Math.floor(r.i / 12) === y && mf(r));
+    return { y, lab: y === HIST_YEARS ? 'CY · forecast' : y === HIST_YEARS - 1 ? 'PY' : `Y-${HIST_YEARS - y}`,
+             units:a.units, ns:a.ns, gm:a.gm, rate:a.rate };
+  });
   const budTotal = agg(BUD)[S.measure === 'gm' ? 'gm' : 'ns'];
   const mc   = monteCarlo(grad, SIG, { n:5000, rho:S.rho, target:budTotal });
   const hist = histogram(mc.samples);
@@ -177,7 +213,9 @@ function compute() {
   return { state:S, SKUS, H, rowsFC, rowsPY, rowsBUD, FC, base,
     cmp:S.cmp, measure:S.measure, focusMkt:S.focusMkt, tab:S.tab, gridDrv:S.gridDrv,
     pick:S.pick, drill, rho:S.rho, k:S.k, sig:SIG,
-    br, reconciled:reconciled(br), grad, sc, torn, mc, hist,
+    br, brGroups: groupParts(br.parts), isolate: S.isolate,
+    priceSweep, histBr, histSeries, yearSummary, savedScenarios: SCEN,
+    reconciled:reconciled(br), grad, sc, torn, mc, hist,
     histMarks: [
       { v:sc.likely, lab:'forecast', col:C.ink },
       { v:budTotal,  lab:'budget',   col:C.bad, dash:'3 3' }
@@ -194,8 +232,13 @@ function compute() {
 
 /* ------------------------------- actions -------------------------------- */
 let ctx;
+const presetName = () => {
+  const n = Object.values(S.ov).filter(v => v).length;
+  const base = S.cmp === 'BUD' ? 'vs budget' : 'vs PY';
+  return (n === 0 ? 'History on autopilot' : `${n} adjustment${n > 1 ? 's' : ''}`) + ` · ${base}`;
+};
 const A = {
-  setCursor: i => { S.cursor = Math.max(CY_START, Math.min(23, i)); go(); },
+  setCursor: i => { S.cursor = Math.max(CY_START, Math.min(N_MONTHS - 1, i)); go(); },
   setCarry:  v => { S.carry = v; go(); },
   setRamp:   v => { S.ramp = v; go(); },
   setElast:  v => { S.elast = v; go(); },
@@ -207,6 +250,17 @@ const A = {
   setMeasure:m => { S.measure = m; S.pick = null; go(); },
   setFocusMkt:m => { S.focusMkt = m; go(); },
   pickBucket:b => { S.pick = S.pick === b ? null : b; go(); },
+  setIsolate:v => { S.isolate = v; S.pick = null; go(); },
+  saveScenario: () => {
+    const a = agg(ctx.FC);
+    SCEN.push({ name: presetName(), gm:a.gm, ns:a.ns, rate:a.rate, units:a.units,
+      worst:ctx.sc.worst, best:ctx.sc.best, above:ctx.mc.above,
+      ov:{ ...S.ov }, carry:S.carry, elast:S.elast, cmp:S.cmp, measure:S.measure, cursor:S.cursor });
+    go();
+  },
+  loadScenario: i => { const s = SCEN[i]; if (!s) return;
+    S.ov = { ...s.ov }; S.carry = s.carry; S.elast = s.elast; go(); },
+  dropScenario: i => { SCEN.splice(i, 1); go(); },
   setOv: (lvl, scope, drv, v) => {
     const key = ovKey(lvl, scope, drv);
     if (v === null || Number.isNaN(v)) delete S.ov[key]; else S.ov[key] = v;
@@ -257,7 +311,8 @@ const A = {
 };
 
 /* -------------------------------- routing ------------------------------- */
-const PAGES = { plan:views.renderPlan, cockpit:views.renderCockpit, report:views.renderReport };
+const PAGES = { history:views.renderHistory, plan:views.renderPlan, cockpit:views.renderCockpit,
+                sensitivity:views.renderSensitivity, report:views.renderReport };
 
 function go() {
   ctx = compute();

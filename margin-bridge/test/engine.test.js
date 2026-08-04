@@ -1,4 +1,4 @@
-import { generateAll, CY_START, isCY, label } from '../src/data.js';
+import { generateAll, CY_START, N_MONTHS, isCY, label } from '../src/data.js';
 import { newState, summarise, buildForecast, stampPY, stampBUD, agg, ovKey } from '../src/model.js';
 import { bridge, reconciled } from '../src/bridge.js';
 import { sigmas, gradients, scenarios, monteCarlo } from '../src/risk.js';
@@ -37,7 +37,7 @@ for (const [nm, base] of [['vs BUD', BUD], ['vs PY', PY]]) {
 // cursor movement: forecast should converge on actuals as the year closes
 console.log('\ncursor sweep (FC margin, EUR m):');
 const path = [];
-for (let c = 12; c <= 23; c++) {
+for (let c = CY_START; c <= N_MONTHS - 1; c++) {
   const s2 = { ...newState(), cursor: c };
   const hh = summarise(FACTS, c);
   const f = buildForecast(FACTS, hh, s2).filter(r => isCY(r.i));

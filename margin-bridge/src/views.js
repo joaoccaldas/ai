@@ -2,7 +2,7 @@
    views.js — rendering only. Nothing here computes a number.
    ========================================================================== */
 
-import { MARKETS, BUS, CLASSES, MONTH_NAMES, CY_START, N_MONTHS, label } from './data.js';
+import { MARKETS, BUS, CLASSES, MONTH_NAMES, CY_START, N_MONTHS, HIST_YEARS, label } from './data.js';
 import { DRIVERS, LEVELLED, ovKey, inherited } from './model.js';
 import * as ch from './charts.js';
 import { eur, seur, pct, spp, C } from './charts.js';
@@ -209,12 +209,16 @@ export function renderCockpit(root, ctx, A) {
   ctl.appendChild(mk([['BUD','Forecast vs budget'],['PY','Forecast vs prior year']], ctx.cmp, A.setCmp));
   ctl.appendChild(mk([['gm','Product margin'],['ns','Net sales']], ctx.measure, A.setMeasure));
   ctl.appendChild(mk([['ALL','Nordics'],...MARKETS.map(m => [m.id, m.name])], ctx.focusMkt, A.setFocusMkt));
+  ctl.appendChild(mk([[false,'Detailed walk'],[true,'Isolate levers']], ctx.isolate, A.setIsolate));
   root.appendChild(ctl);
 
-  /* hero bridge */
+  /* hero bridge — detailed, or collapsed onto Volume / Mix / Pricing / Cost / Lifecycle / FX */
+  const parts = ctx.isolate ? ctx.brGroups : br.parts;
   const hero = h('section', 'panel hero');
   hero.appendChild(h('div', 'phead', `<h2>${ctx.bridgeTitle}</h2>
-    <p>Click any bucket to see which markets it came from.</p>`));
+    <p>${ctx.isolate
+      ? 'Collapsed onto the levers. <b>Volume</b>, <b>Mix</b> and <b>Pricing</b> (list price net of discount and rebate) are the three the commercial team owns; cost, lifecycle and FX are held separate.'
+      : 'Click any bucket to see which markets it came from.'}</p>`));
   const rd = h('div', 'readout');
   rd.innerHTML = `
     <div><span class="k">${ctx.fromLab}</span><span class="v num">${eur(br.from)}</span></div>
@@ -228,10 +232,10 @@ export function renderCockpit(root, ctx, A) {
   hero.appendChild(rd);
   const wf = h('div', 'chart'); hero.appendChild(wf);
   root.appendChild(hero);
-  ch.waterfall(wf, { from:br.from, to:br.to, parts:br.parts,
-    fromLab:ctx.fromLab, toLab:ctx.toLab, height:310, onPick:A.pickBucket });
+  ch.waterfall(wf, { from:br.from, to:br.to, parts,
+    fromLab:ctx.fromLab, toLab:ctx.toLab, height:310, onPick: ctx.isolate ? null : A.pickBucket });
 
-  if (ctx.pick) {
+  if (ctx.pick && !ctx.isolate) {
     const dd = h('section', 'panel');
     const nm = br.parts.find(p => p.id === ctx.pick)?.lab ?? ctx.pick;
     dd.appendChild(h('div', 'phead', `<h2>${nm} by market</h2>
@@ -246,6 +250,35 @@ export function renderCockpit(root, ctx, A) {
     root.appendChild(dd);
     dd.querySelector('#closedd').onclick = () => A.pickBucket(null);
   }
+
+  /* scenario compare strip */
+  const scv = h('section', 'panel scenbar');
+  const saved = ctx.savedScenarios;
+  scv.innerHTML = `<div class="phead"><h2>Scenarios</h2>
+    <p>Snapshot the current set of adjustments, then hold them side by side.</p></div>`;
+  const scrow = h('div', 'scenrow');
+  const cur = h('div', 'scard cur');
+  cur.innerHTML = `<div class="eyebrow">Current</div>
+    <div class="num big">${eur(kpi.gm)}</div><div class="mini">${ctx.assumptions.length ? ctx.assumptions.length + ' adjustment' + (ctx.assumptions.length>1?'s':'') : 'History on autopilot'}</div>
+    <div class="mini">worst ${eur(sc.worst)} · best ${eur(sc.best)}</div>
+    <button class="solid sm" id="savescen">Save snapshot</button>`;
+  scrow.appendChild(cur);
+  saved.forEach((s, i) => {
+    const d = s.gm - kpi.gm;
+    const c = h('div', 'scard');
+    c.innerHTML = `<div class="eyebrow">${i + 1} · ${s.name}</div>
+      <div class="num big">${eur(s.gm)}</div>
+      <div class="mini num ${d>=0?'up':'down'}">${seur(d)} vs current</div>
+      <div class="mini">P(≥bud) ${s.above!=null?(s.above*100).toFixed(0)+'%':'—'}</div>
+      <div class="srow"><button class="ghost sm" data-load="${i}">Load</button>
+        <button class="ghost sm" data-drop="${i}">✕</button></div>`;
+    scrow.appendChild(c);
+  });
+  scv.appendChild(scrow);
+  root.appendChild(scv);
+  scv.querySelector('#savescen').onclick = A.saveScenario;
+  scv.querySelectorAll('[data-load]').forEach(b => b.onclick = () => A.loadScenario(+b.dataset.load));
+  scv.querySelectorAll('[data-drop]').forEach(b => b.onclick = () => A.dropScenario(+b.dataset.drop));
 
   /* KPI row */
   const kp = h('section', 'kpis');
@@ -396,4 +429,146 @@ export function renderReport(root, ctx, A) {
           prior-year shape, year-to-date trend carried at ${(ctx.state.carry*100).toFixed(0)}%,
           last three months' price and cost held flat.</td></tr>`);
   ar.appendChild(at); root.appendChild(ar);
+}
+
+/* ======================== PAGE 0 — HISTORY (actuals) ===================== */
+export function renderHistory(root, ctx, A) {
+  root.innerHTML = '';
+  const { histBr, yearSummary, histSeries, state } = ctx;
+
+  const ctl = h('section', 'ctlbar');
+  const mk = (opts, cur, on) => { const g = h('div', 'seg');
+    opts.forEach(([v, l]) => { const b = h('button', 'sgb' + (cur === v ? ' on' : ''), l);
+      b.onclick = () => on(v); g.appendChild(b); }); return g; };
+  ctl.appendChild(mk([['gm','Product margin'],['ns','Net sales']], ctx.measure, A.setMeasure));
+  ctl.appendChild(mk([['ALL','Nordics'],...MARKETS.map(m => [m.id, m.name])], ctx.focusMkt, A.setFocusMkt));
+  ctl.appendChild(mk([[false,'Detailed walk'],[true,'Isolate levers']], ctx.isolate, A.setIsolate));
+  root.appendChild(ctl);
+
+  const intro = h('section', 'panel');
+  intro.appendChild(h('div', 'phead', `<h2>Two years of actuals</h2>
+    <p>${HIST_YEARS} full years of monthly history sit under the forecast. The walk below is the
+       <b>year-on-year</b> product-margin bridge on pure actuals — prior year against the year
+       before it — so the same volume / mix / pricing isolation applies to what already happened,
+       before any assumption is touched.</p>`));
+  root.appendChild(intro);
+
+  /* per-year summary */
+  const sumP = h('section', 'panel');
+  sumP.appendChild(h('div', 'phead', `<h2>Year on year</h2>`));
+  const st = h('table', 'grid rpt');
+  st.innerHTML = `<tr><th>Year</th><th>Units</th><th>Net sales</th><th>Product margin</th><th>Margin rate</th></tr>` +
+    yearSummary.map(y => `<tr><td class="rowlab">${y.lab}</td>
+      <td class="num">${Math.round(y.units/1000)}k</td>
+      <td class="num">${eur(y.ns)}</td><td class="num"><b>${eur(y.gm)}</b></td>
+      <td class="num">${pct(y.rate)}</td></tr>`).join('');
+  sumP.appendChild(st); root.appendChild(sumP);
+
+  /* monthly margin trend across the whole calendar */
+  const trP = h('section', 'panel');
+  trP.appendChild(h('div', 'phead', `<h2>Monthly ${ctx.measure === 'gm' ? 'product margin' : 'net sales'}</h2>
+    <p>Every month, oldest to newest. Solid is actual; dashed after the cut-off is forecast.</p>`));
+  const spk = h('div', 'chart');
+  spk.appendChild(ch.spark(histSeries.map(x => ctx.measure === 'gm' ? x.gm : x.ns),
+    Math.max(640, 900), 96, C.good, state.cursor));
+  trP.appendChild(spk);
+  const yl = h('div', 'yearlabels');
+  yl.innerHTML = yearSummary.map(y => `<span>${y.lab}</span>`).join('');
+  trP.appendChild(yl);
+  root.appendChild(trP);
+
+  /* the YoY actuals bridge */
+  if (histBr) {
+    const parts = ctx.isolate ? groupPartsLocal(histBr.parts) : histBr.parts;
+    const bp = h('section', 'panel hero');
+    bp.appendChild(h('div', 'phead', `<h2>Prior year → year before · actuals</h2>
+      <p>What actually drove the margin between the two most recent completed years.</p>`));
+    const wf = h('div', 'chart'); bp.appendChild(wf); root.appendChild(bp);
+    ch.waterfall(wf, { from:histBr.from, to:histBr.to, parts,
+      fromLab:'Y-2', toLab:'PY', height:300 });
+  }
+}
+
+/* mirror of bridge.groupParts, kept local so views stays render-only */
+function groupPartsLocal(parts) {
+  const order = ['Volume','Mix','Pricing','Cost','Lifecycle','FX'], by = {};
+  for (const p of parts) (by[p.grp] ??= { id:p.grp.toLowerCase(), lab:p.grp, v:0, grp:p.grp }).v += p.v;
+  return order.filter(g => by[g]).map(g => by[g]);
+}
+
+/* ====================== PAGE 4 — SENSITIVITY (price) ===================== */
+export function renderSensitivity(root, ctx, A) {
+  root.innerHTML = '';
+  const { priceSweep, torn, sc } = ctx;
+
+  const ctl = h('section', 'ctlbar');
+  const mk = (opts, cur, on) => { const g = h('div', 'seg');
+    opts.forEach(([v, l]) => { const b = h('button', 'sgb' + (cur === v ? ' on' : ''), l);
+      b.onclick = () => on(v); g.appendChild(b); }); return g; };
+  ctl.appendChild(mk([['ALL','Nordics'],...MARKETS.map(m => [m.id, m.name])], ctx.focusMkt, A.setFocusMkt));
+  const el2 = h('div', 'seg elasnote');
+  el2.innerHTML = `<span class="mini">Elasticity ×${ctx.state.elast.toFixed(2)} — set on Plan</span>`;
+  ctl.appendChild(el2);
+  root.appendChild(ctl);
+
+  /* price response curve */
+  const cur = priceSweep.pts.find(p => p.p === Math.round(priceSweep.cur)) ?? priceSweep.u0;
+  const best = priceSweep.best;
+  const dVol = (best.units / (priceSweep.u0.units || 1) - 1) * 100;
+  const dGm = best.gm - (cur.gm || 0);
+  const pc = h('section', 'panel hero');
+  pc.appendChild(h('div', 'phead', `<h2>Price sensitivity</h2>
+    <p>Product margin (solid), net sales (dashed) and volume index (gold) as the portfolio price
+       assumption sweeps from ${priceSweep.lo}% to +${priceSweep.hi}%. Volume responds through each
+       business unit's elasticity. The green line marks the ${priceSweep.atCeiling
+         ? 'best price <b>within the modelled range</b> — margin is still rising at the ceiling'
+         : '<b>margin-maximising</b> price, where the price gain and volume loss cross'}.</p>`));
+  const chart = h('div', 'chart'); pc.appendChild(chart); root.appendChild(pc);
+  ch.priceCurve(chart, priceSweep, 300);
+
+  const rd = h('section', 'kpis');
+  [['Current price move', (priceSweep.cur>0?'+':'')+priceSweep.cur+'%', ''],
+   ['Margin-max price', (best.p>0?'+':'')+best.p+'%', 'green'],
+   ['Margin at optimum', eur(best.gm), dGm>=0?'green':'red'],
+   ['Volume at optimum', (dVol>=0?'+':'')+dVol.toFixed(1)+'%', dVol>=0?'green':'red']].forEach(([k, v, col]) => {
+    const c = h('div', 'kpi');
+    c.innerHTML = `<div class="k">${k}</div><div class="v num ${col==='red'?'down':col==='green'?'up':''}">${v}</div>`;
+    rd.appendChild(c);
+  });
+  root.appendChild(rd);
+
+  const note = h('section', 'panel');
+  note.appendChild(h('div', 'phead', `<h2>Reading it</h2>`));
+  note.appendChild(h('p', 'narrative', priceSweep.atCeiling
+    ? `<p>At the current setting the portfolio prices <b>${(priceSweep.cur>0?'+':'')+priceSweep.cur}%</b>.
+      Across the modelled range product margin keeps rising with price — at these margin rates and
+      elasticities the per-unit gain still outweighs the volume it sheds, so the best point sits at the
+      <b>+${priceSweep.hi}%</b> ceiling (<b>${eur(best.gm)}</b>). That is a signal there may be untaken
+      pricing power; it is <em>not</em> a mandate to raise list price ${priceSweep.hi}% — competitive
+      response and cross-elasticity, not in this model, would bend the curve down first.</p>`
+    : `<p>At the current setting the portfolio prices <b>${(priceSweep.cur>0?'+':'')+priceSweep.cur}%</b>.
+      Pushing price lifts realised margin per unit but sheds volume through elasticity; the two cross at
+      <b>${(best.p>0?'+':'')+best.p}%</b>, where product margin is highest at <b>${eur(best.gm)}</b>.
+      Beyond that point the volume loss outweighs the price gain — the classic reason a blanket price
+      rise can destroy margin even as it lifts the per-unit number.</p>`));
+  root.appendChild(note);
+
+  /* per-BU elasticity */
+  const eP = h('section', 'panel');
+  eP.appendChild(h('div', 'phead', `<h2>Elasticity by business unit</h2>
+    <p>Δ units per Δ price. Big-ticket built-in appliances are stickier than small domestic ones.</p>`));
+  const et = h('table', 'grid');
+  et.innerHTML = `<tr><th>Business unit</th><th>Own-price elasticity</th><th>Read</th></tr>` +
+    BUS.map(b => `<tr><td class="rowlab">${b.name}</td><td class="num">${b.elas.toFixed(2)}</td>
+      <td class="mini">${b.elas > -0.8 ? 'inelastic — price has room' :
+        b.elas > -1 ? 'near unit — price is roughly margin-neutral' :
+        'elastic — price rises leak volume'}</td></tr>`).join('');
+  eP.appendChild(et); root.appendChild(eP);
+
+  /* sensitivity tornado */
+  const tP = h('section', 'panel');
+  tP.appendChild(h('div', 'phead', `<h2>What moves it</h2>
+    <p>Each driver swung ±${sc.k}σ of its own history, alone. Sigma at the right.</p>`));
+  const tc = h('div', 'chart'); tP.appendChild(tc); root.appendChild(tP);
+  ch.tornadoChart(tc, torn, 220);
 }

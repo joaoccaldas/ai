@@ -262,6 +262,51 @@ export function heat(host, { rows, cols, cells, fmt = spp }) {
   host.innerHTML = `<table><tr><th></th>${th}</tr>${body}</table>`;
 }
 
+/* ---------------------------- price response ----------------------------- */
+export function priceCurve(host, { pts, best, cur, u0 }, height = 260) {
+  clear(host);
+  const W = Math.max(420, host.clientWidth || 720), H = height;
+  const s = svg(W, H); host.appendChild(s);
+  const pad = { l:52, r:52, t:16, b:34 }, iw = W-pad.l-pad.r, ih = H-pad.t-pad.b;
+  const px = pts.map(p => p.p), x0 = Math.min(...px), x1 = Math.max(...px);
+  const gm = pts.map(p => p.gm), ns = pts.map(p => p.ns);
+  const lo = Math.min(...gm) * 0.985, hi = Math.max(...ns) * 1.015;
+  const X = v => pad.l + (v-x0)/((x1-x0)||1)*iw, Y = v => pad.t + ih - (v-lo)/((hi-lo)||1)*ih;
+  // volume on its own right-hand scale (index vs price 0)
+  const vi = pts.map(p => p.units / (u0.units || 1));
+  const vlo = Math.min(...vi), vhi = Math.max(...vi);
+  const Yv = v => pad.t + ih - (v-vlo)/((vhi-vlo)||1)*ih;
+
+  for (let i = 0; i <= 4; i++) {
+    const v = lo + (hi-lo)*i/4;
+    s.appendChild(el('line', { x1:pad.l, x2:W-pad.r, y1:Y(v), y2:Y(v), stroke:C.rule }));
+    s.appendChild(tx(pad.l-6, Y(v)+3, eur(v), { 'text-anchor':'end', 'font-size':9 }));
+  }
+  // zero-price vertical
+  s.appendChild(el('line', { x1:X(0), x2:X(0), y1:pad.t, y2:pad.t+ih, stroke:C.steel,
+    'stroke-width':1, 'stroke-dasharray':'3 3' }));
+  const poly = (arr, Yf, col, w, dash) => s.appendChild(el('polyline',
+    { points:arr.map((p,i)=>`${X(px[i])},${Yf(p)}`).join(' '), fill:'none', stroke:col,
+      'stroke-width':w, 'stroke-dasharray':dash, 'stroke-linejoin':'round' }));
+  poly(ns, Y, C.steel, 1.6, '5 3');
+  poly(vi, Yv, C.brass, 1.4, '2 3');
+  poly(gm, Y, C.ink, 2.4, null);
+  // best-margin marker
+  s.appendChild(el('circle', { cx:X(best.p), cy:Y(best.gm), r:4.5, fill:C.good }));
+  s.appendChild(el('line', { x1:X(best.p), x2:X(best.p), y1:pad.t, y2:pad.t+ih, stroke:C.good,
+    'stroke-width':1.5 }));
+  s.appendChild(tx(X(best.p), pad.t-4, `margin-max ${best.p>0?'+':''}${best.p}%`,
+    { 'text-anchor':'middle', 'font-size':9, fill:C.good, 'font-weight':600 }));
+  // current marker
+  const cy0 = pts.find(p => p.p === Math.round(cur)) ?? u0;
+  s.appendChild(el('circle', { cx:X(cy0.p), cy:Y(cy0.gm), r:3.5, fill:C.ink }));
+  s.appendChild(tx(pad.l, H-8, `${x0}%`, { 'font-size':9 }));
+  s.appendChild(tx(X(0), H-8, 'price 0', { 'text-anchor':'middle', 'font-size':9, fill:C.ink }));
+  s.appendChild(tx(W-pad.r, H-8, `+${x1}%`, { 'text-anchor':'end', 'font-size':9 }));
+  s.appendChild(tx(W-pad.r+6, pad.t+9, 'vol', { 'font-size':9, fill:C.brass }));
+  return s;
+}
+
 /* ------------------------------- sparkline ------------------------------- */
 export function spark(vals, w, h, col, split) {
   const s = svg(w, h); s.setAttribute('width', w);

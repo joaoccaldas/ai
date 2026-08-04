@@ -183,6 +183,25 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+/* ------------------------- scenarios + new views ----------------------- */
+button.solid{font-family:"Archivo",sans-serif;font-weight:600;font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;border:1px solid var(--ink);border-radius:2px;cursor:pointer;
+  background:var(--ink);color:var(--paper);padding:6px 10px}
+button.solid:hover{background:var(--bad);border-color:var(--bad)}
+button.solid.sm{font-size:9px;padding:4px 8px}
+.scenrow{display:flex;gap:12px;flex-wrap:wrap}
+.scard{flex:1 1 170px;min-width:160px;background:var(--paper);border:1px solid var(--rule);
+  padding:11px 13px;display:flex;flex-direction:column;gap:4px}
+.scard.cur{border-color:var(--ink)}
+.scard .big{font-size:20px;font-weight:500;letter-spacing:-.02em}
+.scard .mini{font-size:10px;color:var(--steel);line-height:1.35}
+.scard .srow{display:flex;gap:6px;margin-top:4px}
+.elasnote{border:none;align-items:center;display:flex}
+.elasnote .mini{font-size:11px;color:var(--steel)}
+.yearlabels{display:flex;justify-content:space-around;margin-top:2px}
+.yearlabels span{font-family:"Archivo",sans-serif;font-weight:600;font-size:9px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--steel)}
+
 /* --------------------------------- print ------------------------------- */
 @media print{
   .topbar,.foot,.exportbar,.tabs,.ctlbar,.presets{display:none!important}

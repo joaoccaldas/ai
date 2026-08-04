@@ -10,7 +10,7 @@
          bar chart, not a picture, so whoever gets the deck can edit it.
    ========================================================================== */
 
-import { MARKETS, BUS } from './data.js';
+import { MARKETS, BUS, HIST_YEARS, isCY } from './data.js';
 import { DRIVERS } from './model.js';
 import { eur, pct, spp } from './charts.js';
 
@@ -25,7 +25,7 @@ const toCsv = (head, rows) =>
 
 /* Load-ready period: month index → YYYY-MM. PY = last calendar year, CY = this
    one, so a target system can key on a real date instead of "Jun CY". */
-const period = i => `${(new Date().getFullYear() - 1) + (i >= 12 ? 1 : 0)}-${String((i % 12) + 1).padStart(2, '0')}`;
+const period = i => `${new Date().getFullYear() - HIST_YEARS + Math.floor(i / 12)}-${String((i % 12) + 1).padStart(2, '0')}`;
 
 /* ------------------------------- CSV: facts ------------------------------ */
 export function exportFacts(ctx, grain = 'sku') {
@@ -46,7 +46,7 @@ export function exportFacts(ctx, grain = 'sku') {
   // FC carries the PY months too (i<12), but those are already emitted as 'PY'
   // above — emit only the current-year forecast/actual slice, so no version
   // double-counts prior year in a load target that sums across versions.
-  rowsFC.forEach(r => { if (r.i >= 12) add(r, r.open ? 'FC-open' : 'ACT'); });
+  rowsFC.forEach(r => { if (isCY(r.i)) add(r, r.open ? 'FC-open' : 'ACT'); });
 
   const cols = grain === 'sku' ? ['market','bu','class','sku'] :
                grain === 'bu'  ? ['market','bu'] : ['market'];
