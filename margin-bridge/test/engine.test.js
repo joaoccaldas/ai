@@ -1,5 +1,7 @@
 import { generateAll, CY_START, N_MONTHS, isCY, label } from '../src/data.js';
-import { newState, summarise, buildForecast, stampPY, stampBUD, agg, ovKey, pnl } from '../src/model.js';
+import { newState, summarise, buildForecast, stampPY, stampBUD, agg, ovKey, pnl,
+         leafAgg, pnlFromLeaves } from '../src/model.js';
+import { MARKETS, BUS } from '../src/data.js';
 import { bridge, reconciled } from '../src/bridge.js';
 import { sigmas, gradients, scenarios, monteCarlo } from '../src/risk.js';
 
@@ -94,6 +96,19 @@ ok(Math.abs(pl.ebit - (pl.pm - pl.opex)) < 1, 'EBIT = product margin − opex');
 ok(pl.ebit > 0 && pl.ebit < pl.pm, 'EBIT is positive and below product margin');
 console.log(`\nP&L (FC): ns ${eur(pl.ns)}  pm ${eur(pl.pm)} (${(pl.pmRate*100).toFixed(1)}%)  ` +
   `opex ${eur(pl.opex)}  EBIT ${eur(pl.ebit)} (${(pl.ebitRate*100).toFixed(1)}%)`);
+
+// consolidation: every level must sum to its parent, exactly
+const L = leafAgg(FC, true);
+const root = pnlFromLeaves(L, () => true);
+const mktSum = MARKETS.reduce((s, m) => s + pnlFromLeaves(L, o => o.k === m.id).ebit, 0);
+const buSum  = BUS.reduce((s, b) => s + pnlFromLeaves(L, o => o.bu === b.id).ebit, 0);
+let skuSum = 0;
+for (const m of MARKETS) for (const b of BUS)
+  skuSum += pnlFromLeaves(L, o => o.k === m.id && o.bu === b.id).ebit;
+ok(Math.abs(root.ebit - mktSum) < 1, `Nordics EBIT = Σ markets (${eur(root.ebit)} vs ${eur(mktSum)})`);
+ok(Math.abs(root.ebit - buSum) < 1, 'Nordics EBIT = Σ business units');
+ok(Math.abs(root.ebit - skuSum) < 1, 'Nordics EBIT = Σ market×BU cells');
+ok(Math.abs(root.ebit - pl.ebit) < 1, 'leaf consolidation matches the direct P&L');
 
 // risk
 const SIG = sigmas(FACTS);

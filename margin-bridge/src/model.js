@@ -244,6 +244,39 @@ export const OPEX_LINES = [
   { key:'da',   name:'Depreciation & amortisation' }
 ];
 
+/* Aggregate rows to their finest grain — market × BU × SKU — once. Everything
+   in the consolidation tree is then a SUM of these leaves, so a parent is
+   literally the sum of its children and totals consolidate by construction,
+   not by a second calculation that might disagree. */
+export function leafAgg(rows, cyOnly = false) {
+  const L = {};
+  for (const r of rows) {
+    if (cyOnly && !isCY(r.i)) continue;
+    const m = meas(r), key = `${r.k}|${r.bu}|${r.s}`;
+    const o = L[key] ??= { k:r.k, bu:r.bu, s:r.s, units:0, gs:0, disc:0, reb:0, ns:0, cogs:0, pm:0 };
+    o.units += m.units; o.gs += m.gs; o.disc += m.disc; o.reb += m.reb;
+    o.ns += m.ns; o.cogs += m.cogs; o.pm += m.gm;
+  }
+  return L;
+}
+
+/** P&L for the subset of leaves matching pred — the consolidation primitive. */
+export function pnlFromLeaves(leaves, pred) {
+  let U=0, GS=0, D=0, RB=0, NS=0, CG=0, PM=0; const nsBu = {};
+  for (const key in leaves) {
+    const o = leaves[key]; if (pred && !pred(o)) continue;
+    U+=o.units; GS+=o.gs; D+=o.disc; RB+=o.reb; NS+=o.ns; CG+=o.cogs; PM+=o.pm;
+    nsBu[o.bu] = (nsBu[o.bu] ?? 0) + o.ns;
+  }
+  let anp=0, sell=0, logi=0, sga=0, da=0;
+  for (const bu in nsBu) { const o = OPEX[bu] || {}; const ns = nsBu[bu];
+    anp+=ns*(o.anp||0); sell+=ns*(o.sell||0); logi+=ns*(o.logi||0); sga+=ns*(o.sga||0); da+=ns*(o.da||0); }
+  const opex = anp+sell+logi+sga+da, ebit = PM-opex;
+  return { units:U, gs:GS, disc:D, reb:RB, ns:NS, cogs:CG, pm:PM,
+           anp, sell, logi, sga, da, opex, ebit,
+           pmRate: NS?PM/NS:0, ebitRate: NS?ebit/NS:0 };
+}
+
 /** Full P&L from volume to EBIT for a set of rows (already period/scope filtered). */
 export function pnl(rows, pred) {
   const a = agg(rows, pred);

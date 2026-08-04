@@ -307,6 +307,62 @@ export function priceCurve(host, { pts, best, cur, u0 }, height = 260) {
   return s;
 }
 
+/* ------------------- BU mix: contribution (mix vs rate) ------------------ */
+export function contribBars(host, rows, height = 216) {
+  clear(host);
+  const W = Math.max(440, host.clientWidth || 720), H = height;
+  const s = svg(W, H); host.appendChild(s);
+  const pad = { l:118, r:56, t:14, b:26 }, iw = W-pad.l-pad.r, ih = H-pad.t-pad.b;
+  const mx = Math.max(...rows.flatMap(r => [Math.abs(r.me), Math.abs(r.re)]), 1e-9);
+  const X = v => pad.l + iw/2 + v/mx*(iw/2 - 2);
+  const slot = ih / Math.max(1, rows.length);
+  s.appendChild(el('line', { x1:X(0), x2:X(0), y1:pad.t, y2:pad.t+ih, stroke:C.ink }));
+  rows.forEach((r, i) => {
+    const y0 = pad.t + i*slot + slot*0.16, bh = slot*0.30;
+    [['me', C.brass, 0], ['re', C.ink, bh + 3]].forEach(([k, col, off]) => {
+      const v = r[k], x0 = Math.min(X(0), X(v));
+      s.appendChild(el('rect', { x:x0, y:y0+off, width:Math.max(1, Math.abs(X(v)-X(0))), height:bh,
+        fill:col, opacity:.9 }));
+    });
+    s.appendChild(tx(pad.l-8, y0 + slot*0.42, r.name, { 'text-anchor':'end', fill:C.ink, 'font-size':10 }));
+    const tot = r.me + r.re;
+    s.appendChild(tx(W-pad.r+6, y0 + slot*0.42, spp(tot), { 'font-size':9,
+      fill: tot>=0 ? C.good : C.bad, 'font-weight':600 }));
+  });
+  s.appendChild(el('rect', { x:pad.l, y:H-13, width:9, height:9, fill:C.brass }));
+  s.appendChild(tx(pad.l+13, H-5, 'mix effect', { 'font-size':9 }));
+  s.appendChild(el('rect', { x:pad.l+82, y:H-13, width:9, height:9, fill:C.ink }));
+  s.appendChild(tx(pad.l+95, H-5, 'rate effect', { 'font-size':9 }));
+  s.appendChild(tx(W-pad.r+6, pad.t-2, 'total', { 'font-size':8, fill:C.steel }));
+  return s;
+}
+
+/* ---------------------- BU mix: share × margin bubble -------------------- */
+export function buBubble(host, { pts }, height = 232) {
+  clear(host);
+  const W = Math.max(360, host.clientWidth || 560), H = height;
+  const s = svg(W, H); host.appendChild(s);
+  const pad = { l:46, r:16, t:14, b:30 }, iw = W-pad.l-pad.r, ih = H-pad.t-pad.b;
+  const x1 = Math.max(...pts.map(p => p.x)) * 1.18;
+  const y0 = Math.min(...pts.map(p => p.y)) - 0.02, y1 = Math.max(...pts.map(p => p.y)) + 0.02;
+  const X = v => pad.l + v/x1*iw, Y = v => pad.t + ih - (v-y0)/((y1-y0)||1)*ih;
+  for (let i = 0; i <= 3; i++) {
+    const v = y0 + (y1-y0)*i/3;
+    s.appendChild(el('line', { x1:pad.l, x2:W-pad.r, y1:Y(v), y2:Y(v), stroke:C.rule }));
+    s.appendChild(tx(pad.l-6, Y(v)+3, (v*100).toFixed(0)+'%', { 'text-anchor':'end', 'font-size':9 }));
+  }
+  const mz = Math.max(...pts.map(p => p.z), 1);
+  pts.forEach(p => {
+    s.appendChild(el('circle', { cx:X(p.x), cy:Y(p.y), r:7+Math.sqrt(p.z/mz)*20, fill:p.col, opacity:.72 }));
+    s.appendChild(tx(X(p.x), Y(p.y)+3, p.lab, { 'text-anchor':'middle', 'font-size':9, fill:'#fff',
+      'font-weight':600 }));
+  });
+  s.appendChild(tx(pad.l, H-8, 'NS share  →', { 'font-size':9 }));
+  s.appendChild(tx(pad.l+2, pad.t+8, 'Margin rate ↑', { 'font-size':9 }));
+  s.appendChild(tx(W-pad.r, H-8, 'bubble = net sales', { 'text-anchor':'end', 'font-size':9 }));
+  return s;
+}
+
 /* ------------------------------- sparkline ------------------------------- */
 export function spark(vals, w, h, col, split) {
   const s = svg(w, h); s.setAttribute('width', w);
