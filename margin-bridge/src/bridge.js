@@ -25,13 +25,14 @@ function roll(rows, fxRule) {
   for (const r of rows) {
     const k = `${r.k}|${r.s}`;
     const fx = fxRule ? fxRule(r) : r.fx;
-    if (!out[k]) out[k] = { q:0, gs:0, ns:0, cogs:0, disc:0, k:r.k, s:r.s, bu:r.bu, cls:r.cls };
-    const o = out[k];
+    if (!out[k]) out[k] = { q:0, gs:0, ns:0, cogs:0, disc:0, reb:0, k:r.k, s:r.s, bu:r.bu, cls:r.cls };
+    const o = out[k], rebR = r.rebR ?? 0;
     o.q    += r.units;
     o.gs   += r.units * r.aspG / fx;
-    o.ns   += r.units * r.aspG * (1 - r.discR) / fx;
+    o.ns   += r.units * r.aspG * (1 - r.discR - rebR) / fx;
     o.cogs += r.units * r.cogsU / fx;
     o.disc += r.units * r.aspG * r.discR / fx;
+    o.reb  += r.units * r.aspG * rebR / fx;
   }
   return out;
 }
@@ -53,32 +54,45 @@ export function bridge(base, comp, measure = 'gm') {
 
   const value = o => measure === 'gm' ? o.ns - o.cogs : o.ns;
 
-  let Qa = 0, Qb = 0, Va = 0, VbC = 0;
-  for (const k in A) { Qa += A[k].q; Va  += value(A[k]); }
-  for (const k in B) { Qb += B[k].q; VbC += value(B[k]); }
-  const upmA = Qa ? Va / Qa : 0;
+  // constant-FX totals across everything
+  let Va = 0, VbC = 0;
+  for (const k in A) Va  += value(A[k]);
+  for (const k in B) VbC += value(B[k]);
+
+  // continuing SKUs: present with volume in BOTH periods. Everything volume,
+  // mix, price and rate is measured on these; launches and delists get their
+  // own bucket so a big launch never masquerades as favourable mix.
+  const cont = k => A[k] && B[k] && A[k].q > 0 && B[k].q > 0;
+
+  let Qa = 0, Qb = 0, Vac = 0;
+  for (const k in A) if (cont(k)) { Qa += A[k].q; Vac += value(A[k]); }
+  for (const k in B) if (cont(k)) Qb += B[k].q;
+  const upmA = Qa ? Vac / Qa : 0;
 
   // Σ q_b,i × v_a,i  → volume and mix evaluated at base unit economics
   let atBase = 0;
-  for (const k in B) {
-    const a = A[k];
-    atBase += a && a.q > 0 ? B[k].q * (value(a) / a.q) : B[k].q * upmA;
-  }
+  for (const k in B) if (cont(k)) atBase += B[k].q * (value(A[k]) / A[k].q);
   const volume = (Qb - Qa) * upmA;
   let   mix    = atBase - Qb * upmA;
 
-  // rate effects on comparison-period volume
-  let price = 0, disc = 0, cogs = 0;
-  for (const k in B) {
+  // rate effects on comparison-period volume, continuing SKUs only
+  let price = 0, disc = 0, reb = 0, cogs = 0;
+  for (const k in B) if (cont(k)) {
     const a = A[k], b = B[k];
-    if (!a || a.q === 0 || b.q === 0) continue;
     price += b.q * (b.gs / b.q - a.gs / a.q);
     disc  -= b.q * (b.disc / b.q - a.disc / a.q);
+    reb   -= b.q * (b.reb / b.q - a.reb / a.q);
     if (measure === 'gm') cogs -= b.q * (b.cogs / b.q - a.cogs / a.q);
   }
 
-  // whatever launches/delists left behind goes to mix, keeping the walk exact
-  mix += (VbC - Va) - (volume + mix + price + disc + cogs);
+  // lifecycle: value of SKUs that live in exactly one period, at constant FX
+  let launch = 0, delist = 0;
+  for (const k in B) if (!cont(k)) launch += value(B[k]);
+  for (const k in A) if (!cont(k)) delist += value(A[k]);
+  const lifecycle = launch - delist;
+
+  // continuing-SKU nonlinearity lands in mix, keeping the constant-FX walk exact
+  mix += (VbC - Va) - (volume + mix + price + disc + reb + cogs + lifecycle);
 
   // FX = comparison period at its own rates minus the same at base rates
   let VbA = 0; for (const k in Bact) VbA += value(Bact[k]);
@@ -86,12 +100,14 @@ export function bridge(base, comp, measure = 'gm') {
 
   const total = VbA - Va;
   const parts = [
-    { id:'volume', lab:'Volume',   v:volume },
-    { id:'mix',    lab:'Mix',      v:mix    },
-    { id:'price',  lab:'Price',    v:price  },
-    { id:'disc',   lab:'Discount', v:disc   },
+    { id:'volume', lab:'Volume',    v:volume    },
+    { id:'mix',    lab:'Mix',       v:mix       },
+    { id:'price',  lab:'Price',     v:price     },
+    { id:'disc',   lab:'Discount',  v:disc      },
+    { id:'reb',    lab:'Rebate',    v:reb       },
     ...(measure === 'gm' ? [{ id:'cogs', lab:'COGS', v:cogs }] : []),
-    { id:'fx',     lab:'FX',       v:fx     }
+    { id:'life',   lab:'Lifecycle', v:lifecycle },
+    { id:'fx',     lab:'FX',        v:fx        }
   ];
   const resid = total - parts.reduce((a, p) => a + p.v, 0);
   return { from:Va, to:VbA, total, parts, resid, Qa, Qb, measure };

@@ -3,9 +3,14 @@
 
    Nobody types three scenarios. They are derived:
 
-   1. sigma(): for each driver, measure how much that driver actually moved,
-      month on month, in the history we hold. That dispersion is the driver's
-      own uncertainty. Volume is volatile, DKK is pegged and is not.
+   1. sigma(): for each driver, measure how much that driver actually moved
+      over the *planning horizon we are forecasting*, in the history we hold.
+      If seven months are open, we look at how much each driver drifted over
+      seven-month windows in the past — not one month, and not a hand-tuned
+      annualisation factor. That h-step dispersion IS the planning uncertainty,
+      derived rather than assumed. Volume drifts a lot; DKK is pegged and barely
+      moves. (The earlier build multiplied a one-month σ by fixed fudge factors
+      of 0.55 and 1.60 — those are gone.)
 
    2. gradient(): move each driver one unit and read the margin response.
       The model is close to linear over sensible ranges, so one gradient per
@@ -13,24 +18,36 @@
 
    3. combine(): worst case is NOT the sum of every driver at its worst.
       That is the classic error and it produces numbers nobody believes.
-      Drivers are combined in quadrature with a correlation term:
+      Drivers are combined in quadrature with a correlation STRUCTURE, not a
+      single number:
 
-          band = sqrt( Σ eᵢ² + 2ρ · Σᵢ<ⱼ eᵢeⱼ )
+          band = sqrt( Σ eᵢ² + 2 · Σᵢ<ⱼ ρᵢⱼ · eᵢeⱼ )
 
-      ρ = 0 treats drivers as independent, ρ = 1 stacks them linearly.
-      Default 0.35: in a downturn volume and mix do move together, but FX
-      and COGS inflation are not the same event.
+      Drivers sit in two blocks. Demand (volume, price, discount, rebate,
+      premium mix) co-moves in a downturn at ρ. The macro block (COGS
+      inflation, FX) co-moves at ρ too, but across the two blocks the
+      correlation is only ρ·cross (default cross = 0.4) — a soft landing and
+      input-cost inflation are related, not the same event.
 
-   4. monteCarlo(): one common factor plus idiosyncratic noise, 5,000 draws
-      on the linearised model. Gives P10/P50/P90 and, more usefully,
-      "what is the probability we land above budget".
+   4. monteCarlo(): a demand factor and a macro factor plus a weak common
+      factor and idiosyncratic noise, 5,000 draws on the linearised model.
+      Reproduces the block correlation exactly and gives P10/P50/P90 and,
+      more usefully, "what is the probability we land above budget".
    ========================================================================== */
 
 import { DRIVERS } from './model.js';
 import { isCY, monthOf, CY_START } from './data.js';
 
+/* Which block each driver belongs to, for the correlation structure. */
+export const BLOCK = { growth:'demand', price:'demand', disc:'demand', rebate:'demand',
+                       premium:'demand', cogs:'macro', fxSE:'macro', fxNO:'macro' };
+/** Pairwise correlation: ρ within a block, ρ·cross across blocks, 1 on the diagonal. */
+export const corrOf = (a, b, rho, cross = 0.4) =>
+  a === b ? 1 : (BLOCK[a] === BLOCK[b] ? rho : rho * cross);
+
 /* ------------------------- 1. historical dispersion ---------------------- */
-export function sigmas(FACTS) {
+export function sigmas(FACTS, horizon = 6) {
+  const h = Math.max(1, Math.min(11, Math.round(horizon)));   // open-month planning window
   const key = f => `${f.k}|${f.s}`;
   const H = {};
   for (const f of FACTS) {
@@ -40,8 +57,8 @@ export function sigmas(FACTS) {
     const xs = [];
     for (const k in H) {
       const a = H[k];
-      for (let i = 1; i < a.length; i++) if (a[i] && a[i-1]) {
-        const v = get(a[i], a[i-1]);
+      for (let i = h; i < a.length; i++) if (a[i] && a[i-h]) {
+        const v = get(a[i], a[i-h]);              // h-step change, not 1-step
         if (isFinite(v)) xs.push(v);
       }
     }
@@ -52,22 +69,25 @@ export function sigmas(FACTS) {
     const m = xs.reduce((a,b)=>a+b,0) / xs.length;
     return Math.sqrt(xs.reduce((a,b)=>a+(b-m)**2,0) / xs.length);
   };
-  // annualised-ish: monthly dispersion scaled to a full-year planning move
   const s = {
-    growth:  sd(pull((b,a) => (b.units/a.units - 1) * 100)) * 0.55,
-    price:   sd(pull((b,a) => (b.aspG/a.aspG - 1) * 100))   * 1.60,
-    disc:    sd(pull((b,a) => (b.discR - a.discR) * 100))   * 1.60,
-    cogs:    sd(pull((b,a) => (b.cogsU/a.cogsU - 1) * 100)) * 1.60,
-    premium: 2.2,      // observed class-share drift, pp per year
-    fxSE:    4.8,      // SEK annual vol vs EUR
-    fxNO:    5.4       // NOK annual vol vs EUR
+    growth:  sd(pull((b,a) => (b.units/a.units - 1) * 100)),
+    price:   sd(pull((b,a) => (b.aspG/a.aspG - 1) * 100)),
+    disc:    sd(pull((b,a) => (b.discR - a.discR) * 100)),
+    rebate:  sd(pull((b,a) => ((b.rebR??0) - (a.rebR??0)) * 100)),
+    cogs:    sd(pull((b,a) => (b.cogsU/a.cogsU - 1) * 100)),
+    // class-share and FX are not on the per-SKU fact; documented annual vols
+    // scaled to the open-month horizon by the √time rule.
+    premium: 2.2 * Math.sqrt(h/12),
+    fxSE:    4.8 * Math.sqrt(h/12),
+    fxNO:    5.4 * Math.sqrt(h/12)
   };
-  s.disc = Math.max(0.4, s.disc);
+  s.disc   = Math.max(0.2, s.disc);
+  s.rebate = Math.max(0.2, s.rebate);
   return s;
 }
 
 /* Sign convention: which direction of each driver is GOOD for margin. */
-export const FAVOURABLE = { growth:+1, price:+1, disc:-1, cogs:-1, premium:+1, fxSE:+1, fxNO:+1 };
+export const FAVOURABLE = { growth:+1, price:+1, disc:-1, rebate:-1, cogs:-1, premium:+1, fxSE:+1, fxNO:+1 };
 
 /* ------------------------------ 2. gradients ----------------------------- */
 /** @param evalFn (overrideMap) => margin in EUR */
@@ -83,23 +103,24 @@ export function gradients(evalFn, state) {
 }
 
 /* ---------------------------- 3. scenario bands -------------------------- */
-export function combine(effects, rho) {
-  const e = Object.values(effects);
-  let q = e.reduce((a, x) => a + x * x, 0);
-  for (let i = 0; i < e.length; i++)
-    for (let j = i + 1; j < e.length; j++) q += 2 * rho * e[i] * e[j];
+export function combine(effects, rho, cross = 0.4) {
+  const ids = Object.keys(effects);
+  let q = ids.reduce((a, id) => a + effects[id] ** 2, 0);
+  for (let i = 0; i < ids.length; i++)
+    for (let j = i + 1; j < ids.length; j++)
+      q += 2 * corrOf(ids[i], ids[j], rho, cross) * effects[ids[i]] * effects[ids[j]];
   return Math.sqrt(Math.max(0, q));
 }
 
 /**
  * @returns { likely, best, worst, effects, k, rho } all in EUR margin
  */
-export function scenarios(grad, sig, { k = 1.28, rho = 0.35 } = {}) {
+export function scenarios(grad, sig, { k = 1.28, rho = 0.35, cross = 0.4 } = {}) {
   const effects = {};
   for (const d of DRIVERS) {
     effects[d.id] = Math.abs((grad.g[d.id] ?? 0) * (sig[d.id] ?? 0) * k);
   }
-  const band = combine(effects, rho);
+  const band = combine(effects, rho, cross);
   return { likely: grad.base, best: grad.base + band, worst: grad.base - band,
            effects, band, k, rho };
 }
@@ -125,15 +146,19 @@ const gauss = (() => {
   };
 })();
 
-export function monteCarlo(grad, sig, { n = 5000, rho = 0.35, target = null } = {}) {
+export function monteCarlo(grad, sig, { n = 5000, rho = 0.35, cross = 0.4, target = null } = {}) {
   const ids = DRIVERS.map(d => d.id);
-  const a = Math.sqrt(rho), b = Math.sqrt(1 - rho);
+  // z = √(cross·ρ)·G + √(ρ−cross·ρ)·F_block + √(1−ρ)·idio  → unit variance,
+  // within-block corr ρ, cross-block corr cross·ρ, exactly matching combine().
+  const g0 = Math.sqrt(Math.max(0, cross * rho));
+  const gb = Math.sqrt(Math.max(0, rho - cross * rho));
+  const gi = Math.sqrt(Math.max(0, 1 - rho));
   const out = new Float64Array(n);
   for (let t = 0; t < n; t++) {
-    const F = gauss();
+    const G = gauss(), Fdem = gauss(), Fmac = gauss();
     let m = grad.base;
     for (const id of ids) {
-      const z = a * F + b * gauss();
+      const z = g0 * G + gb * (BLOCK[id] === 'demand' ? Fdem : Fmac) + gi * gauss();
       m += (grad.g[id] ?? 0) * (sig[id] ?? 0) * z;
     }
     out[t] = m;

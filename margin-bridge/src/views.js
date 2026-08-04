@@ -67,6 +67,9 @@ export function renderPlan(root, ctx, A) {
     <p class="help">Price and cost decisions rarely land in full on day one. The ramp phases a change in over the first three open months.</p>`;
   ramp.querySelector('button').onclick = () => A.setRamp(!state.ramp);
   mg.appendChild(ramp);
+  mg.appendChild(dial('Price elasticity',
+    'How hard a price move pulls volume the other way. 0 ignores it (price drops straight to margin); 1 applies each business unit\'s own elasticity — laundry is stickier than small appliances. A "price action" that ignores elasticity always flatters the plan.',
+    state.elast, 0, 1.5, 0.05, v => '×' + v.toFixed(2), A.setElast));
   mech.appendChild(mg);
   root.appendChild(mech);
 

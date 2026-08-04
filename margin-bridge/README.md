@@ -23,7 +23,7 @@ ES modules need an origin. GitHub Pages works as-is.
 
 **Nothing in the forecast is typed by a human.** Base values are derived from
 history. Humans supply *deltas*, and deltas resolve by specificity. That is what
-keeps a 66-SKU × 4-market × 12-month plan maintainable and auditable at the same
+keeps a ~60-SKU × 4-market × 12-month plan maintainable and auditable at the same
 time.
 
 ---
@@ -43,9 +43,16 @@ The contract is one flat fact table:
 | `i` | month index, 0–11 prior year, 12–23 current year |
 | `units` | volume |
 | `aspG` | gross ASP per unit, **local currency** |
-| `discR` | discount + rebate rate, 0–1 |
+| `discR` | on-invoice discount rate, 0–1 |
+| `rebR` | off-invoice rebate + returns rate, 0–1 |
 | `cogsU` | COGS per unit, local currency |
 | `mapped` | false when the SKU has no clean BU/class link in the source system |
+
+Gross-to-net is split in two on purpose: on-invoice discount is a list-price
+decision the commercial team controls month to month, while rebates and returns
+accrue against volume and settle later. Net sales = `units × aspG × (1 − discR −
+rebR)`, and the bridge walks the two as separate buckets so a discount giveaway
+is never confused with a rebate accrual.
 
 Three things about that shape are deliberate:
 
@@ -92,11 +99,18 @@ late.**
 For each open month, each SKU, each market:
 
 ```
-units  = prior-year same month × driftFactor × (1 + growth)
+units  = prior-year same month × driftFactor × (1 + growth) × (1 + elasticity × priceΔ)
 aspG   = last 3 closed months' weighted ASP × (1 + price × ramp)
-discR  = last 3 closed months' weighted discount + (discΔ × ramp)
+discR  = last 3 closed months' weighted on-invoice discount + (discΔ × ramp)
+rebR   = last 3 closed months' weighted rebate + (rebateΔ × ramp)
 cogsU  = last 3 closed months' weighted COGS × (1 + cogsInflation × ramp)
 ```
+
+Then premiumisation runs as a second pass: within each Market × BU × month it
+moves a fixed number of units out of Silver into Platinum (or the reverse), so
+the group volume is unchanged to the last decimal and only the margin-rate mix
+shifts. It is a reallocation, not a scaling — premiumisation is exactly
+units-neutral.
 
 - **Anchoring to the same month last year** carries seasonality for free. Cooking
   peaks in November, SDA in January; nobody has to type a seasonal index.
@@ -104,6 +118,9 @@ cogsU  = last 3 closed months' weighted COGS × (1 + cogsInflation × ramp)
   dial (0–100%) is the judgement call every forecast cycle actually argues about:
   *does the year-to-date gap persist to December, or does the year revert to last
   year's shape?* Making it an explicit dial beats burying it in a formula.
+- **Price elasticity** pulls volume against a price move, by business unit —
+  laundry is stickier than small appliances. The dial runs 0 (ignore) to 1.5; at
+  0 a price rise drops straight to margin, which always flatters the plan.
 - **`ramp`** phases price and cost changes in over three months, because price
   decisions do not land in full on day one.
 
@@ -129,8 +146,8 @@ Most specific wins. Only overrides are stored; everything else inherits.
 | **Market × BU** | 4×5 editable grid | The working level. ~20 cells, one owner each. |
 | **SKU** | filterable table | Exceptions only: a launch, a delist, a competitor price move. |
 
-Why hybrid rather than pure top-down or pure bottom-up: 264 market-SKU
-combinations is too many for anyone to plan and defend. One number is too coarse
+Why hybrid rather than pure top-down or pure bottom-up: several hundred
+market-SKU combinations is too many for anyone to plan and defend. One number is too coarse
 to be credible in front of commercial. **Market × BU is roughly 20 cells, which
 is the level at which a named human can own each one.** SKU sits underneath for
 the handful of things per quarter that are genuinely known.
@@ -146,11 +163,14 @@ un-removable override.
 
 Nobody types three scenarios. They are derived. `src/risk.js`.
 
-**Step 1 — measure each driver's own volatility from the history you hold.**
-Month-on-month dispersion of volume, ASP, discount and COGS across every
-market-SKU series, scaled to a planning horizon. Volume is volatile. DKK is
-pegged and is not. The observed sigma is printed under every slider, so an input
-outside it is visible while it is being typed.
+**Step 1 — measure each driver's own volatility over the horizon you are
+forecasting.** If seven months are open, the model looks at how much volume, ASP,
+on-invoice discount, rebate and COGS actually drifted over *seven-month* windows
+in the history it holds — the h-step dispersion, not a one-month number multiplied
+by a hand-tuned annualisation factor. The uncertainty is derived, not assumed, and
+it narrows as the year closes and there is less horizon left to be wrong about.
+Volume is volatile; DKK is pegged and is not. The observed sigma is printed under
+every slider, so an input outside it is visible while it is being typed.
 
 **Step 2 — measure the model's response.** One central finite difference per
 driver gives EUR of margin per unit of driver. The model is close to linear over
@@ -159,23 +179,27 @@ sensible ranges, which makes everything downstream effectively free.
 **Step 3 — combine, and do not just add up.** Worst case is *not* every driver at
 its worst simultaneously. That is the classic error and it produces numbers
 nobody believes and everybody discounts. Drivers are combined in quadrature with
-a correlation term:
+a correlation *structure*, not a single number:
 
 ```
-band = √( Σ eᵢ² + 2ρ · Σᵢ<ⱼ eᵢeⱼ )
+band = √( Σ eᵢ² + 2 · Σᵢ<ⱼ ρᵢⱼ · eᵢeⱼ )
 ```
 
-`ρ = 0` treats drivers as independent; `ρ = 1` stacks them linearly. Default
-**0.35**: in a downturn volume and mix genuinely do move together, but COGS
-inflation and the NOK are not the same event. In the shipped dataset the
-quadrature band is about €3.3m against €4.9m for naive stacking — a third
-narrower, and defensible.
+Drivers sit in two blocks. **Demand** — volume, price, discount, rebate, premium
+mix — co-moves in a downturn at `ρ`. **Macro** — COGS inflation, FX — co-moves at
+`ρ` too. But across the two blocks the correlation is only `ρ · cross` (default
+`cross = 0.4`): a soft landing and input-cost inflation are related, not the same
+event. `ρ = 0` treats everything as independent; `ρ = 1` stacks the demand block
+linearly. Default **0.35**, and in the shipped dataset the quadrature band comes
+out roughly a quarter narrower than naive stacking — defensible rather than
+theatrical.
 
 `k` sets how many sigmas: 1.00 ≈ 68% of outcomes, **1.28 ≈ 80%**, 1.64 ≈ 90%.
 
-**Step 4 — Monte Carlo, for the sentence that lands.** 5,000 draws on a one-factor
-correlated model over the linearised response. Gives P10/P50/P90 and, more
-usefully in a review: *"there is a 34% chance of finishing at or above budget."*
+**Step 4 — Monte Carlo, for the sentence that lands.** 5,000 draws with a demand
+factor, a macro factor and a weak common factor over the linearised response —
+reproducing the block correlation above exactly. Gives P10/P50/P90 and, more
+usefully in a review: *"there is a 23% chance of finishing at or above budget."*
 That is a better answer than any single point estimate.
 
 `ρ` and `k` are both dials on the Plan page. When someone in the room says "that
@@ -190,16 +214,21 @@ PowerPoint slide:
 
 | Bucket | Measured as |
 |---|---|
-| Volume | ΔQ at base-period mix and base-period unit margin |
+| Volume | ΔQ at base-period mix and base-period unit margin, continuing SKUs |
 | Mix | remainder within volume, at base-period unit economics |
 | Price | Δ gross ASP on comparison-period volumes |
-| Discount | Δ discount per unit on comparison-period volumes, sign flipped |
+| Discount | Δ on-invoice discount per unit on comparison-period volumes, sign flipped |
+| Rebate | Δ off-invoice rebate + returns per unit on comparison-period volumes, sign flipped |
 | COGS | Δ COGS per unit on comparison-period volumes, sign flipped |
+| Lifecycle | net margin of SKUs live in exactly one period — launches minus delists |
 | FX | comparison period retranslated, base rates → actual rates |
 
-SKUs present in one period but not the other have no unit economics to compare,
-so their effect lands in Mix. That is the only sensible home for a launch or a
-delist and it keeps the walk exact.
+Volume, mix, price and every rate effect are measured on **continuing** SKUs —
+those present with volume in both periods. SKUs that live in only one period have
+no unit economics to compare, so a launch or a delist goes to its own **Lifecycle**
+bucket instead of hiding inside Mix, where a big launch would otherwise read as
+favourable mix with no visibility. Any remaining continuing-SKU nonlinearity lands
+in Mix, which keeps the walk exact.
 
 **The seal in the header is not decoration.** It recomputes the residual on every
 recalculation and turns red if the buckets do not sum to the delta. `npm test`
@@ -233,12 +262,14 @@ walk by market.
 | Button | What it produces |
 |---|---|
 | **PowerPoint** | 4 slides. The bridge goes in as a **native editable stacked bar chart**, not a picture — whoever receives the deck can change it. Loads `pptxgenjs` on demand from CDN. |
-| **Excel workbook** | Excel-compatible SpreadsheetML workbook with Summary, BU facts, SKU facts and assumptions. No external dependency. |
 | **PDF** | Print stylesheet + `window.print()`. No dependency, no drift between screen and paper. |
 | **CSV · by SKU / by BU** | Fact extract at the chosen grain, all three versions, EUR, semicolon-delimited with BOM so Excel opens it correctly in a Nordic locale. |
 | **CSV · assumptions** | The assumption register: every override, its level, its scope, plus cursor, carry, ramp, ρ and k. |
 
-CSV periods are emitted as `YYYY-MM`, and prior-year facts appear once only.
+CSV periods are emitted as load-ready `YYYY-MM`, and prior-year facts appear once
+only — no version double-counts prior year in a target that sums across versions.
+(A native XLSX workbook export is on the roadmap, not in the build; today the path
+out to Excel is the BOM-tagged CSV.)
 
 That last one matters more than it looks. **A forecast without the assumptions
 behind it is not reproducible, and it will be argued with.** The register is what
@@ -302,6 +333,14 @@ reconciles without launching anything.
 
 Honest list, in the order I would do them:
 
+- **Full (non-linearised) Monte Carlo.** The draws still run over the gradient
+  response, not the full model resimulated. Fine over ±2σ; it will understate a
+  convex tail if pushed to extremes. Production should resimulate the engine.
+- **Estimated covariance.** Correlation is now a two-block structure (demand vs
+  macro) rather than a single scalar — better, but still management judgement, not
+  an estimated covariance matrix from history.
+- **Native XLSX export.** The Excel path today is BOM-tagged CSV; a real workbook
+  with typed cells and multiple sheets is the obvious next step.
 - **Nested drill.** Bucket → market works; bucket → market → BU → SKU does not.
 - **Monthly FX curve.** Currently one rate for closed months and one for open,
   per market. Real hedging policy needs a monthly curve.
@@ -309,10 +348,11 @@ Honest list, in the order I would do them:
   view needs the calendar generalised.
 - **Save / load scenarios.** The assumption register exports but does not
   re-import. A named scenario library is the obvious next step.
-- **Elasticity.** Price and volume are independent dials today. A per-class
-  elasticity coefficient would stop anyone modelling +10% price at flat volume.
-- **Full Monte Carlo.** Currently linearised around the base. Fine over ±2σ,
-  drifts if the model is pushed to extremes.
+
+Landed since the first cut: exactly units-neutral premiumisation, a split
+gross-to-net (on-invoice discount vs off-invoice rebate) as two bridge buckets, a
+per-BU price-elasticity dial, a dedicated lifecycle bucket for launches and
+delists, horizon-based volatility, and a two-block correlation structure.
 
 ---
 

@@ -21,11 +21,13 @@ const S = {
   cmp: 'BUD', measure: 'gm', focusMkt: 'ALL', pick: null,
   rho: 0.35, k: 1.28
 };
-const SIG = sigmas(FACTS);
 
 /* ------------------------------- compute -------------------------------- */
 function compute() {
   const H = summarise(FACTS, S.cursor);
+  // dispersion is measured over the actual open-month horizon, so the risk
+  // band narrows as the year closes and there is less left to be wrong about.
+  const SIG = sigmas(FACTS, 23 - S.cursor);
   const rowsFC  = buildForecast(FACTS, H, S);
   const rowsPY  = stampPY(FACTS, S);
   const rowsBUD = stampBUD(BUDGET, S);
@@ -196,6 +198,7 @@ const A = {
   setCursor: i => { S.cursor = Math.max(CY_START, Math.min(23, i)); go(); },
   setCarry:  v => { S.carry = v; go(); },
   setRamp:   v => { S.ramp = v; go(); },
+  setElast:  v => { S.elast = v; go(); },
   setRho:    v => { S.rho = v; go(); },
   setK:      v => { S.k = v; go(); },
   setTab:    t => { S.tab = t; go(); },

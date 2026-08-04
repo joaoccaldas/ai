@@ -23,6 +23,10 @@ const csvEsc = v => typeof v === 'string' && /[",\n;]/.test(v) ? `"${v.replace(/
 const toCsv = (head, rows) =>
   [head.join(';'), ...rows.map(r => r.map(csvEsc).join(';'))].join('\n');
 
+/* Load-ready period: month index → YYYY-MM. PY = last calendar year, CY = this
+   one, so a target system can key on a real date instead of "Jun CY". */
+const period = i => `${(new Date().getFullYear() - 1) + (i >= 12 ? 1 : 0)}-${String((i % 12) + 1).padStart(2, '0')}`;
+
 /* ------------------------------- CSV: facts ------------------------------ */
 export function exportFacts(ctx, grain = 'sku') {
   const { rowsFC, rowsPY, rowsBUD, meas, label } = ctx;
@@ -39,13 +43,16 @@ export function exportFacts(ctx, grain = 'sku') {
   };
   rowsPY.forEach(r => add(r, 'PY'));
   rowsBUD.forEach(r => add(r, 'BUD'));
-  rowsFC.forEach(r => add(r, r.open ? 'FC-open' : (r.i >= 12 ? 'ACT' : 'PY-act')));
+  // FC carries the PY months too (i<12), but those are already emitted as 'PY'
+  // above — emit only the current-year forecast/actual slice, so no version
+  // double-counts prior year in a load target that sums across versions.
+  rowsFC.forEach(r => { if (r.i >= 12) add(r, r.open ? 'FC-open' : 'ACT'); });
 
   const cols = grain === 'sku' ? ['market','bu','class','sku'] :
                grain === 'bu'  ? ['market','bu'] : ['market'];
-  const head = [...cols, 'month', 'version', 'units', 'gross_sales_eur', 'net_sales_eur',
-                'cogs_eur', 'product_margin_eur', 'margin_rate'];
-  const rows = Object.values(bucket).map(b => [...b.key, label(b.i), b.ver,
+  const head = [...cols, 'period', 'month_label', 'version', 'units', 'gross_sales_eur',
+                'net_sales_eur', 'cogs_eur', 'product_margin_eur', 'margin_rate'];
+  const rows = Object.values(bucket).map(b => [...b.key, period(b.i), label(b.i), b.ver,
     b.u.toFixed(1), b.gs.toFixed(2), b.ns.toFixed(2), b.cogs.toFixed(2), b.gm.toFixed(2),
     (b.ns ? b.gm/b.ns : 0).toFixed(4)]);
   dl(new Blob(['\ufeff' + toCsv(head, rows)], { type:'text/csv;charset=utf-8' }),
