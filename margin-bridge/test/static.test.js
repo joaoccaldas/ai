@@ -19,10 +19,14 @@ let fails = 0;
 const ok = (c, m) => { console.log((c ? '  PASS  ' : '  FAIL  ') + m); if (!c) fails++; };
 const at = (...p) => resolve(ROOT, ...p);
 
-/* 1 — entry points the browser asks for on first paint */
-const html = readFileSync(at('index.html'), 'utf8');
+/* 1 — landing page is the front door and links into the app */
+const landing = readFileSync(at('index.html'), 'utf8');
+ok(landing.includes('app.html'), 'index.html (landing) links to app.html');
+
+/* 2 — the app is the real entry the browser boots from */
+const html = readFileSync(at('app.html'), 'utf8');
 for (const asset of ['assets/style.css', 'src/app.js']) {
-  ok(html.includes(asset), `index.html references ${asset}`);
+  ok(html.includes(asset), `app.html references ${asset}`);
   ok(existsSync(at(asset)), `${asset} exists on disk`);
 }
 ok(existsSync(at('.nojekyll')), '.nojekyll present (Pages serves src/ and assets/ verbatim)');
@@ -41,7 +45,7 @@ for (const f of readdirSync(at('src')).filter(n => n.endsWith('.js'))) {
 ok(missing === 0, `all ${checked} src/ imports resolve`);
 
 /* 3 — index.html must not depend on a build step (no bare specifiers, no bundler) */
-ok(!/from\s*['"][^.\/]/.test(html), 'index.html ships raw ES modules, no bundler');
+ok(!/from\s*['"][^.\/]/.test(html), 'app.html ships raw ES modules, no bundler');
 
 console.log(fails ? `\n${fails} FAILED\n` : '\nall green\n');
 process.exit(fails ? 1 : 0);

@@ -1,5 +1,5 @@
 import { generateAll, CY_START, N_MONTHS, isCY, label } from '../src/data.js';
-import { newState, summarise, buildForecast, stampPY, stampBUD, agg, ovKey } from '../src/model.js';
+import { newState, summarise, buildForecast, stampPY, stampBUD, agg, ovKey, pnl } from '../src/model.js';
 import { bridge, reconciled } from '../src/bridge.js';
 import { sigmas, gradients, scenarios, monteCarlo } from '../src/risk.js';
 
@@ -84,6 +84,16 @@ const Sr = { ...newState(), ov: { [ovKey('all','ALL','rebate')]: 2 } };
 const FCr = buildForecast(FACTS, summarise(FACTS, Sr.cursor), Sr).filter(r => isCY(r.i));
 ok(agg(FCr).ns < agg(FC).ns, 'higher rebate accrual reduces net sales');
 ok(Math.abs(agg(FCr).units - agg(FC).units) < 1, 'rebate does not move volume');
+
+// P&L cascade: the statement must add up, volume to EBIT
+const pl = pnl(FC);
+ok(Math.abs(pl.ns - (pl.gs - pl.disc - pl.reb)) < 1, 'net sales = gross − discount − rebate');
+ok(Math.abs(pl.pm - (pl.ns - pl.cogs)) < 1, 'product margin = net sales − COGS');
+ok(Math.abs(pl.opex - (pl.anp + pl.sell + pl.logi + pl.sga + pl.da)) < 1, 'opex sums its five lines');
+ok(Math.abs(pl.ebit - (pl.pm - pl.opex)) < 1, 'EBIT = product margin − opex');
+ok(pl.ebit > 0 && pl.ebit < pl.pm, 'EBIT is positive and below product margin');
+console.log(`\nP&L (FC): ns ${eur(pl.ns)}  pm ${eur(pl.pm)} (${(pl.pmRate*100).toFixed(1)}%)  ` +
+  `opex ${eur(pl.opex)}  EBIT ${eur(pl.ebit)} (${(pl.ebitRate*100).toFixed(1)}%)`);
 
 // risk
 const SIG = sigmas(FACTS);

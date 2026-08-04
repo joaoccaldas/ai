@@ -202,6 +202,30 @@ button.solid.sm{font-size:9px;padding:4px 8px}
 .yearlabels span{font-family:"Archivo",sans-serif;font-weight:600;font-size:9px;letter-spacing:.13em;
   text-transform:uppercase;color:var(--steel)}
 
+/* ---------------------------------- P&L -------------------------------- */
+table.pnl td.rowlab{padding:4px 10px 4px 0}
+table.pnl tr.ind td.rowlab{padding-left:16px;color:var(--steel);font-weight:400}
+table.pnl tr.sub td{border-top:1px solid var(--rule);font-weight:600}
+table.pnl tr.sub td.rowlab{font-weight:700}
+table.pnl tr.tot td{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);
+  font-weight:700;font-size:12px}
+table.pnl tr.mut td{padding-top:1px;padding-bottom:4px;font-size:10px;color:var(--steel);border:none}
+table.pnl tr.mut td.rowlab{font-style:italic}
+table.pnl td.soft{color:var(--steel)}
+table.pnl td.tot{font-weight:700}
+table.pnl th,table.pnl td.num{padding-left:10px}
+
+/* --------------------------------- mix --------------------------------- */
+.mixbar{display:flex;height:46px;border:1px solid var(--rule);overflow:hidden}
+.mseg{display:flex;flex-direction:column;justify-content:center;align-items:center;color:#fff;
+  min-width:0;overflow:hidden;border-right:1px solid rgba(255,255,255,.35)}
+.mseg:last-child{border-right:none}
+.mseg span{font-family:"Archivo",sans-serif;font-weight:600;font-size:10px;letter-spacing:.04em;
+  white-space:nowrap;padding:0 4px}
+.mseg .mini{font-weight:400;font-size:9px;opacity:.9}
+i.dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:middle}
+a.mark{text-decoration:none;color:inherit;cursor:pointer}
+
 /* --------------------------------- print ------------------------------- */
 @media print{
   .topbar,.foot,.exportbar,.tabs,.ctlbar,.presets{display:none!important}

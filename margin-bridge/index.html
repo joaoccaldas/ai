@@ -3,49 +3,288 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Margin Bridge · Miele Nordics</title>
-<meta name="description" content="Driver-based forecasting and price-volume-mix bridging for a
-  four-market, five-business-unit portfolio.">
+<title>Margin Bridge · How to forecast and budget</title>
+<meta name="description" content="Margin Bridge — a guided, driver-based way to build a forecast and a budget: from two years of history, through assumptions and adjustments, to a price-volume-mix bridge and a P&L to EBIT.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
+<style>
+  :root{
+    --enamel:#EFEFEC; --paper:#F7F7F5; --ink:#1C1B1A; --steel:#8A8B87;
+    --rule:#D6D6D1; --bad:#9E1B1B; --good:#2F5D50; --brass:#B08A3E;
+    --sans:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+    --disp:"Archivo",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--enamel);color:var(--ink);font-family:var(--sans);
+    font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  .eyebrow{font-family:var(--disp);font-weight:600;font-size:10px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--steel)}
+
+  /* topbar */
+  .top{display:flex;align-items:center;height:56px;border-bottom:1px solid var(--rule);
+    position:sticky;top:0;background:var(--enamel);z-index:5}
+  .mark{font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:.02em;text-decoration:none;color:var(--ink)}
+  .mark span{color:var(--bad)}
+  .top .cta{margin-left:auto;font-family:var(--disp);font-weight:600;font-size:11px;
+    letter-spacing:.05em;text-transform:uppercase;text-decoration:none;background:var(--ink);
+    color:var(--paper);padding:8px 14px;border-radius:2px}
+  .top .cta:hover{background:var(--bad)}
+
+  /* hero */
+  .hero{padding:76px 0 30px}
+  .hero h1{font-family:var(--disp);font-weight:800;font-size:clamp(30px,5.4vw,58px);
+    line-height:1.02;letter-spacing:-.01em;margin:14px 0 0;max-width:15ch}
+  .hero p.lead{font-size:clamp(16px,2vw,20px);color:#3a3936;max-width:60ch;margin:20px 0 0}
+  .hero .btns{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+  .btn{font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:.05em;
+    text-transform:uppercase;text-decoration:none;padding:11px 18px;border-radius:2px;
+    border:1px solid var(--ink)}
+  .btn.solid{background:var(--ink);color:var(--paper)}
+  .btn.solid:hover{background:var(--bad);border-color:var(--bad)}
+  .btn.ghost{color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--brass);color:var(--brass)}
+
+  /* two-column definition: forecast vs budget */
+  .defs{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);
+    border:1px solid var(--rule);margin:44px 0}
+  .def{background:var(--paper);padding:24px}
+  .def h3{font-family:var(--disp);font-weight:800;font-size:14px;letter-spacing:.02em;margin:6px 0 8px}
+  .def p{margin:0;font-size:14px;color:#45443f}
+  .def .tag{font-family:var(--mono);font-size:11px;color:var(--brass)}
+
+  /* section */
+  .sec{padding:40px 0;border-top:1px solid var(--rule)}
+  .sec h2{font-family:var(--disp);font-weight:800;font-size:clamp(20px,3vw,30px);margin:6px 0 6px}
+  .sec .sub{color:var(--steel);max-width:66ch;margin:0 0 6px}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}
+  .step{background:var(--paper);border:1px solid var(--rule);padding:20px 22px;display:flex;
+    flex-direction:column;gap:10px}
+  .step .n{font-family:var(--mono);font-weight:600;font-size:12px;color:var(--bad)}
+  .step h3{font-family:var(--disp);font-weight:800;font-size:15px;margin:0}
+  .step p{margin:0;font-size:13.5px;color:#45443f}
+  .step svg{width:100%;height:74px;margin-top:2px}
+
+  /* trust row */
+  .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px}
+  .tcard{background:var(--paper);border:1px solid var(--rule);padding:20px}
+  .tcard h3{font-family:var(--disp);font-weight:800;font-size:14px;margin:0 0 6px}
+  .tcard p{margin:0;font-size:13px;color:#45443f}
+  .seal-ico{display:inline-flex;align-items:center;gap:7px;color:var(--good);
+    font-family:var(--disp);font-weight:600;font-size:11px;letter-spacing:.09em;text-transform:uppercase}
+  .seal-ico i{width:15px;height:15px;border-radius:50%;border:1.5px solid var(--good);
+    display:grid;place-items:center;font-size:9px;font-style:normal}
+
+  .cap{font-size:11px;color:var(--steel);text-align:center;margin-top:8px}
+
+  /* closing */
+  .close{padding:56px 0 30px;text-align:center;border-top:1px solid var(--rule);margin-top:20px}
+  .close h2{font-family:var(--disp);font-weight:800;font-size:clamp(22px,3.4vw,34px);margin:0 0 18px}
+  footer{border-top:1px solid var(--rule);padding:26px 0;color:var(--steel);font-size:12px}
+  footer .num{color:var(--steel)}
+
+  @media (max-width:760px){
+    .defs,.steps,.trust{grid-template-columns:1fr}
+    .hero{padding:50px 0 20px}
+  }
+</style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="mark">Margin<span>Bridge</span></div>
-  <nav class="nav">
-    <button data-p="history">History</button>
-    <button data-p="plan" class="on">Plan</button>
-    <button data-p="cockpit">Cockpit</button>
-    <button data-p="sensitivity">Sensitivity</button>
-    <button data-p="report">Report</button>
-  </nav>
-  <div class="presets">
-    <span class="eyebrow">Presets</span>
-    <button data-preset="down">Downside</button>
-    <button data-preset="up">Upside</button>
-    <button data-preset="price">Price action</button>
-    <button id="btnReset">Reset</button>
-  </div>
-  <div class="spacer"></div>
-  <div id="cutlabel" class="cut num">—</div>
-  <div id="status" class="seal"></div>
+<header class="top wrap" style="max-width:none;padding-left:24px;padding-right:24px">
+  <a class="mark" href="index.html">Margin<span>Bridge</span></a>
+  <a class="cta" href="app.html">Open the model →</a>
 </header>
 
-<main id="view"></main>
+<main>
+  <section class="hero wrap">
+    <div class="eyebrow">Driver-based FP&amp;A · Nordic appliance portfolio</div>
+    <h1>Forecast and budget, from history to EBIT.</h1>
+    <p class="lead">Margin Bridge builds a full-year plan the way finance actually reasons: start
+      from two years of real history, layer the adjustments you can defend, and watch it break down
+      to months, business units and SKUs — with a price-volume-mix bridge and a P&amp;L that reconciles
+      to the cent, every time you touch it.</p>
+    <div class="btns">
+      <a class="btn solid" href="app.html">Open the model →</a>
+      <a class="btn ghost" href="#how">See how it works</a>
+    </div>
+  </section>
 
-<footer class="foot">
-  <b>Margin Bridge</b> — driver-based forecasting and PVM decomposition for a four-market,
-  five-business-unit appliance portfolio. Figures are generated from a seeded synthetic dataset;
-  replace <code>generateAll()</code> in <code>src/data.js</code> with your own extract and nothing
-  downstream changes. Volume is measured at base-period mix and unit margin, mix is the remainder
-  within volume, price, discount and COGS sit on forecast volumes, and FX is the forecast
-  retranslated. The buckets sum to the delta with no residual, and the seal in the header proves
-  it on every recalculation.
+  <section class="wrap">
+    <div class="defs">
+      <div class="def">
+        <div class="tag">// locked</div>
+        <h3>A budget is a promise</h3>
+        <p>Set once before the year, and frozen. It is the yardstick every month is measured against.
+          Margin Bridge holds it as its own version — it is never overwritten, so the variance story
+          is always honest.</p>
+      </div>
+      <div class="def">
+        <div class="tag">// living</div>
+        <h3>A forecast is the truth so far</h3>
+        <p>Actuals for the months that have closed, plus a driven view of the months still open. Move
+          the cut-off and the split moves with it: what is booked is locked, what is ahead responds to
+          your assumptions.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap" id="how">
+    <div class="eyebrow">The method</div>
+    <h2>Seven steps from history to a defensible number</h2>
+    <p class="sub">Nothing in the forecast is typed by a human. Base values come from history; you
+      supply adjustments, and the model does the arithmetic — down to every SKU, in local currency,
+      consolidated in EUR.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="n">01 — History</div>
+        <h3>Start from two years of actuals</h3>
+        <p>Monthly volume, price, discount, rebate and cost for every market and SKU. Seasonality and
+          trend come for free, because the forecast anchors to the same month last year.</p>
+        <svg viewBox="0 0 320 74" preserveAspectRatio="none">
+          <polyline points="4,54 30,46 56,50 82,34 108,44 134,26 160,40 186,30 212,36 238,20 264,30 290,14 316,22"
+            fill="none" stroke="#2F5D50" stroke-width="2"/>
+          <line x1="212" y1="6" x2="212" y2="70" stroke="#1C1B1A" stroke-width="1" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+      <div class="step">
+        <div class="n">02 — Cut-off</div>
+        <h3>Say what is closed</h3>
+        <p>One cursor marks the last actual month. Everything to its left is locked from the ledger;
+          everything to its right is open to plan. Slide it forward and you watch the cost of deciding
+          late.</p>
+        <svg viewBox="0 0 320 74">
+          <rect x="4" y="28" width="176" height="18" fill="#1C1B1A"/>
+          <rect x="184" y="28" width="132" height="18" fill="#D6D6D1"/>
+          <text x="10" y="20" font-family="Archivo" font-size="9" fill="#8A8B87" letter-spacing="1">ACTUAL</text>
+          <text x="250" y="20" font-family="Archivo" font-size="9" fill="#8A8B87" letter-spacing="1">OPEN</text>
+        </svg>
+      </div>
+      <div class="step">
+        <div class="n">03 — Assumptions</div>
+        <h3>Adjust where you have a view</h3>
+        <p>Growth, price, discount, rebate, cost, premium mix and FX — set once for the whole
+          portfolio, then refine at Market&nbsp;×&nbsp;BU or SKU. The most specific number always wins,
+          and every override is written down.</p>
+        <svg viewBox="0 0 320 74">
+          <rect x="120" y="6" width="80" height="14" fill="#9E1B1B"/>
+          <rect x="96" y="26" width="128" height="14" fill="#B08A3E"/>
+          <rect x="72" y="46" width="176" height="14" fill="#D6D6D1"/>
+          <text x="204" y="17" font-family="IBM Plex Mono" font-size="8" fill="#8A8B87">SKU</text>
+          <text x="228" y="37" font-family="IBM Plex Mono" font-size="8" fill="#8A8B87">BU</text>
+          <text x="252" y="57" font-family="IBM Plex Mono" font-size="8" fill="#8A8B87">portfolio</text>
+        </svg>
+      </div>
+      <div class="step">
+        <div class="n">04 — Forecast</div>
+        <h3>History on autopilot, plus your deltas</h3>
+        <p>With every dial at zero the forecast is simply last year's shape carried forward. Each
+          adjustment bends it — and phases in over three months, because price and cost decisions never
+          land in full on day one.</p>
+        <svg viewBox="0 0 320 74">
+          <polyline points="4,50 60,46 116,48 172,40" fill="none" stroke="#1C1B1A" stroke-width="2"/>
+          <polyline points="172,40 228,32 284,20 316,14" fill="none" stroke="#9E1B1B" stroke-width="2" stroke-dasharray="4 3"/>
+          <circle cx="172" cy="40" r="3" fill="#1C1B1A"/>
+        </svg>
+      </div>
+      <div class="step">
+        <div class="n">05 — Bridge</div>
+        <h3>Isolate volume, mix and pricing</h3>
+        <p>The price-volume-mix bridge walks the margin from budget to forecast and separates the three
+          commercial levers from cost, lifecycle and FX. It reconciles to the cent — a header seal
+          proves it on every change.</p>
+        <svg viewBox="0 0 320 74">
+          <rect x="6"  y="40" width="34" height="30" fill="#1C1B1A"/>
+          <rect x="52" y="30" width="34" height="12" fill="#2F5D50"/>
+          <rect x="98" y="34" width="34" height="10" fill="#2F5D50"/>
+          <rect x="144" y="40" width="34" height="12" fill="#9E1B1B"/>
+          <rect x="190" y="46" width="34" height="12" fill="#9E1B1B"/>
+          <rect x="236" y="44" width="34" height="10" fill="#2F5D50"/>
+          <rect x="282" y="34" width="32" height="36" fill="#1C1B1A"/>
+        </svg>
+      </div>
+      <div class="step">
+        <div class="n">06 — P&amp;L to EBIT</div>
+        <h3>All the way down the statement</h3>
+        <p>Net sales, product margin, then advertising, selling, logistics, overhead and D&amp;A to
+          EBIT — by full year, quarter or month, with variance against budget and prior year, side by
+          side.</p>
+        <svg viewBox="0 0 320 74">
+          <line x1="6" y1="12" x2="150" y2="12" stroke="#1C1B1A" stroke-width="6"/>
+          <line x1="6" y1="28" x2="120" y2="28" stroke="#8A8B87" stroke-width="6"/>
+          <line x1="6" y1="44" x2="96" y2="44" stroke="#8A8B87" stroke-width="6"/>
+          <line x1="6" y1="60" x2="70" y2="60" stroke="#2F5D50" stroke-width="6"/>
+          <text x="160" y="16" font-family="IBM Plex Mono" font-size="8" fill="#8A8B87">net sales</text>
+          <text x="130" y="32" font-family="IBM Plex Mono" font-size="8" fill="#8A8B87">margin</text>
+          <text x="106" y="48" font-family="IBM Plex Mono" font-size="8" fill="#8A8B87">− opex</text>
+          <text x="80" y="64" font-family="IBM Plex Mono" font-size="8" fill="#2F5D50">= EBIT</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="steps" style="grid-template-columns:1fr;margin-top:16px">
+      <div class="step">
+        <div class="n">07 — Stress it</div>
+        <h3>Scenarios, price sensitivity and the range of outcomes</h3>
+        <p>Worst / likely / best are derived from your own history — never typed — combined with
+          correlation, not naive stacking. Sweep price to find where margin peaks, and hold saved
+          scenarios side by side before you commit.</p>
+        <svg viewBox="0 0 320 60" style="height:56px">
+          <polygon points="4,50 316,50 316,30 4,44" fill="#9E1B1B" opacity="0.12"/>
+          <polyline points="4,47 60,44 116,40 172,36 228,30 284,26 316,24" fill="none" stroke="#1C1B1A" stroke-width="2"/>
+          <circle cx="228" cy="30" r="4" fill="#2F5D50"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap">
+    <div class="eyebrow">Why you can trust the number</div>
+    <h2>Reconciled, reproducible, and honest about its gaps</h2>
+    <div class="trust">
+      <div class="tcard">
+        <div class="seal-ico"><i>✓</i> Bridge reconciled</div>
+        <h3 style="margin-top:10px">It always adds up</h3>
+        <p>The bridge buckets sum to the delta with no residual — for product margin and net sales,
+          against budget and prior year. A seal recomputes it on every keystroke and turns red if it
+          ever breaks.</p>
+      </div>
+      <div class="tcard">
+        <h3>Every number is traceable</h3>
+        <p>The assumption register travels with the forecast: every adjustment, its level and scope,
+          plus the cut-off, trend carry and confidence settings. A number without its assumptions is
+          not reproducible.</p>
+      </div>
+      <div class="tcard">
+        <h3>Synthetic, and self-aware</h3>
+        <p>Every figure here is generated from a seeded dataset — no real company data. Swap one
+          function for your own extract and nothing downstream changes. The roadmap lists what is
+          modelled versus production-grade, in the open.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="close wrap">
+    <div class="eyebrow" style="justify-content:center">Ready</div>
+    <h2>Open the model and move the cut-off.</h2>
+    <a class="btn solid" href="app.html">Open Margin Bridge →</a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Margin Bridge</b> — driver-based forecasting, price-volume-mix bridging and a P&amp;L to EBIT for
+    a four-market, five-business-unit appliance portfolio. Runs entirely in the browser; no build step,
+    no backend. Synthetic seeded data throughout — <span class="num">no real figures</span> from any
+    company. MIT.
+  </div>
 </footer>
 
-<script type="module" src="src/app.js"></script>
 </body>
 </html>
