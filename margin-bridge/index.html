@@ -61,6 +61,15 @@
   .sec h2{font-family:var(--disp);font-weight:800;font-size:clamp(20px,3vw,30px);margin:6px 0 6px}
   .sec .sub{color:var(--steel);max-width:66ch;margin:0 0 6px}
 
+  /* five-stage flow */
+  .flow5{display:flex;align-items:stretch;gap:8px;margin-top:26px;flex-wrap:wrap}
+  .f5{flex:1 1 150px;background:var(--paper);border:1px solid var(--rule);padding:16px 16px 18px}
+  .f5 .fn{font-family:var(--disp);font-weight:800;font-size:20px;color:var(--brass)}
+  .f5 h4{font-family:var(--disp);font-weight:800;font-size:14px;margin:6px 0 6px}
+  .f5 p{margin:0;font-size:12px;color:#45443f;line-height:1.4}
+  .far{align-self:center;color:var(--steel);font-size:16px}
+  @media (max-width:760px){ .flow5{flex-direction:column} .far{transform:rotate(90deg)} }
+
   /* steps */
   .steps{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}
   .step{background:var(--paper);border:1px solid var(--rule);padding:20px 22px;display:flex;
@@ -104,14 +113,14 @@
 <main>
   <section class="hero wrap">
     <div class="eyebrow">Driver-based FP&amp;A · Nordic appliance portfolio</div>
-    <h1>Forecast and budget, from history to EBIT.</h1>
-    <p class="lead">Margin Bridge builds a full-year plan the way finance actually reasons: start
-      from two years of real history, layer the adjustments you can defend, and watch it break down
-      to months, business units and SKUs — with a price-volume-mix bridge and a P&amp;L that reconciles
-      to the cent, every time you touch it.</p>
+    <h1>One connected financial planning flow.</h1>
+    <p class="lead">Start at the destination — a five-year plan to 2031 — and break it down by year,
+      sales channel and business unit. Then build against it: a <b>budget</b> for the full year, or a
+      <b>forecast</b> for the rest of this one. Every step feeds the next, and every total reconciles
+      back up — to the cent, every time you touch it.</p>
     <div class="btns">
       <a class="btn solid" href="app.html">Open the model →</a>
-      <a class="btn ghost" href="#how">See how it works</a>
+      <a class="btn ghost" href="#how">See the flow</a>
     </div>
   </section>
 
@@ -135,8 +144,29 @@
   </section>
 
   <section class="sec wrap" id="how">
-    <div class="eyebrow">The method</div>
-    <h2>Seven steps from history to a defensible number</h2>
+    <div class="eyebrow">The flow</div>
+    <h2>Five stages, one connected model</h2>
+    <p class="sub">The plan sets the targets; the budget and the forecast are built against it; every
+      view downstream reconciles back up. Open the model and it starts you at stage one.</p>
+    <div class="flow5">
+      <div class="f5"><div class="fn">①</div><h4>Long-term plan</h4><p>The 2031 destination, broken to
+        years, sales channels and business units. Editable, and it consolidates.</p></div>
+      <div class="far">→</div>
+      <div class="f5"><div class="fn">②</div><h4>Choose a version</h4><p>A budget for the full year, or a
+        forecast for the rest of this one. The header shows which is live.</p></div>
+      <div class="far">→</div>
+      <div class="f5"><div class="fn">③</div><h4>Build the detail</h4><p>Budget: channel × BU × month
+        from the plan. Forecast: drivers by market, BU and SKU.</p></div>
+      <div class="far">→</div>
+      <div class="f5"><div class="fn">④</div><h4>Analyse &amp; validate</h4><p>Bridge, P&amp;L to EBIT, mix
+        and sensitivity — with a seal that proves every total ties out.</p></div>
+      <div class="far">→</div>
+      <div class="f5"><div class="fn">⑤</div><h4>Report</h4><p>Editable PowerPoint, PDF and load-ready
+        CSV, with the assumptions attached.</p></div>
+    </div>
+    <p class="sub" style="margin-top:34px">Under each stage, the same method: nothing is typed from
+      scratch — base values come from history, you supply the adjustments, and the model does the
+      arithmetic down to every SKU. Here is that method, step by step.</p>
     <p class="sub">Nothing in the forecast is typed by a human. Base values come from history; you
       supply adjustments, and the model does the arithmetic — down to every SKU, in local currency,
       consolidated in EUR.</p>

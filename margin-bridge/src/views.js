@@ -1038,3 +1038,124 @@ export function renderBudget(root, ctx, A) {
     const sx=h('div','scrollx'); sx.appendChild(t); tP.appendChild(sx); root.appendChild(tP);
   }
 }
+
+/* ===================== PAGE — BUILD A VERSION (chooser) ================== */
+export function renderBuild(root, ctx, A) {
+  root.innerHTML = '';
+  const M = ctx.mfp, cur = ctx.build;
+  const em2 = v => '€' + (v/1e6).toFixed(1) + 'm';
+
+  const hd = h('section', 'panel');
+  hd.appendChild(h('div', 'phead', `<h2>Build a version</h2>
+    <p>The long-term plan sets the destination. Now choose what you are building against it — a
+       <b>budget</b> for the whole year, or a <b>forecast</b> for the rest of the current one. The choice
+       sets the version you edit, analyse and report; it is shown in the header from here on.</p>`));
+  root.appendChild(hd);
+
+  const cards = h('div', 'buildcards');
+  const card = (id, kicker, title, body, points, cta, page) => {
+    const c = h('div', 'buildcard' + (cur === id ? ' on' : ''));
+    c.innerHTML = `<div class="eyebrow">${kicker}</div><h3>${title}</h3><p>${body}</p>
+      <ul>${points.map(p => `<li>${p}</li>`).join('')}</ul>
+      <button class="btn2 ${cur===id?'solid':''}">${cta}</button>`;
+    c.querySelector('button').onclick = () => A.setBuild(id, page);
+    return c;
+  };
+  cards.appendChild(card('budget', 'Full year · top-down', 'Budget 2027',
+    `Prepopulated from the 2027 slice of the long-term plan — <b>${em2(M.years[2027].tot.ns)}</b> net
+     sales — and spread to months by the seasonality curve. You refine the channel and BU mix and the
+     monthly shape; it always ties back to the plan.`,
+    ['Starts from the MFP, not a blank sheet', 'Channel × BU × month, full year',
+     'Reconciles up to the Nordics plan target'],
+    'Build the 2027 budget →', 'budget'));
+  cards.appendChild(card('forecast', 'Rest of year · bottom-up', 'Forecast the current year',
+    `Actuals for the closed months plus a driver-based view of the months still open. Move the cut-off,
+     pull the growth, price, discount, rebate and mix levers, and read the margin bridge to EBIT.`,
+    ['Actuals locked, open months driven', 'Down to SKU, in local currency → EUR',
+     'Scenario range and price sensitivity built in'],
+    'Build the forecast →', 'plan'));
+  root.appendChild(cards);
+
+  const flow = h('section', 'panel');
+  flow.appendChild(h('div', 'phead', `<h2>Where this sits in the flow</h2>`));
+  flow.appendChild(flowStrip(ctx, A, 'build'));
+  root.appendChild(flow);
+}
+
+/* A small horizontal flow indicator reused on the guide and build pages. */
+function flowStrip(ctx, A, here) {
+  const steps = [
+    ['mfp', '① Long-term plan', 'Set the 2031 destination and break it to years, channels and BUs'],
+    ['build', '② Choose a version', 'Budget for the full year, or forecast the rest of this one'],
+    [ctx.build === 'budget' ? 'budget' : 'plan', '③ Build the detail',
+      ctx.build === 'budget' ? 'Channel × BU × month, tied to the plan' : 'Drivers by market, BU and SKU'],
+    ['cockpit', '④ Analyse & validate', 'Bridge, P&L to EBIT, mix, sensitivity — every total reconciles'],
+    ['report', '⑤ Report', 'Board-ready outputs and the assumption register']
+  ];
+  const w = h('div', 'flowstrip');
+  steps.forEach(([pg, t, d], i) => {
+    const s = h('button', 'flowstep' + (pg === here ? ' on' : ''));
+    s.innerHTML = `<div class="ft">${t}</div><div class="fd">${d}</div>`;
+    s.onclick = () => A.goto(pg);
+    w.appendChild(s);
+    if (i < steps.length - 1) { const a = h('span', 'flowarrow', '→'); w.appendChild(a); }
+  });
+  return w;
+}
+
+/* ========================= PAGE — GUIDE / TUTORIAL ====================== */
+export function renderTutorial(root, ctx, A) {
+  root.innerHTML = '';
+  const hd = h('section', 'panel');
+  hd.appendChild(h('div', 'phead', `<h2>How the planning flow works</h2>
+    <p>Margin Bridge is built as one connected flow: a long-term plan sets the targets, you build a
+       budget or a forecast against it, and every view downstream reconciles back up. Follow the five
+       steps below — each links straight to its page.</p>`));
+  root.appendChild(hd);
+
+  const fs = h('section', 'panel');
+  fs.appendChild(flowStrip(ctx, A, 'tutorial'));
+  root.appendChild(fs);
+
+  const steps = [
+    ['①', 'Start with the long-term plan', 'mfp', 'Open MFP · Long-term',
+      `Begin at the destination: the five-year Miele Financial Plan. Four years of actuals and the 2026
+       budget prepopulate 2027–2031, which you overwrite — net sales growth, price, margin — then break
+       the top line down by <b>sales channel</b> (ERT, KRT, Direct Projects, D2C, Customer Service) and by
+       <b>business unit</b>, adjusting each mix. Nordics = Σ channels = Σ (channel × BU), every year.`],
+    ['②', 'Choose what you are building', 'build', 'Open Build a version',
+      `Decide the version: a <b>Budget</b> for the full year 2027, prepopulated top-down from the plan, or
+       a <b>Forecast</b> for the rest of the current year, built bottom-up from actuals plus driver
+       assumptions. The header shows which version is live.`],
+    ['③', 'Build the detail', 'budget', 'Open the builder',
+      `For a budget, the plan's 2027 channel × BU figures spread to months on the seasonality curve, one
+       page per sales channel. For a forecast, you pull the growth, price, discount, rebate and premium
+       levers by market, BU and SKU, with a three-month phase-in and a YTD-trend carry.`],
+    ['④', 'Analyse and validate', 'cockpit', 'Open the Bridge',
+      `Read the price-volume-mix <b>bridge</b> to product margin and the <b>EBIT bridge</b> below it; walk
+       the <b>P&L</b> from volume to EBIT by year, quarter or month with variance to budget and prior
+       year; see how <b>BU mix</b> moves profitability; stress it with <b>scenarios</b> and <b>price
+       sensitivity</b>. A seal proves every total reconciles on each change.`],
+    ['⑤', 'Report', 'report', 'Open Report',
+      `Take it out: a native editable PowerPoint bridge, a PDF, and load-ready CSV — the numbers and the
+       assumption register together, so the plan is reproducible and defensible weeks later.`]
+  ];
+  const list = h('section', 'panel');
+  list.appendChild(h('div', 'tutsteps', ''));
+  const box = list.querySelector('.tutsteps');
+  steps.forEach(([n, title, page, cta, body]) => {
+    const st = h('div', 'tutstep');
+    st.innerHTML = `<div class="tn">${n}</div>
+      <div class="tc"><h3>${title}</h3><p>${body}</p>
+      <button class="ghost sm">${cta} →</button></div>`;
+    st.querySelector('button').onclick = () => A.goto(page);
+    box.appendChild(st);
+  });
+  root.appendChild(list);
+
+  const note = h('section', 'panel');
+  note.appendChild(h('p', 'note', `Everything is one connected model: adjust the long-term plan and the
+    2027 budget moves with it; every breakdown sums back to the Nordics total. Figures are synthetic and
+    seeded — swap the data source and the flow is unchanged.`));
+  root.appendChild(note);
+}
