@@ -40,6 +40,10 @@ let VERSIONS = [];
 try { VERSIONS = JSON.parse(localStorage.getItem(VKEY) || '[]'); } catch { VERSIONS = []; }
 const persistV = () => { try { localStorage.setItem(VKEY, JSON.stringify(VERSIONS)); } catch {} };
 const clone = o => JSON.parse(JSON.stringify(o));
+const gauss01 = (() => { let sp = null; return () => {
+  if (sp !== null) { const s = sp; sp = null; return s; }
+  let u, v, sq; do { u = Math.random()*2-1; v = Math.random()*2-1; sq = u*u+v*v; } while (!sq || sq >= 1);
+  const f = Math.sqrt(-2*Math.log(sq)/sq); sp = v*f; return u*f; }; })();
 function snapshotState(name) {
   const c = ctx;   // current computed context, for the summary
   return { id: 'v' + Date.now(), name: name || 'Untitled', type: S.build,
@@ -268,6 +272,61 @@ function compute() {
   validation.pass = validation.checks.filter(c=>c.status==='pass').length;
   validation.warn = validation.checks.filter(c=>c.status==='warn').length;
   validation.fail = validation.checks.filter(c=>c.status==='fail').length;
+
+  /* ---- MFP scenarios & sensitivity: stress the plan drivers, read 2031 ---- */
+  const buMode = S.mfp.mode === 'bu';
+  const effG = y => S.mfp.growth[y] != null ? S.mfp.growth[y] : mfp.defaults.growth[y]*100;
+  const effPm = y => S.mfp.pm[y] != null ? S.mfp.pm[y] : mfp.defaults.pm[y]*100;
+  const effBuG = (bu,y) => (S.mfp.buGrowth[y]&&S.mfp.buGrowth[y][bu]!=null) ? S.mfp.buGrowth[y][bu] : mfp.defaults.buGrowth[y][bu]*100;
+  const effCh = (c,y) => (S.mfp.chShare[y]&&S.mfp.chShare[y][c]!=null) ? S.mfp.chShare[y][c] : mfp.defaults.chShare[y][c]*100;
+  const projDelta = (d) => {
+    const stx = JSON.parse(JSON.stringify(S.mfp));
+    for (const y of PLAN_YEARS) {
+      if (d.growth != null) {
+        if (buMode) { stx.buGrowth[y] ??= {}; for (const b of BUS) stx.buGrowth[y][b.id] = effBuG(b.id,y) + d.growth; }
+        else stx.growth[y] = effG(y) + d.growth;
+      }
+      if (d.pm != null) stx.pm[y] = effPm(y) + d.pm;
+      if (d.mix != null) {
+        if (buMode) { stx.buGrowth[y] ??= {}; stx.buGrowth[y].SDA = effBuG('SDA',y) + d.mix; }
+        else { stx.chShare[y] ??= {}; stx.chShare[y].D2C = effCh('D2C',y) + d.mix; }
+      }
+    }
+    return project(HIST, stx);
+  };
+  const base31 = mfp.years[2031].tot;
+  const DRV = [
+    { id:'growth', name:'Net-sales growth', d:{ growth:1.5 } },
+    { id:'margin', name:'Product margin rate', d:{ pm:1.5 } },
+    { id:'mix',    name: buMode ? 'SDA weighting' : 'Channel mix → D2C', d:{ mix:3 } }
+  ];
+  const negD = o => Object.fromEntries(Object.entries(o).map(([k,v]) => [k,-v]));
+  const mtorn = DRV.map(dr => {
+    const up = projDelta(dr.d).years[2031].tot, dn = projDelta(negD(dr.d)).years[2031].tot;
+    const hi = up.pm - base31.pm, lo = dn.pm - base31.pm;
+    return { id:dr.id, name:dr.name, hi:Math.max(hi,lo), lo:Math.min(hi,lo),
+             half:Math.abs(hi-lo)/2, nsHalf:Math.abs(up.ns-dn.ns)/2, span:Math.abs(hi-lo) };
+  }).sort((a,b)=>b.span-a.span);
+  const rho = 0.3;
+  const halves = mtorn.map(t=>t.half);
+  let q = halves.reduce((a,x)=>a+x*x,0);
+  for (let i=0;i<halves.length;i++) for (let j=i+1;j<halves.length;j++) q += 2*rho*halves[i]*halves[j];
+  const mBand = Math.sqrt(Math.max(0,q));
+  // net-sales fan from the growth driver, per plan year
+  const gUp = projDelta({growth:1.5}), gDn = projDelta({growth:-1.5});
+  const nsFan = MFP_YEARS.map(y => y < 2027 ? null
+    : [gDn.years[y].tot.ns, gUp.years[y].tot.ns]);
+  // light Monte Carlo on 2031 product margin
+  let above = 0; const samples = [];
+  const trend31 = project(HIST, { mode:S.mfp.mode }).years[2031].tot.pm;  // pure-trend reference
+  for (let n=0;n<2000;n++){ const F = gauss01(); let m = base31.pm;
+    for (const t of mtorn) m += t.half * (Math.sqrt(rho)*F + Math.sqrt(1-rho)*gauss01());
+    samples.push(m); if (m >= trend31) above++; }
+  samples.sort((a,b)=>a-b);
+  const qtl = p => samples[Math.min(samples.length-1, Math.floor(p*samples.length))];
+  const mfpRisk = { likely:base31, band:mBand, worstPm:base31.pm-mBand, bestPm:base31.pm+mBand,
+    worstNs:gDn.years[2031].tot.ns, bestNs:gUp.years[2031].tot.ns,
+    torn: mtorn, nsFan, p10:qtl(.10), p50:qtl(.50), p90:qtl(.90), aboveTrend:above/2000, trend31 };
   const budTotal = agg(BUD)[S.measure === 'gm' ? 'gm' : 'ns'];
   const mc   = monteCarlo(grad, SIG, { n:5000, rho:S.rho, target:budTotal });
   const hist = histogram(mc.samples);
@@ -394,7 +453,7 @@ function compute() {
     priceSweep, histBr, histSeries, yearSummary, savedScenarios: SCEN,
     pnl: pnlData, mix: mixData, opexLines: OPEX_LINES, tree: treeData, ebitBridge,
     mfp, mfpState: S.mfp, hist: HIST, build: S.build, page: S.page,
-    budget2027, recon, validation, versions: VERSIONS,
+    budget2027, recon, validation, versions: VERSIONS, mfpRisk,
     reconciled:reconciled(br), grad, sc, torn, mc, hist,
     histMarks: [
       { v:sc.likely, lab:'forecast', col:C.ink },
@@ -452,6 +511,15 @@ const A = {
   goto: page => { S.page = page; S.pick = null; go(); },
   mfpBudAdj: (ch, v) => { (S.mfp.budAdj ??= {});
     if (v === null || v === '' || Number.isNaN(v)) delete S.mfp.budAdj[ch]; else S.mfp.budAdj[ch] = v; go(); },
+  mfpAdoptBudget: () => {   // roll the bottom-up budget back up into the 2027 plan
+    const bt = ctx.budget2027;
+    S.mfp.nsAbs[2027] = bt.tot.ns;                       // plan top line = committed budget
+    S.mfp.chShare[2027] = {};                            // and its channel mix
+    for (const c of CH_IDS) S.mfp.chShare[2027][c] = (bt.ch[c].ns / bt.tot.ns) * 100;
+    S.mfp.budAdj = {};                                   // gap now closed — commitments are the plan
+    go();
+  },
+  mfpUnadopt: () => { delete S.mfp.nsAbs[2027]; delete S.mfp.chShare[2027]; go(); },
   vSave: name => { VERSIONS.unshift(snapshotState(name)); persistV(); go(); },
   vLoad: id => { const v = VERSIONS.find(x => x.id === id); if (!v) return;
     S.build = v.type; S.mfp = clone(v.mfp);

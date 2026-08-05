@@ -282,6 +282,9 @@ a.mark{text-decoration:none;color:inherit;cursor:pointer}
 .chk.pass .ci{background:var(--good)} .chk.warn .ci{background:var(--brass)} .chk.fail .ci{background:var(--bad)}
 .chk.warn{color:#5a5124} .chk.fail{color:var(--bad)}
 .chk em{color:var(--steel);font-style:italic;font-size:11px}
+.rollrow{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:14px;
+  padding:14px;background:var(--paper);border:1px solid var(--rule);flex-wrap:wrap;font-size:12.5px}
+.rollrow>div:last-child{display:flex;gap:8px;flex:none}
 .saverow{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
 .saverow .search{flex:1;min-width:240px;padding:9px 12px;border:1px solid var(--rule);border-radius:2px;
   font-family:"IBM Plex Sans",sans-serif;font-size:13px;background:var(--paper)}

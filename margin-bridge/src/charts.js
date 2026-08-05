@@ -364,14 +364,20 @@ export function buBubble(host, { pts }, height = 232) {
 }
 
 /* --------------------------- MFP: multi-year line ------------------------ */
-export function mfpLine(host, { labels, series, splitAt, height = 250, fmt = eur }) {
+export function mfpLine(host, { labels, series, splitAt, band, height = 250, fmt = eur }) {
   clear(host);
   const W = Math.max(460, host.clientWidth || 780), H = height;
   const s = svg(W, H); host.appendChild(s);
   const pad = { l:52, r:52, t:16, b:26 }, iw = W-pad.l-pad.r, ih = H-pad.t-pad.b;
-  const all = series.flatMap(se => se.vals).filter(v => v != null);
+  const bandv = band ? band.flatMap(b => b || []) : [];
+  const all = series.flatMap(se => se.vals).concat(bandv).filter(v => v != null);
   const lo = Math.min(...all) * 0.9, hi = Math.max(...all) * 1.06;
   const X = i => pad.l + i/(labels.length-1)*iw, Y = v => pad.t + ih - (v-lo)/((hi-lo)||1)*ih;
+  if (band) {
+    const up = band.map((b,i)=> b ? `${X(i)},${Y(b[1])}` : null).filter(Boolean);
+    const dn = band.map((b,i)=> b ? `${X(i)},${Y(b[0])}` : null).filter(Boolean).reverse();
+    if (up.length) s.appendChild(el('polygon', { points:[...up, ...dn].join(' '), fill:C.bad, opacity:.10 }));
+  }
   for (let i = 0; i <= 3; i++) { const v = lo + (hi-lo)*i/3;
     s.appendChild(el('line', { x1:pad.l, x2:W-pad.r, y1:Y(v), y2:Y(v), stroke:C.rule }));
     s.appendChild(tx(pad.l-6, Y(v)+3, fmt(v), { 'text-anchor':'end', 'font-size':9 })); }
@@ -391,6 +397,32 @@ export function mfpLine(host, { labels, series, splitAt, height = 250, fmt = eur
   labels.forEach((l,i)=> s.appendChild(tx(X(i), H-8, l, { 'text-anchor':'middle', 'font-size':9,
     fill: (splitAt!=null && i>splitAt) ? C.steel : C.ink })));
   if (series.length>1) series.forEach((se,i)=> s.appendChild(tx(W-pad.r+4, pad.t+10+i*13, se.label, { 'font-size':9, fill:se.col })));
+  return s;
+}
+
+/* --------------------- MFP: swing bars (plan tornado) -------------------- */
+export function swingBars(host, rows, height = 170) {
+  clear(host);
+  const W = Math.max(420, host.clientWidth || 700), H = height;
+  const s = svg(W, H); host.appendChild(s);
+  const pad = { l:150, r:64, t:12, b:22 }, iw = W-pad.l-pad.r, ih = H-pad.t-pad.b;
+  const mx = Math.max(...rows.map(r => Math.max(Math.abs(r.hi), Math.abs(r.lo))), 1);
+  const X = v => pad.l + iw/2 + v/mx*(iw/2 - 2);
+  const slot = ih / Math.max(1, rows.length);
+  s.appendChild(el('line', { x1:X(0), x2:X(0), y1:pad.t, y2:pad.t+ih, stroke:C.ink }));
+  rows.forEach((r, i) => {
+    const y = pad.t + i*slot + slot*0.22, bh = slot*0.56;
+    for (const v of [r.lo, r.hi]) {
+      const x0 = Math.min(X(0), X(v));
+      s.appendChild(el('rect', { x:x0, y, width:Math.max(1, Math.abs(X(v)-X(0))), height:bh,
+        fill: v >= 0 ? C.good : C.bad, opacity:.88 }));
+    }
+    s.appendChild(tx(pad.l-8, y+bh/2+3.5, r.name, { 'text-anchor':'end', fill:C.ink, 'font-size':10 }));
+    s.appendChild(tx(W-pad.r+6, y+bh/2+3.5, '±'+eur(r.half), { 'font-size':9, fill:C.steel }));
+  });
+  s.appendChild(tx(pad.l, H-6, '−'+eur(mx), { 'font-size':9 }));
+  s.appendChild(tx(X(0), H-6, 'plan', { 'text-anchor':'middle', 'font-size':9, fill:C.ink }));
+  s.appendChild(tx(W-pad.r, H-6, '+'+eur(mx), { 'text-anchor':'end', 'font-size':9 }));
   return s;
 }
 
