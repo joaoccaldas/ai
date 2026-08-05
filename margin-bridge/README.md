@@ -37,7 +37,11 @@ bridge and a Nordics→market→BU→SKU consolidation drill-down), **Mix**,
   the MFP.
 - **Validate & reconcile** — the integrity checks (consolidation, no negatives,
   margin and growth in bounds) plus the top-down/bottom-up loop: flex each
-  channel's budget against the plan and see the gap to close.
+  channel's budget against the plan, see the gap, and **roll the committed
+  budget back up into the plan** so 2028–2031 re-plan off the new base.
+- **Plan risk** (on the MFP) — a scenario band around 2031 product margin from
+  the plan drivers (growth, margin, mix) combined in quadrature, a Monte-Carlo
+  P10–P90 and P(≥ trend), and a tornado ranking which lever moves the plan most.
 - **Versions** — save the plan and its assumptions as named cases (Base, Upside,
   Downside, Budget, Forecast), reload any, and compare them side by side.
   Versions persist in the browser.

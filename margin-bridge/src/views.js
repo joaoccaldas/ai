@@ -900,9 +900,29 @@ export function renderMfp(root, ctx, A) {
   tj.appendChild(h('div', 'phead', `<h2>Net sales &amp; product margin · 2022 → 2031</h2>
     <p>Solid is actual and budget; dashed is the plan. The line breaks at the ${BUD_YEAR} plan launch.</p>`));
   const tjc = h('div', 'chart'); tj.appendChild(tjc); root.appendChild(tj);
-  ch.mfpLine(tjc, { labels: MFP_YEARS.map(String), splitAt: ACTUAL_YEARS.length,
+  ch.mfpLine(tjc, { labels: MFP_YEARS.map(String), splitAt: ACTUAL_YEARS.length, band: ctx.mfpRisk.nsFan,
     series: [ { label:'Net sales', col:C.ink, vals: MFP_YEARS.map(y => Y(y).tot.ns) },
               { label:'Product margin', col:C.good, vals: MFP_YEARS.map(y => Y(y).tot.pm) } ] });
+
+  /* ---- scenario range & sensitivity on the 2031 plan ---- */
+  const R = ctx.mfpRisk;
+  const scP = h('section', 'panel');
+  scP.appendChild(h('div', 'phead', `<h2>Plan risk · the range around 2031</h2>
+    <p>The plan drivers carry uncertainty. Combined in quadrature, they put a band around the 2031
+       product margin; the tornado ranks which lever moves it most.</p>`));
+  root.appendChild(scP);
+  const rkp = h('section', 'kpis');
+  [['Worst · 2031 margin', em(R.worstPm), 'down'],
+   ['Plan · 2031 margin', em(R.likely.pm), ''],
+   ['Best · 2031 margin', em(R.bestPm), 'up'],
+   ['P(≥ trend)', pct(R.aboveTrend,0), R.aboveTrend>=.5?'up':'down']
+  ].forEach(([k,v,c])=>{ const e=h('div','kpi'); e.innerHTML=`<div class="k">${k}</div><div class="v num ${c}">${v}</div>`; rkp.appendChild(e); });
+  scP.appendChild(rkp);
+  const tornEl = h('div','chart'); scP.appendChild(tornEl);
+  ch.swingBars(tornEl, R.torn);
+  scP.appendChild(h('p','note',`Range is ±1.5pp a year on growth, ±1.5pp on margin rate and ±3pp of mix,
+    combined at ρ=0.3. The P10–P90 of 2031 product margin is ${em(R.p10)} to ${em(R.p90)} across 2,000 draws;
+    <b>${pct(R.aboveTrend,0)}</b> of them beat simply continuing the trend.`));
 
   /* ---- sales-channel breakdown ---- */
   const chSec = h('section', 'panel');
@@ -1242,15 +1262,29 @@ export function renderValidate(root, ctx, A) {
     `<tr class="totrow"><td class="rowlab">Nordics</td><td class="num">${em(R.target.ns)}</td>
       <td class="num"><b>${em(R.build.ns)}</b></td><td class="num"></td>
       <td class="num ${Math.abs(R.gap)<1?'':R.gap>=0?'up':'down'}">${Math.abs(R.gap)<1?'€0':seur(R.gap)}</td></tr>`;
-  rP.appendChild(t); root.appendChild(rP);
+  rP.appendChild(t);
+  /* roll bottom-up back up: adopt the committed budget as the 2027 plan */
+  const adopted = ctx.mfpState.nsAbs && ctx.mfpState.nsAbs[2027] != null;
+  const roll = h('div', 'rollrow');
+  roll.innerHTML = `<div><b>Close the loop.</b> ${Math.abs(R.gap) < 1 && !adopted
+      ? 'Budget matches the plan — nothing to roll up.'
+      : adopted
+        ? 'The 2027 plan has adopted the committed budget; the horizon re-plans off it.'
+        : `Adopt the committed budget as the 2027 plan — the top line becomes <b>${em(R.build.ns)}</b> and
+           2028–2031 re-plan off it, closing the gap.`}</div>
+    <div>${adopted ? '<button class="ghost" id="unadopt">Revert to trend plan</button>' : ''}
+      <button class="solid" id="adopt" ${Math.abs(R.gap)<1 && !adopted ? 'disabled' : ''}>Roll budget into plan →</button></div>`;
+  rP.appendChild(roll); root.appendChild(rP);
   rP.querySelectorAll('input[data-ba]').forEach(inp => inp.onchange = e => {
     const v = e.target.value.trim(); A.mfpBudAdj(e.target.dataset.ba, v===''?null:parseFloat(v)); });
+  const ab = roll.querySelector('#adopt'); if (ab) ab.onclick = A.mfpAdoptBudget;
+  const ua = roll.querySelector('#unadopt'); if (ua) ua.onclick = A.mfpUnadopt;
 
   const nt = h('section','panel');
   nt.appendChild(h('p','note',`A positive adjustment means the channel commits above the plan; negative,
-    below. When every channel is set the Nordics gap is the total the plan and the commitments differ by —
-    accept it (re-plan) or push it back to the channels. This is the top-down / bottom-up loop a real
-    planning cycle runs on.`));
+    below. The Nordics gap is what the plan and the commitments differ by — push it back to the channels,
+    or <b>roll it up</b>: adopt the budget as the plan and the whole 2028–2031 horizon re-plans off the new
+    base. That is the loop closing in both directions.`));
   root.appendChild(nt);
 }
 
