@@ -19,6 +19,8 @@
   .serif{font-family:'Cormorant Garamond',serif}
   #hall{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
   #vign{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 120% at 50% 42%,transparent 48%,rgba(0,0,0,.66) 100%)}
+  #introdim{position:fixed;inset:0;z-index:11;pointer-events:none;background:radial-gradient(120% 100% at 50% 44%,rgba(8,7,6,.5),rgba(8,7,6,.86));opacity:0;transition:opacity .8s ease}
+  #sweep{position:fixed;top:-6%;bottom:-6%;left:0;width:46vw;z-index:13;pointer-events:none;opacity:0;filter:blur(34px);will-change:transform,opacity;background:linear-gradient(90deg,transparent,rgba(201,168,106,.85),transparent)}
   #grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 6s steps(6) infinite}
   @keyframes gr{0%{transform:translate(0,0)}50%{transform:translate(4%,-4%)}100%{transform:translate(0,0)}}
@@ -32,8 +34,10 @@
   a.commission:hover{border-color:var(--gold);color:var(--gold)}
   #menubtn{display:none;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);cursor:pointer}
   body{cursor:none}@media(pointer:coarse){body{cursor:auto}#cursor{display:none}}
-  #sound{display:flex;align-items:center;gap:.55rem;background:none;border:1px solid var(--line);border-radius:40px;padding:.5rem .9rem;color:var(--ink);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;transition:.3s}
-  #sound:hover{border-color:var(--gold);color:var(--gold)}
+  #sound,#tour{display:flex;align-items:center;gap:.55rem;background:none;border:1px solid var(--line);border-radius:40px;padding:.5rem .9rem;color:var(--ink);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;cursor:none;transition:.3s}
+  #sound:hover,#tour:hover{border-color:var(--gold);color:var(--gold)}
+  #tour.on{border-color:var(--gold);color:var(--gold);background:rgba(201,168,106,.1)}
+  #tour .ti{font-size:.7rem;line-height:1}
   #sound .eq{display:flex;gap:2px;align-items:flex-end;height:12px}
   #sound .eq i{width:2px;height:3px;background:currentColor}
   #sound.on .eq i{animation:eq .9s ease-in-out infinite}
@@ -57,6 +61,9 @@
   #cap .idx{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1rem;letter-spacing:.1em}
   #cap h2{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(1.8rem,4.2vw,2.9rem);line-height:1;margin:.1rem 0 .35rem}
   #cap .tag{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+  #cap .note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.02rem;color:var(--muted);margin-top:.55rem;max-width:34ch;margin-left:auto;margin-right:auto;opacity:0;transition:opacity .5s}
+  #cap.tour .note{opacity:1}
+  @media(max-width:760px){#tour{display:none}}
   #cap .enter{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.15rem;pointer-events:auto;background:var(--ink);color:#0c0b0a;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;padding:.8rem 1.6rem;border-radius:40px;cursor:pointer;transition:.3s;border:0}
   #cap .enter:hover{background:var(--gold)}
   /* arrows */
@@ -128,12 +135,12 @@
 <body>
 <div id="loader"><div class="ring"></div></div>
 <canvas id="hall"></canvas>
-<div id="vign"></div><div id="grain"></div>
+<div id="vign"></div><div id="introdim"></div><div id="sweep"></div><div id="grain"></div>
 
 <header id="hd">
   <a class="brand" href="#" onclick="scrollTo({top:0,behavior:'smooth'});return false">CALDAS <b>STUDIO</b></a>
   <nav class="mid"><a href="#" onclick="scrollTo({top:0,behavior:'smooth'});return false">Gallery</a><a href="#studio">Process</a><a href="#cta">Commission</a></nav>
-  <div class="r"><button id="sound"><span class="eq"><i></i><i></i><i></i><i></i></span> Sound</button><a class="commission" href="mailto:hello@caldas.studio?subject=Commission">Commission</a><span id="menubtn">Menu</span></div>
+  <div class="r"><button id="tour"><span class="ti">▶</span> Tour</button><button id="sound"><span class="eq"><i></i><i></i><i></i><i></i></span> Sound</button><a class="commission" href="mailto:hello@caldas.studio?subject=Commission">Commission</a><span id="menubtn">Menu</span></div>
 </header>
 <div id="cursor"><b>Enter</b></div>
 
@@ -151,6 +158,7 @@
   <div class="idx" id="cap-idx">I</div>
   <h2 class="serif" id="cap-name">—</h2>
   <div class="tag" id="cap-tag">—</div>
+  <div class="note serif" id="cap-note"></div>
   <button class="enter" id="cap-go">Enter this room ↗</button>
 </div>
 <div id="dots"></div>
@@ -207,34 +215,34 @@ const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isMobile=innerWidth<760;
 
 const ROOMS=[
-  {n:'Laurie Hedges',room:'Conservation filmmaker', tag:'Inspired by, and for, nature.', url:'../laurie/', img:'gallery/laurie.jpg'},
-  {n:'Inner Group', room:'Workshop companion', tag:'Unity in diversity.',       url:'innergroup/', img:'gallery/innergroup.jpg'},
-  {n:'Aurelia',     room:'Fine jewellery',     tag:'Light, made to keep.',       url:'jewelry/',    img:'gallery/jewelry.jpg'},
-  {n:'Éclat',       room:'Diamond maison',     tag:'One perfect light.',         url:'eclat/',      img:'gallery/eclat.jpg'},
-  {n:'Maison Lumen',room:'Fine dining',        tag:'Light. Atmosphere.',         url:'restaurant/', img:'gallery/restaurant.jpg'},
-  {n:'PULSE',       room:'Strength studio',    tag:'Energy in motion.',          url:'gym/',        img:'gallery/gym.jpg'},
-  {n:'Vinöra',      room:'Natural wine',       tag:'Savour the moment.',         url:'wine/',       img:'gallery/wine.jpg'},
-  {n:'Wild Stem',   room:'Florist',            tag:'Rooted in nature.',          url:'florist/',    img:'gallery/florist.jpg'},
-  {n:'Éden',        room:'Hair & beauty',      tag:'Wellness reimagined.',       url:'salon/',      img:'gallery/salon.jpg'},
-  {n:'Dunhaven',    room:'Coastal retreat',    tag:'Strength in serenity.',      url:'hotel/',      img:'gallery/hotel.jpg'},
-  {n:'Ember & Oak', room:'Coffee roaster',     tag:'Warmth. Crafted.',           url:'cafe/',       img:'gallery/cafe.jpg'},
-  {n:'Studio Nord', room:'Architecture',       tag:'Light & mass.',              url:'studionord/', img:'gallery/studionord.jpg'},
-  {n:'VOLT',        room:'Streetwear drop',    tag:'Don’t sleep.',          url:'volt/',       img:'gallery/volt.jpg'},
-  {n:'Lumé',        room:'Skincare',           tag:'Skin, at rest.',             url:'lume/',       img:'gallery/lume.jpg'},
-  {n:'Flowstate',   room:'SaaS product',       tag:'Ship calm.',                 url:'flowstate/',  img:'gallery/flowstate.jpg'},
-  {n:'Wander',      room:'Adventure travel',   tag:'Where the map ends.',        url:'wander/',     img:'gallery/wander.jpg'},
-  {n:'Belong',      room:'Flagship festival',  tag:'Be yourself. Together.',     url:'../belong/',  img:'gallery/belong.jpg'},
+  {n:'Laurie Hedges',room:'Conservation filmmaker', tag:'Inspired by, and for, nature.', url:'../laurie/', img:'gallery/laurie.jpg', accent:'#7fb98a', note:'A film-maker’s eye, framed by the wild it protects.'},
+  {n:'Inner Group', room:'Workshop companion', tag:'Unity in diversity.',       url:'innergroup/', img:'gallery/innergroup.jpg', accent:'#7fd4c1', note:'A calm companion for the work of leading yourself.'},
+  {n:'Aurelia',     room:'Fine jewellery',     tag:'Light, made to keep.',       url:'jewelry/',    img:'gallery/jewelry.jpg', accent:'#e7c15c', note:'Light, cut by hand and made to keep.'},
+  {n:'Éclat',       room:'Diamond maison',     tag:'One perfect light.',         url:'eclat/',      img:'gallery/eclat.jpg', accent:'#bfe0ff', note:'One perfect stone, held in a single beam.'},
+  {n:'Maison Lumen',room:'Fine dining',        tag:'Light. Atmosphere.',         url:'restaurant/', img:'gallery/restaurant.jpg', accent:'#d8a24e', note:'The last light of the day, served by candle.'},
+  {n:'PULSE',       room:'Strength studio',    tag:'Energy in motion.',          url:'gym/',        img:'gallery/gym.jpg', accent:'#c6ff2e', note:'Show up. Get strong. Move through it.'},
+  {n:'Vinöra',      room:'Natural wine',       tag:'Savour the moment.',         url:'wine/',       img:'gallery/wine.jpg', accent:'#e8607a', note:'Living wines, poured by candlelight.'},
+  {n:'Wild Stem',   room:'Florist',            tag:'Rooted in nature.',          url:'florist/',    img:'gallery/florist.jpg', accent:'#e86aa0', note:'Flowers with a heartbeat.'},
+  {n:'Éden',        room:'Hair & beauty',      tag:'Wellness reimagined.',       url:'salon/',      img:'gallery/salon.jpg', accent:'#e6a58f', note:'Beauty, unhurried.'},
+  {n:'Dunhaven',    room:'Coastal retreat',    tag:'Strength in serenity.',      url:'hotel/',      img:'gallery/hotel.jpg', accent:'#8fc0cf', note:'Where granite meets the sea.'},
+  {n:'Ember & Oak', room:'Coffee roaster',     tag:'Warmth. Crafted.',           url:'cafe/',       img:'gallery/cafe.jpg', accent:'#e07a3c', note:'Roasted slow. Poured with care.'},
+  {n:'Studio Nord', room:'Architecture',       tag:'Light & mass.',              url:'studionord/', img:'gallery/studionord.jpg', accent:'#a9bcc7', note:'Light and mass, held in balance.'},
+  {n:'VOLT',        room:'Streetwear drop',    tag:'Don’t sleep.',          url:'volt/',       img:'gallery/volt.jpg', accent:'#e0ff4d', note:'Don’t sleep on the drop.'},
+  {n:'Lumé',        room:'Skincare',           tag:'Skin, at rest.',             url:'lume/',       img:'gallery/lume.jpg', accent:'#bcd8c6', note:'Skin, at rest.'},
+  {n:'Flowstate',   room:'SaaS product',       tag:'Ship calm.',                 url:'flowstate/',  img:'gallery/flowstate.jpg', accent:'#7aa8ff', note:'Ship calm.'},
+  {n:'Wander',      room:'Adventure travel',   tag:'Where the map ends.',        url:'wander/',     img:'gallery/wander.jpg', accent:'#e0975a', note:'Where the map ends, the story begins.'},
+  {n:'Belong',      room:'Flagship festival',  tag:'Be yourself. Together.',     url:'../belong/',  img:'gallery/belong.jpg', accent:'#ff76bf', note:'Imagine freely. Be yourself. Belong.'},
 ];
 const N=ROOMS.length, ROMAN=['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII','XIII','XIV','XV','XVI','XVII'];
 
 /* ---- chrome: dots, menu, caption refs ---- */
 const dotsEl=document.getElementById('dots'), listItems=document.getElementById('list-items');
 ROOMS.forEach((r,i)=>{
-  const d=document.createElement('b');d.title=r.n;d.onclick=()=>goTo(i);dotsEl.appendChild(d);
+  const d=document.createElement('b');d.title=r.n;d.onclick=()=>{stopTour();goTo(i);};dotsEl.appendChild(d);
   const a=document.createElement('a');a.innerHTML=`${r.n} <span>${String(i+1).padStart(2,'0')} · ${r.room}</span>`;a.onclick=()=>{closeMenu();open(i);};listItems.appendChild(a);
 });
 const dots=[...dotsEl.children];
-const capEl=document.getElementById('cap'),capIdx=document.getElementById('cap-idx'),capName=document.getElementById('cap-name'),capTag=document.getElementById('cap-tag');
+const capEl=document.getElementById('cap'),capIdx=document.getElementById('cap-idx'),capName=document.getElementById('cap-name'),capTag=document.getElementById('cap-tag'),capNote=document.getElementById('cap-note');
 document.getElementById('menubtn').onclick=()=>document.getElementById('list').classList.add('on');
 document.getElementById('list-x').onclick=closeMenu;
 function closeMenu(){document.getElementById('list').classList.remove('on');}
@@ -244,18 +252,35 @@ function closeMenu(){document.getElementById('list').classList.remove('on');}
 const track=document.getElementById('track');
 const scrollable=()=>Math.max(1,track.offsetHeight-innerHeight);
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
-function goTo(i){i=clamp(i,0,N-1);window.scrollTo({top:(i/(N-1))*scrollable(),behavior:'smooth'});}
+const sweepEl=document.getElementById('sweep');
+function sweep(dir,color){                 // an architectural beam of the destination room's light
+  sweepEl.style.background=`linear-gradient(90deg,transparent, ${color}, transparent)`;
+  const from=dir>=0?-innerWidth*0.55:innerWidth,to=dir>=0?innerWidth:-innerWidth*0.55;
+  sweepEl.animate([{transform:`translateX(${from}px)`,opacity:0},{opacity:.5,offset:.5},{transform:`translateX(${to}px)`,opacity:0}],{duration:640,easing:'cubic-bezier(.4,0,.2,1)'});
+}
+function goTo(i){i=clamp(i,0,N-1);const dir=Math.sign(i-curActive);if(dir!==0)sweep(dir,(ROOMS[i]&&ROOMS[i].accent)||'#c9a86a');window.scrollTo({top:(i/(N-1))*scrollable(),behavior:'smooth'});}
 let curActive=0;                       // the work at visual centre (driven by the eased carousel)
 function activeIdx(){return curActive;}
-document.getElementById('prev').onclick=()=>goTo(activeIdx()-1);
-document.getElementById('next').onclick=()=>goTo(activeIdx()+1);
+document.getElementById('prev').onclick=()=>{stopTour();goTo(activeIdx()-1);};
+document.getElementById('next').onclick=()=>{stopTour();goTo(activeIdx()+1);};
 addEventListener('keydown',e=>{
   if(document.getElementById('modal').classList.contains('on')){ if(e.key==='Escape') closeModal(); return; }
-  if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();goTo(activeIdx()+1);}
-  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();goTo(activeIdx()-1);}
+  if(e.key==='ArrowRight'||e.key==='ArrowDown'){stopTour();e.preventDefault();goTo(activeIdx()+1);}
+  else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){stopTour();e.preventDefault();goTo(activeIdx()-1);}
   else if(e.key==='Enter'||e.key===' '){ if(scrollY<scrollable()+innerHeight){e.preventDefault();open(activeIdx());} }
 });
 document.getElementById('cap-go').onclick=()=>open(activeIdx());
+
+/* ---- guided auto-tour ---- */
+const tourBtn=document.getElementById('tour');let tour=false,tourTimer=null;
+function tourStep(){let i=activeIdx()+1;if(i>=N)i=0;goTo(i);}
+function setTour(on){tour=on;tourBtn.classList.toggle('on',on);capEl.classList.toggle('tour',on);
+  if(on){const s=document.getElementById('sound');if(s&&!s.classList.contains('on'))s.click();if(scrollY<innerHeight*0.16)goTo(1);tourTimer=setInterval(tourStep,5200);}
+  else if(tourTimer){clearInterval(tourTimer);tourTimer=null;}}
+function stopTour(){if(tour)setTour(false);}
+tourBtn.onclick=()=>setTour(!tour);
+addEventListener('wheel',()=>stopTour(),{passive:true});
+addEventListener('touchmove',()=>stopTour(),{passive:true});
 
 /* ---- modal ---- */
 const modal=document.getElementById('modal'),mFrame=document.getElementById('m-frame'),mName=document.getElementById('m-name'),mRoom=document.getElementById('m-room'),mOpen=document.getElementById('m-open'),mLd=modal.querySelector('.ld');
@@ -312,9 +337,13 @@ composer.addPass(dofPass);
 composer.addPass(new OutputPass());
 
 const AW=3.4,AH=AW*4/3;
+const GLOW_TEX=disc('rgba(255,255,255,0.62)');                 // white base — tinted per room
+const roomCols=ROOMS.map(r=>new THREE.Color(r.accent||'#c9a86a'));
+const baseKey=new THREE.Color(0xfff0d6), keyTarget=new THREE.Color(), fogBase=new THREE.Color(0x0c0b0a);
 ROOMS.forEach((r,i)=>{
   const grp=new THREE.Group();scene.add(grp);
-  const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:disc('rgba(201,168,106,0.55)'),transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending}));
+  const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:GLOW_TEX,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending}));
+  glow.material.color.copy(roomCols[i]);
   glow.scale.set(AW+3,AH+3,1);glow.position.z=-.1;grp.add(glow);
   const frame=new THREE.Mesh(new THREE.PlaneGeometry(AW+.3,AH+.3),new THREE.MeshBasicMaterial({color:0x0d0b09,transparent:true}));frame.position.z=-.02;grp.add(frame);
   const gold=new THREE.Mesh(new THREE.PlaneGeometry(AW+.14,AH+.14),new THREE.MeshBasicMaterial({color:0x8a7038,transparent:true}));gold.position.z=-.01;grp.add(gold);
@@ -335,13 +364,14 @@ addEventListener('pointerdown',e=>{
   if(scrollY>scrollable()+innerHeight*0.5)return;      // only in gallery zone
   pt.x=(e.clientX/innerWidth)*2-1;pt.y=-(e.clientY/innerHeight)*2+1;ray.setFromCamera(pt,camera);
   const hit=ray.intersectObjects(panels.map(p=>p.art));
-  if(hit.length){const i=hit[0].object.userData.idx; if(i===activeIdx())open(i); else goTo(i);}
+  if(hit.length){stopTour();const i=hit[0].object.userData.idx; if(i===activeIdx())open(i); else goTo(i);}
 });
 
 let af=0, lastT=performance.now()/1000;
 // cinematic intro dolly + mouse parallax + custom cursor
 let intro=0, tmx=0,tmy=0, mx=0,my=0, pcx=innerWidth/2,pcy=innerHeight/2, ccx=pcx,ccy=pcy;
 const cursor=document.getElementById('cursor');
+const introdimEl=document.getElementById('introdim');
 addEventListener('pointermove',e=>{tmx=(e.clientX/innerWidth)*2-1;tmy=(e.clientY/innerHeight)*2-1;pcx=e.clientX;pcy=e.clientY;},{passive:true});
 const SP=isMobile?3.5:4.3, DEP=2.4, ANG=0.5;
 function frame(){requestAnimationFrame(frame);const t=performance.now()/1000;
@@ -370,15 +400,25 @@ function frame(){requestAnimationFrame(frame);const t=performance.now()/1000;
   // custom cursor
   ccx+=(pcx-ccx)*0.3;ccy+=(pcy-ccy)*0.3;
   if(cursor){cursor.style.transform=`translate(${ccx}px,${ccy}px) translate(-50%,-50%)`;
-    const overArt=gz&&Math.abs(pcx-innerWidth/2)<innerWidth*0.26&&pcy>innerHeight*0.12&&pcy<innerHeight*0.82;
+    const overArt=gz&&scrollY>=innerHeight*0.16&&Math.abs(pcx-innerWidth/2)<innerWidth*0.26&&pcy>innerHeight*0.12&&pcy<innerHeight*0.82;
     cursor.classList.toggle('enter',overArt);}
   // ui state — everything follows the visual centre
   curActive=clamp(Math.round(af),0,N-1); const ai=curActive;
-  if(gz){capEl.classList.add('on');dotsEl.classList.add('on');document.getElementById('prev').classList.add('on');document.getElementById('next').classList.add('on');
+  // per-room atmosphere: spotlight, fog and clear-colour ease toward the active work's accent
+  const acc=roomCols[ai]||roomCols[0];
+  keyTarget.copy(baseKey).lerp(acc,0.34);
+  key.color.lerp(keyTarget,1-Math.exp(-dt*3));
+  scene.fog.color.copy(fogBase).lerp(acc,0.10);
+  renderer.setClearColor(scene.fog.color,1);
+  const atStart=scrollY<innerHeight*0.16;                 // intro owns the first frame
+  const showChrome=gz&&!atStart;
+  if(showChrome){capEl.classList.add('on');dotsEl.classList.add('on');document.getElementById('prev').classList.add('on');document.getElementById('next').classList.add('on');
     const r=ROOMS[ai];capIdx.textContent=ROMAN[ai];capName.textContent=r.n;capTag.textContent=r.tag;
-    dots.forEach((d,i)=>d.classList.toggle('on',i===ai));
+    capIdx.style.color=r.accent||'';capNote.textContent=r.note||'';
+    dots.forEach((d,i)=>{const on=i===ai;d.classList.toggle('on',on);d.style.background=on?(ROOMS[i].accent||''):'';d.style.boxShadow=on?('0 0 8px '+(ROOMS[i].accent||'')):'';});
   }else{capEl.classList.remove('on');dotsEl.classList.remove('on');document.getElementById('prev').classList.remove('on');document.getElementById('next').classList.remove('on');}
-  document.getElementById('intro').style.opacity=(scrollY<innerHeight*0.16&&intro>0.85)?1:0;
+  document.getElementById('intro').style.opacity=(atStart&&intro>0.85)?1:0;
+  introdimEl.style.opacity=atStart?1:0;                   // dim the hall behind the title
   composer.render();if(reduce)return;}
 frame();
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);bloom.setSize(innerWidth,innerHeight);dofPass.material.uniforms.uAspect.value=innerWidth/innerHeight;dustMat.uniforms.uS.value=innerHeight/24;});
