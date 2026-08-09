@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#061817">
+  <meta name="theme-color" content="#ece8e2">
   <meta name="description" content="Inner Group workshop companion for Vattenfall L&D">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta property="og:title" content="Leading from within · Inner Group">
   <meta property="og:description" content="Your workshop journey before, during and after the session.">
   <title>Leading from within · Inner Group</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.squarespace-cdn.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="icon" href="./assets/app-icon.svg" type="image/svg+xml">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./styles.css">
@@ -51,7 +51,7 @@
             <span class="hero-line"><span class="kin-word" data-word="Leading">Leading</span></span>
             <span class="hero-line hero-line-offset"><em>from</em> <span class="kin-word" data-word="within">within.</span></span>
           </h1>
-          <p id="welcomeText" class="hero-lede reveal delay-1">A private space to prepare, participate and continue the work after we meet.</p>
+          <p id="welcomeText" class="hero-lede reveal delay-1">Welcome. This is your space to prepare, take part and continue the work after we meet.</p>
           <div class="hero-actions reveal delay-2">
             <button id="enterApp" class="button button-primary magnetic" type="button">Enter workshop <span>↘</span></button>
             <div class="micro-proof"><strong>No login.</strong><span>No app. One link.</span></div>
@@ -120,8 +120,15 @@
           <div class="panels">
             <section class="phase-panel is-active" data-panel="pre_work">
               <div class="panel-intro">
-                <div><span class="panel-number">01</span><p class="kicker">Before we meet</p><h3>Arrive with<br><em>curiosity.</em></h3></div>
+                <div><span class="panel-number">01</span><p class="kicker">Pre-work</p><h3>What to do<br><em>before the workshop.</em></h3></div>
                 <div class="panel-intro-copy"><p id="preIntro">Set aside ten quiet minutes. Watch the welcome and let the questions travel with you.</p><div class="duration"><span>10</span><small>minutes<br>at your pace</small></div></div>
+              </div>
+
+              <div class="prework-steps reveal">
+                <div class="step-head">
+                  <span class="step-badge">1</span>
+                  <div><h4>Get to know your facilitators</h4><p>A short welcome video before we meet.</p></div>
+                </div>
               </div>
 
               <article class="video-card surface reveal">
@@ -133,23 +140,37 @@
                 </div>
                 <div class="video-copy">
                   <p class="kicker">Welcome video</p>
-                  <h4 id="videoTitle">Before we begin</h4>
+                  <h4 id="videoTitle">Get to know your facilitators</h4>
                   <p id="videoDescription">Linn and Maria introduce the intention for the workshop and invite you to arrive with curiosity rather than perfect answers.</p>
                   <a id="videoTextLink" class="text-link" href="https://www.innergroup.se/" target="_blank" rel="noopener">Open video in a new window <span>↗</span></a>
                 </div>
               </article>
 
               <div class="reflection-block reveal">
-                <div class="reflection-head">
-                  <div><p class="kicker">Quiet prompts</p><h4>Notice what is already here.</h4></div>
-                  <div class="reflection-count"><span id="reflectionCurrent">01</span><i></i><span id="reflectionTotal">04</span></div>
+                <div class="prework-steps">
+                  <div class="step-head">
+                    <span class="step-badge">2</span>
+                    <div><h4>Reflection questions</h4><p>Take a moment and write down your thoughts.</p></div>
+                  </div>
                 </div>
-                <div id="reflectionRail" class="reflection-rail" tabindex="0" aria-label="Reflection questions"></div>
+                <div class="reflection-head">
+                  <div><p class="kicker">Tap a card to reflect</p><h4>Notice what is already here.</h4></div>
+                  <div class="reflection-count"><span id="reflectionCurrent">01</span><i>/</i><span id="reflectionTotal">04</span></div>
+                </div>
+                <div id="reflectionRail" class="reflection-rail" aria-label="Reflection questions"></div>
                 <div class="reflection-controls">
                   <p>No submission. Nothing is stored.</p>
                   <div><button id="prevReflection" type="button" aria-label="Previous reflection">←</button><button id="nextReflection" type="button" aria-label="Next reflection">→</button></div>
                 </div>
               </div>
+
+              <article class="about-card reveal">
+                <div>
+                  <p class="kicker">About Inner Group</p>
+                  <h4 id="aboutHeadline">Self leadership is your next super power.</h4>
+                </div>
+                <a id="aboutLink" class="button" href="https://www.innergroup.se/" target="_blank" rel="noopener"><span id="aboutCta">Visit innergroup.se</span> <span>↗</span></a>
+              </article>
             </section>
 
             <section class="phase-panel" data-panel="live" hidden>
