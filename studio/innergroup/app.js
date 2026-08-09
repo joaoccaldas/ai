@@ -7,7 +7,7 @@
   const DEFAULT_CONFIG = {
     id: 'vattenfall_2026_09', current_phase: 'pre_work',
     workshop: { eyebrow: 'Inner Group · Vattenfall L&D', title: 'Leading from within', date: '14 September 2026', welcome: 'A private space to prepare, participate and continue the work after we meet.' },
-    pre_work: { intro: 'Set aside ten quiet minutes. Watch the welcome and let the questions travel with you. There is nothing to submit.', video: { title: 'Before we begin', description: 'Linn and Maria introduce the intention for the workshop and invite you to arrive with curiosity rather than perfect answers.', embed_url: '', external_url: 'https://www.innergroup.se/' }, questions: ['When do you feel most grounded and effective at work?','What situations make it harder to act in line with what matters to you?','What does psychological safety look like in everyday behaviour?','What is one question you would like this workshop to help you explore?'] },
+    pre_work: { intro: 'Set aside ten quiet minutes. Watch the welcome and let the questions travel with you. There is nothing to submit.', video: { title: 'Before we begin', description: 'Linn and Maria introduce the intention for the workshop and invite you to arrive with curiosity rather than perfect answers.', embed_url: '', external_url: 'https://www.innergroup.se/' }, questions: ['When do you feel most grounded and effective at work?','What situations make it harder to act in line with what matters to you?','What does psychological safety look like in everyday behaviour?','What is one question you would like this workshop to help you explore?'], about: { headline: 'Self leadership is your next super power.', cta: 'Visit innergroup.se', url: 'https://www.innergroup.se/' } },
     live: { intro: 'Use this page as the quiet backbone of the day: your agenda, preparation prompts and live exercise in one place.', agenda: { title: 'The inner conditions for sustainable performance', description: 'A participatory journey from awareness to concrete behaviour, connecting personal self-leadership with the culture around us.', items: [] }, exercise: { title: 'What helps people thrive?', description: 'Join the live word cloud when invited by the facilitators.', external_url: 'https://www.mentimeter.com/' } },
     post_work: { intro: 'The workshop ends. The practice does not. Revisit the core ideas and choose one action that can survive a busy week.', summary: { title: 'The Seed and the Soil', text: 'We strengthen the person and the system together.', url: 'https://www.innergroup.se/' }, resources: [], feedback: { title: 'What should we keep, change or deepen?', description: 'Your feedback helps Inner Group improve the experience for future participants.', url: 'https://forms.google.com/' } }
   };
@@ -55,6 +55,10 @@
     setText('videoDescription', config.pre_work.video.description);
     setLink('videoFallback', config.pre_work.video.external_url || config.pre_work.video.embed_url);
     setLink('videoTextLink', config.pre_work.video.external_url || config.pre_work.video.embed_url);
+    const about = config.pre_work.about || {};
+    setText('aboutHeadline', about.headline);
+    setText('aboutCta', about.cta);
+    setLink('aboutLink', about.url);
     setText('liveIntro', config.live.intro);
     setText('agendaTitle', config.live.agenda.title);
     setText('agendaDescription', config.live.agenda.description);
@@ -78,12 +82,31 @@
   function renderReflections() {
     const questions = config.pre_work.questions || [];
     $('#reflectionRail').innerHTML = questions.map((question, index) => `
-      <article class="reflection-card" data-reflection="${index}">
-        <span class="reflect-no">Reflection ${String(index + 1).padStart(2, '0')}</span>
-        <blockquote>${escapeHtml(question)}</blockquote>
-        <footer>Pause here. Carry the thought with you.</footer>
+      <article class="reflection-card" data-reflection="${index}" tabindex="0" role="button" aria-pressed="false" aria-label="Reflection ${index + 1}. Tap to reflect.">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <span class="reflect-no">Reflection ${String(index + 1).padStart(2, '0')}</span>
+            <blockquote>${escapeHtml(question)}</blockquote>
+            <span class="flip-hint">Tap to reflect <span aria-hidden="true">↻</span></span>
+          </div>
+          <div class="flip-face flip-back">
+            <span class="reflect-no">Take a moment</span>
+            <blockquote>Sit with this. Notice what comes up — there is nothing to submit.</blockquote>
+            <span class="flip-hint">Tap to return <span aria-hidden="true">↺</span></span>
+          </div>
+        </div>
       </article>`).join('');
     setText('reflectionTotal', String(questions.length).padStart(2, '0'));
+    $$('.reflection-card').forEach(card => {
+      const flip = () => {
+        const flipped = card.classList.toggle('is-flipped');
+        card.setAttribute('aria-pressed', String(flipped));
+      };
+      card.addEventListener('click', flip);
+      card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); flip(); }
+      });
+    });
   }
 
   function renderAgenda() {
@@ -233,7 +256,8 @@
 
   setupEvents();
   observeReveals();
-  initWebGL();
+  // Light brand theme uses the CSS ambient background instead of the dark WebGL shader.
+  void initWebGL;
   finishLoading();
   loadConfig();
   if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(() => {});

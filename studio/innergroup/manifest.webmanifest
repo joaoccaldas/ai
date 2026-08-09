@@ -3,7 +3,7 @@
   "short_name": "Inner Group",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#061817",
-  "theme_color": "#061817",
+  "background_color": "#ece8e2",
+  "theme_color": "#00868b",
   "icons": [{"src":"./assets/app-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
 }

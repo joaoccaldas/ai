@@ -10,7 +10,7 @@
   "pre_work": {
     "intro": "Set aside ten quiet minutes. Watch the welcome and let the questions travel with you. There is nothing to submit.",
     "video": {
-      "title": "Before we begin",
+      "title": "Get to know your facilitators",
       "description": "Linn and Maria introduce the intention for the workshop and invite you to arrive with curiosity rather than perfect answers.",
       "embed_url": "",
       "external_url": "https://www.innergroup.se/"
@@ -20,7 +20,12 @@
       "What situations make it harder to act in line with what matters to you?",
       "What does psychological safety look like in everyday behaviour?",
       "What is one question you would like this workshop to help you explore?"
-    ]
+    ],
+    "about": {
+      "headline": "Self leadership is your next super power.",
+      "cta": "Visit innergroup.se",
+      "url": "https://www.innergroup.se/"
+    }
   },
   "live": {
     "intro": "Use this page as the quiet backbone of the day: the agenda, your reflection prompts and the live group exercise in one place.",
