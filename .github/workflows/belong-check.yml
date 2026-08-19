@@ -19,7 +19,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 12
 
     steps:
       - name: Checkout
@@ -45,10 +45,13 @@ jobs:
           grep -q 'prefers-reduced-motion: reduce' belong/index.html
           grep -q 'visibilitychange' belong/index.html
 
-      - name: Install Playwright
-        run: |
-          npm install --no-save playwright@1.55.0
-          npx playwright install --with-deps chromium
+      - name: Install Playwright package
+        timeout-minutes: 2
+        run: npm install --no-save --no-audit --no-fund playwright@1.55.0
+
+      - name: Install Chromium
+        timeout-minutes: 4
+        run: npx playwright install chromium
 
       - name: Start static server
         run: |
@@ -64,6 +67,7 @@ jobs:
           exit 1
 
       - name: Browser production suite
+        timeout-minutes: 4
         env:
           BELONG_BASE_URL: http://127.0.0.1:4173/belong/
           BELONG_ARTIFACTS: belong/test-artifacts
