@@ -1,0 +1,87 @@
+name: Belong Production Check
+
+on:
+  push:
+    paths:
+      - 'belong/**'
+      - 'vendor/**'
+      - '.github/workflows/belong-check.yml'
+  pull_request:
+    paths:
+      - 'belong/**'
+      - 'vendor/**'
+      - '.github/workflows/belong-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Static invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f belong/index.html
+          test -f belong/tests/smoke.mjs
+          grep -q 'class="skip-link"' belong/index.html
+          grep -q 'aria-hidden="true"' belong/index.html
+          grep -q '"@type": "CreativeWork"' belong/index.html
+          ! grep -q '"@type": "MusicEvent"' belong/index.html
+          ! grep -q 'api.whatsapp.com' belong/index.html
+          grep -q 'thebelongfestival.com' belong/index.html
+          grep -q 'prefers-reduced-motion: reduce' belong/index.html
+          grep -q 'visibilitychange' belong/index.html
+
+      - name: Install Playwright package
+        timeout-minutes: 2
+        run: npm install --no-save --no-audit --no-fund playwright@1.55.0
+
+      - name: Install Chromium
+        timeout-minutes: 4
+        run: npx playwright install chromium
+
+      - name: Start static server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/belong-server.log 2>&1 &
+          echo $! > /tmp/belong-server.pid
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/belong/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/belong-server.log
+          exit 1
+
+      - name: Browser production suite
+        timeout-minutes: 4
+        env:
+          BELONG_BASE_URL: http://127.0.0.1:4173/belong/
+          BELONG_ARTIFACTS: belong/test-artifacts
+        run: node belong/tests/smoke.mjs
+
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: belong-browser-evidence
+          path: belong/test-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Server diagnostics
+        if: failure()
+        run: cat /tmp/belong-server.log || true
