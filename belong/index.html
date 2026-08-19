@@ -3,66 +3,50 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Belong — A Luxury Immersive Music Experience · Jaisalmer 2026</title>
-<meta name="description" content="An immersive concept experience for The Belong Festival — a luxury music gathering in the golden desert of Jaisalmer where scattered souls find each other. 27–29 November 2026. There's only one rule: be unabashedly, wholeheartedly yourself." />
-<meta name="keywords" content="Belong Festival, immersive music festival, Jaisalmer festival, luxury desert festival, boutique music experience, wellness festival India, house music festival, immersive web experience" />
-<meta name="author" content="Concept redesign — João Caldas" />
+<title>Belong Festival — Immersive Concept Redesign by João Caldas</title>
+<meta name="description" content="An independent immersive web concept redesign for The Belong Festival in Jaisalmer, exploring connection through a scroll-driven desert journey. Concept by João Caldas; not an official festival page." />
+<meta name="keywords" content="Belong Festival concept redesign, immersive web experience, Jaisalmer, Three.js, creative coding, experiential design" />
+<meta name="author" content="João Caldas" />
 <meta name="robots" content="index, follow, max-image-preview:large" />
 <meta name="theme-color" content="#0a0018" />
 <link rel="canonical" href="https://joaoccaldas.github.io/ai/belong/" />
 
-<!-- Open Graph -->
-<meta property="og:site_name" content="Belong — Immersive Experience" />
-<meta property="og:title" content="Belong — A Luxury Immersive Music Experience" />
-<meta property="og:description" content="Sunlit connections by day. Starlit rhythms by night. Strangers become kindred spirits in the golden desert. Jaisalmer · 27–29 November 2026." />
+<!-- Open Graph: explicitly identifies this as an independent concept redesign. -->
+<meta property="og:site_name" content="João Caldas — Creative AI Studio" />
+<meta property="og:title" content="Belong Festival — Immersive Concept Redesign" />
+<meta property="og:description" content="An independent Three.js concept redesign inspired by The Belong Festival: a day-to-night desert journey about curiosity, connection and belonging." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://joaoccaldas.github.io/ai/belong/" />
 <meta property="og:locale" content="en_US" />
 <meta property="og:image" content="https://joaoccaldas.github.io/ai/belong/og.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="Belong — a heart of glowing souls in the desert night. Jaisalmer, 27–29 November 2026." />
+<meta property="og:image:alt" content="Belong concept redesign — a heart of glowing souls in a prismatic desert night." />
 
-<!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Belong — A Luxury Immersive Music Experience" />
-<meta name="twitter:description" content="Sunlit connections by day. Starlit rhythms by night. Jaisalmer · 27–29 November 2026." />
+<meta name="twitter:title" content="Belong Festival — Immersive Concept Redesign" />
+<meta name="twitter:description" content="Independent creative-coding concept by João Caldas, inspired by The Belong Festival." />
 <meta name="twitter:image" content="https://joaoccaldas.github.io/ai/belong/og.png" />
 
-<!-- Structured data: the festival as a MusicEvent -->
+<!-- Structured data describes the work itself, not an official festival sales surface. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "MusicEvent",
-  "name": "The Belong Festival — A Luxury Immersive Music Experience",
-  "description": "A luxury immersive music experience in the golden desert of Jaisalmer that sparks authentic connections. Sunlit workshops and wellness by day; house, techno and afro-house by night. Limited to 150 souls.",
-  "startDate": "2026-11-27",
-  "endDate": "2026-11-29",
-  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-  "eventStatus": "https://schema.org/EventScheduled",
-  "image": ["https://joaoccaldas.github.io/ai/belong/og.png"],
-  "url": "https://joaoccaldas.github.io/ai/belong/",
-  "maximumAttendeeCapacity": 150,
-  "location": {
-    "@type": "Place",
-    "name": "Jaisalmer",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Jaisalmer",
-      "addressRegion": "Rajasthan",
-      "addressCountry": "IN"
-    }
+  "@type": "CreativeWork",
+  "name": "Belong Festival — Immersive Concept Redesign",
+  "description": "An independent immersive web concept redesign inspired by The Belong Festival, created as a design and creative-coding proposal.",
+  "creator": {
+    "@type": "Person",
+    "name": "João Caldas"
   },
-  "organizer": {
-    "@type": "Organization",
+  "url": "https://joaoccaldas.github.io/ai/belong/",
+  "image": "https://joaoccaldas.github.io/ai/belong/og.png",
+  "isBasedOn": "https://thebelongfestival.com/",
+  "about": {
+    "@type": "Thing",
     "name": "The Belong Festival",
     "url": "https://thebelongfestival.com/"
-  },
-  "offers": [
-    { "@type": "Offer", "name": "Platinum", "price": "70000", "priceCurrency": "INR", "availability": "https://schema.org/LimitedAvailability", "url": "https://joaoccaldas.github.io/ai/belong/#tiers" },
-    { "@type": "Offer", "name": "Gold", "price": "60000", "priceCurrency": "INR", "availability": "https://schema.org/LimitedAvailability", "url": "https://joaoccaldas.github.io/ai/belong/#tiers" },
-    { "@type": "Offer", "name": "Silver", "price": "50000", "priceCurrency": "INR", "availability": "https://schema.org/LimitedAvailability", "url": "https://joaoccaldas.github.io/ai/belong/#tiers" }
-  ]
+  }
 }
 </script>
 
@@ -78,7 +62,6 @@
     --serif:'Cormorant Garamond',Georgia,serif;
     --sans:'Jost',system-ui,-apple-system,sans-serif;
   }
-  /* RAINBOW mode — the faceted spectrum of the Belong logo, everywhere */
   body.rainbow{
     --accent-rgb:255,86,213;
     --gold:rgb(var(--accent-rgb));
@@ -99,7 +82,6 @@
   }
   body.rainbow #mode .swatch{background:conic-gradient(from 0deg,#ff2d9b,#ff8a00,#ffe600,#38e06b,#22d3ee,#7c5cff,#ff2d9b)}
 
-  /* AURORA mode — ethereal borealis: teal, green, soft violet */
   body.aurora{
     --accent-rgb:94,234,212;
     --gold:rgb(var(--accent-rgb));
@@ -120,7 +102,14 @@
     overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6;letter-spacing:.01em}
   a{color:inherit;text-decoration:none}
   ::selection{background:var(--gold);color:var(--ink)}
-  @media(hover:hover) and (pointer:fine){ *{cursor:none} }
+  :focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+
+  .skip-link{position:fixed;left:1rem;top:1rem;z-index:10000;background:var(--cream);color:var(--ink);padding:.7rem 1rem;
+    border-radius:8px;font-weight:500;transform:translateY(-180%);transition:transform .2s ease}
+  .skip-link:focus{transform:translateY(0)}
+
+  /* Never remove the native cursor unless the custom cursor loop has actually started. */
+  @media(hover:hover) and (pointer:fine){ .cursor-ready *{cursor:none} }
 
   #scene{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
   #atmos{position:fixed;inset:0;z-index:1;pointer-events:none;mix-blend-mode:multiply;opacity:.82;
@@ -129,7 +118,6 @@
       radial-gradient(140% 120% at 50% 122%, rgba(6,5,18,.62), transparent 55%)}
   #scrim{position:fixed;inset:0;z-index:1;pointer-events:none;
     background:linear-gradient(100deg, rgba(7,6,20,.6) 0%, rgba(7,6,20,.3) 34%, transparent 62%)}
-  /* fine film grain for texture */
   #grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     animation:grain 6s steps(6) infinite}
@@ -155,16 +143,16 @@
     color:rgba(var(--text-rgb),.86);margin-top:1.8rem}
   .body.wide{max-width:56ch}
   .accent{color:var(--gold);font-style:italic;font-family:var(--serif)}
-  /* shimmering gold sweep on hero accent */
   .shimmer{background:linear-gradient(100deg,var(--gold) 20%,#fff6df 42%,var(--gold) 64%);
     background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
     font-style:italic;font-family:var(--serif);animation:sweep 5.5s linear infinite}
   @keyframes sweep{to{background-position:220% 0}}
 
-  .rise{opacity:0;transform:translateY(40px);filter:blur(7px);
+  /* Progressive enhancement: content is visible by default. JS opts into reveal motion only after module imports succeed. */
+  .motion-ready .rise{opacity:0;transform:translateY(40px);filter:blur(7px);
     transition:opacity 1.15s cubic-bezier(.2,.7,.2,1),transform 1.15s cubic-bezier(.2,.7,.2,1),filter 1.15s ease}
-  .rise.in{opacity:1;transform:none;filter:none}
-  .rise.d1{transition-delay:.12s}.rise.d2{transition-delay:.26s}.rise.d3{transition-delay:.4s}.rise.d4{transition-delay:.54s}
+  .motion-ready .rise.in{opacity:1;transform:none;filter:none}
+  .motion-ready .rise.d1{transition-delay:.12s}.motion-ready .rise.d2{transition-delay:.26s}.motion-ready .rise.d3{transition-delay:.4s}.motion-ready .rise.d4{transition-delay:.54s}
 
   header{position:fixed;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;justify-content:space-between;
     padding:1.5rem 6vw;transition:background .4s ease,padding .4s ease}
@@ -181,8 +169,9 @@
 
   #rail{position:fixed;right:2.1vw;top:50%;transform:translateY(-50%);z-index:20;display:flex;flex-direction:column;gap:.85rem;align-items:center}
   @media(max-width:860px){#rail{display:none}}
-  .dot{width:7px;height:7px;border-radius:50%;background:rgba(var(--text-rgb),.28);transition:background .4s,transform .4s}
-  .dot.active{background:var(--gold);transform:scale(1.7);box-shadow:0 0 12px var(--gold)}
+  .dot{appearance:none;border:0;padding:0;width:9px;height:9px;border-radius:50%;background:rgba(var(--text-rgb),.28);transition:background .4s,transform .4s;cursor:pointer}
+  .dot.active{background:var(--gold);transform:scale(1.55);box-shadow:0 0 12px var(--gold)}
+  .dot:focus-visible{outline:2px solid var(--cream);outline-offset:5px}
 
   .hint{position:absolute;bottom:5vh;left:50%;transform:translateX(-50%);font-size:.66rem;letter-spacing:.34em;
     text-transform:uppercase;color:rgba(var(--text-rgb),.7);display:flex;flex-direction:column;align-items:center;gap:.8rem;text-align:center}
@@ -229,6 +218,10 @@
   .tier .price small{font-size:1rem;opacity:.6}
   .tier .note{font-size:.8rem;color:rgba(var(--text-rgb),.55)}
   .tier.platinum{border-color:rgba(var(--accent-rgb),.5)}
+  .sold-status{display:inline-block;margin-top:1rem;border:1px solid rgba(var(--text-rgb),.25);border-radius:999px;padding:.3rem .65rem;
+    font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(var(--text-rgb),.72)}
+  .concept-note{max-width:62ch;margin-top:1.25rem;padding:1rem 1.15rem;border-left:2px solid var(--gold);background:rgba(11,10,30,.34);
+    color:rgba(var(--text-rgb),.76);font-size:.88rem}
 
   .steps{margin-top:3rem;max-width:760px}
   .step{display:flex;gap:1.5rem;padding:1.4rem 0;border-bottom:1px solid rgba(var(--text-rgb),.08);align-items:baseline}
@@ -250,17 +243,16 @@
   footer{position:relative;z-index:2;padding:9vh 8vw 5vh;border-top:1px solid rgba(var(--accent-rgb),.16);
     background:linear-gradient(180deg,transparent,rgba(6,5,18,.82))}
   .foot-lead{font-family:var(--serif);font-style:italic;font-size:clamp(1.8rem,5vw,3.2rem);max-width:22ch;line-height:1.15;margin-bottom:2.5rem}
-  .socials{display:flex;gap:1.4rem;margin:2rem 0;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase}
+  .socials{display:flex;gap:1.4rem;flex-wrap:wrap;margin:2rem 0;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase}
   .socials a{opacity:.75;transition:color .3s,opacity .3s}
   .socials a:hover{color:var(--gold);opacity:1}
-  .copyright{font-size:.72rem;color:rgba(var(--text-rgb),.4);letter-spacing:.06em}
+  .copyright{font-size:.72rem;color:rgba(var(--text-rgb),.48);letter-spacing:.06em;max-width:90ch}
   .home-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.4rem;font-size:.7rem;letter-spacing:.2em;
     text-transform:uppercase;color:rgba(var(--text-rgb),.5);transition:color .3s}
   .home-link:hover{color:var(--gold)}
 
-  /* loader */
   #loader{position:fixed;inset:0;z-index:60;background:var(--night);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.6rem;
-    transition:opacity 1s ease,visibility 1s}
+    transition:opacity .7s ease,visibility .7s}
   #loader.done{opacity:0;visibility:hidden}
   #loader .mark{font-family:var(--serif);font-size:2.4rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cream)}
   #loader .mark span{color:var(--gold)}
@@ -268,7 +260,6 @@
   #loader .bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s ease}
   #loader .sub{font-size:.64rem;letter-spacing:.34em;text-transform:uppercase;color:rgba(var(--text-rgb),.5)}
 
-  /* time-of-day + sound */
   #tod{position:fixed;left:6vw;bottom:4vh;z-index:20;font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;
     color:rgba(var(--text-rgb),.55);display:flex;align-items:center;gap:.7rem;transition:opacity .5s}
   #tod .orb{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold);transition:background .8s,box-shadow .8s}
@@ -285,7 +276,7 @@
   #sound.on .eq i:nth-child(4){animation-delay:.15s}
   @keyframes eq{0%,100%{height:3px}50%{height:12px}}
   @media(max-width:860px){#sound{right:5vw;bottom:3vh}}
-  /* palette toggle */
+
   #mode{position:fixed;right:6vw;bottom:calc(4vh + 52px);z-index:21;display:flex;align-items:center;gap:.6rem;
     background:rgba(11,10,30,.5);border:1px solid rgba(var(--accent-rgb),.35);color:var(--cream);border-radius:40px;
     padding:.55rem 1rem;font-family:var(--sans);font-size:.64rem;letter-spacing:.26em;text-transform:uppercase;
@@ -295,49 +286,58 @@
     background:conic-gradient(from 0deg,#e0b25c,#f0879a,#8f7bc4,#e0b25c);box-shadow:0 0 9px rgba(var(--accent-rgb),.6)}
   @media(max-width:860px){#mode{right:5vw;bottom:calc(3vh + 48px)}}
 
-  /* custom cursor */
-  #cur-dot,#cur-ring{position:fixed;top:0;left:0;z-index:9999;pointer-events:none;border-radius:50%;
+  /* Custom cursor is display:none until its JS loop confirms it can run. */
+  #cur-dot,#cur-ring{display:none;position:fixed;top:0;left:0;z-index:9999;pointer-events:none;border-radius:50%;
     transform:translate(-50%,-50%);mix-blend-mode:screen}
+  .cursor-ready #cur-dot,.cursor-ready #cur-ring{display:block}
   #cur-dot{width:7px;height:7px;background:var(--gold);box-shadow:0 0 10px var(--gold)}
   #cur-ring{width:34px;height:34px;border:1px solid rgba(var(--accent-rgb),.6);transition:width .25s ease,height .25s ease,border-color .25s ease,background .25s ease}
   #cur-ring.big{width:64px;height:64px;border-color:rgba(var(--accent-rgb),.9);background:rgba(var(--accent-rgb),.08)}
-  @media(hover:none),(pointer:coarse){#cur-dot,#cur-ring{display:none}}
+  @media(hover:none),(pointer:coarse){.cursor-ready #cur-dot,.cursor-ready #cur-ring{display:none}}
 
-  .reduce *{animation-duration:.001s!important;animation-iteration-count:1!important;transition-duration:.001s!important}
+  .reduce *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  @media(prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto!important}
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+    #grain,.marquee .track,.hint .line,.shimmer{animation:none!important}
+    .pillar,.split .card,.tier,#sound,#mode{backdrop-filter:none}
+  }
+  @media(max-width:720px){.pillar,.split .card,.tier,#sound,#mode{backdrop-filter:none}}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#content">Skip to content</a>
 
-<div id="loader">
+<div id="loader" aria-hidden="true">
   <div class="mark">BE<span>LONG</span></div>
   <div class="bar"><i id="loadbar"></i></div>
   <div class="sub">Gathering the souls</div>
 </div>
 
-<canvas id="scene"></canvas>
-<div id="atmos"></div>
-<div id="scrim"></div>
-<div id="grain"></div>
-<div id="cur-ring"></div>
-<div id="cur-dot"></div>
+<canvas id="scene" aria-hidden="true"></canvas>
+<div id="atmos" aria-hidden="true"></div>
+<div id="scrim" aria-hidden="true"></div>
+<div id="grain" aria-hidden="true"></div>
+<div id="cur-ring" aria-hidden="true"></div>
+<div id="cur-dot" aria-hidden="true"></div>
 
 <header id="topbar">
   <a class="brand" href="#top">BE<span>·</span>LONG</a>
-  <nav class="nav">
+  <nav class="nav" aria-label="Primary navigation">
     <a href="#imagine">Imagine</a>
     <a href="#pillars">Why Belong</a>
     <a href="#experience">Experience</a>
-    <a href="#join">Join</a>
-    <a class="cta" href="https://api.whatsapp.com/send?phone=918306795929&text=Hey%21+Belong+Festival+looks+super+exciting%21+Count+me+in+%E2%80%94+I+want+to+know+everything%21+How+do+I+Apply%3F" target="_blank" rel="noopener">Join the waitlist</a>
+    <a href="#join">Official site</a>
+    <a class="cta" href="https://thebelongfestival.com/" target="_blank" rel="noopener">Visit official site</a>
   </nav>
 </header>
 
-<div id="rail"></div>
-<div id="tod"><span class="orb"></span><span id="todlabel">Golden dawn</span></div>
-<button id="mode" aria-label="Switch colour palette"><span class="swatch"></span><span id="modelabel">Palette</span></button>
-<button id="sound" aria-label="Toggle ambient sound"><span class="eq"><i></i><i></i><i></i><i></i></span><span id="soundlabel">Sound</span></button>
+<nav id="rail" aria-label="Section navigation"></nav>
+<div id="tod" aria-hidden="true"><span class="orb"></span><span id="todlabel">Golden dawn</span></div>
+<button id="mode" type="button" aria-label="Colour palette: Rainbow. Activate to switch palette"><span class="swatch" aria-hidden="true"></span><span id="modelabel">Rainbow</span></button>
+<button id="sound" type="button" aria-label="Toggle ambient sound" aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="soundlabel">Sound</span></button>
 
-<main id="content">
+<main id="content" tabindex="-1">
 
   <section class="panel" id="top" data-tod-label="Golden dawn">
     <div class="rise in">
@@ -348,7 +348,7 @@
       </h2>
       <p class="body wide">More than just a festival — a <span class="shimmer">luxury immersive music experience</span> where scattered souls find each other in the golden desert.</p>
     </div>
-    <div class="hint"><span>Scroll to gather</span><span class="line"></span></div>
+    <div class="hint" aria-hidden="true"><span>Scroll to gather</span><span class="line"></span></div>
   </section>
 
   <section class="panel" id="imagine" data-tod-label="Warm morning">
@@ -422,29 +422,29 @@
   </section>
 
   <section class="panel" id="tiers" data-tod-label="Predawn glow">
-    <div class="kicker rise">Your Passage In</div>
-    <h2 class="lead rise d1">Choose the stay that resonates.</h2>
-    <p class="body rise d2">Every package includes a three-day royal stay, all workshops, performances and the full wellness program.</p>
+    <div class="kicker rise">Package Reference</div>
+    <h2 class="lead rise d1">Three tiers from the festival brief.</h2>
+    <p class="body rise d2">Pricing is shown here as part of this concept study, not as a live sales offer.</p>
+    <p class="concept-note rise d2">Availability changes independently of this concept page. The official Belong Festival site currently lists these packages as sold out; always use the official site for current status.</p>
     <div class="tiers rise d3">
-      <div class="tier platinum"><div class="name">Platinum</div><div class="price">&#8377;70,000<small>/-</small></div><div class="note">Royal stay · triple-sharing · full immersion</div></div>
-      <div class="tier"><div class="name">Gold</div><div class="price">&#8377;60,000<small>/-</small></div><div class="note">Royal stay · triple-sharing · full immersion</div></div>
-      <div class="tier"><div class="name">Silver</div><div class="price">&#8377;50,000<small>/-</small></div><div class="note">Royal stay · triple-sharing · full immersion</div></div>
+      <div class="tier platinum"><div class="name">Platinum</div><div class="price">&#8377;70,000<small>/-</small></div><div class="note">Royal stay · triple-sharing · full immersion</div><span class="sold-status">Official site: sold out</span></div>
+      <div class="tier"><div class="name">Gold</div><div class="price">&#8377;60,000<small>/-</small></div><div class="note">Royal stay · triple-sharing · full immersion</div><span class="sold-status">Official site: sold out</span></div>
+      <div class="tier"><div class="name">Silver</div><div class="price">&#8377;50,000<small>/-</small></div><div class="note">Royal stay · triple-sharing · full immersion</div><span class="sold-status">Official site: sold out</span></div>
     </div>
   </section>
 
   <section class="panel" id="join" data-tod-label="Dawn returns">
-    <div class="kicker rise">How to Join</div>
-    <h2 class="lead rise d1">Belonging begins with a <span class="accent">conversation.</span></h2>
+    <div class="kicker rise">Official Next Step</div>
+    <h2 class="lead rise d1">Continue with the <span class="accent">official Belong Festival.</span></h2>
+    <p class="body wide rise d2">This page is an independent design proposal. For live availability, applications, payment, policies or event updates, continue on the festival&rsquo;s own channels.</p>
     <div class="steps rise d2">
-      <div class="step"><span class="n">1</span><p>Select the package that resonates with you.</p></div>
-      <div class="step"><span class="n">2</span><p>Fill out the application form.</p></div>
-      <div class="step"><span class="n">3</span><p>Book a quick 10-minute conversation with our founder.</p></div>
-      <div class="step"><span class="n">4</span><p>Once approved, you&rsquo;ll get a personal checkout link.</p></div>
-      <div class="step"><span class="n">5</span><p>Complete your payment &mdash; and you&rsquo;re officially in.</p></div>
+      <div class="step"><span class="n">1</span><p>Check current availability and event information on the official website.</p></div>
+      <div class="step"><span class="n">2</span><p>Use the official application or contact flow for any booking-related action.</p></div>
+      <div class="step"><span class="n">3</span><p>Follow the official Instagram account for festival updates.</p></div>
     </div>
     <div class="rise d3">
-      <a class="cta-big" href="https://api.whatsapp.com/send?phone=918306795929&text=Hey%21+Belong+Festival+looks+super+exciting%21+Count+me+in+%E2%80%94+I+want+to+know+everything%21+How+do+I+Apply%3F" target="_blank" rel="noopener">Apply now &nbsp;&rarr;</a>
-      <a class="cta-ghost" href="https://www.instagram.com/thebelongfestival" target="_blank" rel="noopener">Follow the journey</a>
+      <a class="cta-big" href="https://thebelongfestival.com/" target="_blank" rel="noopener">Visit official Belong &nbsp;&rarr;</a>
+      <a class="cta-ghost" href="https://www.instagram.com/thebelongfestival" target="_blank" rel="noopener">Official Instagram</a>
     </div>
   </section>
 
@@ -454,12 +454,12 @@
   <p class="foot-lead">You didn&rsquo;t come here to escape. You came here to <span class="accent" style="color:var(--rose)">belong.</span></p>
   <div class="brand" style="font-size:1.2rem">BE<span>·</span>LONG</div>
   <div class="socials">
-    <a href="https://www.instagram.com/thebelongfestival" target="_blank" rel="noopener">Instagram</a>
-    <a href="https://api.whatsapp.com/send?phone=918306795929" target="_blank" rel="noopener">WhatsApp</a>
+    <a href="https://thebelongfestival.com/" target="_blank" rel="noopener">Official site</a>
+    <a href="https://www.instagram.com/thebelongfestival" target="_blank" rel="noopener">Official Instagram</a>
     <a href="#top">Back to the dawn</a>
   </div>
   <a class="home-link" href="../">&larr; Return to joaoccaldas.github.io/ai</a>
-  <p class="copyright" style="margin-top:1.4rem">An independent <strong style="color:rgba(var(--accent-rgb),.75);font-weight:500">concept redesign</strong> created as a design proposal for The Belong Festival — not an official page. Festival name &amp; content © The Belong Festival. Explore the official site at <a href="https://thebelongfestival.com/" target="_blank" rel="noopener" style="color:rgba(var(--accent-rgb),.75)">thebelongfestival.com</a>.</p>
+  <p class="copyright" style="margin-top:1.4rem">Independent <strong style="color:rgba(var(--accent-rgb),.8);font-weight:500">concept redesign by João Caldas</strong>, created as a design proposal inspired by The Belong Festival. This is not an official page and does not sell tickets or process applications. Festival name and source content belong to The Belong Festival.</p>
   <p class="copyright" style="margin-top:.6rem">Belong · Magic · Acceptance · Art · Freedom · Love</p>
 </footer>
 
@@ -471,21 +471,21 @@
 </script>
 
 <script>
-/* Set the saved (or default) palette before first paint so the loader matches */
+/* Set saved/default palette before first paint. This classic script is independent of Three.js. */
 (function(){
   var m; try{ m=localStorage.getItem('belong-palette'); }catch(e){}
   if(m==='playful'||m==='neon'||m==='prism') m='rainbow';
-  if(m!=='desert'&&m!=='aurora'&&m!=='rainbow') m='rainbow';   // Rainbow is the default
+  if(m!=='desert'&&m!=='aurora'&&m!=='rainbow') m='rainbow';
   if(m==='rainbow') document.body.classList.add('rainbow');
   else if(m==='aurora') document.body.classList.add('aurora');
 })();
-/* Resilient loader — reveals content even if the 3D module never loads */
+/* Loader can never strand the page if the module or WebGL path fails. */
 (function(){
   var loader=document.getElementById('loader'), bar=document.getElementById('loadbar'), lp=0;
-  var iv=setInterval(function(){ lp=Math.min(100,lp+Math.random()*22); bar.style.width=lp+'%';
-    if(lp>=100){ clearInterval(iv); setTimeout(function(){loader.classList.add('done');},450);} },130);
-  setTimeout(function(){loader.classList.add('done');},5000);
-  window.addEventListener('load',function(){ setTimeout(function(){loader.classList.add('done');},900); });
+  var iv=setInterval(function(){ lp=Math.min(100,lp+Math.random()*28); bar.style.width=lp+'%';
+    if(lp>=100){ clearInterval(iv); setTimeout(function(){loader.classList.add('done');},250);} },110);
+  setTimeout(function(){loader.classList.add('done');},2500);
+  window.addEventListener('load',function(){ setTimeout(function(){loader.classList.add('done');},500); });
 })();
 </script>
 
@@ -496,18 +496,26 @@ import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
+const reduceMotion = motionQuery.matches;
 if(reduceMotion) document.body.classList.add('reduce');
+else document.documentElement.classList.add('motion-ready');
 const isMobile = innerWidth < 760;
+const finePointer = matchMedia('(hover:hover) and (pointer:fine)').matches;
 const MODES = ['desert','rainbow','aurora'];
-const modeW = [1,0,0], modeT = [1,0,0];   // eased one-hot weights: [desert, rainbow, aurora]
+const modeW = [1,0,0], modeT = [1,0,0];
+let requestSceneRender = ()=>{};
 
 /* ---------- scroll + pointer state ---------- */
 const S = { scroll:0, target:0, w:innerWidth, h:innerHeight,
-  mx:0, my:0, tmx:0, tmy:0 };            // smoothed & target mouse (-1..1)
+  mx:0, my:0, tmx:0, tmy:0 };
 function docH(){ return document.body.scrollHeight - innerHeight; }
-addEventListener('scroll',()=>{ const d=docH(); S.target = d>0? scrollY/d : 0; },{passive:true});
-addEventListener('pointermove',e=>{ S.tmx=(e.clientX/S.w)*2-1; S.tmy=(e.clientY/S.h)*2-1; },{passive:true});
+function syncScroll(){ const d=docH(); S.target=d>0?scrollY/d:0; if(reduceMotion) S.scroll=S.target; }
+syncScroll(); S.scroll=S.target;
+addEventListener('scroll',()=>{ syncScroll(); if(reduceMotion) requestSceneRender(); },{passive:true});
+if(!reduceMotion){
+  addEventListener('pointermove',e=>{ S.tmx=(e.clientX/S.w)*2-1; S.tmy=(e.clientY/S.h)*2-1; },{passive:true});
+}
 
 /* ============================================================
    THREE — desert cycle + a network of souls that find each other
@@ -516,17 +524,16 @@ try {
 const canvas = document.getElementById('scene');
 canvas.addEventListener('webglcontextlost',e=>{ e.preventDefault(); document.body.style.background='#0b0a1e'; });
 const renderer = new THREE.WebGLRenderer({canvas,antialias:!isMobile,alpha:false});
-renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile?1.5:2));
+renderer.setPixelRatio(Math.min(devicePixelRatio, isMobile?1.25:1.75));
 renderer.setSize(S.w,S.h);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 0.85;
+document.documentElement.classList.add('webgl-ready');
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(58, S.w/S.h, 0.1, 2200);
 camera.position.set(0,24,60);
 
-/* ---- day→night→dawn palette (keyed to scroll) ---- */
-// cinematic desert cycle
 const SKIES=[
   {p:0.00,top:[0.86,0.55,0.35],hor:[0.98,0.78,0.45],dune:[0.80,0.55,0.30]},
   {p:0.12,top:[0.44,0.62,0.86],hor:[0.95,0.82,0.60],dune:[0.86,0.66,0.38]},
@@ -539,7 +546,6 @@ const SKIES=[
   {p:0.90,top:[0.72,0.50,0.42],hor:[0.96,0.72,0.46],dune:[0.74,0.52,0.32]},
   {p:1.00,top:[0.44,0.62,0.86],hor:[0.96,0.84,0.62],dune:[0.88,0.68,0.40]},
 ];
-// RAINBOW base cycle — a deep violet canvas the shader floods with flowing spectrum
 const SKIES_RAINBOW=[
   {p:0.00,top:[0.36,0.14,0.48],hor:[0.62,0.22,0.52],dune:[0.42,0.14,0.44]},
   {p:0.24,top:[0.30,0.22,0.62],hor:[0.58,0.38,0.66],dune:[0.46,0.16,0.50]},
@@ -548,7 +554,6 @@ const SKIES_RAINBOW=[
   {p:0.80,top:[0.15,0.06,0.36],hor:[0.44,0.14,0.44],dune:[0.25,0.09,0.36]},
   {p:1.00,top:[0.33,0.18,0.56],hor:[0.58,0.32,0.62],dune:[0.44,0.16,0.48]},
 ];
-// AURORA base cycle — deep teal / blue night the shader paints with borealis curtains
 const SKIES_AURORA=[
   {p:0.00,top:[0.08,0.22,0.32],hor:[0.22,0.48,0.48],dune:[0.10,0.24,0.28]},
   {p:0.24,top:[0.10,0.30,0.44],hor:[0.30,0.56,0.56],dune:[0.12,0.30,0.34]},
@@ -562,7 +567,6 @@ function hsv2rgb(h,s,v){ const i=Math.floor(h*6), f=h*6-i, pp=v*(1-s), q=v*(1-f*
   switch(i%6){case 0:return[v,tt,pp];case 1:return[q,v,pp];case 2:return[pp,v,tt];case 3:return[pp,q,v];case 4:return[tt,pp,v];default:return[v,pp,q];} }
 function skyArr(p,A){ let i=0; while(i<A.length-2 && p>A[i+1].p)i++; const a=A[i],b=A[i+1];
   const t=Math.max(0,Math.min(1,(p-a.p)/(b.p-a.p))); return {top:L3(a.top,b.top,t),hor:L3(a.hor,b.hor,t),dune:L3(a.dune,b.dune,t)}; }
-// weighted blend of the three mode sky palettes
 function skyAt(p){
   const d=skyArr(p,SKIES), r=skyArr(p,SKIES_RAINBOW), a=skyArr(p,SKIES_AURORA), w=modeW;
   const bl=k=>[d[k][0]*w[0]+r[k][0]*w[1]+a[k][0]*w[2], d[k][1]*w[0]+r[k][1]*w[1]+a[k][1]*w[2], d[k][2]*w[0]+r[k][2]*w[1]+a[k][2]*w[2]];
@@ -570,22 +574,20 @@ function skyAt(p){
 }
 const nightAt=p=>Math.max(0,Math.min(1,1-Math.abs(p-0.62)/0.28));
 
-/* soul colour keyframes */
-const SOULK=[  // desert: gold → lilac → rose → night blue → dawn
+const SOULK=[
   {p:0.00,c:[1.00,0.78,0.42]},{p:0.24,c:[1.00,0.83,0.50]},{p:0.42,c:[0.86,0.74,0.98]},
   {p:0.60,c:[1.00,0.46,0.62]},{p:0.76,c:[0.64,0.74,1.00]},{p:0.90,c:[1.00,0.55,0.55]},{p:1.00,c:[1.00,0.74,0.46]},
 ];
-const SOULK_AURORA=[  // aurora: mint → green → violet → cyan
+const SOULK_AURORA=[
   {p:0.00,c:[0.40,0.95,0.80]},{p:0.30,c:[0.30,0.92,0.58]},{p:0.50,c:[0.62,0.60,1.00]},
   {p:0.62,c:[0.50,1.00,0.72]},{p:0.80,c:[0.36,0.86,0.96]},{p:1.00,c:[0.40,0.95,0.80]},
 ];
-const SOUL_RAINBOW_BASE=[1.0,0.5,0.85];   // placeholder; per-hue shader overlay dominates in rainbow mode
+const SOUL_RAINBOW_BASE=[1.0,0.5,0.85];
 function soulArr(p,A){ let i=0; while(i<A.length-2 && p>A[i+1].p)i++; const a=A[i],b=A[i+1];
   const t=Math.max(0,Math.min(1,(p-a.p)/(b.p-a.p))); return L3(a.c,b.c,t); }
 function soulColorAt(p){ const d=soulArr(p,SOULK), a=soulArr(p,SOULK_AURORA), rb=SOUL_RAINBOW_BASE, w=modeW;
   return [d[0]*w[0]+rb[0]*w[1]+a[0]*w[2], d[1]*w[0]+rb[1]*w[1]+a[1]*w[2], d[2]*w[0]+rb[2]*w[1]+a[2]*w[2]]; }
 
-/* ---- sky dome ---- */
 const skyMat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,uniforms:{
   uTop:{value:new THREE.Color()},uHor:{value:new THREE.Color()},uSun:{value:new THREE.Vector3(0,.2,-1)},
   uSunGlow:{value:1},uSunColor:{value:new THREE.Color()},uRainbow:{value:0},uAurora:{value:0},uTime:{value:0}},
@@ -595,14 +597,12 @@ const skyMat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,unif
     void main(){float h=clamp(vD.y*.5+.5,0.,1.);vec3 c=mix(uHor,uTop,pow(h,.7));
     float sd=clamp(dot(normalize(vD),normalize(uSun)),0.,1.);
     c+=uSunColor*pow(sd,140.)*1.0*uSunGlow; c+=uSunColor*pow(sd,24.)*.06*uSunGlow;
-    // RAINBOW sky — flowing bands of full spectrum drifting up the dome
     if(uRainbow>0.001){
       float band=fract(vD.y*0.6 + vD.x*0.22 + sin(vD.x*3.0+uTime*0.2)*0.05 + uTime*0.055);
       vec3 rain=hsv2rgb(vec3(band,0.9,1.0));
       float m=uRainbow*0.6*smoothstep(-0.35,0.85,vD.y);
       c=mix(c, c*0.35+rain*0.85, m);
     }
-    // AURORA curtains — shimmering teal/green/violet ribbons rising from the horizon
     if(uAurora>0.001){
       float y=clamp(vD.y,0.,1.);
       float rib=(0.5+0.5*sin(vD.x*7.0+uTime*0.55))*(0.5+0.5*sin(vD.x*15.0-uTime*0.4+vD.y*5.0));
@@ -613,7 +613,6 @@ const skyMat=new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,unif
     gl_FragColor=vec4(c,1.);}`});
 scene.add(new THREE.Mesh(new THREE.SphereGeometry(1000,32,16),skyMat));
 
-/* ---- stars ---- */
 const starN=1500, starGeo=new THREE.BufferGeometry(), starP=new Float32Array(starN*3);
 for(let i=0;i<starN;i++){const r=760,u=Math.random(),v=Math.random(),th=6.283*u,ph=Math.acos(2*v-1);
   starP[i*3]=r*Math.sin(ph)*Math.cos(th);starP[i*3+1]=Math.abs(r*Math.cos(ph))*.9+20;starP[i*3+2]=r*Math.sin(ph)*Math.sin(th);}
@@ -621,14 +620,12 @@ starGeo.setAttribute('position',new THREE.BufferAttribute(starP,3));
 const starMat=new THREE.PointsMaterial({color:0xfff4d8,size:2.6,transparent:true,opacity:0,depthWrite:false,sizeAttenuation:false});
 scene.add(new THREE.Points(starGeo,starMat));
 
-/* ---- sun / moon sprite ---- */
 const sunTex=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d');
   const gr=g.createRadialGradient(64,64,0,64,64,64);gr.addColorStop(0,'#fff');gr.addColorStop(.3,'rgba(255,240,210,.9)');gr.addColorStop(1,'rgba(255,240,210,0)');
   g.fillStyle=gr;g.fillRect(0,0,128,128);return new THREE.CanvasTexture(c);})();
 const sun=new THREE.Sprite(new THREE.SpriteMaterial({map:sunTex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending}));
 sun.scale.set(80,80,1);scene.add(sun);
 
-/* ---- dunes ---- */
 const duneGeo=new THREE.PlaneGeometry(2600,2600, isMobile?150:220, isMobile?150:220); duneGeo.rotateX(-Math.PI/2);
 const duneMat=new THREE.ShaderMaterial({uniforms:{uTravel:{value:0},uDune:{value:new THREE.Color()},uHor:{value:new THREE.Color()},
   uLight:{value:new THREE.Vector3(.3,.6,-.4)},uNight:{value:0},uSunColor:{value:new THREE.Color()},
@@ -647,33 +644,26 @@ const duneMat=new THREE.ShaderMaterial({uniforms:{uTravel:{value:0},uDune:{value
     void main(){vec3 L=normalize(uLight);float d=clamp(dot(normalize(vN),L),0.,1.);
       vec3 base=uDune;base=mix(base,base+vec3(.12,.1,.05),smoothstep(10.,42.,vH)*.6);
       vec3 c=base*(.35+d*.9);c+=uSunColor*pow(d,3.)*(1.-uNight)*.4;
-      // rainbow iridescence flowing over the sand
       vec3 irid=hsv2rgb(vec3(fract(vH*0.018 + vN.x*0.4 + uTime*0.05),0.8,1.0));
       c=mix(c, c*0.4+irid*0.7, uIrid*0.42);
-      // aurora glow gathering on the crests
       c+=vec3(0.10,0.45,0.40)*smoothstep(6.,40.,vH)*uCool*0.4;
       c=mix(c,uHor,vF);gl_FragColor=vec4(c,1.);}`});
 const dunes=new THREE.Mesh(duneGeo,duneMat); dunes.position.y=-18; scene.add(dunes);
 
-/* ============================================================
-   THE SOULS — scattered points that gather & connect
-   ============================================================ */
 const COUNT = isMobile?110:180;
 const CENTER = new THREE.Vector3(0,40,-120);
-const pos = new Float32Array(COUNT*3);      // live positions
-const base = new Float32Array(COUNT*3);     // scattered home
-const heart = new Float32Array(COUNT*3);    // finale heart target
+const pos = new Float32Array(COUNT*3);
+const base = new Float32Array(COUNT*3);
+const heart = new Float32Array(COUNT*3);
 const seed = new Float32Array(COUNT);
-const hue  = new Float32Array(COUNT);        // per-soul rainbow hue for prism mode
+const hue  = new Float32Array(COUNT);
 for(let i=0;i<COUNT;i++){
   base[i*3]  =(Math.random()-.5)*320;
   base[i*3+1]= Math.random()*92;
   base[i*3+2]=-20-Math.random()*230;
   pos[i*3]=base[i*3]; pos[i*3+1]=base[i*3+1]; pos[i*3+2]=base[i*3+2];
   seed[i]=Math.random()*100;
-  hue[i]=i/COUNT;   // spread the spectrum around the constellation (and the heart outline)
-  // heart parametric curve (some on outline, some nested inside)
-  // all souls sit on the heart outline (ordered by t) so consecutive links trace a clean stroke
+  hue[i]=i/COUNT;
   const tt=(i/COUNT)*Math.PI*2, sc=2.4;
   const hx=16*Math.pow(Math.sin(tt),3);
   const hy=13*Math.cos(tt)-5*Math.cos(2*tt)-2*Math.cos(3*tt)-Math.cos(4*tt);
@@ -698,10 +688,9 @@ const soulMat=new THREE.ShaderMaterial({transparent:true,depthWrite:false,blendi
       float core=smoothstep(.18,0.,d);vec3 col=vCol+core*.6;gl_FragColor=vec4(col,a*vA);}`});
 scene.add(new THREE.Points(soulGeo,soulMat));
 
-/* connection lines (rebuilt each frame) */
 const MAXSEG = isMobile?600:1200;
 const linePos=new Float32Array(MAXSEG*2*3), lineCol=new Float32Array(MAXSEG*2*3);
-const soulCol=new Float32Array(COUNT*3);   // per-soul line colour (rainbow in prism mode)
+const soulCol=new Float32Array(COUNT*3);
 const lineGeo=new THREE.BufferGeometry();
 lineGeo.setAttribute('position',new THREE.BufferAttribute(linePos,3).setUsage(THREE.DynamicDrawUsage));
 lineGeo.setAttribute('color',new THREE.BufferAttribute(lineCol,3).setUsage(THREE.DynamicDrawUsage));
@@ -716,26 +705,32 @@ function updateMouseWorld(){
   mouseWorld.copy(camera.position).add(tmpDir.multiplyScalar(dist));
 }
 
-/* ---- bloom composer ---- */
 const composer=new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene,camera));
 const bloom=new UnrealBloomPass(new THREE.Vector2(S.w,S.h), isMobile?0.42:0.55, 0.35, 0.9);
 composer.addPass(bloom);
 composer.addPass(new OutputPass());
 
-/* ============================================================
-   RENDER
-   ============================================================ */
 const clock=new THREE.Clock();
 const _t=new THREE.Color(),_h=new THREE.Color(),_d=new THREE.Color(),_s=new THREE.Color();
 const _sp=new THREE.Vector3(), _sc=new THREE.Color();
+let frameHandle=0;
+
+function scheduleFrame(){
+  if(frameHandle || document.hidden) return;
+  frameHandle=requestAnimationFrame(frame);
+}
 
 function frame(){
-  requestAnimationFrame(frame);
-  const t=clock.elapsedTime; clock.getDelta();
+  frameHandle=0;
+  clock.getDelta();
+  const t=reduceMotion?0:clock.elapsedTime;
   S.scroll += (S.target-S.scroll)*(reduceMotion?1:0.06);
-  S.mx += (S.tmx-S.mx)*0.05; S.my += (S.tmy-S.my)*0.05;
-  for(let k=0;k<3;k++) modeW[k]+=(modeT[k]-modeW[k])*0.05;
+  S.mx += (S.tmx-S.mx)*(reduceMotion?1:0.05); S.my += (S.tmy-S.my)*(reduceMotion?1:0.05);
+  for(let k=0;k<3;k++){
+    if(reduceMotion) modeW[k]=modeT[k];
+    else modeW[k]+=(modeT[k]-modeW[k])*0.05;
+  }
   const wDesert=modeW[0], wRainbow=modeW[1], wAurora=modeW[2];
   const p=Math.max(0,Math.min(1,S.scroll));
   const night=nightAt(p), moon=night>0.35;
@@ -744,7 +739,6 @@ function frame(){
   soulMat.uniforms.uPrism.value=wRainbow;
   duneMat.uniforms.uIrid.value=wRainbow; duneMat.uniforms.uCool.value=wAurora; duneMat.uniforms.uTime.value=t;
 
-  // sky + dunes
   const sk=skyAt(p);
   _t.setRGB(sk.top[0],sk.top[1],sk.top[2]); _h.setRGB(sk.hor[0],sk.hor[1],sk.hor[2]); _d.setRGB(sk.dune[0],sk.dune[1],sk.dune[2]);
   skyMat.uniforms.uTop.value.copy(_t); skyMat.uniforms.uHor.value.copy(_h);
@@ -753,7 +747,6 @@ function frame(){
   let elev; if(moon){elev=Math.sin(Math.PI*Math.max(0,Math.min(1,(p-.40)/.44)));}
   else if(p<.44){elev=Math.sin(Math.PI*(p/.44));} else {elev=Math.sin(Math.PI*Math.max(0,(p-.80)/.20)/2);}
   _sp.set(90+Math.cos(p*Math.PI)*250, elev*150+4, -430); sun.position.copy(_sp);
-  // sun/moon colour: weighted blend of the three modes
   const dS=moon?[.42,.48,.64]:[1,.86,.58], rS=moon?[.85,.55,1.0]:[1,.7,.9], aS=moon?[.45,.95,.85]:[.7,1,.85];
   _s.setRGB(dS[0]*wDesert+rS[0]*wRainbow+aS[0]*wAurora, dS[1]*wDesert+rS[1]*wRainbow+aS[1]*wAurora, dS[2]*wDesert+rS[2]*wRainbow+aS[2]*wAurora);
   sun.material.color.copy(_s); sun.scale.setScalar(moon?24:50);
@@ -761,22 +754,18 @@ function frame(){
   duneMat.uniforms.uSunColor.value.copy(_s); duneMat.uniforms.uLight.value.copy(_sp).normalize();
   starMat.opacity=Math.min(1,night*1.5);
   starMat.color.setRGB(1*wDesert+1*wRainbow+0.7*wAurora, 0.957*wDesert+0.8*wRainbow+1.0*wAurora, 0.847*wDesert+1.0*wRainbow+0.9*wAurora);
-  duneMat.uniforms.uTravel.value=p*900+t*1.4;
+  duneMat.uniforms.uTravel.value=p*900+(reduceMotion?0:t*1.4);
 
-  // camera path + mouse parallax
-  const bx=Math.sin(p*Math.PI*.6)*10, by=26-p*8+Math.sin(t*.3)*.5;
+  const bx=Math.sin(p*Math.PI*.6)*10, by=26-p*8+(reduceMotion?0:Math.sin(t*.3)*.5);
   camera.position.x=bx + S.mx*9;
   camera.position.y=by - S.my*5;
   camera.lookAt(Math.sin(p*Math.PI*.6)*6 + S.mx*4, 8-p*4 - S.my*2, -200);
   updateMouseWorld();
 
-  /* ---- souls: wander → gather → (finale) heart, drawn toward the cursor ---- */
-  const cohesion=Math.max(0,Math.min(1,(p-0.05)/0.5));   // grows through the journey
-  // the souls become a heart of light across the LOVE beat (deep night), then relax
+  const cohesion=Math.max(0,Math.min(1,(p-0.05)/0.5));
   let hb=Math.max(0,Math.min(1,(0.15-Math.abs(p-0.61))/0.055)); const heartAmt=hb*hb*(3-2*hb);
   const sc=soulColorAt(p); _sc.setRGB(sc[0],sc[1],sc[2]);
   soulMat.uniforms.uColor.value.copy(_sc); soulMat.uniforms.uTime.value=t;
-  // per-soul display colour for the connection lines (rainbow in rainbow mode)
   if(wRainbow>0.004){
     for(let i=0;i<COUNT;i++){ const rc=hsv2rgb((hue[i]+t*0.03)%1,0.92,1.0), o=i*3;
       soulCol[o]=sc[0]+(rc[0]-sc[0])*wRainbow; soulCol[o+1]=sc[1]+(rc[1]-sc[1])*wRainbow; soulCol[o+2]=sc[2]+(rc[2]-sc[2])*wRainbow; }
@@ -784,13 +773,12 @@ function frame(){
     for(let i=0;i<COUNT;i++){ soulCol[i*3]=sc[0]; soulCol[i*3+1]=sc[1]; soulCol[i*3+2]=sc[2]; }
   }
 
+  const follow=reduceMotion?1:0.06;
   for(let i=0;i<COUNT;i++){
     const ix=i*3, sd=seed[i];
-    // wander around scattered home
     let tx=base[ix]  +Math.sin(t*0.30+sd)*8;
     let ty=base[ix+1]+Math.sin(t*0.24+sd*1.7)*6;
     let tz=base[ix+2]+Math.cos(t*0.20+sd*1.3)*8;
-    // gather toward a shrinking cloud around CENTER
     if(cohesion>0.001){
       let dx=base[ix]-CENTER.x, dy=base[ix+1]-CENTER.y, dz=base[ix+2]-CENTER.z;
       const dl=Math.hypot(dx,dy,dz)||1; const R=140-110*cohesion;
@@ -799,21 +787,16 @@ function frame(){
       const gz=CENTER.z+dz/dl*R+Math.sin(t*.6+sd*2.)*6;
       const m=cohesion*0.78; tx+=(gx-tx)*m; ty+=(gy-ty)*m; tz+=(gz-tz)*m;
     }
-    // finale heart
     if(heartAmt>0){ tx+=(heart[ix]-tx)*heartAmt; ty+=(heart[ix+1]-ty)*heartAmt; tz+=(heart[ix+2]-tz)*heartAmt; }
-    // cursor attraction — you weave into the web
     const mdx=mouseWorld.x-pos[ix], mdy=mouseWorld.y-pos[ix+1], mdz=mouseWorld.z-pos[ix+2];
     const md=Math.hypot(mdx,mdy,mdz);
-    if(md<95){ const f=(1-md/95)*0.16*(1-heartAmt); tx+=mdx*f; ty+=mdy*f; tz+=mdz*f; }
-    // integrate
-    pos[ix]  +=(tx-pos[ix])  *0.06;
-    pos[ix+1]+=(ty-pos[ix+1])*0.06;
-    pos[ix+2]+=(tz-pos[ix+2])*0.06;
+    if(!reduceMotion && md<95){ const f=(1-md/95)*0.16*(1-heartAmt); tx+=mdx*f; ty+=mdy*f; tz+=mdz*f; }
+    pos[ix]  +=(tx-pos[ix])*follow;
+    pos[ix+1]+=(ty-pos[ix+1])*follow;
+    pos[ix+2]+=(tz-pos[ix+2])*follow;
   }
   soulGeo.attributes.position.needsUpdate=true;
 
-  // rebuild connections — distance shrinks during the finale so the web
-  // collapses into a clean heart outline rather than a dense knot
   const thr=26+34*cohesion, thr2=thr*thr, bright=(0.18+0.9*cohesion)*(1-heartAmt);
   let n=0;
   if(bright>0.02){
@@ -829,7 +812,6 @@ function frame(){
       }
     }
   }
-  // finale: trace the heart by linking consecutive souls along its outline
   if(heartAmt>0.1){
     const hb2=heartAmt;
     for(let i=0;i<COUNT && n<MAXSEG;i++){
@@ -841,8 +823,7 @@ function frame(){
       n++;
     }
   }
-  // cursor's own threads to nearby souls (calm during the heart so it stays crisp)
-  const curB=0.9*(1-heartAmt);
+  const curB=reduceMotion?0:0.9*(1-heartAmt);
   for(let i=0;i<COUNT && n<MAXSEG && curB>0.02;i++){
     const dx=mouseWorld.x-pos[i*3],dy=mouseWorld.y-pos[i*3+1],dz=mouseWorld.z-pos[i*3+2]; const d=Math.hypot(dx,dy,dz);
     if(d<70){ const a=(1-d/70)*curB, o=n*6;
@@ -855,63 +836,86 @@ function frame(){
   lineGeo.attributes.position.needsUpdate=true; lineGeo.attributes.color.needsUpdate=true;
 
   composer.render();
+  if(!reduceMotion) scheduleFrame();
 }
-frame();
+requestSceneRender=scheduleFrame;
+scheduleFrame();
 
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) scheduleFrame(); });
 addEventListener('resize',()=>{
   S.w=innerWidth; S.h=innerHeight; camera.aspect=S.w/S.h; camera.updateProjectionMatrix();
   renderer.setSize(S.w,S.h); composer.setSize(S.w,S.h); bloom.setSize(S.w,S.h);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, innerWidth<760?1.25:1.75));
   soulMat.uniforms.uSize.value=S.h*(innerWidth<760?.9:1.15);
+  syncScroll(); scheduleFrame();
 });
+canvas.addEventListener('webglcontextrestored',scheduleFrame);
 } catch(err){
   console.warn('WebGL scene disabled:', err && err.message);
   const c=document.getElementById('scene'); if(c) c.style.display='none';
+  document.documentElement.classList.add('webgl-failed');
   document.body.style.background='linear-gradient(180deg,#0b0a1e 0%,#241a3a 45%,#5a3352 70%,#c8934a 100%)';
 }
 
 /* ============================================================
-   DOM — reveals, rail, labels, cursor, marquee, hero, sound
+   DOM — independent of WebGL. Module-load failure still leaves raw HTML visible.
    ============================================================ */
-const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); }),{threshold:0.16});
-document.querySelectorAll('.rise').forEach(el=>io.observe(el));
+if(!reduceMotion){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); }),{threshold:0.16});
+  document.querySelectorAll('.rise').forEach(el=>io.observe(el));
+}
 
 const panels=[...document.querySelectorAll('.panel')], rail=document.getElementById('rail');
-panels.forEach(pn=>{ const d=document.createElement('div'); d.className='dot'; d.title=pn.id;
-  d.addEventListener('click',()=>pn.scrollIntoView({behavior:'smooth'})); rail.appendChild(d); });
+panels.forEach((pn,index)=>{
+  const d=document.createElement('button');
+  d.type='button'; d.className='dot';
+  const label=pn.querySelector('.kicker')?.textContent?.trim() || pn.id || `Section ${index+1}`;
+  d.setAttribute('aria-label',`Go to ${label}`);
+  d.addEventListener('click',()=>pn.scrollIntoView({behavior:reduceMotion?'auto':'smooth'}));
+  rail.appendChild(d);
+});
 const dots=[...rail.children], todLabel=document.getElementById('todlabel'), topbar=document.getElementById('topbar');
 const todObs=new IntersectionObserver(es=>es.forEach(e=>{
   if(e.isIntersecting){
     const i=panels.indexOf(e.target);
-    dots.forEach((d,k)=>d.classList.toggle('active',k===i));
+    dots.forEach((d,k)=>{
+      d.classList.toggle('active',k===i);
+      if(k===i) d.setAttribute('aria-current','true'); else d.removeAttribute('aria-current');
+    });
     const l=e.target.getAttribute('data-tod-label'); if(l) todLabel.textContent=l;
   }
 }),{threshold:0.5});
 panels.forEach(pn=>todObs.observe(pn));
 addEventListener('scroll',()=>topbar.classList.toggle('solid',scrollY>innerHeight*0.6),{passive:true});
 
-// kinetic hero letters
 const hw=document.getElementById('heroword');
-if(hw){ const txt=hw.textContent.trim(); hw.textContent='';
+if(hw && !reduceMotion){ const txt=hw.textContent.trim(); hw.textContent='';
   [...txt].forEach((ch,i)=>{ const s=document.createElement('span'); s.textContent=ch;
     s.style.animationDelay=(0.15+i*0.09)+'s'; hw.appendChild(s); }); }
 
-// marquee
 const words=['Belong','Magic','Acceptance','Art','Mind Bends','House Music','Freedom','Self Embrace','Heart','Soul','Mind','Friends','Family','Community','Laughing','Group Hugs','Cold Nights'];
 const mk=()=>words.map((x,i)=>`<span>${i%3===0?`<span class="b">${x}</span>`:x}</span><span style="color:var(--gold);opacity:.5">&middot;</span>`).join('');
 document.getElementById('mtrack').innerHTML=mk()+mk();
 
-// custom cursor
 const cd=document.getElementById('cur-dot'), cr=document.getElementById('cur-ring');
-let crx=0,cry=0,cdx=0,cdy=0;
-addEventListener('pointermove',e=>{ cdx=e.clientX; cdy=e.clientY; },{passive:true});
-(function curLoop(){ crx+=(cdx-crx)*0.18; cry+=(cdy-cry)*0.18;
-  cd.style.transform=`translate(${cdx}px,${cdy}px) translate(-50%,-50%)`;
-  cr.style.transform=`translate(${crx}px,${cry}px) translate(-50%,-50%)`; requestAnimationFrame(curLoop); })();
-document.querySelectorAll('a,button,.dot,.pillar,.tier').forEach(el=>{
-  el.addEventListener('pointerenter',()=>cr.classList.add('big'));
-  el.addEventListener('pointerleave',()=>cr.classList.remove('big')); });
+if(finePointer && !reduceMotion){
+  document.documentElement.classList.add('cursor-ready');
+  let crx=innerWidth/2,cry=innerHeight/2,cdx=crx,cdy=cry,cursorFrame=0;
+  addEventListener('pointermove',e=>{ cdx=e.clientX; cdy=e.clientY; },{passive:true});
+  function curLoop(){
+    cursorFrame=0;
+    crx+=(cdx-crx)*0.18; cry+=(cdy-cry)*0.18;
+    cd.style.transform=`translate(${cdx}px,${cdy}px) translate(-50%,-50%)`;
+    cr.style.transform=`translate(${crx}px,${cry}px) translate(-50%,-50%)`;
+    if(!document.hidden) cursorFrame=requestAnimationFrame(curLoop);
+  }
+  cursorFrame=requestAnimationFrame(curLoop);
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden && !cursorFrame) cursorFrame=requestAnimationFrame(curLoop); });
+  document.querySelectorAll('a,button,.pillar,.tier').forEach(el=>{
+    el.addEventListener('pointerenter',()=>cr.classList.add('big'));
+    el.addEventListener('pointerleave',()=>cr.classList.remove('big')); });
+}
 
-// palette mode — cycles Desert → Neon → Prism
 const modeBtn=document.getElementById('mode'), modeLabel=document.getElementById('modelabel');
 const themeMeta=document.querySelector('meta[name=theme-color]');
 const LABELS={desert:'Desert',rainbow:'Rainbow',aurora:'Aurora'};
@@ -923,17 +927,18 @@ function applyMode(mode, animate){
   document.body.classList.toggle('rainbow', mode==='rainbow');
   document.body.classList.toggle('aurora', mode==='aurora');
   const idx=MODES.indexOf(mode);
-  for(let k=0;k<3;k++){ modeT[k]=k===idx?1:0; if(!animate) modeW[k]=modeT[k]; }
-  modeLabel.textContent = LABELS[mode];
-  if(themeMeta) themeMeta.content = NIGHTCOL[mode];
+  for(let k=0;k<3;k++){ modeT[k]=k===idx?1:0; if(!animate || reduceMotion) modeW[k]=modeT[k]; }
+  modeLabel.textContent=LABELS[mode];
+  modeBtn.setAttribute('aria-label',`Colour palette: ${LABELS[mode]}. Activate to switch palette`);
+  if(themeMeta) themeMeta.content=NIGHTCOL[mode];
   try{ localStorage.setItem('belong-palette', mode); }catch(e){}
+  requestSceneRender();
 }
 let savedPalette=null; try{ savedPalette=localStorage.getItem('belong-palette'); }catch(e){}
-if(savedPalette==='playful'||savedPalette==='neon'||savedPalette==='prism') savedPalette='rainbow'; // migrate old values
-applyMode(savedPalette||'rainbow', false);   // Rainbow is the default first impression
+if(savedPalette==='playful'||savedPalette==='neon'||savedPalette==='prism') savedPalette='rainbow';
+applyMode(savedPalette||'rainbow', false);
 modeBtn.addEventListener('click',()=>applyMode(MODES[(MODES.indexOf(currentMode)+1)%MODES.length], true));
 
-// ambient sound — a warm generative pad, off by default (respects autoplay policy)
 const sBtn=document.getElementById('sound'), sLabel=document.getElementById('soundlabel');
 let actx,master,on=false;
 function buildAudio(){
@@ -951,9 +956,10 @@ sBtn.addEventListener('click',()=>{
     if(actx.state==='suspended') actx.resume();
     on=!on;
     master.gain.cancelScheduledValues(actx.currentTime);
-    master.gain.linearRampToValueAtTime(on?0.5:0, actx.currentTime+ (on?1.4:0.6));
+    master.gain.linearRampToValueAtTime(on?0.5:0, actx.currentTime+(on?1.4:0.6));
     sBtn.classList.toggle('on',on); sLabel.textContent=on?'Sound on':'Sound';
-  }catch(e){ sLabel.textContent='—'; }
+    sBtn.setAttribute('aria-pressed',String(on));
+  }catch(e){ sLabel.textContent='Unavailable'; sBtn.setAttribute('aria-pressed','false'); }
 });
 </script>
 </body>
