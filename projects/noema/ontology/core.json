@@ -1,0 +1,33 @@
+{
+  "entity_types": [
+    "POPULATION","CULTURE","HOMININ","SITE","PERIOD","BELIEF","RITUAL","PRACTICE","EXPERIENCE","SYMBOL","NARRATIVE_MOTIF","SUPERNATURAL_AGENT","ARTIFACT","TEXT_TRADITION","NATURAL_PHENOMENON","SOCIAL_STRUCTURE","LANGUAGE_FAMILY","MIGRATION","ENVIRONMENT"
+  ],
+  "relation_types": {
+    "PRECEDES": {"directional": true, "causal": false},
+    "CO_OCCURS_WITH": {"directional": false, "causal": false},
+    "RESEMBLES": {"directional": false, "causal": false},
+    "DESCENDS_FROM": {"directional": true, "causal": true},
+    "POSSIBLY_DIFFUSED_TO": {"directional": true, "causal": true},
+    "CONTRADICTS": {"directional": false, "causal": false},
+    "SUPPORTED_BY": {"directional": true, "causal": false},
+    "DISPUTED_BY": {"directional": true, "causal": false},
+    "ASSOCIATED_WITH": {"directional": false, "causal": false},
+    "PREDICTS": {"directional": true, "causal": true},
+    "LOCATED_AT": {"directional": true, "causal": false},
+    "PART_OF": {"directional": true, "causal": false},
+    "LINGUISTICALLY_RELATED_TO": {"directional": false, "causal": false},
+    "GENETICALLY_RELATED_TO": {"directional": false, "causal": false},
+    "TRADE_CONNECTED_TO": {"directional": false, "causal": false},
+    "ECOLOGICALLY_SIMILAR_TO": {"directional": false, "causal": false}
+  },
+  "epistemic_statuses": ["KNOWN","SUPPORTED","PLAUSIBLE","DISPUTED","SPECULATIVE","UNKNOWN","UNTESTABLE"],
+  "evidence_levels": ["E0","E1","E2","E3","E4"],
+  "access_levels": ["PUBLIC","ACADEMIC_USE","ATTRIBUTION_REQUIRED","COMMUNITY_RESTRICTED","DO_NOT_PUBLISH"],
+  "invariants": [
+    "RESEMBLES does not imply DESCENDS_FROM",
+    "embedding similarity cannot validate a historical relationship",
+    "directional influence requires temporal plausibility",
+    "source independence must be estimated before cross-cultural recurrence is scored",
+    "every non-speculative hypothesis needs alternatives and falsification criteria"
+  ]
+}
