@@ -1,0 +1,1 @@
+{"name":"mashlab-browser","private":true,"type":"module","scripts":{"test":"node tests/dsp.test.mjs","check":"node --check app.js && node --check dsp.js"}}

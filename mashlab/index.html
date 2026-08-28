@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#090b10" />
+  <meta name="description" content="MashLab is a local-first browser studio that analyzes songs and videos, beat-matches them, and creates musical mashup plans." />
+  <title>MashLab · intelligent mashup studio</title>
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="MashLab home">
+      <span class="brand-mark" aria-hidden="true"><i></i><b></b></span>
+      <span>MASHLAB</span>
+    </a>
+    <div class="top-actions">
+      <span class="privacy-pill">LOCAL-FIRST</span>
+      <button id="installBtn" class="ghost small" hidden>Install app</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <p class="eyebrow">INTELLIGENT MASHUP STUDIO</p>
+      <h1>Drop two tracks.<br><em>Find the song between them.</em></h1>
+      <p class="hero-copy">Upload audio or video. MashLab extracts the sound, maps tempo, key and energy, then proposes musically aligned mashups you can audition and export.</p>
+      <div class="hero-badges">
+        <span>Audio + video</span><span>Beat analysis</span><span>Key matching</span><span>Local processing</span>
+      </div>
+    </section>
+
+    <section class="workspace" aria-label="Mashup workspace">
+      <div class="tracks-grid">
+        <article class="track-card" data-track="A">
+          <div class="track-head">
+            <span class="track-letter">A</span>
+            <div>
+              <h2>Track A</h2>
+              <p>Base / source</p>
+            </div>
+            <button class="remove-track ghost small" data-remove="A" hidden>Clear</button>
+          </div>
+          <label class="dropzone" id="dropA" for="fileA">
+            <input id="fileA" type="file" accept="audio/*,video/*,.mp3,.wav,.m4a,.aac,.flac,.ogg,.opus,.mp4,.mov,.webm,.mkv" />
+            <span class="drop-icon">＋</span>
+            <strong>Choose song or video</strong>
+            <small>MP3 · WAV · M4A · FLAC · MP4 · MOV · WebM</small>
+          </label>
+          <div class="loaded" id="loadedA" hidden>
+            <div class="track-title-row"><strong id="nameA"></strong><span id="kindA" class="kind"></span></div>
+            <canvas id="waveA" class="wave" width="900" height="170" aria-label="Track A waveform"></canvas>
+            <div class="metrics" id="metricsA"></div>
+            <div class="analysis-note" id="noteA"></div>
+            <div class="sliders">
+              <label>Volume <output id="volOutA">75%</output><input id="volA" type="range" min="0" max="1" step="0.01" value="0.75"></label>
+              <label>Pan <output id="panOutA">Center</output><input id="panA" type="range" min="-1" max="1" step="0.01" value="-0.12"></label>
+            </div>
+          </div>
+        </article>
+
+        <article class="track-card" data-track="B">
+          <div class="track-head">
+            <span class="track-letter alt">B</span>
+            <div>
+              <h2>Track B</h2>
+              <p>Blend / target</p>
+            </div>
+            <button class="remove-track ghost small" data-remove="B" hidden>Clear</button>
+          </div>
+          <label class="dropzone" id="dropB" for="fileB">
+            <input id="fileB" type="file" accept="audio/*,video/*,.mp3,.wav,.m4a,.aac,.flac,.ogg,.opus,.mp4,.mov,.webm,.mkv" />
+            <span class="drop-icon">＋</span>
+            <strong>Choose song or video</strong>
+            <small>Audio is extracted from compatible videos in your browser</small>
+          </label>
+          <div class="loaded" id="loadedB" hidden>
+            <div class="track-title-row"><strong id="nameB"></strong><span id="kindB" class="kind"></span></div>
+            <canvas id="waveB" class="wave" width="900" height="170" aria-label="Track B waveform"></canvas>
+            <div class="metrics" id="metricsB"></div>
+            <div class="analysis-note" id="noteB"></div>
+            <div class="sliders">
+              <label>Volume <output id="volOutB">70%</output><input id="volB" type="range" min="0" max="1" step="0.01" value="0.70"></label>
+              <label>Pan <output id="panOutB">Center</output><input id="panB" type="range" min="-1" max="1" step="0.01" value="0.12"></label>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <section id="analysisPanel" class="analysis-panel" hidden>
+        <div class="compat-head">
+          <div>
+            <p class="eyebrow">PAIR ANALYSIS</p>
+            <h2>Compatibility</h2>
+          </div>
+          <div class="score-ring" id="scoreRing"><strong id="pairScore">--</strong><small>/100</small></div>
+        </div>
+        <div class="compat-grid" id="compatGrid"></div>
+        <div class="target-row">
+          <label>Target tempo
+            <input id="targetBpm" type="range" min="70" max="180" step="0.1" value="120" />
+          </label>
+          <output id="targetBpmOut">120.0 BPM</output>
+          <button id="autoTarget" class="ghost">Auto</button>
+        </div>
+        <button id="generateBtn" class="primary wide">Generate mashup ideas</button>
+      </section>
+
+      <section id="ideasPanel" class="ideas-panel" hidden>
+        <div class="section-title">
+          <div><p class="eyebrow">ARRANGEMENT ENGINE</p><h2>Three ways in</h2></div>
+          <p>Built from detected hooks, tempo distance and harmonic fit.</p>
+        </div>
+        <div id="ideas" class="ideas"></div>
+      </section>
+
+      <section id="transportPanel" class="transport-panel" hidden>
+        <div class="transport-top">
+          <div>
+            <p class="eyebrow">LIVE PREVIEW</p>
+            <h2 id="activePlanName">Mashup</h2>
+            <p id="activePlanDesc" class="muted"></p>
+          </div>
+          <div class="transport-buttons">
+            <button id="playBtn" class="primary">▶ Play</button>
+            <button id="pauseBtn" class="ghost">Pause</button>
+            <button id="stopBtn" class="ghost">Stop</button>
+          </div>
+        </div>
+        <div class="timeline" id="timeline">
+          <div class="lane"><span>A</span><div id="laneA" class="lane-body lane-a"></div></div>
+          <div class="lane"><span>B</span><div id="laneB" class="lane-body lane-b"></div></div>
+          <div id="playhead" class="playhead"></div>
+        </div>
+        <div class="transport-meta" id="transportMeta"></div>
+        <div class="export-row">
+          <button id="recordBtn" class="ghost">Record pitch-safe preview</button>
+          <button id="exportWavBtn" class="ghost">Quick WAV render</button>
+        </div>
+        <p class="fineprint">Live preview uses the browser's pitch-preserving playback when available. Quick WAV rendering is offline and may pitch-shift tracks that require tempo correction. A production exporter will use independent time-stretch.</p>
+      </section>
+    </section>
+
+    <section class="about-grid">
+      <article><span>01</span><h3>Everything stays local</h3><p>Files are decoded in your browser. This prototype does not upload your media anywhere.</p></article>
+      <article><span>02</span><h3>Video becomes audio</h3><p>When your browser supports the video's audio codec, MashLab decodes the soundtrack directly for analysis and mixing.</p></article>
+      <article><span>03</span><h3>Musical, not random</h3><p>Tempo, beat phase, key estimate, energy and hook candidates feed the compatibility and arrangement engine.</p></article>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <audio id="mediaA" preload="auto"></audio>
+  <audio id="mediaB" preload="auto"></audio>
+
+  <footer>
+    <span>MASHLAB · browser prototype</span>
+    <span>Only process media you own or are authorized to use.</span>
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
