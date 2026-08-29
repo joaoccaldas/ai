@@ -1,0 +1,38 @@
+name: NOEMA DRH Source Audit
+
+on:
+  push:
+    paths:
+      - 'projects/noema/scripts/import_drh_catalog.py'
+      - '.github/workflows/noema-drh-audit.yml'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build compact DRH audit catalog
+        run: |
+          python scripts/import_drh_catalog.py --max-routed-answers 20000 --output /tmp/drh-catalog.json
+          python -m json.tool /tmp/drh-catalog.json >/dev/null
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/drh-catalog.json'))
+          s=x['summary']
+          assert s['entries'] > 100
+          assert s['questions'] > 100
+          assert s['routed_questions'] > 20
+          assert x['mapping_rule'].startswith('Question keyword routes')
+          print(json.dumps(s,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noema-drh-audit-catalog
+          path: /tmp/drh-catalog.json
