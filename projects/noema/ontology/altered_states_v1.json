@@ -1,0 +1,44 @@
+{
+  "ontology_id": "NOEMA-ALTERED-STATES-V1",
+  "version": "1.0.0",
+  "purpose": "Represent altered states, induction methods, psychoactive substances, phenomenology, cultural framing and downstream belief transmission as separate variables.",
+  "epistemic_guards": [
+    "A reported experience is evidence that an experience was reported, not that its interpreted ontology is externally true.",
+    "Substance identity does not determine experience content without dose, preparation, set, setting and cultural priors.",
+    "Shared phenomenology does not establish shared historical origin.",
+    "Ritual use does not imply psychedelic use; shamanic roles do not imply psychoactive substances.",
+    "Psychoactive use does not imply religious use; medicinal, social and recreational contexts must remain distinct.",
+    "Archaeological residue establishes a chemical/material trace only to the level supported by context and analytical method."
+  ],
+  "induction_families": {
+    "RHYTHMIC_SENSORIMOTOR": ["drumming", "chanting", "singing", "dancing", "repetitive_movement", "rhythmic_light", "music"],
+    "RESPIRATORY_ATTENTIONAL": ["breath_control", "hyperventilation", "meditation", "prayer", "focused_attention", "open_monitoring"],
+    "DEPRIVATION_STRESS": ["fasting", "sleep_deprivation", "sensory_deprivation", "isolation", "prolonged_vigil", "pain", "heat", "cold"],
+    "SOCIAL_RITUAL": ["possession_ritual", "collective_synchrony", "initiation", "dream_incubation", "guided_imagery", "suggestion"],
+    "PHARMACOLOGICAL": ["single_substance", "multi_substance_preparation", "fermentation", "smoked_material", "snuff", "chewed_material", "infusion_or_decoction"]
+  },
+  "substance_classes": {
+    "CLASSIC_PSYCHEDELIC": {"mechanism_family":"primarily_5HT2A_agonism","example_compounds":["psilocin/psilocybin", "DMT", "mescaline", "LSD"],"note":"Examples classify pharmacology, not ritual history."},
+    "DISSOCIATIVE": {"mechanism_family":"commonly_NMDA_antagonism_or_related","example_compounds":["ketamine", "ibogaine_complex_profile"],"note":"Ibogaine has mixed pharmacology and should not be reduced to one receptor class."},
+    "DELIRIANT": {"mechanism_family":"commonly_anticholinergic_or_related","example_compounds":["atropine", "scopolamine"],"note":"High toxicity and distinct phenomenology require separation from classic psychedelics."},
+    "CANNABINOID": {"mechanism_family":"cannabinoid_receptor_activity","example_compounds":["THC"]},
+    "STIMULANT": {"mechanism_family":"catecholaminergic_or_related","example_compounds":["cocaine", "caffeine"],"note":"Coca preparations and purified cocaine must not be treated as identical contexts."},
+    "SEDATIVE_HYPNOTIC": {"mechanism_family":"multiple","example_compounds":["ethanol"]},
+    "OPIOID": {"mechanism_family":"opioid_receptor_activity","example_compounds":["morphine", "opium_alkaloids"]},
+    "NICOTINIC": {"mechanism_family":"nicotinic_acetylcholine_receptor_activity","example_compounds":["nicotine"]},
+    "KAVA_LIKE": {"mechanism_family":"mixed","example_compounds":["kavalactones"]},
+    "AMANITA_LIKE": {"mechanism_family":"GABAergic_and_glutamatergic","example_compounds":["muscimol", "ibotenic_acid"]},
+    "OTHER_OR_UNKNOWN": {"mechanism_family":"unknown_or_mixed","example_compounds":[]}
+  },
+  "preparation_fields": ["species_or_material", "part_used", "preparation_name", "single_or_mixture", "coingredients", "fermentation", "heating", "dose_or_quantity", "route", "timing", "dietary_restriction", "specialist_supervision", "source_identification_confidence"],
+  "routes": ["oral", "brewed", "chewed", "smoked", "vaporized", "inhaled_snuff", "enema", "topical", "sublingual", "unknown"],
+  "phenomenology": ["visual_imagery", "auditory_phenomena", "entity_encounter", "ancestor_encounter", "possession", "ego_dissolution", "unity", "nature_connectedness", "time_distortion", "spatial_distortion", "out_of_body", "death_rebirth", "soul_flight", "noetic_quality", "ineffability", "fear", "ecstasy", "somatic_healing", "memory_reexperiencing", "dreamlike_state"],
+  "cultural_context": ["ritual_script", "mythic_frame", "specialist_interpretation", "group_expectation", "music", "sacred_space", "initiation_status", "language_labels", "attention_training", "social_feedback", "post_experience_integration"],
+  "claimed_functions": ["healing", "divination", "spirit_contact", "ancestor_contact", "initiation", "protection", "knowledge_acquisition", "social_bonding", "identity", "conflict_resolution", "mourning", "religious_revelation", "recreation", "medicine"],
+  "transmission_hypotheses": [
+    {"id":"CULTURAL_PRIOR_SHAPING","statement":"Cultural priors, attention training, categories, emotions and social interactions can shape the phenomenology and interpretation of altered states.","status":"RESEARCH_HYPOTHESIS_WITH_ETHNOGRAPHIC_SUPPORT"},
+    {"id":"ALTERED_STATE_ENCULTURATION","statement":"Ritually framed psychedelic experiences may facilitate social affiliation and transmission or experiential verification of culturally specific beliefs.","status":"RESEARCH_HYPOTHESIS_WITH_ETHNOGRAPHIC_SUPPORT"},
+    {"id":"ANCIENT_PSYCHOACTIVE_RELIGION_ROOT","statement":"Psychoactive use contributed causally to the origins of religion in general.","status":"CONTESTED_BROAD_HYPOTHESIS_REQUIRING_CASE_SPECIFIC_EVIDENCE"}
+  ],
+  "minimum_claim_fields": ["culture_or_group", "period", "location", "induction_method", "substance_if_any", "ritual_context", "reported_phenomenology", "participant_interpretation", "observer_interpretation", "source", "evidence_type", "confidence"]
+}
