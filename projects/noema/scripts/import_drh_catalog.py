@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 URL = "https://raw.githubusercontent.com/religionhistory/SCCSR/main/data_clean/drh_tables.zip"
+csv.field_size_limit(20_000_000)
 
 ROUTES = {
     "AGENCY_ONTOLOGY": ["god", "deit", "supernatural", "spirit", "ancestor", "demon", "angel"],
@@ -56,7 +57,7 @@ def norm_answer(answer: str, value: str) -> str:
     v = (value or "").strip()
     if a == "yes" or v == "1": return "PRESENT"
     if a == "no" or v == "0": return "ABSENT"
-    if "don't know" in a or "doesn't know" in a or "field" in a and "know" in a or v == "-1": return "UNKNOWN"
+    if "don't know" in a or "doesn't know" in a or (("field" in a) and ("know" in a)) or v == "-1": return "UNKNOWN"
     return "CATEGORICAL"
 
 
