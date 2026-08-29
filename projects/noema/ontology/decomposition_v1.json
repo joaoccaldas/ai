@@ -1,0 +1,101 @@
+{
+  "ontology_id": "NOEMA-DECOMPOSITION-V1",
+  "version": "1.0.0",
+  "purpose": "Decompose religious, spiritual, supernatural and ritual systems into comparable first-principle components without assuming that any tradition is internally uniform or historically descended from another.",
+  "unit_of_comparison": "FEATURE_ASSERTION",
+  "principles": [
+    "Tradition labels are containers, not explanatory variables.",
+    "Compare components before comparing whole religions.",
+    "Presence, absence, unknown and contested are distinct states.",
+    "Shared feature does not imply shared origin.",
+    "Material form does not imply semantic meaning.",
+    "Experience does not establish ontology.",
+    "Ritual function and participant interpretation may differ.",
+    "Contemporary, historical and reconstructed states must never be silently merged.",
+    "Internal variation by sect, region, period, class, gender and practitioner role is first-class data.",
+    "Indigenous/community-restricted knowledge may be indexed as restricted without exposing protected content."
+  ],
+  "dimensions": {
+    "AGENCY_ONTOLOGY": {
+      "description": "What kinds of non-ordinary agents or powers are posited?",
+      "facets": ["creator_deity", "high_god", "multiple_gods", "ancestors", "spirits", "nature_beings", "demons_or_harm_agents", "saints_or_intercessors", "impersonal_power", "fate_or_cosmic_order", "no_supernatural_agent_required"],
+      "agent_attributes": ["person_like", "embodied", "disembodied", "local", "universal", "omniscient", "morally_concerned", "punitive", "protective", "creator", "ancestor_linked", "place_linked", "animal_linked", "humanly_incarnated", "interventionist", "remote"]
+    },
+    "SELF_PERSONHOOD": {
+      "description": "What is a person and what, if anything, persists?",
+      "facets": ["single_soul", "multiple_soul", "spirit_double", "reincarnation", "rebirth_without_soul", "ancestral_continuity", "resurrection", "mind_body_dualism", "nondual_self", "no_enduring_self", "distributed_personhood", "unknown"]
+    },
+    "DEATH_AFTERLIFE": {
+      "facets": ["continued_existence", "ancestor_transformation", "judgment", "heaven_like_realm", "underworld", "reincarnation", "rebirth", "resurrection", "ghost_state", "dissolution", "cyclical_return", "uncertain_or_multiple"],
+      "mortuary_links": ["burial", "cremation", "exposure", "mummification", "secondary_burial", "grave_goods", "ancestor_shrine", "body_protection", "apotropaic_treatment", "commemoration", "none_or_unknown"]
+    },
+    "COSMOLOGY": {
+      "facets": ["layered_worlds", "sky_earth_underworld", "axis_mundi", "world_tree", "sacred_mountain", "primordial_ocean", "cosmic_egg", "cyclic_cosmos", "linear_creation", "emanation", "eternal_cosmos", "apocalypse_or_renewal", "microcosm_macrocosm", "unknown"]
+    },
+    "NATURE_RELATION": {
+      "facets": ["animism", "sacred_landscape", "animal_personhood", "plant_personhood", "weather_agency", "celestial_agency", "earth_as_person", "human_nature_continuity", "human_nature_hierarchy", "stewardship", "dominion", "reciprocity", "taboo_ecology"]
+    },
+    "CAUSALITY_DIVINATION": {
+      "facets": ["omens", "oracles", "dream_divination", "spirit_divination", "lot_casting", "astrology", "mediumship", "possession_divination", "ancestor_messages", "sacred_text_divination", "necromancy", "healing_diagnosis", "magic_causality", "karma_like_moral_causality", "providence", "fate", "chance_accepted"]
+    },
+    "MORAL_ORDER": {
+      "facets": ["supernatural_punishment", "moralizing_high_god", "ancestor_sanction", "karma", "ritual_purity", "taboo", "sin", "honor_shame", "reciprocity", "cosmic_balance", "no_supernatural_moral_enforcement"]
+    },
+    "SACREDNESS": {
+      "facets": ["sacred_profane_boundary", "consecrated_objects", "sacred_places", "sacred_times", "sacred_texts", "relics", "icons", "aniconism", "purity_boundary", "pilgrimage", "taboo_space"]
+    },
+    "RITUAL_GRAMMAR": {
+      "purposes": ["healing", "initiation", "funerary", "ancestor_relation", "divination", "protection", "fertility", "rain_or_weather", "hunting", "agricultural_abundance", "warfare", "atonement", "purification", "possession", "communion", "sacrifice", "pilgrimage", "calendrical_renewal", "coronation_or_legitimation", "marriage", "birth", "ecstatic_contact", "teaching_or_reenactment"],
+      "actions": ["prayer", "chant", "song", "drumming", "dance", "procession", "prostration", "meditation", "silence", "fasting", "feasting", "offering", "animal_sacrifice", "human_sacrifice", "libation", "incense_or_smoke", "fire", "water_immersion", "anointing", "bloodletting", "scarification", "tattooing", "masking", "costume", "sexual_rite", "pilgrimage", "circumambulation", "divination", "story_recitation", "scripture_reading", "icon_veneration", "relic_veneration", "grave_visitation", "ingestion", "inhalation", "purging", "sleep_or_dream_incubation"],
+      "structure": ["individual", "dyadic", "small_group", "mass_collective", "synchronous", "asynchronous", "secret", "public", "specialist_led", "lay_led", "gender_restricted", "age_grade", "repetitive", "one_time", "calendar_fixed", "event_triggered", "high_cost", "low_cost"]
+    },
+    "ALTERED_STATE_INDUCTION": {
+      "non_drug_methods": ["drumming", "chanting", "dancing", "hyperventilation", "breath_control", "meditation", "prayer", "fasting", "sleep_deprivation", "dream_incubation", "sensory_deprivation", "sensory_overload", "isolation", "pain", "heat", "cold", "sexual_activity", "rhythmic_light", "music", "repetitive_movement", "prolonged_vigil", "possession_ritual"],
+      "substance_classes": ["classic_psychedelic", "dissociative", "deliriant", "cannabinoid", "stimulant", "sedative", "opioid", "alcohol", "nicotine_or_tobacco", "kava_like", "unknown_psychoactive", "multi_substance_preparation"],
+      "routes": ["oral", "smoked", "inhaled_snuff", "chewed", "brewed", "enema", "topical", "unknown"],
+      "context_variables": ["preparation", "dietary_restriction", "specialist_supervision", "music", "group_expectation", "narrative_frame", "sacred_space", "dose_known", "dose_unknown", "initiation_status"]
+    },
+    "EXPERIENCE_PHENOMENOLOGY": {
+      "facets": ["trance", "possession", "entity_encounter", "ancestor_encounter", "visions", "auditory_voices", "dream_revelation", "ego_dissolution", "unity", "nature_connectedness", "time_distortion", "out_of_body", "near_death_like", "death_rebirth", "soul_flight", "automatic_speech", "healing_sensation", "prophetic_certainty", "noetic_quality", "fear_or_terror", "ecstasy", "ineffability"]
+    },
+    "RELIGIOUS_SPECIALISTS": {
+      "roles": ["shaman", "priest", "healer", "medium", "diviner", "oracle", "prophet", "monastic", "ascetic", "spirit_medium", "witch_or_sorcerer", "ritual_elder", "hereditary_specialist", "lay_specialist"],
+      "recruitment": ["hereditary", "elected", "initiatory_call", "vision_or_illness_call", "apprenticeship", "institutional_training", "charismatic", "unknown"],
+      "functions": ["healing", "divination", "sacrifice", "teaching", "spirit_intermediation", "political_legitimation", "calendar_management", "funerary_officiation", "conflict_resolution", "rainmaking", "curse_or_counter_magic"]
+    },
+    "TRANSMISSION": {
+      "modes": ["oral_narrative", "ritual_participation", "imitation", "family_socialization", "initiation", "formal_schooling", "scripture", "iconography", "song_or_poetry", "dream_or_vision_claim", "missionization", "conversion", "state_enforcement", "trade_contact", "intermarriage", "migration", "conquest", "syncretism", "credibility_enhancing_display", "altered_state_enculturation"]
+    },
+    "MATERIAL_AND_SPACE": {
+      "facets": ["temple", "shrine", "grave", "tomb", "monument", "enclosure", "cave", "sacred_grove", "mountain", "spring_or_water", "domestic_altar", "oracle_site", "pilgrimage_route", "ritual_vessel", "mask", "figurine", "icon", "relic", "amulet", "bead_or_ornament", "pigment", "inscription", "calendar_or_astronomical_alignment", "acoustic_design"]
+    },
+    "SOCIAL_FUNCTION": {
+      "facets": ["group_cohesion", "identity_boundary", "costly_signaling", "cooperation", "hierarchy_legitimation", "egalitarian_leveling", "kinship_organization", "conflict", "warfare_support", "healing", "redistribution", "memory", "law_or_norm_enforcement", "ecological_management", "uncertain_function"]
+    },
+    "HISTORICAL_MECHANISM": {
+      "facets": ["shared_ancestry", "population_movement", "cultural_diffusion", "trade_contact", "intermarriage", "elite_emulation", "missionization", "conquest", "syncretism", "independent_convergence", "local_innovation", "ecological_constraint", "cognitive_constraint", "research_or_coding_artifact", "unknown"]
+    },
+    "EVIDENCE_INFERENCE_LADDER": {
+      "levels": [
+        "OBSERVED_PHYSICAL_TRACE",
+        "ANTHROPOGENIC_ACTION",
+        "RECURRENT_PATTERN",
+        "CONVENTIONALIZED_PRACTICE",
+        "INFORMATION_BEARING_SYSTEM_POSSIBLE",
+        "SEMANTIC_CONTENT_INFERRED",
+        "RITUAL_FUNCTION_INFERRED",
+        "RELIGIOUS_MEANING_INFERRED",
+        "THEOLOGICAL_DOCTRINE_ATTESTED"
+      ],
+      "rule": "A higher level may not be inferred solely because a lower level is present."
+    }
+  },
+  "assertion_schema": {
+    "required": ["subject_id", "dimension", "facet", "state", "source_id", "review_status"],
+    "states": ["PRESENT", "ABSENT", "UNKNOWN", "CONTESTED", "NOT_APPLICABLE"],
+    "strength": ["DIRECT_ATTESTATION", "STRONG_INFERENCE", "MODERATE_INFERENCE", "WEAK_INFERENCE", "MODEL_RECONSTRUCTION"],
+    "temporal_scope": ["CONTEMPORARY", "HISTORICAL_ATTESTED", "ARCHAEOLOGICAL", "RECONSTRUCTED_ANCESTRAL", "UNSPECIFIED"],
+    "variation_fields": ["region", "period", "sect_or_school", "practitioner_role", "gender", "class_or_status", "age_grade", "source_population"],
+    "provenance_fields": ["source_locator", "upstream_dataset", "upstream_variable", "upstream_code", "license", "reviewer", "review_date"]
+  }
+}
