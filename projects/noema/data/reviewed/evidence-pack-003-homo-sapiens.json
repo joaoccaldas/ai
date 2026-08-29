@@ -1,0 +1,301 @@
+{
+  "pack_id": "NOEMA-EVIDENCE-003",
+  "title": "Early Homo sapiens symbolic and mortuary behavior: a multifunctional evidence mosaic",
+  "version": 1,
+  "generated_at": "2026-08-29T02:02:00Z",
+  "review_status": "MODEL_CURATED_SOURCE_VERIFIED_HUMAN_REVIEW_PENDING",
+  "publication_status": "RESEARCH_PREVIEW",
+  "scope_note": "This dossier tests whether early Homo sapiens evidence is better represented as a mosaic of technological, ornamental, graphic, mortuary and socially transmitted practices rather than a single 'symbolic revolution'. It is designed for comparison with the Neanderthal Deep Time dossier, not for ranking species.",
+  "epistemic_rules": [
+    "Material category is not behavioral meaning: ochre can be technological, decorative, symbolic, or multifunctional.",
+    "Personal ornament is strong evidence of display and social signaling, but the exact encoded meaning may remain unknown.",
+    "Graphic design is not automatically denotational writing or language.",
+    "Intentional burial is not automatically evidence of an afterlife doctrine or formal religion.",
+    "A species label does not make every site, population or practice culturally equivalent.",
+    "Behavioral similarity across Homo groups may reflect convergence, shared ancestry, interaction, or combinations of these.",
+    "Sparse preservation and excavation histories constrain apparent first appearances."
+  ],
+  "sites": [
+    {
+      "id": "HS-SITE-BLOMBOS",
+      "name": "Blombos Cave",
+      "country": "South Africa",
+      "latitude": -34.416667,
+      "longitude": 21.216667,
+      "coordinate_source": "Published site setting: 34°25′S, 21°13′E",
+      "coordinate_url": "https://www.sciencedirect.com/science/article/pii/S0277379119303130"
+    },
+    {
+      "id": "HS-SITE-QAFZEH",
+      "name": "Qafzeh Cave",
+      "country": "Israel",
+      "latitude": 32.680511,
+      "longitude": 35.295717,
+      "coordinate_source": "Published heritage/location records: 32°40′49.84″N, 35°17′44.58″E",
+      "coordinate_url": "https://www.wikidata.org/wiki/Q1753826"
+    },
+    {
+      "id": "HS-SITE-BIZMOUNE",
+      "name": "Bizmoune Cave",
+      "country": "Morocco",
+      "latitude": null,
+      "longitude": null,
+      "coordinate_source": "Exact coordinates intentionally omitted pending reconciliation of a malformed seconds field in a published text extraction.",
+      "coordinate_url": "https://consensus.app/papers/early-middle-stone-age-personal-ornaments-from-bizmoune-sehasseh-fernandez/b7c1654569b855b3944cd2d09f755794/?utm_source=chatgpt"
+    }
+  ],
+  "sources": [
+    {
+      "id": "HS-S001",
+      "title": "The evolution of early symbolic behavior in Homo sapiens",
+      "authors": ["K. Tylén", "Riccardo Fusaroli", "Sergio Rojo", "Katrin Heimann", "N. Fay", "N. Johannsen", "F. Riede", "M. Lombard"],
+      "year": 2020,
+      "journal": "Proceedings of the National Academy of Sciences",
+      "citation_count_at_retrieval": 70,
+      "canonical_url": "https://consensus.app/papers/the-evolution-of-early-symbolic-behavior-in-homo-sapiens-tylén-fusaroli/de1d12cb01385ed381911a803a1cffe2/?utm_source=chatgpt",
+      "source_role": "EXPERIMENTAL_INTERPRETATION_OF_ARCHAEOLOGICAL_MARKS"
+    },
+    {
+      "id": "HS-S002",
+      "title": "Early Middle Stone Age personal ornaments from Bizmoune Cave, Essaouira, Morocco",
+      "authors": ["El Mehdi Sehasseh", "Philippe Fernandez", "S. Kuhn", "M. Stiner", "S. Mentzer", "D. Colarossi", "Amy Clark", "François Lanoe", "M. Pailes", "Dirk Hoffmann", "Alexa Benson", "Edward E. Rhodes", "M. Benmansour", "A. Laissaoui", "Ismail Ziani", "P. Vidal-Matutano", "Jacob Morales", "Youssef Djellal", "Benoit Longet", "J. Hublin", "Mohammed Mouhiddine", "Fatima-Zohra Rafi", "Kayla B. Worthey", "Ismael Sánchez-Morales", "Noufel Ghayati", "A. Bouzouggar"],
+      "year": 2021,
+      "journal": "Science Advances",
+      "citation_count_at_retrieval": 85,
+      "canonical_url": "https://consensus.app/papers/early-middle-stone-age-personal-ornaments-from-bizmoune-sehasseh-fernandez/b7c1654569b855b3944cd2d09f755794/?utm_source=chatgpt",
+      "source_role": "PERSONAL_ORNAMENTS_AND_CHRONOLOGY"
+    },
+    {
+      "id": "HS-S003",
+      "title": "An abstract drawing from the 73,000-year-old levels at Blombos Cave, South Africa",
+      "authors": ["C. Henshilwood", "F. d’Errico", "K. V. van Niekerk", "Laure Dayet", "Alain Queffelec", "L. Pollarolo"],
+      "year": 2018,
+      "journal": "Nature",
+      "citation_count_at_retrieval": 194,
+      "canonical_url": "https://consensus.app/papers/an-abstract-drawing-from-the-73000yearold-levels-at-henshilwood-d’errico/821718a53fcb520fb64a55547164a28e/?utm_source=chatgpt",
+      "source_role": "GRAPHIC_DESIGN_AND_MICROSCOPIC_ANALYSIS"
+    },
+    {
+      "id": "HS-S004",
+      "title": "Unveiling the multifunctional use of ochre in the Middle Stone Age: Specialized ochre retouchers from Blombos Cave",
+      "authors": ["E. Velliky", "Francesco d'Errico", "K. V. van Niekerk", "C. Henshilwood"],
+      "year": 2025,
+      "journal": "Science Advances",
+      "citation_count_at_retrieval": 8,
+      "canonical_url": "https://consensus.app/papers/unveiling-the-multifunctional-use-of-ochre-in-the-middle-velliky-derrico/555322185cb95260bf8c2f445c909407/?utm_source=chatgpt",
+      "source_role": "FUNCTIONAL_OCHRE_USE_CONTROL"
+    },
+    {
+      "id": "HS-S005",
+      "title": "The Paleolithic Burials at Qafzeh Cave, Israel",
+      "authors": ["B. Vandermeersch", "O. Bar‐Yosef"],
+      "year": 2019,
+      "journal": "Paleobiology",
+      "citation_count_at_retrieval": 32,
+      "canonical_url": "https://consensus.app/papers/the-paleolithic-burials-at-qafzeh-cave-israel-vandermeersch-bar‐yosef/92d70198dad95ef080426eb044cc6690/?utm_source=chatgpt",
+      "source_role": "EARLY_HOMO_SAPIENS_MORTUARY_CONTEXT"
+    },
+    {
+      "id": "HS-S006",
+      "title": "Evidence from Tinshemet Cave in Israel suggests behavioural uniformity across Homo groups in the Levantine mid-Middle Palaeolithic circa 130,000–80,000 years ago",
+      "authors": ["Yossi Zaidner", "M. Prévost", "Ruth Shahack-Gross", "L. Weissbrod", "Reuven Yeshurun", "Naomi Porat", "G. Guérin", "N. Mercier", "Asmodée Galy", "C. Pécheyran", "G. Barbotin", "C. Tribolo", "H. Valladas", "D. White", "Rhys G. O. Timms", "S. Blockley", "A. Frumkin", "David Gaitero-Santos", "S. Ilani", "Sapir Ben-Haim", "A. Pedergnana", "Alyssa V. Pietraszek", "Pedro García", "Cristiano Nicosia", "Susan E. Lagle", "Oz Varoner", "Chen Zeigen", "D. Langgut", "O. Crouvi", "Sarah Borgel", "R. Sarig", "H. May", "Israel Hershkovitz"],
+      "year": 2025,
+      "journal": "Nature Human Behaviour",
+      "citation_count_at_retrieval": 14,
+      "canonical_url": "https://consensus.app/papers/evidence-from-tinshemet-cave-in-israel-suggests-zaidner-prévost/f1493ce5eef35f37be37c12f8c62775b/?utm_source=chatgpt",
+      "source_role": "CROSS_HOMO_LEVANTINE_COMPARISON"
+    }
+  ],
+  "claims": [
+    {
+      "id": "HS-C001",
+      "source_id": "HS-S001",
+      "claim_text": "Experimental work using Blombos and Diepkloof engraving-derived stimuli found that the markings became more salient, memorable, reproducible and expressive of style and human intent over time; the authors found support for decoration and socially transmitted traditions but no clear indication of denotational symbolic signs.",
+      "claim_type": "EXPERIMENTAL_INTERPRETIVE_TEST",
+      "observation_inference": "EXPERIMENTAL_MODEL_OF_ARCHAEOLOGICAL_PATTERNS",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_MODEL_DEPENDENT",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Experimental responses to archaeological mark patterns, not direct access to the intentions of their makers; specifically argues against over-reading the marks as denotational signs.",
+      "supports": ["HS-H001"],
+      "challenges": ["HS-H005"]
+    },
+    {
+      "id": "HS-C002",
+      "source_id": "HS-S002",
+      "site_id": "HS-SITE-BIZMOUNE",
+      "claim_text": "Bizmoune Cave yielded 33 shell beads, many from deposits dated to at least 142 ka; the authors describe them as the oldest shell beads yet recovered and interpret their wider North African pattern as relevant to identity signaling and cultural continuity.",
+      "claim_type": "PERSONAL_ORNAMENTS_AND_MINIMUM_AGE",
+      "observation_inference": "OBSERVATION_PLUS_AUTHOR_SOCIAL_INTERPRETATION",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC_WITH_INTERPRETATION",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Strong evidence for intentionally used personal ornaments in the reported context; exact social identity, status category or symbolic code is not directly recoverable from the beads alone.",
+      "temporal": {"kind": "minimum_age", "older_than_bp": 142000, "display": "≥142 ka BP", "dating_note": "Many beads derive from deposits dated to at least 142 ka."},
+      "supports": ["HS-H001"],
+      "challenges": []
+    },
+    {
+      "id": "HS-C003",
+      "source_id": "HS-S003",
+      "site_id": "HS-SITE-BLOMBOS",
+      "claim_text": "Microscopic and chemical analyses identify a cross-hatched pattern intentionally drawn with a red ochre crayon on a silcrete flake from approximately 73 ka Middle Stone Age levels at Blombos Cave.",
+      "claim_type": "INTENTIONAL_GRAPHIC_DESIGN",
+      "observation_inference": "MULTIMETHOD_MATERIAL_ANALYSIS",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Establishes deliberate graphic mark-making on this object and supports capacity for graphic design; it does not establish writing, language encoding, ritual use or religious meaning.",
+      "temporal": {"kind": "context_age", "central_bp": 73000, "display": "~73 ka BP", "dating_note": "Archaeological level age reported by the source."},
+      "supports": ["HS-H001"],
+      "challenges": []
+    },
+    {
+      "id": "HS-C004",
+      "source_id": "HS-S004",
+      "site_id": "HS-SITE-BLOMBOS",
+      "claim_text": "Seven deliberately modified ochre pieces from Blombos Cave show use-wear and experimental matches consistent with use as lithic retouchers; the authors conclude that ochre participated in technological as well as potentially personal or cultural systems.",
+      "claim_type": "FUNCTIONAL_OCHRE_USE",
+      "observation_inference": "USE_WEAR_PLUS_EXPERIMENTAL_FUNCTIONAL_INFERENCE",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_FUNCTIONAL_EVIDENCE",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Shows that at least some ochre artifacts had a practical lithic-working function. It does not imply all ochre was utilitarian and directly warns against single-meaning classification.",
+      "temporal": {"kind": "context_range", "older_bp": 90000, "younger_bp": 70000, "display": "90–70 ka BP", "dating_note": "Still Bay to pre-Still Bay layers described by the source."},
+      "supports": ["HS-H006"],
+      "challenges": ["HS-H002"]
+    },
+    {
+      "id": "HS-C005",
+      "source_id": "HS-S005",
+      "site_id": "HS-SITE-QAFZEH",
+      "claim_text": "Qafzeh Cave preserves multiple morphologically modern human burials in Middle Paleolithic contexts; the burial cluster is reported within an approximately 120–90 ka time range and the source discusses possible funerary interpretations from excavation observations.",
+      "claim_type": "EARLY_HOMO_SAPIENS_MORTUARY_CONTEXT",
+      "observation_inference": "ARCHAEOLOGICAL_CONTEXT_PLUS_FUNERARY_INTERPRETATION",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Supports structured mortuary behavior in the Qafzeh contexts. Burial alone does not establish an afterlife doctrine, deity concept or formal religion.",
+      "temporal": {"kind": "context_range", "older_bp": 120000, "younger_bp": 90000, "display": "~120–90 ka BP", "dating_note": "TL and ESR range reported for the Qafzeh cluster."},
+      "supports": ["HS-H003"],
+      "challenges": []
+    },
+    {
+      "id": "HS-C006",
+      "source_id": "HS-S006",
+      "claim_text": "Tinshemet Cave yielded articulated Homo remains with ochre, fauna and stone tools dated to about 100 ka; in regional comparison the authors argue for a broadly shared Levantine mid-Middle Paleolithic behavioral set and suggest intensified inter-population interaction and admixture as an explanation.",
+      "claim_type": "CROSS_HOMO_REGIONAL_SYNTHESIS",
+      "observation_inference": "SITE_OBSERVATION_PLUS_REGIONAL_AUTHOR_MODEL",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_REGIONAL_MODEL",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Supports behavioral overlap and a regional interaction hypothesis in the Levant; it does not prove that every practice was culturally transmitted between species or that the groups were behaviorally identical.",
+      "supports": ["HS-H004"],
+      "challenges": []
+    },
+    {
+      "id": "HS-C007",
+      "source_id": "HS-S001",
+      "claim_text": "The experimental analysis found no clear indication that the Blombos and Diepkloof engraving traditions functioned as denotational symbolic signs.",
+      "claim_type": "NEGATIVE_INTERPRETIVE_RESULT",
+      "observation_inference": "EXPERIMENTAL_MODEL_RESULT",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_NEGATIVE_RESULT",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Constrains one proposed function of these mark traditions; it does not show that the marks lacked all symbolic, decorative, social or identity-related functions.",
+      "supports": [],
+      "challenges": ["HS-H005"]
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "HS-H001",
+      "title": "Socially transmitted graphic and ornamental traditions existed in early Homo sapiens before 70 ka",
+      "statement": "Early Homo sapiens populations maintained culturally transmitted practices involving personal ornaments and deliberate graphic design substantially before the Upper Paleolithic.",
+      "status": "SUPPORTED_ACROSS_MULTIPLE_CONTEXTS",
+      "supporting_claim_ids": ["HS-C001", "HS-C002", "HS-C003"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": [],
+      "evidence_balance": "Independent material classes and regions support an early mosaic of display and graphic traditions, while the exact semantic content of those traditions remains partly underdetermined.",
+      "rivals": ["Repeated local innovations without long-term social transmission", "Some artifacts served aesthetic/display functions without denotational symbolism", "Preservation and excavation intensity exaggerate apparent discontinuities"],
+      "falsification_or_discrimination": ["Test continuity of manufacturing conventions across stratigraphic sequences", "Compare use-wear and production standardization across distant sites", "Model discovery and preservation bias before inferring abrupt behavioral origins"]
+    },
+    {
+      "id": "HS-H002",
+      "title": "Ochre in Middle Stone Age contexts is intrinsically ritual or symbolic",
+      "statement": "The archaeological presence of ochre is sufficient to classify a context as ritual or symbolically motivated.",
+      "status": "CHALLENGED_BY_FUNCTIONAL_EVIDENCE",
+      "supporting_claim_ids": [],
+      "challenging_claim_ids": ["HS-C004"],
+      "related_claim_ids": ["HS-C003"],
+      "evidence_balance": "Direct functional evidence from ochre retouchers falsifies the single-meaning version of this hypothesis. Ochre must be evaluated artifact-by-artifact and context-by-context.",
+      "rivals": ["Ochre is multifunctional", "Different ochre pieces carried different technological and social functions", "A single object can combine practical and social significance"],
+      "falsification_or_discrimination": ["Use-wear and residue analysis for individual pieces", "Compare selection, preparation and deposition patterns", "Require contextual evidence before assigning ritual function"]
+    },
+    {
+      "id": "HS-H003",
+      "title": "Early Homo sapiens practiced structured mortuary behavior",
+      "statement": "At least some early Homo sapiens groups intentionally structured the treatment or burial of their dead in Middle Paleolithic contexts.",
+      "status": "SUPPORTED_SITE_SPECIFIC",
+      "supporting_claim_ids": ["HS-C005"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": [],
+      "evidence_balance": "Qafzeh supports structured mortuary behavior in a specific early Homo sapiens context, but motive and cosmological interpretation remain underdetermined.",
+      "rivals": ["Some deposits reflect pragmatic corpse management", "Mortuary practice need not involve formal religious doctrine", "Different Qafzeh burials may have different histories"],
+      "falsification_or_discrimination": ["Reassess primary grave contexts taphonomically", "Separate repeated funerary conventions from one-off deposition", "Compare grave-associated objects against ordinary occupation deposits"]
+    },
+    {
+      "id": "HS-H004",
+      "title": "Some Middle Paleolithic behaviors crossed Homo population boundaries in the Levant",
+      "statement": "Behavioral similarities among Levantine Homo groups partly reflect interaction, admixture or cultural transmission rather than wholly isolated species-specific traditions.",
+      "status": "SUPPORTED_REGIONAL_MODEL_NOT_UNIQUE",
+      "supporting_claim_ids": ["HS-C006"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": ["HS-C005"],
+      "evidence_balance": "Recent regional synthesis supports substantial behavioral overlap and proposes interaction as a mechanism. Convergence and shared ancestral capacities remain viable alternatives for individual practices.",
+      "rivals": ["Independent convergence under similar ecology", "Shared ancestral behavioral capacities", "Archaeological categories are too coarse to resolve population-specific traditions"],
+      "falsification_or_discrimination": ["Integrate ancient DNA and population chronology with artifact traditions", "Model contact opportunities explicitly", "Identify high-resolution style or chaîne opératoire traits with temporal direction"]
+    },
+    {
+      "id": "HS-H005",
+      "title": "Blombos and Diepkloof engravings were denotational symbolic signs",
+      "statement": "The engraved traditions encoded stable denotational meanings comparable to explicit signs or proto-writing.",
+      "status": "NOT_SUPPORTED_BY_CURRENT_EXPERIMENTAL_TEST",
+      "supporting_claim_ids": [],
+      "challenging_claim_ids": ["HS-C001", "HS-C007"],
+      "related_claim_ids": ["HS-C003"],
+      "evidence_balance": "The selected experimental evidence supports decoration, transmission, style and intentionality but found no clear indication of denotational sign function. Other symbolic functions remain open.",
+      "rivals": ["Decorative tradition", "Identity or affiliation signaling", "Ritualized mark-making without fixed denotation", "Meaning existed but cannot be recovered from current experimental proxies"],
+      "falsification_or_discrimination": ["Demonstrate stable mapping between recurring motifs and independent contextual referents", "Show combinatorial or syntactic patterning beyond decoration", "Replicate functional discrimination using independent experimental designs"]
+    },
+    {
+      "id": "HS-H006",
+      "title": "Early symbolic materials were behaviorally multifunctional",
+      "statement": "Material classes often treated as symbolic markers, especially ochre, participated in overlapping technological, aesthetic, social and possibly ritual systems.",
+      "status": "SUPPORTED_AS_ANALYTIC_MODEL",
+      "supporting_claim_ids": ["HS-C004"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": ["HS-C002", "HS-C003"],
+      "evidence_balance": "The direct technological use of ochre, alongside graphic ochre use and personal ornaments in broader Middle Stone Age records, makes a multifunctional model more defensible than assigning one universal meaning to a material category.",
+      "rivals": ["Strictly separate functional and symbolic artifact classes", "Observed multifunctionality is site-specific rather than general"],
+      "falsification_or_discrimination": ["Classify pieces by microscopic function before aggregate symbolic coding", "Test whether symbolic-context indicators predict treatment beyond raw material type", "Track reuse and life histories of individual artifacts"]
+    }
+  ],
+  "synthesis": {
+    "headline": "Early Homo sapiens behavior looks like a mosaic, not a switch flipping on.",
+    "findings": [
+      "Personal ornaments at Bizmoune and deliberate graphic design at Blombos support socially visible and transmitted practices well before 70 ka.",
+      "The Blombos/Diepkloof experimental literature supports style, decoration and cultural transmission without demonstrating denotational sign use.",
+      "Direct evidence that some ochre pieces served as lithic retouchers makes 'ochre equals ritual' an invalid coding rule.",
+      "Qafzeh supports structured early Homo sapiens mortuary behavior while leaving theology and afterlife doctrine underdetermined, paralleling the epistemic boundary already enforced for Neanderthal burials.",
+      "Recent Levantine evidence makes strict species-exclusive behavioral narratives harder to sustain, but interaction, convergence and shared ancestry still need to be separated rather than collapsed."
+    ],
+    "next_tests": [
+      "Build a cross-pack comparison matrix using identical behavioral constructs for Neanderthals and Homo sapiens.",
+      "Separate raw observations such as pigment, perforation, wear, grave position and mark geometry from symbolic/ritual interpretations.",
+      "Model first appearances as censored by preservation, excavation intensity and dating uncertainty.",
+      "Add object life-history data so multifunctional artifacts are not forced into one ontology slot.",
+      "Integrate population-contact evidence before attributing behavioral similarities to transmission, convergence or ancestry."
+    ]
+  }
+}
