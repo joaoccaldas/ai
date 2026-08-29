@@ -1,0 +1,137 @@
+[
+  {
+    "title": "D-PLACE: Database of Places, Language, Culture and Environment",
+    "source_type": "CROSS_CULTURAL_DATASET",
+    "canonical_url": "https://d-place.org/",
+    "publisher": "D-PLACE",
+    "access_level": "ATTRIBUTION_REQUIRED",
+    "metadata": {
+      "role": "cross-cultural comparison, language ancestry, geography and environment",
+      "caution": "ethnographic focal dates and coding decisions must remain attached to every imported datum"
+    }
+  },
+  {
+    "title": "Seshat: Global History Databank",
+    "source_type": "HISTORICAL_DATASET",
+    "canonical_url": "https://seshatdatabank.info/data",
+    "publisher": "Seshat Global History Databank",
+    "published_year": 2026,
+    "access_level": "PUBLIC",
+    "metadata": {
+      "release": "Polaris-2026",
+      "role": "historical social complexity, ritual/religion and polity-level variables",
+      "caution": "missing values must never be silently recoded as absences"
+    }
+  },
+  {
+    "title": "The Database of Religious History",
+    "source_type": "RELIGIOUS_HISTORY_DATASET",
+    "canonical_url": "https://religiondatabase.org/landing/about",
+    "publisher": "University of British Columbia / DRH",
+    "access_level": "PUBLIC",
+    "metadata": {
+      "role": "standardized historical religion entries with qualitative comments and references"
+    }
+  },
+  {
+    "title": "Pulotu: Database of Austronesian Religions",
+    "source_type": "RELIGION_DATASET",
+    "canonical_url": "https://pulotu.com/",
+    "publisher": "Pulotu",
+    "access_level": "PUBLIC",
+    "metadata": {
+      "role": "Austronesian supernatural beliefs and practices with phylogenetic context",
+      "current_web_scope": "137 cultures"
+    }
+  },
+  {
+    "title": "ARIADNE Research Infrastructure",
+    "source_type": "ARCHAEOLOGY_INFRASTRUCTURE",
+    "canonical_url": "https://ariadne-infrastructure.eu/portal/",
+    "publisher": "ARIADNE Research Infrastructure",
+    "access_level": "ATTRIBUTION_REQUIRED",
+    "metadata": {
+      "role": "archaeological dataset discovery and integration"
+    }
+  },
+  {
+    "title": "Pulotu: Database of Austronesian Supernatural Beliefs and Practices",
+    "source_type": "PEER_REVIEWED_PAPER",
+    "canonical_url": "https://consensus.app/papers/pulotu-database-of-austronesian-supernatural-beliefs-and-watts-sheehan/15904786d842531584cb9319038cf8d1/?utm_source=chatgpt",
+    "publisher": "PLoS ONE",
+    "published_year": 2015,
+    "external_id": "consensus:15904786d842531584cb9319038cf8d1",
+    "access_level": "PUBLIC",
+    "metadata": {
+      "authors": "Joseph Watts et al.",
+      "role": "methodological foundation for phylogenetically aware comparative religion"
+    }
+  },
+  {
+    "title": "Broad supernatural punishment but not moralizing high gods precede the evolution of political complexity in Austronesia",
+    "source_type": "PEER_REVIEWED_PAPER",
+    "canonical_url": "https://consensus.app/papers/broad-supernatural-punishment-but-not-moralizing-high-watts-greenhill/5c7e31b63a60526eb82f11a2432b874f/?utm_source=chatgpt",
+    "publisher": "Proceedings of the Royal Society B",
+    "published_year": 2015,
+    "external_id": "consensus:5c7e31b63a60526eb82f11a2432b874f",
+    "access_level": "PUBLIC",
+    "metadata": {
+      "authors": "Joseph Watts et al.",
+      "research_tension": "tests causal ordering between supernatural punishment, moralizing high gods and political complexity"
+    }
+  },
+  {
+    "title": "Treatment of missing data determined conclusions regarding moralizing gods",
+    "source_type": "PEER_REVIEWED_CRITIQUE",
+    "canonical_url": "https://consensus.app/papers/treatment-of-missing-data-determined-conclusions-beheim-atkinson/cf477ae53ae55b58983ac75e3a9141ad/?utm_source=chatgpt",
+    "publisher": "Nature",
+    "published_year": 2021,
+    "doi": "10.1038/s41586-021-03655-4",
+    "external_id": "consensus:cf477ae53ae55b58983ac75e3a9141ad",
+    "access_level": "PUBLIC",
+    "metadata": {
+      "authors": "B. Beheim et al.",
+      "research_tension": "demonstrates how missing-data handling can reverse causal conclusions"
+    }
+  },
+  {
+    "title": "The Database of Religious History (DRH): ontology, coding strategies and the future of cultural evolutionary analyses",
+    "source_type": "PEER_REVIEWED_PAPER",
+    "canonical_url": "https://consensus.app/papers/the-database-of-religious-history-drh-ontology-coding-slingerland-monroe/fdbf3b050135520b8f92ec4bdca1af9a/?utm_source=chatgpt",
+    "publisher": "Religion, Brain & Behavior",
+    "published_year": 2023,
+    "external_id": "consensus:fdbf3b050135520b8f92ec4bdca1af9a",
+    "access_level": "PUBLIC",
+    "metadata": {
+      "authors": "E. Slingerland, M. Monroe, Michael Muthukrishna",
+      "role": "ontology and coding-design reference"
+    }
+  },
+  {
+    "title": "Hunter-Gatherers and the Origins of Religion",
+    "source_type": "PEER_REVIEWED_PAPER",
+    "canonical_url": "https://consensus.app/papers/huntergatherers-and-the-origins-of-religion-peoples-duda/ec1a3f10820051658d764cb564a494e6/?utm_source=chatgpt",
+    "publisher": "Human Nature",
+    "published_year": 2016,
+    "external_id": "consensus:ec1a3f10820051658d764cb564a494e6",
+    "access_level": "PUBLIC",
+    "metadata": {
+      "authors": "Hervey C. Peoples, P. Duda, F. Marlowe",
+      "role": "ancestral-state reconstruction example",
+      "caution": "ancestral reconstructions are model-dependent inferences, not direct archaeological observations"
+    }
+  },
+  {
+    "title": "Ritual explained: interdisciplinary answers to Tinbergen's four questions",
+    "source_type": "PEER_REVIEWED_PAPER",
+    "canonical_url": "https://consensus.app/papers/ritual-explained-interdisciplinary-answers-to-legare-nielsen/28d386cc70df5b1d85a443110192a446/?utm_source=chatgpt",
+    "publisher": "Philosophical Transactions of the Royal Society B",
+    "published_year": 2020,
+    "external_id": "consensus:28d386cc70df5b1d85a443110192a446",
+    "access_level": "PUBLIC",
+    "metadata": {
+      "authors": "C. Legare, Mark Nielsen",
+      "role": "interdisciplinary ritual framework across phylogeny, function, mechanism and ontogeny"
+    }
+  }
+]
