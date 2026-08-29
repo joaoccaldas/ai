@@ -29,6 +29,7 @@ jobs:
         run: |
           python -m json.tool ontology/decomposition_v1.json >/dev/null
           python -m json.tool ontology/source_mappings.json >/dev/null
+          python -m json.tool ontology/drh_curated_mappings.json >/dev/null
           python -m json.tool data/candidates/discovery-pressure-2026-08-29.json >/dev/null
           python - <<'PY'
           import json
@@ -51,7 +52,27 @@ jobs:
           assert s['raw_assertions'] > 0, s
           assert all(a['state'] != 'UNKNOWN' for a in x['assertions'])
           assert all(a.get('source_locator',{}).get('variable_id') for a in x['assertions'])
-          print(json.dumps(s, indent=2))
+          print('PULOTU', json.dumps(s, indent=2))
+          PY
+      - name: Validate DRH/SCCSR compact decomposition corpus
+        run: |
+          python scripts/import_drh_decomposition.py --output /tmp/noema-drh-decomposition.json
+          python -m json.tool /tmp/noema-drh-decomposition.json >/dev/null
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/noema-drh-decomposition.json'))
+          s=x['summary']
+          assert x['dataset_id'] == 'NOEMA-RELIGION-DECOMPOSITION-DRH-V1'
+          assert s['subjects'] > 100, s
+          assert s['questions'] > 100, s
+          assert s['mapped_questions'] >= 20, s
+          assert s['assertions'] > 100, s
+          assert s['comparable_religious_groups'] > 0, s
+          assert all(a['state'] in {'PRESENT','ABSENT','UNKNOWN'} for a in x['assertions'])
+          assert all(a.get('source_locator',{}).get('question_id') for a in x['assertions'])
+          assert all('expert_name' in a and 'branching_question' in a for a in x['assertions'])
+          assert any(not q['mapped'] for q in x['questions']), 'raw DRH question index was lost'
+          print('DRH', json.dumps(s, indent=2))
           PY
       - name: Validate v1 reference catalog and multi-page routes
         run: |
@@ -84,6 +105,8 @@ jobs:
               'site/lineages.html':'Connection is not origin.',
               'site/sources-v1.html':'Every conclusion should have a trail.',
               'site/entity.html':'universal entity card',
+              'site/simulations.html':'Is a pattern surprising?',
+              'site/drh.html':'Entries, questions, metadata.',
           }
           for path,marker in pages.items():
               text=Path(path).read_text(encoding='utf-8')
@@ -149,13 +172,16 @@ jobs:
               'site/deep-time-compare.html': ('<title>NOEMA Deep Time Compare</title>', 'no species ranking'),
               'site/human-meaning-atlas.html': ('<title>NOEMA Human Meaning Atlas</title>', '500,000 BP → present'),
               'site/religion-decomposition.html': ('<title>NOEMA Religion Decomposition</title>', 'Search religion beneath religion'),
+              'site/simulations.html': ('<title>Simulations · NOEMA</title>', 'Is a pattern surprising?'),
+              'site/drh.html': ('<title>DRH Explorer · NOEMA</title>', 'Entries, questions, metadata.'),
           }
           for path, required in pages.items():
               html=Path(path).read_text(encoding='utf-8')
-              scripts=re.findall(r'<script>(.*?)</script>', html, flags=re.S|re.I)
-              assert scripts, f'inline site script not found in {path}'
+              scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', html, flags=re.S|re.I)
+              inline=[s for s in scripts if s.strip()]
+              assert inline, f'inline site script not found in {path}'
               target=Path('/tmp')/(Path(path).stem + '-noema-site.js')
-              target.write_text('\n'.join(scripts), encoding='utf-8')
+              target.write_text('\n'.join(inline), encoding='utf-8')
               for marker in required:
                   assert marker in html, f'{marker!r} missing from {path}'
               print(target)
@@ -165,4 +191,6 @@ jobs:
           node --check /tmp/deep-time-compare-noema-site.js
           node --check /tmp/human-meaning-atlas-noema-site.js
           node --check /tmp/religion-decomposition-noema-site.js
+          node --check /tmp/simulations-noema-site.js
+          node --check /tmp/drh-noema-site.js
       - run: pytest
