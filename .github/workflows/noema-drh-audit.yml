@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'projects/noema/scripts/import_drh_catalog.py'
+      - 'projects/noema/scripts/import_drh_decomposition.py'
+      - 'projects/noema/ontology/drh_curated_mappings.json'
       - '.github/workflows/noema-drh-audit.yml'
   workflow_dispatch:
 
@@ -20,7 +22,7 @@ jobs:
           python-version: '3.12'
       - name: Build compact DRH audit catalog
         run: |
-          python scripts/import_drh_catalog.py --max-routed-answers 20000 --output /tmp/drh-catalog.json
+          python scripts/import_drh_catalog.py --max-routed-answers 0 --output /tmp/drh-catalog.json
           python -m json.tool /tmp/drh-catalog.json >/dev/null
           python - <<'PY'
           import json
@@ -29,10 +31,30 @@ jobs:
           assert s['entries'] > 100
           assert s['questions'] > 100
           assert s['routed_questions'] > 20
+          assert s['routed_answers_exported'] == 0
           assert x['mapping_rule'].startswith('Question keyword routes')
+          print(json.dumps(s,indent=2))
+          PY
+      - name: Build curated DRH first-principles assertions
+        run: |
+          python -m json.tool ontology/drh_curated_mappings.json >/dev/null
+          python scripts/import_drh_decomposition.py --output /tmp/drh-decomposition.json
+          python -m json.tool /tmp/drh-decomposition.json >/dev/null
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/drh-decomposition.json'))
+          s=x['summary']
+          assert s['subjects'] > 100, s
+          assert s['comparable_religious_groups'] > 100, s
+          assert s['mapped_questions'] >= 30, s
+          assert s['assertions'] > 1000, s
+          assert all(a['mapping_status'] in {'CURATED_CROSSWALK_V1','NEEDS_REVIEW'} for a in x['assertions'])
+          assert all(a['state'] in {'PRESENT','ABSENT','UNKNOWN'} for a in x['assertions'])
           print(json.dumps(s,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: noema-drh-audit-catalog
-          path: /tmp/drh-catalog.json
+          name: noema-drh-source-audit
+          path: |
+            /tmp/drh-catalog.json
+            /tmp/drh-decomposition.json
