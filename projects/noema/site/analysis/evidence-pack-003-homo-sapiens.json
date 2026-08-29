@@ -1,0 +1,141 @@
+{
+  "pack_id": "NOEMA-EVIDENCE-003",
+  "review_status": "MODEL_CURATED_SOURCE_VERIFIED_HUMAN_REVIEW_PENDING",
+  "publication_status": "RESEARCH_PREVIEW",
+  "counts": {
+    "sources": 6,
+    "claims": 7,
+    "hypotheses": 6
+  },
+  "claim_types": {
+    "EXPERIMENTAL_INTERPRETIVE_TEST": 1,
+    "PERSONAL_ORNAMENTS_AND_MINIMUM_AGE": 1,
+    "INTENTIONAL_GRAPHIC_DESIGN": 1,
+    "FUNCTIONAL_OCHRE_USE": 1,
+    "EARLY_HOMO_SAPIENS_MORTUARY_CONTEXT": 1,
+    "CROSS_HOMO_REGIONAL_SYNTHESIS": 1,
+    "NEGATIVE_INTERPRETIVE_RESULT": 1
+  },
+  "epistemic_statuses": {
+    "SUPPORTED_MODEL_DEPENDENT": 1,
+    "STRONG_SITE_SPECIFIC_WITH_INTERPRETATION": 1,
+    "STRONG_SITE_SPECIFIC": 1,
+    "STRONG_FUNCTIONAL_EVIDENCE": 1,
+    "SUPPORTED_SITE_SPECIFIC": 1,
+    "SUPPORTED_REGIONAL_MODEL": 1,
+    "SUPPORTED_NEGATIVE_RESULT": 1
+  },
+  "hypothesis_ledger": [
+    {
+      "id": "HS-H001",
+      "title": "Socially transmitted graphic and ornamental traditions existed in early Homo sapiens before 70 ka",
+      "status": "SUPPORTED_ACROSS_MULTIPLE_CONTEXTS",
+      "support_count": 3,
+      "challenge_count": 0,
+      "related_count": 0,
+      "support_evidence_levels": {
+        "E3": 1,
+        "E4": 2
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "Independent material classes and regions support an early mosaic of display and graphic traditions, while the exact semantic content of those traditions remains partly underdetermined.",
+      "scope_guard": false
+    },
+    {
+      "id": "HS-H002",
+      "title": "Ochre in Middle Stone Age contexts is intrinsically ritual or symbolic",
+      "status": "CHALLENGED_BY_FUNCTIONAL_EVIDENCE",
+      "support_count": 0,
+      "challenge_count": 1,
+      "related_count": 1,
+      "support_evidence_levels": {},
+      "challenge_evidence_levels": {
+        "E4": 1
+      },
+      "evidence_balance": "Direct functional evidence from ochre retouchers falsifies the single-meaning version of this hypothesis. Ochre must be evaluated artifact-by-artifact and context-by-context.",
+      "scope_guard": false
+    },
+    {
+      "id": "HS-H003",
+      "title": "Early Homo sapiens practiced structured mortuary behavior",
+      "status": "SUPPORTED_SITE_SPECIFIC",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 0,
+      "support_evidence_levels": {
+        "E3": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "Qafzeh supports structured mortuary behavior in a specific early Homo sapiens context, but motive and cosmological interpretation remain underdetermined.",
+      "scope_guard": false
+    },
+    {
+      "id": "HS-H004",
+      "title": "Some Middle Paleolithic behaviors crossed Homo population boundaries in the Levant",
+      "status": "SUPPORTED_REGIONAL_MODEL_NOT_UNIQUE",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 1,
+      "support_evidence_levels": {
+        "E3": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "Recent regional synthesis supports substantial behavioral overlap and proposes interaction as a mechanism. Convergence and shared ancestral capacities remain viable alternatives for individual practices.",
+      "scope_guard": false
+    },
+    {
+      "id": "HS-H005",
+      "title": "Blombos and Diepkloof engravings were denotational symbolic signs",
+      "status": "NOT_SUPPORTED_BY_CURRENT_EXPERIMENTAL_TEST",
+      "support_count": 0,
+      "challenge_count": 2,
+      "related_count": 1,
+      "support_evidence_levels": {},
+      "challenge_evidence_levels": {
+        "E3": 2
+      },
+      "evidence_balance": "The selected experimental evidence supports decoration, transmission, style and intentionality but found no clear indication of denotational sign function. Other symbolic functions remain open.",
+      "scope_guard": false
+    },
+    {
+      "id": "HS-H006",
+      "title": "Early symbolic materials were behaviorally multifunctional",
+      "status": "SUPPORTED_AS_ANALYTIC_MODEL",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 2,
+      "support_evidence_levels": {
+        "E4": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "The direct technological use of ochre, alongside graphic ochre use and personal ornaments in broader Middle Stone Age records, makes a multifunctional model more defensible than assigning one universal meaning to a material category.",
+      "scope_guard": false
+    }
+  ],
+  "synthesis": {
+    "headline": "Early Homo sapiens behavior looks like a mosaic, not a switch flipping on.",
+    "findings": [
+      "Personal ornaments at Bizmoune and deliberate graphic design at Blombos support socially visible and transmitted practices well before 70 ka.",
+      "The Blombos/Diepkloof experimental literature supports style, decoration and cultural transmission without demonstrating denotational sign use.",
+      "Direct evidence that some ochre pieces served as lithic retouchers makes 'ochre equals ritual' an invalid coding rule.",
+      "Qafzeh supports structured early Homo sapiens mortuary behavior while leaving theology and afterlife doctrine underdetermined, paralleling the epistemic boundary already enforced for Neanderthal burials.",
+      "Recent Levantine evidence makes strict species-exclusive behavioral narratives harder to sustain, but interaction, convergence and shared ancestry still need to be separated rather than collapsed."
+    ],
+    "next_tests": [
+      "Build a cross-pack comparison matrix using identical behavioral constructs for Neanderthals and Homo sapiens.",
+      "Separate raw observations such as pigment, perforation, wear, grave position and mark geometry from symbolic/ritual interpretations.",
+      "Model first appearances as censored by preservation, excavation intensity and dating uncertainty.",
+      "Add object life-history data so multifunctional artifacts are not forced into one ontology slot.",
+      "Integrate population-contact evidence before attributing behavioral similarities to transmission, convergence or ancestry."
+    ]
+  },
+  "epistemic_rules": [
+    "Material category is not behavioral meaning: ochre can be technological, decorative, symbolic, or multifunctional.",
+    "Personal ornament is strong evidence of display and social signaling, but the exact encoded meaning may remain unknown.",
+    "Graphic design is not automatically denotational writing or language.",
+    "Intentional burial is not automatically evidence of an afterlife doctrine or formal religion.",
+    "A species label does not make every site, population or practice culturally equivalent.",
+    "Behavioral similarity across Homo groups may reflect convergence, shared ancestry, interaction, or combinations of these.",
+    "Sparse preservation and excavation histories constrain apparent first appearances."
+  ]
+}

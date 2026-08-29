@@ -1,0 +1,134 @@
+{
+  "comparison_id": "NOEMA-DEEP-TIME-COMPARE-001",
+  "title": "Neanderthal and early Homo sapiens behavior without species ranking",
+  "principle": "Compare source-bounded behavioral constructs. Never convert the matrix into a scalar species score, cognitive ranking, or evolutionary ladder.",
+  "left": {
+    "pack_id": "NOEMA-EVIDENCE-002",
+    "label": "Neanderthal-associated evidence"
+  },
+  "right": {
+    "pack_id": "NOEMA-EVIDENCE-003",
+    "label": "Early Homo sapiens-associated evidence"
+  },
+  "rows": [
+    {
+      "id": "MORTUARY",
+      "construct": "Structured / intentional mortuary behavior",
+      "comparability": "HIGH_AT_CONSTRUCT_LEVEL",
+      "interpretation": "Both dossiers support intentional or structured mortuary behavior in particular contexts. Neither supports uniform species-wide practice or a specific theology.",
+      "left": {
+        "type": "hypothesis",
+        "id": "DT-H001",
+        "title": "Some Neanderthal groups intentionally buried some dead",
+        "status": "SUPPORTED_SITE_SPECIFIC",
+        "evidence_balance": "Modern in-situ and multidisciplinary site evidence supports intentional burial in particular cases. This does not imply uniform Neanderthal mortuary practice or a specific funerary theology.",
+        "support_count": 2,
+        "challenge_count": 0,
+        "related_count": 1
+      },
+      "right": {
+        "type": "hypothesis",
+        "id": "HS-H003",
+        "title": "Early Homo sapiens practiced structured mortuary behavior",
+        "status": "SUPPORTED_SITE_SPECIFIC",
+        "evidence_balance": "Qafzeh supports structured mortuary behavior in a specific early Homo sapiens context, but motive and cosmological interpretation remain underdetermined.",
+        "support_count": 1,
+        "challenge_count": 0,
+        "related_count": 0
+      }
+    },
+    {
+      "id": "MATERIAL",
+      "construct": "Deliberate display / abstract / graphic material behavior",
+      "comparability": "PARTIAL_DIFFERENT_MATERIAL_CLASSES",
+      "interpretation": "Both sides contain deliberate material patterning or display behavior, but shells, pigments, engravings and graphic designs are not interchangeable traits and need artifact-level analysis.",
+      "left": {
+        "type": "hypothesis",
+        "id": "DT-H002",
+        "title": "Some Neanderthal populations produced abstract or symbolically used material culture",
+        "status": "SUPPORTED_WITH_INTERPRETIVE_BOUNDARY",
+        "evidence_balance": "The strongest observations establish deliberate material modification, pigment/ornament contexts and non-utilitarian structured marks. ‘Symbolic’ is a higher-level interpretation and must remain distinguishable from the physical observations.",
+        "support_count": 3,
+        "challenge_count": 0,
+        "related_count": 0
+      },
+      "right": {
+        "type": "hypothesis",
+        "id": "HS-H001",
+        "title": "Socially transmitted graphic and ornamental traditions existed in early Homo sapiens before 70 ka",
+        "status": "SUPPORTED_ACROSS_MULTIPLE_CONTEXTS",
+        "evidence_balance": "Independent material classes and regions support an early mosaic of display and graphic traditions, while the exact semantic content of those traditions remains partly underdetermined.",
+        "support_count": 3,
+        "challenge_count": 0,
+        "related_count": 0
+      }
+    },
+    {
+      "id": "BURIAL_THEOLOGY",
+      "construct": "Does burial establish religion or afterlife doctrine?",
+      "comparability": "EPISTEMIC_GUARDRAIL",
+      "interpretation": "The same inferential boundary applies on both sides: mortuary evidence can support purposeful treatment of the dead while leaving cosmology underdetermined.",
+      "left": {
+        "type": "hypothesis",
+        "id": "DT-H004",
+        "title": "Intentional burial proves formal religion or afterlife doctrine",
+        "status": "NOT_ESTABLISHED_BY_CURRENT_EVIDENCE",
+        "evidence_balance": "The current evidence supports mortuary behavior in specific contexts but underdetermines motive and cosmology. The hypothesis is intentionally retained as a tempting inference that NOEMA must not silently make.",
+        "support_count": 0,
+        "challenge_count": 0,
+        "related_count": 3
+      },
+      "right": {
+        "type": "claim",
+        "id": "HS-C005",
+        "title": "Early Homo Sapiens Mortuary Context",
+        "status": "SUPPORTED_SITE_SPECIFIC",
+        "evidence_balance": "Supports structured mortuary behavior in the Qafzeh contexts. Burial alone does not establish an afterlife doctrine, deity concept or formal religion.",
+        "support_count": 1,
+        "challenge_count": 0,
+        "related_count": 0,
+        "evidence_level": "E3"
+      }
+    },
+    {
+      "id": "INTERACTION",
+      "construct": "Behavioral overlap can arise through more than one evolutionary process",
+      "comparability": "MECHANISM_LEVEL_ONLY",
+      "interpretation": "Ancestral inheritance, convergence and inter-population transmission are rival mechanisms. Similar behavior cannot identify one mechanism without chronology, contact and population-history evidence.",
+      "left": {
+        "type": "hypothesis",
+        "id": "DT-H003",
+        "title": "Symbolic material culture predates the Neanderthal–Homo sapiens split",
+        "status": "SPECULATIVE",
+        "evidence_balance": "Possible under parsimony but not directly demonstrated by the sites in this pack; convergent evolution, repeated innovation and preservation bias remain serious alternatives.",
+        "support_count": 1,
+        "challenge_count": 0,
+        "related_count": 2
+      },
+      "right": {
+        "type": "hypothesis",
+        "id": "HS-H004",
+        "title": "Some Middle Paleolithic behaviors crossed Homo population boundaries in the Levant",
+        "status": "SUPPORTED_REGIONAL_MODEL_NOT_UNIQUE",
+        "evidence_balance": "Recent regional synthesis supports substantial behavioral overlap and proposes interaction as a mechanism. Convergence and shared ancestral capacities remain viable alternatives for individual practices.",
+        "support_count": 1,
+        "challenge_count": 0,
+        "related_count": 1
+      }
+    }
+  ],
+  "forbidden_outputs": [
+    "species intelligence score",
+    "cognitive superiority ranking",
+    "single date for the origin of symbolism",
+    "religion present/absent classification from burial alone",
+    "shared meaning inferred from shared material form"
+  ],
+  "summary": {
+    "matched_constructs": 4,
+    "left_sources": 5,
+    "right_sources": 6,
+    "left_claims": 7,
+    "right_claims": 7
+  }
+}

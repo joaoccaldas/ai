@@ -1,0 +1,110 @@
+{
+  "pack_id": "NOEMA-EVIDENCE-002",
+  "review_status": "MODEL_CURATED_SOURCE_VERIFIED_HUMAN_REVIEW_PENDING",
+  "publication_status": "RESEARCH_PREVIEW",
+  "counts": {
+    "sources": 5,
+    "claims": 7,
+    "hypotheses": 4
+  },
+  "claim_types": {
+    "METHODOLOGICAL_CONSTRAINT": 1,
+    "MORTUARY_CONTEXT": 1,
+    "BURIAL_AND_DIRECT_DATING": 1,
+    "MATERIAL_CULTURE_AND_MINIMUM_AGE": 1,
+    "AUTHOR_EVOLUTIONARY_INTERPRETATION": 1,
+    "ANTHROPOGENIC_MARKS_AND_CHRONOLOGY": 1,
+    "AUTHOR_SYMBOLIC_INTERPRETATION": 1
+  },
+  "epistemic_statuses": {
+    "SYNTHESIS": 1,
+    "SUPPORTED_SITE_SPECIFIC": 1,
+    "STRONG_SITE_SPECIFIC": 3,
+    "SPECULATIVE_EXTRAPOLATION": 1,
+    "SUPPORTED_INTERPRETATION": 1
+  },
+  "hypothesis_ledger": [
+    {
+      "id": "DT-H001",
+      "title": "Some Neanderthal groups intentionally buried some dead",
+      "status": "SUPPORTED_SITE_SPECIFIC",
+      "support_count": 2,
+      "challenge_count": 0,
+      "related_count": 1,
+      "support_evidence_levels": {
+        "E3": 1,
+        "E4": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "Modern in-situ and multidisciplinary site evidence supports intentional burial in particular cases. This does not imply uniform Neanderthal mortuary practice or a specific funerary theology.",
+      "scope_guard": false
+    },
+    {
+      "id": "DT-H002",
+      "title": "Some Neanderthal populations produced abstract or symbolically used material culture",
+      "status": "SUPPORTED_WITH_INTERPRETIVE_BOUNDARY",
+      "support_count": 3,
+      "challenge_count": 0,
+      "related_count": 0,
+      "support_evidence_levels": {
+        "E4": 2,
+        "E3": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "The strongest observations establish deliberate material modification, pigment/ornament contexts and non-utilitarian structured marks. ‘Symbolic’ is a higher-level interpretation and must remain distinguishable from the physical observations.",
+      "scope_guard": false
+    },
+    {
+      "id": "DT-H003",
+      "title": "Symbolic material culture predates the Neanderthal–Homo sapiens split",
+      "status": "SPECULATIVE",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 2,
+      "support_evidence_levels": {
+        "E1": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "Possible under parsimony but not directly demonstrated by the sites in this pack; convergent evolution, repeated innovation and preservation bias remain serious alternatives.",
+      "scope_guard": false
+    },
+    {
+      "id": "DT-H004",
+      "title": "Intentional burial proves formal religion or afterlife doctrine",
+      "status": "NOT_ESTABLISHED_BY_CURRENT_EVIDENCE",
+      "support_count": 0,
+      "challenge_count": 0,
+      "related_count": 3,
+      "support_evidence_levels": {},
+      "challenge_evidence_levels": {},
+      "evidence_balance": "The current evidence supports mortuary behavior in specific contexts but underdetermines motive and cosmology. The hypothesis is intentionally retained as a tempting inference that NOEMA must not silently make.",
+      "scope_guard": false
+    }
+  ],
+  "synthesis": {
+    "headline": "Neanderthals cross the behavioral threshold before the theological one.",
+    "findings": [
+      "The selected evidence supports intentional burial in particular Neanderthal contexts, but motive remains underdetermined.",
+      "The selected evidence also supports deliberate pigments, modified shell assemblages and abstract non-figurative marks in Neanderthal-associated contexts.",
+      "These observations weaken older models in which complex symbolic material behavior is exclusive to Homo sapiens.",
+      "They do not, however, license NOEMA to label Neanderthal behavior ‘religion’, ‘spirituality’ or ‘afterlife belief’ without additional discriminating evidence.",
+      "Deep-time analysis therefore needs two parallel graphs: physical observations and interpretive hypotheses, joined by explicitly reviewable inference edges."
+    ],
+    "next_tests": [
+      "Add dating distributions rather than single-point dates for each site and distinguish minimum from direct ages.",
+      "Add competing taphonomic interpretations for disputed mortuary sites.",
+      "Map repeated object classes such as pigments, perforated shells, raptor talons and engravings without assuming shared meaning.",
+      "Test cultural transmission versus recurrent independent invention using chronology, geography and population history.",
+      "Create an interpretation ladder from anthropogenic → patterned → non-utilitarian → symbolic → ritual → religious, requiring new evidence at every step."
+    ]
+  },
+  "epistemic_rules": [
+    "An archaeological object is an observation; its symbolic meaning is an inference.",
+    "Intentional burial is not automatically evidence of an afterlife belief.",
+    "Mortuary behavior is broader than ritual, and ritual is broader than religion.",
+    "Non-utilitarian does not uniquely mean sacred.",
+    "Minimum ages, direct dates and contextual dates must remain distinct.",
+    "Species attribution must be based on context, direct biological identification or securely bounded chronology, never assumed from age alone.",
+    "Absence of preserved symbolic material is not evidence of absence of symbolic cognition."
+  ]
+}

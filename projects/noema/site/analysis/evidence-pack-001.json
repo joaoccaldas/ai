@@ -1,0 +1,123 @@
+{
+  "pack_id": "NOEMA-EVIDENCE-001",
+  "review_status": "MODEL_CURATED_SOURCE_VERIFIED_HUMAN_REVIEW_PENDING",
+  "publication_status": "RESEARCH_PREVIEW",
+  "counts": {
+    "sources": 6,
+    "claims": 6,
+    "hypotheses": 5
+  },
+  "claim_types": {
+    "ANCESTRAL_STATE_INFERENCE": 1,
+    "PHYLOGENETIC_DIRECTIONALITY": 1,
+    "BEHAVIORAL_ASSOCIATION": 1,
+    "MISSING_DATA_SENSITIVITY": 1,
+    "HISTORICAL_CAUSAL_INFERENCE": 1,
+    "METHODOLOGICAL_FRAMEWORK": 1
+  },
+  "epistemic_statuses": {
+    "SUPPORTED_MODEL_DEPENDENT": 1,
+    "SUPPORTED_SCOPE_LIMITED": 1,
+    "SUPPORTED": 1,
+    "SUPPORTED_METHOD_CRITIQUE": 1,
+    "SUPPORTED_WITH_ACTIVE_DEBATE": 1,
+    "SYNTHESIS": 1
+  },
+  "hypothesis_ledger": [
+    {
+      "id": "H001",
+      "title": "Big Gods caused the initial rise of sociopolitical complexity",
+      "status": "CHALLENGED_IN_CURRENT_PACK",
+      "support_count": 0,
+      "challenge_count": 3,
+      "related_count": 1,
+      "support_evidence_levels": {},
+      "challenge_evidence_levels": {
+        "E3": 3
+      },
+      "evidence_balance": "The selected evidence weighs against the simple causal form of this hypothesis, while methodological disagreement means the historical sequence should not be represented as settled by a single analysis.",
+      "scope_guard": true
+    },
+    {
+      "id": "H002",
+      "title": "Broad supernatural punishment can precede political complexity",
+      "status": "SUPPORTED_SCOPE_LIMITED",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 1,
+      "support_evidence_levels": {
+        "E3": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "Supported in the Austronesian phylogenetic study in this pack; global generalization remains untested here.",
+      "scope_guard": true
+    },
+    {
+      "id": "H003",
+      "title": "Punitive and knowledgeable gods can expand impartial prosociality",
+      "status": "SUPPORTED_BEHAVIORAL_SCOPE",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 2,
+      "support_evidence_levels": {
+        "E3": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "Directly supported by the eight-society behavioral study in this pack, but this mechanism is not equivalent to causing the historical emergence of states or megasocieties.",
+      "scope_guard": true
+    },
+    {
+      "id": "H004",
+      "title": "Animism is ancestral among coded hunter-gatherer religious traits",
+      "status": "SUPPORTED_MODEL_DEPENDENT",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 0,
+      "support_evidence_levels": {
+        "E3": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "Supported by the cited phylogenetic reconstruction, but it is an inference from present-day comparative data and should not be rendered as a direct archaeological observation of early Homo sapiens.",
+      "scope_guard": false
+    },
+    {
+      "id": "H005",
+      "title": "Ritual needs multi-level explanation",
+      "status": "METHODOLOGICAL_FRAME",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 0,
+      "support_evidence_levels": {
+        "E2": 1
+      },
+      "challenge_evidence_levels": {},
+      "evidence_balance": "Used as an analysis constraint for NOEMA rather than as a historical fact claim.",
+      "scope_guard": false
+    }
+  ],
+  "synthesis": {
+    "headline": "The first evidence pack rejects a one-variable story.",
+    "findings": [
+      "Micro-level prosocial effects and macro-level historical causation are separate questions. Evidence for one does not automatically establish the other.",
+      "Construct choice changes conclusions: 'moralizing high gods' is narrower than 'broad supernatural punishment', while behavioral studies may operationalize punitive and knowledgeable gods differently again.",
+      "Missingness is substantive historical information. In periods without written or ethnographic records, UNKNOWN must not be silently converted to ABSENT.",
+      "Phylogenetic methods are essential where cultures share ancestry, but their results remain sensitive to trees, coding and diffusion assumptions.",
+      "The current pack weighs against the simple claim that moralizing high gods caused the initial rise of sociopolitical complexity, while leaving open narrower mechanisms involving supernatural punishment, cooperation, maintenance and shared upstream drivers."
+    ],
+    "next_tests": [
+      "Harmonize supernatural-agent constructs across Pulotu, DRH, Seshat and relevant D-PLACE-linked societies before pooled analysis.",
+      "Run missing-data sensitivity as a required analysis branch, never an optional appendix.",
+      "Model lineage ancestry and known contact/diffusion separately.",
+      "Separate emergence, maintenance and expansion of social complexity as different outcomes.",
+      "Attach expert qualitative historical notes to every apparently decisive first/last occurrence."
+    ]
+  },
+  "epistemic_rules": [
+    "UNKNOWN is not ABSENT.",
+    "Association is not historical causation.",
+    "A phylogenetic reconstruction is a model-based inference, not direct evidence about a Paleolithic individual or site.",
+    "Moralizing high gods, broad supernatural punishment, and punitive/knowledgeable gods are distinct constructs unless a source explicitly equates them.",
+    "Cultural samples are not statistically independent merely because they are geographically separate.",
+    "Model-generated synthesis is analysis, never primary evidence."
+  ]
+}
