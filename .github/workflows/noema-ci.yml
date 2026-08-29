@@ -25,4 +25,23 @@ jobs:
       - run: pip install -e '.[dev]'
       - name: Compile package and standalone scripts
         run: python -m compileall -q src scripts tests
+      - name: Validate research JSON projections
+        run: |
+          python -m json.tool data/reviewed/evidence-pack-001.json >/dev/null
+          python -m json.tool site/data.json >/dev/null
+          python scripts/analyze_evidence_pack.py data/reviewed/evidence-pack-001.json --output /tmp/noema-analysis.json
+          python -m json.tool /tmp/noema-analysis.json >/dev/null
+      - name: Syntax-check observatory JavaScript
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          html=Path('site/index.html').read_text(encoding='utf-8')
+          scripts=re.findall(r'<script>(.*?)</script>', html, flags=re.S|re.I)
+          assert scripts, 'inline site script not found'
+          Path('/tmp/noema-site.js').write_text('\n'.join(scripts), encoding='utf-8')
+          assert '<title>NOEMA Observatory</title>' in html
+          assert 'Similarity generates a question, never a conclusion' in html
+          PY
+          node --check /tmp/noema-site.js
       - run: pytest
