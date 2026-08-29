@@ -1,0 +1,35 @@
+name: NOEMA D-PLACE Variable Audit
+
+on:
+  push:
+    paths:
+      - 'projects/noema/scripts/audit_dplace_religion_variables.py'
+      - '.github/workflows/noema-dplace-variable-audit.yml'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build D-PLACE religion variable audit
+        run: |
+          python scripts/audit_dplace_religion_variables.py --output /tmp/dplace-religion-variables.json
+          python -m json.tool /tmp/dplace-religion-variables.json >/dev/null
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/dplace-religion-variables.json'))
+          assert x['summary']['candidate_variables'] > 0
+          assert x['status'] == 'SOURCE_VARIABLE_CANDIDATES_NOT_EVIDENCE'
+          print(json.dumps(x['summary'],indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noema-dplace-religion-variable-audit
+          path: /tmp/dplace-religion-variables.json
