@@ -25,6 +25,10 @@ Updated: 2026-08-29
 - Independent local checks pass for provenance, deduplication, publication policy, temporal rejection, entity resolution and dependence-aware hypothesis updates.
 - GitHub reports PR #45 mergeable.
 
+## Activation gate
+
+PR #45 is the v0 activation change set. After merge, the default branch owns NOEMA CI, daily Crossref discovery and weekly D-PLACE benchmark workflows. Post-merge workflow results are the authoritative integration check.
+
 ## Blocked by connector/runtime, not represented as complete
 
 - Neon main-branch promotion: the current ChatGPT Neon connector exposes incompatible camelCase vs snake_case argument contracts for migration completion and subsequent DB calls.
