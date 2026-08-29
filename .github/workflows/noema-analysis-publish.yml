@@ -1,0 +1,64 @@
+name: NOEMA Analysis Projection
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/noema/data/reviewed/**'
+      - 'projects/noema/data/comparisons/**'
+      - 'projects/noema/src/noema/compare.py'
+      - 'projects/noema/src/noema/evidence.py'
+      - 'projects/noema/scripts/compare_deep_time.py'
+      - '.github/workflows/noema-analysis-publish.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  publish-analysis:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e .
+      - name: Build deterministic deep-time comparison
+        run: |
+          python scripts/compare_deep_time.py \
+            data/comparisons/deep-time-constructs.json \
+            data/reviewed/evidence-pack-002-deep-time.json \
+            data/reviewed/evidence-pack-003-homo-sapiens.json \
+            --output site/deep-time-comparison.json
+          python -m json.tool site/deep-time-comparison.json >/dev/null
+      - name: Build per-dossier analysis projections
+        run: |
+          mkdir -p site/analysis
+          for pack in data/reviewed/evidence-pack-*.json; do
+            stem=$(basename "${pack%.json}")
+            python scripts/analyze_evidence_pack.py "$pack" --output "site/analysis/${stem}.json"
+          done
+      - name: Commit generated analysis only when changed
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain -- site/deep-time-comparison.json site/analysis)" ]; then
+            echo "NOEMA analysis projections unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add site/deep-time-comparison.json site/analysis
+          git commit -m "analysis(noema): refresh deterministic projections [skip noema-analysis]"
+          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noema-analysis-projections
+          path: |
+            projects/noema/site/deep-time-comparison.json
+            projects/noema/site/analysis/*.json
+          retention-days: 90
