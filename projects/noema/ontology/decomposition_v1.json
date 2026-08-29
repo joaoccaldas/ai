@@ -1,6 +1,6 @@
 {
   "ontology_id": "NOEMA-DECOMPOSITION-V1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "purpose": "Decompose religious, spiritual, supernatural and ritual systems into comparable first-principle components without assuming that any tradition is internally uniform or historically descended from another.",
   "unit_of_comparison": "FEATURE_ASSERTION",
   "principles": [
@@ -18,8 +18,8 @@
   "dimensions": {
     "AGENCY_ONTOLOGY": {
       "description": "What kinds of non-ordinary agents or powers are posited?",
-      "facets": ["creator_deity", "high_god", "multiple_gods", "ancestors", "spirits", "nature_beings", "demons_or_harm_agents", "saints_or_intercessors", "impersonal_power", "fate_or_cosmic_order", "no_supernatural_agent_required"],
-      "agent_attributes": ["person_like", "embodied", "disembodied", "local", "universal", "omniscient", "morally_concerned", "punitive", "protective", "creator", "ancestor_linked", "place_linked", "animal_linked", "humanly_incarnated", "interventionist", "remote"]
+      "facets": ["supernatural_agents_generic", "creator_deity", "high_god", "multiple_gods", "ancestors", "dead_human_spirits", "spirits", "nonhuman_spirits_or_beings", "hybrid_human_divine_beings", "nature_beings", "demons_or_harm_agents", "saints_or_intercessors", "impersonal_power", "fate_or_cosmic_order", "no_supernatural_agent_required"],
+      "agent_attributes": ["person_like", "embodied", "disembodied", "local", "universal", "omniscient", "morally_concerned", "punitive", "protective", "creator", "ancestor_linked", "place_linked", "animal_linked", "humanly_incarnated", "interventionist", "communicates_with_living", "remote"]
     },
     "SELF_PERSONHOOD": {
       "description": "What is a person and what, if anything, persists?",
@@ -36,16 +36,16 @@
       "facets": ["animism", "sacred_landscape", "animal_personhood", "plant_personhood", "weather_agency", "celestial_agency", "earth_as_person", "human_nature_continuity", "human_nature_hierarchy", "stewardship", "dominion", "reciprocity", "taboo_ecology"]
     },
     "CAUSALITY_DIVINATION": {
-      "facets": ["omens", "oracles", "dream_divination", "spirit_divination", "lot_casting", "astrology", "mediumship", "possession_divination", "ancestor_messages", "sacred_text_divination", "necromancy", "healing_diagnosis", "magic_causality", "karma_like_moral_causality", "providence", "fate", "chance_accepted"]
+      "facets": ["divination", "omens", "oracles", "dream_divination", "spirit_divination", "lot_casting", "astrology", "mediumship", "possession_divination", "ancestor_messages", "sacred_text_divination", "necromancy", "healing_diagnosis", "magic_causality", "karma_like_moral_causality", "providence", "fate", "chance_accepted"]
     },
     "MORAL_ORDER": {
-      "facets": ["supernatural_punishment", "moralizing_high_god", "ancestor_sanction", "karma", "ritual_purity", "taboo", "sin", "honor_shame", "reciprocity", "cosmic_balance", "no_supernatural_moral_enforcement"]
+      "facets": ["supernatural_monitoring", "supernatural_punishment", "supernatural_prosocial_monitoring", "ritual_observance_monitoring", "moralizing_high_god", "explicit_moral_norms", "divine_command_morality", "cosmic_moral_order", "ancestor_sanction", "karma", "ritual_purity", "taboo", "sin", "honor_shame", "reciprocity", "cosmic_balance", "no_supernatural_moral_enforcement"]
     },
     "SACREDNESS": {
       "facets": ["sacred_profane_boundary", "consecrated_objects", "sacred_places", "sacred_times", "sacred_texts", "relics", "icons", "aniconism", "purity_boundary", "pilgrimage", "taboo_space"]
     },
     "RITUAL_GRAMMAR": {
-      "purposes": ["healing", "initiation", "funerary", "ancestor_relation", "divination", "protection", "fertility", "rain_or_weather", "hunting", "agricultural_abundance", "warfare", "atonement", "purification", "possession", "communion", "sacrifice", "pilgrimage", "calendrical_renewal", "coronation_or_legitimation", "marriage", "birth", "ecstatic_contact", "teaching_or_reenactment"],
+      "purposes": ["healing", "initiation", "funerary", "ancestor_relation", "veneration_of_dead", "divination", "protection", "fertility", "rain_or_weather", "hunting", "agricultural_abundance", "warfare", "atonement", "purification", "possession", "communion", "sacrifice", "pilgrimage", "calendrical_renewal", "coronation_or_legitimation", "marriage", "birth", "ecstatic_contact", "teaching_or_reenactment"],
       "actions": ["prayer", "chant", "song", "drumming", "dance", "procession", "prostration", "meditation", "silence", "fasting", "feasting", "offering", "animal_sacrifice", "human_sacrifice", "libation", "incense_or_smoke", "fire", "water_immersion", "anointing", "bloodletting", "scarification", "tattooing", "masking", "costume", "sexual_rite", "pilgrimage", "circumambulation", "divination", "story_recitation", "scripture_reading", "icon_veneration", "relic_veneration", "grave_visitation", "ingestion", "inhalation", "purging", "sleep_or_dream_incubation"],
       "structure": ["individual", "dyadic", "small_group", "mass_collective", "synchronous", "asynchronous", "secret", "public", "specialist_led", "lay_led", "gender_restricted", "age_grade", "repetitive", "one_time", "calendar_fixed", "event_triggered", "high_cost", "low_cost"]
     },
@@ -56,10 +56,10 @@
       "context_variables": ["preparation", "dietary_restriction", "specialist_supervision", "music", "group_expectation", "narrative_frame", "sacred_space", "dose_known", "dose_unknown", "initiation_status"]
     },
     "EXPERIENCE_PHENOMENOLOGY": {
-      "facets": ["trance", "possession", "entity_encounter", "ancestor_encounter", "visions", "auditory_voices", "dream_revelation", "ego_dissolution", "unity", "nature_connectedness", "time_distortion", "out_of_body", "near_death_like", "death_rebirth", "soul_flight", "automatic_speech", "healing_sensation", "prophetic_certainty", "noetic_quality", "fear_or_terror", "ecstasy", "ineffability"]
+      "facets": ["trance", "possession", "trance_possession", "entity_encounter", "ancestor_encounter", "visions", "auditory_voices", "dream_revelation", "ego_dissolution", "unity", "nature_connectedness", "time_distortion", "out_of_body", "near_death_like", "death_rebirth", "soul_flight", "automatic_speech", "healing_sensation", "prophetic_certainty", "noetic_quality", "fear_or_terror", "ecstasy", "ineffability"]
     },
     "RELIGIOUS_SPECIALISTS": {
-      "roles": ["shaman", "priest", "healer", "medium", "diviner", "oracle", "prophet", "monastic", "ascetic", "spirit_medium", "witch_or_sorcerer", "ritual_elder", "hereditary_specialist", "lay_specialist"],
+      "roles": ["religious_specialist", "shaman", "priest", "healer", "medium", "diviner", "oracle", "prophet", "monastic", "ascetic", "spirit_medium", "witch_or_sorcerer", "ritual_elder", "hereditary_specialist", "lay_specialist"],
       "recruitment": ["hereditary", "elected", "initiatory_call", "vision_or_illness_call", "apprenticeship", "institutional_training", "charismatic", "unknown"],
       "functions": ["healing", "divination", "sacrifice", "teaching", "spirit_intermediation", "political_legitimation", "calendar_management", "funerary_officiation", "conflict_resolution", "rainmaking", "curse_or_counter_magic"]
     },
@@ -76,17 +76,7 @@
       "facets": ["shared_ancestry", "population_movement", "cultural_diffusion", "trade_contact", "intermarriage", "elite_emulation", "missionization", "conquest", "syncretism", "independent_convergence", "local_innovation", "ecological_constraint", "cognitive_constraint", "research_or_coding_artifact", "unknown"]
     },
     "EVIDENCE_INFERENCE_LADDER": {
-      "levels": [
-        "OBSERVED_PHYSICAL_TRACE",
-        "ANTHROPOGENIC_ACTION",
-        "RECURRENT_PATTERN",
-        "CONVENTIONALIZED_PRACTICE",
-        "INFORMATION_BEARING_SYSTEM_POSSIBLE",
-        "SEMANTIC_CONTENT_INFERRED",
-        "RITUAL_FUNCTION_INFERRED",
-        "RELIGIOUS_MEANING_INFERRED",
-        "THEOLOGICAL_DOCTRINE_ATTESTED"
-      ],
+      "levels": ["OBSERVED_PHYSICAL_TRACE", "ANTHROPOGENIC_ACTION", "RECURRENT_PATTERN", "CONVENTIONALIZED_PRACTICE", "INFORMATION_BEARING_SYSTEM_POSSIBLE", "SEMANTIC_CONTENT_INFERRED", "RITUAL_FUNCTION_INFERRED", "RELIGIOUS_MEANING_INFERRED", "THEOLOGICAL_DOCTRINE_ATTESTED"],
       "rule": "A higher level may not be inferred solely because a lower level is present."
     }
   },
