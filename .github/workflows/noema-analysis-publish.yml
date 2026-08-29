@@ -7,9 +7,12 @@ on:
     paths:
       - 'projects/noema/data/reviewed/**'
       - 'projects/noema/data/comparisons/**'
+      - 'projects/noema/site/societies.json'
       - 'projects/noema/src/noema/compare.py'
+      - 'projects/noema/src/noema/atlas.py'
       - 'projects/noema/src/noema/evidence.py'
       - 'projects/noema/scripts/compare_deep_time.py'
+      - 'projects/noema/scripts/build_human_meaning_atlas.py'
       - '.github/workflows/noema-analysis-publish.yml'
 
 permissions:
@@ -36,6 +39,15 @@ jobs:
             data/reviewed/evidence-pack-003-homo-sapiens.json \
             --output site/deep-time-comparison.json
           python -m json.tool site/deep-time-comparison.json >/dev/null
+      - name: Build deterministic Human Meaning Atlas
+        run: |
+          python scripts/build_human_meaning_atlas.py \
+            site/societies.json \
+            data/reviewed/evidence-pack-001.json \
+            data/reviewed/evidence-pack-002-deep-time.json \
+            data/reviewed/evidence-pack-003-homo-sapiens.json \
+            --output site/human-meaning-atlas.json
+          python -m json.tool site/human-meaning-atlas.json >/dev/null
       - name: Build per-dossier analysis projections
         run: |
           mkdir -p site/analysis
@@ -46,13 +58,13 @@ jobs:
       - name: Commit generated analysis only when changed
         run: |
           set -euo pipefail
-          if [ -z "$(git status --porcelain -- site/deep-time-comparison.json site/analysis)" ]; then
+          if [ -z "$(git status --porcelain -- site/deep-time-comparison.json site/human-meaning-atlas.json site/analysis)" ]; then
             echo "NOEMA analysis projections unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/deep-time-comparison.json site/analysis
+          git add site/deep-time-comparison.json site/human-meaning-atlas.json site/analysis
           git commit -m "analysis(noema): refresh deterministic projections [skip noema-analysis]"
           git push
       - uses: actions/upload-artifact@v4
@@ -60,5 +72,6 @@ jobs:
           name: noema-analysis-projections
           path: |
             projects/noema/site/deep-time-comparison.json
+            projects/noema/site/human-meaning-atlas.json
             projects/noema/site/analysis/*.json
           retention-days: 90
