@@ -1,0 +1,37 @@
+name: NOEMA Discovery
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  crossref-discovery:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Discover recent scholarly candidates
+        run: python projects/noema/scripts/discover_crossref.py --days 14 --rows 15 --output noema-crossref-candidates.json
+      - name: Validate discovery artifact
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('noema-crossref-candidates.json')
+          data=json.loads(p.read_text())
+          assert data['candidate_count'] == len(data['candidates'])
+          assert all(x['status']=='CANDIDATE_UNREVIEWED' for x in data['candidates'])
+          print('validated', data['candidate_count'], 'candidates')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noema-crossref-candidates
+          path: noema-crossref-candidates.json
+          retention-days: 30
