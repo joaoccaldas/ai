@@ -1,18 +1,29 @@
 {
   "dataset_id": "NOEMA-RELIGION-DECOMPOSITION-PULOTU-V1",
-  "generated_at": "2026-08-29T06:54:37.791391+00:00",
   "status": "research-preview",
   "source": {
     "name": "Pulotu: Database of Austronesian Supernatural Beliefs and Practices",
     "upstream_repo": "https://github.com/D-PLACE/dplace-dataset-pulotu",
+    "upstream_ref": "main",
     "files": {
       "variables.csv": "https://raw.githubusercontent.com/D-PLACE/dplace-dataset-pulotu/main/cldf/variables.csv",
       "codes.csv": "https://raw.githubusercontent.com/D-PLACE/dplace-dataset-pulotu/main/cldf/codes.csv",
       "societies.csv": "https://raw.githubusercontent.com/D-PLACE/dplace-dataset-pulotu/main/cldf/societies.csv",
       "data.csv": "https://raw.githubusercontent.com/D-PLACE/dplace-dataset-pulotu/main/cldf/data.csv"
     },
+    "file_sha256": {
+      "variables.csv": "e782d2364f82cfc42b48b87a4ab2a4e4283dbe591df28bd951cdc39eb62de1d0",
+      "codes.csv": "9e4ff33abdce2f4937c9f8b503dfe6ae2085a311e89a9b762b6d37a6504c11a9",
+      "societies.csv": "b3914cc8059d6f4cc671938a0ad29682f877528dc2f2e98f19537f2474d09b57",
+      "data.csv": "3227a8aeec596b65238634f127ff1a840c597fa51ddb28739a2e35052b7aa7cf"
+    },
+    "source_digest": "a98e42a1f63e6366f07e183858ace93eb1f5f06dfb6c7ca11f0cfc0f2dd6cde3",
     "attribution": "Watts et al. (2015), Pulotu; CLDF distribution maintained in D-PLACE ecosystem.",
     "license_rule": "Redistribution must follow the license and attribution terms of the upstream dataset/repository."
+  },
+  "crosswalk": {
+    "mapping_version": "1.1.0",
+    "mapping_sha256": "6d4fb2dab2187ea70f37fdec885a3902cf9eb6d9edf576ca97cacef36efcf0f0"
   },
   "semantics": {
     "mapped_feature": "NOEMA crosswalk applied to an upstream coded variable; mapping itself remains reviewable.",
