@@ -1,0 +1,65 @@
+name: NOEMA Media Candidate Discovery
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '43 6 * * 3'
+  push:
+    paths:
+      - 'projects/noema/scripts/discover_wikimedia_media.py'
+      - 'projects/noema/src/noema/media.py'
+      - 'projects/noema/ontology/media_v1.json'
+      - 'projects/noema/data/reference/belief-catalog-v1.json'
+      - '.github/workflows/noema-media-discovery.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: noema-media-discovery-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e .
+      - name: Discover Commons candidates without approving them
+        run: |
+          python scripts/discover_wikimedia_media.py --per-entity 3
+          python -m json.tool data/candidates/wikimedia-media-candidates.json >/dev/null
+          python - <<'PY'
+          import json
+          d=json.load(open('data/candidates/wikimedia-media-candidates.json'))
+          assert d['status'] == 'PENDING_IDENTITY_AND_RIGHTS_REVIEW'
+          assert all(x['decision'] == 'PENDING_REVIEW' for x in d['candidates'])
+          assert all(x['identity_match_status'] == 'PENDING_REVIEW' for x in d['candidates'])
+          assert all(x['rights_review_status'] == 'PENDING_REVIEW' for x in d['candidates'])
+          assert all(x['source_page_url'].startswith('https://commons.wikimedia.org/') for x in d['candidates'])
+          print({'entities': d['entities_queried'], 'candidates': d['candidate_count'], 'errors': len(d['errors'])})
+          PY
+      - name: Commit candidate metadata only when changed
+        run: |
+          file='data/candidates/wikimedia-media-candidates.json'
+          if git status --porcelain -- "$file" | grep -q .; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add "$file"
+            git commit -m 'data(noema): refresh media candidates [skip noema-media]'
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          else
+            echo 'No media candidate change.'
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noema-media-candidates
+          path: projects/noema/data/candidates/wikimedia-media-candidates.json

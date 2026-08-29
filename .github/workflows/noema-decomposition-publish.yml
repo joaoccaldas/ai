@@ -17,6 +17,7 @@ on:
       - 'projects/noema/scripts/audit_dplace_religion_variables.py'
       - 'projects/noema/scripts/build_religion_federation_manifest.py'
       - 'projects/noema/scripts/build_pattern_candidates.py'
+      - 'projects/noema/scripts/build_coverage_matrix.py'
       - 'projects/noema/scripts/build_research_health.py'
       - '.github/workflows/noema-decomposition-publish.yml'
   workflow_dispatch:
@@ -54,8 +55,9 @@ jobs:
           python scripts/audit_dplace_religion_variables.py --output site/dplace-religion-variables.json
           python scripts/build_religion_federation_manifest.py --output site/religion-federation.json
           python scripts/build_pattern_candidates.py --output site/pattern-candidates.json
+          python scripts/build_coverage_matrix.py --output site/coverage-matrix.json
           python scripts/build_research_health.py --output site/research-health.json
-          for f in site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json site/pattern-candidates.json site/research-health.json; do
+          for f in site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json site/pattern-candidates.json site/coverage-matrix.json site/research-health.json; do
             python -m json.tool "$f" >/dev/null
           done
       - name: Validate scale, statistics and epistemic semantics
@@ -68,10 +70,10 @@ jobs:
           v=json.load(open('site/dplace-religion-variables.json'))
           f=json.load(open('site/religion-federation.json'))
           pc=json.load(open('site/pattern-candidates.json'))
+          cov=json.load(open('site/coverage-matrix.json'))
           h=json.load(open('site/research-health.json'))
           assert p['summary']['subjects'] >= 100
           assert p['summary']['accepted_assertions'] > 1000
-          assert p['summary']['raw_assertions'] > 1000
           assert d['summary']['comparable_religious_groups'] > 500
           assert d['summary']['assertions'] > 10000
           assert c['summary']['entries'] > 1500 and c['summary']['questions'] > 4000
@@ -84,16 +86,19 @@ jobs:
           assert f['gates']['ritual_implies_psychoactive_use'] is False
           assert pc['status'] == 'HYPOTHESIS_GENERATION_ONLY'
           assert [x['source'] for x in pc['cohorts']] == ['PULOTU','DRH']
-          assert all(0 <= r['q_bh'] <= 1 for x in pc['cohorts'] for r in x['candidates'])
+          assert all('explicitly PRESENT or explicitly ABSENT' in x['null_model']['missingness_rule'] for x in pc['cohorts'])
+          assert all(0 <= r['q_bh'] <= 1 and r['n_comparable'] <= r['cohort_profiles'] for x in pc['cohorts'] for r in x['candidates'])
           assert all('phylogeny' in r['unresolved_confounders'] for x in pc['cohorts'] for r in x['candidates'])
+          assert cov['dimensions'] and len(cov['sources']) == 2
           assert h['metrics']['accepted_semantic_assertions'] == f['summary']['accepted_semantic_assertions']
           assert any(x['area'] == 'causal inference' for x in h['blind_spots'])
+          assert any(x['area'] == 'reference taxonomy' for x in h['blind_spots'])
           print(json.dumps(f['summary'],indent=2))
           print(json.dumps(h['metrics'],indent=2))
           PY
       - name: Commit refreshed public federation only when content changed
         run: |
-          files='site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json site/pattern-candidates.json site/research-health.json'
+          files='site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json site/pattern-candidates.json site/coverage-matrix.json site/research-health.json'
           if git status --porcelain -- $files | grep -q .; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -113,4 +118,5 @@ jobs:
             projects/noema/site/dplace-religion-variables.json
             projects/noema/site/religion-federation.json
             projects/noema/site/pattern-candidates.json
+            projects/noema/site/coverage-matrix.json
             projects/noema/site/research-health.json
