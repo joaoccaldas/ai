@@ -1,0 +1,149 @@
+{
+  "queue_id": "NOEMA-DISCOVERY-PRESSURE-2026-08-29",
+  "status": "CANDIDATE_UNREVIEWED",
+  "source": "NOEMA discovery triage supplied from the active discovery pipeline",
+  "promotion_rule": "No record in this file is evidence. Scholarly source verification, licensing/provenance review, claim extraction and human review remain required.",
+  "candidates": [
+    {
+      "id": "DISC-20260829-GUO-BEADS",
+      "title": "Reconstructing the Life History of Double Perforated Ivory Beads…",
+      "authors": "Guo et al.",
+      "published": "2026-08-12",
+      "doi": "10.1007/s10816-026-09818-9",
+      "triage": "RECENT_PUBLICATION",
+      "proposed_facets": [
+        "MATERIAL_AND_SPACE::bead_or_ornament",
+        "MATERIAL_AND_SPACE::pigment",
+        "EVIDENCE_INFERENCE_LADDER::OBSERVED_PHYSICAL_TRACE",
+        "EVIDENCE_INFERENCE_LADDER::ANTHROPOGENIC_ACTION"
+      ],
+      "pressure": ["pigment_residue_may_be_production_related", "material_trace_does_not_equal_symbolic_intention"],
+      "review_target": "HS graphic/symbolic hypotheses"
+    },
+    {
+      "id": "DISC-20260829-FORTE-ORTOLEVA",
+      "title": "Performing Power and Transitional Space…",
+      "authors": "Forte & Ortoleva",
+      "published": "2026-08-20",
+      "doi": "10.1007/s10816-026-09820-1",
+      "triage": "RECENT_PUBLICATION",
+      "proposed_facets": ["MATERIAL_AND_SPACE::tomb", "MATERIAL_AND_SPACE::acoustic_design", "RITUAL_GRAMMAR::procession"],
+      "pressure": ["sensory_architecture", "multimodal_model_interpretation_requires_observation_guard"],
+      "review_target": "ritual space / sensory architecture construct"
+    },
+    {
+      "id": "DISC-20260829-PIEN",
+      "title": "Non-normative 17th-century burial at Pień",
+      "authors": "Poliński et al.",
+      "published": "2026-07-30",
+      "doi": "10.1016/j.jasrep.2026.105967",
+      "triage": "RECENT_2026",
+      "proposed_facets": ["DEATH_AFTERLIFE::apotropaic_treatment", "MORAL_ORDER::taboo", "RITUAL_GRAMMAR::protection", "MATERIAL_AND_SPACE::grave"],
+      "pressure": ["actions_are_observed_belief_label_is_inferred", "vampire_is_historiographic_or_popular_label_not_primary_class"],
+      "review_target": "apotropaic / anti-demonic mortuary practice"
+    },
+    {
+      "id": "DISC-20260829-KILLIN",
+      "title": "Behavioral Modernity, Neanderthals and Homo sapiens: a Case for Concept Retirement",
+      "authors": "Killin",
+      "published": "2026-01-19",
+      "doi": "10.1007/s13752-025-00527-2",
+      "triage": "CONCEPTUAL_HIGH_RELEVANCE",
+      "proposed_facets": ["EVIDENCE_INFERENCE_LADDER::RECURRENT_PATTERN"],
+      "pressure": ["retire_behavioral_modernity_umbrella", "compare_observable_constructs_instead"],
+      "review_target": "cross-Homo comparison ontology"
+    },
+    {
+      "id": "DISC-20260829-ORFANOU",
+      "title": "Late Bronze Age mortuary practices in Central Europe",
+      "authors": "Orfanou et al.",
+      "published": "2026-02-24",
+      "doi": "10.1038/s41467-026-69895-y",
+      "triage": "ANCIENT_DNA_MORTUARY",
+      "proposed_facets": ["HISTORICAL_MECHANISM::population_movement", "HISTORICAL_MECHANISM::cultural_diffusion", "HISTORICAL_MECHANISM::local_innovation", "RITUAL_GRAMMAR::funerary"],
+      "pressure": ["culture_not_reducible_to_genes", "mortuary_variation_not_explained_by_major_ancestry_or_mobility_difference"],
+      "review_target": "mortuary transmission mechanism discriminator"
+    },
+    {
+      "id": "DISC-20260829-CUMMINGS",
+      "title": "Kinship and tomb architecture in northern Scotland",
+      "authors": "Cummings et al.",
+      "published": "2026",
+      "doi": "10.15184/aqy.2026.10291",
+      "triage": "KINSHIP_TOMB",
+      "proposed_facets": ["SOCIAL_FUNCTION::kinship_organization", "MATERIAL_AND_SPACE::tomb", "RITUAL_GRAMMAR::funerary"],
+      "pressure": ["biological_descent_and_social_kinship_must_be_separate", "published_erratum_must_attach_before_review"],
+      "review_target": "kinship layer"
+    },
+    {
+      "id": "DISC-20260829-MATTILA",
+      "title": "Ajvide co-burials and biological relatedness",
+      "authors": "Mattila et al.",
+      "published": "2026-02-18",
+      "doi": "10.1098/rspb.2025.0813",
+      "triage": "SCANDINAVIAN_COBURIAL",
+      "proposed_facets": ["SOCIAL_FUNCTION::kinship_organization", "RITUAL_GRAMMAR::funerary", "MATERIAL_AND_SPACE::grave"],
+      "pressure": ["mortuary_grouping_beyond_nuclear_family", "biological_kinship_does_not_imply_ancestor_worship"],
+      "review_target": "kinship ↔ mortuary organization"
+    },
+    {
+      "id": "DISC-20260829-OBIMD",
+      "title": "OBIMD: Multi-modal Dataset for Contextual Interpretation of Oracle Bone Inscriptions",
+      "published": "2026-03-14",
+      "doi": "10.1038/s41597-026-06967-0",
+      "triage": "STRUCTURED_DATASET",
+      "proposed_facets": ["CAUSALITY_DIVINATION::oracles", "MATERIAL_AND_SPACE::inscription", "TRANSMISSION::scripture"],
+      "pressure": ["dataset_is_infrastructure_not_semantic_evidence", "divination_language_and_ritual_can_be_joined_contextually"],
+      "review_target": "divination / writing / historical-language layer"
+    },
+    {
+      "id": "DISC-20260829-NEENA",
+      "title": "NEENA isotopic dataset",
+      "published": "2026-01-14",
+      "doi": "10.1038/s41597-025-06477-5",
+      "triage": "STRUCTURED_DATASET",
+      "proposed_facets": ["HISTORICAL_MECHANISM::population_movement"],
+      "pressure": ["mobility_and_diet_context_layer", "context_not_religious_meaning"],
+      "review_target": "mobility / provenance substrate"
+    },
+    {
+      "id": "DISC-20260829-CHLEBY",
+      "title": "Chleby Neolithic enclosure",
+      "published": "2026-08-25",
+      "triage": "FIELD_DISCOVERY_NON_PEER_REVIEWED",
+      "proposed_facets": ["MATERIAL_AND_SPACE::enclosure", "MATERIAL_AND_SPACE::calendar_or_astronomical_alignment", "SACREDNESS::sacred_places"],
+      "pressure": ["ritual_center_is_interpretation", "astronomical_alignment_requires_formal_test"],
+      "review_target": "astronomical / ritual architecture",
+      "publication_gate": "SEGREGATE_FROM_SCHOLARLY_EVIDENCE"
+    },
+    {
+      "id": "DISC-20260829-BENTZ-DUTKIEWICZ",
+      "title": "Aurignacian geometric signs and conventional organization",
+      "authors": "Bentz & Dutkiewicz",
+      "published": "2026",
+      "triage": "HIGH_VALUE_REVIEW",
+      "proposed_facets": [
+        "MATERIAL_AND_SPACE::inscription",
+        "EVIDENCE_INFERENCE_LADDER::RECURRENT_PATTERN",
+        "EVIDENCE_INFERENCE_LADDER::CONVENTIONALIZED_PRACTICE",
+        "EVIDENCE_INFERENCE_LADDER::INFORMATION_BEARING_SYSTEM_POSSIBLE"
+      ],
+      "pressure": ["conventional_signs_do_not_equal_writing", "semantic_content_requires_additional_evidence"],
+      "review_target": "HS graphic/symbolic hypotheses"
+    }
+  ],
+  "cross_candidate_patterns": [
+    {
+      "id": "PRESSURE-CULTURE-NE-GENES",
+      "statement": "Mortuary and cultural transmission models must discriminate population movement, cultural affiliation/diffusion, convergence and local innovation.",
+      "candidate_ids": ["DISC-20260829-ORFANOU", "DISC-20260829-CUMMINGS", "DISC-20260829-MATTILA"],
+      "status": "HYPOTHESIS_PRESSURE_NOT_EVIDENCE"
+    },
+    {
+      "id": "PRESSURE-SYMBOLIC-LADDER",
+      "statement": "Replace broad symbolic coding with a ladder from physical modification to recurrent pattern, conventionalization, possible information-bearing system, semantic content and ritual/religious interpretation.",
+      "candidate_ids": ["DISC-20260829-GUO-BEADS", "DISC-20260829-BENTZ-DUTKIEWICZ"],
+      "status": "ONTOLOGY_PRESSURE_NOT_EVIDENCE"
+    }
+  ]
+}
