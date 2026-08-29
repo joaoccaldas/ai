@@ -47,7 +47,7 @@ jobs:
       - name: Commit benchmark projection when upstream changed
         run: |
           set -euo pipefail
-          if git diff --quiet -- projects/noema/site/societies.json; then
+          if [ -z "$(git status --porcelain -- projects/noema/site/societies.json)" ]; then
             echo "D-PLACE benchmark projection unchanged."
             exit 0
           fi
