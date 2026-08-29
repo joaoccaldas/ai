@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import datetime as dt
+import html
 import json
 import math
 import os
@@ -41,6 +42,12 @@ SELECT_FIELDS = (
     "is-referenced-by-count,created,indexed"
 )
 
+REASON_PRIORITY = {
+    "RECENT_PUBLICATION": 3,
+    "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+    "NEWLY_INDEXED_LEGACY": 1,
+}
+
 
 def get_json(url: str, attempts: int = 3) -> dict[str, Any]:
     request = urllib.request.Request(
@@ -62,6 +69,12 @@ def get_json(url: str, attempts: int = 3) -> dict[str, Any]:
         if attempt < attempts - 1:
             time.sleep(2**attempt)
     raise RuntimeError(f"Crossref request failed after {attempts} attempts: {last_error}")
+
+
+def _clean_text(value: str | None) -> str:
+    value = html.unescape(value or "")
+    value = re.sub(r"<[^>]+>", " ", value)
+    return re.sub(r"\s+", " ", value).strip()
 
 
 def _date_from_parts(value: Any) -> dt.date | None:
@@ -93,17 +106,26 @@ def _domain_hits(title: str, container: str | None, subjects: list[str]) -> list
     return hits
 
 
+def _discovery_reason(published_date: dt.date | None, cutoff: dt.date, today: dt.date) -> str:
+    if published_date and published_date > today:
+        return "UPCOMING_OR_AHEAD_OF_PRINT"
+    if published_date and published_date >= cutoff:
+        return "RECENT_PUBLICATION"
+    return "NEWLY_INDEXED_LEGACY"
+
+
 def _score_candidate(
     *,
     hits: list[str],
     work_type: str | None,
     citation_count: int,
-    published_date: dt.date | None,
-    cutoff: dt.date,
+    reason: str,
 ) -> float:
     score = min(len(hits), 5) * 2.0
-    if published_date and published_date >= cutoff:
+    if reason == "RECENT_PUBLICATION":
         score += 6.0
+    elif reason == "UPCOMING_OR_AHEAD_OF_PRINT":
+        score += 4.0
     type_bonus = {
         "journal-article": 2.0,
         "proceedings-article": 1.5,
@@ -116,9 +138,10 @@ def _score_candidate(
     return round(score, 3)
 
 
-def discover(from_index_date: str, rows: int = 20) -> list[dict[str, Any]]:
+def discover(from_index_date: str, rows: int = 20, today: dt.date | None = None) -> list[dict[str, Any]]:
     by_key: dict[str, dict[str, Any]] = {}
     cutoff = dt.date.fromisoformat(from_index_date)
+    today = today or dt.date.today()
     mailto = os.environ.get("CROSSREF_MAILTO", "").strip()
     for query in QUERIES:
         request_params: dict[str, Any] = {
@@ -136,24 +159,23 @@ def discover(from_index_date: str, rows: int = 20) -> list[dict[str, Any]]:
             url = item.get("URL") or (f"https://doi.org/{doi}" if doi else "")
             if not url:
                 continue
-            title = (item.get("title") or [""])[0].strip()
+            title = _clean_text((item.get("title") or [""])[0])
             if not title:
                 continue
-            container = (item.get("container-title") or [None])[0]
-            subjects = item.get("subject") or []
+            container = _clean_text((item.get("container-title") or [None])[0]) or None
+            subjects = [_clean_text(str(x)) for x in (item.get("subject") or []) if _clean_text(str(x))]
             hits = _domain_hits(title, container, subjects)
             if not hits:
                 continue
             citation_count = int(item.get("is-referenced-by-count", 0) or 0)
             published_date = _date_from_parts(item.get("published") or {})
             indexed_date = _indexed_date(item.get("indexed") or {})
-            reason = "RECENT_PUBLICATION" if published_date and published_date >= cutoff else "NEWLY_INDEXED_LEGACY"
+            reason = _discovery_reason(published_date, cutoff, today)
             relevance_score = _score_candidate(
                 hits=hits,
                 work_type=item.get("type"),
                 citation_count=citation_count,
-                published_date=published_date,
-                cutoff=cutoff,
+                reason=reason,
             )
             key = doi or url
             candidate = {
@@ -181,7 +203,7 @@ def discover(from_index_date: str, rows: int = 20) -> list[dict[str, Any]]:
     return sorted(
         by_key.values(),
         key=lambda x: (
-            x["discovery_reason"] == "RECENT_PUBLICATION",
+            REASON_PRIORITY[x["discovery_reason"]],
             x["relevance_score"],
             x["published_date"] or "",
             x["citation_count"],
@@ -195,25 +217,30 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--days", type=int, default=14)
     parser.add_argument("--rows", type=int, default=15)
+    parser.add_argument("--priority-limit", type=int, default=30)
     parser.add_argument("--output", type=Path, default=Path("noema-crossref-candidates.json"))
     args = parser.parse_args()
     today = dt.date.today()
     from_index_date = (today - dt.timedelta(days=max(1, args.days))).isoformat()
-    candidates = discover(from_index_date, rows=max(1, min(args.rows, 100)))
+    candidates = discover(from_index_date, rows=max(1, min(args.rows, 100)), today=today)
     reason_counts: dict[str, int] = {}
     for candidate in candidates:
         reason = candidate["discovery_reason"]
         reason_counts[reason] = reason_counts.get(reason, 0) + 1
+    priority_limit = max(1, min(args.priority_limit, len(candidates))) if candidates else 0
+    priority_keys = [x.get("doi") or x["canonical_url"] for x in candidates[:priority_limit]]
     output = {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "from_index_date": from_index_date,
         "candidate_count": len(candidates),
+        "priority_candidate_count": priority_limit,
+        "priority_keys": priority_keys,
         "reason_counts": reason_counts,
         "queries": list(QUERIES),
         "candidates": candidates,
     }
     args.output.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({"output": str(args.output), "candidate_count": len(candidates), "reason_counts": reason_counts}))
+    print(json.dumps({"output": str(args.output), "candidate_count": len(candidates), "priority_candidate_count": priority_limit, "reason_counts": reason_counts}))
 
 
 if __name__ == "__main__":
