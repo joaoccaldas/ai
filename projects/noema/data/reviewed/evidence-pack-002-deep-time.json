@@ -1,7 +1,7 @@
 {
   "pack_id": "NOEMA-EVIDENCE-002",
   "title": "Neanderthal mortuary and symbolic behavior: observation before interpretation",
-  "version": 1,
+  "version": 2,
   "generated_at": "2026-08-29T01:46:00Z",
   "review_status": "MODEL_CURATED_SOURCE_VERIFIED_HUMAN_REVIEW_PENDING",
   "publication_status": "RESEARCH_PREVIEW",
@@ -115,6 +115,7 @@
       "evidence_level": "E2",
       "epistemic_status": "SYNTHESIS",
       "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Methodological synthesis across Paleolithic mortuary research; not a site-specific behavioral or theological claim.",
       "supports": ["DT-H004"],
       "challenges": []
     },
@@ -128,6 +129,7 @@
       "evidence_level": "E3",
       "epistemic_status": "SUPPORTED_SITE_SPECIFIC",
       "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "The articulated Shanidar individual and its depositional context; the inference does not establish flower offerings, ritual motive, formal religion or afterlife belief.",
       "supports": ["DT-H001"],
       "challenges": []
     },
@@ -141,6 +143,7 @@
       "evidence_level": "E4",
       "epistemic_status": "STRONG_SITE_SPECIFIC",
       "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "La Ferrassie 8 and the cited multidisciplinary context; supports purposeful deposition of this child but does not identify a specific cosmology or funerary theology.",
       "supports": ["DT-H001"],
       "challenges": []
     },
@@ -154,6 +157,7 @@
       "evidence_level": "E4",
       "epistemic_status": "STRONG_SITE_SPECIFIC",
       "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "The Los Aviones assemblage and its stratigraphic context; the U-series result is a minimum age from overlying flowstone, not a direct date on each object.",
       "supports": ["DT-H002"],
       "challenges": []
     },
@@ -167,6 +171,7 @@
       "evidence_level": "E1",
       "epistemic_status": "SPECULATIVE_EXTRAPOLATION",
       "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "An author extrapolation beyond the directly observed Los Aviones material; retained for hypothesis generation only and not treated as evidence of a >500 ka symbolic tradition.",
       "supports": ["DT-H003"],
       "challenges": []
     },
@@ -180,6 +185,7 @@
       "evidence_level": "E4",
       "epistemic_status": "STRONG_SITE_SPECIFIC",
       "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "The La Roche-Cotard marks, cave closure chronology and archaeological attribution; supports anthropogenic patterned marks in this context, not a unique ritual or religious interpretation.",
       "supports": ["DT-H002"],
       "challenges": []
     },
@@ -193,6 +199,7 @@
       "evidence_level": "E3",
       "epistemic_status": "SUPPORTED_INTERPRETATION",
       "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "The authors' interpretation of the La Roche-Cotard marks as abstract design; abstract design does not uniquely imply sacred, ritual or religious meaning.",
       "supports": ["DT-H002"],
       "challenges": []
     }
@@ -239,9 +246,9 @@
       "title": "Intentional burial proves formal religion or afterlife doctrine",
       "statement": "An intentional Neanderthal burial is sufficient evidence for a formal religion or explicit belief in an afterlife.",
       "status": "NOT_ESTABLISHED_BY_CURRENT_EVIDENCE",
-      "supporting_claim_ids": [],
+      "supporting_claim_ids": ["DT-C001"],
       "challenging_claim_ids": [],
-      "related_claim_ids": ["DT-C001", "DT-C002", "DT-C003"],
+      "related_claim_ids": ["DT-C002", "DT-C003"],
       "evidence_balance": "The current evidence supports mortuary behavior in specific contexts but underdetermines motive and cosmology. The hypothesis is intentionally retained as a tempting inference that NOEMA must not silently make.",
       "rivals": ["Care, grief or social memory", "Hygienic or pragmatic corpse management", "Ritual without afterlife doctrine", "Symbolic commemoration without organized religion"],
       "falsification_or_discrimination": ["Seek repeated structured associations, offerings or spatial conventions that constrain interpretation", "Compare mortuary treatment with settlement and non-mortuary depositional patterns", "Do not use burial alone as the discriminating observation"]
