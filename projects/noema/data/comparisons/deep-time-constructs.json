@@ -1,0 +1,50 @@
+{
+  "comparison_id": "NOEMA-DEEP-TIME-COMPARE-001",
+  "title": "Neanderthal and early Homo sapiens behavior without species ranking",
+  "principle": "Compare source-bounded behavioral constructs. Never convert the matrix into a scalar species score, cognitive ranking, or evolutionary ladder.",
+  "left_pack": "../reviewed/evidence-pack-002-deep-time.json",
+  "right_pack": "../reviewed/evidence-pack-003-homo-sapiens.json",
+  "left_label": "Neanderthal-associated evidence",
+  "right_label": "Early Homo sapiens-associated evidence",
+  "rows": [
+    {
+      "id": "MORTUARY",
+      "construct": "Structured / intentional mortuary behavior",
+      "left": {"type": "hypothesis", "id": "DT-H001"},
+      "right": {"type": "hypothesis", "id": "HS-H003"},
+      "comparability": "HIGH_AT_CONSTRUCT_LEVEL",
+      "interpretation": "Both dossiers support intentional or structured mortuary behavior in particular contexts. Neither supports uniform species-wide practice or a specific theology."
+    },
+    {
+      "id": "MATERIAL",
+      "construct": "Deliberate display / abstract / graphic material behavior",
+      "left": {"type": "hypothesis", "id": "DT-H002"},
+      "right": {"type": "hypothesis", "id": "HS-H001"},
+      "comparability": "PARTIAL_DIFFERENT_MATERIAL_CLASSES",
+      "interpretation": "Both sides contain deliberate material patterning or display behavior, but shells, pigments, engravings and graphic designs are not interchangeable traits and need artifact-level analysis."
+    },
+    {
+      "id": "BURIAL_THEOLOGY",
+      "construct": "Does burial establish religion or afterlife doctrine?",
+      "left": {"type": "hypothesis", "id": "DT-H004"},
+      "right": {"type": "claim", "id": "HS-C005"},
+      "comparability": "EPISTEMIC_GUARDRAIL",
+      "interpretation": "The same inferential boundary applies on both sides: mortuary evidence can support purposeful treatment of the dead while leaving cosmology underdetermined."
+    },
+    {
+      "id": "INTERACTION",
+      "construct": "Behavioral overlap can arise through more than one evolutionary process",
+      "left": {"type": "hypothesis", "id": "DT-H003"},
+      "right": {"type": "hypothesis", "id": "HS-H004"},
+      "comparability": "MECHANISM_LEVEL_ONLY",
+      "interpretation": "Ancestral inheritance, convergence and inter-population transmission are rival mechanisms. Similar behavior cannot identify one mechanism without chronology, contact and population-history evidence."
+    }
+  ],
+  "forbidden_outputs": [
+    "species intelligence score",
+    "cognitive superiority ranking",
+    "single date for the origin of symbolism",
+    "religion present/absent classification from burial alone",
+    "shared meaning inferred from shared material form"
+  ]
+}
