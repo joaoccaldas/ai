@@ -1,5 +1,5 @@
 {
-  "mapping_version": "1.0.0",
+  "mapping_version": "1.1.0",
   "sources": {
     "PULOTU": {
       "source_repo": "D-PLACE/dplace-dataset-pulotu",
@@ -28,13 +28,34 @@
         "20": [{"dimension":"AGENCY_ONTOLOGY","facet":"impersonal_power","qualifier":"mana_genealogy"},{"dimension":"SOCIAL_FUNCTION","facet":"kinship_organization","conditional":true}],
         "21": [{"dimension":"AGENCY_ONTOLOGY","facet":"impersonal_power","qualifier":"mana_personal_quality"}],
         "22": [{"dimension":"AGENCY_ONTOLOGY","facet":"impersonal_power","qualifier":"mana_spiritual_religious"}],
+        "23": [{"dimension":"HISTORICAL_MECHANISM","facet":"population_movement","qualifier":"pre_austronesian_population_context","conditional":true}],
         "24": [{"dimension":"HISTORICAL_MECHANISM","facet":"missionization","qualifier":"christian_influence_on_supernatural_belief"}],
         "25": [{"dimension":"HISTORICAL_MECHANISM","facet":"cultural_diffusion","qualifier":"hindu_buddhist_influence_on_supernatural_belief"}],
         "26": [{"dimension":"HISTORICAL_MECHANISM","facet":"trade_contact","qualifier":"contact_frequency_proxy"}],
         "27": [{"dimension":"HISTORICAL_MECHANISM","facet":"missionization","qualifier":"islamic_influence_on_supernatural_belief"}],
         "36": [{"dimension":"RITUAL_GRAMMAR","facet":"offering","qualifier":"costly_sacrifice_or_offering"},{"dimension":"SOCIAL_FUNCTION","facet":"costly_signaling","conditional":true}],
         "37": [{"dimension":"RITUAL_GRAMMAR","facet":"warfare","qualifier":"headhunting","mapping_note":"Purpose must remain source-specific; do not classify as religious solely because Pulotu places it in supernatural practices."}],
-        "38": [{"dimension":"RELIGIOUS_SPECIALISTS","facet":"priest","qualifier":"political_religious_differentiation_proxy","conditional":true}]
+        "38": [{"dimension":"RELIGIOUS_SPECIALISTS","facet":"priest","qualifier":"political_religious_differentiation_proxy","conditional":true}],
+        "40": [{"dimension":"RITUAL_GRAMMAR","facet":"initiation","qualifier":"genital_cutting_rite","conditional":true}],
+        "41": [{"dimension":"RITUAL_GRAMMAR","facet":"initiation","qualifier":"tooth_pulling_rite","conditional":true}],
+        "42": [{"dimension":"RITUAL_GRAMMAR","facet":"tattooing","qualifier":"body_marking_rite","conditional":true}],
+        "43": [{"dimension":"RITUAL_GRAMMAR","facet":"scarification","qualifier":"body_marking_rite","conditional":true}],
+        "44": [{"dimension":"RITUAL_GRAMMAR","facet":"initiation","qualifier":"piercing_rite","conditional":true}],
+        "66": [{"dimension":"TRANSMISSION","facet":"conversion","qualifier":"top_down_vs_bottom_up_conversion"},{"dimension":"HISTORICAL_MECHANISM","facet":"elite_emulation","conditional":true}],
+        "67": [{"dimension":"TRANSMISSION","facet":"state_enforcement","qualifier":"force_in_conversion"},{"dimension":"HISTORICAL_MECHANISM","facet":"conquest","conditional":true}],
+        "68": [{"dimension":"TRANSMISSION","facet":"conversion","qualifier":"world_religion_adoption"}],
+        "69": [{"dimension":"TRANSMISSION","facet":"missionization","qualifier":"resident_missionary_involvement"},{"dimension":"HISTORICAL_MECHANISM","facet":"missionization"}],
+        "70": [{"dimension":"TRANSMISSION","facet":"syncretism","qualifier":"syncretic_religious_movement"},{"dimension":"HISTORICAL_MECHANISM","facet":"syncretism"}],
+        "71": [{"dimension":"HISTORICAL_MECHANISM","facet":"population_movement","qualifier":"replacement_level_immigration"}],
+        "72": [{"dimension":"HISTORICAL_MECHANISM","facet":"cultural_diffusion","qualifier":"language_shift_context","conditional":true}],
+        "73": [{"dimension":"TRANSMISSION","facet":"formal_schooling","qualifier":"foreign_education_system"}],
+        "76": [{"dimension":"HISTORICAL_MECHANISM","facet":"trade_contact","qualifier":"exportation_of_goods"}],
+        "80": [{"dimension":"HISTORICAL_MECHANISM","facet":"conquest","qualifier":"loss_of_autonomy","conditional":true}],
+        "81": [{"dimension":"HISTORICAL_MECHANISM","facet":"conquest","qualifier":"forced_loss_of_autonomy","conditional":true}],
+        "83": [{"dimension":"TRANSMISSION","facet":"syncretism","qualifier":"unofficial_current_syncretism"}],
+        "84": [{"dimension":"TRANSMISSION","facet":"syncretism","qualifier":"institutional_current_syncretism"}],
+        "86": [{"dimension":"RELIGIOUS_SPECIALISTS","facet":"priest","qualifier":"religious_authority_structure","conditional":true}],
+        "87": [{"dimension":"SOCIAL_FUNCTION","facet":"hierarchy_legitimation","qualifier":"religious_political_authority_structure","conditional":true}]
       },
       "raw_fallback": {
         "enabled": true,
