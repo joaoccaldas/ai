@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-08-29T00:50:00Z",
+  "status": "seed",
+  "counts": {
+    "sources": 11,
+    "claims": 0,
+    "candidate_links": 0,
+    "open_hypotheses": 2
+  },
+  "layers": ["RITUAL", "BELIEF", "SYMBOL", "SITE"],
+  "nodes": [
+    {
+      "id": "seed-ritual",
+      "kind": "RITUAL",
+      "title": "Ritual synchrony",
+      "summary": "Candidate cross-cultural ritual class. Recurrence must be tested for ancestry, contact, ecology and coding bias.",
+      "status": "SCHEMATIC"
+    },
+    {
+      "id": "seed-belief",
+      "kind": "BELIEF",
+      "title": "Animism",
+      "summary": "A comparative belief-class node. Definitions remain source-specific and ancestral-state claims remain model-dependent.",
+      "status": "SCHEMATIC"
+    },
+    {
+      "id": "seed-symbol",
+      "kind": "SYMBOL",
+      "title": "Serpent motif",
+      "summary": "Similarity is hypothesis-generation only; historical descent requires independent evidence.",
+      "status": "SCHEMATIC"
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H-0001",
+      "title": "Ritual before doctrine",
+      "posterior_probability": 0.46,
+      "epistemic_status": "PLAUSIBLE",
+      "human_review_status": "SEED_ONLY",
+      "note": "Not an empirical conclusion. Included to exercise the hypothesis interface."
+    },
+    {
+      "id": "H-0002",
+      "title": "Recurrent serpent symbolism",
+      "posterior_probability": 0.31,
+      "epistemic_status": "SPECULATIVE",
+      "human_review_status": "SEED_ONLY",
+      "note": "Not an empirical conclusion. Included to exercise the hypothesis interface."
+    }
+  ],
+  "source_catalog": [
+    {"title": "D-PLACE", "role": "cross-cultural / linguistic / environmental controls"},
+    {"title": "Seshat", "role": "historical social complexity and religion"},
+    {"title": "Database of Religious History", "role": "historical religion ontology and expert coding"},
+    {"title": "Pulotu", "role": "Austronesian religious beliefs and practices"},
+    {"title": "ARIADNE", "role": "archaeological data infrastructure"}
+  ]
+}
