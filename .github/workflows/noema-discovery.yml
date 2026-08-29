@@ -23,22 +23,25 @@ jobs:
         with:
           python-version: "3.12"
       - name: Discover recent scholarly candidates
-        run: python projects/noema/scripts/discover_crossref.py --days 14 --rows 15 --output noema-crossref-candidates.json
+        run: python projects/noema/scripts/discover_crossref.py --days 14 --rows 15 --priority-limit 30 --output noema-crossref-candidates.json
       - name: Validate discovery artifact
         run: |
           python - <<'PY'
-          import json
+          import json,re
           from pathlib import Path
           p=Path('noema-crossref-candidates.json')
           data=json.loads(p.read_text())
           items=data['candidates']
+          valid_reasons={'RECENT_PUBLICATION','UPCOMING_OR_AHEAD_OF_PRINT','NEWLY_INDEXED_LEGACY'}
           assert data['candidate_count'] == len(items)
+          assert data['priority_candidate_count'] == len(data['priority_keys']) <= 30
           assert len({x.get('doi') or x['canonical_url'] for x in items}) == len(items)
           assert all(x['status']=='CANDIDATE_UNREVIEWED' for x in items)
           assert all(x['domain_hits'] for x in items)
           assert all(x['relevance_score'] > 0 for x in items)
-          assert all(x['discovery_reason'] in {'RECENT_PUBLICATION','NEWLY_INDEXED_LEGACY'} for x in items)
-          print('validated', len(items), 'candidates', data.get('reason_counts', {}))
+          assert all(x['discovery_reason'] in valid_reasons for x in items)
+          assert all(not re.search(r'<[^>]+>', x['title']) for x in items)
+          print('validated', len(items), 'candidates', data.get('reason_counts', {}), 'priority', data['priority_candidate_count'])
           PY
       - uses: actions/upload-artifact@v4
         with:
