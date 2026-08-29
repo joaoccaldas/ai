@@ -1,0 +1,1382 @@
+{
+  "atlas_id": "NOEMA-HUMAN-MEANING-ATLAS-001",
+  "release": "v0.9",
+  "title": "Human Meaning Atlas",
+  "principle": "Map only source-bounded evidence with traceable time and place. Coverage is not evidence; similarity is not ancestry; material form is not meaning.",
+  "time_domain_bp": {
+    "max": 500000,
+    "min": 0
+  },
+  "mapped_events": [
+    {
+      "pack_id": "NOEMA-EVIDENCE-002",
+      "claim_id": "DT-C004",
+      "source_id": "DT-S004",
+      "source_title": "Symbolic use of marine shells and mineral pigments by Iberian Neandertals 115,000 years ago",
+      "source_url": "https://consensus.app/papers/symbolic-use-of-marine-shells-and-mineral-pigments-by-hoffmann-angelucci/9eabb727de9c526db179fa90ef9774a6/?utm_source=chatgpt",
+      "claim_text": "Cueva de los Aviones yielded ochred and perforated marine shells, red and yellow colorants, and shell containers with pigment-mixture residues in a Neanderthal-associated Middle Paleolithic context; U-series dating of overlying flowstone places the assemblage at least about 115–120 ka old.",
+      "claim_type": "MATERIAL_CULTURE_AND_MINIMUM_AGE",
+      "construct": "GRAPHIC_OR_DISPLAY",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "inference_band": "OBSERVATION_PLUS_INFERENCE",
+      "scope": "The Los Aviones assemblage and its stratigraphic context; the U-series result is a minimum-age constraint from overlying flowstone, not a direct date on each object.",
+      "time": {
+        "older_bp": 120000,
+        "younger_bp": 115000,
+        "center_bp": 117500,
+        "display": "115–120 ka BP minimum-age context",
+        "dating_note": "U-series dating of flowstone capping the archaeological deposit constrains the underlying assemblage.",
+        "kind": "minimum_age_range"
+      },
+      "site": {
+        "id": "SITE-LOS-AVIONES",
+        "name": "Cueva de los Aviones",
+        "country": "Spain",
+        "latitude": 37.585361,
+        "longitude": -0.985739,
+        "coordinate_source": "Wikidata location",
+        "coordinate_url": "https://www.wikidata.org/wiki/Q1143227"
+      }
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "claim_id": "HS-C005",
+      "source_id": "HS-S005",
+      "source_title": "The Paleolithic Burials at Qafzeh Cave, Israel",
+      "source_url": "https://consensus.app/papers/the-paleolithic-burials-at-qafzeh-cave-israel-vandermeersch-bar‐yosef/92d70198dad95ef080426eb044cc6690/?utm_source=chatgpt",
+      "claim_text": "Qafzeh Cave preserves multiple morphologically modern human burials in Middle Paleolithic contexts; the burial cluster is reported within an approximately 120–90 ka time range and the source discusses possible funerary interpretations from excavation observations.",
+      "claim_type": "EARLY_HOMO_SAPIENS_MORTUARY_CONTEXT",
+      "construct": "MORTUARY",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "inference_band": "OBSERVATION_PLUS_INFERENCE",
+      "scope": "Supports structured mortuary behavior in the Qafzeh contexts. Burial alone does not establish an afterlife doctrine, deity concept or formal religion.",
+      "time": {
+        "older_bp": 120000,
+        "younger_bp": 90000,
+        "center_bp": 105000,
+        "display": "~120–90 ka BP",
+        "dating_note": "TL and ESR range reported for the Qafzeh cluster.",
+        "kind": "context_range"
+      },
+      "site": {
+        "id": "HS-SITE-QAFZEH",
+        "name": "Qafzeh Cave",
+        "country": "Israel",
+        "latitude": 32.680511,
+        "longitude": 35.295717,
+        "coordinate_source": "Published heritage/location records: 32°40′49.84″N, 35°17′44.58″E",
+        "coordinate_url": "https://www.wikidata.org/wiki/Q1753826"
+      }
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "claim_id": "HS-C004",
+      "source_id": "HS-S004",
+      "source_title": "Unveiling the multifunctional use of ochre in the Middle Stone Age: Specialized ochre retouchers from Blombos Cave",
+      "source_url": "https://consensus.app/papers/unveiling-the-multifunctional-use-of-ochre-in-the-middle-velliky-derrico/555322185cb95260bf8c2f445c909407/?utm_source=chatgpt",
+      "claim_text": "Seven deliberately modified ochre pieces from Blombos Cave show use-wear and experimental matches consistent with use as lithic retouchers; the authors conclude that ochre participated in technological as well as potentially personal or cultural systems.",
+      "claim_type": "FUNCTIONAL_OCHRE_USE",
+      "construct": "TECHNOLOGICAL_FUNCTION",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_FUNCTIONAL_EVIDENCE",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "inference_band": "OBSERVATION_PLUS_INFERENCE",
+      "scope": "Shows that at least some ochre artifacts had a practical lithic-working function. It does not imply all ochre was utilitarian and directly warns against single-meaning classification.",
+      "time": {
+        "older_bp": 90000,
+        "younger_bp": 70000,
+        "center_bp": 80000,
+        "display": "90–70 ka BP",
+        "dating_note": "Still Bay to pre-Still Bay layers described by the source.",
+        "kind": "context_range"
+      },
+      "site": {
+        "id": "HS-SITE-BLOMBOS",
+        "name": "Blombos Cave",
+        "country": "South Africa",
+        "latitude": -34.416667,
+        "longitude": 21.216667,
+        "coordinate_source": "Published site setting: 34°25′S, 21°13′E",
+        "coordinate_url": "https://www.sciencedirect.com/science/article/pii/S0277379119303130"
+      }
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "claim_id": "HS-C003",
+      "source_id": "HS-S003",
+      "source_title": "An abstract drawing from the 73,000-year-old levels at Blombos Cave, South Africa",
+      "source_url": "https://consensus.app/papers/an-abstract-drawing-from-the-73000yearold-levels-at-henshilwood-d’errico/821718a53fcb520fb64a55547164a28e/?utm_source=chatgpt",
+      "claim_text": "Microscopic and chemical analyses identify a cross-hatched pattern intentionally drawn with a red ochre crayon on a silcrete flake from approximately 73 ka Middle Stone Age levels at Blombos Cave.",
+      "claim_type": "INTENTIONAL_GRAPHIC_DESIGN",
+      "construct": "GRAPHIC_OR_DISPLAY",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "inference_band": "OBSERVATION_DOMINANT",
+      "scope": "Establishes deliberate graphic mark-making on this object and supports capacity for graphic design; it does not establish writing, language encoding, ritual use or religious meaning.",
+      "time": {
+        "older_bp": 73000,
+        "younger_bp": 73000,
+        "center_bp": 73000,
+        "display": "~73 ka BP",
+        "dating_note": "Archaeological level age reported by the source.",
+        "kind": "context_age"
+      },
+      "site": {
+        "id": "HS-SITE-BLOMBOS",
+        "name": "Blombos Cave",
+        "country": "South Africa",
+        "latitude": -34.416667,
+        "longitude": 21.216667,
+        "coordinate_source": "Published site setting: 34°25′S, 21°13′E",
+        "coordinate_url": "https://www.sciencedirect.com/science/article/pii/S0277379119303130"
+      }
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-002",
+      "claim_id": "DT-C006",
+      "source_id": "DT-S005",
+      "source_title": "The earliest unambiguous Neanderthal engravings on cave walls: La Roche-Cotard, Loire Valley, France",
+      "source_url": "https://consensus.app/papers/the-earliest-unambiguous-neanderthal-engravings-on-cave-marquet-freiesleben/a91ee8e3fda55b7489eb1ab10090d9f4/?utm_source=chatgpt",
+      "claim_text": "La Roche-Cotard contains spatially structured non-figurative cave-wall marks whose anthropogenic origin was supported by taphonomic, traceological and experimental evidence; cave closure occurred more than 57±3 ka ago, before the regional arrival of Homo sapiens, in a Mousterian context attributed to Neanderthals.",
+      "claim_type": "ANTHROPOGENIC_MARKS_AND_CHRONOLOGY",
+      "construct": "GRAPHIC_OR_DISPLAY",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "inference_band": "OBSERVATION_PLUS_INFERENCE",
+      "scope": "The La Roche-Cotard marks, cave closure chronology and archaeological attribution; supports anthropogenic patterned marks in this context, not a unique ritual or religious interpretation.",
+      "time": {
+        "older_bp": 57000,
+        "younger_bp": null,
+        "center_bp": 57000,
+        "display": ">57 ±3 ka BP cave-closure constraint",
+        "dating_note": "Cave closure is based on multiple OSL ages; the marks predate closure.",
+        "kind": "minimum_age"
+      },
+      "site": {
+        "id": "SITE-LA-ROCHE-COTARD",
+        "name": "La Roche-Cotard",
+        "country": "France",
+        "latitude": 47.336944,
+        "longitude": 0.430833,
+        "coordinate_source": "Marquet et al. site context: 47°20′13″N, 0°25′51″E",
+        "coordinate_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0286568"
+      }
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-002",
+      "claim_id": "DT-C003",
+      "source_id": "DT-S003",
+      "source_title": "Pluridisciplinary evidence for burial for the La Ferrassie 8 Neandertal child",
+      "source_url": "https://consensus.app/papers/pluridisciplinary-evidence-for-burial-for-the-la-balzeau-turq/bc5ae61493b55c72bb0065e7393f2f88/?utm_source=chatgpt",
+      "claim_text": "At La Ferrassie 8, multidisciplinary analysis reports a pit dug into sterile sediment with the corpse of a roughly two-year-old Neanderthal child placed within it; a Neanderthal-associated hominin bone directly dated to 41.7–40.8 ka cal BP (95%).",
+      "claim_type": "BURIAL_AND_DIRECT_DATING",
+      "construct": "MORTUARY",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "inference_band": "OBSERVATION_PLUS_INFERENCE",
+      "scope": "La Ferrassie 8 and the cited multidisciplinary context; supports purposeful deposition of this child but does not identify a specific cosmology or funerary theology.",
+      "time": {
+        "older_bp": 41700,
+        "younger_bp": 40800,
+        "center_bp": 41250,
+        "display": "41.7–40.8 ka cal BP (95%)",
+        "dating_note": "Direct 14C age reported for a Neanderthal-associated hominin bone from the context.",
+        "kind": "direct_range"
+      },
+      "site": {
+        "id": "SITE-LA-FERRASSIE",
+        "name": "La Ferrassie",
+        "country": "France",
+        "latitude": 44.951806,
+        "longitude": 0.938056,
+        "coordinate_source": "Wikidata/Base Mérimée-linked location",
+        "coordinate_url": "https://www.wikidata.org/wiki/Q39656"
+      }
+    }
+  ],
+  "unmapped_dated_events": [
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "claim_id": "HS-C002",
+      "source_id": "HS-S002",
+      "source_title": "Early Middle Stone Age personal ornaments from Bizmoune Cave, Essaouira, Morocco",
+      "source_url": "https://consensus.app/papers/early-middle-stone-age-personal-ornaments-from-bizmoune-sehasseh-fernandez/b7c1654569b855b3944cd2d09f755794/?utm_source=chatgpt",
+      "claim_text": "Bizmoune Cave yielded 33 shell beads, many from deposits dated to at least 142 ka; the authors describe them as the oldest shell beads yet recovered and interpret their wider North African pattern as relevant to identity signaling and cultural continuity.",
+      "claim_type": "PERSONAL_ORNAMENTS_AND_MINIMUM_AGE",
+      "construct": "GRAPHIC_OR_DISPLAY",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC_WITH_INTERPRETATION",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "inference_band": "OBSERVATION_PLUS_INFERENCE",
+      "scope": "Strong evidence for intentionally used personal ornaments in the reported context; exact social identity, status category or symbolic code is not directly recoverable from the beads alone.",
+      "time": {
+        "older_bp": 142000,
+        "younger_bp": null,
+        "center_bp": 142000,
+        "display": "≥142 ka BP",
+        "dating_note": "Many beads derive from deposits dated to at least 142 ka.",
+        "kind": "minimum_age"
+      },
+      "site": null
+    }
+  ],
+  "coverage": {
+    "benchmark_id": "NOEMA-DPLACE-100-v1",
+    "points": [
+      {
+        "id": "CCMChadr1236",
+        "name": "Hadrami Arabic",
+        "region": "Arabian Peninsula",
+        "latitude": 15.4468,
+        "longitude": 48.6524,
+        "glottocode": "hadr1236",
+        "focal_year": null
+      },
+      {
+        "id": "Cj9",
+        "name": "Yemeni",
+        "region": "Arabian Peninsula",
+        "latitude": 15.0,
+        "longitude": 45.0,
+        "glottocode": "sana1295",
+        "focal_year": 1950
+      },
+      {
+        "id": "B110",
+        "name": "Ngatjan",
+        "region": "Australia",
+        "latitude": -17.36,
+        "longitude": 145.56,
+        "glottocode": "ngad1260",
+        "focal_year": 1880
+      },
+      {
+        "id": "CARNEIRO4_094",
+        "name": "Walbiri",
+        "region": "Australia",
+        "latitude": -22.0,
+        "longitude": 132.0,
+        "glottocode": "warl1254",
+        "focal_year": null
+      },
+      {
+        "id": "B45",
+        "name": "Nambikwara",
+        "region": "Brazil",
+        "latitude": -12.73,
+        "longitude": -59.55,
+        "glottocode": "sout2994",
+        "focal_year": 1938
+      },
+      {
+        "id": "Se12",
+        "name": "Tucano",
+        "region": "Brazil",
+        "latitude": 0.0,
+        "longitude": -70.0,
+        "glottocode": "tuca1252",
+        "focal_year": 1950
+      },
+      {
+        "id": "Sb1",
+        "name": "Callinago",
+        "region": "Caribbean",
+        "latitude": 15.41,
+        "longitude": -61.27,
+        "glottocode": "isla1278",
+        "focal_year": 1650
+      },
+      {
+        "id": "CCMCvinc1243",
+        "name": "Vincentian Creole English",
+        "region": "Caribbean",
+        "latitude": 13.2436,
+        "longitude": -61.1963,
+        "glottocode": "vinc1243",
+        "focal_year": null
+      },
+      {
+        "id": "SCCS55",
+        "name": "Abkhaz",
+        "region": "Caucasus",
+        "latitude": 43.13,
+        "longitude": 40.77,
+        "glottocode": "abkh1244",
+        "focal_year": 1880
+      },
+      {
+        "id": "Ci8",
+        "name": "Georgians",
+        "region": "Caucasus",
+        "latitude": 42.0,
+        "longitude": 45.0,
+        "glottocode": "imer1248",
+        "focal_year": 1850
+      },
+      {
+        "id": "SCCS157",
+        "name": "Bribri",
+        "region": "Central America",
+        "latitude": 9.0,
+        "longitude": -83.25,
+        "glottocode": "brib1243",
+        "focal_year": 1917
+      },
+      {
+        "id": "CCMCpipi1250",
+        "name": "Pipil",
+        "region": "Central America",
+        "latitude": 13.8931,
+        "longitude": -89.443,
+        "glottocode": "pipi1250",
+        "focal_year": null
+      },
+      {
+        "id": "SCCS67",
+        "name": "Lolo",
+        "region": "China",
+        "latitude": 27.5,
+        "longitude": 103.5,
+        "glottocode": "sich1238",
+        "focal_year": 1910
+      },
+      {
+        "id": "Ed6",
+        "name": "Min Chinese",
+        "region": "China",
+        "latitude": 24.0,
+        "longitude": 115.0,
+        "glottocode": "chao1239",
+        "focal_year": 1920
+      },
+      {
+        "id": "Ad12",
+        "name": "Gusii",
+        "region": "East Tropical Africa",
+        "latitude": -1.0,
+        "longitude": 35.0,
+        "glottocode": "gusi1247",
+        "focal_year": 1940
+      },
+      {
+        "id": "Ad34",
+        "name": "Kamba",
+        "region": "East Tropical Africa",
+        "latitude": -2.0,
+        "longitude": 38.0,
+        "glottocode": "kamb1297",
+        "focal_year": 1910
+      },
+      {
+        "id": "CCMCcent2126",
+        "name": "Central Okinawan",
+        "region": "Eastern Asia",
+        "latitude": 26.14854,
+        "longitude": 127.7816,
+        "glottocode": "cent2126",
+        "focal_year": null
+      },
+      {
+        "id": "Ed5",
+        "name": "Japanese",
+        "region": "Eastern Asia",
+        "latitude": 35.0,
+        "longitude": 136.0,
+        "glottocode": "nucl1643",
+        "focal_year": 1950
+      },
+      {
+        "id": "SCCS126",
+        "name": "Mi'kmaq",
+        "region": "Eastern Canada",
+        "latitude": 46.99,
+        "longitude": -65.0,
+        "glottocode": "mikm1235",
+        "focal_year": 1650
+      },
+      {
+        "id": "B360",
+        "name": "Waskaganish",
+        "region": "Eastern Canada",
+        "latitude": 51.08,
+        "longitude": -77.81,
+        "glottocode": "sout2978",
+        "focal_year": 1900
+      },
+      {
+        "id": "ch20",
+        "name": "Kazan tatar",
+        "region": "Eastern Europe",
+        "latitude": 55.0,
+        "longitude": 50.0,
+        "glottocode": "midd1325",
+        "focal_year": 1910
+      },
+      {
+        "id": "SCCS53",
+        "name": "Yurak-Samoyeds",
+        "region": "Eastern Europe",
+        "latitude": 68.0,
+        "longitude": 51.5,
+        "glottocode": "nene1249",
+        "focal_year": 1894
+      },
+      {
+        "id": "B19",
+        "name": "Kadar",
+        "region": "Indian Subcontinent",
+        "latitude": 10.25,
+        "longitude": 77.17,
+        "glottocode": "kada1242",
+        "focal_year": 1946
+      },
+      {
+        "id": "Ee5",
+        "name": "Shina",
+        "region": "Indian Subcontinent",
+        "latitude": 35.0,
+        "longitude": 73.0,
+        "glottocode": "shin1264",
+        "focal_year": 1870
+      },
+      {
+        "id": "B8",
+        "name": "Andamanese",
+        "region": "Indo-China",
+        "latitude": 13.32,
+        "longitude": 92.89,
+        "glottocode": "akab1249",
+        "focal_year": 1870
+      },
+      {
+        "id": "B5",
+        "name": "Onge",
+        "region": "Indo-China",
+        "latitude": 10.7,
+        "longitude": 92.47,
+        "glottocode": "onge1236",
+        "focal_year": 1952
+      },
+      {
+        "id": "Cd11",
+        "name": "Guanche",
+        "region": "Macaronesia",
+        "latitude": 27.99,
+        "longitude": -15.62,
+        "glottocode": "guan1277",
+        "focal_year": 1500
+      },
+      {
+        "id": "SCCS85",
+        "name": "Iban",
+        "region": "Malesia",
+        "latitude": 2.0,
+        "longitude": 113.0,
+        "glottocode": "iban1264",
+        "focal_year": 1950
+      },
+      {
+        "id": "CCMCmina1268",
+        "name": "Minangkabau",
+        "region": "Malesia",
+        "latitude": -0.896,
+        "longitude": 100.44,
+        "glottocode": "mina1268",
+        "focal_year": null
+      },
+      {
+        "id": "Nj14",
+        "name": "Tequistlatec",
+        "region": "Mexico",
+        "latitude": 16.0,
+        "longitude": -96.0,
+        "glottocode": "high1242",
+        "focal_year": 1960
+      },
+      {
+        "id": "CCMCyaqu1251",
+        "name": "Yaqui",
+        "region": "Mexico",
+        "latitude": 29.9446,
+        "longitude": -110.681,
+        "glottocode": "yaqu1251",
+        "focal_year": null
+      },
+      {
+        "id": "Eb1",
+        "name": "Kazakh",
+        "region": "Middle Asia",
+        "latitude": 48.0,
+        "longitude": 70.0,
+        "glottocode": "kaza1248",
+        "focal_year": 1910
+      },
+      {
+        "id": "SCCS65",
+        "name": "Kazakh",
+        "region": "Middle Asia",
+        "latitude": 42.5,
+        "longitude": 75.5,
+        "glottocode": "kaza1248",
+        "focal_year": 1885
+      },
+      {
+        "id": "CCMCkash1274",
+        "name": "Kashubian",
+        "region": "Middle Europe",
+        "latitude": 54.2996,
+        "longitude": 18.6163,
+        "glottocode": "kash1274",
+        "focal_year": null
+      },
+      {
+        "id": "CCMCpoli1260",
+        "name": "Polish",
+        "region": "Middle Europe",
+        "latitude": 51.8439,
+        "longitude": 18.6255,
+        "glottocode": "poli1260",
+        "focal_year": null
+      },
+      {
+        "id": "Eb3",
+        "name": "Khalka",
+        "region": "Mongolia",
+        "latitude": 46.0,
+        "longitude": 97.0,
+        "glottocode": "halh1238",
+        "focal_year": 1940
+      },
+      {
+        "id": "SCCS66",
+        "name": "Khalka",
+        "region": "Mongolia",
+        "latitude": 47.17,
+        "longitude": 96.08,
+        "glottocode": "halh1238",
+        "focal_year": 1920
+      },
+      {
+        "id": "CCMCmaor1246",
+        "name": "Maori",
+        "region": "New Zealand",
+        "latitude": -38.2881,
+        "longitude": 176.541,
+        "glottocode": "maor1246",
+        "focal_year": null
+      },
+      {
+        "id": "Ij2",
+        "name": "Māori",
+        "region": "New Zealand",
+        "latitude": -38.41,
+        "longitude": 176.31,
+        "glottocode": "maor1246",
+        "focal_year": 1820
+      },
+      {
+        "id": "CCMChawa1245",
+        "name": "Hawaiian",
+        "region": "North-Central Pacific",
+        "latitude": 19.6297,
+        "longitude": -155.43,
+        "glottocode": "hawa1245",
+        "focal_year": null
+      },
+      {
+        "id": "CARNEIRO4_014",
+        "name": "Hawaiians",
+        "region": "North-Central Pacific",
+        "latitude": 19.89,
+        "longitude": -155.83,
+        "glottocode": "hawa1245",
+        "focal_year": null
+      },
+      {
+        "id": "Ne15",
+        "name": "Hidatsa",
+        "region": "North-Central U.S.A.",
+        "latitude": 47.0,
+        "longitude": -101.0,
+        "glottocode": "hida1246",
+        "focal_year": 1860
+      },
+      {
+        "id": "Ne8",
+        "name": "Teton",
+        "region": "North-Central U.S.A.",
+        "latitude": 43.0,
+        "longitude": -103.0,
+        "glottocode": "lako1247",
+        "focal_year": 1870
+      },
+      {
+        "id": "Ca6",
+        "name": "Afar",
+        "region": "Northeast Tropical Africa",
+        "latitude": 12.0,
+        "longitude": 42.0,
+        "glottocode": "afar1241",
+        "focal_year": 1880
+      },
+      {
+        "id": "Ai40",
+        "name": "Moro",
+        "region": "Northeast Tropical Africa",
+        "latitude": 11.0,
+        "longitude": 30.0,
+        "glottocode": "moro1285",
+        "focal_year": 1940
+      },
+      {
+        "id": "Ng6",
+        "name": "Delaware",
+        "region": "Northeastern U.S.A.",
+        "latitude": 41.0,
+        "longitude": -75.0,
+        "glottocode": "unam1242",
+        "focal_year": 1700
+      },
+      {
+        "id": "CARNEIRO6_023",
+        "name": "Seneca",
+        "region": "Northeastern U.S.A.",
+        "latitude": 43.0,
+        "longitude": -77.0,
+        "glottocode": "sene1264",
+        "focal_year": null
+      },
+      {
+        "id": "CCMCcent2194",
+        "name": "Central Moroccan Berber",
+        "region": "Northern Africa",
+        "latitude": 32.7415,
+        "longitude": -2.40872,
+        "glottocode": "cent2194",
+        "focal_year": null
+      },
+      {
+        "id": "Cd13",
+        "name": "Hamama",
+        "region": "Northern Africa",
+        "latitude": 30.0,
+        "longitude": 9.0,
+        "glottocode": "sout3114",
+        "focal_year": 1930
+      },
+      {
+        "id": "CCMCnorw1258",
+        "name": "Norwegian",
+        "region": "Northern Europe",
+        "latitude": 59.92,
+        "longitude": 10.71,
+        "glottocode": "norw1258",
+        "focal_year": null
+      },
+      {
+        "id": "CARNEIRO4_057",
+        "name": "Sami",
+        "region": "Northern Europe",
+        "latitude": 68.0,
+        "longitude": 22.0,
+        "glottocode": "nort2671",
+        "focal_year": null
+      },
+      {
+        "id": "CCMCgali1262",
+        "name": "Galibi Carib",
+        "region": "Northern South America",
+        "latitude": 5.83772,
+        "longitude": -56.8323,
+        "glottocode": "gali1262",
+        "focal_year": null
+      },
+      {
+        "id": "CCMCtrio1238",
+        "name": "Trió",
+        "region": "Northern South America",
+        "latitude": 2.53616,
+        "longitude": -55.7599,
+        "glottocode": "trio1238",
+        "focal_year": null
+      },
+      {
+        "id": "SCCS108",
+        "name": "Marshallese - Jaluit Atoll",
+        "region": "Northwestern Pacific",
+        "latitude": 6.28,
+        "longitude": 169.49,
+        "glottocode": "rali1241",
+        "focal_year": 1900
+      },
+      {
+        "id": "If17",
+        "name": "Marshallese - Jaluit atoll",
+        "region": "Northwestern Pacific",
+        "latitude": 6.28,
+        "longitude": 169.49,
+        "glottocode": "rali1241",
+        "focal_year": 1900
+      },
+      {
+        "id": "B286",
+        "name": "Makah",
+        "region": "Northwestern U.S.A.",
+        "latitude": 48.22,
+        "longitude": -124.58,
+        "glottocode": "maka1318",
+        "focal_year": 1860
+      },
+      {
+        "id": "B284",
+        "name": "Quileute",
+        "region": "Northwestern U.S.A.",
+        "latitude": 47.77,
+        "longitude": -124.14,
+        "glottocode": "quil1240",
+        "focal_year": 1880
+      },
+      {
+        "id": "SCCS99",
+        "name": "Siuai",
+        "region": "Papuasia",
+        "latitude": -6.76,
+        "longitude": 155.45,
+        "glottocode": "siwa1245",
+        "focal_year": 1939
+      },
+      {
+        "id": "Ie4",
+        "name": "Wogeo",
+        "region": "Papuasia",
+        "latitude": -3.24,
+        "longitude": 144.1,
+        "glottocode": "woge1237",
+        "focal_year": 1930
+      },
+      {
+        "id": "ec13",
+        "name": "Itelmen",
+        "region": "Russian Far East",
+        "latitude": 54.98,
+        "longitude": 161.79,
+        "glottocode": "itel1242",
+        "focal_year": 1710
+      },
+      {
+        "id": "Ec1",
+        "name": "Nivkh",
+        "region": "Russian Far East",
+        "latitude": 53.0,
+        "longitude": 142.0,
+        "glottocode": "gily1242",
+        "focal_year": 1920
+      },
+      {
+        "id": "CCMCtuvi1240",
+        "name": "Tuvinian",
+        "region": "Siberia",
+        "latitude": 51.7,
+        "longitude": 94.36667,
+        "glottocode": "tuvi1240",
+        "focal_year": null
+      },
+      {
+        "id": "Ec6",
+        "name": "Yukaghir",
+        "region": "Siberia",
+        "latitude": 70.0,
+        "longitude": 145.0,
+        "glottocode": "nort2745",
+        "focal_year": 1850
+      },
+      {
+        "id": "CCMClala1264",
+        "name": "Lala-Bisa",
+        "region": "South Tropical Africa",
+        "latitude": -12.945,
+        "longitude": 30.2297,
+        "glottocode": "lala1264",
+        "focal_year": null
+      },
+      {
+        "id": "CCMCndon1254",
+        "name": "Ndonga",
+        "region": "South Tropical Africa",
+        "latitude": -17.22,
+        "longitude": 17.35,
+        "glottocode": "ndon1254",
+        "focal_year": null
+      },
+      {
+        "id": "CCMCsout2866",
+        "name": "South Marquesan",
+        "region": "South-Central Pacific",
+        "latitude": -9.75663,
+        "longitude": -138.979,
+        "glottocode": "sout2866",
+        "focal_year": null
+      },
+      {
+        "id": "Ij8",
+        "name": "Tahitians",
+        "region": "South-Central Pacific",
+        "latitude": -17.71,
+        "longitude": -149.54,
+        "glottocode": "tahi1242",
+        "focal_year": 1900
+      },
+      {
+        "id": "WNAI152",
+        "name": "Chiricahua (Warm Springs)",
+        "region": "South-Central U.S.A.",
+        "latitude": 33.0,
+        "longitude": -108.0,
+        "glottocode": "mesc1238",
+        "focal_year": null
+      },
+      {
+        "id": "Nh24",
+        "name": "Lipan Apache",
+        "region": "South-Central U.S.A.",
+        "latitude": 30.0,
+        "longitude": -100.0,
+        "glottocode": "lipa1241",
+        "focal_year": 1880
+      },
+      {
+        "id": "SCCS48",
+        "name": "Gheg",
+        "region": "Southeastern Europe",
+        "latitude": 42.0,
+        "longitude": 20.17,
+        "glottocode": "gheg1238",
+        "focal_year": 1910
+      },
+      {
+        "id": "CCMCpiem1238",
+        "name": "Piemontese",
+        "region": "Southeastern Europe",
+        "latitude": 45.4633,
+        "longitude": 8.32366,
+        "glottocode": "piem1238",
+        "focal_year": null
+      },
+      {
+        "id": "Nf13",
+        "name": "Shawnee",
+        "region": "Southeastern U.S.A.",
+        "latitude": 37.0,
+        "longitude": -85.0,
+        "glottocode": "shaw1249",
+        "focal_year": 1820
+      },
+      {
+        "id": "Ng11",
+        "name": "Yuchi",
+        "region": "Southeastern U.S.A.",
+        "latitude": 35.0,
+        "longitude": -86.0,
+        "glottocode": "yuch1247",
+        "focal_year": 1750
+      },
+      {
+        "id": "CCMCswat1243",
+        "name": "Swati",
+        "region": "Southern Africa",
+        "latitude": -26.0,
+        "longitude": 31.5,
+        "glottocode": "swat1243",
+        "focal_year": null
+      },
+      {
+        "id": "Ab12",
+        "name": "Zulu",
+        "region": "Southern Africa",
+        "latitude": -29.0,
+        "longitude": 31.0,
+        "glottocode": "zulu1248",
+        "focal_year": 1830
+      },
+      {
+        "id": "Sh3",
+        "name": "Abipón",
+        "region": "Southern South America",
+        "latitude": -29.0,
+        "longitude": -61.0,
+        "glottocode": "abip1241",
+        "focal_year": 1800
+      },
+      {
+        "id": "Sh5",
+        "name": "Choroti",
+        "region": "Southern South America",
+        "latitude": -22.0,
+        "longitude": -62.0,
+        "glottocode": "iyow1239",
+        "focal_year": 1910
+      },
+      {
+        "id": "CCMCport1283",
+        "name": "Portuguese",
+        "region": "Southwestern Europe",
+        "latitude": 39.91,
+        "longitude": -8.1,
+        "glottocode": "port1283",
+        "focal_year": null
+      },
+      {
+        "id": "Ce8",
+        "name": "Spanish Basques",
+        "region": "Southwestern Europe",
+        "latitude": 43.0,
+        "longitude": -2.0,
+        "glottocode": "west1508",
+        "focal_year": 1934
+      },
+      {
+        "id": "Ii4",
+        "name": "Ellice",
+        "region": "Southwestern Pacific",
+        "latitude": -7.48,
+        "longitude": 178.68,
+        "glottocode": "tuva1244",
+        "focal_year": 1890
+      },
+      {
+        "id": "Ii13",
+        "name": "Uveans",
+        "region": "Southwestern Pacific",
+        "latitude": -13.28,
+        "longitude": -176.17,
+        "glottocode": "wall1257",
+        "focal_year": 1830
+      },
+      {
+        "id": "WNAI82",
+        "name": "Luiseño",
+        "region": "Southwestern U.S.A.",
+        "latitude": 33.3,
+        "longitude": -117.3,
+        "glottocode": "luis1253",
+        "focal_year": null
+      },
+      {
+        "id": "WNAI120",
+        "name": "Mahaguaduka",
+        "region": "Southwestern U.S.A.",
+        "latitude": 39.3,
+        "longitude": -117.3,
+        "glottocode": "west2622",
+        "focal_year": null
+      },
+      {
+        "id": "Cf3",
+        "name": "Tristan da Cunha",
+        "region": "Subantarctic Islands",
+        "latitude": -37.11,
+        "longitude": -12.27,
+        "glottocode": "stan1293",
+        "focal_year": 1930
+      },
+      {
+        "id": "B354",
+        "name": "Koyukon",
+        "region": "Subarctic America",
+        "latitude": 66.52,
+        "longitude": -153.78,
+        "glottocode": "koyu1237",
+        "focal_year": 1880
+      },
+      {
+        "id": "B388",
+        "name": "Tasiilaq",
+        "region": "Subarctic America",
+        "latitude": 65.64,
+        "longitude": -37.64,
+        "glottocode": "tunu1234",
+        "focal_year": 1880
+      },
+      {
+        "id": "Af35",
+        "name": "Adangme",
+        "region": "West Tropical Africa",
+        "latitude": 6.0,
+        "longitude": 0.0,
+        "glottocode": "adan1247",
+        "focal_year": 1940
+      },
+      {
+        "id": "Ag46",
+        "name": "Manprusi",
+        "region": "West Tropical Africa",
+        "latitude": 10.0,
+        "longitude": -1.0,
+        "glottocode": "mamp1244",
+        "focal_year": 1920
+      },
+      {
+        "id": "Ag22",
+        "name": "Serer",
+        "region": "West Tropical Africa",
+        "latitude": 14.0,
+        "longitude": -12.0,
+        "glottocode": "sere1260",
+        "focal_year": 1920
+      },
+      {
+        "id": "Ac22",
+        "name": "Dzing",
+        "region": "West-Central Tropical Africa",
+        "latitude": -4.0,
+        "longitude": 20.0,
+        "glottocode": "ding1239",
+        "focal_year": 1930
+      },
+      {
+        "id": "Ae58",
+        "name": "Tikar",
+        "region": "West-Central Tropical Africa",
+        "latitude": 6.0,
+        "longitude": 12.0,
+        "glottocode": "tige1238",
+        "focal_year": 1910
+      },
+      {
+        "id": "Cj3",
+        "name": "Hebrews",
+        "region": "Western Asia",
+        "latitude": 32.0,
+        "longitude": 35.0,
+        "glottocode": "anci1244",
+        "focal_year": null
+      },
+      {
+        "id": "Cj7",
+        "name": "Lebanese",
+        "region": "Western Asia",
+        "latitude": 34.0,
+        "longitude": 36.0,
+        "glottocode": "nort3139",
+        "focal_year": 1950
+      },
+      {
+        "id": "B256",
+        "name": "Blackfoot",
+        "region": "Western Canada",
+        "latitude": 51.01,
+        "longitude": -110.76,
+        "glottocode": "pieg1239",
+        "focal_year": 1850
+      },
+      {
+        "id": "CARNEIRO6_045",
+        "name": "Kutenai",
+        "region": "Western Canada",
+        "latitude": 50.0,
+        "longitude": -117.0,
+        "glottocode": "kute1249",
+        "focal_year": null
+      },
+      {
+        "id": "Nb27",
+        "name": "Stó:lō",
+        "region": "Western Canada",
+        "latitude": 49.0,
+        "longitude": -122.0,
+        "glottocode": "chil1281",
+        "focal_year": 1880
+      },
+      {
+        "id": "Eh10",
+        "name": "Betsileo",
+        "region": "Western Indian Ocean",
+        "latitude": -22.0,
+        "longitude": 47.0,
+        "glottocode": "bets1235",
+        "focal_year": null
+      },
+      {
+        "id": "CCMCmaha1309",
+        "name": "Mahafaly-Antanalana Malagasy",
+        "region": "Western Indian Ocean",
+        "latitude": -24.2,
+        "longitude": 44.5,
+        "glottocode": "maha1309",
+        "focal_year": null
+      },
+      {
+        "id": "CARNEIRO4_088",
+        "name": "Sirionó",
+        "region": "Western South America",
+        "latitude": -16.0,
+        "longitude": -64.0,
+        "glottocode": "siri1273",
+        "focal_year": null
+      },
+      {
+        "id": "Sf4",
+        "name": "U'wa",
+        "region": "Western South America",
+        "latitude": 7.0,
+        "longitude": -72.0,
+        "glottocode": "cent2150",
+        "focal_year": 1950
+      }
+    ],
+    "semantics": "Geographic/linguistic coverage benchmark only; it does not mean a society's religion or ritual system has been coded."
+  },
+  "constructs": [
+    "GRAPHIC_OR_DISPLAY",
+    "MORTUARY",
+    "TECHNOLOGICAL_FUNCTION"
+  ],
+  "idea_field": [
+    {
+      "pack_id": "NOEMA-EVIDENCE-001",
+      "id": "H001",
+      "title": "Big Gods caused the initial rise of sociopolitical complexity",
+      "status": "CHALLENGED_IN_CURRENT_PACK",
+      "evidence_balance": "The selected evidence weighs against the simple causal form of this hypothesis, while methodological disagreement means the historical sequence should not be represented as settled by a single analysis.",
+      "support_count": 0,
+      "challenge_count": 3,
+      "related_count": 1
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-001",
+      "id": "H002",
+      "title": "Broad supernatural punishment can precede political complexity",
+      "status": "SUPPORTED_SCOPE_LIMITED",
+      "evidence_balance": "Supported in the Austronesian phylogenetic study in this pack; global generalization remains untested here.",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 1
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-001",
+      "id": "H003",
+      "title": "Punitive and knowledgeable gods can expand impartial prosociality",
+      "status": "SUPPORTED_BEHAVIORAL_SCOPE",
+      "evidence_balance": "Directly supported by the eight-society behavioral study in this pack, but this mechanism is not equivalent to causing the historical emergence of states or megasocieties.",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 2
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-001",
+      "id": "H004",
+      "title": "Animism is ancestral among coded hunter-gatherer religious traits",
+      "status": "SUPPORTED_MODEL_DEPENDENT",
+      "evidence_balance": "Supported by the cited phylogenetic reconstruction, but it is an inference from present-day comparative data and should not be rendered as a direct archaeological observation of early Homo sapiens.",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 0
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-001",
+      "id": "H005",
+      "title": "Ritual needs multi-level explanation",
+      "status": "METHODOLOGICAL_FRAME",
+      "evidence_balance": "Used as an analysis constraint for NOEMA rather than as a historical fact claim.",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 0
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-002",
+      "id": "DT-H001",
+      "title": "Some Neanderthal groups intentionally buried some dead",
+      "status": "SUPPORTED_SITE_SPECIFIC",
+      "evidence_balance": "Modern in-situ and multidisciplinary site evidence supports intentional burial in particular cases. This does not imply uniform Neanderthal mortuary practice or a specific funerary theology.",
+      "support_count": 2,
+      "challenge_count": 0,
+      "related_count": 1
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-002",
+      "id": "DT-H002",
+      "title": "Some Neanderthal populations produced abstract or symbolically used material culture",
+      "status": "SUPPORTED_WITH_INTERPRETIVE_BOUNDARY",
+      "evidence_balance": "The strongest observations establish deliberate material modification, pigment/ornament contexts and non-utilitarian structured marks. ‘Symbolic’ is a higher-level interpretation and must remain distinguishable from the physical observations.",
+      "support_count": 3,
+      "challenge_count": 0,
+      "related_count": 0
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-002",
+      "id": "DT-H003",
+      "title": "Symbolic material culture predates the Neanderthal–Homo sapiens split",
+      "status": "SPECULATIVE",
+      "evidence_balance": "Possible under parsimony but not directly demonstrated by the sites in this pack; convergent evolution, repeated innovation and preservation bias remain serious alternatives.",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 2
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-002",
+      "id": "DT-H004",
+      "title": "Intentional burial proves formal religion or afterlife doctrine",
+      "status": "NOT_ESTABLISHED_BY_CURRENT_EVIDENCE",
+      "evidence_balance": "The current evidence supports mortuary behavior in specific contexts but underdetermines motive and cosmology. The hypothesis is intentionally retained as a tempting inference that NOEMA must not silently make.",
+      "support_count": 0,
+      "challenge_count": 0,
+      "related_count": 3
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "id": "HS-H001",
+      "title": "Socially transmitted graphic and ornamental traditions existed in early Homo sapiens before 70 ka",
+      "status": "SUPPORTED_ACROSS_MULTIPLE_CONTEXTS",
+      "evidence_balance": "Independent material classes and regions support an early mosaic of display and graphic traditions, while the exact semantic content of those traditions remains partly underdetermined.",
+      "support_count": 3,
+      "challenge_count": 0,
+      "related_count": 0
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "id": "HS-H002",
+      "title": "Ochre in Middle Stone Age contexts is intrinsically ritual or symbolic",
+      "status": "CHALLENGED_BY_FUNCTIONAL_EVIDENCE",
+      "evidence_balance": "Direct functional evidence from ochre retouchers falsifies the single-meaning version of this hypothesis. Ochre must be evaluated artifact-by-artifact and context-by-context.",
+      "support_count": 0,
+      "challenge_count": 1,
+      "related_count": 1
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "id": "HS-H003",
+      "title": "Early Homo sapiens practiced structured mortuary behavior",
+      "status": "SUPPORTED_SITE_SPECIFIC",
+      "evidence_balance": "Qafzeh supports structured mortuary behavior in a specific early Homo sapiens context, but motive and cosmological interpretation remain underdetermined.",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 0
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "id": "HS-H004",
+      "title": "Some Middle Paleolithic behaviors crossed Homo population boundaries in the Levant",
+      "status": "SUPPORTED_REGIONAL_MODEL_NOT_UNIQUE",
+      "evidence_balance": "Recent regional synthesis supports substantial behavioral overlap and proposes interaction as a mechanism. Convergence and shared ancestral capacities remain viable alternatives for individual practices.",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 1
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "id": "HS-H005",
+      "title": "Blombos and Diepkloof engravings were denotational symbolic signs",
+      "status": "NOT_SUPPORTED_BY_CURRENT_EXPERIMENTAL_TEST",
+      "evidence_balance": "The selected experimental evidence supports decoration, transmission, style and intentionality but found no clear indication of denotational sign function. Other symbolic functions remain open.",
+      "support_count": 0,
+      "challenge_count": 2,
+      "related_count": 1
+    },
+    {
+      "pack_id": "NOEMA-EVIDENCE-003",
+      "id": "HS-H006",
+      "title": "Early symbolic materials were behaviorally multifunctional",
+      "status": "SUPPORTED_AS_ANALYTIC_MODEL",
+      "evidence_balance": "The direct technological use of ochre, alongside graphic ochre use and personal ornaments in broader Middle Stone Age records, makes a multifunctional model more defensible than assigning one universal meaning to a material category.",
+      "support_count": 1,
+      "challenge_count": 0,
+      "related_count": 2
+    }
+  ],
+  "forbidden_inferences": [
+    "current oldest observation equals evolutionary origin",
+    "shared material form equals shared meaning",
+    "burial equals afterlife doctrine",
+    "ochre equals ritual",
+    "species ranking from evidence counts",
+    "coverage point equals coded belief evidence"
+  ],
+  "summary": {
+    "evidence_packs": 3,
+    "sources": 17,
+    "claims": 20,
+    "mapped_dated_events": 6,
+    "unmapped_dated_events": 1,
+    "coverage_societies": 100,
+    "hypotheses": 15,
+    "constructs": 3
+  },
+  "insights": {
+    "construct_matrix": [
+      {
+        "construct": "GRAPHIC_OR_DISPLAY",
+        "mapped_event_count": 3,
+        "site_count": 3,
+        "pack_count": 2,
+        "pack_ids": [
+          "NOEMA-EVIDENCE-002",
+          "NOEMA-EVIDENCE-003"
+        ],
+        "oldest_encoded_center_bp": 117500,
+        "newest_encoded_center_bp": 57000,
+        "interpretation_guard": "Cross-pack recurrence is a prompt for comparison, not evidence of shared meaning, ancestry or transmission."
+      },
+      {
+        "construct": "MORTUARY",
+        "mapped_event_count": 2,
+        "site_count": 2,
+        "pack_count": 2,
+        "pack_ids": [
+          "NOEMA-EVIDENCE-002",
+          "NOEMA-EVIDENCE-003"
+        ],
+        "oldest_encoded_center_bp": 105000,
+        "newest_encoded_center_bp": 41250,
+        "interpretation_guard": "Cross-pack recurrence is a prompt for comparison, not evidence of shared meaning, ancestry or transmission."
+      },
+      {
+        "construct": "TECHNOLOGICAL_FUNCTION",
+        "mapped_event_count": 1,
+        "site_count": 1,
+        "pack_count": 1,
+        "pack_ids": [
+          "NOEMA-EVIDENCE-003"
+        ],
+        "oldest_encoded_center_bp": 80000,
+        "newest_encoded_center_bp": 80000,
+        "interpretation_guard": "Cross-pack recurrence is a prompt for comparison, not evidence of shared meaning, ancestry or transmission."
+      }
+    ],
+    "signals": [
+      {
+        "kind": "CROSS_PACK_RECURRENCE",
+        "construct": "GRAPHIC_OR_DISPLAY",
+        "statement": "Graphic Or Display has mapped dated observations in 2 evidence packs.",
+        "guard": "Cross-pack recurrence is a prompt for comparison, not evidence of shared meaning, ancestry or transmission."
+      },
+      {
+        "kind": "CROSS_PACK_RECURRENCE",
+        "construct": "MORTUARY",
+        "statement": "Mortuary has mapped dated observations in 2 evidence packs.",
+        "guard": "Cross-pack recurrence is a prompt for comparison, not evidence of shared meaning, ancestry or transmission."
+      },
+      {
+        "kind": "MAPPING_BLIND_SPOT",
+        "statement": "1 dated event is deliberately absent from the globe because its coordinate record is unresolved.",
+        "guard": "Missing geography remains missing; NOEMA does not invent a point for visual completeness."
+      }
+    ],
+    "diagnostics": {
+      "oldest_mapped_center_bp": 117500,
+      "newest_mapped_center_bp": 41250,
+      "unmapped_dated_events": 1,
+      "mapped_review_states": [
+        "HUMAN_REVIEW_PENDING"
+      ],
+      "pre_oldest_time_domain_is_evidence_gap": true,
+      "note": "These are descriptive diagnostics of the current encoded corpus, not estimates of behavioral origins or population prevalence."
+    }
+  }
+}
