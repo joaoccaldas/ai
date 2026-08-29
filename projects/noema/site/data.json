@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-08-29T02:08:00Z",
+  "generated_at": "2026-08-29T06:20:00Z",
   "status": "research-preview",
-  "release": "v0.8",
+  "release": "v0.9",
   "title": "NOEMA Observatory",
   "evidence_pack": "../data/reviewed/evidence-pack-001.json",
   "evidence_packs": [
@@ -9,6 +9,13 @@
     "../data/reviewed/evidence-pack-002-deep-time.json",
     "../data/reviewed/evidence-pack-003-homo-sapiens.json"
   ],
+  "human_meaning_atlas": {
+    "url": "./human-meaning-atlas.html",
+    "projection": "./human-meaning-atlas.json",
+    "status": "research-preview",
+    "time_domain_bp": 500000,
+    "principle": "Map only source-bounded evidence with traceable time and place; coverage is not evidence and current first appearance is not origin."
+  },
   "deep_time": {
     "url": "./deep-time.html",
     "evidence_pack": "../data/reviewed/evidence-pack-002-deep-time.json",
@@ -25,7 +32,9 @@
     "human_approved_claims": 0,
     "benchmark_societies_target": 100,
     "deep_time_sites": 7,
-    "deep_time_matched_constructs": 4
+    "deep_time_matched_constructs": 4,
+    "atlas_mapped_dated_events": 6,
+    "atlas_unmapped_dated_events": 1
   },
   "publication_gate": {
     "research_preview": true,
@@ -33,8 +42,10 @@
     "unknown_is_absent": false,
     "model_synthesis_is_evidence": false,
     "observation_equals_interpretation": false,
-    "species_ranking_allowed": false
+    "species_ranking_allowed": false,
+    "coverage_equals_belief_evidence": false,
+    "current_first_appearance_equals_origin": false
   },
-  "headline": "Evidence first. Disagreement visible.",
-  "description": "NOEMA now combines a comparative-religion controversy dossier, Neanderthal and early Homo sapiens Deep Time dossiers, a construct-matched cross-Homo comparison, and a reproducible 100-society D-PLACE geographic benchmark. Claims remain source-scoped, inference boundaries explicit, species ranking forbidden, and publication review-gated."
+  "headline": "Evidence in space. Uncertainty in view.",
+  "description": "NOEMA v0.9 adds the Human Meaning Atlas: an orthographic deep-time globe generated from source-bounded archaeological evidence, with a 500,000 BP to present time lens, construct layers, explicit inference bands, a separate D-PLACE coverage layer, and hypothesis cards that remain off-map when they lack defensible coordinates."
 }
