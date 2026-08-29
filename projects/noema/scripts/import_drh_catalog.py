@@ -3,12 +3,12 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import io
 import json
 import urllib.request
 import zipfile
 from collections import Counter, defaultdict
-from datetime import datetime, timezone
 from pathlib import Path
 
 URL = "https://raw.githubusercontent.com/religionhistory/SCCSR/main/data_clean/drh_tables.zip"
@@ -33,10 +33,11 @@ ROUTES = {
 }
 
 
-def fetch_zip() -> zipfile.ZipFile:
+def fetch_archive() -> tuple[zipfile.ZipFile, str]:
     req = urllib.request.Request(URL, headers={"User-Agent":"NOEMA/1.0 (+https://github.com/joaoccaldas/ai)"})
     with urllib.request.urlopen(req, timeout=180) as r:
-        return zipfile.ZipFile(io.BytesIO(r.read()))
+        payload = r.read()
+    return zipfile.ZipFile(io.BytesIO(payload)), hashlib.sha256(payload).hexdigest()
 
 
 def csv_rows(z: zipfile.ZipFile, suffix: str):
@@ -64,9 +65,9 @@ def norm_answer(answer: str, value: str) -> str:
 def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--output", default="site/drh-catalog.json")
-    ap.add_argument("--max-routed-answers", type=int, default=120000)
+    ap.add_argument("--max-routed-answers", type=int, default=20000)
     args=ap.parse_args()
-    z=fetch_zip()
+    z, archive_digest = fetch_archive()
 
     regions={}
     for r in csv_rows(z,"region_data.csv"):
@@ -88,15 +89,17 @@ def main():
             "data_source":e.get("data_source"),"tags":tags.get(eid,[]),
         })
 
-    questions={}; answer_counts=Counter(); state_counts=Counter(); routed_answers=[]; route_counts=Counter(); poll_counts=Counter()
+    questions={}; state_counts=Counter(); routed_answers=[]; route_counts=Counter(); poll_counts=Counter()
+    total_answers=0
     for a in csv_rows(z,"answerset.csv"):
+        total_answers += 1
         qid=a["question_id"]; qname=a.get("question_name") or ""; routes=route_question(qname)
         q=questions.setdefault(qid,{"id":qid,"name":qname,"parent_question":a.get("parent_question"),"polls":set(),"answer_count":0,"routes":routes,"answer_examples":Counter()})
         q["polls"].add(a.get("poll_name") or "")
         q["answer_count"]+=1
         ans=(a.get("answer") or "").strip(); q["answer_examples"][ans]+=1
         state=norm_answer(ans,a.get("answer_value") or "")
-        answer_counts[qid]+=1; state_counts[state]+=1; poll_counts[a.get("poll_name") or "UNKNOWN"]+=1
+        state_counts[state]+=1; poll_counts[a.get("poll_name") or "UNKNOWN"]+=1
         for r in routes: route_counts[r]+=1
         if routes and len(routed_answers)<args.max_routed_answers:
             routed_answers.append({
@@ -114,14 +117,24 @@ def main():
         q["polls"]=sorted(x for x in q["polls"] if x); q["answer_examples"]=examples; qout.append(q)
     qout.sort(key=lambda x:(not bool(x["routes"]),-x["answer_count"],x["name"]))
 
+    route_definition_digest = hashlib.sha256(
+        json.dumps(ROUTES, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
     out={
         "dataset_id":"NOEMA-DRH-CATALOG-V1",
-        "generated_at":datetime.now(timezone.utc).isoformat(),
         "status":"research-preview",
-        "source":{"name":"Standard Cross-Cultural Sample of Religion / Database of Religious History","url":"https://github.com/religionhistory/SCCSR","license":"CC-BY-4.0","snapshot_note":"Upstream repository documents v1 and v2 snapshots; this importer reads the current main-branch curated archive."},
+        "source":{
+            "name":"Standard Cross-Cultural Sample of Religion / Database of Religious History",
+            "url":"https://github.com/religionhistory/SCCSR",
+            "archive_url":URL,
+            "archive_sha256":archive_digest,
+            "license":"CC-BY-4.0",
+            "snapshot_note":"Upstream repository documents v1 and v2 snapshots; this importer reads the current main-branch curated archive."
+        },
+        "routing":{"method":"keyword_navigation_only","route_definition_sha256":route_definition_digest},
         "bias_warning":"DRH is expert-driven and unevenly sampled across traditions, time and space. Raw counts are not prevalence estimates.",
         "mapping_rule":"Question keyword routes are navigation aids only. AUTO_ROUTE_REVIEW_REQUIRED answers must not enter cross-tradition pattern scoring as NOEMA semantic facts until reviewed.",
-        "summary":{"entries":len(entries),"questions":len(qout),"routed_questions":sum(1 for q in qout if q["routes"]),"routed_answers_exported":len(routed_answers),"answer_states":dict(state_counts),"poll_counts":dict(poll_counts),"route_counts":dict(route_counts)},
+        "summary":{"entries":len(entries),"questions":len(qout),"total_answers":total_answers,"routed_questions":sum(1 for q in qout if q["routes"]),"routed_answers_exported":len(routed_answers),"answer_states":dict(state_counts),"poll_counts":dict(poll_counts),"route_counts":dict(route_counts)},
         "entries":entries,"questions":qout,"routed_answers":routed_answers,
     }
     p=Path(args.output);p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(out,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
