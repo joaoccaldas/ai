@@ -32,6 +32,8 @@ jobs:
           echo "NOEMA_PUBLIC_URL=${base}/"
           echo "NOEMA_EXPLORE_URL=${base}/explore.html"
           echo "NOEMA_GODS_URL=${base}/gods.html"
+          echo "NOEMA_DRH_URL=${base}/drh.html"
+          echo "NOEMA_SIMULATIONS_URL=${base}/simulations.html"
           echo "NOEMA_DECOMPOSITION_URL=${base}/religion-decomposition.html"
           echo "NOEMA_HUMAN_MEANING_ATLAS_URL=${base}/human-meaning-atlas.html"
 
@@ -43,9 +45,12 @@ jobs:
             gods=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/gods.html${bust}" || true)
             patterns=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/patterns.html${bust}" || true)
             compare=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/compare.html${bust}" || true)
+            simulations=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/simulations.html${bust}" || true)
+            drh_page=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/drh.html${bust}" || true)
             entity=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/entity.html?id=GOD-ODIN&build=${SHA}" || true)
             workbench=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/religion-decomposition.html${bust}" || true)
             decomposition=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/religion-decomposition.json${bust}" || true)
+            drh=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/drh-decomposition.json${bust}" || true)
             catalog=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "https://${OWNER}.github.io/${REPO}/projects/noema/data/reference/belief-catalog-v1.json${bust}" || true)
             ontology=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "https://${OWNER}.github.io/${REPO}/projects/noema/ontology/decomposition_v1.json${bust}" || true)
             atlas_html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/human-meaning-atlas.html${bust}" || true)
@@ -61,11 +66,17 @@ jobs:
               && printf '%s' "$gods" | grep -q '<title>Gods & Spirits · NOEMA</title>' \
               && printf '%s' "$patterns" | grep -q '<title>Patterns · NOEMA</title>' \
               && printf '%s' "$compare" | grep -q '<title>Compare · NOEMA</title>' \
+              && printf '%s' "$simulations" | grep -q '<title>Simulations · NOEMA</title>' \
+              && printf '%s' "$simulations" | grep -q 'Is a pattern surprising?' \
+              && printf '%s' "$drh_page" | grep -q '<title>DRH Explorer · NOEMA</title>' \
+              && printf '%s' "$drh_page" | grep -q 'Entries, questions, metadata.' \
               && printf '%s' "$entity" | grep -q '<title>Entity · NOEMA</title>' \
               && printf '%s' "$workbench" | grep -q '<title>NOEMA Religion Decomposition</title>' \
               && printf '%s' "$workbench" | grep -q 'Search religion beneath religion' \
               && printf '%s' "$decomposition" | grep -q 'NOEMA-RELIGION-DECOMPOSITION-PULOTU-V1' \
               && printf '%s' "$decomposition" | grep -q 'accepted_assertions' \
+              && printf '%s' "$drh" | grep -q 'NOEMA-RELIGION-DECOMPOSITION-DRH-V1' \
+              && printf '%s' "$drh" | grep -q 'mapped_questions' \
               && printf '%s' "$catalog" | grep -q 'NOEMA-BELIEF-CATALOG-V1' \
               && printf '%s' "$catalog" | grep -q 'GOD-ODIN' \
               && printf '%s' "$ontology" | grep -q 'NOEMA-DECOMPOSITION-V1' \
@@ -76,7 +87,7 @@ jobs:
               && printf '%s' "$comparison" | grep -q 'NOEMA-DEEP-TIME-COMPARE-001' \
               && printf '%s' "$coverage" | grep -q 'NOEMA-DPLACE-100-v1'; then
               ok=1
-              echo "NOEMA v1 Research OS, decomposition corpus, entity/search pages, Atlas and Deep Time verified on attempt ${attempt}."
+              echo "NOEMA v1 Research OS, Pulotu + DRH decomposition corpora, simulations, entity/search pages, Atlas and Deep Time verified on attempt ${attempt}."
               break
             fi
             echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA v1 bundle yet."
