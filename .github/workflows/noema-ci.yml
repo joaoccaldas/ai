@@ -35,6 +35,22 @@ jobs:
             python scripts/analyze_evidence_pack.py "$pack" --output "$out"
             python -m json.tool "$out" >/dev/null
           done
+      - name: Validate construct-matched Deep Time comparison
+        run: |
+          python -m json.tool data/comparisons/deep-time-constructs.json >/dev/null
+          python scripts/compare_deep_time.py \
+            data/comparisons/deep-time-constructs.json \
+            data/reviewed/evidence-pack-002-deep-time.json \
+            data/reviewed/evidence-pack-003-homo-sapiens.json \
+            --output /tmp/noema-deep-time-comparison.json
+          python -m json.tool /tmp/noema-deep-time-comparison.json >/dev/null
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/noema-deep-time-comparison.json'))
+          assert x['summary']['matched_constructs'] == 4
+          assert 'species intelligence score' in [v.lower() for v in x['forbidden_outputs']]
+          assert 'cognitive superiority ranking' in [v.lower() for v in x['forbidden_outputs']]
+          PY
       - name: Syntax-check observatory JavaScript
         run: |
           python - <<'PY'
@@ -43,6 +59,7 @@ jobs:
           pages = {
               'site/index.html': ('<title>NOEMA Observatory</title>', 'Similarity generates a question, never a conclusion'),
               'site/deep-time.html': ('<title>NOEMA Deep Time</title>', 'behavioral evidence may climb toward interpretation'),
+              'site/deep-time-compare.html': ('<title>NOEMA Deep Time Compare</title>', 'no species ranking'),
           }
           for path, required in pages.items():
               html=Path(path).read_text(encoding='utf-8')
@@ -56,4 +73,5 @@ jobs:
           PY
           node --check /tmp/index-noema-site.js
           node --check /tmp/deep-time-noema-site.js
+          node --check /tmp/deep-time-compare-noema-site.js
       - run: pytest
