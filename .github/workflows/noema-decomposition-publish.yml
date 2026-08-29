@@ -1,0 +1,62 @@
+name: NOEMA Religion Decomposition Publish
+
+on:
+  push:
+    paths:
+      - 'projects/noema/ontology/decomposition_v1.json'
+      - 'projects/noema/ontology/source_mappings.json'
+      - 'projects/noema/scripts/import_pulotu_decomposition.py'
+      - '.github/workflows/noema-decomposition-publish.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '17 5 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  build-decomposition:
+    if: ${{ github.event_name != 'push' || !contains(github.event.head_commit.message, '[skip noema-decomposition]') }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build normalized Pulotu decomposition projection
+        run: |
+          python scripts/import_pulotu_decomposition.py --output site/religion-decomposition.json
+          python -m json.tool site/religion-decomposition.json >/dev/null
+      - name: Validate scale and epistemic semantics
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('site/religion-decomposition.json'))
+          s=x['summary']
+          assert s['subjects'] >= 100
+          assert s['upstream_variables'] >= 70
+          assert s['assertions'] >= 1000
+          assert s['mapped_assertions'] > 0 and s['raw_assertions'] > 0
+          assert 'true absence' not in x['semantics']['absence'].lower()
+          print(json.dumps(s, indent=2))
+          PY
+      - name: Commit refreshed public projection
+        run: |
+          if git status --porcelain -- site/religion-decomposition.json | grep -q .; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add site/religion-decomposition.json
+            git commit -m 'data(noema): refresh religion decomposition projection [skip noema-decomposition]'
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          else
+            echo 'No decomposition projection change.'
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noema-religion-decomposition
+          path: projects/noema/site/religion-decomposition.json
