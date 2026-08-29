@@ -1,0 +1,118 @@
+{
+  "schema_id": "NOEMA-DECOMPOSITION-1",
+  "version": "1.0.0",
+  "purpose": "Decompose religious, spiritual and belief systems into independently searchable components while preserving source-specific terminology and uncertainty.",
+  "principles": [
+    "A named religion is a bundle, not an atomic category.",
+    "Similar components do not imply common origin.",
+    "Practice, claimed meaning, participant experience and analyst interpretation are separate fields.",
+    "Absence of coding is UNKNOWN, never FALSE.",
+    "Historical transmission, shared ancestry, convergence and local innovation remain competing mechanisms until tested.",
+    "Substance use is one altered-state induction route among many and never defines shamanism by itself.",
+    "Indigenous or community-restricted knowledge must retain access controls and community terminology."
+  ],
+  "dimensions": [
+    {
+      "id": "ONTOLOGY_AGENCY",
+      "label": "Agency ontology",
+      "question": "What kinds of agents or intentional forces are said to exist?",
+      "components": ["ANCESTOR", "SPIRIT", "DEITY", "CREATOR", "MORALIZING_DEITY", "LOCAL_PLACE_BEING", "ANIMAL_PERSON", "PLANT_PERSON", "DEMON_OR_MALEVOLENT_AGENT", "FATE_OR_IMPERSONAL_ORDER", "NONE_REQUIRED"]
+    },
+    {
+      "id": "SELF_PERSONHOOD",
+      "label": "Self and personhood",
+      "question": "What is a person made of and what can persist or transform?",
+      "components": ["BODY_SOUL_DUALISM", "MULTIPLE_SOULS", "ANCESTRAL_CONTINUITY", "REINCARNATION", "REBIRTH_WITHOUT_PERMANENT_SELF", "NONDUAL_SELF", "RELATIONAL_PERSONHOOD", "SPIRIT_POSSESSION", "SOUL_FLIGHT", "NO_PERSISTENT_SELF_CLAIM"]
+    },
+    {
+      "id": "DEATH_AFTERLIFE",
+      "label": "Death and afterlife",
+      "question": "What is believed or practiced around death?",
+      "components": ["AFTERLIFE_REALM", "ANCESTOR_TRANSFORMATION", "REINCARNATION", "RESURRECTION", "JUDGMENT", "MEMORIAL_CONTINUITY", "MORTUARY_OFFERING", "APOTROPAIC_BURIAL", "SECONDARY_BURIAL", "CREMATION", "EXPOSURE", "UNKNOWN_AFTERLIFE"]
+    },
+    {
+      "id": "COSMOLOGY",
+      "label": "Cosmology",
+      "question": "How is reality structured?",
+      "components": ["MULTI_LAYER_COSMOS", "HEAVEN_EARTH_UNDERWORLD", "CYCLIC_COSMOS", "CREATION_EVENT", "EMANATION", "COSMIC_ORDER", "SACRED_DIRECTIONS", "WORLD_AXIS", "CELESTIAL_CORRESPONDENCE", "LANDSCAPE_AS_COSMOS"]
+    },
+    {
+      "id": "NATURE_RELATION",
+      "label": "Nature relation",
+      "question": "How are humans related to animals, plants, weather and landscape?",
+      "components": ["ANIMISM", "SACRED_LANDSCAPE", "TOTEMIC_RELATION", "ANIMAL_KINSHIP", "PLANT_AGENCY", "WEATHER_AGENCY", "LAND_SPIRITS", "ECOLOGICAL_TABOO", "HUMAN_NATURE_DUALISM", "STEWARDSHIP"]
+    },
+    {
+      "id": "MORALITY_ORDER",
+      "label": "Morality and order",
+      "question": "What enforces or grounds moral/social order?",
+      "components": ["SUPERNATURAL_PUNISHMENT", "MORALIZING_HIGH_GOD", "ANCESTOR_SANCTION", "KARMA_CAUSATION", "RITUAL_PURITY", "TABOO", "COSMIC_ORDER", "COMMUNAL_SANCTION", "DIVINE_LAW", "NO_SUPERNATURAL_MORAL_ENFORCER_REQUIRED"]
+    },
+    {
+      "id": "RITUAL_GRAMMAR",
+      "label": "Ritual grammar",
+      "question": "What recurrent action structures transform persons, relationships or worlds?",
+      "components": ["OFFERING", "SACRIFICE", "PRAYER", "CHANT", "SONG", "DRUMMING", "DANCE", "PROCESSION", "PILGRIMAGE", "INITIATION", "DIVINATION", "HEALING", "POSSESSION", "EXORCISM", "PURIFICATION", "FASTING", "FEASTING", "MOURNING", "FUNERARY_RITE", "ANCESTOR_RITE", "SEASONAL_RITE", "ASTRONOMICAL_ALIGNMENT", "VOW", "CONFESSION", "MEDITATION", "YOGA_OR_BREATHWORK", "ASCETICISM", "ORACLE", "DREAM_INCUBATION"]
+    },
+    {
+      "id": "ALTERED_STATE_INDUCTION",
+      "label": "Altered-state induction",
+      "question": "How are unusual states of consciousness induced or cultivated?",
+      "components": ["PSYCHEDELIC", "CANNABINOID", "ALCOHOL", "STIMULANT", "SEDATIVE", "OTHER_PSYCHOACTIVE", "DRUMMING", "RHYTHMIC_MUSIC", "CHANTING", "DANCE", "HYPERVENTILATION", "BREATH_CONTROL", "MEDITATION", "FASTING", "SLEEP_DEPRIVATION", "SENSORY_DEPRIVATION", "ISOLATION", "PAIN", "HEAT_OR_SAUNA", "COLD", "DREAMING", "POSSESSION_RITUAL", "PRAYER", "NONE_REQUIRED"]
+    },
+    {
+      "id": "SUBSTANCE_RELATION",
+      "label": "Psychoactive and sacred substances",
+      "question": "Which substances are used, how, by whom and for what claimed purpose?",
+      "components": ["PSILOCYBIN", "DMT_BREW", "PEYOTE_MESCALINE", "IBOGA", "AMANITA", "CANNABIS", "TOBACCO", "ALCOHOL", "OPIUM", "STIMULANT_PLANT", "SNUFF", "SACRAMENTAL_FOOD_OR_DRINK", "UNKNOWN_SUBSTANCE"]
+    },
+    {
+      "id": "PHENOMENOLOGY",
+      "label": "Reported phenomenology",
+      "question": "What experiences are reported or culturally expected?",
+      "components": ["ENTITY_ENCOUNTER", "ANCESTOR_ENCOUNTER", "UNITY", "EGO_DISSOLUTION", "SOUL_FLIGHT", "DEATH_REBIRTH", "VISION", "AUDITORY_VOICE", "DREAM_REVELATION", "POSSESSION", "TIME_DISTORTION", "SYNESTHESIA", "SACRED_PRESENCE", "NOETIC_CERTAINTY", "HEALING_EXPERIENCE", "FEAR_OR_AWE"]
+    },
+    {
+      "id": "SPECIALIST_ROLE",
+      "label": "Religious specialists",
+      "question": "Who mediates, interprets or performs specialized religious work?",
+      "components": ["SHAMANIC_PRACTITIONER", "PRIEST", "DIVINER", "ORACLE", "MEDIUM", "HEALER", "MONK_OR_NUN", "ASCETIC", "PROPHET", "SPIRIT_POSSESSED_MEDIUM", "HEREDITARY_SPECIALIST", "NO_SPECIALIST_REQUIRED"]
+    },
+    {
+      "id": "KNOWLEDGE_AUTHORITY",
+      "label": "Knowledge and authority",
+      "question": "How are religious claims authorized and transmitted?",
+      "components": ["REVELATION", "SCRIPTURE", "ORAL_TRADITION", "ANCESTRAL_PRECEDENT", "VISIONARY_EXPERIENCE", "DREAM", "DIVINATION", "PRIESTLY_AUTHORITY", "LINEAGE_TRANSMISSION", "INITIATORY_SECRET", "COMMUNAL_TRADITION", "PHILOSOPHICAL_REASONING", "PERSONAL_EXPERIENCE"]
+    },
+    {
+      "id": "MATERIAL_MEDIATION",
+      "label": "Material mediation",
+      "question": "What material forms mediate or materialize belief and ritual?",
+      "components": ["ICON", "IDOL", "MASK", "RELIC", "AMULET", "TALISMAN", "ALTAR", "TEMPLE", "SHRINE", "TOMB", "MEGALITH", "ROCK_ART", "BODY_MARKING", "BEAD_OR_ORNAMENT", "SACRED_TEXT", "ORACLE_OBJECT", "MUSICAL_INSTRUMENT", "RITUAL_VESSEL", "SACRED_PLANT", "PIGMENT", "GEOMETRIC_SIGN"]
+    },
+    {
+      "id": "SACRED_SPACE_TIME",
+      "label": "Sacred space and time",
+      "question": "How are places and times marked as qualitatively different?",
+      "components": ["TEMPLE_SPACE", "SHRINE_SPACE", "BURIAL_SPACE", "MOUNTAIN", "CAVE", "FOREST", "SPRING_OR_WATER", "GROVE", "DOMESTIC_SHRINE", "PILGRIMAGE_ROUTE", "CARDINAL_ORIENTATION", "SOLAR_ALIGNMENT", "LUNAR_ALIGNMENT", "SEASONAL_CALENDAR", "LIFE_CYCLE_TIME", "ANCESTRAL_TIME", "MYTHIC_TIME"]
+    },
+    {
+      "id": "SOCIAL_FUNCTION",
+      "label": "Social functions",
+      "question": "What social work can the practice perform without assuming that function explains origin?",
+      "components": ["COOPERATION", "GROUP_IDENTITY", "KINSHIP", "LEGITIMATION", "CONFLICT_REGULATION", "HEALING", "MOURNING", "RESOURCE_COORDINATION", "STATUS_DISPLAY", "POLITICAL_HIERARCHY", "EGALITARIAN_LEVELING", "MORAL_ENFORCEMENT", "CULTURAL_TRANSMISSION", "MEMORY", "BOUNDARY_MAINTENANCE"]
+    },
+    {
+      "id": "TRANSMISSION_MECHANISM",
+      "label": "Historical mechanism",
+      "question": "What mechanism could explain similarity or change?",
+      "components": ["VERTICAL_INHERITANCE", "HORIZONTAL_DIFFUSION", "MIGRATION", "INTERMARRIAGE", "TRADE_CONTACT", "CONQUEST", "MISSIONIZATION", "SYNCRETISM", "INDEPENDENT_CONVERGENCE", "SHARED_ANCESTRAL_CAPACITY", "LOCAL_INNOVATION", "COLONIAL_RECODING", "MODERN_REVIVAL", "UNKNOWN_MECHANISM"]
+    }
+  ],
+  "observation_ladders": {
+    "material_signification": ["PHYSICAL_MODIFICATION", "RECURRENT_PATTERN", "CONVENTIONALIZED_PRACTICE", "INFORMATION_BEARING_SYSTEM", "SEMANTIC_CONTENT"],
+    "religious_inference": ["ANTHROPOGENIC", "PATTERNED", "NON_UTILITARIAN", "SYMBOLIC", "RITUAL", "RELIGIOUS", "SPECIFIC_THEOLOGY"],
+    "psychoactive_inference": ["SUBSTANCE_PRESENT", "INGESTION_PLAUSIBLE", "INGESTION_DEMONSTRATED", "RITUAL_CONTEXT", "ALTERED_STATE_INTENT", "SPECIFIC_RELIGIOUS_MEANING"]
+  },
+  "comparison_controls": ["TIME", "GEOGRAPHY", "LANGUAGE_FAMILY", "GENETIC_ANCESTRY", "KNOWN_CONTACT", "TRADE_NETWORK", "ECOLOGY", "SUBSISTENCE", "POLITICAL_COMPLEXITY", "SOURCE_DEPENDENCE", "CODING_SCHEME", "COLONIAL_CONTEXT", "PRESERVATION_BIAS", "RESEARCH_INTENSITY"]
+}
