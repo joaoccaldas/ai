@@ -1,0 +1,89 @@
+{
+  "federation_id": "NOEMA-RELIGION-FEDERATION-V1",
+  "release": "v1.0",
+  "status": "research-preview",
+  "principle": "Federate source ontologies, preserve upstream semantics, compare only explicitly crosswalked facets, and keep dependence/missingness visible.",
+  "summary": {
+    "source_families": 3,
+    "comparable_belief_system_profiles": 830,
+    "pulotu_profiles": 137,
+    "drh_comparable_religious_groups": 693,
+    "drh_context_entries_with_curated_assertions": 353,
+    "accepted_semantic_assertions": 24660,
+    "conditional_assertions_excluded_from_profiles": 2892,
+    "pulotu_raw_searchable_assertions": 4803,
+    "drh_total_entries": 1687,
+    "drh_standardized_questions": 4234,
+    "drh_total_coded_answers": 383629,
+    "dplace_total_variables": 3341,
+    "dplace_religion_variable_candidates": 526,
+    "discovery_pressure_candidates": 11,
+    "ontology_dimensions": 17
+  },
+  "sources": [
+    {
+      "id": "PULOTU",
+      "role": "coded supernatural-belief/practice profiles + contact/context metadata",
+      "projection": "./religion-decomposition.json",
+      "source_digest": "a98e42a1f63e6366f07e183858ace93eb1f5f06dfb6c7ca11f0cfc0f2dd6cde3",
+      "mapping_version": "1.1.0",
+      "accepted_assertions": 5051,
+      "conditional_assertions": 2257,
+      "raw_assertions": 4803
+    },
+    {
+      "id": "DRH",
+      "role": "expert-coded historical religious groups, places, texts and rituals",
+      "projection": "./drh-decomposition.json",
+      "catalog": "./drh-catalog.json",
+      "source_digest": "fff29d5195d32dfdaf5476757bcf5f28dab87438b38d960a7d3a2cbd4b5c637b",
+      "mapping_version": "1.0.0",
+      "accepted_assertions": 19609,
+      "conditional_assertions": 635,
+      "catalog_questions": 4234
+    },
+    {
+      "id": "DPLACE",
+      "role": "high-recall source-variable universe for cross-cultural religion/ritual/divination context",
+      "catalog": "./dplace-religion-variables.json",
+      "source_digest": "dc7a6bfb5c871357a2d35abad45b9551ec276dafba90650b24b48669b12ebe9c",
+      "candidate_variables": 526,
+      "note": "candidate-variable routing only; not semantic evidence"
+    }
+  ],
+  "ontology": {
+    "id": "NOEMA-DECOMPOSITION-V1",
+    "version": "1.1.0",
+    "dimensions": [
+      "AGENCY_ONTOLOGY",
+      "SELF_PERSONHOOD",
+      "DEATH_AFTERLIFE",
+      "COSMOLOGY",
+      "NATURE_RELATION",
+      "CAUSALITY_DIVINATION",
+      "MORAL_ORDER",
+      "SACREDNESS",
+      "RITUAL_GRAMMAR",
+      "ALTERED_STATE_INDUCTION",
+      "EXPERIENCE_PHENOMENOLOGY",
+      "RELIGIOUS_SPECIALISTS",
+      "TRANSMISSION",
+      "MATERIAL_AND_SPACE",
+      "SOCIAL_FUNCTION",
+      "HISTORICAL_MECHANISM",
+      "EVIDENCE_INFERENCE_LADDER"
+    ],
+    "altered_states_id": "NOEMA-ALTERED-STATES-V1",
+    "altered_states_version": "1.0.0"
+  },
+  "gates": {
+    "unknown_is_absence": false,
+    "raw_source_route_is_semantic_mapping": false,
+    "conditional_mapping_enters_profiles": false,
+    "shared_feature_implies_common_origin": false,
+    "ritual_implies_psychoactive_use": false,
+    "psychoactive_use_implies_religion": false,
+    "experience_implies_external_ontology": false,
+    "culture_change_implies_genetic_replacement": false
+  }
+}
