@@ -1,0 +1,25 @@
+{
+  "ontology_id": "NOEMA-MEDIA-V1",
+  "version": "1.0.0",
+  "purpose": "Govern images, maps, manuscript scans, artifact/site photography, and explanatory diagrams without confusing visual material with evidence.",
+  "principles": [
+    "A visual asset is not evidence merely because it depicts a research entity.",
+    "Every displayed research asset must preserve its source page, creator when known, license, rights status, caption, and entity linkage.",
+    "Generated or reconstructed imagery must be visibly labeled and may never masquerade as archaeological, historical, ethnographic, manuscript, or museum evidence.",
+    "Community-restricted or sacred visual material must follow the strictest applicable access rule.",
+    "Remote media URLs are references; provenance belongs to the source page and rights metadata, not to the hotlink.",
+    "A primary image is a UI choice, not an epistemic ranking."
+  ],
+  "media_types": ["IMAGE", "MAP", "MANUSCRIPT", "ARTIFACT_PHOTO", "SITE_PHOTO", "DIAGRAM"],
+  "rights_statuses": ["PENDING_REVIEW", "APPROVED", "RESTRICTED", "REJECTED"],
+  "required_fields": ["entity_id", "media_type", "source_page_url", "media_url", "rights_status", "caption", "alt_text"],
+  "recommended_fields": ["creator", "license", "attribution_text", "date_label", "institution", "catalog_number", "depicted_object_date", "photograph_date"],
+  "preferred_sources": [
+    {"class": "MUSEUM_OR_ARCHIVE", "rule": "Prefer collection pages with stable catalog identifiers and explicit rights statements."},
+    {"class": "WIKIMEDIA_COMMONS", "rule": "Use the file description page as source_page_url and preserve creator/license metadata."},
+    {"class": "ACADEMIC_PROJECT", "rule": "Display only when reuse rights are explicit."},
+    {"class": "GENERATED_EXPLANATION", "rule": "Allowed only with GENERATED/RECONSTRUCTION labeling and never as source evidence."}
+  ],
+  "display_gate": {"rule": "Only rights_status=APPROVED may render in the public research UI unless a restricted authenticated surface exists."},
+  "evidence_gate": {"rule": "Media can illustrate a source or object; evidentiary claims still require claim/source provenance and an inference level."}
+}

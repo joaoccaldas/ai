@@ -5,14 +5,19 @@ on:
     paths:
       - 'projects/noema/ontology/decomposition_v1.json'
       - 'projects/noema/ontology/altered_states_v1.json'
+      - 'projects/noema/ontology/media_v1.json'
       - 'projects/noema/ontology/source_mappings.json'
       - 'projects/noema/ontology/drh_curated_mappings.json'
+      - 'projects/noema/data/reference/belief-catalog-v1.json'
       - 'projects/noema/data/candidates/discovery-pressure-2026-08-29.json'
+      - 'projects/noema/src/noema/patterns.py'
       - 'projects/noema/scripts/import_pulotu_decomposition.py'
       - 'projects/noema/scripts/import_drh_decomposition.py'
       - 'projects/noema/scripts/import_drh_catalog.py'
       - 'projects/noema/scripts/audit_dplace_religion_variables.py'
       - 'projects/noema/scripts/build_religion_federation_manifest.py'
+      - 'projects/noema/scripts/build_pattern_candidates.py'
+      - 'projects/noema/scripts/build_research_health.py'
       - '.github/workflows/noema-decomposition-publish.yml'
   workflow_dispatch:
   schedule:
@@ -39,17 +44,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Build source projections
+      - name: Install NOEMA package
+        run: pip install -e .
+      - name: Build source projections and analysis products
         run: |
           python scripts/import_pulotu_decomposition.py --output site/religion-decomposition.json
           python scripts/import_drh_decomposition.py --output site/drh-decomposition.json
           python scripts/import_drh_catalog.py --max-routed-answers 0 --output site/drh-catalog.json
           python scripts/audit_dplace_religion_variables.py --output site/dplace-religion-variables.json
           python scripts/build_religion_federation_manifest.py --output site/religion-federation.json
-          for f in site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json; do
+          python scripts/build_pattern_candidates.py --output site/pattern-candidates.json
+          python scripts/build_research_health.py --output site/research-health.json
+          for f in site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json site/pattern-candidates.json site/research-health.json; do
             python -m json.tool "$f" >/dev/null
           done
-      - name: Validate scale and epistemic semantics
+      - name: Validate scale, statistics and epistemic semantics
         run: |
           python - <<'PY'
           import json
@@ -58,6 +67,8 @@ jobs:
           c=json.load(open('site/drh-catalog.json'))
           v=json.load(open('site/dplace-religion-variables.json'))
           f=json.load(open('site/religion-federation.json'))
+          pc=json.load(open('site/pattern-candidates.json'))
+          h=json.load(open('site/research-health.json'))
           assert p['summary']['subjects'] >= 100
           assert p['summary']['accepted_assertions'] > 1000
           assert p['summary']['raw_assertions'] > 1000
@@ -71,11 +82,18 @@ jobs:
           assert f['gates']['unknown_is_absence'] is False
           assert f['gates']['shared_feature_implies_common_origin'] is False
           assert f['gates']['ritual_implies_psychoactive_use'] is False
+          assert pc['status'] == 'HYPOTHESIS_GENERATION_ONLY'
+          assert [x['source'] for x in pc['cohorts']] == ['PULOTU','DRH']
+          assert all(0 <= r['q_bh'] <= 1 for x in pc['cohorts'] for r in x['candidates'])
+          assert all('phylogeny' in r['unresolved_confounders'] for x in pc['cohorts'] for r in x['candidates'])
+          assert h['metrics']['accepted_semantic_assertions'] == f['summary']['accepted_semantic_assertions']
+          assert any(x['area'] == 'causal inference' for x in h['blind_spots'])
           print(json.dumps(f['summary'],indent=2))
+          print(json.dumps(h['metrics'],indent=2))
           PY
       - name: Commit refreshed public federation only when content changed
         run: |
-          files='site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json'
+          files='site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json site/pattern-candidates.json site/research-health.json'
           if git status --porcelain -- $files | grep -q .; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -94,3 +112,5 @@ jobs:
             projects/noema/site/drh-catalog.json
             projects/noema/site/dplace-religion-variables.json
             projects/noema/site/religion-federation.json
+            projects/noema/site/pattern-candidates.json
+            projects/noema/site/research-health.json
