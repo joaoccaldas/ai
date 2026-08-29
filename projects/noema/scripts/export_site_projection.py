@@ -69,7 +69,7 @@ def build_projection(conn: psycopg.Connection[Any]) -> dict[str, Any]:
         """
         SELECT id::text AS id, title, statement,
                posterior_probability::float8 AS posterior_probability,
-               status AS epistemic_status, human_review_status,
+               status AS hypothesis_status, human_review_status,
                falsification_criteria, alternative_hypotheses,
                updated_at
         FROM hypotheses
