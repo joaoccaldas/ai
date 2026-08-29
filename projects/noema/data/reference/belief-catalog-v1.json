@@ -1,0 +1,292 @@
+{
+  "catalog_id": "NOEMA-BELIEF-CATALOG-V1",
+  "status": "REFERENCE_PROFILE_UNREVIEWED",
+  "purpose": "Starter identity and decomposition catalog for UI/search. These records are reference profiles, not approved historical evidence.",
+  "rules": [
+    "Every attribute may later be replaced or qualified by claim-level evidence.",
+    "UNKNOWN is not false.",
+    "A deity, spirit, ultimate reality, ritual or belief system can have multiple names and historically changing attributes.",
+    "Similarity tags are comparison aids only; they do not imply descent or common origin.",
+    "Modern umbrella labels must not erase emic names or internal diversity."
+  ],
+  "entities": [
+    {
+      "id": "SYS-GREEK-ANCIENT",
+      "kind": "BELIEF_SYSTEM",
+      "name": "Ancient Greek religion",
+      "aliases": ["Greek polytheism", "Hellenic religion"],
+      "regions": ["Mediterranean", "Ancient Greece"],
+      "time": {"start_bce": 1200, "end_ce": 500, "precision": "broad_reference_range"},
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY", "LOCAL_PLACE_BEING", "FATE_OR_IMPERSONAL_ORDER"], "RITUAL_GRAMMAR": ["OFFERING", "SACRIFICE", "DIVINATION", "PROCESSION", "PILGRIMAGE"], "SPECIALIST_ROLE": ["PRIEST", "ORACLE", "DIVINER"], "SACRED_SPACE_TIME": ["TEMPLE_SPACE", "SHRINE_SPACE", "CAVE", "SACRED_DIRECTIONS"], "KNOWLEDGE_AUTHORITY": ["ORAL_TRADITION", "DIVINATION", "COMMUNAL_TRADITION"]},
+      "related_entities": ["GOD-ZEUS", "GOD-ATHENA"],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "SYS-NORSE",
+      "kind": "BELIEF_SYSTEM",
+      "name": "Pre-Christian Norse religion",
+      "aliases": ["Old Norse religion", "Norse paganism"],
+      "regions": ["Scandinavia", "North Atlantic"],
+      "time": {"start_ce": 500, "end_ce": 1200, "precision": "broad_reference_range"},
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY", "ANCESTOR", "LOCAL_PLACE_BEING", "FATE_OR_IMPERSONAL_ORDER"], "RITUAL_GRAMMAR": ["OFFERING", "SACRIFICE", "DIVINATION", "FUNERARY_RITE", "FEASTING"], "SPECIALIST_ROLE": ["DIVINER", "SPIRIT_POSSESSED_MEDIUM"], "MATERIAL_MEDIATION": ["AMULET", "TOMB", "RITUAL_VESSEL"], "DEATH_AFTERLIFE": ["AFTERLIFE_REALM", "MORTUARY_OFFERING", "CREMATION"]},
+      "related_entities": ["GOD-ODIN", "GOD-THOR"],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "SYS-EGYPT-ANCIENT",
+      "kind": "BELIEF_SYSTEM",
+      "name": "Ancient Egyptian religion",
+      "aliases": ["Egyptian religion"],
+      "regions": ["Nile Valley", "Ancient Egypt"],
+      "time": {"start_bce": 3000, "end_ce": 500, "precision": "broad_reference_range"},
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY", "ANCESTOR"], "DEATH_AFTERLIFE": ["AFTERLIFE_REALM", "JUDGMENT", "MORTUARY_OFFERING"], "COSMOLOGY": ["COSMIC_ORDER", "CREATION_EVENT"], "MORALITY_ORDER": ["COSMIC_ORDER", "RITUAL_PURITY"], "RITUAL_GRAMMAR": ["OFFERING", "FUNERARY_RITE", "PROCESSION"], "MATERIAL_MEDIATION": ["TEMPLE", "TOMB", "ICON", "RITUAL_VESSEL", "SACRED_TEXT"]},
+      "related_entities": ["GOD-OSIRIS", "GOD-ISIS", "GOD-RA"],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "SYS-SHAIVISM",
+      "kind": "BELIEF_SYSTEM",
+      "name": "Shaivism",
+      "aliases": ["Śaivism"],
+      "regions": ["South Asia"],
+      "time": {"start_bce": 200, "end_ce": null, "precision": "broad_reference_range"},
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "SELF_PERSONHOOD": ["NONDUAL_SELF"], "RITUAL_GRAMMAR": ["OFFERING", "PRAYER", "MEDITATION", "YOGA_OR_BREATHWORK", "ASCETICISM"], "ALTERED_STATE_INDUCTION": ["MEDITATION", "BREATH_CONTROL", "FASTING"], "SPECIALIST_ROLE": ["ASCETIC", "PRIEST"], "MATERIAL_MEDIATION": ["ICON", "TEMPLE"]},
+      "related_entities": ["GOD-SHIVA"],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "SYS-SHINTO",
+      "kind": "BELIEF_SYSTEM",
+      "name": "Shinto",
+      "aliases": ["Shintō", "kami worship"],
+      "regions": ["Japan"],
+      "time": {"start_ce": null, "end_ce": null, "precision": "historically_layered"},
+      "dimensions": {"ONTOLOGY_AGENCY": ["LOCAL_PLACE_BEING", "ANCESTOR", "DEITY"], "NATURE_RELATION": ["ANIMISM", "SACRED_LANDSCAPE", "LAND_SPIRITS"], "RITUAL_GRAMMAR": ["OFFERING", "PURIFICATION", "PROCESSION", "PRAYER"], "MATERIAL_MEDIATION": ["SHRINE", "AMULET"], "SACRED_SPACE_TIME": ["SHRINE_SPACE", "MOUNTAIN", "FOREST", "SPRING_OR_WATER"]},
+      "related_entities": ["GOD-AMATERASU"],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "SYS-AZTEC",
+      "kind": "BELIEF_SYSTEM",
+      "name": "Mexica/Aztec religion",
+      "aliases": ["Aztec religion", "Mexica religion"],
+      "regions": ["Central Mexico", "Mesoamerica"],
+      "time": {"start_ce": 1300, "end_ce": 1521, "precision": "political_period_reference"},
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "COSMOLOGY": ["CYCLIC_COSMOS", "CREATION_EVENT", "CELESTIAL_CORRESPONDENCE"], "RITUAL_GRAMMAR": ["OFFERING", "SACRIFICE", "FASTING", "PROCESSION"], "SACRED_SPACE_TIME": ["TEMPLE_SPACE", "SEASONAL_CALENDAR"], "MATERIAL_MEDIATION": ["TEMPLE", "ICON", "RITUAL_VESSEL"]},
+      "related_entities": ["GOD-QUETZALCOATL"],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "SYS-INCA",
+      "kind": "BELIEF_SYSTEM",
+      "name": "Inca religion",
+      "aliases": ["Tawantinsuyu religion"],
+      "regions": ["Andes", "Tawantinsuyu"],
+      "time": {"start_ce": 1400, "end_ce": 1572, "precision": "imperial_period_reference"},
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY", "ANCESTOR", "LOCAL_PLACE_BEING"], "NATURE_RELATION": ["SACRED_LANDSCAPE", "LAND_SPIRITS"], "RITUAL_GRAMMAR": ["OFFERING", "SACRIFICE", "PILGRIMAGE", "ANCESTOR_RITE"], "SACRED_SPACE_TIME": ["MOUNTAIN", "SPRING_OR_WATER", "SOLAR_ALIGNMENT", "SEASONAL_CALENDAR"], "MATERIAL_MEDIATION": ["SHRINE", "RITUAL_VESSEL"]},
+      "related_entities": ["GOD-INTI"],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "SYS-AMAZON-AYAHUASCA",
+      "kind": "PRACTICE_COMPLEX",
+      "name": "Amazonian ayahuasca ritual traditions",
+      "aliases": ["ayahuasca traditions", "yagé traditions"],
+      "regions": ["Amazon Basin"],
+      "time": {"start_ce": null, "end_ce": null, "precision": "multiple_traditions_not_single_origin"},
+      "dimensions": {"ALTERED_STATE_INDUCTION": ["PSYCHEDELIC", "CHANTING", "RHYTHMIC_MUSIC"], "SUBSTANCE_RELATION": ["DMT_BREW"], "PHENOMENOLOGY": ["VISION", "ENTITY_ENCOUNTER", "HEALING_EXPERIENCE", "NOETIC_CERTAINTY"], "SPECIALIST_ROLE": ["SHAMANIC_PRACTITIONER", "HEALER"], "SOCIAL_FUNCTION": ["HEALING", "CULTURAL_TRANSMISSION"]},
+      "related_entities": ["SUB-AYAHUASCA", "RIT-TRANCE-HEALING"],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-ZEUS",
+      "kind": "DEITY",
+      "name": "Zeus",
+      "aliases": ["Zeús", "Jupiter as Roman counterpart"],
+      "traditions": ["SYS-GREEK-ANCIENT"],
+      "regions": ["Ancient Greece", "Mediterranean"],
+      "roles": ["sky", "thunder", "sovereignty", "oaths", "justice"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "MORALITY_ORDER": ["DIVINE_LAW"], "MATERIAL_MEDIATION": ["TEMPLE", "ALTAR"], "RITUAL_GRAMMAR": ["OFFERING", "SACRIFICE", "PRAYER"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Zeus", "note": "Identity/reference only; historical attributes require claim-level sourcing."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-ATHENA",
+      "kind": "DEITY",
+      "name": "Athena",
+      "aliases": ["Athene"],
+      "traditions": ["SYS-GREEK-ANCIENT"],
+      "regions": ["Ancient Greece"],
+      "roles": ["wisdom", "craft", "warfare", "civic protection"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "MATERIAL_MEDIATION": ["TEMPLE", "ICON"], "RITUAL_GRAMMAR": ["OFFERING", "PROCESSION"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Athena-Greek-mythology", "note": "Reference profile."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-ODIN",
+      "kind": "DEITY",
+      "name": "Odin",
+      "aliases": ["Óðinn", "Woden", "Wotan"],
+      "traditions": ["SYS-NORSE"],
+      "regions": ["Scandinavia", "Germanic Europe"],
+      "roles": ["wisdom", "poetry", "magic", "war", "dead"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "KNOWLEDGE_AUTHORITY": ["VISIONARY_EXPERIENCE"], "DEATH_AFTERLIFE": ["AFTERLIFE_REALM"], "RITUAL_GRAMMAR": ["OFFERING", "SACRIFICE"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Odin-Norse-deity", "note": "Reference profile."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-THOR",
+      "kind": "DEITY",
+      "name": "Thor",
+      "aliases": ["Þórr", "Donar"],
+      "traditions": ["SYS-NORSE"],
+      "regions": ["Scandinavia", "Germanic Europe"],
+      "roles": ["thunder", "protection", "strength"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "MATERIAL_MEDIATION": ["AMULET"], "RITUAL_GRAMMAR": ["OFFERING"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Thor-Germanic-deity", "note": "Reference profile."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-OSIRIS",
+      "kind": "DEITY",
+      "name": "Osiris",
+      "aliases": [],
+      "traditions": ["SYS-EGYPT-ANCIENT"],
+      "regions": ["Ancient Egypt"],
+      "roles": ["dead", "afterlife", "renewal", "kingship"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "DEATH_AFTERLIFE": ["AFTERLIFE_REALM", "JUDGMENT", "ANCESTOR_TRANSFORMATION"], "RITUAL_GRAMMAR": ["FUNERARY_RITE", "OFFERING"], "MATERIAL_MEDIATION": ["TOMB", "ICON"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Osiris-Egyptian-god", "note": "Reference profile."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-ISIS",
+      "kind": "DEITY",
+      "name": "Isis",
+      "aliases": ["Aset"],
+      "traditions": ["SYS-EGYPT-ANCIENT"],
+      "regions": ["Ancient Egypt", "Mediterranean"],
+      "roles": ["healing", "magic", "kingship", "motherhood"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "RITUAL_GRAMMAR": ["OFFERING", "HEALING"], "MATERIAL_MEDIATION": ["TEMPLE", "ICON"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Isis-Egyptian-goddess", "note": "Reference profile."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-RA",
+      "kind": "DEITY",
+      "name": "Ra",
+      "aliases": ["Re"],
+      "traditions": ["SYS-EGYPT-ANCIENT"],
+      "regions": ["Ancient Egypt"],
+      "roles": ["sun", "creation", "kingship"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY", "CREATOR"], "COSMOLOGY": ["CREATION_EVENT", "CELESTIAL_CORRESPONDENCE"], "MATERIAL_MEDIATION": ["TEMPLE", "ICON"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Re", "note": "Reference profile."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-SHIVA",
+      "kind": "DEITY",
+      "name": "Shiva",
+      "aliases": ["Śiva", "Mahadeva"],
+      "traditions": ["SYS-SHAIVISM"],
+      "regions": ["South Asia"],
+      "roles": ["transformation", "asceticism", "yoga", "destruction", "renewal"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "RITUAL_GRAMMAR": ["OFFERING", "PRAYER", "MEDITATION", "YOGA_OR_BREATHWORK"], "SPECIALIST_ROLE": ["ASCETIC"], "MATERIAL_MEDIATION": ["ICON", "TEMPLE"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Shiva", "note": "Reference profile; Shaiva traditions are internally diverse."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-AMATERASU",
+      "kind": "DEITY",
+      "name": "Amaterasu",
+      "aliases": ["Amaterasu Ōmikami"],
+      "traditions": ["SYS-SHINTO"],
+      "regions": ["Japan"],
+      "roles": ["sun", "imperial ancestry"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY", "ANCESTOR"], "COSMOLOGY": ["CELESTIAL_CORRESPONDENCE"], "SACRED_SPACE_TIME": ["SHRINE_SPACE"], "MATERIAL_MEDIATION": ["SHRINE"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Amaterasu", "note": "Reference profile."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-QUETZALCOATL",
+      "kind": "DEITY",
+      "name": "Quetzalcoatl",
+      "aliases": ["Feathered Serpent"],
+      "traditions": ["SYS-AZTEC"],
+      "regions": ["Mesoamerica"],
+      "roles": ["wind", "learning", "creation", "priestly culture"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "COSMOLOGY": ["CREATION_EVENT"], "MATERIAL_MEDIATION": ["TEMPLE", "ICON"], "RITUAL_GRAMMAR": ["OFFERING"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Quetzalcoatl", "note": "Attributes vary substantially by period and polity."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "GOD-INTI",
+      "kind": "DEITY",
+      "name": "Inti",
+      "aliases": [],
+      "traditions": ["SYS-INCA"],
+      "regions": ["Andes"],
+      "roles": ["sun", "imperial legitimacy"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["DEITY"], "COSMOLOGY": ["CELESTIAL_CORRESPONDENCE"], "SACRED_SPACE_TIME": ["SOLAR_ALIGNMENT", "SEASONAL_CALENDAR"], "RITUAL_GRAMMAR": ["OFFERING", "SACRIFICE"]},
+      "sources": [{"tier": "ENCYCLOPEDIA_REFERENCE", "url": "https://www.britannica.com/topic/Inti-Inca-god", "note": "Reference profile."}],
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "CON-ANIMISM",
+      "kind": "BELIEF_COMPONENT",
+      "name": "Animism",
+      "aliases": ["relational non-human agency"],
+      "dimensions": {"NATURE_RELATION": ["ANIMISM"], "ONTOLOGY_AGENCY": ["LOCAL_PLACE_BEING", "ANIMAL_PERSON", "PLANT_PERSON"]},
+      "profile_status": "ANALYTIC_COMPONENT"
+    },
+    {
+      "id": "CON-ANCESTOR-RELATION",
+      "kind": "BELIEF_COMPONENT",
+      "name": "Ancestor relations",
+      "aliases": ["ancestor veneration", "ancestor worship"],
+      "dimensions": {"ONTOLOGY_AGENCY": ["ANCESTOR"], "DEATH_AFTERLIFE": ["ANCESTOR_TRANSFORMATION"], "RITUAL_GRAMMAR": ["ANCESTOR_RITE", "OFFERING"]},
+      "profile_status": "ANALYTIC_COMPONENT"
+    },
+    {
+      "id": "CON-DIVINATION",
+      "kind": "BELIEF_COMPONENT",
+      "name": "Divination",
+      "aliases": ["oracle practice", "mantic practice"],
+      "dimensions": {"RITUAL_GRAMMAR": ["DIVINATION", "ORACLE"], "KNOWLEDGE_AUTHORITY": ["DIVINATION"], "SPECIALIST_ROLE": ["DIVINER", "ORACLE"]},
+      "profile_status": "ANALYTIC_COMPONENT"
+    },
+    {
+      "id": "RIT-TRANCE-HEALING",
+      "kind": "RITUAL",
+      "name": "Trance-centered healing ritual",
+      "aliases": ["altered-state healing rite"],
+      "dimensions": {"RITUAL_GRAMMAR": ["HEALING"], "ALTERED_STATE_INDUCTION": ["DRUMMING", "RHYTHMIC_MUSIC", "CHANTING", "DANCE", "PSYCHEDELIC"], "PHENOMENOLOGY": ["ENTITY_ENCOUNTER", "VISION", "HEALING_EXPERIENCE"], "SPECIALIST_ROLE": ["SHAMANIC_PRACTITIONER", "HEALER"]},
+      "profile_status": "ANALYTIC_TEMPLATE"
+    },
+    {
+      "id": "SUB-AYAHUASCA",
+      "kind": "SUBSTANCE",
+      "name": "Ayahuasca",
+      "aliases": ["yagé", "caapi-based DMT admixture traditions"],
+      "regions": ["Amazon Basin"],
+      "dimensions": {"SUBSTANCE_RELATION": ["DMT_BREW"], "ALTERED_STATE_INDUCTION": ["PSYCHEDELIC"], "PHENOMENOLOGY": ["VISION", "ENTITY_ENCOUNTER", "NOETIC_CERTAINTY", "HEALING_EXPERIENCE"]},
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "SUB-PEYOTE",
+      "kind": "SUBSTANCE",
+      "name": "Peyote",
+      "aliases": ["Lophophora williamsii"],
+      "regions": ["North America", "Mexico"],
+      "dimensions": {"SUBSTANCE_RELATION": ["PEYOTE_MESCALINE"], "ALTERED_STATE_INDUCTION": ["PSYCHEDELIC"], "PHENOMENOLOGY": ["VISION", "SACRED_PRESENCE"]},
+      "profile_status": "REFERENCE_ONLY"
+    },
+    {
+      "id": "SUB-PSILOCYBIN",
+      "kind": "SUBSTANCE",
+      "name": "Psilocybin-containing mushrooms",
+      "aliases": ["psilocybin mushrooms"],
+      "dimensions": {"SUBSTANCE_RELATION": ["PSILOCYBIN"], "ALTERED_STATE_INDUCTION": ["PSYCHEDELIC"], "PHENOMENOLOGY": ["VISION", "UNITY", "EGO_DISSOLUTION", "NOETIC_CERTAINTY"]},
+      "profile_status": "REFERENCE_ONLY"
+    }
+  ]
+}
