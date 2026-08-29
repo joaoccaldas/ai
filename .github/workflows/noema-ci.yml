@@ -53,6 +53,44 @@ jobs:
           assert all(a.get('source_locator',{}).get('variable_id') for a in x['assertions'])
           print(json.dumps(s, indent=2))
           PY
+      - name: Validate v1 reference catalog and multi-page routes
+        run: |
+          python -m json.tool data/reference/belief-catalog-v1.json >/dev/null
+          python -m json.tool data/candidates/discovery-triage-2026-08-29.json >/dev/null
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          c=json.load(open('data/reference/belief-catalog-v1.json'))
+          ids=[e['id'] for e in c['entities']]
+          assert len(ids) == len(set(ids)), 'duplicate reference entity IDs'
+          known=set(ids)
+          for e in c['entities']:
+              assert e.get('name') and e.get('kind')
+              assert e.get('profile_status') in {'REFERENCE_ONLY','ANALYTIC_COMPONENT','ANALYTIC_TEMPLATE'}
+              assert e.get('profile_status') != 'EVIDENCE'
+              for r in e.get('related_entities',[]):
+                  assert r in known, f'unknown related entity {r} from {e["id"]}'
+              for s in e.get('sources',[]):
+                  assert str(s.get('url','')).startswith('https://')
+          pages={
+              'site/explore.html':'Break belief systems into parts.',
+              'site/belief-systems.html':'No religion is one variable.',
+              'site/gods.html':'Every god gets a card.',
+              'site/rituals.html':'Compare actions before meanings.',
+              'site/altered-states.html':'Substance is only one part of the experience.',
+              'site/patterns.html':'What keeps appearing together?',
+              'site/compare.html':'Same words do not mean same history.',
+              'site/lineages.html':'Connection is not origin.',
+              'site/sources-v1.html':'Every conclusion should have a trail.',
+              'site/entity.html':'universal entity card',
+          }
+          for path,marker in pages.items():
+              text=Path(path).read_text(encoding='utf-8')
+              assert marker in text, (path,marker)
+              assert 'app-v1.css' in text
+              assert 'app-v1.js' in text
+          PY
+          node --check site/app-v1.js
       - name: Validate every evidence dossier and deterministic analysis projection
         run: |
           python -m json.tool site/data.json >/dev/null
