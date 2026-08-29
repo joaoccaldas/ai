@@ -13,8 +13,8 @@
     "reference_entities": 26,
     "deity_spirit_reference_entities": 11,
     "approved_media_assets": 0,
-    "pattern_candidates_pulotu": 4,
-    "pattern_candidates_drh": 385
+    "pattern_candidates_pulotu": 3,
+    "pattern_candidates_drh": 381
   },
   "strengths": [
     "Source digests and upstream locators are preserved in generated federation products.",
