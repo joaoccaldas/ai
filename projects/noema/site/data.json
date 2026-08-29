@@ -1,23 +1,34 @@
 {
-  "generated_at": "2026-08-29T01:33:24Z",
+  "generated_at": "2026-08-29T01:52:00Z",
   "status": "research-preview",
-  "release": "v0.6",
+  "release": "v0.7",
   "title": "NOEMA Observatory",
   "evidence_pack": "../data/reviewed/evidence-pack-001.json",
+  "evidence_packs": [
+    "../data/reviewed/evidence-pack-001.json",
+    "../data/reviewed/evidence-pack-002-deep-time.json"
+  ],
+  "deep_time": {
+    "url": "./deep-time.html",
+    "evidence_pack": "../data/reviewed/evidence-pack-002-deep-time.json",
+    "status": "research-preview"
+  },
   "society_benchmark": "./societies.json",
   "counts": {
-    "source_verified_papers": 6,
-    "source_bounded_claims": 6,
-    "hypotheses": 5,
+    "source_verified_papers": 11,
+    "source_bounded_claims": 13,
+    "hypotheses": 9,
     "human_approved_claims": 0,
-    "benchmark_societies_target": 100
+    "benchmark_societies_target": 100,
+    "deep_time_sites": 4
   },
   "publication_gate": {
     "research_preview": true,
     "human_review_required_for_claim_publication": true,
     "unknown_is_absent": false,
-    "model_synthesis_is_evidence": false
+    "model_synthesis_is_evidence": false,
+    "observation_equals_interpretation": false
   },
   "headline": "Evidence first. Disagreement visible.",
-  "description": "The first live NOEMA dossier tests competing claims about ancestral religious traits, supernatural punishment, prosociality and sociopolitical complexity. The atlas uses a reproducible D-PLACE benchmark for geographic coverage, while religious claims remain source-scoped and review-gated."
+  "description": "NOEMA now combines a comparative-religion controversy dossier, a Deep Time Neanderthal mortuary and symbolic-behavior dossier, and a reproducible 100-society D-PLACE geographic benchmark. Claims remain source-scoped, inference boundaries explicit, and publication review-gated."
 }
