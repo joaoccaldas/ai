@@ -5,12 +5,12 @@
   "principle": "Federate source ontologies, preserve upstream semantics, compare only explicitly crosswalked facets, and keep dependence/missingness visible.",
   "summary": {
     "source_families": 3,
-    "comparable_belief_system_profiles": 830,
+    "comparable_belief_system_profiles": 1063,
     "pulotu_profiles": 137,
-    "drh_comparable_religious_groups": 693,
-    "drh_context_entries_with_curated_assertions": 353,
-    "accepted_semantic_assertions": 24660,
-    "conditional_assertions_excluded_from_profiles": 2892,
+    "drh_comparable_religious_groups": 926,
+    "drh_context_entries_with_curated_assertions": 761,
+    "accepted_semantic_assertions": 24452,
+    "conditional_assertions_excluded_from_profiles": 2886,
     "pulotu_raw_searchable_assertions": 4803,
     "drh_total_entries": 1687,
     "drh_standardized_questions": 4234,
@@ -38,8 +38,8 @@
       "catalog": "./drh-catalog.json",
       "source_digest": "fff29d5195d32dfdaf5476757bcf5f28dab87438b38d960a7d3a2cbd4b5c637b",
       "mapping_version": "1.0.0",
-      "accepted_assertions": 19609,
-      "conditional_assertions": 635,
+      "accepted_assertions": 19401,
+      "conditional_assertions": 629,
       "catalog_questions": 4234
     },
     {

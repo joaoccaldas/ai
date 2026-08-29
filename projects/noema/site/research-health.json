@@ -1,0 +1,85 @@
+{
+  "report_id": "NOEMA-RESEARCH-HEALTH-V1",
+  "status": "ENGINEERING_AND_EPISTEMIC_AUDIT",
+  "metrics": {
+    "source_families": 3,
+    "comparable_profiles": 1063,
+    "accepted_semantic_assertions": 24452,
+    "ontology_dimensions": 17,
+    "pulotu_mapping_coverage_pct": 41.71,
+    "drh_question_mapping_coverage_pct": 0.92,
+    "drh_comparable_groups_with_any_curated_mapping_pct": 74.73,
+    "dplace_religion_variable_candidates": 526,
+    "reference_entities": 26,
+    "deity_spirit_reference_entities": 11,
+    "approved_media_assets": 0,
+    "pattern_candidates_pulotu": 4,
+    "pattern_candidates_drh": 385
+  },
+  "strengths": [
+    "Source digests and upstream locators are preserved in generated federation products.",
+    "Reference identity profiles are separated from evidence claims.",
+    "Unknown, absent, contested, and conditional mappings are not silently collapsed.",
+    "Pulotu and DRH remain separate statistical cohorts.",
+    "Crosswalks include semantic-drift guards for curated DRH questions.",
+    "Public projections are generated deterministically and validated in CI."
+  ],
+  "blind_spots": [
+    {
+      "severity": "CRITICAL",
+      "area": "causal inference",
+      "finding": "Pattern screening does not yet control for phylogeny, spatial autocorrelation, known contact, source dependence, research intensity, or missing-data mechanisms.",
+      "next_gate": "Require phylogenetic/spatial/contact-aware models before any relationship can be promoted beyond descriptive candidate status."
+    },
+    {
+      "severity": "HIGH",
+      "area": "DRH semantic coverage",
+      "finding": "Only 39 of 4234 standardized DRH questions have curated NOEMA crosswalks (0.92%).",
+      "next_gate": "Expand mappings in reviewed thematic batches with semantic-drift tests; never use keyword auto-mapping as evidence."
+    },
+    {
+      "severity": "HIGH",
+      "area": "D-PLACE integration",
+      "finding": "526 religion/ritual/divination-related D-PLACE variables are routed for review but are not accepted semantic assertions.",
+      "next_gate": "Review and crosswalk high-value variables, preserving upstream variable IDs and licensing."
+    },
+    {
+      "severity": "HIGH",
+      "area": "runtime database",
+      "finding": "The repository schema is richer than the currently verified deployed database state; static federation files remain the operational public source of truth.",
+      "next_gate": "Apply and verify all migrations on the runtime database, then publish DB-backed projections through the read-only API."
+    },
+    {
+      "severity": "MEDIUM",
+      "area": "semantic retrieval",
+      "finding": "Global search is ontology-expanded lexical retrieval, not a calibrated hybrid vector + metadata search.",
+      "next_gate": "Publish versioned embeddings or a deterministic semantic index with model/version metadata and lexical fallback."
+    },
+    {
+      "severity": "MEDIUM",
+      "area": "entity resolution",
+      "finding": "The reference layer currently has 11 deity/spirit/agent cards, far below the target needed for global deity-level coverage.",
+      "next_gate": "Add authority IDs, multilingual names, historical variants, source-specific identities, and reviewed merge/split decisions."
+    },
+    {
+      "severity": "MEDIUM",
+      "area": "media",
+      "finding": "0 media assets currently pass an explicit rights-status gate in the reference catalog.",
+      "next_gate": "Add a Commons/museum media adapter that stores creator, license, source page, media URL, rights status, caption, alt text, and entity linkage before display."
+    }
+  ],
+  "maturity": {
+    "data_provenance": "STRONG",
+    "ontology": "STRONG_BUT_EXPANDING",
+    "source_coverage": "MEDIUM",
+    "semantic_mapping_coverage": "EARLY_TO_MEDIUM",
+    "entity_resolution": "EARLY",
+    "pattern_screening": "MEDIUM_DESCRIPTIVE",
+    "causal_relationship_inference": "EARLY",
+    "simulation": "EARLY",
+    "runtime_database_activation": "UNVERIFIED",
+    "media_and_visual_provenance": "EARLY",
+    "public_ui": "MEDIUM"
+  },
+  "policy": "This health report is an engineering/research-readiness audit, not a scientific confidence score."
+}
