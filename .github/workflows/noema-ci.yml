@@ -29,6 +29,15 @@ jobs:
         run: |
           python -m json.tool ontology/decomposition_v1.json >/dev/null
           python -m json.tool ontology/source_mappings.json >/dev/null
+          python -m json.tool data/candidates/discovery-pressure-2026-08-29.json >/dev/null
+          python - <<'PY'
+          import json
+          q=json.load(open('data/candidates/discovery-pressure-2026-08-29.json'))
+          assert q['status'] == 'CANDIDATE_UNREVIEWED'
+          assert len(q['candidates']) >= 10
+          assert all(c.get('review_target') for c in q['candidates'])
+          assert 'No record in this file is evidence' in q['promotion_rule']
+          PY
           python scripts/import_pulotu_decomposition.py --output /tmp/noema-religion-decomposition.json
           python -m json.tool /tmp/noema-religion-decomposition.json >/dev/null
           python - <<'PY'
@@ -100,6 +109,7 @@ jobs:
               'site/deep-time.html': ('<title>NOEMA Deep Time</title>', 'behavioral evidence may climb toward interpretation'),
               'site/deep-time-compare.html': ('<title>NOEMA Deep Time Compare</title>', 'no species ranking'),
               'site/human-meaning-atlas.html': ('<title>NOEMA Human Meaning Atlas</title>', '500,000 BP → present'),
+              'site/religion-decomposition.html': ('<title>NOEMA Religion Decomposition</title>', 'Search religion beneath religion'),
           }
           for path, required in pages.items():
               html=Path(path).read_text(encoding='utf-8')
@@ -115,4 +125,5 @@ jobs:
           node --check /tmp/deep-time-noema-site.js
           node --check /tmp/deep-time-compare-noema-site.js
           node --check /tmp/human-meaning-atlas-noema-site.js
+          node --check /tmp/religion-decomposition-noema-site.js
       - run: pytest
