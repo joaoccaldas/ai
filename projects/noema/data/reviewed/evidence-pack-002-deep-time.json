@@ -1,0 +1,267 @@
+{
+  "pack_id": "NOEMA-EVIDENCE-002",
+  "title": "Neanderthal mortuary and symbolic behavior: observation before interpretation",
+  "version": 1,
+  "generated_at": "2026-08-29T01:46:00Z",
+  "review_status": "MODEL_CURATED_SOURCE_VERIFIED_HUMAN_REVIEW_PENDING",
+  "publication_status": "RESEARCH_PREVIEW",
+  "scope_note": "This dossier distinguishes excavated material and dating evidence from behavioral interpretation. Intentional deposition, ornament-like objects, pigments or abstract marks do not by themselves identify a theology, organized religion, deity concept or afterlife doctrine.",
+  "epistemic_rules": [
+    "An archaeological object is an observation; its symbolic meaning is an inference.",
+    "Intentional burial is not automatically evidence of an afterlife belief.",
+    "Mortuary behavior is broader than ritual, and ritual is broader than religion.",
+    "Non-utilitarian does not uniquely mean sacred.",
+    "Minimum ages, direct dates and contextual dates must remain distinct.",
+    "Species attribution must be based on context, direct biological identification or securely bounded chronology, never assumed from age alone.",
+    "Absence of preserved symbolic material is not evidence of absence of symbolic cognition."
+  ],
+  "sites": [
+    {
+      "id": "SITE-SHANIDAR",
+      "name": "Shanidar Cave",
+      "country": "Iraq",
+      "latitude": 36.833333,
+      "longitude": 44.216667,
+      "coordinate_source": "Springer Encyclopedia of Geoarchaeology entry reports 36°50′N, 44°13′E",
+      "coordinate_url": "https://doi.org/10.1007/978-3-030-44600-0_237-1"
+    },
+    {
+      "id": "SITE-LA-FERRASSIE",
+      "name": "La Ferrassie",
+      "country": "France",
+      "latitude": 44.951806,
+      "longitude": 0.938056,
+      "coordinate_source": "Wikidata/Base Mérimée-linked location",
+      "coordinate_url": "https://www.wikidata.org/wiki/Q39656"
+    },
+    {
+      "id": "SITE-LOS-AVIONES",
+      "name": "Cueva de los Aviones",
+      "country": "Spain",
+      "latitude": 37.585361,
+      "longitude": -0.985739,
+      "coordinate_source": "Wikidata location",
+      "coordinate_url": "https://www.wikidata.org/wiki/Q1143227"
+    },
+    {
+      "id": "SITE-LA-ROCHE-COTARD",
+      "name": "La Roche-Cotard",
+      "country": "France",
+      "latitude": 47.336944,
+      "longitude": 0.430833,
+      "coordinate_source": "Marquet et al. site context: 47°20′13″N, 0°25′51″E",
+      "coordinate_url": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0286568"
+    }
+  ],
+  "sources": [
+    {
+      "id": "DT-S001",
+      "title": "Issues of theory and method in the analysis of Paleolithic mortuary behavior: A view from Shanidar Cave",
+      "authors": ["Emma Pomeroy", "C. Hunt", "T. Reynolds", "Dlshad Abdulmutalb", "E. Asouti", "P. Bennett", "M. Bosch", "A. Burke", "L. Farr", "R. Foley", "C. French", "A. Frumkin", "P. Goldberg", "Evan Hill", "C. Kabukcu", "M. Lahr", "Ross Lane", "C. Marean", "B. Maureille", "G. Mutri", "C. Miller", "Kaify Ali Mustafa", "Andreas Nymark", "P. Pettitt", "N. Sala", "Dennis M. Sandgathe", "C. Stringer", "Emily Tilby", "G. Barker"],
+      "year": 2020,
+      "journal": "Evolutionary Anthropology: Issues",
+      "citation_count_at_retrieval": 17,
+      "canonical_url": "https://consensus.app/papers/issues-of-theory-and-method-in-the-analysis-of-paleolithic-pomeroy-hunt/3f0974fda46557dbac4c818c46e27238/?utm_source=chatgpt",
+      "source_role": "METHODOLOGICAL_GUARDRAIL"
+    },
+    {
+      "id": "DT-S002",
+      "title": "New Neanderthal remains associated with the ‘flower burial’ at Shanidar Cave",
+      "authors": ["Emma Pomeroy", "P. Bennett", "C. Hunt", "T. Reynolds", "L. Farr", "M. Frouin", "J. Holman", "Ross Lane", "C. French", "G. Barker"],
+      "year": 2019,
+      "journal": "Antiquity",
+      "citation_count_at_retrieval": 58,
+      "canonical_url": "https://consensus.app/papers/new-neanderthal-remains-associated-with-the-‘flower-pomeroy-bennett/4d8ca915e39c5901a1e236561c691359/?utm_source=chatgpt",
+      "source_role": "MORTUARY_CONTEXT"
+    },
+    {
+      "id": "DT-S003",
+      "title": "Pluridisciplinary evidence for burial for the La Ferrassie 8 Neandertal child",
+      "authors": ["A. Balzeau", "Alain Turq", "S. Talamo", "C. Daujeard", "G. Guérin", "F. Welker", "I. Crevecoeur", "H. Fewlass", "J. Hublin", "C. Lahaye", "B. Maureille", "M. Meyer", "C. Schwab", "A. Gómez‐Olivencia"],
+      "year": 2020,
+      "journal": "Scientific Reports",
+      "citation_count_at_retrieval": 45,
+      "canonical_url": "https://consensus.app/papers/pluridisciplinary-evidence-for-burial-for-the-la-balzeau-turq/bc5ae61493b55c72bb0065e7393f2f88/?utm_source=chatgpt",
+      "source_role": "MORTUARY_CONTEXT_AND_DATING"
+    },
+    {
+      "id": "DT-S004",
+      "title": "Symbolic use of marine shells and mineral pigments by Iberian Neandertals 115,000 years ago",
+      "authors": ["D. Hoffmann", "D. Angelucci", "V. Villaverde", "J. Zapata", "J. Zilhão"],
+      "year": 2018,
+      "journal": "Science Advances",
+      "citation_count_at_retrieval": 166,
+      "canonical_url": "https://consensus.app/papers/symbolic-use-of-marine-shells-and-mineral-pigments-by-hoffmann-angelucci/9eabb727de9c526db179fa90ef9774a6/?utm_source=chatgpt",
+      "source_role": "SYMBOLIC_MATERIAL_CULTURE_AND_DATING"
+    },
+    {
+      "id": "DT-S005",
+      "title": "The earliest unambiguous Neanderthal engravings on cave walls: La Roche-Cotard, Loire Valley, France",
+      "authors": ["J. Marquet", "T. Freiesleben", "K. Thomsen", "A. Murray", "Morgane Calligaro", "J. Macaire", "E. Robert", "M. Lorblanchet", "T. Aubry", "Grégory Bayle", "J. Bréhéret", "H. Camus", "Pascal Chareille", "Y. Egels", "Émilie Guillaud", "G. Guérin", "P. Gautret", "Morgane Liard", "Magen O'farrell", "Jean-Baptiste Peyrouse", "E. Thamó-Bozsó", "P. Verdin", "Dorota Wojtczak", "C. Oberlin", "J. Jaubert"],
+      "year": 2023,
+      "journal": "PLOS ONE",
+      "citation_count_at_retrieval": 35,
+      "canonical_url": "https://consensus.app/papers/the-earliest-unambiguous-neanderthal-engravings-on-cave-marquet-freiesleben/a91ee8e3fda55b7489eb1ab10090d9f4/?utm_source=chatgpt",
+      "source_role": "ANTHROPOGENIC_MARKS_AND_DATING"
+    }
+  ],
+  "claims": [
+    {
+      "id": "DT-C001",
+      "source_id": "DT-S001",
+      "claim_text": "Modern identification of Paleolithic intentional burial depends on theory, taphonomy, archaeological context and improved field methods; Neanderthal mortuary debates are constrained because many arguments revisit old excavations while new in-situ finds are rare.",
+      "claim_type": "METHODOLOGICAL_CONSTRAINT",
+      "observation_inference": "METHOD_SYNTHESIS",
+      "evidence_level": "E2",
+      "epistemic_status": "SYNTHESIS",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "supports": ["DT-H004"],
+      "challenges": []
+    },
+    {
+      "id": "DT-C002",
+      "source_id": "DT-S002",
+      "site_id": "SITE-SHANIDAR",
+      "claim_text": "Recent Shanidar excavations recovered an articulated adult Neanderthal close to the earlier ‘flower burial’ location; the authors report that stratigraphic evidence suggests intentional burial.",
+      "claim_type": "MORTUARY_CONTEXT",
+      "observation_inference": "OBSERVATION_PLUS_AUTHOR_INFERENCE",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "supports": ["DT-H001"],
+      "challenges": []
+    },
+    {
+      "id": "DT-C003",
+      "source_id": "DT-S003",
+      "site_id": "SITE-LA-FERRASSIE",
+      "claim_text": "At La Ferrassie 8, multidisciplinary analysis reports a pit dug into sterile sediment with the corpse of a roughly two-year-old Neanderthal child placed within it; a Neanderthal-associated hominin bone directly dated to 41.7–40.8 ka cal BP (95%).",
+      "claim_type": "BURIAL_AND_DIRECT_DATING",
+      "observation_inference": "MULTIDISCIPLINARY_ARCHAEOLOGICAL_INFERENCE",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "supports": ["DT-H001"],
+      "challenges": []
+    },
+    {
+      "id": "DT-C004",
+      "source_id": "DT-S004",
+      "site_id": "SITE-LOS-AVIONES",
+      "claim_text": "Cueva de los Aviones yielded ochred and perforated marine shells, red and yellow colorants, and shell containers with pigment-mixture residues in a Neanderthal-associated Middle Paleolithic context; U-series dating of overlying flowstone places the assemblage at least about 115–120 ka old.",
+      "claim_type": "MATERIAL_CULTURE_AND_MINIMUM_AGE",
+      "observation_inference": "OBSERVATION_AND_CHRONOMETRIC_INFERENCE",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "supports": ["DT-H002"],
+      "challenges": []
+    },
+    {
+      "id": "DT-C005",
+      "source_id": "DT-S004",
+      "site_id": "SITE-LOS-AVIONES",
+      "claim_text": "The authors interpret the Los Aviones assemblage as symbolic material culture and state that it is possible that roots of such behavior extend to the common ancestor of Neanderthals and modern humans more than half a million years ago.",
+      "claim_type": "AUTHOR_EVOLUTIONARY_INTERPRETATION",
+      "observation_inference": "AUTHOR_SPECULATIVE_INFERENCE",
+      "evidence_level": "E1",
+      "epistemic_status": "SPECULATIVE_EXTRAPOLATION",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "supports": ["DT-H003"],
+      "challenges": []
+    },
+    {
+      "id": "DT-C006",
+      "source_id": "DT-S005",
+      "site_id": "SITE-LA-ROCHE-COTARD",
+      "claim_text": "La Roche-Cotard contains spatially structured non-figurative cave-wall marks whose anthropogenic origin was supported by taphonomic, traceological and experimental evidence; cave closure occurred more than 57±3 ka ago, before the regional arrival of Homo sapiens, in a Mousterian context attributed to Neanderthals.",
+      "claim_type": "ANTHROPOGENIC_MARKS_AND_CHRONOLOGY",
+      "observation_inference": "MULTIMETHOD_ARCHAEOLOGICAL_INFERENCE",
+      "evidence_level": "E4",
+      "epistemic_status": "STRONG_SITE_SPECIFIC",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "supports": ["DT-H002"],
+      "challenges": []
+    },
+    {
+      "id": "DT-C007",
+      "source_id": "DT-S005",
+      "site_id": "SITE-LA-ROCHE-COTARD",
+      "claim_text": "The authors conclude that the La Roche-Cotard engravings are examples of Neanderthal abstract design.",
+      "claim_type": "AUTHOR_SYMBOLIC_INTERPRETATION",
+      "observation_inference": "AUTHOR_INTERPRETATION",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_INTERPRETATION",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "supports": ["DT-H002"],
+      "challenges": []
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "DT-H001",
+      "title": "Some Neanderthal groups intentionally buried some dead",
+      "statement": "Intentional burial occurred in at least some Neanderthal contexts rather than every articulated skeleton being produced by natural processes.",
+      "status": "SUPPORTED_SITE_SPECIFIC",
+      "supporting_claim_ids": ["DT-C002", "DT-C003"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": ["DT-C001"],
+      "evidence_balance": "Modern in-situ and multidisciplinary site evidence supports intentional burial in particular cases. This does not imply uniform Neanderthal mortuary practice or a specific funerary theology.",
+      "rivals": ["Natural deposition in individual disputed cases", "Intentional corpse management without ritual meaning", "Site-specific pragmatic burial"],
+      "falsification_or_discrimination": ["Taphonomic evidence incompatible with purposeful deposition at a claimed site", "Stratigraphic revision showing the body was not placed in a prepared context", "Independent reassessment of excavation records and sediment processes"]
+    },
+    {
+      "id": "DT-H002",
+      "title": "Some Neanderthal populations produced abstract or symbolically used material culture",
+      "statement": "At least some Neanderthal populations intentionally produced or used material forms whose patterning is consistent with symbolic or abstract behavior.",
+      "status": "SUPPORTED_WITH_INTERPRETIVE_BOUNDARY",
+      "supporting_claim_ids": ["DT-C004", "DT-C006", "DT-C007"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": [],
+      "evidence_balance": "The strongest observations establish deliberate material modification, pigment/ornament contexts and non-utilitarian structured marks. ‘Symbolic’ is a higher-level interpretation and must remain distinguishable from the physical observations.",
+      "rivals": ["Aesthetic or social display not requiring sacred meaning", "Functional use not yet identified for some objects", "Individual/local traditions rather than species-wide cognition"],
+      "falsification_or_discrimination": ["Demonstrate utilitarian production pathway for a proposed symbolic object", "Redate or reattribute the context to Homo sapiens", "Show marks arose through natural or incidental processes"]
+    },
+    {
+      "id": "DT-H003",
+      "title": "Symbolic material culture predates the Neanderthal–Homo sapiens split",
+      "statement": "The common ancestor of Neanderthals and Homo sapiens already possessed culturally expressed symbolic material behavior.",
+      "status": "SPECULATIVE",
+      "supporting_claim_ids": ["DT-C005"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": ["DT-C004", "DT-C006"],
+      "evidence_balance": "Possible under parsimony but not directly demonstrated by the sites in this pack; convergent evolution, repeated innovation and preservation bias remain serious alternatives.",
+      "rivals": ["Independent Neanderthal innovation", "Repeated convergent emergence", "Older evidence exists but is archaeologically invisible", "The symbolic category is too broad for ancestral-state inference"],
+      "falsification_or_discrimination": ["Find well-dated pre-split material with a defensible symbolic interpretation", "Build trait models that compare ancestral inheritance with convergent innovation", "Test sensitivity to preservation and discovery bias"]
+    },
+    {
+      "id": "DT-H004",
+      "title": "Intentional burial proves formal religion or afterlife doctrine",
+      "statement": "An intentional Neanderthal burial is sufficient evidence for a formal religion or explicit belief in an afterlife.",
+      "status": "NOT_ESTABLISHED_BY_CURRENT_EVIDENCE",
+      "supporting_claim_ids": [],
+      "challenging_claim_ids": [],
+      "related_claim_ids": ["DT-C001", "DT-C002", "DT-C003"],
+      "evidence_balance": "The current evidence supports mortuary behavior in specific contexts but underdetermines motive and cosmology. The hypothesis is intentionally retained as a tempting inference that NOEMA must not silently make.",
+      "rivals": ["Care, grief or social memory", "Hygienic or pragmatic corpse management", "Ritual without afterlife doctrine", "Symbolic commemoration without organized religion"],
+      "falsification_or_discrimination": ["Seek repeated structured associations, offerings or spatial conventions that constrain interpretation", "Compare mortuary treatment with settlement and non-mortuary depositional patterns", "Do not use burial alone as the discriminating observation"]
+    }
+  ],
+  "synthesis": {
+    "headline": "Neanderthals cross the behavioral threshold before the theological one.",
+    "findings": [
+      "The selected evidence supports intentional burial in particular Neanderthal contexts, but motive remains underdetermined.",
+      "The selected evidence also supports deliberate pigments, modified shell assemblages and abstract non-figurative marks in Neanderthal-associated contexts.",
+      "These observations weaken older models in which complex symbolic material behavior is exclusive to Homo sapiens.",
+      "They do not, however, license NOEMA to label Neanderthal behavior ‘religion’, ‘spirituality’ or ‘afterlife belief’ without additional discriminating evidence.",
+      "Deep-time analysis therefore needs two parallel graphs: physical observations and interpretive hypotheses, joined by explicitly reviewable inference edges."
+    ],
+    "next_tests": [
+      "Add dating distributions rather than single-point dates for each site and distinguish minimum from direct ages.",
+      "Add competing taphonomic interpretations for disputed mortuary sites.",
+      "Map repeated object classes such as pigments, perforated shells, raptor talons and engravings without assuming shared meaning.",
+      "Test cultural transmission versus recurrent independent invention using chronology, geography and population history.",
+      "Create an interpretation ladder from anthropogenic → patterned → non-utilitarian → symbolic → ritual → religious, requiring new evidence at every step."
+    ]
+  }
+}
