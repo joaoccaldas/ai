@@ -11,7 +11,7 @@ on:
       - '.github/workflows/noema-benchmark.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   dplace-benchmark:
@@ -32,11 +32,30 @@ jobs:
           import json
           data=json.load(open('noema-benchmark-100.json'))
           assert data['actual_size'] == 100
-          ids=[x['dplace_id'] for x in data['societies']]
+          societies=data['societies']
+          ids=[x['dplace_id'] for x in societies]
           assert len(ids)==len(set(ids))
-          assert all(x['region'] for x in data['societies'])
-          print('validated benchmark across', len({x['region'] for x in data['societies']}), 'regions')
+          assert all(x['region'] for x in societies)
+          assert all(x['glottocode'] for x in societies)
+          assert all(x['latitude'] is not None and x['longitude'] is not None for x in societies)
+          regions=len({x['region'] for x in societies})
+          assert regions >= 40
+          print('validated benchmark across', regions, 'regions')
           PY
+      - name: Publish benchmark projection into observatory tree
+        run: cp noema-benchmark-100.json projects/noema/site/societies.json
+      - name: Commit benchmark projection when upstream changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- projects/noema/site/societies.json; then
+            echo "D-PLACE benchmark projection unchanged."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add projects/noema/site/societies.json
+          git commit -m "data(noema): refresh D-PLACE benchmark [skip noema-benchmark]"
+          git push
       - uses: actions/upload-artifact@v4
         with:
           name: noema-dplace-benchmark-100
