@@ -1,0 +1,45 @@
+{
+  "mapping_version": "1.0.0",
+  "sources": {
+    "PULOTU": {
+      "source_repo": "D-PLACE/dplace-dataset-pulotu",
+      "source_ref": "main",
+      "license_note": "Preserve upstream licensing and attribution metadata from the source repository.",
+      "mode": "explicit_variable_mapping_with_raw_fallback",
+      "mappings": {
+        "2": [{"dimension":"AGENCY_ONTOLOGY","facet":"high_god","mapping_note":"Pulotu god(s) are broad-scope non-ancestor supernatural agents; do not equate automatically with monotheism."}],
+        "3": [{"dimension":"AGENCY_ONTOLOGY","facet":"nature_beings"},{"dimension":"NATURE_RELATION","facet":"celestial_agency","conditional":true}],
+        "4": [{"dimension":"AGENCY_ONTOLOGY","facet":"ancestors","qualifier":"deified_broad_scope"},{"dimension":"DEATH_AFTERLIFE","facet":"ancestor_transformation"}],
+        "5": [{"dimension":"AGENCY_ONTOLOGY","facet":"ancestors","qualifier":"ancestral_spirits_narrow_scope"},{"dimension":"DEATH_AFTERLIFE","facet":"continued_existence"}],
+        "6": [{"dimension":"AGENCY_ONTOLOGY","facet":"nature_beings"},{"dimension":"NATURE_RELATION","facet":"animism","mapping_note":"Nature spirits are compatible with but do not by themselves prove a whole-system animism classification."}],
+        "7": [{"dimension":"MORAL_ORDER","facet":"supernatural_punishment","qualifier":"impiety"}],
+        "8": [{"dimension":"MORAL_ORDER","facet":"supernatural_punishment","qualifier":"selfishness"}],
+        "9": [{"dimension":"COSMOLOGY","facet":"linear_creation","qualifier":"primordial_pair"}],
+        "10": [{"dimension":"COSMOLOGY","facet":"linear_creation","qualifier":"human_creation_myth"}],
+        "11": [{"dimension":"DEATH_AFTERLIFE","facet":"continued_existence","qualifier":"postmortem_rites_affect_afterlife"},{"dimension":"RITUAL_GRAMMAR","facet":"funerary","qualifier":"afterlife_effect"}],
+        "12": [{"dimension":"DEATH_AFTERLIFE","facet":"judgment","qualifier":"life_actions_affect_afterlife"},{"dimension":"MORAL_ORDER","facet":"supernatural_punishment","conditional":true}],
+        "13": [{"dimension":"AGENCY_ONTOLOGY","facet":"saints_or_intercessors","qualifier":"culture_hero_etic_bridge","mapping_note":"NOEMA retains PULOTU:CULTURE_HERO as the primary source term; this bridge does not assert equivalence to saints."}],
+        "14": [{"dimension":"NATURE_RELATION","facet":"weather_agency","qualifier":"natural_forces_supernaturally_controlled_or_imbued"}],
+        "15": [{"dimension":"MORAL_ORDER","facet":"taboo","qualifier":"social_hierarchy"},{"dimension":"SOCIAL_FUNCTION","facet":"hierarchy_legitimation","conditional":true}],
+        "16": [{"dimension":"MORAL_ORDER","facet":"taboo","qualifier":"kinship"},{"dimension":"SOCIAL_FUNCTION","facet":"kinship_organization","conditional":true}],
+        "17": [{"dimension":"MORAL_ORDER","facet":"taboo","qualifier":"resource_management"},{"dimension":"SOCIAL_FUNCTION","facet":"ecological_management"}],
+        "18": [{"dimension":"AGENCY_ONTOLOGY","facet":"impersonal_power","qualifier":"mana_social_status"}],
+        "19": [{"dimension":"AGENCY_ONTOLOGY","facet":"impersonal_power","qualifier":"mana_social_influence_or_skill"}],
+        "20": [{"dimension":"AGENCY_ONTOLOGY","facet":"impersonal_power","qualifier":"mana_genealogy"},{"dimension":"SOCIAL_FUNCTION","facet":"kinship_organization","conditional":true}],
+        "21": [{"dimension":"AGENCY_ONTOLOGY","facet":"impersonal_power","qualifier":"mana_personal_quality"}],
+        "22": [{"dimension":"AGENCY_ONTOLOGY","facet":"impersonal_power","qualifier":"mana_spiritual_religious"}],
+        "24": [{"dimension":"HISTORICAL_MECHANISM","facet":"missionization","qualifier":"christian_influence_on_supernatural_belief"}],
+        "25": [{"dimension":"HISTORICAL_MECHANISM","facet":"cultural_diffusion","qualifier":"hindu_buddhist_influence_on_supernatural_belief"}],
+        "26": [{"dimension":"HISTORICAL_MECHANISM","facet":"trade_contact","qualifier":"contact_frequency_proxy"}],
+        "27": [{"dimension":"HISTORICAL_MECHANISM","facet":"missionization","qualifier":"islamic_influence_on_supernatural_belief"}],
+        "36": [{"dimension":"RITUAL_GRAMMAR","facet":"offering","qualifier":"costly_sacrifice_or_offering"},{"dimension":"SOCIAL_FUNCTION","facet":"costly_signaling","conditional":true}],
+        "37": [{"dimension":"RITUAL_GRAMMAR","facet":"warfare","qualifier":"headhunting","mapping_note":"Purpose must remain source-specific; do not classify as religious solely because Pulotu places it in supernatural practices."}],
+        "38": [{"dimension":"RELIGIOUS_SPECIALISTS","facet":"priest","qualifier":"political_religious_differentiation_proxy","conditional":true}]
+      },
+      "raw_fallback": {
+        "enabled": true,
+        "behavior": "Retain unmapped variables with upstream variable ID/name/category/section/subsection and make them searchable as RAW_SOURCE_FEATURE until reviewed mapping exists."
+      }
+    }
+  }
+}
