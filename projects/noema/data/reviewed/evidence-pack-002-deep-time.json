@@ -1,7 +1,7 @@
 {
   "pack_id": "NOEMA-EVIDENCE-002",
   "title": "Neanderthal mortuary and symbolic behavior: observation before interpretation",
-  "version": 2,
+  "version": 3,
   "generated_at": "2026-08-29T01:46:00Z",
   "review_status": "MODEL_CURATED_SOURCE_VERIFIED_HUMAN_REVIEW_PENDING",
   "publication_status": "RESEARCH_PREVIEW",
@@ -116,7 +116,7 @@
       "epistemic_status": "SYNTHESIS",
       "review_status": "HUMAN_REVIEW_PENDING",
       "scope": "Methodological synthesis across Paleolithic mortuary research; not a site-specific behavioral or theological claim.",
-      "supports": ["DT-H004"],
+      "supports": [],
       "challenges": []
     },
     {
@@ -144,6 +144,7 @@
       "epistemic_status": "STRONG_SITE_SPECIFIC",
       "review_status": "HUMAN_REVIEW_PENDING",
       "scope": "La Ferrassie 8 and the cited multidisciplinary context; supports purposeful deposition of this child but does not identify a specific cosmology or funerary theology.",
+      "temporal": {"kind": "direct_range", "older_bp": 41700, "younger_bp": 40800, "display": "41.7–40.8 ka cal BP (95%)", "dating_note": "Direct 14C age reported for a Neanderthal-associated hominin bone from the context."},
       "supports": ["DT-H001"],
       "challenges": []
     },
@@ -157,7 +158,8 @@
       "evidence_level": "E4",
       "epistemic_status": "STRONG_SITE_SPECIFIC",
       "review_status": "HUMAN_REVIEW_PENDING",
-      "scope": "The Los Aviones assemblage and its stratigraphic context; the U-series result is a minimum age from overlying flowstone, not a direct date on each object.",
+      "scope": "The Los Aviones assemblage and its stratigraphic context; the U-series result is a minimum-age constraint from overlying flowstone, not a direct date on each object.",
+      "temporal": {"kind": "minimum_age_range", "older_bp": 120000, "younger_bp": 115000, "display": "115–120 ka BP minimum-age context", "dating_note": "U-series dating of flowstone capping the archaeological deposit constrains the underlying assemblage."},
       "supports": ["DT-H002"],
       "challenges": []
     },
@@ -186,6 +188,7 @@
       "epistemic_status": "STRONG_SITE_SPECIFIC",
       "review_status": "HUMAN_REVIEW_PENDING",
       "scope": "The La Roche-Cotard marks, cave closure chronology and archaeological attribution; supports anthropogenic patterned marks in this context, not a unique ritual or religious interpretation.",
+      "temporal": {"kind": "minimum_age", "older_than_bp": 57000, "uncertainty_bp": 3000, "display": ">57 ±3 ka BP cave-closure constraint", "dating_note": "Cave closure is based on multiple OSL ages; the marks predate closure."},
       "supports": ["DT-H002"],
       "challenges": []
     },
@@ -246,9 +249,9 @@
       "title": "Intentional burial proves formal religion or afterlife doctrine",
       "statement": "An intentional Neanderthal burial is sufficient evidence for a formal religion or explicit belief in an afterlife.",
       "status": "NOT_ESTABLISHED_BY_CURRENT_EVIDENCE",
-      "supporting_claim_ids": ["DT-C001"],
+      "supporting_claim_ids": [],
       "challenging_claim_ids": [],
-      "related_claim_ids": ["DT-C002", "DT-C003"],
+      "related_claim_ids": ["DT-C001", "DT-C002", "DT-C003"],
       "evidence_balance": "The current evidence supports mortuary behavior in specific contexts but underdetermines motive and cosmology. The hypothesis is intentionally retained as a tempting inference that NOEMA must not silently make.",
       "rivals": ["Care, grief or social memory", "Hygienic or pragmatic corpse management", "Ritual without afterlife doctrine", "Symbolic commemoration without organized religion"],
       "falsification_or_discrimination": ["Seek repeated structured associations, offerings or spatial conventions that constrain interpretation", "Compare mortuary treatment with settlement and non-mortuary depositional patterns", "Do not use burial alone as the discriminating observation"]
