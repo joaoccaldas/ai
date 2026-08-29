@@ -25,23 +25,35 @@ jobs:
       - run: pip install -e '.[dev]'
       - name: Compile package and standalone scripts
         run: python -m compileall -q src scripts tests
-      - name: Validate research JSON projections
+      - name: Validate every evidence dossier and deterministic analysis projection
         run: |
-          python -m json.tool data/reviewed/evidence-pack-001.json >/dev/null
           python -m json.tool site/data.json >/dev/null
-          python scripts/analyze_evidence_pack.py data/reviewed/evidence-pack-001.json --output /tmp/noema-analysis.json
-          python -m json.tool /tmp/noema-analysis.json >/dev/null
+          for pack in data/reviewed/evidence-pack-*.json; do
+            echo "validating ${pack}"
+            python -m json.tool "$pack" >/dev/null
+            out="/tmp/$(basename "${pack%.json}")-analysis.json"
+            python scripts/analyze_evidence_pack.py "$pack" --output "$out"
+            python -m json.tool "$out" >/dev/null
+          done
       - name: Syntax-check observatory JavaScript
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
-          html=Path('site/index.html').read_text(encoding='utf-8')
-          scripts=re.findall(r'<script>(.*?)</script>', html, flags=re.S|re.I)
-          assert scripts, 'inline site script not found'
-          Path('/tmp/noema-site.js').write_text('\n'.join(scripts), encoding='utf-8')
-          assert '<title>NOEMA Observatory</title>' in html
-          assert 'Similarity generates a question, never a conclusion' in html
+          pages = {
+              'site/index.html': ('<title>NOEMA Observatory</title>', 'Similarity generates a question, never a conclusion'),
+              'site/deep-time.html': ('<title>NOEMA Deep Time</title>', 'behavioral evidence may climb toward interpretation'),
+          }
+          for path, required in pages.items():
+              html=Path(path).read_text(encoding='utf-8')
+              scripts=re.findall(r'<script>(.*?)</script>', html, flags=re.S|re.I)
+              assert scripts, f'inline site script not found in {path}'
+              target=Path('/tmp')/(Path(path).stem + '-noema-site.js')
+              target.write_text('\n'.join(scripts), encoding='utf-8')
+              for marker in required:
+                  assert marker in html, f'{marker!r} missing from {path}'
+              print(target)
           PY
-          node --check /tmp/noema-site.js
+          node --check /tmp/index-noema-site.js
+          node --check /tmp/deep-time-noema-site.js
       - run: pytest
