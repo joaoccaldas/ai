@@ -35,7 +35,8 @@ def build(rows: list[dict[str, str]], size: int, salt: str) -> list[dict[str, ob
     used = {r["ID"] for r in selected}
     if len(selected) < target:
         global_ranked = sorted(eligible, key=lambda r: stable_rank(r["ID"], salt))
-        selected.extend(r for r in global_ranked if r["ID"] not in used][: target - len(selected)])
+        remaining = [r for r in global_ranked if r["ID"] not in used]
+        selected.extend(remaining[: target - len(selected)])
 
     result = []
     for row in sorted(selected[:target], key=lambda r: (r["region"], r["Name"], r["ID"])):
