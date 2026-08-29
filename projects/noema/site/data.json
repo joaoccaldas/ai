@@ -1,59 +1,23 @@
 {
-  "generated_at": "2026-08-29T00:50:00Z",
-  "status": "seed",
+  "generated_at": "2026-08-29T01:33:24Z",
+  "status": "research-preview",
+  "release": "v0.6",
+  "title": "NOEMA Observatory",
+  "evidence_pack": "../data/reviewed/evidence-pack-001.json",
+  "society_benchmark": "./societies.json",
   "counts": {
-    "sources": 11,
-    "claims": 0,
-    "candidate_links": 0,
-    "open_hypotheses": 2
+    "source_verified_papers": 6,
+    "source_bounded_claims": 6,
+    "hypotheses": 5,
+    "human_approved_claims": 0,
+    "benchmark_societies_target": 100
   },
-  "layers": ["RITUAL", "BELIEF", "SYMBOL", "SITE"],
-  "nodes": [
-    {
-      "id": "seed-ritual",
-      "kind": "RITUAL",
-      "title": "Ritual synchrony",
-      "summary": "Candidate cross-cultural ritual class. Recurrence must be tested for ancestry, contact, ecology and coding bias.",
-      "status": "SCHEMATIC"
-    },
-    {
-      "id": "seed-belief",
-      "kind": "BELIEF",
-      "title": "Animism",
-      "summary": "A comparative belief-class node. Definitions remain source-specific and ancestral-state claims remain model-dependent.",
-      "status": "SCHEMATIC"
-    },
-    {
-      "id": "seed-symbol",
-      "kind": "SYMBOL",
-      "title": "Serpent motif",
-      "summary": "Similarity is hypothesis-generation only; historical descent requires independent evidence.",
-      "status": "SCHEMATIC"
-    }
-  ],
-  "hypotheses": [
-    {
-      "id": "H-0001",
-      "title": "Ritual before doctrine",
-      "posterior_probability": 0.46,
-      "epistemic_status": "PLAUSIBLE",
-      "human_review_status": "SEED_ONLY",
-      "note": "Not an empirical conclusion. Included to exercise the hypothesis interface."
-    },
-    {
-      "id": "H-0002",
-      "title": "Recurrent serpent symbolism",
-      "posterior_probability": 0.31,
-      "epistemic_status": "SPECULATIVE",
-      "human_review_status": "SEED_ONLY",
-      "note": "Not an empirical conclusion. Included to exercise the hypothesis interface."
-    }
-  ],
-  "source_catalog": [
-    {"title": "D-PLACE", "role": "cross-cultural / linguistic / environmental controls"},
-    {"title": "Seshat", "role": "historical social complexity and religion"},
-    {"title": "Database of Religious History", "role": "historical religion ontology and expert coding"},
-    {"title": "Pulotu", "role": "Austronesian religious beliefs and practices"},
-    {"title": "ARIADNE", "role": "archaeological data infrastructure"}
-  ]
+  "publication_gate": {
+    "research_preview": true,
+    "human_review_required_for_claim_publication": true,
+    "unknown_is_absent": false,
+    "model_synthesis_is_evidence": false
+  },
+  "headline": "Evidence first. Disagreement visible.",
+  "description": "The first live NOEMA dossier tests competing claims about ancestral religious traits, supernatural punishment, prosociality and sociopolitical complexity. The atlas uses a reproducible D-PLACE benchmark for geographic coverage, while religious claims remain source-scoped and review-gated."
 }
