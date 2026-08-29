@@ -8,12 +8,15 @@ on:
       - 'projects/noema/data/reviewed/**'
       - 'projects/noema/data/comparisons/**'
       - 'projects/noema/site/societies.json'
+      - 'projects/noema/ontology/decomposition_v1.json'
+      - 'projects/noema/ontology/source_mappings.json'
       - 'projects/noema/src/noema/compare.py'
       - 'projects/noema/src/noema/atlas.py'
       - 'projects/noema/src/noema/atlas_insights.py'
       - 'projects/noema/src/noema/evidence.py'
       - 'projects/noema/scripts/compare_deep_time.py'
       - 'projects/noema/scripts/build_human_meaning_atlas.py'
+      - 'projects/noema/scripts/import_pulotu_decomposition.py'
       - '.github/workflows/noema-analysis-publish.yml'
 
 permissions:
@@ -22,7 +25,7 @@ permissions:
 jobs:
   publish-analysis:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     defaults:
       run:
         working-directory: projects/noema
@@ -32,6 +35,21 @@ jobs:
         with:
           python-version: '3.12'
       - run: pip install -e .
+      - name: Build Pulotu religion decomposition projection
+        run: |
+          python scripts/import_pulotu_decomposition.py --output site/religion-decomposition.json
+          python -m json.tool site/religion-decomposition.json >/dev/null
+          python - <<'PY'
+          import json
+          x=json.load(open('site/religion-decomposition.json'))
+          s=x['summary']
+          assert s['subjects'] >= 100, s
+          assert s['upstream_variables'] >= 70, s
+          assert s['assertions'] >= 1000, s
+          assert s['mapped_assertions'] > 0, s
+          assert all(a.get('source_locator',{}).get('variable_id') for a in x['assertions'])
+          print(json.dumps(s, indent=2))
+          PY
       - name: Build deterministic deep-time comparison
         run: |
           python scripts/compare_deep_time.py \
@@ -59,19 +77,20 @@ jobs:
       - name: Commit generated analysis only when changed
         run: |
           set -euo pipefail
-          if [ -z "$(git status --porcelain -- site/deep-time-comparison.json site/human-meaning-atlas.json site/analysis)" ]; then
+          if [ -z "$(git status --porcelain -- site/religion-decomposition.json site/deep-time-comparison.json site/human-meaning-atlas.json site/analysis)" ]; then
             echo "NOEMA analysis projections unchanged."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add site/deep-time-comparison.json site/human-meaning-atlas.json site/analysis
+          git add site/religion-decomposition.json site/deep-time-comparison.json site/human-meaning-atlas.json site/analysis
           git commit -m "analysis(noema): refresh deterministic projections [skip noema-analysis]"
           git push
       - uses: actions/upload-artifact@v4
         with:
           name: noema-analysis-projections
           path: |
+            projects/noema/site/religion-decomposition.json
             projects/noema/site/deep-time-comparison.json
             projects/noema/site/human-meaning-atlas.json
             projects/noema/site/analysis/*.json
