@@ -1,0 +1,129 @@
+{
+  "triage_id": "NOEMA-DISCOVERY-2026-08-29-A",
+  "status": "CANDIDATE_UNREVIEWED",
+  "source": "user-provided NOEMA discovery triage output",
+  "rules": [
+    "No item in this file is approved evidence.",
+    "Popular or historiographic labels must not replace primary analytical classifications.",
+    "Corrections and errata must be attached before review.",
+    "Dataset records require provenance and license checks before publication layers use them."
+  ],
+  "candidates": [
+    {
+      "id": "TRIAGE-GUO-2026",
+      "class": "RECENT_PUBLICATION",
+      "title": "Reconstructing the Life History of Double Perforated Ivory Beads…",
+      "authors": "Guo et al.",
+      "published": "2026-08-12",
+      "doi": "10.1007/s10816-026-09818-9",
+      "domains": ["MATERIAL_MEDIATION", "PIGMENT", "ORNAMENT", "MANUFACTURING_TRACE"],
+      "decomposition_pressure": "Separates production residue from intentional coloration; supports a physical-modification to semantic-content inference ladder.",
+      "review_priority": "HIGH"
+    },
+    {
+      "id": "TRIAGE-FORTE-ORTOLEVA-2026",
+      "class": "RECENT_PUBLICATION",
+      "title": "Performing Power and Transitional Space…",
+      "authors": "Forte & Ortoleva",
+      "published": "2026-08-20",
+      "doi": "10.1007/s10816-026-09820-1",
+      "domains": ["RITUAL_SPACE", "ACOUSTICS", "SENSORY_ARCHAEOLOGY", "ETRUSCAN"],
+      "decomposition_pressure": "Candidate for sensory architecture and ritual-space dimensions; model interpretation must remain subordinate to archaeological observation.",
+      "review_priority": "MEDIUM"
+    },
+    {
+      "id": "TRIAGE-PIEN-2026",
+      "class": "RECENT_2026",
+      "title": "Non-normative 17th-century burial at Pień",
+      "authors": "Poliński et al.",
+      "published": "2026-07-30",
+      "doi": "10.1016/j.jasrep.2026.105967",
+      "domains": ["MORTUARY", "APOTROPAIC_BURIAL", "ANTI_DEMONIC_PRACTICE", "MATERIAL_MEDIATION"],
+      "decomposition_pressure": "Actions and material configuration can be coded; 'vampire' remains a historiographic/popular label unless primary sources justify a period emic term.",
+      "review_priority": "HIGH"
+    },
+    {
+      "id": "TRIAGE-KILLIN-2026",
+      "class": "CONCEPTUAL_2026",
+      "title": "Behavioral Modernity, Neanderthals and Homo sapiens: a Case for Concept Retirement",
+      "authors": "Killin",
+      "published": "2026-01-19",
+      "doi": "10.1007/s13752-025-00527-2",
+      "domains": ["METHODOLOGY", "CONSTRUCT_VALIDITY", "DEEP_TIME"],
+      "decomposition_pressure": "Supports retiring umbrella 'behavioral modernity' labels in favor of observable component constructs.",
+      "review_priority": "HIGH"
+    },
+    {
+      "id": "TRIAGE-ORFANOU-2026",
+      "class": "RECENT_2026",
+      "title": "Late Bronze Age Central European mortuary practices and population relationships",
+      "authors": "Orfanou et al.",
+      "published": "2026-02-24",
+      "doi": "10.1038/s41467-026-69895-y",
+      "domains": ["MORTUARY", "GENETIC_ANCESTRY", "CULTURAL_TRANSMISSION", "LOCAL_INNOVATION"],
+      "decomposition_pressure": "Strong discriminator between ancestry, cultural affiliation, diffusion and local innovation mechanisms.",
+      "review_priority": "HIGH"
+    },
+    {
+      "id": "TRIAGE-CUMMINGS-2026",
+      "class": "RECENT_2026",
+      "title": "Ancient DNA, tomb architecture and kinship",
+      "authors": "Cummings et al.",
+      "published": "2026",
+      "doi": "10.15184/aqy.2026.10291",
+      "domains": ["KINSHIP", "TOMB", "BIOLOGICAL_RELATEDNESS", "SOCIAL_KINSHIP"],
+      "decomposition_pressure": "Requires separate biological-kinship and socially-constructed-kinship dimensions; correction/erratum must be linked before review.",
+      "review_priority": "HIGH",
+      "requires_correction_link": true
+    },
+    {
+      "id": "TRIAGE-MATTILA-2026",
+      "class": "RECENT_2026",
+      "title": "Ajvide co-burials and biological relatedness",
+      "authors": "Mattila et al.",
+      "published": "2026-02-18",
+      "doi": "10.1098/rspb.2025.0813",
+      "domains": ["MORTUARY", "KINSHIP", "CO_BURIAL"],
+      "decomposition_pressure": "Adds biological-relatedness vs mortuary-organization relation without inferring ancestor worship.",
+      "review_priority": "HIGH"
+    },
+    {
+      "id": "TRIAGE-OBIMD-2026",
+      "class": "STRUCTURED_DATASET",
+      "title": "OBIMD: Multi-modal Dataset for Contextual Interpretation of Oracle Bone Inscriptions",
+      "published": "2026-03-14",
+      "doi": "10.1038/s41597-026-06967-0",
+      "domains": ["DIVINATION", "ORACLE", "WRITING", "RITUAL", "HISTORICAL_LANGUAGE"],
+      "decomposition_pressure": "Infrastructure source for divination, oracle practice, text and ritual context; individual religious meanings remain claim-level questions.",
+      "review_priority": "HIGH"
+    },
+    {
+      "id": "TRIAGE-NEENA-2026",
+      "class": "STRUCTURED_DATASET",
+      "title": "NEENA isotopic dataset",
+      "published": "2026-01-14",
+      "doi": "10.1038/s41597-025-06477-5",
+      "domains": ["MOBILITY", "DIET", "GEOGRAPHIC_PROVENANCE", "ARCHAEOLOGICAL_CONTEXT"],
+      "decomposition_pressure": "Contextual substrate for distinguishing mobility/population movement from cultural transmission around sites and mortuary practices.",
+      "review_priority": "MEDIUM"
+    },
+    {
+      "id": "TRIAGE-CHLEBY-2026",
+      "class": "FIELD_DISCOVERY_NON_PEER_REVIEWED",
+      "title": "Chleby Neolithic enclosure",
+      "reported": "2026-08-25",
+      "domains": ["RITUAL_ARCHITECTURE", "ASTRONOMICAL_ALIGNMENT", "SACRED_SPACE"],
+      "decomposition_pressure": "Keep field discovery separate from peer-reviewed evidence; ritual-center and astronomical-function claims remain interpretations.",
+      "review_priority": "LOW",
+      "peer_reviewed": false
+    }
+  ],
+  "requested_model_changes": [
+    "Replace behavioral-modernity umbrella labels with observable constructs.",
+    "Add ancestry vs cultural affiliation vs diffusion vs local innovation mechanism discriminator.",
+    "Separate biological kinship from social kinship.",
+    "Store popular labels such as vampire burial as aliases, not primary classifications.",
+    "Add dataset-source licensing and provenance review.",
+    "Use material-signification ladder: physical modification -> recurrent pattern -> conventionalized practice -> information-bearing system? -> semantic content?"
+  ]
+}
