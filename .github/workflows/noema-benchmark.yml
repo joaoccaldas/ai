@@ -4,6 +4,11 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "43 5 * * 1"
+  push:
+    branches: [main]
+    paths:
+      - 'projects/noema/scripts/build_benchmark.py'
+      - '.github/workflows/noema-benchmark.yml'
 
 permissions:
   contents: read
