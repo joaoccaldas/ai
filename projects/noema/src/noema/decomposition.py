@@ -1,10 +1,10 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from dataclasses import dataclass
 from typing import Any, Iterable
 
 VALID_STATES = {"PRESENT", "ABSENT", "UNKNOWN", "CONTESTED", "NOT_APPLICABLE"}
+ACCEPTED_MAPPING_STATUSES = {"EXPLICIT_V1", "CURATED_CROSSWALK_V1"}
 
 
 def feature_key(assertion: dict[str, Any]) -> str:
@@ -16,10 +16,16 @@ def searchable_blob(assertion: dict[str, Any]) -> str:
         assertion.get("subject_id"), assertion.get("subject_name"), assertion.get("dimension"),
         assertion.get("facet"), assertion.get("qualifier"), assertion.get("state"),
         assertion.get("source_id"), assertion.get("upstream_variable_name"),
-        assertion.get("upstream_category"), assertion.get("upstream_section"),
-        assertion.get("upstream_subsection"), assertion.get("comment"),
+        assertion.get("upstream_question_name"), assertion.get("upstream_category"),
+        assertion.get("upstream_section"), assertion.get("upstream_subsection"),
+        assertion.get("upstream_answer"), assertion.get("world_region"),
+        assertion.get("region_name"), assertion.get("comment"),
     ]
     return " ".join(str(x) for x in fields if x).lower()
+
+
+def is_accepted_mapping(assertion: dict[str, Any]) -> bool:
+    return assertion.get("mapping_status") in ACCEPTED_MAPPING_STATUSES
 
 
 def query_assertions(
@@ -36,17 +42,17 @@ def query_assertions(
         if states and a.get("state") not in states: continue
         if subjects and a.get("subject_id") not in subjects: continue
         if source_ids and a.get("source_id") not in source_ids: continue
-        if not include_conditional and a.get("mapping_status") == "NEEDS_REVIEW": continue
+        if not include_conditional and not is_accepted_mapping(a): continue
         if q and q not in searchable_blob(a): continue
         out.append(a)
     return out
 
 
 def subject_profiles(assertions: Iterable[dict[str, Any]], *, states: set[str] | None = None) -> dict[str, set[str]]:
-    accepted = states or {"PRESENT", "CONTESTED"}
+    accepted_states = states or {"PRESENT", "CONTESTED"}
     profiles: dict[str, set[str]] = defaultdict(set)
     for a in assertions:
-        if a.get("state") in accepted and a.get("mapping_status") != "NEEDS_REVIEW":
+        if a.get("state") in accepted_states and is_accepted_mapping(a):
             profiles[str(a["subject_id"])].add(feature_key(a))
     return dict(profiles)
 
@@ -82,7 +88,8 @@ def compare_subjects(assertions: Iterable[dict[str, Any]], subject_ids: list[str
         "pairwise": pairwise,
         "semantics": {
             "not_present_in_profile": "No accepted PRESENT/CONTESTED assertion in the current profile; this does not mean true absence.",
-            "common_feature": "Shared coded feature; not evidence of common origin or shared meaning."
+            "common_feature": "Shared coded feature; not evidence of common origin or shared meaning.",
+            "accepted_mapping_statuses": sorted(ACCEPTED_MAPPING_STATUSES),
         }
     }
 
@@ -91,7 +98,7 @@ def pattern_candidates(
     assertions: Iterable[dict[str, Any]], *, min_subjects: int = 2,
     dependence: dict[tuple[str, str], float] | None = None,
 ) -> list[dict[str, Any]]:
-    """Rank recurring features for investigation, not as historical conclusions.
+    """Rank recurring accepted features for investigation, not as historical conclusions.
 
     dependence[(a,b)] is 0..1 where 1 means strongly non-independent through ancestry/contact.
     The penalty is intentionally conservative and descriptive, not a phylogenetic model.
@@ -130,6 +137,9 @@ def dimension_matrix(assertions: Iterable[dict[str, Any]]) -> dict[str, Any]:
     dims = sorted({str(a.get("dimension")) for a in rows if a.get("dimension")})
     matrix = []
     for sid in subjects:
-        per_dim = Counter(a.get("dimension") for a in rows if a.get("subject_id") == sid and a.get("state") == "PRESENT")
+        per_dim = Counter(
+            a.get("dimension") for a in rows
+            if a.get("subject_id") == sid and a.get("state") == "PRESENT" and is_accepted_mapping(a)
+        )
         matrix.append({"subject_id": sid, "dimensions": {d: per_dim.get(d, 0) for d in dims}})
     return {"subjects": subjects, "dimensions": dims, "matrix": matrix}
