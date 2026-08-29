@@ -3,11 +3,11 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import io
 import json
 import urllib.request
 from collections import Counter
-from datetime import datetime, timezone
 from pathlib import Path
 
 BASE = "https://raw.githubusercontent.com/D-PLACE/dplace-dataset-pulotu/main/cldf"
@@ -24,6 +24,10 @@ def rows(text: str):
     return list(csv.DictReader(io.StringIO(text)))
 
 
+def sha256_text(text: str) -> str:
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
 def infer_state(value: str, code_name: str, code_description: str) -> str:
     text = " ".join(x for x in (value, code_name, code_description) if x).strip().lower()
     if not text:
@@ -38,8 +42,9 @@ def infer_state(value: str, code_name: str, code_description: str) -> str:
 
 
 def load_mapping(path: Path):
-    doc = json.loads(path.read_text(encoding="utf-8"))
-    return doc["sources"]["PULOTU"]
+    text = path.read_text(encoding="utf-8")
+    doc = json.loads(text)
+    return doc["sources"]["PULOTU"], sha256_text(text), doc.get("mapping_version")
 
 
 def main():
@@ -49,11 +54,17 @@ def main():
     ap.add_argument("--include-missing", action="store_true")
     args = ap.parse_args()
 
-    mapping = load_mapping(Path(args.mapping))
-    vars_rows = rows(download(FILES["variables.csv"]))
-    codes_rows = rows(download(FILES["codes.csv"]))
-    societies_rows = rows(download(FILES["societies.csv"]))
-    data_rows = rows(download(FILES["data.csv"]))
+    mapping, mapping_digest, mapping_version = load_mapping(Path(args.mapping))
+    downloaded = {name: download(url) for name, url in FILES.items()}
+    file_digests = {name: sha256_text(text) for name, text in downloaded.items()}
+    source_digest = hashlib.sha256(
+        json.dumps(file_digests, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+    vars_rows = rows(downloaded["variables.csv"])
+    codes_rows = rows(downloaded["codes.csv"])
+    societies_rows = rows(downloaded["societies.csv"])
+    data_rows = rows(downloaded["data.csv"])
 
     variables = {r["ID"]: r for r in vars_rows}
     codes = {r["ID"]: r for r in codes_rows}
@@ -106,15 +117,22 @@ def main():
             "upstream_value": value or None,
             "upstream_value_label": source_value or None,
             "comment": d.get("Comment") or None,
-            "source_locator": {"table": "cldf/data.csv", "row_id": d.get("ID"), "variable_id": var_id, "society_id": sid},
+            "source_locator": {
+                "table": "cldf/data.csv",
+                "row_id": d.get("ID"),
+                "variable_id": var_id,
+                "society_id": sid,
+            },
         }
         mapped = explicit.get(var_id)
         if mapped:
             for m in mapped:
                 a = dict(common)
                 a.update({"dimension": m["dimension"], "facet": m["facet"]})
-                if m.get("qualifier"): a["qualifier"] = m["qualifier"]
-                if m.get("mapping_note"): a["mapping_note"] = m["mapping_note"]
+                if m.get("qualifier"):
+                    a["qualifier"] = m["qualifier"]
+                if m.get("mapping_note"):
+                    a["mapping_note"] = m["mapping_note"]
                 a["mapping_status"] = "NEEDS_REVIEW" if m.get("conditional") else "EXPLICIT_V1"
                 assertions.append(a)
         elif mapping.get("raw_fallback", {}).get("enabled"):
@@ -132,20 +150,26 @@ def main():
     raw_count = sum(1 for a in assertions if a["mapping_status"] == "UNMAPPED_RAW")
     out = {
         "dataset_id": "NOEMA-RELIGION-DECOMPOSITION-PULOTU-V1",
-        "generated_at": datetime.now(timezone.utc).isoformat(),
         "status": "research-preview",
         "source": {
             "name": "Pulotu: Database of Austronesian Supernatural Beliefs and Practices",
             "upstream_repo": "https://github.com/D-PLACE/dplace-dataset-pulotu",
+            "upstream_ref": "main",
             "files": FILES,
+            "file_sha256": file_digests,
+            "source_digest": source_digest,
             "attribution": "Watts et al. (2015), Pulotu; CLDF distribution maintained in D-PLACE ecosystem.",
             "license_rule": "Redistribution must follow the license and attribution terms of the upstream dataset/repository.",
+        },
+        "crosswalk": {
+            "mapping_version": mapping_version,
+            "mapping_sha256": mapping_digest,
         },
         "semantics": {
             "mapped_feature": "NOEMA crosswalk applied to an upstream coded variable; mapping itself remains reviewable.",
             "raw_feature": "Searchable upstream variable retained without forcing a NOEMA semantic mapping.",
             "absence": "Only an upstream code interpreted as explicit absence; missing rows/values are not converted to absence.",
-            "similarity": "Shared coded features are descriptive and do not establish ancestry, diffusion or identical meaning."
+            "similarity": "Shared coded features are descriptive and do not establish ancestry, diffusion or identical meaning.",
         },
         "summary": {
             "subjects": len(subjects),
@@ -157,8 +181,12 @@ def main():
         },
         "subjects": subjects,
         "variables": [{
-            "id": k, "name": v.get("Name"), "simplified_name": v.get("Simplified_Name"),
-            "category": v.get("Category"), "section": v.get("Section"), "subsection": v.get("Subsection"),
+            "id": k,
+            "name": v.get("Name"),
+            "simplified_name": v.get("Simplified_Name"),
+            "category": v.get("Category"),
+            "section": v.get("Section"),
+            "subsection": v.get("Subsection"),
             "mapped": k in explicit,
         } for k, v in variables.items()],
         "assertions": assertions,
