@@ -1,0 +1,39 @@
+name: NOEMA Benchmark
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "43 5 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  dplace-benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch canonical D-PLACE society table
+        run: curl --fail --location --retry 3 --output dplace-societies.csv https://raw.githubusercontent.com/D-PLACE/dplace-cldf/master/cldf/societies.csv
+      - name: Build deterministic benchmark
+        run: python projects/noema/scripts/build_benchmark.py dplace-societies.csv --size 100 --output noema-benchmark-100.json
+      - name: Validate benchmark
+        run: |
+          python - <<'PY'
+          import json
+          data=json.load(open('noema-benchmark-100.json'))
+          assert data['actual_size'] == 100
+          ids=[x['dplace_id'] for x in data['societies']]
+          assert len(ids)==len(set(ids))
+          assert all(x['region'] for x in data['societies'])
+          print('validated benchmark across', len({x['region'] for x in data['societies']}), 'regions')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noema-dplace-benchmark-100
+          path: noema-benchmark-100.json
+          retention-days: 90
