@@ -3,6 +3,9 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import json
+import os
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -19,27 +22,47 @@ QUERIES = (
     "ancestor worship cross cultural",
 )
 
+SELECT_FIELDS = (
+    "DOI,title,published,container-title,author,URL,type,subject,"
+    "is-referenced-by-count,created,indexed"
+)
 
-def get_json(url: str) -> dict[str, Any]:
+
+def get_json(url: str, attempts: int = 3) -> dict[str, Any]:
     request = urllib.request.Request(
         url,
         headers={"User-Agent": "NOEMA-Research/0.1 (https://github.com/joaoccaldas/ai)"},
     )
-    with urllib.request.urlopen(request, timeout=30) as response:
-        return json.load(response)
+    last_error: Exception | None = None
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(request, timeout=30) as response:
+                return json.load(response)
+        except urllib.error.HTTPError as exc:
+            body = exc.read().decode("utf-8", errors="replace")[:1000]
+            if 400 <= exc.code < 500 and exc.code != 429:
+                raise RuntimeError(f"Crossref HTTP {exc.code}: {body}") from exc
+            last_error = exc
+        except urllib.error.URLError as exc:
+            last_error = exc
+        if attempt < attempts - 1:
+            time.sleep(2**attempt)
+    raise RuntimeError(f"Crossref request failed after {attempts} attempts: {last_error}")
 
 
-def discover(from_date: str, rows: int = 20) -> list[dict[str, Any]]:
+def discover(from_index_date: str, rows: int = 20) -> list[dict[str, Any]]:
     by_key: dict[str, dict[str, Any]] = {}
+    mailto = os.environ.get("CROSSREF_MAILTO", "").strip()
     for query in QUERIES:
-        params = urllib.parse.urlencode(
-            {
-                "query.bibliographic": query,
-                "filter": f"from-pub-date:{from_date}",
-                "rows": rows,
-                "select": "DOI,title,published,container-title,author,URL,type,subject,is-referenced-by-count,created,updated",
-            }
-        )
+        request_params: dict[str, Any] = {
+            "query.bibliographic": query,
+            "filter": f"from-index-date:{from_index_date}",
+            "rows": rows,
+            "select": SELECT_FIELDS,
+        }
+        if mailto:
+            request_params["mailto"] = mailto
+        params = urllib.parse.urlencode(request_params)
         payload = get_json(f"https://api.crossref.org/works?{params}")
         for item in payload.get("message", {}).get("items", []):
             doi = (item.get("DOI") or "").lower().strip()
@@ -48,6 +71,8 @@ def discover(from_date: str, rows: int = 20) -> list[dict[str, Any]]:
                 continue
             key = doi or url
             title = (item.get("title") or [""])[0]
+            if not title.strip():
+                continue
             container = (item.get("container-title") or [None])[0]
             candidate = {
                 "provider": "Crossref",
@@ -76,11 +101,11 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=Path("noema-crossref-candidates.json"))
     args = parser.parse_args()
     today = dt.date.today()
-    from_date = (today - dt.timedelta(days=max(1, args.days))).isoformat()
-    candidates = discover(from_date, rows=max(1, min(args.rows, 100)))
+    from_index_date = (today - dt.timedelta(days=max(1, args.days))).isoformat()
+    candidates = discover(from_index_date, rows=max(1, min(args.rows, 100)))
     output = {
         "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
-        "from_publication_date": from_date,
+        "from_index_date": from_index_date,
         "candidate_count": len(candidates),
         "queries": list(QUERIES),
         "candidates": candidates,
