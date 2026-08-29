@@ -25,6 +25,25 @@ jobs:
       - run: pip install -e '.[dev]'
       - name: Compile package and standalone scripts
         run: python -m compileall -q src scripts tests
+      - name: Validate decomposition ontology and live Pulotu crosswalk
+        run: |
+          python -m json.tool ontology/decomposition_v1.json >/dev/null
+          python -m json.tool ontology/source_mappings.json >/dev/null
+          python scripts/import_pulotu_decomposition.py --output /tmp/noema-religion-decomposition.json
+          python -m json.tool /tmp/noema-religion-decomposition.json >/dev/null
+          python - <<'PY'
+          import json
+          x=json.load(open('/tmp/noema-religion-decomposition.json'))
+          s=x['summary']
+          assert s['subjects'] >= 100, s
+          assert s['upstream_variables'] >= 70, s
+          assert s['assertions'] >= 1000, s
+          assert s['mapped_assertions'] > 0, s
+          assert s['raw_assertions'] > 0, s
+          assert all(a['state'] != 'UNKNOWN' for a in x['assertions'])
+          assert all(a.get('source_locator',{}).get('variable_id') for a in x['assertions'])
+          print(json.dumps(s, indent=2))
+          PY
       - name: Validate every evidence dossier and deterministic analysis projection
         run: |
           python -m json.tool site/data.json >/dev/null
