@@ -2,114 +2,105 @@
 
 **Network Observatory of Experience, Myth & Ancestry**
 
-NOEMA is a living, provenance-first research system for mapping beliefs, rituals, symbols, narratives, altered-state practices, sacred material culture, and theories about the unknown across deep time and geography.
+NOEMA is a provenance-first research system for mapping beliefs, rituals, myths, symbols, sacred practices, archaeological observations and competing explanations across geography and deep time.
 
-## Research contract
+> Similarity generates a question, never a conclusion.
 
-NOEMA does **not** attempt to prove or disprove religion, spirituality, or supernatural claims. It separates:
+## Scientific contract
 
-1. **Observations** — what a source reports or what material evidence shows.
-2. **Claims** — atomic, attributable propositions extracted from observations.
-3. **Relationships** — candidate links between entities or claims.
-4. **Hypotheses** — explanations that can be tested against alternatives.
-5. **Unknowns** — observations for which available evidence cannot discriminate among explanations.
-
-A similarity is a question, never a conclusion.
-
-## Epistemic statuses
-
-- `KNOWN`: direct, high-confidence observation within the source's scope.
-- `SUPPORTED`: evidence favors the claim.
-- `PLAUSIBLE`: consistent with evidence but underdetermined.
-- `DISPUTED`: credible competing interpretations exist.
-- `SPECULATIVE`: hypothesis-generation only.
-- `UNKNOWN`: evidence does not currently discriminate explanations.
-- `UNTESTABLE`: no present empirical test is available.
-
-## Evidence levels
-
-- `E0` speculative
-- `E1` anecdotal / single-source
-- `E2` repeated correlational evidence
-- `E3` strong, independent multi-source/multi-method evidence
-- `E4` very strong, replicated and robust across methods
-
-## Core architecture
-
-```text
-Sources -> ingestion -> atomic claims -> entity resolution
-                               |
-                               v
-                        evidence graph
-                         /    |     \
-                 temporal  spatial  semantic
-                         \    |     /
-                         candidate links
-                               |
-                         confounder tests
-                               |
-                         hypothesis engine
-                         /             \
-                  supporting       adversarial
-                    evidence         alternatives
-                         \             /
-                         posterior update
-                               |
-                        human review gate
-                               |
-                         observatory API/site
-```
-
-## v0 scope
-
-The first release is intentionally bounded:
-
-- 100 cultures/populations
-- 50 cross-cultural motifs
-- 25 ritual classes
-- 20 archaeological/historical periods
-- 10 explicit hypotheses
-- peer-reviewed and primary-source provenance
-- temporal ranges, geographic geometry, source independence
-- adversarial alternative-hypothesis generation
-- reproducible scoring and revision history
-
-The objective is to validate the methodology before scaling the corpus.
-
-## Repository layout
-
-```text
-projects/noema/
-  db/                 schema and migrations
-  ontology/           controlled vocabulary and relation semantics
-  src/noema/          research engine
-  tests/              scientific and software invariants
-  site/               observatory prototype
-  research/           protocols, evaluation sets, source registry
-```
-
-## Canonical store
-
-A dedicated Neon PostgreSQL project (`noema-research`) is used as the canonical store with PostGIS and pgvector. No database credentials are committed to GitHub. Runtime configuration is loaded from environment variables.
-
-## Non-negotiable invariants
-
-1. Every factual claim must retain source provenance.
-2. `RESEMBLES` must never imply `DESCENDS_FROM`.
-3. Temporal impossibilities automatically invalidate directional influence claims.
-4. Cultural non-independence must be modeled before treating cross-cultural recurrence as independent convergence.
-5. Embedding similarity may nominate relationships but may not validate them.
-6. Restricted or sacred community knowledge must not be published merely because it is technically accessible.
-7. Every hypothesis must record at least one alternative and a falsification criterion before promotion beyond `SPECULATIVE`.
+1. Observations, claims, interpretations and hypotheses are separate record types.
+2. Every empirical claim requires source provenance.
+3. `RESEMBLES` never implies `DESCENDS_FROM`, diffusion or causation.
+4. Embeddings nominate candidate relationships only.
+5. Directional historical relationships must pass temporal plausibility checks.
+6. Source dependence, shared ancestry, contact, environment and coding bias are explicit confounders.
+7. Unknown is a valid result. Unknown does not mean supernatural.
 8. Model outputs are audit events, not evidence.
+9. Sacred or community-restricted knowledge is excluded from public projections.
+10. Hypotheses require alternatives and falsification criteria.
 
-## Development
+## v0 architecture
 
-Python 3.12+ is the reference runtime.
+```text
+Public scholarly discovery ─┐
+Consensus / research review ├─> Source envelopes ─> claim review ─> evidence graph
+D-PLACE / DRH / Seshat ─────┤                         │
+Pulotu / ARIADNE ───────────┘                         ├─> entity resolution queue
+                                                      ├─> candidate relationships
+                                                      └─> hypothesis revisions
+                                                                  │
+                                        publication safety gate ──┘
+                                                                  │
+                                                     read-only API / Site
+```
+
+### Durable data layer
+
+`db/001_initial.sql` targets PostgreSQL with PostGIS and pgvector. The dedicated Neon project is named `noema-research`. **Never commit its connection string.**
+
+### Research engine
+
+- `src/noema/models.py` — typed epistemic primitives
+- `src/noema/scoring.py` — conservative relationship scoring
+- `src/noema/ingest.py` — source envelopes + stable deduplication
+- `src/noema/resolution.py` — conservative entity resolution
+- `src/noema/hypothesis_engine.py` — dependence-aware probability revision
+- `src/noema/publish.py` — public projection safety gate
+- `src/noema/api.py` — read-only observatory API
+
+### Evidence sources and discovery
+
+- `data/seeds/initial_sources.json` — initial adversarial source fabric
+- `scripts/discover_crossref.py` — credential-free recent literature discovery
+- `scripts/build_benchmark.py` — deterministic D-PLACE 100-society benchmark generator
+- `scripts/seed_db.py` — idempotent source seed loader using `DATABASE_URL`
+
+### Observatory
+
+`site/index.html` consumes `site/data.json`. Production data must be exported only after the publication gate. The current map nodes are explicitly schematic and make no geographic claim.
+
+## Automation
+
+- `NOEMA CI` — tests changes under `projects/noema/**`
+- `NOEMA Discovery` — daily Crossref candidate artifact, no direct evidence writes
+- `NOEMA Benchmark` — weekly deterministic 100-society D-PLACE artifact
+- ChatGPT scheduled research cycles — daily discovery, weekly re-analysis, monthly cross-domain discovery, with quarterly paradigm challenge folded into Jan/Apr/Jul/Oct
+
+No automated discovery channel has authority to promote candidates directly into evidence.
+
+## Local setup
 
 ```bash
 cd projects/noema
-python -m pytest
+python -m venv .venv
+source .venv/bin/activate
+pip install -e '.[dev,api]'
+pytest
 ```
 
-The codebase is deliberately provider-neutral. LLMs are used behind typed interfaces so local/cloud models can be substituted without changing the evidence model.
+Run the read-only API:
+
+```bash
+export DATABASE_URL='postgresql://...'
+uvicorn noema.api:app --reload
+```
+
+Seed the source catalogue after the schema exists:
+
+```bash
+python scripts/seed_db.py
+```
+
+## Current infrastructure limitation
+
+The Neon ChatGPT connector currently exposes a casing mismatch between its declared tool schema and backend migration endpoint. The initial schema was successfully verified on the connector-created temporary branch, but promotion through that broken endpoint cannot be truthfully marked complete until the connector accepts a valid completion call or the schema is applied by another authorized database path.
+
+## Next milestones
+
+1. Wire reviewed claim extraction into the database.
+2. Export approved PostGIS geometry to the Site.
+3. Add D-PLACE / DRH / Seshat / Pulotu adapters with source-specific licenses and caveats.
+4. Add chronological uncertainty distributions and dating-method metadata.
+5. Add phylogenetic and spatial model adapters rather than relying on generic similarity scores.
+6. Add hypothesis revision ledger UI and "what would falsify this?" view.
+7. Add expert/community review queues for sensitive cultural interpretations.
