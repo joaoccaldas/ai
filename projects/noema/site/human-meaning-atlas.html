@@ -17,7 +17,7 @@ let atlas,world,rotation=[-10,-18],focusBP=100000,allTime=true,showEvidence=true
 const svg=d3.select('#globe'),projection=d3.geoOrthographic().precision(.4),path=d3.geoPath(projection),g=svg.append('g');
 function resize(){const node=$('#globe'),w=node.clientWidth,h=node.clientHeight||690,r=Math.min(w,h)*.43;svg.attr('viewBox',`0 0 ${w} ${h}`);projection.translate([w/2,h*.48]).scale(r).rotate(rotation);renderGeo();}
 function timeDistance(e){return Math.abs((e.time?.center_bp??0)-focusBP)}
-function timeOpacity(e){if(allTime)return .82;const windowBP=Math.max(12000,focusBP*.18),d=timeDistance(e);return d>windowBP?.15:.98-(d/windowBP)*.72}
+function timeOpacity(e){if(allTime)return .82;const windowBP=Math.max(12000,focusBP*.18),d=timeDistance(e);return d>windowBP ? .15 : .98-(d/windowBP)*.72}
 function timeVisible(e){if(allTime)return true;return timeOpacity(e)>.16}
 function eventRadius(e){return ({E4:6.2,E3:5.2,E2:4.3,E1:3.6}[e.evidence_level]||4.2)}
 function renderGeo(){if(!atlas)return;projection.rotate(rotation);g.selectAll('*').remove();g.append('path').datum({type:'Sphere'}).attr('class','sphere').attr('d',path);g.append('path').datum(d3.geoGraticule10()).attr('class','graticule').attr('d',path);if(world){const land=topojson.feature(world,world.objects.land);g.append('path').datum(land).attr('class','land').attr('d',path)}
