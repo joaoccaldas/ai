@@ -7,6 +7,7 @@ on:
     paths:
       - 'projects/noema/site/**'
       - 'projects/noema/data/reviewed/**'
+      - 'projects/noema/data/comparisons/**'
       - '.github/workflows/noema-pages-verify.yml'
 
 permissions:
@@ -27,36 +28,46 @@ jobs:
           base="https://${OWNER}.github.io/${REPO}/projects/noema/site"
           page="${base}/?build=${SHA}"
           deep_time="${base}/deep-time.html?build=${SHA}"
+          compare="${base}/deep-time-compare.html?build=${SHA}"
+          comparison_json="${base}/deep-time-comparison.json?build=${SHA}"
           data="${base}/data.json?build=${SHA}"
           evidence="https://${OWNER}.github.io/${REPO}/projects/noema/data/reviewed/evidence-pack-001.json?build=${SHA}"
           deep_evidence="https://${OWNER}.github.io/${REPO}/projects/noema/data/reviewed/evidence-pack-002-deep-time.json?build=${SHA}"
+          sapiens_evidence="https://${OWNER}.github.io/${REPO}/projects/noema/data/reviewed/evidence-pack-003-homo-sapiens.json?build=${SHA}"
           societies="${base}/societies.json?build=${SHA}"
           echo "NOEMA_PUBLIC_URL=${base}/"
           echo "NOEMA_DEEP_TIME_URL=${base}/deep-time.html"
+          echo "NOEMA_DEEP_TIME_COMPARE_URL=${base}/deep-time-compare.html"
 
           ok=0
-          for attempt in $(seq 1 60); do
+          for attempt in $(seq 1 72); do
             html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$page" || true)
             deep_html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$deep_time" || true)
+            compare_html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$compare" || true)
+            comparison=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$comparison_json" || true)
             projection=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$data" || true)
             dossier=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$evidence" || true)
             deep_dossier=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$deep_evidence" || true)
+            sapiens_dossier=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$sapiens_evidence" || true)
             atlas=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$societies" || true)
             if printf '%s' "$html" | grep -q '<title>NOEMA Observatory</title>' \
-              && printf '%s' "$html" | grep -q 'Similarity generates a question, never a conclusion' \
               && printf '%s' "$deep_html" | grep -q '<title>NOEMA Deep Time</title>' \
-              && printf '%s' "$deep_html" | grep -q 'behavioral evidence may climb toward interpretation' \
-              && printf '%s' "$projection" | grep -q '"status": "research-preview"' \
+              && printf '%s' "$compare_html" | grep -q '<title>NOEMA Deep Time Compare</title>' \
+              && printf '%s' "$compare_html" | grep -q 'no species ranking' \
+              && printf '%s' "$projection" | grep -q '"release": "v0.8"' \
               && printf '%s' "$dossier" | grep -q '"pack_id": "NOEMA-EVIDENCE-001"' \
               && printf '%s' "$deep_dossier" | grep -q '"pack_id": "NOEMA-EVIDENCE-002"' \
-              && printf '%s' "$deep_dossier" | grep -q '"supporting_claim_ids": \[\]' \
+              && printf '%s' "$sapiens_dossier" | grep -q '"pack_id": "NOEMA-EVIDENCE-003"' \
+              && printf '%s' "$comparison" | grep -q '"comparison_id": "NOEMA-DEEP-TIME-COMPARE-001"' \
+              && printf '%s' "$comparison" | grep -q '"matched_constructs": 4' \
+              && printf '%s' "$comparison" | grep -q 'species intelligence score' \
               && printf '%s' "$atlas" | grep -q '"benchmark_id": "NOEMA-DPLACE-100-v1"' \
               && printf '%s' "$atlas" | grep -q '"actual_size": 100'; then
               ok=1
-              echo "NOEMA main observatory, Deep Time dossier and 100-society atlas verified on attempt ${attempt}."
+              echo "NOEMA v0.8 main, Deep Time, Homo sapiens dossier, comparison projection and atlas verified on attempt ${attempt}."
               break
             fi
-            echo "Attempt ${attempt}: Pages has not exposed all NOEMA v0.7 projections yet."
+            echo "Attempt ${attempt}: Pages has not exposed all NOEMA v0.8 projections yet."
             sleep 5
           done
           test "$ok" = "1"
