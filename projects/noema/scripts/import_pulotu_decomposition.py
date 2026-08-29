@@ -82,6 +82,8 @@ def main():
             "ethonyms": s.get("Ethonyms") or None,
             "comment": s.get("Comment") or None,
             "source": "PULOTU",
+            "unit_type": "CULTURAL_TRADITION_PROFILE",
+            "comparable_belief_system": True,
         })
 
     assertions = []
@@ -103,6 +105,7 @@ def main():
         common = {
             "subject_id": sid,
             "subject_name": societies[sid].get("Name") or sid,
+            "unit_type": "CULTURAL_TRADITION_PROFILE",
             "state": state,
             "source_id": "PULOTU",
             "review_status": "UPSTREAM_CODED_MAPPING_REVIEW_PENDING",
@@ -146,7 +149,9 @@ def main():
             assertions.append(a)
 
     counts = Counter(a["dimension"] for a in assertions)
-    mapped_count = sum(1 for a in assertions if a["mapping_status"] in {"EXPLICIT_V1", "NEEDS_REVIEW"})
+    accepted_count = sum(1 for a in assertions if a["mapping_status"] == "EXPLICIT_V1")
+    conditional_count = sum(1 for a in assertions if a["mapping_status"] == "NEEDS_REVIEW")
+    mapped_count = accepted_count + conditional_count
     raw_count = sum(1 for a in assertions if a["mapping_status"] == "UNMAPPED_RAW")
     out = {
         "dataset_id": "NOEMA-RELIGION-DECOMPOSITION-PULOTU-V1",
@@ -167,6 +172,8 @@ def main():
         },
         "semantics": {
             "mapped_feature": "NOEMA crosswalk applied to an upstream coded variable; mapping itself remains reviewable.",
+            "accepted_profile_feature": "EXPLICIT_V1 mappings may enter descriptive profile comparison; this is not a claim of historical independence or common origin.",
+            "conditional_feature": "NEEDS_REVIEW mappings remain searchable but are excluded from accepted profile comparison.",
             "raw_feature": "Searchable upstream variable retained without forcing a NOEMA semantic mapping.",
             "absence": "Only an upstream code interpreted as explicit absence; missing rows/values are not converted to absence.",
             "similarity": "Shared coded features are descriptive and do not establish ancestry, diffusion or identical meaning.",
@@ -176,6 +183,8 @@ def main():
             "upstream_variables": len(variables),
             "assertions": len(assertions),
             "mapped_assertions": mapped_count,
+            "accepted_assertions": accepted_count,
+            "conditional_assertions": conditional_count,
             "raw_assertions": raw_count,
             "dimensions": dict(sorted(counts.items())),
         },
@@ -193,7 +202,7 @@ def main():
     }
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(out, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    output.write_text(json.dumps(out, ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
     print(json.dumps(out["summary"], indent=2))
 
 
