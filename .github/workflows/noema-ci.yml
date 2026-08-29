@@ -73,6 +73,7 @@ jobs:
               for s in e.get('sources',[]):
                   assert str(s.get('url','')).startswith('https://')
           pages={
+              'site/dashboard-v1.html':'Search beneath religion.',
               'site/explore.html':'Break belief systems into parts.',
               'site/belief-systems.html':'No religion is one variable.',
               'site/gods.html':'Every god gets a card.',
@@ -143,7 +144,7 @@ jobs:
           from pathlib import Path
           import re
           pages = {
-              'site/index.html': ('<title>NOEMA Observatory</title>', 'Similarity generates a question, never a conclusion'),
+              'site/index.html': ('<title>NOEMA Observatory</title>', 'Search beneath religion.'),
               'site/deep-time.html': ('<title>NOEMA Deep Time</title>', 'behavioral evidence may climb toward interpretation'),
               'site/deep-time-compare.html': ('<title>NOEMA Deep Time Compare</title>', 'no species ranking'),
               'site/human-meaning-atlas.html': ('<title>NOEMA Human Meaning Atlas</title>', '500,000 BP → present'),

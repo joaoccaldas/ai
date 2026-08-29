@@ -8,6 +8,8 @@ on:
       - 'projects/noema/site/**'
       - 'projects/noema/data/reviewed/**'
       - 'projects/noema/data/comparisons/**'
+      - 'projects/noema/data/reference/**'
+      - 'projects/noema/ontology/**'
       - '.github/workflows/noema-pages-verify.yml'
 
 permissions:
@@ -16,9 +18,9 @@ permissions:
 jobs:
   verify-public-site:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     steps:
-      - name: Verify NOEMA observatory and research projections on GitHub Pages
+      - name: Verify NOEMA v1 research OS and projections on GitHub Pages
         env:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
@@ -26,59 +28,58 @@ jobs:
         run: |
           set -euo pipefail
           base="https://${OWNER}.github.io/${REPO}/projects/noema/site"
-          page="${base}/?build=${SHA}"
-          atlas_page="${base}/human-meaning-atlas.html?build=${SHA}"
-          atlas_json="${base}/human-meaning-atlas.json?build=${SHA}"
-          deep_time="${base}/deep-time.html?build=${SHA}"
-          compare="${base}/deep-time-compare.html?build=${SHA}"
-          comparison_json="${base}/deep-time-comparison.json?build=${SHA}"
-          data="${base}/data.json?build=${SHA}"
-          evidence="https://${OWNER}.github.io/${REPO}/projects/noema/data/reviewed/evidence-pack-001.json?build=${SHA}"
-          deep_evidence="https://${OWNER}.github.io/${REPO}/projects/noema/data/reviewed/evidence-pack-002-deep-time.json?build=${SHA}"
-          sapiens_evidence="https://${OWNER}.github.io/${REPO}/projects/noema/data/reviewed/evidence-pack-003-homo-sapiens.json?build=${SHA}"
-          societies="${base}/societies.json?build=${SHA}"
+          bust="?build=${SHA}"
           echo "NOEMA_PUBLIC_URL=${base}/"
+          echo "NOEMA_EXPLORE_URL=${base}/explore.html"
+          echo "NOEMA_GODS_URL=${base}/gods.html"
+          echo "NOEMA_DECOMPOSITION_URL=${base}/religion-decomposition.html"
           echo "NOEMA_HUMAN_MEANING_ATLAS_URL=${base}/human-meaning-atlas.html"
-          echo "NOEMA_DEEP_TIME_URL=${base}/deep-time.html"
-          echo "NOEMA_DEEP_TIME_COMPARE_URL=${base}/deep-time-compare.html"
 
           ok=0
-          for attempt in $(seq 1 96); do
-            html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$page" || true)
-            atlas_html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$atlas_page" || true)
-            atlas=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$atlas_json" || true)
-            deep_html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$deep_time" || true)
-            compare_html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$compare" || true)
-            comparison=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$comparison_json" || true)
-            projection=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$data" || true)
-            dossier=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$evidence" || true)
-            deep_dossier=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$deep_evidence" || true)
-            sapiens_dossier=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$sapiens_evidence" || true)
-            coverage=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$societies" || true)
-            if printf '%s' "$html" | grep -q '<title>NOEMA Observatory</title>' \
+          for attempt in $(seq 1 120); do
+            root=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/${bust}" || true)
+            explore=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/explore.html${bust}" || true)
+            systems=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/belief-systems.html${bust}" || true)
+            gods=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/gods.html${bust}" || true)
+            patterns=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/patterns.html${bust}" || true)
+            compare=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/compare.html${bust}" || true)
+            entity=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/entity.html?id=GOD-ODIN&build=${SHA}" || true)
+            workbench=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/religion-decomposition.html${bust}" || true)
+            decomposition=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/religion-decomposition.json${bust}" || true)
+            catalog=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "https://${OWNER}.github.io/${REPO}/projects/noema/data/reference/belief-catalog-v1.json${bust}" || true)
+            ontology=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "https://${OWNER}.github.io/${REPO}/projects/noema/ontology/decomposition_v1.json${bust}" || true)
+            atlas_html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/human-meaning-atlas.html${bust}" || true)
+            atlas=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/human-meaning-atlas.json${bust}" || true)
+            deep_html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/deep-time.html${bust}" || true)
+            comparison=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/deep-time-comparison.json${bust}" || true)
+            coverage=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "${base}/societies.json${bust}" || true)
+            if printf '%s' "$root" | grep -q '<title>NOEMA Observatory</title>' \
+              && printf '%s' "$root" | grep -q 'Search beneath religion.' \
+              && printf '%s' "$root" | grep -q 'One graph, many lenses' \
+              && printf '%s' "$explore" | grep -q '<title>Explore · NOEMA</title>' \
+              && printf '%s' "$systems" | grep -q '<title>Belief Systems · NOEMA</title>' \
+              && printf '%s' "$gods" | grep -q '<title>Gods & Spirits · NOEMA</title>' \
+              && printf '%s' "$patterns" | grep -q '<title>Patterns · NOEMA</title>' \
+              && printf '%s' "$compare" | grep -q '<title>Compare · NOEMA</title>' \
+              && printf '%s' "$entity" | grep -q '<title>Entity · NOEMA</title>' \
+              && printf '%s' "$workbench" | grep -q '<title>NOEMA Religion Decomposition</title>' \
+              && printf '%s' "$workbench" | grep -q 'Search religion beneath religion' \
+              && printf '%s' "$decomposition" | grep -q 'NOEMA-RELIGION-DECOMPOSITION-PULOTU-V1' \
+              && printf '%s' "$decomposition" | grep -q 'accepted_assertions' \
+              && printf '%s' "$catalog" | grep -q 'NOEMA-BELIEF-CATALOG-V1' \
+              && printf '%s' "$catalog" | grep -q 'GOD-ODIN' \
+              && printf '%s' "$ontology" | grep -q 'NOEMA-DECOMPOSITION-V1' \
+              && printf '%s' "$ontology" | grep -q 'ALTERED_STATE_INDUCTION' \
               && printf '%s' "$atlas_html" | grep -q '<title>NOEMA Human Meaning Atlas</title>' \
-              && printf '%s' "$atlas_html" | grep -q '500,000 BP → present' \
+              && printf '%s' "$atlas" | grep -q 'NOEMA-HUMAN-MEANING-ATLAS-001' \
               && printf '%s' "$deep_html" | grep -q '<title>NOEMA Deep Time</title>' \
-              && printf '%s' "$compare_html" | grep -q '<title>NOEMA Deep Time Compare</title>' \
-              && printf '%s' "$compare_html" | grep -q 'no species ranking' \
-              && printf '%s' "$projection" | grep -q '"release": "v0.9"' \
-              && printf '%s' "$projection" | grep -q 'human_meaning_atlas' \
-              && printf '%s' "$dossier" | grep -q '"pack_id": "NOEMA-EVIDENCE-001"' \
-              && printf '%s' "$deep_dossier" | grep -q '"pack_id": "NOEMA-EVIDENCE-002"' \
-              && printf '%s' "$sapiens_dossier" | grep -q '"pack_id": "NOEMA-EVIDENCE-003"' \
-              && printf '%s' "$comparison" | grep -q '"comparison_id": "NOEMA-DEEP-TIME-COMPARE-001"' \
-              && printf '%s' "$comparison" | grep -q '"matched_constructs": 4' \
-              && printf '%s' "$atlas" | grep -q '"atlas_id": "NOEMA-HUMAN-MEANING-ATLAS-001"' \
-              && printf '%s' "$atlas" | grep -q '"release": "v0.9"' \
-              && printf '%s' "$atlas" | grep -q '"coverage_societies": 100' \
-              && printf '%s' "$atlas" | grep -q 'species ranking from evidence counts' \
-              && printf '%s' "$coverage" | grep -q '"benchmark_id": "NOEMA-DPLACE-100-v1"' \
-              && printf '%s' "$coverage" | grep -q '"actual_size": 100'; then
+              && printf '%s' "$comparison" | grep -q 'NOEMA-DEEP-TIME-COMPARE-001' \
+              && printf '%s' "$coverage" | grep -q 'NOEMA-DPLACE-100-v1'; then
               ok=1
-              echo "NOEMA v0.9 Observatory, Human Meaning Atlas, Deep Time, comparison projection and coverage verified on attempt ${attempt}."
+              echo "NOEMA v1 Research OS, decomposition corpus, entity/search pages, Atlas and Deep Time verified on attempt ${attempt}."
               break
             fi
-            echo "Attempt ${attempt}: Pages has not exposed all NOEMA v0.9 projections yet."
+            echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA v1 bundle yet."
             sleep 5
           done
           test "$ok" = "1"
