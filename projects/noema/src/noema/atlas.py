@@ -154,9 +154,12 @@ def build_human_meaning_atlas(
         lon = society.get("longitude")
         if lat is None or lon is None:
             continue
+        society_id = society.get("dplace_id") or society.get("id")
+        if not society_id:
+            raise AtlasError("coverage society lacks authoritative id")
         coverage_points.append(
             {
-                "id": society["id"],
+                "id": society_id,
                 "name": society["name"],
                 "region": society.get("region"),
                 "latitude": float(lat),
