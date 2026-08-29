@@ -79,14 +79,20 @@ def _origin_key(assertion: dict, source: str) -> str:
     locator = assertion.get("source_locator") or {}
     if locator:
         return f"{source}:LOCATOR:{json.dumps(locator, sort_keys=True, separators=(',', ':'))}"
-    # Missing upstream provenance is not evidence of independence. All such rows share
-    # one conservative sentinel so a pair depending on unknown origins is excluded.
+    # Missing provenance cannot establish coding independence.
     return f"{source}:MISSING_ORIGIN"
 
 
-def _subject_features(
+def _subject_cells(
     doc: dict, *, source: str, comparable_only: bool = False
-) -> tuple[dict[str, dict[str, set[str]]], int, int]:
+) -> tuple[dict[str, dict[str, dict]], int, int, int]:
+    """Return explicit binary cells only.
+
+    A feature is present only when its accepted source states are exactly PRESENT.
+    It is absent only when they are exactly ABSENT. UNKNOWN, CONTESTED, mixed
+    present/unknown, mixed absent/unknown, and direct present/absent conflicts do not
+    enter pair denominators.
+    """
     subjects = doc.get("subjects") or []
     if source == "DRH":
         allowed_subjects = {
@@ -102,7 +108,7 @@ def _subject_features(
         raise ValueError(f"unsupported source: {source}")
 
     states: dict[tuple[str, str], set[str]] = defaultdict(set)
-    present_origins: dict[tuple[str, str], set[str]] = defaultdict(set)
+    origins: dict[tuple[str, str], set[str]] = defaultdict(set)
     accepted_rows = 0
     for assertion in doc.get("assertions") or []:
         sid = str(assertion.get("subject_id") or "")
@@ -116,12 +122,12 @@ def _subject_features(
             continue
         key = (sid, feature_key(dimension, facet))
         states[key].add(state)
-        if state == "PRESENT":
-            present_origins[key].add(_origin_key(assertion, source))
+        origins[key].add(_origin_key(assertion, source))
         accepted_rows += 1
 
-    by_subject: dict[str, dict[str, set[str]]] = {sid: {} for sid in allowed_subjects}
+    by_subject: dict[str, dict[str, dict]] = {sid: {} for sid in allowed_subjects}
     conflicted = 0
+    ambiguous_or_unknown = 0
     for key, observed_states in states.items():
         sid, feature = key
         if "PRESENT" in observed_states and (
@@ -129,10 +135,13 @@ def _subject_features(
         ):
             conflicted += 1
             continue
-        # Be conservative when a source has both PRESENT and UNKNOWN scopes.
-        if observed_states == {"PRESENT"} and present_origins[key]:
-            by_subject[sid][feature] = set(present_origins[key])
-    return by_subject, conflicted, accepted_rows
+        if observed_states == {"PRESENT"}:
+            by_subject[sid][feature] = {"present": True, "origins": set(origins[key])}
+        elif observed_states == {"ABSENT"}:
+            by_subject[sid][feature] = {"present": False, "origins": set(origins[key])}
+        else:
+            ambiguous_or_unknown += 1
+    return by_subject, conflicted, ambiguous_or_unknown, accepted_rows
 
 
 def pairwise_candidates(
@@ -141,22 +150,32 @@ def pairwise_candidates(
     source: str,
     comparable_only: bool = False,
     min_feature_count: int = 5,
+    min_known_count: int = 10,
+    min_pair_known: int = 20,
     min_pair_count: int = 3,
     min_lift: float = 1.15,
     limit: int = 500,
 ) -> dict:
-    profiles, conflict_cells, accepted_rows = _subject_features(
+    profiles, conflict_cells, ambiguous_cells, accepted_rows = _subject_cells(
         doc, source=source, comparable_only=comparable_only
     )
-    n = len(profiles)
-    freq: Counter[str] = Counter()
-    for features in profiles.values():
-        for feature in features:
-            freq[feature] += 1
+    cohort_n = len(profiles)
+    present_count: Counter[str] = Counter()
+    known_count: Counter[str] = Counter()
+    for cells in profiles.values():
+        for feature, cell in cells.items():
+            known_count[feature] += 1
+            if cell["present"]:
+                present_count[feature] += 1
 
     eligible_features = sorted(
-        feature for feature, count in freq.items() if count >= min_feature_count
+        feature
+        for feature in known_count
+        if known_count[feature] >= min_known_count
+        and present_count[feature] >= min_feature_count
     )
+    eligible_set = set(eligible_features)
+
     semantic_duplicate_pairs: set[tuple[str, str]] = set()
     for fa, fb in combinations(eligible_features, 2):
         _, a = split_feature(fa)
@@ -164,34 +183,46 @@ def pairwise_candidates(
         if normalized_facet(a) == normalized_facet(b):
             semantic_duplicate_pairs.add((fa, fb))
 
-    # A pair whose two mapped features ever derive from the same upstream question /
-    # variable is excluded from the entire testing universe. This is intentionally
-    # conservative: duplicated crosswalk semantics are not discoveries.
+    # If the same upstream question/variable codes both sides in any comparable cell,
+    # the whole feature pair is excluded. A crosswalk tautology is not a discovery.
     source_dependent_pairs: set[tuple[str, str]] = set()
-    for features in profiles.values():
-        present = sorted(f for f in features if f in set(eligible_features))
-        for fa, fb in combinations(present, 2):
-            if features[fa] & features[fb]:
+    for cells in profiles.values():
+        known = sorted(f for f in cells if f in eligible_set)
+        for fa, fb in combinations(known, 2):
+            if cells[fa]["origins"] & cells[fb]["origins"]:
                 source_dependent_pairs.add((fa, fb))
 
     excluded_pairs = semantic_duplicate_pairs | source_dependent_pairs
-    pair_counts: Counter[tuple[str, str]] = Counter()
-    for features in profiles.values():
-        present = sorted(f for f in features if f in set(eligible_features))
-        for pair in combinations(present, 2):
-            if pair not in excluded_pairs:
-                pair_counts[pair] += 1
-
-    # Build the complete independent testing universe first. BH correction happens
-    # before display-oriented support/lift filters, avoiding post-selection FDR.
     tested: list[dict] = []
+    insufficient_overlap = 0
+    degenerate_pairs = 0
+
+    # Pair-specific complete-case analysis: a subject enters a pair's denominator only
+    # when both features are explicitly PRESENT or explicitly ABSENT. Missing/unknown
+    # data never become zeroes.
     for fa, fb in combinations(eligible_features, 2):
         if (fa, fb) in excluded_pairs:
             continue
-        both = pair_counts[(fa, fb)]
-        ca, cb = freq[fa], freq[fb]
-        expected = (ca * cb) / n if n else 0
-        lift = both / expected if expected else 0
+        comparable = [
+            cells
+            for cells in profiles.values()
+            if fa in cells and fb in cells
+        ]
+        n = len(comparable)
+        if n < min_pair_known:
+            insufficient_overlap += 1
+            continue
+        a_total = sum(1 for cells in comparable if cells[fa]["present"])
+        b_total = sum(1 for cells in comparable if cells[fb]["present"])
+        both = sum(
+            1
+            for cells in comparable
+            if cells[fa]["present"] and cells[fb]["present"]
+        )
+        if a_total in {0, n} or b_total in {0, n}:
+            degenerate_pairs += 1
+            continue
+        expected = (a_total * b_total) / n
         da, a = split_feature(fa)
         db, b = split_feature(fb)
         tested.append(
@@ -204,17 +235,22 @@ def pairwise_candidates(
                 "facet_b": b,
                 "cooccurrence": both,
                 "n_profiles": n,
-                "prevalence_a": ca / n if n else 0,
-                "prevalence_b": cb / n if n else 0,
-                "support": both / n if n else 0,
+                "n_comparable": n,
+                "cohort_profiles": cohort_n,
+                "profiles_excluded_for_pair_missingness": cohort_n - n,
+                "prevalence_a": a_total / n,
+                "prevalence_b": b_total / n,
+                "support": both / n,
                 "expected_under_fixed_marginals": expected,
-                "lift": lift,
-                "phi": _phi(n, both, ca, cb),
-                "p_enrichment": _hypergeom_upper_tail(n, ca, cb, both),
+                "lift": both / expected if expected else 0,
+                "phi": _phi(n, both, a_total, b_total),
+                "p_enrichment": _hypergeom_upper_tail(n, a_total, b_total, both),
             }
         )
-    _bh_adjust(tested)
 
+    # Correct over all eligible, independent, sufficiently observed, non-degenerate
+    # pairs before display-oriented filtering.
+    _bh_adjust(tested)
     rows = [
         row
         for row in tested
@@ -239,7 +275,7 @@ def pairwise_candidates(
             "known_contact",
             "source_dependence_beyond_same_upstream_field",
             "research_intensity",
-            "missing_data_mechanism",
+            "missing_data_mechanism_beyond_complete_case_filtering",
             "historical_scope_equivalence"
             if source == "DRH"
             else "historical_change_since_coded_state",
@@ -248,25 +284,29 @@ def pairwise_candidates(
     return {
         "source": source,
         "cohort_policy": (
-            "DRH RELIGIOUS_GROUP entries only; heterogeneous historical scopes remain separate upstream and aggregate presence is discovery-only."
+            "DRH RELIGIOUS_GROUP entries only; heterogeneous historical scopes remain separate upstream and aggregate feature states remain discovery-only."
             if source == "DRH"
-            else "Pulotu cultural-tradition profiles using explicit PRESENT mappings only."
+            else "Pulotu cultural-tradition profiles using accepted crosswalk states only."
         ),
-        "n_profiles": n,
+        "n_profiles": cohort_n,
         "accepted_assertion_rows_considered": accepted_rows,
         "conflicted_subject_feature_cells_excluded": conflict_cells,
-        "feature_count": len(freq),
+        "unknown_or_ambiguous_subject_feature_cells_excluded": ambiguous_cells,
+        "feature_count": len(known_count),
         "eligible_feature_count": len(eligible_features),
         "semantic_duplicate_feature_pairs_excluded": len(semantic_duplicate_pairs),
         "same_upstream_origin_feature_pairs_excluded": len(source_dependent_pairs),
+        "insufficient_pairwise_observation_pairs_excluded": insufficient_overlap,
+        "degenerate_feature_pairs_excluded": degenerate_pairs,
         "tested_feature_pairs": len(tested),
         "candidate_count_before_limit": len(rows),
         "candidates": rows[:limit],
         "null_model": {
-            "test": "one-sided hypergeometric enrichment with fixed feature marginals",
-            "multiple_testing": "Benjamini-Hochberg across the complete eligible independent feature-pair testing universe within cohort, before display filtering",
+            "test": "one-sided hypergeometric enrichment with fixed feature marginals on pair-specific explicitly observed binary states",
+            "missingness_rule": "A profile enters a feature-pair denominator only when both features are explicitly PRESENT or explicitly ABSENT. UNKNOWN, CONTESTED, mixed scopes, uncoded rows and missing rows are excluded, never converted to absence.",
+            "multiple_testing": "Benjamini-Hochberg across the complete eligible independent sufficiently-observed non-degenerate feature-pair testing universe within cohort, before display filtering",
             "mapping_dependence_guard": "Feature pairs sharing an upstream question/variable anywhere in the cohort, plus identical normalized facets across dimensions, are excluded from testing.",
-            "interpretation": "Screens for surprising co-occurrence under naive fixed marginals only. It is not a causal, ancestral, diffusion, phylogenetic, spatial, or full source-independence test.",
+            "interpretation": "Screens for surprising co-occurrence under a pairwise complete-case fixed-marginal null only. It is not a causal, ancestral, diffusion, phylogenetic, spatial, missingness-mechanism, or full source-independence test.",
         },
     }
 
