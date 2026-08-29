@@ -1,0 +1,248 @@
+{
+  "pack_id": "NOEMA-EVIDENCE-001",
+  "title": "Religious traits, supernatural punishment, prosociality and social complexity",
+  "version": 1,
+  "generated_at": "2026-08-29T01:33:24Z",
+  "review_status": "MODEL_CURATED_SOURCE_VERIFIED_HUMAN_REVIEW_PENDING",
+  "publication_status": "RESEARCH_PREVIEW",
+  "scope_note": "A deliberately adversarial starter dossier. Claims are constrained to what the cited source records report. This pack is not a global conclusion about religion and does not turn source summaries into archaeological facts.",
+  "epistemic_rules": [
+    "UNKNOWN is not ABSENT.",
+    "Association is not historical causation.",
+    "A phylogenetic reconstruction is a model-based inference, not direct evidence about a Paleolithic individual or site.",
+    "Moralizing high gods, broad supernatural punishment, and punitive/knowledgeable gods are distinct constructs unless a source explicitly equates them.",
+    "Cultural samples are not statistically independent merely because they are geographically separate.",
+    "Model-generated synthesis is analysis, never primary evidence."
+  ],
+  "sources": [
+    {
+      "id": "S001",
+      "title": "Hunter-Gatherers and the Origins of Religion",
+      "authors": ["Hervey C. Peoples", "P. Duda", "F. Marlowe"],
+      "year": 2016,
+      "journal": "Human Nature",
+      "citation_count_at_retrieval": 141,
+      "canonical_url": "https://consensus.app/papers/huntergatherers-and-the-origins-of-religion-peoples-duda/ec1a3f10820051658d764cb564a494e6/?utm_source=chatgpt",
+      "method": "Time-calibrated phylogenetic ancestral-state reconstruction over a global hunter-gatherer sample, using linguistic classifications and correlated-evolution tests.",
+      "scope": "Present-day hunter-gatherer comparative data used to infer ancestral states.",
+      "source_role": "ANCESTRAL_STATE_INFERENCE"
+    },
+    {
+      "id": "S002",
+      "title": "Broad supernatural punishment but not moralizing high gods precede the evolution of political complexity in Austronesia",
+      "authors": ["Joseph Watts", "Simon J. Greenhill", "Q. Atkinson", "Thomas E. Currie", "Joseph A. Bulbulia", "R. Gray"],
+      "year": 2015,
+      "journal": "Proceedings of the Royal Society B: Biological Sciences",
+      "citation_count_at_retrieval": 272,
+      "canonical_url": "https://consensus.app/papers/broad-supernatural-punishment-but-not-moralizing-high-watts-greenhill/5c7e31b63a60526eb82f11a2432b874f/?utm_source=chatgpt",
+      "method": "Bayesian phylogenetic comparative analysis of 96 Austronesian cultures.",
+      "scope": "Austronesian cultural lineages.",
+      "source_role": "PHYLOGENETIC_DIRECTIONALITY"
+    },
+    {
+      "id": "S003",
+      "title": "Moralistic gods, supernatural punishment and the expansion of human sociality",
+      "authors": ["B. Purzycki", "C. Apicella", "Q. Atkinson", "E. Cohen", "R. McNamara", "A. Willard", "Dimitris Xygalatas", "A. Norenzayan", "J. Henrich"],
+      "year": 2016,
+      "journal": "Nature",
+      "citation_count_at_retrieval": 398,
+      "canonical_url": "https://consensus.app/papers/moralistic-gods-supernatural-punishment-and-the-purzycki-apicella/cdd008a7dd7b565ead2f9696fe01ceb3/?utm_source=chatgpt",
+      "method": "Ethnographic interviews plus behavioral allocation games; 591 participants and 35,400 observations across eight societies.",
+      "scope": "Eight diverse contemporary communities; individual-level beliefs and behavioral allocation outcomes.",
+      "source_role": "BEHAVIORAL_MECHANISM"
+    },
+    {
+      "id": "S004",
+      "title": "Treatment of missing data determined conclusions regarding moralizing gods",
+      "authors": ["B. Beheim", "Q. Atkinson", "Joseph A. Bulbulia", "W. Gervais", "R. Gray", "J. Henrich", "M. Lang", "M. Monroe", "Michael Muthukrishna", "A. Norenzayan", "B. Purzycki", "A. Shariff", "E. Slingerland", "R. Spicer", "A. Willard"],
+      "year": 2021,
+      "journal": "Nature",
+      "citation_count_at_retrieval": 37,
+      "canonical_url": "https://consensus.app/papers/treatment-of-missing-data-determined-conclusions-beheim-atkinson/cf477ae53ae55b58983ac75e3a9141ad/?utm_source=chatgpt",
+      "method": "Reanalysis and methodological critique of Seshat moralizing-gods data and missing-value treatment.",
+      "scope": "The Seshat dataset and the specific historical causal analysis under critique.",
+      "source_role": "MISSING_DATA_SENSITIVITY"
+    },
+    {
+      "id": "S005",
+      "title": "Testing the Big Gods hypothesis with global historical data: a review and retake",
+      "authors": ["H. Whitehouse", "Pieter François", "Patrick E. Savage", "D. Hoyer", "K. Feeney", "Enrico Cioni", "Rosa S. Purcell", "Jennifer Larson", "J. Baines", "B. Haar", "A. Covey", "P. Turchin"],
+      "year": 2022,
+      "journal": "Religion, Brain & Behavior",
+      "citation_count_at_retrieval": 27,
+      "canonical_url": "https://consensus.app/papers/testing-the-big-gods-hypothesis-with-global-historical-whitehouse-françois/6ce9dd779319519ca70914cd81addca1/?utm_source=chatgpt",
+      "method": "Corrected and extended Seshat reanalysis with expanded codebook, database revisions, data-management improvements and more direct causal methodology.",
+      "scope": "Global historical Seshat data as operationalized by the authors.",
+      "source_role": "CORRECTED_GLOBAL_RETAKE"
+    },
+    {
+      "id": "S006",
+      "title": "Ritual explained: interdisciplinary answers to Tinbergen's four questions",
+      "authors": ["C. Legare", "Mark Nielsen"],
+      "year": 2020,
+      "journal": "Philosophical Transactions of the Royal Society B",
+      "citation_count_at_retrieval": 38,
+      "canonical_url": "https://consensus.app/papers/ritual-explained-interdisciplinary-answers-to-legare-nielsen/28d386cc70df5b1d85a443110192a446/?utm_source=chatgpt",
+      "method": "Interdisciplinary synthesis organized around phylogeny, adaptive function, mechanism and ontogeny.",
+      "scope": "Ritual as a cross-disciplinary explanatory target.",
+      "source_role": "INTERDISCIPLINARY_FRAMEWORK"
+    }
+  ],
+  "claims": [
+    {
+      "id": "C001",
+      "source_id": "S001",
+      "claim_text": "In the authors' phylogenetic reconstruction, animism is inferred as the oldest of the coded hunter-gatherer religious traits, with belief in an afterlife followed by shamanism and ancestor worship.",
+      "claim_type": "ANCESTRAL_STATE_INFERENCE",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_MODEL_DEPENDENT",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Comparative reconstruction from present-day hunter-gatherer data; not direct Paleolithic archaeological observation.",
+      "supports": ["H004"],
+      "challenges": []
+    },
+    {
+      "id": "C002",
+      "source_id": "S002",
+      "claim_text": "Within the sampled Austronesian cultures, the Bayesian phylogenetic analysis found broad supernatural punishment preceding political complexity, while moralizing high gods followed political complexity.",
+      "claim_type": "PHYLOGENETIC_DIRECTIONALITY",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_SCOPE_LIMITED",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "96 Austronesian cultures; should not be generalized globally without further tests.",
+      "supports": ["H002"],
+      "challenges": ["H001"]
+    },
+    {
+      "id": "C003",
+      "source_id": "S003",
+      "claim_text": "Across eight sampled communities, participants who rated their moralistic gods as more punitive and knowledgeable allocated more resources toward geographically distant co-religionists relative to themselves and local co-religionists.",
+      "claim_type": "BEHAVIORAL_ASSOCIATION",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Individual-level behavioral association in an eight-society design; does not by itself establish historical causation of state formation.",
+      "supports": ["H003"],
+      "challenges": []
+    },
+    {
+      "id": "C004",
+      "source_id": "S004",
+      "claim_text": "The critique reports that 61% of moralizing-gods observations used in the original Seshat analysis were missing or suspected unknown and had been recoded as absences; alternative missing-data treatments reversed the reported temporal ordering.",
+      "claim_type": "MISSING_DATA_SENSITIVITY",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_METHOD_CRITIQUE",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Methodological sensitivity of the original Seshat analysis, not a universal claim that moralizing gods always precede complexity.",
+      "supports": [],
+      "challenges": ["H001"]
+    },
+    {
+      "id": "C005",
+      "source_id": "S005",
+      "claim_text": "The corrected and extended Seshat retake reports that the largest increases in sociopolitical complexity precede Big Gods and concludes that Big Gods did not drive the evolution of sociopolitical complexity as predicted by the tested Big Gods hypothesis.",
+      "claim_type": "HISTORICAL_CAUSAL_INFERENCE",
+      "evidence_level": "E3",
+      "epistemic_status": "SUPPORTED_WITH_ACTIVE_DEBATE",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Global historical inference within the authors' revised Seshat operationalization; must be read alongside coding and missingness critiques.",
+      "supports": [],
+      "challenges": ["H001"]
+    },
+    {
+      "id": "C006",
+      "source_id": "S006",
+      "claim_text": "A satisfactory explanation of ritual requires distinct but integrated accounts of phylogeny, adaptive function, proximate mechanism and ontogeny.",
+      "claim_type": "METHODOLOGICAL_FRAMEWORK",
+      "evidence_level": "E2",
+      "epistemic_status": "SYNTHESIS",
+      "review_status": "HUMAN_REVIEW_PENDING",
+      "scope": "Interdisciplinary explanatory framework rather than a single empirical causal estimate.",
+      "supports": ["H005"],
+      "challenges": []
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "H001",
+      "title": "Big Gods caused the initial rise of sociopolitical complexity",
+      "statement": "Moralizing high gods were a primary causal driver of the initial rise of large-scale sociopolitical complexity.",
+      "status": "CHALLENGED_IN_CURRENT_PACK",
+      "evidence_balance": "The selected evidence weighs against the simple causal form of this hypothesis, while methodological disagreement means the historical sequence should not be represented as settled by a single analysis.",
+      "supporting_claim_ids": [],
+      "challenging_claim_ids": ["C002", "C004", "C005"],
+      "related_claim_ids": ["C003"],
+      "falsification_or_discrimination": [
+        "Show robust temporal precedence of appropriately defined moralizing high gods over complexity under multiple missing-data models.",
+        "Demonstrate that the effect survives controls for shared ancestry, diffusion, warfare, ecology, literacy and source availability.",
+        "Replicate across independently coded historical datasets with construct-equivalent variables."
+      ],
+      "rivals": ["Broad supernatural punishment contributes before political complexity in some lineages", "Complexity and moralizing religion share upstream drivers", "Prosocial religious beliefs help maintain or extend cooperation after complexity begins", "Observed ordering is partly a measurement/literacy artefact"]
+    },
+    {
+      "id": "H002",
+      "title": "Broad supernatural punishment can precede political complexity",
+      "statement": "In some cultural lineages, supernatural punishment defined more broadly than moralizing high gods can precede and contribute to political complexity.",
+      "status": "SUPPORTED_SCOPE_LIMITED",
+      "evidence_balance": "Supported in the Austronesian phylogenetic study in this pack; global generalization remains untested here.",
+      "supporting_claim_ids": ["C002"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": ["C003"],
+      "falsification_or_discrimination": ["Replicate with construct-equivalent coding outside Austronesian lineages.", "Test sensitivity to contact networks and alternative phylogenies.", "Separate broad punishment from creator/high-god categories."],
+      "rivals": ["Political complexity generates punishment concepts", "Both traits respond to warfare or ecological pressure", "Coding categories create apparent ordering"]
+    },
+    {
+      "id": "H003",
+      "title": "Punitive and knowledgeable gods can expand impartial prosociality",
+      "statement": "Beliefs in gods perceived as punitive and knowledgeable about human conduct can increase impartial behavior toward distant co-religionists.",
+      "status": "SUPPORTED_BEHAVIORAL_SCOPE",
+      "evidence_balance": "Directly supported by the eight-society behavioral study in this pack, but this mechanism is not equivalent to causing the historical emergence of states or megasocieties.",
+      "supporting_claim_ids": ["C003"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": ["C002", "C005"],
+      "falsification_or_discrimination": ["Replicate with preregistered construct-equivalent designs in additional societies.", "Separate effects of punishment, knowledge, group identity and local institutions.", "Test whether the behavioral mechanism predicts longitudinal institutional change."],
+      "rivals": ["Group identification rather than supernatural punishment drives allocations", "Institutional norms cause both god concepts and impartial behavior"]
+    },
+    {
+      "id": "H004",
+      "title": "Animism is ancestral among coded hunter-gatherer religious traits",
+      "statement": "Among the religious traits coded in the cited hunter-gatherer dataset, animism is reconstructed as present in the most recent common ancestor of the sampled lineages.",
+      "status": "SUPPORTED_MODEL_DEPENDENT",
+      "evidence_balance": "Supported by the cited phylogenetic reconstruction, but it is an inference from present-day comparative data and should not be rendered as a direct archaeological observation of early Homo sapiens.",
+      "supporting_claim_ids": ["C001"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": [],
+      "falsification_or_discrimination": ["Re-estimate using alternative trees, trait definitions and coding uncertainty.", "Compare against independent archaeological and historical proxies where defensible."],
+      "rivals": ["Ancestral-state result changes under alternative phylogenies", "Trait coding compresses diverse ontologies into an overly broad animism category"]
+    },
+    {
+      "id": "H005",
+      "title": "Ritual needs multi-level explanation",
+      "statement": "Ritual recurrence and diversity cannot be explained adequately by a single causal level; phylogeny, function, mechanism and development must be distinguished.",
+      "status": "METHODOLOGICAL_FRAME",
+      "evidence_balance": "Used as an analysis constraint for NOEMA rather than as a historical fact claim.",
+      "supporting_claim_ids": ["C006"],
+      "challenging_claim_ids": [],
+      "related_claim_ids": [],
+      "falsification_or_discrimination": ["For any proposed ritual explanation, specify which explanatory level it addresses and test whether another level accounts for the pattern better."],
+      "rivals": []
+    }
+  ],
+  "synthesis": {
+    "headline": "The first evidence pack rejects a one-variable story.",
+    "findings": [
+      "Micro-level prosocial effects and macro-level historical causation are separate questions. Evidence for one does not automatically establish the other.",
+      "Construct choice changes conclusions: 'moralizing high gods' is narrower than 'broad supernatural punishment', while behavioral studies may operationalize punitive and knowledgeable gods differently again.",
+      "Missingness is substantive historical information. In periods without written or ethnographic records, UNKNOWN must not be silently converted to ABSENT.",
+      "Phylogenetic methods are essential where cultures share ancestry, but their results remain sensitive to trees, coding and diffusion assumptions.",
+      "The current pack weighs against the simple claim that moralizing high gods caused the initial rise of sociopolitical complexity, while leaving open narrower mechanisms involving supernatural punishment, cooperation, maintenance and shared upstream drivers."
+    ],
+    "next_tests": [
+      "Harmonize supernatural-agent constructs across Pulotu, DRH, Seshat and relevant D-PLACE-linked societies before pooled analysis.",
+      "Run missing-data sensitivity as a required analysis branch, never an optional appendix.",
+      "Model lineage ancestry and known contact/diffusion separately.",
+      "Separate emergence, maintenance and expansion of social complexity as different outcomes.",
+      "Attach expert qualitative historical notes to every apparently decisive first/last occurrence."
+    ]
+  }
+}
