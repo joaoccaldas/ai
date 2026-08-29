@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'projects/noema/site/**'
+      - 'projects/noema/data/reviewed/**'
       - '.github/workflows/noema-pages-verify.yml'
 
 permissions:
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - name: Verify NOEMA observatory and projection on GitHub Pages
+      - name: Verify NOEMA observatory and research projections on GitHub Pages
         env:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
@@ -26,24 +27,28 @@ jobs:
           base="https://${OWNER}.github.io/${REPO}/projects/noema/site"
           page="${base}/?build=${SHA}"
           data="${base}/data.json?build=${SHA}"
+          evidence="https://${OWNER}.github.io/${REPO}/projects/noema/data/reviewed/evidence-pack-001.json?build=${SHA}"
+          societies="${base}/societies.json?build=${SHA}"
           echo "NOEMA_PUBLIC_URL=${base}/"
 
           ok=0
           for attempt in $(seq 1 60); do
-            html=$(curl --fail --silent --show-error --location \
-              --header 'Cache-Control: no-cache, no-store, must-revalidate' \
-              "$page" || true)
-            projection=$(curl --fail --silent --show-error --location \
-              --header 'Cache-Control: no-cache, no-store, must-revalidate' \
-              "$data" || true)
+            html=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$page" || true)
+            projection=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$data" || true)
+            dossier=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$evidence" || true)
+            atlas=$(curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$societies" || true)
             if printf '%s' "$html" | grep -q '<title>NOEMA Observatory</title>' \
               && printf '%s' "$html" | grep -q 'Similarity generates a question, never a conclusion' \
-              && printf '%s' "$projection" | grep -q '"status": "seed"'; then
+              && printf '%s' "$projection" | grep -q '"status": "research-preview"' \
+              && printf '%s' "$dossier" | grep -q '"pack_id": "NOEMA-EVIDENCE-001"' \
+              && printf '%s' "$dossier" | grep -q '"publication_status": "RESEARCH_PREVIEW"' \
+              && printf '%s' "$atlas" | grep -q '"benchmark_id": "NOEMA-DPLACE-100-v1"' \
+              && printf '%s' "$atlas" | grep -q '"actual_size": 100'; then
               ok=1
-              echo "NOEMA public observatory verified on attempt ${attempt}."
+              echo "NOEMA public observatory, evidence dossier and 100-society atlas verified on attempt ${attempt}."
               break
             fi
-            echo "Attempt ${attempt}: Pages has not exposed the NOEMA observatory yet."
+            echo "Attempt ${attempt}: Pages has not exposed all NOEMA v0.6 projections yet."
             sleep 5
           done
           test "$ok" = "1"
