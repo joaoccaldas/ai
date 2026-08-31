@@ -13,6 +13,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: noema-writer-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   dplace-benchmark:
     runs-on: ubuntu-latest
@@ -32,19 +36,11 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          data=json.load(open('noema-benchmark-100.json'))
-          assert data['actual_size'] == 100
-          societies=data['societies']
-          ids=[x['dplace_id'] for x in societies]
-          assert len(ids)==len(set(ids))
-          assert all(x['region'] for x in societies)
-          assert all(x['glottocode'] for x in societies)
-          assert all(x['latitude'] is not None and x['longitude'] is not None for x in societies)
-          regions=len({x['region'] for x in societies})
-          assert regions >= 40
-          print('validated benchmark across', regions, 'regions')
+          d=json.load(open('noema-benchmark-100.json'));soc=d['societies'];ids=[x['dplace_id'] for x in soc]
+          assert d['actual_size']==100 and len(ids)==len(set(ids));assert all(x['region'] and x['glottocode'] for x in soc);assert all(x['latitude'] is not None and x['longitude'] is not None for x in soc);assert len({x['region'] for x in soc})>=40
+          print('validated',d['actual_size'],'societies')
           PY
-      - name: Publish benchmark projection into observatory tree
+      - name: Publish benchmark projection
         run: cp noema-benchmark-100.json projects/noema/site/societies.json
       - name: Write observability manifest
         env:
@@ -56,18 +52,12 @@ jobs:
           from datetime import datetime,timezone
           from pathlib import Path
           d=json.load(open('noema-benchmark-100.json'));raw=Path('noema-benchmark-100.json').read_bytes();now=datetime.now(timezone.utc).isoformat()
-          m={'run_id':f"dplace-benchmark-{os.environ['RUN_ID']}",'task_type':'DPLACE_BENCHMARK','status':'COMPLETED','started_at':now,'completed_at':now,
-             'input_refs':['https://raw.githubusercontent.com/D-PLACE/dplace-cldf/master/cldf/societies.csv'],'artifact_digests':{'noema-dplace-benchmark-100':'sha256:'+hashlib.sha256(raw).hexdigest()},
-             'sources_examined':1,'new_candidates':0,'candidate_updates':1,'contradictions':0,'dating_revisions':0,'relationships_generated':0,'hypotheses_revisited':0,'hypotheses_promoted':0,'confidence_or_scope_changes':0,'review_items_created':0,'errors':[],
-             'summary':f"Rebuilt deterministic D-PLACE benchmark with {d['actual_size']} societies; focal years remain observation metadata, never origin dates.",'code_commit':os.environ['CODE_SHA'],
-             'epistemic_guards':{'model_output_is_evidence':False,'unknown_is_absent':False,'similarity_implies_descent':False,'automatic_claim_promotion':False}}
+          m={'run_id':f"dplace-benchmark-{os.environ['RUN_ID']}",'task_type':'DPLACE_BENCHMARK','status':'COMPLETED','started_at':now,'completed_at':now,'input_refs':['https://raw.githubusercontent.com/D-PLACE/dplace-cldf/master/cldf/societies.csv'],'artifact_digests':{'noema-dplace-benchmark-100':'sha256:'+hashlib.sha256(raw).hexdigest()},'sources_examined':1,'new_candidates':0,'candidate_updates':1,'contradictions':0,'dating_revisions':0,'relationships_generated':0,'hypotheses_revisited':0,'hypotheses_promoted':0,'confidence_or_scope_changes':0,'review_items_created':0,'errors':[],'summary':f"Rebuilt deterministic D-PLACE benchmark with {d['actual_size']} societies; focal years remain observation metadata, never origin dates.",'code_commit':os.environ['CODE_SHA'],'epistemic_guards':{'model_output_is_evidence':False,'unknown_is_absent':False,'similarity_implies_descent':False,'automatic_claim_promotion':False}}
           p=Path(f"projects/noema/data/runs/dplace-benchmark-{os.environ['RUN_ID']}.json");p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(m,indent=2)+'\n')
           PY
       - name: Commit benchmark projection and run manifest
         run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]";git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add projects/noema/site/societies.json projects/noema/data/runs/dplace-benchmark-${GITHUB_RUN_ID}.json
           git commit -m "data(noema): refresh D-PLACE benchmark and run manifest [skip noema-benchmark]"
           git push origin "HEAD:${GITHUB_REF_NAME}"

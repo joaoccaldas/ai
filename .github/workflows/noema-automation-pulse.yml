@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: noema-automation-pulse-${{ github.ref }}
+  group: noema-writer-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -22,6 +22,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -31,27 +33,19 @@ jobs:
         run: |
           python - <<'PY'
           import json
-          p='projects/noema/site/automation-pulse.json'
-          d=json.load(open(p))
-          assert d['status']=='OBSERVABILITY_ONLY'
-          assert d['principle'].startswith('Automation output')
+          d=json.load(open('projects/noema/site/automation-pulse.json'))
+          assert d['status']=='OBSERVABILITY_ONLY' and d['principle'].startswith('Automation output')
           for r in d.get('recent_runs',[]):
               g=r.get('epistemic_guards',{})
-              assert g.get('model_output_is_evidence') is False
-              assert g.get('unknown_is_absent') is False
-              assert g.get('similarity_implies_descent') is False
-              assert g.get('automatic_claim_promotion') is False
+              assert g.get('model_output_is_evidence') is False and g.get('unknown_is_absent') is False
+              assert g.get('similarity_implies_descent') is False and g.get('automatic_claim_promotion') is False
           print('validated', len(d.get('recent_runs',[])), 'run manifests')
           PY
       - name: Commit pulse when changed
         run: |
           set -euo pipefail
-          if [ -z "$(git status --porcelain -- projects/noema/site/automation-pulse.json)" ]; then
-            echo "Automation pulse unchanged."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -z "$(git status --porcelain -- projects/noema/site/automation-pulse.json)" ]; then echo "Automation pulse unchanged."; exit 0; fi
+          git config user.name "github-actions[bot]";git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add projects/noema/site/automation-pulse.json
           git commit -m "ops(noema): refresh automation pulse [skip noema-pulse]"
-          git push
+          git push origin "HEAD:${GITHUB_REF_NAME}"

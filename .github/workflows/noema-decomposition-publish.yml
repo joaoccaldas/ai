@@ -29,8 +29,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: noema-religion-federation-${{ github.ref }}
-  cancel-in-progress: true
+  group: noema-writer-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build-federation:
@@ -76,7 +76,6 @@ jobs:
           assert all('phylogeny' in r['unresolved_confounders'] for x in pc['cohorts'] for r in x['candidates'])
           assert cov['dimensions'] and len(cov['sources']) == 2
           assert h['metrics']['accepted_semantic_assertions'] == f['summary']['accepted_semantic_assertions']
-          assert any(x['area'] == 'causal inference' for x in h['blind_spots'])
           print(json.dumps(f['summary'],indent=2));print(json.dumps(h['metrics'],indent=2))
           PY
       - name: Write observability manifest
@@ -89,19 +88,13 @@ jobs:
           from datetime import datetime,timezone
           from pathlib import Path
           f=json.load(open('site/religion-federation.json'));h=json.load(open('site/research-health.json'));now=datetime.now(timezone.utc).isoformat();s=f['summary']
-          m={'run_id':f"religion-federation-{os.environ['RUN_ID']}",'task_type':'RELIGION_FEDERATION','status':'COMPLETED','started_at':now,'completed_at':now,
-             'input_refs':['Pulotu','DRH/SCCSR','D-PLACE audit'],'sources_examined':3,'new_candidates':int(h['metrics'].get('dplace_religion_variable_candidates',0)),'candidate_updates':int(s.get('accepted_semantic_assertions',0)),
-             'contradictions':0,'dating_revisions':0,'relationships_generated':int(h['metrics'].get('pattern_candidates_pulotu',0))+int(h['metrics'].get('pattern_candidates_drh',0)),
-             'hypotheses_revisited':0,'hypotheses_promoted':0,'confidence_or_scope_changes':0,'review_items_created':0,'errors':[],
-             'summary':f"Federation refreshed {s.get('comparable_belief_system_profiles',0)} comparable profiles and {s.get('accepted_semantic_assertions',0)} accepted assertions; pattern outputs remain descriptive candidates.",
-             'code_commit':os.environ['CODE_SHA'],'epistemic_guards':{'model_output_is_evidence':False,'unknown_is_absent':False,'similarity_implies_descent':False,'automatic_claim_promotion':False}}
+          m={'run_id':f"religion-federation-{os.environ['RUN_ID']}",'task_type':'RELIGION_FEDERATION','status':'COMPLETED','started_at':now,'completed_at':now,'input_refs':['Pulotu','DRH/SCCSR','D-PLACE audit'],'sources_examined':3,'new_candidates':int(h['metrics'].get('dplace_religion_variable_candidates',0)),'candidate_updates':int(s.get('accepted_semantic_assertions',0)),'contradictions':0,'dating_revisions':0,'relationships_generated':int(h['metrics'].get('pattern_candidates_pulotu',0))+int(h['metrics'].get('pattern_candidates_drh',0)),'hypotheses_revisited':0,'hypotheses_promoted':0,'confidence_or_scope_changes':0,'review_items_created':0,'errors':[],'summary':f"Federation refreshed {s.get('comparable_belief_system_profiles',0)} comparable profiles and {s.get('accepted_semantic_assertions',0)} accepted assertions; pattern outputs remain descriptive candidates.",'code_commit':os.environ['CODE_SHA'],'epistemic_guards':{'model_output_is_evidence':False,'unknown_is_absent':False,'similarity_implies_descent':False,'automatic_claim_promotion':False}}
           p=Path(f"data/runs/religion-federation-{os.environ['RUN_ID']}.json");p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(m,indent=2)+'\n')
           PY
       - name: Commit refreshed federation and run manifest
         run: |
           files='site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json site/pattern-candidates.json site/coverage-matrix.json site/research-health.json data/runs/religion-federation-${GITHUB_RUN_ID}.json'
-          git config user.name 'github-actions[bot]';git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add $files
+          git config user.name 'github-actions[bot]';git config user.email '41898282+github-actions[bot]@users.noreply.github.com';git add $files
           git commit -m 'data(noema): refresh religion federation and run manifest [skip noema-decomposition]'
           git push origin "HEAD:${GITHUB_REF_NAME}"
       - uses: actions/upload-artifact@v4

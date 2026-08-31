@@ -13,6 +13,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: noema-writer-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   crossref-discovery:
     runs-on: ubuntu-latest
@@ -30,20 +34,12 @@ jobs:
         run: |
           python - <<'PY'
           import json,re
-          from pathlib import Path
-          p=Path('noema-crossref-candidates.json')
-          data=json.loads(p.read_text())
-          items=data['candidates']
-          valid_reasons={'RECENT_PUBLICATION','UPCOMING_OR_AHEAD_OF_PRINT','NEWLY_INDEXED_LEGACY'}
-          assert data['candidate_count'] == len(items)
-          assert data['priority_candidate_count'] == len(data['priority_keys']) <= 30
-          assert len({x.get('doi') or x['canonical_url'] for x in items}) == len(items)
-          assert all(x['status']=='CANDIDATE_UNREVIEWED' for x in items)
-          assert all(x['domain_hits'] for x in items)
-          assert all(x['relevance_score'] > 0 for x in items)
-          assert all(x['discovery_reason'] in valid_reasons for x in items)
-          assert all(not re.search(r'<[^>]+>', x['title']) for x in items)
-          print('validated', len(items), 'candidates', data.get('reason_counts', {}), 'priority', data['priority_candidate_count'])
+          d=json.load(open('noema-crossref-candidates.json'));items=d['candidates'];valid={'RECENT_PUBLICATION','UPCOMING_OR_AHEAD_OF_PRINT','NEWLY_INDEXED_LEGACY'}
+          assert d['candidate_count']==len(items);assert d['priority_candidate_count']==len(d['priority_keys'])<=30
+          assert len({x.get('doi') or x['canonical_url'] for x in items})==len(items)
+          assert all(x['status']=='CANDIDATE_UNREVIEWED' and x['domain_hits'] and x['relevance_score']>0 and x['discovery_reason'] in valid for x in items)
+          assert all(not re.search(r'<[^>]+>',x['title']) for x in items)
+          print('validated',len(items),'priority',d['priority_candidate_count'])
           PY
       - name: Write observability manifest
         env:
@@ -54,27 +50,13 @@ jobs:
           import hashlib,json,os
           from datetime import datetime,timezone
           from pathlib import Path
-          d=json.load(open('noema-crossref-candidates.json'))
-          raw=Path('noema-crossref-candidates.json').read_bytes()
-          now=datetime.now(timezone.utc).isoformat()
-          m={
-            'run_id':f"github-discovery-{os.environ['RUN_ID']}",'task_type':'GITHUB_DISCOVERY','status':'COMPLETED',
-            'started_at':now,'completed_at':now,'input_refs':['.github/workflows/noema-discovery.yml'],
-            'artifact_digests':{'noema-crossref-candidates':'sha256:'+hashlib.sha256(raw).hexdigest()},
-            'sources_examined':0,'new_candidates':d['candidate_count'],'candidate_updates':0,'contradictions':0,'dating_revisions':0,
-            'relationships_generated':0,'hypotheses_revisited':0,'hypotheses_promoted':0,'confidence_or_scope_changes':0,
-            'review_items_created':d['priority_candidate_count'],'errors':[],
-            'summary':f"Crossref discovery produced {d['candidate_count']} unreviewed candidates and {d['priority_candidate_count']} priority items.",
-            'code_commit':os.environ['CODE_SHA'],
-            'epistemic_guards':{'model_output_is_evidence':False,'unknown_is_absent':False,'similarity_implies_descent':False,'automatic_claim_promotion':False}
-          }
+          d=json.load(open('noema-crossref-candidates.json'));raw=Path('noema-crossref-candidates.json').read_bytes();now=datetime.now(timezone.utc).isoformat()
+          m={'run_id':f"github-discovery-{os.environ['RUN_ID']}",'task_type':'GITHUB_DISCOVERY','status':'COMPLETED','started_at':now,'completed_at':now,'input_refs':['.github/workflows/noema-discovery.yml'],'artifact_digests':{'noema-crossref-candidates':'sha256:'+hashlib.sha256(raw).hexdigest()},'sources_examined':0,'new_candidates':d['candidate_count'],'candidate_updates':0,'contradictions':0,'dating_revisions':0,'relationships_generated':0,'hypotheses_revisited':0,'hypotheses_promoted':0,'confidence_or_scope_changes':0,'review_items_created':d['priority_candidate_count'],'errors':[],'summary':f"Crossref discovery produced {d['candidate_count']} unreviewed candidates and {d['priority_candidate_count']} priority items.",'code_commit':os.environ['CODE_SHA'],'epistemic_guards':{'model_output_is_evidence':False,'unknown_is_absent':False,'similarity_implies_descent':False,'automatic_claim_promotion':False}}
           p=Path(f"projects/noema/data/runs/github-discovery-{os.environ['RUN_ID']}.json");p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(m,indent=2)+'\n')
           PY
       - name: Persist run manifest
         run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]";git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add projects/noema/data/runs/github-discovery-${GITHUB_RUN_ID}.json
           git commit -m "ops(noema): record discovery run ${GITHUB_RUN_ID} [skip noema-discovery]"
           git push origin "HEAD:${GITHUB_REF_NAME}"
