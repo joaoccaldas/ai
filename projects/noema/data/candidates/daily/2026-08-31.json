@@ -1,0 +1,185 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-08-31",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-08-31T06:42:31Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-33361678545",
+    "completed_at": "2026-08-31T05:46:03.144490+00:00",
+    "code_commit": "34328e0e6855a386dd2432d1b170debc10cb63c3",
+    "candidate_count": 121,
+    "priority_candidate_count": 30,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 2,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 1,
+      "NEWLY_INDEXED_LEGACY": 27
+    },
+    "raw_payload_sha256": "c5a03866e15f372adf57611862bf424852c5d4be1b3d846744abcc8eff342a77",
+    "github_artifact_bundle_sha256": "900cbbfdca976a65847529c8a2563b708126281ce150b917f73378088fb7bdc0",
+    "note": "The raw-payload hash and GitHub artifact-bundle hash intentionally cover different byte streams (JSON payload vs ZIP bundle)."
+  },
+  "rules": [
+    "Every record remains a candidate until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin, or diffusion.",
+    "Unknown is not absence.",
+    "Field discoveries remain separate from peer-reviewed evidence until formal publication or authoritative specialist documentation supports promotion.",
+    "Human remains, mortuary contexts, and living/traditional religious knowledge require cultural-sensitivity review before public presentation.",
+    "Corpus size or documentation count must not be interpreted as belief prevalence without an appropriate sampling model."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION": [
+      {
+        "doi": "10.1080/14442213.2026.2697716",
+        "published": "2026-08-17",
+        "indexed": "2026-08-17",
+        "title": "Shamanism: The Timeless Religion by Manvir SinghA Compelling Exploration of Contemporary Religious Practices"
+      },
+      {
+        "doi": "10.1002/9781394250592.ch34",
+        "published": "2026-08-21",
+        "indexed": "2026-08-26",
+        "title": "Demon Eaters and Bloody Charms"
+      }
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [
+      {
+        "doi": "10.56315/pscf9-26harrison",
+        "published": "2026-09-01",
+        "indexed": "2026-08-27",
+        "title": "Some New World: Myths of Supernatural Belief in a Secular Age"
+      }
+    ],
+    "NEWLY_INDEXED_LEGACY_count": 27,
+    "NEWLY_INDEXED_LEGACY_note": "The remaining priority records are older publications newly indexed by Crossref and are not treated as newly published research."
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-KOCAISPIR-2026-08-30",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "From Kura-Araxes to Trialeti: Historical Continuity, Social Transformation, and the Material Expressions of Elite Ideology in the South Caucasus (4th–2nd Millennia BCE)",
+      "authors": ["Ahmet Kocaispir"],
+      "publication_date": "2026-08-30",
+      "discovered_at": "2026-08-31",
+      "doi": "10.18506/anemon.1853088",
+      "canonical_url": "https://dergipark.org.tr/en/pub/anemon/article/1853088",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["MORTUARY", "RITUAL", "ELITE_IDEOLOGY", "CULTURAL_CONTINUITY", "CULTURAL_TRANSFORMATION", "SOUTH_CAUCASUS"],
+      "candidate_relevance": "Compares Kura-Araxes and Trialeti material culture, burial practice, metalwork and ritual/ideological interpretation as a mixture of continuity and transformation. Useful for testing mechanism labels that otherwise collapse cultural change into either replacement or simple persistence.",
+      "epistemic_caution": "The continuity/transformation interpretation is an author-level synthesis and should not be converted into a descent or diffusion edge without source-level chronological and contact review.",
+      "review_priority": "MEDIUM",
+      "sensitive": false
+    },
+    {
+      "id": "DAILY-SAQQARA-SEKHENTYU-PTAH-2026",
+      "triage_class": "RECENT_FIELD_DISCOVERY",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Old Kingdom tomb of Sekhentyu-Ptah and associated burial shafts at Saqqara",
+      "reported_date": "2026-08-29",
+      "discovered_at": "2026-08-31",
+      "canonical_url": "https://sis.gov.eg/en/media-center/news/old-kingdom-tomb-discovered-at-egypt-s-saqqara-necropolis/",
+      "source_type": "AUTHORITATIVE_GOVERNMENT_FIELD_REPORT",
+      "provenance": "Egypt State Information Service reporting an Egyptian archaeological mission and Ministry of Tourism and Antiquities announcement.",
+      "domains": ["MORTUARY", "FUNERARY_RITUAL", "OFFERING", "PURIFICATION", "MAAT", "SAQQARA", "OLD_KINGDOM"],
+      "candidate_relevance": "The false door and a complete inscribed alabaster funerary assemblage were reported in situ, alongside later burial shafts and sealed sarcophagi. This could become a high-quality object-context record for mortuary ritual once excavation documentation is available.",
+      "epistemic_caution": "This is a field announcement, not a peer-reviewed excavation publication. Do not generalize from one tomb to Old Kingdom funerary practice without contextual publication.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "MORTUARY_CONTEXT"],
+      "public_display_guard": "Do not render human remains or sensitive mortuary imagery without provenance, rights and cultural-sensitivity review."
+    },
+    {
+      "id": "DAILY-SUPERSTITIONSMAP-1.0.1-2026",
+      "triage_class": "STRUCTURED_DATASET",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "SuperstitionsMap Global Folklore Documentation Dataset",
+      "version": "1.0.1",
+      "release_date": "2026-08-24",
+      "discovered_at": "2026-08-31",
+      "canonical_url": "https://superstitionsmap.com/dataset/",
+      "license_url": "https://superstitionsmap.com/data-license/",
+      "license": "CC BY 4.0 for licensable original dataset elements, subject to third-party material limitations",
+      "source_type": "STRUCTURED_PUBLIC_DATASET",
+      "coverage": "179 countries (153 ranked, 26 unranked)",
+      "domains": ["FOLKLORE", "SUPERSTITION", "BELIEF_DOCUMENTATION", "SOURCE_COVERAGE", "GEOGRAPHY"],
+      "candidate_relevance": "Potential discovery and source-coverage layer for documented folklore/belief corpora with preserved source notes and explicit unranked states.",
+      "epistemic_caution": "The dataset explicitly states that documented counts are corpus indicators, not literal totals of superstition and not measures of how superstitious a population is. NOEMA must not expose country rankings as prevalence or psychological propensity.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["CULTURAL_STEREOTYPING_RISK", "AGGREGATED_FOLKLORE", "THIRD_PARTY_RIGHTS"],
+      "required_review": ["METHODOLOGY", "SOURCE_PROVENANCE", "LICENSE_SCOPE", "COUNTRY_LEVEL_INTERPRETATION"]
+    },
+    {
+      "id": "DAILY-KANAGATOV-ASC-2026",
+      "triage_class": "NEWLY_DISCOVERED_LEGACY_2026",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Shamanic tradition and altered states of consciousness in Turkic culture",
+      "authors": ["Manat Kanagatov", "Tatyana Seryozhkina", "Zukhra Ismagambetova", "Aliya Karabayeva"],
+      "publication_date": "2026-02-14",
+      "discovered_at": "2026-08-31",
+      "doi": "10.46222/pharosjot.107.223",
+      "canonical_url": "https://doi.org/10.46222/pharosjot.107.223",
+      "consensus_url": "https://consensus.app/papers/shamanic-tradition-and-altered-states-of-consciousness-in-kanagatov-seryozhkina/5f46966558d55b4982208ec15b26945d/?utm_source=chatgpt",
+      "source_type": "PEER_REVIEWED_SYNTHESIS_INTERPRETIVE",
+      "domains": ["SHAMANISM", "ALTERED_STATES", "RITUAL", "KAZAKHSTAN", "TURKIC_CULTURE", "CULTURAL_MEMORY"],
+      "candidate_relevance": "Potential source for decomposing altered-state induction, mediator roles, diagnosis, sacred cognition and social regulation within a specific Turkic/Kazakh interpretive context.",
+      "epistemic_caution": "The paper is interpretive and synthetic rather than a controlled demonstration that ASC categories or symbolic meanings were historically uniform. Do not infer pan-Turkic continuity, archetypal universality or historical descent from the synthesis.",
+      "review_priority": "MEDIUM",
+      "sensitive": true,
+      "sensitivity_flags": ["LIVING_TRADITION", "INDIGENOUS_OR_TRADITIONAL_KNOWLEDGE", "GENERALIZATION_RISK"]
+    }
+  ],
+  "contradictions_or_pressure": [
+    {
+      "type": "INTERPRETATION_GUARD",
+      "target": "country-level superstition prevalence or ranking",
+      "finding": "SuperstitionsMap explicitly defines its counts as documentation-corpus indicators rather than population prevalence. Any NOEMA visualization that converts these counts into how superstitious a country is would contradict the source methodology.",
+      "action": "Treat the dataset as source-coverage/discovery metadata only unless an independently valid prevalence measure is linked."
+    },
+    {
+      "type": "MECHANISM_PRESSURE",
+      "target": "binary continuity vs replacement models",
+      "finding": "The Kura-Araxes/Trialeti synthesis frames material change as simultaneous continuity and transformation, reinforcing the need for multi-mechanism rather than binary historical-transition labels.",
+      "action": "Review mechanism ontology; do not create a historical descent edge from this synthesis alone."
+    }
+  ],
+  "dating_revisions": [],
+  "relationships_generated": [],
+  "hypotheses_requiring_human_review": [
+    {
+      "target": "CULTURAL_TRANSMISSION_MECHANISM",
+      "reason": "Kura-Araxes/Trialeti candidate pressures binary replacement/continuity classification.",
+      "recommended_action": "Review only; no status change."
+    },
+    {
+      "target": "MORTUARY_RITUAL_OBJECT_CONTEXT",
+      "reason": "Sekhentyu-Ptah field context provides an unusually intact reported offering/purification assemblage but lacks full excavation publication.",
+      "recommended_action": "Create field-evidence review item; await formal context publication."
+    },
+    {
+      "target": "SUPERSTITION_AND_FOLKLORE_COVERAGE",
+      "reason": "SuperstitionsMap could expand discovery coverage but carries severe prevalence/labeling and cultural-stereotyping risks.",
+      "recommended_action": "Methodology and licensing review before ingestion."
+    },
+    {
+      "target": "ALTERED_STATES_SHAMANIC_MEDIATION",
+      "reason": "Kanagatov et al. offers a decomposable interpretive model for Turkic/Kazakh practice but should remain geographically and culturally scoped.",
+      "recommended_action": "Source review with living-tradition sensitivity; no cross-cultural generalization."
+    }
+  ],
+  "deduplication": {
+    "keys": ["DOI", "authoritative external ID", "canonical URL"],
+    "excluded_as_already_known": [
+      "10.1007/s10816-026-09818-9",
+      "10.48738/2026.iss1.3954",
+      "10.1002/evan.70036",
+      "10.1038/s41467-026-69895-y",
+      "10.15184/aqy.2026.10291",
+      "10.1098/rspb.2025.0813",
+      "10.1038/s41597-026-06967-0",
+      "10.1038/s41597-025-06477-5",
+      "10.1080/1751696X.2026.2672539"
+    ],
+    "note": "Previously surfaced candidates from the 29–30 August triage cycles were not re-counted as new material output."
+  }
+}
