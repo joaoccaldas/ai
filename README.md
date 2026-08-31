@@ -1,12 +1,15 @@
 # AI
 
-GitHub Pages site with two experiences:
+GitHub Pages site with several experiences:
 
 - **`/`** — AI-native finance presentation (Joao Caldas · FP&A Director, Nordics)
   → https://joaoccaldas.github.io/ai/
 - **`/belong/`** — *Belong*, an immersive scroll-driven 3D reimagining of
   [The Belong Festival](https://thebelongfestival.com/)
   → https://joaoccaldas.github.io/ai/belong/
+- **`/stencil/`** — *Stencil*, a browser tattoo try-on: place a design on your
+  photo, blend it into the skin, and export. See [`stencil/README.md`](stencil/README.md).
+  → https://joaoccaldas.github.io/ai/stencil/
 
 A golden portal in the corner of the home page links into the Belong experience.
 

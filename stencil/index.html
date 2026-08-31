@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Stencil — Tattoo Try-On Studio</title>
+<meta name="description" content="Stencil — try a tattoo on your own photo before you ink. Place, scale, rotate and blend flash designs or your own artwork onto skin, right in your browser. A Caldas Studio tool." />
+<meta name="theme-color" content="#0d0c0f" />
+<meta property="og:title" content="Stencil — Tattoo Try-On Studio" />
+<meta property="og:description" content="See it before you ink. A browser tattoo try-on: place any design on your photo, blend it into skin, and export." />
+<meta property="og:type" content="website" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="app.css" />
+</head>
+<body>
+<a class="skip-link" href="#stage">Skip to the workspace</a>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Stencil — home">STEN<b>·</b>CIL</a>
+  <div class="tagline">See it before you ink</div>
+  <div class="nav-r">
+    <button class="ghost-btn" id="helpBtn" type="button" aria-haspopup="dialog">How it works</button>
+    <a class="ghost-btn" href="../">← Caldas Studio</a>
+  </div>
+</header>
+
+<main class="studio" id="top">
+  <h1 class="sr-only">Stencil — Tattoo Try-On Studio. Place a tattoo design on your photo and blend it into skin, right in your browser.</h1>
+  <!-- ---------------- STAGE ---------------- -->
+  <section class="stage-wrap" aria-label="Try-on workspace">
+    <div class="stage" id="stage" tabindex="-1">
+      <canvas id="compose" width="900" height="1200" aria-label="Tattoo try-on preview"></canvas>
+      <canvas id="overlay" width="900" height="1200" aria-hidden="true"></canvas>
+      <div class="stage-empty" id="stageEmpty">
+        <div class="se-mark">STENCIL</div>
+        <p>Pick a <b>canvas</b> — your photo or a sample skin — then drop a <b>design</b> on top.</p>
+        <button class="solid-btn" id="quickStart" type="button">Start with a sample skin</button>
+      </div>
+    </div>
+    <div class="stage-bar">
+      <span class="sb-hint" id="hint">Drag to move · corner to scale · top handle to rotate</span>
+      <span class="sb-count" id="layerCount" aria-live="polite">0 designs</span>
+    </div>
+  </section>
+
+  <!-- ---------------- CONTROL PANEL ---------------- -->
+  <aside class="panel" aria-label="Controls">
+    <nav class="tabs" role="tablist" aria-label="Panels">
+      <button role="tab" id="tab-canvas"  aria-controls="pane-canvas"  aria-selected="true"  class="tab on">Canvas</button>
+      <button role="tab" id="tab-designs" aria-controls="pane-designs" aria-selected="false" class="tab">Designs</button>
+      <button role="tab" id="tab-adjust"  aria-controls="pane-adjust"  aria-selected="false" class="tab">Adjust</button>
+      <button role="tab" id="tab-export"  aria-controls="pane-export"  aria-selected="false" class="tab">Export</button>
+    </nav>
+
+    <div class="panes">
+      <!-- CANVAS -->
+      <section role="tabpanel" id="pane-canvas" aria-labelledby="tab-canvas" class="pane on">
+        <h2 class="ph">Your canvas</h2>
+        <p class="pd">Try a tattoo on your own photo, or start from a sample skin.</p>
+        <label class="drop" id="photoDrop">
+          <input type="file" id="photoInput" accept="image/*" hidden />
+          <span class="drop-ic" aria-hidden="true">＋</span>
+          <span class="drop-t">Upload a photo</span>
+          <span class="drop-s">arm · shoulder · leg · back — JPG or PNG</span>
+        </label>
+        <h3 class="sh">Sample skins</h3>
+        <div class="thumbs" id="skinThumbs" aria-label="Sample skins"></div>
+        <h3 class="sh">Blank</h3>
+        <div class="swatches" id="blankSwatches" aria-label="Blank skin tones"></div>
+      </section>
+
+      <!-- DESIGNS -->
+      <section role="tabpanel" id="pane-designs" aria-labelledby="tab-designs" class="pane" hidden>
+        <h2 class="ph">Designs</h2>
+        <p class="pd">Tap a design to drop it on your canvas. Add as many as you like.</p>
+        <label class="drop sm" id="artDrop">
+          <input type="file" id="artInput" accept="image/*" hidden />
+          <span class="drop-ic" aria-hidden="true">＋</span>
+          <span class="drop-t">Upload your own tattoo art</span>
+          <span class="drop-s">transparent PNG works best</span>
+        </label>
+        <div class="lib-tabs" role="tablist" aria-label="Design source">
+          <button class="lib-tab on" role="tab" aria-selected="true"  data-lib="flash">Flash</button>
+          <button class="lib-tab"    role="tab" aria-selected="false" data-lib="pack">AI pack</button>
+        </div>
+        <div class="lib-grid" id="flashGrid" aria-label="Flash designs"></div>
+        <div class="lib-grid" id="packGrid" aria-label="AI design pack" hidden></div>
+      </section>
+
+      <!-- ADJUST -->
+      <section role="tabpanel" id="pane-adjust" aria-labelledby="tab-adjust" class="pane" hidden>
+        <h2 class="ph">Adjust</h2>
+        <div id="noSelection" class="empty-note">Select a design on the canvas to fine-tune it.</div>
+        <div id="adjustBody" hidden>
+          <div class="row-btns">
+            <button class="chip" id="flipBtn" type="button">Flip</button>
+            <button class="chip" id="dupeBtn" type="button">Duplicate</button>
+            <button class="chip" id="frontBtn" type="button">Bring front</button>
+            <button class="chip" id="backBtn" type="button">Send back</button>
+            <button class="chip danger" id="delBtn" type="button">Delete</button>
+          </div>
+
+          <label class="ctl"><span>Size <em id="sizeOut">100%</em></span>
+            <input type="range" id="sizeR" min="4" max="220" value="60" /></label>
+          <label class="ctl"><span>Rotation <em id="rotOut">0°</em></span>
+            <input type="range" id="rotR" min="-180" max="180" value="0" /></label>
+          <label class="ctl"><span>Opacity <em id="opOut">85%</em></span>
+            <input type="range" id="opR" min="10" max="100" value="85" /></label>
+
+          <label class="ctl"><span>Blend into skin</span>
+            <select id="blendSel">
+              <option value="multiply">Multiply — fresh ink (default)</option>
+              <option value="source-over">Normal — sticker</option>
+              <option value="screen">Screen — white / light ink</option>
+              <option value="overlay">Overlay</option>
+              <option value="soft-light">Soft light — healed</option>
+              <option value="darken">Darken</option>
+            </select></label>
+
+          <label class="ctl"><span>Softness <em id="blurOut">0.6px</em></span>
+            <input type="range" id="blurR" min="0" max="40" value="6" /></label>
+          <label class="ctl"><span>Settle into skin <em id="grainOut">35%</em></span>
+            <input type="range" id="grainR" min="0" max="100" value="35" /></label>
+
+          <div class="ink-row" id="inkRow">
+            <span>Ink colour</span>
+            <div class="ink-swatches" id="inkSwatches" role="group" aria-label="Ink colour"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EXPORT -->
+      <section role="tabpanel" id="pane-export" aria-labelledby="tab-export" class="pane" hidden>
+        <h2 class="ph">Export</h2>
+        <p class="pd">Download your try-on as a PNG to keep or share with your artist.</p>
+        <label class="ctl"><span>Include grain overlay</span>
+          <input type="checkbox" id="expGrain" /></label>
+        <button class="solid-btn wide" id="downloadBtn" type="button">Download PNG</button>
+        <button class="ghost-btn wide" id="resetBtn" type="button">Clear all designs</button>
+        <p class="fine">Everything happens in your browser. Your photos never leave this device.</p>
+      </section>
+    </div>
+  </aside>
+</main>
+
+<!-- help dialog -->
+<div class="modal" id="helpModal" role="dialog" aria-modal="true" aria-labelledby="helpTitle" hidden>
+  <div class="modal-card">
+    <button class="modal-x" id="helpClose" type="button" aria-label="Close">×</button>
+    <h2 id="helpTitle" class="serif">See it before you ink</h2>
+    <ol class="steps">
+      <li><b>Pick a canvas.</b> Upload a photo of where the tattoo will go, or use a sample skin.</li>
+      <li><b>Add a design.</b> Choose from the flash library, the AI pack, or upload your own art.</li>
+      <li><b>Place it.</b> Drag to move, pull a corner to resize, use the top handle to rotate.</li>
+      <li><b>Blend it.</b> In <i>Adjust</i>, dial in opacity, softness and blend so the ink sits in the skin.</li>
+      <li><b>Export.</b> Download a PNG to keep or send to your tattoo artist.</li>
+    </ol>
+    <p class="fine">A concept tool by Caldas Studio. Designs are for visualisation only.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- data first, then engine -->
+<script src="flash.js"></script>
+<script src="skins/skins.js" onerror="window.STENCIL_SKINS=window.STENCIL_SKINS||[]"></script>
+<script src="library/pack.js" onerror="window.STENCIL_PACK=window.STENCIL_PACK||[]"></script>
+<script src="app.js"></script>
+</body>
+</html>
