@@ -1,0 +1,29 @@
+{
+  "run_id": "chatgpt-weekly-2026-08-30",
+  "task_type": "WEEKLY_REANALYSIS",
+  "status": "COMPLETED_WITHOUT_PROMOTION",
+  "started_at": "2026-08-30T06:10:00Z",
+  "completed_at": "2026-08-30T06:10:03Z",
+  "input_refs": [
+    "projects/noema/data/reviewed/evidence-pack-002-deep-time.json",
+    "projects/noema/data/reviewed/evidence-pack-003-homo-sapiens.json",
+    "projects/noema/site/human-meaning-atlas.json",
+    "projects/noema/site/societies.json"
+  ],
+  "sources_examined": 5,
+  "new_candidates": 5,
+  "dating_revisions": 0,
+  "hypotheses_revisited": 4,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 3,
+  "review_items_created": 0,
+  "errors": [],
+  "summary": "Category-risk increased around artifact-to-symbol inference; DT-H002 and HS-H001 retained status with narrower semantics; DT-H003 remained speculative; late-Neanderthal climate-fragmentation edge should be downweighted without transferring support to cultural alternatives.",
+  "research_note": "projects/noema/research/reanalysis/2026-08-30-weekly-reanalysis.md",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "NOEMA-RUN-MANIFEST-V1",
+  "title": "NOEMA scheduled research run manifest",
+  "type": "object",
+  "required": ["run_id", "task_type", "status", "started_at", "completed_at", "epistemic_guards"],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "task_type": {"enum": ["DAILY_INGEST", "WEEKLY_REANALYSIS", "MONTHLY_DISCOVERY", "GITHUB_DISCOVERY", "DPLACE_BENCHMARK", "RELIGION_FEDERATION", "MEDIA_DISCOVERY", "OTHER"]},
+    "status": {"type": "string", "minLength": 1},
+    "started_at": {"type": "string"},
+    "completed_at": {"type": "string"},
+    "input_refs": {"type": "array", "items": {"type": "string"}},
+    "artifact_digests": {"type": "object", "additionalProperties": {"type": "string"}},
+    "sources_examined": {"type": "integer", "minimum": 0},
+    "new_candidates": {"type": "integer", "minimum": 0},
+    "candidate_updates": {"type": "integer", "minimum": 0},
+    "contradictions": {"type": "integer", "minimum": 0},
+    "dating_revisions": {"type": "integer", "minimum": 0},
+    "relationships_generated": {"type": "integer", "minimum": 0},
+    "hypotheses_revisited": {"type": "integer", "minimum": 0},
+    "hypotheses_promoted": {"type": "integer", "minimum": 0},
+    "confidence_or_scope_changes": {"type": "integer", "minimum": 0},
+    "review_items_created": {"type": "integer", "minimum": 0},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "summary": {"type": "string"},
+    "research_note": {"type": "string"},
+    "code_commit": {"type": ["string", "null"]},
+    "epistemic_guards": {
+      "type": "object",
+      "required": ["model_output_is_evidence", "unknown_is_absent", "similarity_implies_descent", "automatic_claim_promotion"],
+      "properties": {
+        "model_output_is_evidence": {"const": false},
+        "unknown_is_absent": {"const": false},
+        "similarity_implies_descent": {"const": false},
+        "automatic_claim_promotion": {"const": false}
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,23 @@
+{
+  "run_id": "github-discovery-2026-08-31",
+  "task_type": "GITHUB_DISCOVERY",
+  "status": "COMPLETED",
+  "started_at": "2026-08-31T04:30:42Z",
+  "completed_at": "2026-08-31T04:31:01Z",
+  "input_refs": [".github/workflows/noema-discovery.yml"],
+  "sources_examined": 0,
+  "new_candidates": 0,
+  "candidate_updates": 0,
+  "contradictions": 0,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 0,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 0,
+  "errors": [],
+  "summary": "GitHub NOEMA Discovery scheduled workflow completed successfully and produced the noema-crossref-candidates artifact. Candidate counts are intentionally left to the downstream daily ingest manifest rather than inferred here.",
+  "artifact_digests": {"noema-crossref-candidates": "sha256:b965d3fc9e562d2f1d63cffe747d0444d38d5317b943680d9b512c46df5c97e2"},
+  "code_commit": "930e4eb05d4a0b1ea4000b7a461f832f8f46d486",
+  "epistemic_guards": {"model_output_is_evidence": false, "unknown_is_absent": false, "similarity_implies_descent": false, "automatic_claim_promotion": false}
+}
