@@ -1,0 +1,31 @@
+{
+  "run_id": "religion-federation-33361678540",
+  "task_type": "RELIGION_FEDERATION",
+  "status": "COMPLETED",
+  "started_at": "2026-08-31T05:46:27.262104+00:00",
+  "completed_at": "2026-08-31T05:46:27.262104+00:00",
+  "input_refs": [
+    "Pulotu",
+    "DRH/SCCSR",
+    "D-PLACE audit"
+  ],
+  "sources_examined": 3,
+  "new_candidates": 526,
+  "candidate_updates": 24452,
+  "contradictions": 0,
+  "dating_revisions": 0,
+  "relationships_generated": 62,
+  "hypotheses_revisited": 0,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 0,
+  "errors": [],
+  "summary": "Federation refreshed 1063 comparable profiles and 24452 accepted assertions; pattern outputs remain descriptive candidates.",
+  "code_commit": "34328e0e6855a386dd2432d1b170debc10cb63c3",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false
+  }
+}
