@@ -1,11 +1,11 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-08-31T06:46:38.659164+00:00",
+  "generated_at": "2026-08-31T17:38:28.109869+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 15,
-    "new_candidates": 1525,
+    "runs": 16,
+    "new_candidates": 1540,
     "contradictions": 2,
     "dating_revisions": 0,
     "hypotheses_revisited": 8,
@@ -66,6 +66,15 @@
       "summary": "Discovered 33 Wikimedia Commons media candidates across 11 entities; none are public until identity and rights are approved.",
       "errors": [],
       "research_note": null
+    },
+    {
+      "task_type": "MUSEUM_MEDIA_DISCOVERY",
+      "run_id": "museum-media-33367157071",
+      "status": "COMPLETED_REFERENCE_ONLY",
+      "completed_at": "2026-08-31T07:10:12.338021+00:00",
+      "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
+      "errors": [],
+      "research_note": null
     }
   ],
   "task_health": [
@@ -81,7 +90,7 @@
       "last_run_id": "github-discovery-33361678545",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:46:03.144490+00:00",
-      "age_hours": 1.01,
+      "age_hours": 11.87,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -99,7 +108,7 @@
       "last_run_id": "chatgpt-daily-2026-08-31",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T06:46:13Z",
-      "age_hours": 0.01,
+      "age_hours": 10.87,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
         "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
@@ -117,7 +126,7 @@
       "last_run_id": "dplace-benchmark-33361784511",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:47:46.132148+00:00",
-      "age_hours": 0.98,
+      "age_hours": 11.84,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -135,7 +144,7 @@
       "last_run_id": "religion-federation-33361678540",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:46:27.262104+00:00",
-      "age_hours": 1.0,
+      "age_hours": 11.87,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -160,7 +169,7 @@
       "last_run_id": "chatgpt-weekly-2026-08-30",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-08-30T06:10:03Z",
-      "age_hours": 24.61,
+      "age_hours": 35.47,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -197,7 +206,7 @@
       "last_run_id": "media-discovery-33361678569",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-08-31T05:46:01.773622+00:00",
-      "age_hours": 1.01,
+      "age_hours": 11.87,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
@@ -205,6 +214,40 @@
     }
   ],
   "recent_runs": [
+    {
+      "run_id": "museum-media-33367157071",
+      "task_type": "MUSEUM_MEDIA_DISCOVERY",
+      "status": "COMPLETED_REFERENCE_ONLY",
+      "started_at": "2026-08-31T07:10:12.338021+00:00",
+      "completed_at": "2026-08-31T07:10:12.338021+00:00",
+      "input_refs": [
+        "Art Institute of Chicago Open Access API",
+        "Cleveland Museum of Art Open Access API",
+        "projects/noema/data/reference/belief-catalog-v1.json"
+      ],
+      "artifact_digests": {
+        "museum-reference-media": "sha256:26d9a62a3794247805341b46ce0814a25e19b31a916e5fbbee6f0ced3d1c8299"
+      },
+      "sources_examined": 22,
+      "new_candidates": 15,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
+      "code_commit": "78ff6d22b4581b68ac98470f32196cf36e86bb0d",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
     {
       "run_id": "chatgpt-daily-2026-08-31",
       "task_type": "DAILY_INGEST",
