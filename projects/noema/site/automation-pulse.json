@@ -1,15 +1,15 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-08-30T06:10:03Z",
+  "generated_at": "2026-08-31T05:37:14.225414+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 1,
-    "new_candidates": 5,
+    "runs": 9,
+    "new_candidates": 841,
     "contradictions": 0,
     "dating_revisions": 0,
     "hypotheses_revisited": 4,
-    "review_items_created": 0,
+    "review_items_created": 126,
     "errors": 0
   },
   "latest_by_task": [
@@ -18,10 +18,469 @@
       "run_id": "chatgpt-weekly-2026-08-30",
       "status": "COMPLETED_WITHOUT_PROMOTION",
       "completed_at": "2026-08-30T06:10:03Z",
-      "summary": "Category-risk increased around artifact-to-symbol inference; several hypotheses retained status with narrower semantics; no claim was promoted.",
+      "summary": "Category-risk increased around artifact-to-symbol inference; DT-H002 and HS-H001 retained status with narrower semantics; DT-H003 remained speculative; late-Neanderthal climate-fragmentation edge should be downweighted without transferring support to cultural alternatives.",
       "errors": [],
       "research_note": "projects/noema/research/reanalysis/2026-08-30-weekly-reanalysis.md"
+    },
+    {
+      "task_type": "GITHUB_DISCOVERY",
+      "run_id": "github-discovery-33359642572",
+      "status": "COMPLETED",
+      "completed_at": "2026-08-31T05:11:47.779845+00:00",
+      "summary": "Crossref discovery produced 122 unreviewed candidates and 30 priority items.",
+      "errors": [],
+      "research_note": null
+    },
+    {
+      "task_type": "DPLACE_BENCHMARK",
+      "run_id": "dplace-benchmark-33359642624",
+      "status": "COMPLETED",
+      "completed_at": "2026-08-31T05:11:41.942099+00:00",
+      "summary": "Rebuilt deterministic D-PLACE benchmark with 100 societies; focal years remain observation metadata, never origin dates.",
+      "errors": [],
+      "research_note": null
+    },
+    {
+      "task_type": "RELIGION_FEDERATION",
+      "run_id": "religion-federation-33360918327",
+      "status": "COMPLETED",
+      "completed_at": "2026-08-31T05:33:29.175706+00:00",
+      "summary": "Federation refreshed 1063 comparable profiles and 24452 accepted assertions; pattern outputs remain descriptive candidates.",
+      "errors": [],
+      "research_note": null
+    },
+    {
+      "task_type": "MEDIA_DISCOVERY",
+      "run_id": "media-discovery-33359642500",
+      "status": "COMPLETED_PENDING_REVIEW",
+      "completed_at": "2026-08-31T05:11:49.840434+00:00",
+      "summary": "Discovered 33 Wikimedia Commons media candidates across 11 entities; none are public until identity and rights are approved.",
+      "errors": [],
+      "research_note": null
     }
   ],
-  "recent_runs": []
+  "task_health": [
+    {
+      "task_type": "GITHUB_DISCOVERY",
+      "scheduler": "GITHUB_ACTIONS",
+      "cadence": "DAILY",
+      "schedule": "17 4 * * * UTC",
+      "authority": "CANDIDATE_DISCOVERY_ONLY",
+      "next_stage": "DAILY_INGEST",
+      "expected_interval_hours": 26.0,
+      "health": "HEALTHY",
+      "last_run_id": "github-discovery-33359642572",
+      "last_status": "COMPLETED",
+      "last_completed_at": "2026-08-31T05:11:47.779845+00:00",
+      "age_hours": 0.42,
+      "writes": [
+        "Actions artifact: noema-crossref-candidates",
+        "projects/noema/data/runs/github-discovery-*.json"
+      ]
+    },
+    {
+      "task_type": "DAILY_INGEST",
+      "scheduler": "CHATGPT_AUTOMATION",
+      "cadence": "DAILY",
+      "schedule": "approximately 08:00 Europe/Stockholm",
+      "authority": "CANDIDATE_TRIAGE_ONLY",
+      "next_stage": "HUMAN_REVIEW",
+      "expected_interval_hours": 30.0,
+      "health": "NEVER_RUN",
+      "last_run_id": null,
+      "last_status": null,
+      "last_completed_at": null,
+      "age_hours": null,
+      "writes": [
+        "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
+        "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
+      ]
+    },
+    {
+      "task_type": "DPLACE_BENCHMARK",
+      "scheduler": "GITHUB_ACTIONS",
+      "cadence": "WEEKLY_MONDAY",
+      "schedule": "43 5 * * 1 UTC",
+      "authority": "COVERAGE_REFRESH_ONLY",
+      "next_stage": "RELIGION_FEDERATION",
+      "expected_interval_hours": 190.0,
+      "health": "HEALTHY",
+      "last_run_id": "dplace-benchmark-33359642624",
+      "last_status": "COMPLETED",
+      "last_completed_at": "2026-08-31T05:11:41.942099+00:00",
+      "age_hours": 0.43,
+      "writes": [
+        "projects/noema/site/societies.json",
+        "projects/noema/data/runs/dplace-benchmark-*.json"
+      ]
+    },
+    {
+      "task_type": "RELIGION_FEDERATION",
+      "scheduler": "GITHUB_ACTIONS",
+      "cadence": "WEEKLY_MONDAY",
+      "schedule": "17 5 * * 1 UTC",
+      "authority": "DETERMINISTIC_PROJECTION_AND_DESCRIPTIVE_ANALYSIS",
+      "next_stage": "PATTERN_REVIEW",
+      "expected_interval_hours": 190.0,
+      "health": "HEALTHY",
+      "last_run_id": "religion-federation-33360918327",
+      "last_status": "COMPLETED",
+      "last_completed_at": "2026-08-31T05:33:29.175706+00:00",
+      "age_hours": 0.06,
+      "writes": [
+        "projects/noema/site/religion-decomposition.json",
+        "projects/noema/site/drh-decomposition.json",
+        "projects/noema/site/drh-catalog.json",
+        "projects/noema/site/dplace-religion-variables.json",
+        "projects/noema/site/religion-federation.json",
+        "projects/noema/site/pattern-candidates.json",
+        "projects/noema/site/coverage-matrix.json",
+        "projects/noema/site/research-health.json",
+        "projects/noema/data/runs/religion-federation-*.json"
+      ]
+    },
+    {
+      "task_type": "WEEKLY_REANALYSIS",
+      "scheduler": "CHATGPT_AUTOMATION",
+      "cadence": "WEEKLY_SUNDAY",
+      "schedule": "approximately 08:00 Europe/Stockholm",
+      "authority": "HYPOTHESIS_REVISION_CANDIDATES_ONLY",
+      "next_stage": "HUMAN_REVIEW",
+      "expected_interval_hours": 190.0,
+      "health": "HEALTHY",
+      "last_run_id": "chatgpt-weekly-2026-08-30",
+      "last_status": "COMPLETED_WITHOUT_PROMOTION",
+      "last_completed_at": "2026-08-30T06:10:03Z",
+      "age_hours": 23.45,
+      "writes": [
+        "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
+        "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
+      ]
+    },
+    {
+      "task_type": "MONTHLY_DISCOVERY",
+      "scheduler": "CHATGPT_AUTOMATION",
+      "cadence": "MONTHLY_FIRST_DAY",
+      "schedule": "approximately 08:00 Europe/Stockholm",
+      "authority": "RELATIONSHIP_AND_HYPOTHESIS_CANDIDATES_ONLY",
+      "next_stage": "HUMAN_REVIEW",
+      "expected_interval_hours": 780.0,
+      "health": "NEVER_RUN",
+      "last_run_id": null,
+      "last_status": null,
+      "last_completed_at": null,
+      "age_hours": null,
+      "writes": [
+        "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
+        "projects/noema/research/monthly/YYYY-MM-DD-monthly-discovery.md",
+        "projects/noema/data/runs/chatgpt-monthly-YYYY-MM-DD.json"
+      ]
+    },
+    {
+      "task_type": "MEDIA_DISCOVERY",
+      "scheduler": "GITHUB_ACTIONS",
+      "cadence": "WEEKLY_WEDNESDAY",
+      "schedule": "43 6 * * 3 UTC",
+      "authority": "MEDIA_CANDIDATE_DISCOVERY_ONLY",
+      "next_stage": "IDENTITY_AND_RIGHTS_REVIEW",
+      "expected_interval_hours": 190.0,
+      "health": "HEALTHY",
+      "last_run_id": "media-discovery-33359642500",
+      "last_status": "COMPLETED_PENDING_REVIEW",
+      "last_completed_at": "2026-08-31T05:11:49.840434+00:00",
+      "age_hours": 0.42,
+      "writes": [
+        "projects/noema/data/candidates/wikimedia-media-candidates.json",
+        "projects/noema/data/runs/media-discovery-*.json"
+      ]
+    }
+  ],
+  "recent_runs": [
+    {
+      "run_id": "religion-federation-33360918327",
+      "task_type": "RELIGION_FEDERATION",
+      "status": "COMPLETED",
+      "started_at": "2026-08-31T05:33:29.175706+00:00",
+      "completed_at": "2026-08-31T05:33:29.175706+00:00",
+      "input_refs": [
+        "Pulotu",
+        "DRH/SCCSR",
+        "D-PLACE audit"
+      ],
+      "sources_examined": 3,
+      "new_candidates": 526,
+      "candidate_updates": 24452,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 62,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "Federation refreshed 1063 comparable profiles and 24452 accepted assertions; pattern outputs remain descriptive candidates.",
+      "code_commit": "2784cd65955894d8e7e43553479b8617480758fc",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "media-discovery-33359642500",
+      "task_type": "MEDIA_DISCOVERY",
+      "status": "COMPLETED_PENDING_REVIEW",
+      "started_at": "2026-08-31T05:11:49.840434+00:00",
+      "completed_at": "2026-08-31T05:11:49.840434+00:00",
+      "input_refs": [
+        "Wikimedia Commons",
+        "projects/noema/data/reference/belief-catalog-v1.json"
+      ],
+      "artifact_digests": {
+        "wikimedia-media-candidates": "sha256:c736e270aa68bd494c7e64aa8cd4728d4a0b025c97e6ad78e14957847f6ce819"
+      },
+      "sources_examined": 11,
+      "new_candidates": 33,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 33,
+      "errors": [],
+      "summary": "Discovered 33 Wikimedia Commons media candidates across 11 entities; none are public until identity and rights are approved.",
+      "code_commit": "5aae390dcdfe6b7b3ba18f7c6b4acfe986af86c3",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "github-discovery-33359642572",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-08-31T05:11:47.779845+00:00",
+      "completed_at": "2026-08-31T05:11:47.779845+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:83ad6bee315e7dff6ead887f2ace82dcc370e1d2115d65fe4400b2d725d38ce1"
+      },
+      "sources_examined": 0,
+      "new_candidates": 122,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 122 unreviewed candidates and 30 priority items.",
+      "code_commit": "5aae390dcdfe6b7b3ba18f7c6b4acfe986af86c3",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "dplace-benchmark-33359642624",
+      "task_type": "DPLACE_BENCHMARK",
+      "status": "COMPLETED",
+      "started_at": "2026-08-31T05:11:41.942099+00:00",
+      "completed_at": "2026-08-31T05:11:41.942099+00:00",
+      "input_refs": [
+        "https://raw.githubusercontent.com/D-PLACE/dplace-cldf/master/cldf/societies.csv"
+      ],
+      "artifact_digests": {
+        "noema-dplace-benchmark-100": "sha256:83ff1ed66402b284d0cf2cd3ff4433ea0e632be0cfb64819143345f803ffeeb2"
+      },
+      "sources_examined": 1,
+      "new_candidates": 0,
+      "candidate_updates": 1,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "Rebuilt deterministic D-PLACE benchmark with 100 societies; focal years remain observation metadata, never origin dates.",
+      "code_commit": "5aae390dcdfe6b7b3ba18f7c6b4acfe986af86c3",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "github-discovery-33359269191",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-08-31T05:05:59.732277+00:00",
+      "completed_at": "2026-08-31T05:05:59.732277+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:1401cddcb9b20d8be42ec78e19d78859991c6d89e82c2c2b6581eba6547b1fb0"
+      },
+      "sources_examined": 0,
+      "new_candidates": 122,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 122 unreviewed candidates and 30 priority items.",
+      "code_commit": "2444bc65bd92d03cbecb75c625b7cdc38562bb06",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "media-discovery-33359269147",
+      "task_type": "MEDIA_DISCOVERY",
+      "status": "COMPLETED_PENDING_REVIEW",
+      "started_at": "2026-08-31T05:05:38.858450+00:00",
+      "completed_at": "2026-08-31T05:05:38.858450+00:00",
+      "input_refs": [
+        "Wikimedia Commons",
+        "projects/noema/data/reference/belief-catalog-v1.json"
+      ],
+      "artifact_digests": {
+        "wikimedia-media-candidates": "sha256:85ca58e4eb4190c459ce43abbf75f571716d77cb6909251f8f4900a8ebfb4a6e"
+      },
+      "sources_examined": 11,
+      "new_candidates": 33,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 33,
+      "errors": [],
+      "summary": "Discovered 33 Wikimedia Commons media candidates across 11 entities; none are public until identity and rights are approved.",
+      "code_commit": "2444bc65bd92d03cbecb75c625b7cdc38562bb06",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "dplace-benchmark-33359033024",
+      "task_type": "DPLACE_BENCHMARK",
+      "status": "COMPLETED",
+      "started_at": "2026-08-31T05:01:10.003045+00:00",
+      "completed_at": "2026-08-31T05:01:10.003045+00:00",
+      "input_refs": [
+        "https://raw.githubusercontent.com/D-PLACE/dplace-cldf/master/cldf/societies.csv"
+      ],
+      "artifact_digests": {
+        "noema-dplace-benchmark-100": "sha256:83ff1ed66402b284d0cf2cd3ff4433ea0e632be0cfb64819143345f803ffeeb2"
+      },
+      "sources_examined": 1,
+      "new_candidates": 0,
+      "candidate_updates": 1,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "Rebuilt deterministic D-PLACE benchmark with 100 societies; focal years remain observation metadata, never origin dates.",
+      "code_commit": "b268880942f874a00c974c0ca92ba1821b8b6663",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "github-discovery-2026-08-31",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-08-31T04:30:42Z",
+      "completed_at": "2026-08-31T04:31:01Z",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "sources_examined": 0,
+      "new_candidates": 0,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "GitHub NOEMA Discovery scheduled workflow completed successfully and produced the noema-crossref-candidates artifact. Candidate counts are intentionally left to the downstream daily ingest manifest rather than inferred here.",
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:b965d3fc9e562d2f1d63cffe747d0444d38d5317b943680d9b512c46df5c97e2"
+      },
+      "code_commit": "930e4eb05d4a0b1ea4000b7a461f832f8f46d486",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "chatgpt-weekly-2026-08-30",
+      "task_type": "WEEKLY_REANALYSIS",
+      "status": "COMPLETED_WITHOUT_PROMOTION",
+      "started_at": "2026-08-30T06:10:00Z",
+      "completed_at": "2026-08-30T06:10:03Z",
+      "input_refs": [
+        "projects/noema/data/reviewed/evidence-pack-002-deep-time.json",
+        "projects/noema/data/reviewed/evidence-pack-003-homo-sapiens.json",
+        "projects/noema/site/human-meaning-atlas.json",
+        "projects/noema/site/societies.json"
+      ],
+      "sources_examined": 5,
+      "new_candidates": 5,
+      "dating_revisions": 0,
+      "hypotheses_revisited": 4,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 3,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "Category-risk increased around artifact-to-symbol inference; DT-H002 and HS-H001 retained status with narrower semantics; DT-H003 remained speculative; late-Neanderthal climate-fragmentation edge should be downweighted without transferring support to cultural alternatives.",
+      "research_note": "projects/noema/research/reanalysis/2026-08-30-weekly-reanalysis.md",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    }
+  ]
 }
