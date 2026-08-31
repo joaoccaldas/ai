@@ -3,9 +3,10 @@ name: NOEMA Automation Pulse
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [main, noema/v1.0-religion-decomposition]
     paths:
       - 'projects/noema/data/runs/**'
+      - 'projects/noema/data/automation-contract-v1.json'
       - 'projects/noema/scripts/build_automation_pulse.py'
       - '.github/workflows/noema-automation-pulse.yml'
 
@@ -30,17 +31,20 @@ jobs:
           python-version: '3.12'
       - name: Build machine-readable automation pulse
         run: python projects/noema/scripts/build_automation_pulse.py
-      - name: Validate observability semantics
+      - name: Validate observability semantics and task contract
         run: |
           python - <<'PY'
           import json
           d=json.load(open('projects/noema/site/automation-pulse.json'))
           assert d['status']=='OBSERVABILITY_ONLY' and d['principle'].startswith('Automation output')
+          health=d.get('task_health',[])
+          assert len(health)>=7
+          assert {x['task_type'] for x in health} >= {'GITHUB_DISCOVERY','DAILY_INGEST','DPLACE_BENCHMARK','RELIGION_FEDERATION','WEEKLY_REANALYSIS','MONTHLY_DISCOVERY','MEDIA_DISCOVERY'}
           for r in d.get('recent_runs',[]):
               g=r.get('epistemic_guards',{})
               assert g.get('model_output_is_evidence') is False and g.get('unknown_is_absent') is False
               assert g.get('similarity_implies_descent') is False and g.get('automatic_claim_promotion') is False
-          print('validated',len(d.get('recent_runs',[])),'run manifests')
+          print('validated',len(d.get('recent_runs',[])),'run manifests and',len(health),'contract tasks')
           PY
       - name: Commit pulse when changed
         run: |
