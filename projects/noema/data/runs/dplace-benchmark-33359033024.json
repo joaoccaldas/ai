@@ -1,0 +1,32 @@
+{
+  "run_id": "dplace-benchmark-33359033024",
+  "task_type": "DPLACE_BENCHMARK",
+  "status": "COMPLETED",
+  "started_at": "2026-08-31T05:01:10.003045+00:00",
+  "completed_at": "2026-08-31T05:01:10.003045+00:00",
+  "input_refs": [
+    "https://raw.githubusercontent.com/D-PLACE/dplace-cldf/master/cldf/societies.csv"
+  ],
+  "artifact_digests": {
+    "noema-dplace-benchmark-100": "sha256:83ff1ed66402b284d0cf2cd3ff4433ea0e632be0cfb64819143345f803ffeeb2"
+  },
+  "sources_examined": 1,
+  "new_candidates": 0,
+  "candidate_updates": 1,
+  "contradictions": 0,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 0,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 0,
+  "errors": [],
+  "summary": "Rebuilt deterministic D-PLACE benchmark with 100 societies; focal years remain observation metadata, never origin dates.",
+  "code_commit": "b268880942f874a00c974c0ca92ba1821b8b6663",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false
+  }
+}
