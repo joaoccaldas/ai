@@ -1,0 +1,85 @@
+name: NOEMA Museum Reference Media
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '17 7 * * 3'
+  push:
+    branches: [main, noema/v1.1-visual-core]
+    paths:
+      - 'projects/noema/scripts/discover_museum_reference_media.py'
+      - 'projects/noema/data/reference/belief-catalog-v1.json'
+      - '.github/workflows/noema-museum-media.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: noema-museum-media-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Discover provider-asserted public-domain reference media
+        run: |
+          python scripts/discover_museum_reference_media.py --per-provider 1
+          python -m json.tool site/museum-reference-media.json >/dev/null
+          python - <<'PY'
+          import json
+          d=json.load(open('site/museum-reference-media.json'))
+          assert d['status']=='REFERENCE_MEDIA_PROVIDER_ASSERTED_NOT_EVIDENCE'
+          assert d['policy']['not_evidence'] is True
+          for x in d['records']:
+              assert x['display_gate']=='REFERENCE_RENDER_ALLOWED_PROVIDER_ASSERTED_IDENTITY'
+              assert x['evidence_status']=='NOT_EVIDENCE'
+              assert x['rights'] in {'PUBLIC_DOMAIN','CC0'}
+              assert x['identity_basis'].startswith('INSTITUTION_CATALOG')
+              assert x['image_url'].startswith('https://')
+          print({'records':d['record_count'],'providers':d['providers'],'errors':len(d['errors'])})
+          PY
+      - name: Write run manifest
+        env:
+          RUN_ID: ${{ github.run_id }}
+          CODE_SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          p=Path('site/museum-reference-media.json');d=json.loads(p.read_text());now=datetime.now(timezone.utc).isoformat()
+          m={'run_id':f"museum-media-{os.environ['RUN_ID']}",'task_type':'MUSEUM_MEDIA_DISCOVERY','status':'COMPLETED_REFERENCE_ONLY','started_at':now,'completed_at':now,'input_refs':['Art Institute of Chicago Open Access API','Cleveland Museum of Art Open Access API','projects/noema/data/reference/belief-catalog-v1.json'],'artifact_digests':{'museum-reference-media':'sha256:'+hashlib.sha256(p.read_bytes()).hexdigest()},'sources_examined':int(d.get('entities_queried',0))*2,'new_candidates':int(d.get('record_count',0)),'candidate_updates':0,'contradictions':0,'dating_revisions':0,'relationships_generated':0,'hypotheses_revisited':0,'hypotheses_promoted':0,'confidence_or_scope_changes':0,'review_items_created':0,'errors':[str(x) for x in d.get('errors',[])],'summary':f"Published {d.get('record_count',0)} provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",'code_commit':os.environ['CODE_SHA'],'epistemic_guards':{'model_output_is_evidence':False,'unknown_is_absent':False,'similarity_implies_descent':False,'automatic_claim_promotion':False}}
+          q=Path(f"data/runs/museum-media-{os.environ['RUN_ID']}.json");q.parent.mkdir(parents=True,exist_ok=True);q.write_text(json.dumps(m,indent=2)+'\n')
+          PY
+      - name: Commit projection and manifest
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add site/museum-reference-media.json data/runs/museum-media-${GITHUB_RUN_ID}.json
+          if git diff --cached --quiet; then
+            echo "No museum reference media changes"
+            exit 0
+          fi
+          git commit -m 'data(noema): refresh museum reference media [skip noema-museum-media]'
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            sleep $((attempt*2))
+          done
+          exit 1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: noema-museum-reference-media
+          path: projects/noema/site/museum-reference-media.json

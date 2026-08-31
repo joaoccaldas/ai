@@ -25,6 +25,7 @@ jobs:
       - run: pip install -e '.[dev]'
       - name: Compile package and standalone scripts
         run: python -m compileall -q src scripts tests
+
       - name: Validate decomposition ontology and live Pulotu crosswalk
         run: |
           python -m json.tool ontology/decomposition_v1.json >/dev/null
@@ -49,6 +50,7 @@ jobs:
           assert all(a.get('source_locator',{}).get('variable_id') for a in x['assertions'])
           print('PULOTU',json.dumps(s,indent=2))
           PY
+
       - name: Validate DRH/SCCSR compact decomposition corpus
         run: |
           python scripts/import_drh_decomposition.py --output /tmp/noema-drh-decomposition.json
@@ -64,48 +66,85 @@ jobs:
           assert any(not q['mapped'] for q in x['questions']), 'raw DRH question index was lost'
           print('DRH',json.dumps(s,indent=2))
           PY
-      - name: Validate v1 reference catalog and multi-page routes
+
+      - name: Validate reference catalog, media and Visual Core routes
         run: |
           python -m json.tool data/reference/belief-catalog-v1.json >/dev/null
+          python -m json.tool data/reference/media-reviewed-v1.json >/dev/null
+          python -m json.tool site/museum-reference-media.json >/dev/null
           python -m json.tool data/candidates/discovery-triage-2026-08-29.json >/dev/null
           python -m json.tool schemas/run-manifest-v1.json >/dev/null
           python - <<'PY'
           import json
           from pathlib import Path
-          c=json.load(open('data/reference/belief-catalog-v1.json'));ids=[e['id'] for e in c['entities']]
-          assert len(ids)==len(set(ids));known=set(ids)
-          for e in c['entities']:
+
+          catalog=json.load(open('data/reference/belief-catalog-v1.json'))
+          ids=[e['id'] for e in catalog['entities']]
+          assert len(ids)==len(set(ids)); known=set(ids)
+          for e in catalog['entities']:
               assert e.get('name') and e.get('kind')
               assert e.get('profile_status') in {'REFERENCE_ONLY','ANALYTIC_COMPONENT','ANALYTIC_TEMPLATE'}
-              for r in e.get('related_entities',[]): assert r in known, (e['id'],r)
+              for r in e.get('related_entities',[]): assert r in known,(e['id'],r)
               for s in e.get('sources',[]): assert str(s.get('url','')).startswith('https://')
-          app=Path('site/app-v1.js').read_text();assert 'reference_traits' in app and 'normalizeCatalog' in app
-          dashboard=Path('site/index.html').read_text();assert '<title>NOEMA Research OS</title>' in dashboard and 'Human belief,' in dashboard and 'dashboard-v2.js' in dashboard
-          dashboard2=Path('site/dashboard-v1.html').read_text();assert '<title>NOEMA Research OS</title>' in dashboard2 and 'dashboard-v2.css' in dashboard2
-          pulse=Path('site/automation-pulse.html').read_text();assert '<title>Automation Pulse · NOEMA</title>' in pulse and 'automation-pulse.js' in pulse
-          pages={
-              'site/explore.html':'Break belief systems into parts.',
-              'site/belief-systems.html':'No religion is one variable.',
-              'site/gods.html':'Every god gets a card.',
-              'site/rituals.html':'Compare actions before meanings.',
-              'site/altered-states.html':'Substance is only one part of the experience.',
-              'site/patterns.html':'What keeps appearing together?',
-              'site/compare.html':'Same words do not mean same history.',
-              'site/lineages.html':'Connection is not origin.',
-              'site/sources-v1.html':'Every conclusion should have a trail.',
-              'site/entity.html':'universal entity card',
-              'site/simulations.html':'Is a pattern surprising?',
-              'site/drh.html':'Entries, questions, metadata.',
+
+          museum=json.load(open('site/museum-reference-media.json'))
+          assert museum['policy']['not_evidence'] is True
+          assert museum['record_count']>0
+          for r in museum['records']:
+              assert r['display_gate']=='REFERENCE_RENDER_ALLOWED_PROVIDER_ASSERTED_IDENTITY'
+              assert r['evidence_status']=='NOT_EVIDENCE'
+              assert r['rights'] in {'PUBLIC_DOMAIN','CC0'}
+              assert r['provider_page_url'].startswith('https://') and r['image_url'].startswith('https://')
+
+          commons=json.load(open('data/reference/media-reviewed-v1.json'))
+          assert commons['policy']['reference_media_is_evidence'] is False
+          assert commons['items']
+          for r in commons['items']:
+              assert r['identity_status']=='SOURCE_VERIFIED'
+              assert r['rights_status']=='SOURCE_VERIFIED'
+              assert r['evidence_status']=='REFERENCE_ONLY_NOT_EVIDENCE'
+
+          app=Path('site/app-v1.js').read_text()
+          assert 'reference_traits' in app and 'normalizeCatalog' in app
+
+          home=Path('site/index.html').read_text()
+          assert '<title>NOEMA · Human Belief, Decomposed</title>' in home
+          assert 'Human belief,' in home and 'home-v2.js' in home
+
+          expectations={
+              'site/explore.html':('Break belief systems into parts.','app-v1.js'),
+              'site/belief-systems.html':('No religion is one variable.','app-v1.js'),
+              'site/gods.html':('Every god gets a workspace.','app-v1.js'),
+              'site/rituals.html':('Compare actions before meanings.','app-v1.js'),
+              'site/altered-states.html':('Substance is only one part of the experience.','app-v1.js'),
+              'site/patterns.html':('What keeps appearing together?','app-v1.js'),
+              'site/compare.html':('Same words do not mean same history.','app-v1.js'),
+              'site/lineages.html':('Connection is not origin.','relationship-v2.js'),
+              'site/sources-v1.html':('Every conclusion should have a trail.','app-v1.js'),
+              'site/entity.html':('universal entity workspace','entity-v2.js'),
+              'site/simulations.html':('Is a pattern surprising?',None),
+              'site/drh.html':('Entries, questions, metadata.',None),
           }
-          for path,marker in pages.items():
-              text=Path(path).read_text();assert marker in text,(path,marker);assert 'app-v1.css' in text and 'app-v1.js' in text
+          for path,(marker,script) in expectations.items():
+              text=Path(path).read_text()
+              assert marker in text,(path,marker)
+              assert 'app-v1.css' in text,path
+              if script: assert script in text,(path,script)
+
           for p in Path('data/runs').glob('*.json'):
-              r=json.load(open(p));g=r['epistemic_guards'];assert r['run_id'] and r['task_type'] and r['status'];assert all(g[k] is False for k in ['model_output_is_evidence','unknown_is_absent','similarity_implies_descent','automatic_claim_promotion'])
+              r=json.load(open(p)); g=r['epistemic_guards']
+              assert r['run_id'] and r['task_type'] and r['status']
+              assert all(g[k] is False for k in ['model_output_is_evidence','unknown_is_absent','similarity_implies_descent','automatic_claim_promotion'])
           PY
           node --check site/app-v1.js
+          node --check site/home-v2.js
+          node --check site/cards-v2.js
+          node --check site/entity-v2.js
+          node --check site/relationship-v2.js
           node --check site/dashboard-v2.js
           node --check site/automation-pulse.js
           node --check site/pattern-v2.js
+
       - name: Validate every evidence dossier and deterministic analysis projection
         run: |
           python -m json.tool site/data.json >/dev/null
@@ -116,6 +155,7 @@ jobs:
             python scripts/analyze_evidence_pack.py "$pack" --output "$out"
             python -m json.tool "$out" >/dev/null
           done
+
       - name: Validate construct-matched Deep Time comparison
         run: |
           python -m json.tool data/comparisons/deep-time-constructs.json >/dev/null
@@ -127,6 +167,7 @@ jobs:
           forbidden=[v.lower() for v in x['forbidden_outputs']]
           assert 'species intelligence score' in forbidden and 'cognitive superiority ranking' in forbidden
           PY
+
       - name: Validate Human Meaning Atlas projection
         run: |
           python scripts/build_human_meaning_atlas.py site/societies.json data/reviewed/evidence-pack-001.json data/reviewed/evidence-pack-002-deep-time.json data/reviewed/evidence-pack-003-homo-sapiens.json --output /tmp/noema-human-meaning-atlas.json
@@ -138,6 +179,7 @@ jobs:
           assert all(e['site'] is not None for e in x['mapped_events'])
           assert 'species ranking from evidence counts' in [v.lower() for v in x['forbidden_inferences']]
           PY
+
       - name: Validate federation, patterns, health and automation observability
         run: |
           python -m json.tool site/religion-federation.json >/dev/null
@@ -149,7 +191,7 @@ jobs:
           python scripts/build_automation_pulse.py --output /tmp/automation-pulse.json
           python - <<'PY'
           import json
-          f=json.load(open('site/religion-federation.json'));p=json.load(open('site/pattern-candidates.json'));cov=json.load(open('site/coverage-matrix.json'));h=json.load(open('site/research-health.json'));a=json.load(open('/tmp/automation-pulse.json'))
+          f=json.load(open('site/religion-federation.json')); p=json.load(open('site/pattern-candidates.json')); cov=json.load(open('site/coverage-matrix.json')); h=json.load(open('site/research-health.json')); a=json.load(open('/tmp/automation-pulse.json'))
           assert f['summary']['comparable_belief_system_profiles']>700 and f['summary']['accepted_semantic_assertions']>10000
           assert p['status']=='HYPOTHESIS_GENERATION_ONLY'
           assert cov['dimensions'] and len(cov['sources'])==2
@@ -158,6 +200,7 @@ jobs:
           assert h['metrics']['ontology_dimensions']>=16
           assert a['status']=='OBSERVABILITY_ONLY'
           PY
+
       - name: Syntax-check inline research surfaces
         run: |
           python - <<'PY'
@@ -172,8 +215,8 @@ jobs:
               'site/drh.html':('<title>DRH Explorer · NOEMA</title>','Entries, questions, metadata.'),
           }
           for path,required in pages.items():
-              html=Path(path).read_text();scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',html,flags=re.S|re.I);inline=[s for s in scripts if s.strip()];assert inline,path
-              target=Path('/tmp')/(Path(path).stem+'-noema-site.js');target.write_text('\n'.join(inline))
+              html=Path(path).read_text(); scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',html,flags=re.S|re.I); inline=[s for s in scripts if s.strip()]; assert inline,path
+              target=Path('/tmp')/(Path(path).stem+'-noema-site.js'); target.write_text('\n'.join(inline))
               for marker in required: assert marker in html,(path,marker)
               print(target)
           PY
@@ -183,4 +226,5 @@ jobs:
           node --check /tmp/religion-decomposition-noema-site.js
           node --check /tmp/simulations-noema-site.js
           node --check /tmp/drh-noema-site.js
+
       - run: pytest

@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - name: Verify complete NOEMA Research OS bundle on GitHub Pages
+      - name: Verify complete NOEMA v1.1 Research OS bundle on GitHub Pages
         env:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
@@ -31,26 +31,61 @@ jobs:
           set -euo pipefail
           base="https://${OWNER}.github.io/${REPO}/projects/noema/site"; rootbase="https://${OWNER}.github.io/${REPO}/projects/noema"; bust="?build=${SHA}"
           echo "NOEMA_PUBLIC_URL=${base}/"
+          echo "NOEMA_CONNECTIONS_URL=${base}/lineages.html"
           ok=0
           get(){ curl --fail --silent --show-error --location --header 'Cache-Control: no-cache, no-store, must-revalidate' "$1" || true; }
           for attempt in $(seq 1 120); do
-            root=$(get "${base}/${bust}"); pulse_page=$(get "${base}/automation-pulse.html${bust}"); health_page=$(get "${base}/research-health.html${bust}"); explore=$(get "${base}/explore.html${bust}"); gods=$(get "${base}/gods.html${bust}"); patterns=$(get "${base}/patterns.html${bust}"); simulations=$(get "${base}/simulations.html${bust}"); drh_page=$(get "${base}/drh.html${bust}"); workbench=$(get "${base}/religion-decomposition.html${bust}"); atlas_html=$(get "${base}/human-meaning-atlas.html${bust}"); deep_html=$(get "${base}/deep-time.html${bust}")
-            federation=$(get "${base}/religion-federation.json${bust}"); pattern_json=$(get "${base}/pattern-candidates.json${bust}"); health=$(get "${base}/research-health.json${bust}"); pulse=$(get "${base}/automation-pulse.json${bust}"); coverage_matrix=$(get "${base}/coverage-matrix.json${bust}"); decomposition=$(get "${base}/religion-decomposition.json${bust}"); drh=$(get "${base}/drh-decomposition.json${bust}"); societies=$(get "${base}/societies.json${bust}"); atlas=$(get "${base}/human-meaning-atlas.json${bust}"); comparison=$(get "${base}/deep-time-comparison.json${bust}"); catalog=$(get "${rootbase}/data/reference/belief-catalog-v1.json${bust}"); ontology=$(get "${rootbase}/ontology/decomposition_v1.json${bust}"); media=$(get "${rootbase}/data/candidates/wikimedia-media-candidates.json${bust}")
-            if printf '%s' "$root" | grep -q '<title>NOEMA Research OS</title>' \
+            root=$(get "${base}/${bust}")
+            meta=$(get "${base}/data.json${bust}")
+            explore=$(get "${base}/explore.html${bust}")
+            gods=$(get "${base}/gods.html${bust}")
+            entity=$(get "${base}/entity.html${bust}")
+            connections=$(get "${base}/lineages.html${bust}")
+            patterns=$(get "${base}/patterns.html${bust}")
+            simulations=$(get "${base}/simulations.html${bust}")
+            pulse_page=$(get "${base}/automation-pulse.html${bust}")
+            health_page=$(get "${base}/research-health.html${bust}")
+            drh_page=$(get "${base}/drh.html${bust}")
+            workbench=$(get "${base}/religion-decomposition.html${bust}")
+            atlas_html=$(get "${base}/human-meaning-atlas.html${bust}")
+            deep_html=$(get "${base}/deep-time.html${bust}")
+            federation=$(get "${base}/religion-federation.json${bust}")
+            pattern_json=$(get "${base}/pattern-candidates.json${bust}")
+            health=$(get "${base}/research-health.json${bust}")
+            pulse=$(get "${base}/automation-pulse.json${bust}")
+            coverage_matrix=$(get "${base}/coverage-matrix.json${bust}")
+            decomposition=$(get "${base}/religion-decomposition.json${bust}")
+            drh=$(get "${base}/drh-decomposition.json${bust}")
+            societies=$(get "${base}/societies.json${bust}")
+            atlas=$(get "${base}/human-meaning-atlas.json${bust}")
+            comparison=$(get "${base}/deep-time-comparison.json${bust}")
+            museum_media=$(get "${base}/museum-reference-media.json${bust}")
+            catalog=$(get "${rootbase}/data/reference/belief-catalog-v1.json${bust}")
+            commons_media=$(get "${rootbase}/data/reference/media-reviewed-v1.json${bust}")
+            ontology=$(get "${rootbase}/ontology/decomposition_v1.json${bust}")
+            staged_media=$(get "${rootbase}/data/candidates/wikimedia-media-candidates.json${bust}")
+
+            if printf '%s' "$root" | grep -q '<title>NOEMA · Human Belief, Decomposed</title>' \
               && printf '%s' "$root" | grep -q 'Human belief,' \
-              && printf '%s' "$root" | grep -q 'Automation Pulse' \
-              && printf '%s' "$pulse_page" | grep -q '<title>Automation Pulse · NOEMA</title>' \
-              && printf '%s' "$health_page" | grep -q '<title>Research Health · NOEMA</title>' \
+              && printf '%s' "$root" | grep -q 'home-v2.js' \
+              && printf '%s' "$meta" | grep -q '"release": "v1.1"' \
+              && printf '%s' "$meta" | grep -q 'relationship_dual_mode' \
               && printf '%s' "$explore" | grep -q '<title>Explore · NOEMA</title>' \
-              && printf '%s' "$gods" | grep -q '<title>Gods & Spirits · NOEMA</title>' \
+              && printf '%s' "$gods" | grep -q 'Every god gets a workspace.' \
+              && printf '%s' "$entity" | grep -q 'entity-v2.js' \
+              && printf '%s' "$connections" | grep -q 'Two edge languages' \
+              && printf '%s' "$connections" | grep -q 'relationship-v2.js' \
               && printf '%s' "$patterns" | grep -q '<title>Patterns · NOEMA</title>' \
               && printf '%s' "$simulations" | grep -q '<title>Simulations · NOEMA</title>' \
+              && printf '%s' "$pulse_page" | grep -q '<title>Automation Pulse · NOEMA</title>' \
+              && printf '%s' "$health_page" | grep -q '<title>Research Health · NOEMA</title>' \
               && printf '%s' "$drh_page" | grep -q '<title>DRH Explorer · NOEMA</title>' \
               && printf '%s' "$workbench" | grep -q '<title>NOEMA Religion Decomposition</title>' \
               && printf '%s' "$atlas_html" | grep -q '<title>NOEMA Human Meaning Atlas</title>' \
               && printf '%s' "$deep_html" | grep -q '<title>NOEMA Deep Time</title>' \
               && printf '%s' "$federation" | grep -q 'accepted_semantic_assertions' \
               && printf '%s' "$pattern_json" | grep -q 'HYPOTHESIS_GENERATION_ONLY' \
+              && printf '%s' "$pattern_json" | grep -q 'profiles_excluded_for_pair_missingness' \
               && printf '%s' "$health" | grep -q 'NOEMA-RESEARCH-HEALTH-V1' \
               && printf '%s' "$pulse" | grep -q 'NOEMA-AUTOMATION-PULSE-V1' \
               && printf '%s' "$coverage_matrix" | grep -q 'PULOTU' \
@@ -59,11 +94,18 @@ jobs:
               && printf '%s' "$societies" | grep -q 'NOEMA-DPLACE-100-v1' \
               && printf '%s' "$atlas" | grep -q 'NOEMA-HUMAN-MEANING-ATLAS-001' \
               && printf '%s' "$comparison" | grep -q 'NOEMA-DEEP-TIME-COMPARE-001' \
+              && printf '%s' "$museum_media" | grep -q 'REFERENCE_MEDIA_PROVIDER_ASSERTED_NOT_EVIDENCE' \
+              && printf '%s' "$museum_media" | grep -q 'NOT_EVIDENCE' \
               && printf '%s' "$catalog" | grep -q 'GOD-ODIN' \
+              && printf '%s' "$commons_media" | grep -q 'SOURCE_VERIFIED_REFERENCE_MEDIA' \
+              && printf '%s' "$commons_media" | grep -q 'REFERENCE_ONLY_NOT_EVIDENCE' \
               && printf '%s' "$ontology" | grep -q 'NOEMA-DECOMPOSITION-V1' \
-              && printf '%s' "$media" | grep -q 'PENDING_IDENTITY_AND_RIGHTS_REVIEW'; then
-              ok=1; echo "NOEMA Research OS + federation + automation pulse + health + media gate verified on attempt ${attempt}."; break
+              && printf '%s' "$staged_media" | grep -q 'PENDING_IDENTITY_AND_RIGHTS_REVIEW'; then
+              ok=1
+              echo "NOEMA v1.1 Visual Core + federation + relationship modes + media provenance + automation verified on attempt ${attempt}."
+              break
             fi
-            echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA bundle yet."; sleep 5
+            echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA v1.1 bundle yet."
+            sleep 5
           done
           test "$ok" = "1"

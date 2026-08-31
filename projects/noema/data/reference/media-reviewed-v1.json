@@ -1,0 +1,61 @@
+{
+  "dataset_id": "NOEMA-REFERENCE-MEDIA-V1",
+  "status": "SOURCE_VERIFIED_REFERENCE_MEDIA",
+  "purpose": "Rights- and identity-verified reference/iconographic visuals for navigation and entity orientation. These images are not scientific evidence and do not support historical-origin claims.",
+  "policy": {
+    "reference_media_is_evidence": false,
+    "generated_media_is_evidence": false,
+    "evidence_media_requires_claim_binding": true,
+    "display_rule": "Reference media may render only when the source explicitly identifies the depicted subject or cult object and reuse rights are source-verified. Every render must show provenance and media class."
+  },
+  "items": [
+    {
+      "media_id": "MEDIA-ZEUS-HYPSISTOS-DION-001",
+      "entity_id": "GOD-ZEUS",
+      "entity_name": "Zeus",
+      "media_class": "HISTORICAL_REPRESENTATION",
+      "title": "Cult Statue of Zeus Hypsistos, Enthroned",
+      "description": "Roman Imperial-era cult statue identified by the Archaeological Museum of Dion / Wikimedia Commons record as Zeus Hypsistos. Used here only as historical iconographic reference.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Cult_Statue_of_Zeus_Hypsistos.JPG/960px-Cult_Statue_of_Zeus_Hypsistos.JPG",
+      "source_page_url": "https://commons.wikimedia.org/wiki/File:Cult_Statue_of_Zeus_Hypsistos.JPG",
+      "collection": "Archaeological Museum of Dion",
+      "creator_or_photographer": "Ophelia2; ancient sculptor unknown",
+      "license": "Public domain",
+      "rights_status": "SOURCE_VERIFIED",
+      "identity_status": "SOURCE_VERIFIED",
+      "evidence_status": "REFERENCE_ONLY_NOT_EVIDENCE"
+    },
+    {
+      "media_id": "MEDIA-OSIRIS-LOUVRE-001",
+      "entity_id": "GOD-OSIRIS",
+      "entity_name": "Osiris",
+      "media_class": "DOCUMENTARY_OBJECT",
+      "title": "Ancient Egypt stone statue of Osiris",
+      "description": "Photograph of an Egyptian stone statue identified as Osiris in the Louvre collection context. Used as object/reference imagery, not as evidence for any historical-origin hypothesis.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Ancient_Egypt_Stone_Statue_of_Osiris.jpg/960px-Ancient_Egypt_Stone_Statue_of_Osiris.jpg",
+      "source_page_url": "https://commons.wikimedia.org/wiki/File:Ancient_Egypt_Stone_Statue_of_Osiris.jpg",
+      "collection": "Louvre Museum, Ancient Egypt galleries",
+      "creator_or_photographer": "Gary Todd",
+      "license": "CC0 1.0",
+      "rights_status": "SOURCE_VERIFIED",
+      "identity_status": "SOURCE_VERIFIED",
+      "evidence_status": "REFERENCE_ONLY_NOT_EVIDENCE"
+    },
+    {
+      "media_id": "MEDIA-ODIN-GEHRTS-001",
+      "entity_id": "GOD-ODIN",
+      "entity_name": "Odin",
+      "media_class": "MODERN_HISTORICAL_INTERPRETATION",
+      "title": "Odin on his throne with ravens and wolves",
+      "description": "Johannes Gehrts' 1888 illustration of Odin with Huginn, Muninn, Geri and Freki. This is a modern historical interpretation, not an ancient depiction and not evidence for Viking-period iconography.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Odhin.png/960px-Odhin.png",
+      "source_page_url": "https://commons.wikimedia.org/wiki/File:Odhin.png",
+      "collection": "Walhall: Germanische Götter- und Heldensagen (1888)",
+      "creator_or_photographer": "Johannes Gehrts (1855–1921)",
+      "license": "Public domain / Public Domain Mark 1.0",
+      "rights_status": "SOURCE_VERIFIED",
+      "identity_status": "SOURCE_VERIFIED",
+      "evidence_status": "REFERENCE_ONLY_NOT_EVIDENCE"
+    }
+  ]
+}
