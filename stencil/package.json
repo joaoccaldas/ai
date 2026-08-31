@@ -1,0 +1,10 @@
+{
+  "name": "stencil-tryon",
+  "private": true,
+  "type": "module",
+  "description": "Stencil — a browser tattoo try-on studio (Caldas Studio tool).",
+  "scripts": {
+    "check": "node --check app.js && node --check flash.js && node --check library/pack.js && node --check skins/skins.js",
+    "test": "node tests/smoke.mjs"
+  }
+}
