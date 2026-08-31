@@ -142,14 +142,17 @@ jobs:
         run: |
           python -m json.tool site/religion-federation.json >/dev/null
           python -m json.tool site/pattern-candidates.json >/dev/null
+          python scripts/build_coverage_matrix.py --output site/coverage-matrix.json
+          python scripts/build_research_health.py --output site/research-health.json
           python -m json.tool site/coverage-matrix.json >/dev/null
           python -m json.tool site/research-health.json >/dev/null
           python scripts/build_automation_pulse.py --output /tmp/automation-pulse.json
           python - <<'PY'
           import json
-          f=json.load(open('site/religion-federation.json'));p=json.load(open('site/pattern-candidates.json'));h=json.load(open('site/research-health.json'));a=json.load(open('/tmp/automation-pulse.json'))
+          f=json.load(open('site/religion-federation.json'));p=json.load(open('site/pattern-candidates.json'));cov=json.load(open('site/coverage-matrix.json'));h=json.load(open('site/research-health.json'));a=json.load(open('/tmp/automation-pulse.json'))
           assert f['summary']['comparable_belief_system_profiles']>700 and f['summary']['accepted_semantic_assertions']>10000
           assert p['status']=='HYPOTHESIS_GENERATION_ONLY'
+          assert cov['dimensions'] and len(cov['sources'])==2
           assert all('explicitly PRESENT or explicitly ABSENT' in c['null_model']['missingness_rule'] for c in p['cohorts'])
           assert all(r['n_comparable']<=r['cohort_profiles'] and 'phylogeny' in r['unresolved_confounders'] for c in p['cohorts'] for r in c['candidates'])
           assert h['metrics']['ontology_dimensions']>=16
