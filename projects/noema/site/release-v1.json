@@ -1,0 +1,54 @@
+{
+  "release": "v1.0-research-os",
+  "status": "RELEASE_CANDIDATE",
+  "product": "NOEMA Research OS",
+  "principle": "Decomposition before comparison; provenance before relationship claims; automation output is workflow state, not evidence.",
+  "features": {
+    "command_center": true,
+    "global_search": true,
+    "belief_system_explorer": true,
+    "god_and_spirit_cards": true,
+    "ritual_explorer": true,
+    "altered_state_explorer": true,
+    "pattern_lab": true,
+    "pairwise_compare": true,
+    "simulations": true,
+    "connections_graph": true,
+    "research_health": true,
+    "automation_pulse": true,
+    "drh_explorer": true,
+    "pulotu_workbench": true,
+    "human_meaning_atlas": true,
+    "media_candidate_pipeline": true
+  },
+  "data_products": [
+    "religion-federation.json",
+    "pattern-candidates.json",
+    "coverage-matrix.json",
+    "research-health.json",
+    "automation-pulse.json",
+    "drh-decomposition.json",
+    "drh-catalog.json",
+    "religion-decomposition.json",
+    "dplace-religion-variables.json",
+    "human-meaning-atlas.json"
+  ],
+  "epistemic_gates": {
+    "unknown_is_absence": false,
+    "similarity_implies_descent": false,
+    "model_output_is_evidence": false,
+    "automatic_claim_promotion": false,
+    "coverage_equals_belief_evidence": false,
+    "experience_establishes_ontology": false,
+    "material_form_establishes_meaning": false,
+    "media_candidate_renders_before_identity_and_rights_review": false
+  },
+  "known_limits": [
+    "Causal relationship inference still requires phylogenetic, spatial, contact, source-dependence and missingness-aware models.",
+    "DRH semantic crosswalk coverage remains early and must expand through reviewed thematic batches.",
+    "Global search is ontology-expanded lexical retrieval; calibrated hybrid vector retrieval is not yet active.",
+    "Runtime database activation remains unverified; deterministic public federation projections remain the public operational source of truth.",
+    "Reference deity/spirit coverage is still far below global target scale.",
+    "No discovered media candidate renders publicly before separate identity and rights approval."
+  ]
+}
