@@ -1,6 +1,6 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-08-31T05:37:14.225414+00:00",
+  "generated_at": "2026-08-31T05:45:54.447199+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
@@ -72,7 +72,7 @@
       "last_run_id": "github-discovery-33359642572",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:11:47.779845+00:00",
-      "age_hours": 0.42,
+      "age_hours": 0.57,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -108,7 +108,7 @@
       "last_run_id": "dplace-benchmark-33359642624",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:11:41.942099+00:00",
-      "age_hours": 0.43,
+      "age_hours": 0.57,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -126,7 +126,7 @@
       "last_run_id": "religion-federation-33360918327",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:33:29.175706+00:00",
-      "age_hours": 0.06,
+      "age_hours": 0.21,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -151,7 +151,7 @@
       "last_run_id": "chatgpt-weekly-2026-08-30",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-08-30T06:10:03Z",
-      "age_hours": 23.45,
+      "age_hours": 23.6,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -188,7 +188,7 @@
       "last_run_id": "media-discovery-33359642500",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-08-31T05:11:49.840434+00:00",
-      "age_hours": 0.42,
+      "age_hours": 0.57,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
