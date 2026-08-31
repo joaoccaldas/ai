@@ -1,0 +1,552 @@
+{
+  "report_id": "NOEMA-COVERAGE-MATRIX-V1",
+  "status": "DESCRIPTIVE_DATA_READINESS",
+  "dimensions": [
+    "AGENCY_ONTOLOGY",
+    "SELF_PERSONHOOD",
+    "DEATH_AFTERLIFE",
+    "COSMOLOGY",
+    "NATURE_RELATION",
+    "CAUSALITY_DIVINATION",
+    "MORAL_ORDER",
+    "SACREDNESS",
+    "RITUAL_GRAMMAR",
+    "ALTERED_STATE_INDUCTION",
+    "EXPERIENCE_PHENOMENOLOGY",
+    "RELIGIOUS_SPECIALISTS",
+    "TRANSMISSION",
+    "MATERIAL_AND_SPACE",
+    "SOCIAL_FUNCTION",
+    "HISTORICAL_MECHANISM",
+    "EVIDENCE_INFERENCE_LADDER"
+  ],
+  "sources": [
+    {
+      "source": "PULOTU",
+      "cohort_profiles": 137,
+      "rows": [
+        {
+          "dimension": "AGENCY_ONTOLOGY",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 1227,
+          "profiles_with_any_accepted_assertion": 135,
+          "profiles_with_explicit_binary_state": 135,
+          "profile_semantic_coverage_pct": 98.54,
+          "profile_binary_coverage_pct": 98.54,
+          "state_rows": {
+            "PRESENT": 1227,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "SELF_PERSONHOOD",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "DEATH_AFTERLIFE",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 506,
+          "profiles_with_any_accepted_assertion": 135,
+          "profiles_with_explicit_binary_state": 135,
+          "profile_semantic_coverage_pct": 98.54,
+          "profile_binary_coverage_pct": 98.54,
+          "state_rows": {
+            "PRESENT": 506,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "COSMOLOGY",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 233,
+          "profiles_with_any_accepted_assertion": 121,
+          "profiles_with_explicit_binary_state": 121,
+          "profile_semantic_coverage_pct": 88.32,
+          "profile_binary_coverage_pct": 88.32,
+          "state_rows": {
+            "PRESENT": 233,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "NATURE_RELATION",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 259,
+          "profiles_with_any_accepted_assertion": 135,
+          "profiles_with_explicit_binary_state": 135,
+          "profile_semantic_coverage_pct": 98.54,
+          "profile_binary_coverage_pct": 98.54,
+          "state_rows": {
+            "PRESENT": 259,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "CAUSALITY_DIVINATION",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "MORAL_ORDER",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 593,
+          "profiles_with_any_accepted_assertion": 135,
+          "profiles_with_explicit_binary_state": 135,
+          "profile_semantic_coverage_pct": 98.54,
+          "profile_binary_coverage_pct": 98.54,
+          "state_rows": {
+            "PRESENT": 593,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "SACREDNESS",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "RITUAL_GRAMMAR",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 384,
+          "profiles_with_any_accepted_assertion": 136,
+          "profiles_with_explicit_binary_state": 136,
+          "profile_semantic_coverage_pct": 99.27,
+          "profile_binary_coverage_pct": 99.27,
+          "state_rows": {
+            "PRESENT": 384,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "ALTERED_STATE_INDUCTION",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "EXPERIENCE_PHENOMENOLOGY",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "RELIGIOUS_SPECIALISTS",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "TRANSMISSION",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 774,
+          "profiles_with_any_accepted_assertion": 131,
+          "profiles_with_explicit_binary_state": 131,
+          "profile_semantic_coverage_pct": 95.62,
+          "profile_binary_coverage_pct": 95.62,
+          "state_rows": {
+            "PRESENT": 774,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "MATERIAL_AND_SPACE",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "SOCIAL_FUNCTION",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 111,
+          "profiles_with_any_accepted_assertion": 111,
+          "profiles_with_explicit_binary_state": 111,
+          "profile_semantic_coverage_pct": 81.02,
+          "profile_binary_coverage_pct": 81.02,
+          "state_rows": {
+            "PRESENT": 111,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "HISTORICAL_MECHANISM",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 964,
+          "profiles_with_any_accepted_assertion": 136,
+          "profiles_with_explicit_binary_state": 136,
+          "profile_semantic_coverage_pct": 99.27,
+          "profile_binary_coverage_pct": 99.27,
+          "state_rows": {
+            "PRESENT": 964,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "EVIDENCE_INFERENCE_LADDER",
+          "cohort_profiles": 137,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        }
+      ]
+    },
+    {
+      "source": "DRH",
+      "cohort_profiles": 926,
+      "rows": [
+        {
+          "dimension": "AGENCY_ONTOLOGY",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 3567,
+          "profiles_with_any_accepted_assertion": 649,
+          "profiles_with_explicit_binary_state": 635,
+          "profile_semantic_coverage_pct": 70.09,
+          "profile_binary_coverage_pct": 68.57,
+          "state_rows": {
+            "PRESENT": 2567,
+            "ABSENT": 674,
+            "UNKNOWN": 326,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "SELF_PERSONHOOD",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 618,
+          "profiles_with_any_accepted_assertion": 616,
+          "profiles_with_explicit_binary_state": 562,
+          "profile_semantic_coverage_pct": 66.52,
+          "profile_binary_coverage_pct": 60.69,
+          "state_rows": {
+            "PRESENT": 162,
+            "ABSENT": 402,
+            "UNKNOWN": 54,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "DEATH_AFTERLIFE",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 2472,
+          "profiles_with_any_accepted_assertion": 634,
+          "profiles_with_explicit_binary_state": 625,
+          "profile_semantic_coverage_pct": 68.47,
+          "profile_binary_coverage_pct": 67.49,
+          "state_rows": {
+            "PRESENT": 1522,
+            "ABSENT": 690,
+            "UNKNOWN": 260,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "COSMOLOGY",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "NATURE_RELATION",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "CAUSALITY_DIVINATION",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 509,
+          "profiles_with_any_accepted_assertion": 372,
+          "profiles_with_explicit_binary_state": 354,
+          "profile_semantic_coverage_pct": 40.17,
+          "profile_binary_coverage_pct": 38.23,
+          "state_rows": {
+            "PRESENT": 234,
+            "ABSENT": 246,
+            "UNKNOWN": 29,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "MORAL_ORDER",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 3472,
+          "profiles_with_any_accepted_assertion": 659,
+          "profiles_with_explicit_binary_state": 599,
+          "profile_semantic_coverage_pct": 71.17,
+          "profile_binary_coverage_pct": 64.69,
+          "state_rows": {
+            "PRESENT": 2554,
+            "ABSENT": 602,
+            "UNKNOWN": 316,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "SACREDNESS",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 820,
+          "profiles_with_any_accepted_assertion": 438,
+          "profiles_with_explicit_binary_state": 426,
+          "profile_semantic_coverage_pct": 47.3,
+          "profile_binary_coverage_pct": 46.0,
+          "state_rows": {
+            "PRESENT": 535,
+            "ABSENT": 218,
+            "UNKNOWN": 67,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "RITUAL_GRAMMAR",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 4610,
+          "profiles_with_any_accepted_assertion": 678,
+          "profiles_with_explicit_binary_state": 670,
+          "profile_semantic_coverage_pct": 73.22,
+          "profile_binary_coverage_pct": 72.35,
+          "state_rows": {
+            "PRESENT": 1856,
+            "ABSENT": 2270,
+            "UNKNOWN": 484,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "ALTERED_STATE_INDUCTION",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "EXPERIENCE_PHENOMENOLOGY",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 1021,
+          "profiles_with_any_accepted_assertion": 387,
+          "profiles_with_explicit_binary_state": 373,
+          "profile_semantic_coverage_pct": 41.79,
+          "profile_binary_coverage_pct": 40.28,
+          "state_rows": {
+            "PRESENT": 667,
+            "ABSENT": 257,
+            "UNKNOWN": 97,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "RELIGIOUS_SPECIALISTS",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "TRANSMISSION",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "MATERIAL_AND_SPACE",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 300,
+          "profiles_with_any_accepted_assertion": 298,
+          "profiles_with_explicit_binary_state": 293,
+          "profile_semantic_coverage_pct": 32.18,
+          "profile_binary_coverage_pct": 31.64,
+          "state_rows": {
+            "PRESENT": 246,
+            "ABSENT": 49,
+            "UNKNOWN": 5,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "SOCIAL_FUNCTION",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "HISTORICAL_MECHANISM",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        },
+        {
+          "dimension": "EVIDENCE_INFERENCE_LADDER",
+          "cohort_profiles": 926,
+          "accepted_assertion_rows": 0,
+          "profiles_with_any_accepted_assertion": 0,
+          "profiles_with_explicit_binary_state": 0,
+          "profile_semantic_coverage_pct": 0.0,
+          "profile_binary_coverage_pct": 0.0,
+          "state_rows": {
+            "PRESENT": 0,
+            "ABSENT": 0,
+            "UNKNOWN": 0,
+            "CONTESTED": 0
+          }
+        }
+      ]
+    }
+  ],
+  "interpretation": {
+    "semantic_coverage": "Share of cohort profiles with at least one accepted mapped assertion in the dimension.",
+    "binary_coverage": "Share with at least one explicit PRESENT or ABSENT mapped state in the dimension. This is a readiness indicator, not proof that every feature pair inside the dimension is jointly observed.",
+    "warning": "High row counts can reflect questionnaire design or multiple source questions. Coverage is not evidence strength."
+  }
+}
