@@ -1,0 +1,108 @@
+// Stencil Studio — multi-tenant schema
+// A Studio is the tenant (a tattoo parlour). Users belong to a Studio.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Studio {
+  id   String @id @default(cuid())
+  name String
+  slug String @unique
+
+  // white-label branding
+  logoUrl     String?
+  accentColor String  @default("#d24b3f")
+  tagline     String  @default("See it before you ink")
+
+  // bring-your-own Higgsfield key (secret stored AES-256-GCM encrypted)
+  hfKeyId        String?
+  hfKeySecretEnc String?
+  hfConnected    Boolean @default(false)
+
+  // billing (Stripe) — flat software licence
+  stripeCustomerId     String?   @unique
+  stripeSubscriptionId String?   @unique
+  subscriptionStatus   String    @default("none") // none|trialing|active|past_due|canceled
+  plan                 String    @default("none")
+  trialEndsAt          DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users    User[]
+  designs  Design[]
+  sessions ClientSession[]
+  renders  Render[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String
+  role         String   @default("owner") // owner|artist
+  studioId     String
+  studio       Studio   @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+
+  @@index([studioId])
+}
+
+model Design {
+  id        String   @id @default(cuid())
+  studioId  String
+  studio    Studio   @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  name      String
+  imageUrl  String
+  kind      String   @default("flash") // flash|upload
+  createdAt DateTime @default(now())
+
+  @@index([studioId])
+}
+
+model ClientSession {
+  id            String   @id @default(cuid())
+  studioId      String
+  studio        Studio   @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  clientName    String?
+  clientContact String?
+  photoUrl      String?
+  consent       Boolean  @default(false)
+  shareToken    String   @unique @default(cuid())
+  createdAt     DateTime @default(now())
+
+  renders Render[]
+
+  @@index([studioId])
+}
+
+model Render {
+  id                String   @id @default(cuid())
+  studioId          String
+  studio            Studio   @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  sessionId         String
+  session           ClientSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  designId          String?
+  designName        String?
+  status            String   @default("queued") // queued|processing|completed|failed
+  provider          String   @default("higgsfield")
+  providerRequestId String?
+  providerStatusUrl String?
+  prompt            String?
+  placement         Json?
+  bodyUrl           String?
+  designUrl         String?
+  compositeUrl      String?
+  resultUrl         String?
+  error             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([studioId])
+  @@index([sessionId])
+}
