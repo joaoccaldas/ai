@@ -5,6 +5,7 @@ on:
   schedule:
     - cron: '43 6 * * 3'
   push:
+    branches: [main, noema/v1.0-religion-decomposition]
     paths:
       - 'projects/noema/scripts/discover_wikimedia_media.py'
       - 'projects/noema/src/noema/media.py'
@@ -47,18 +48,30 @@ jobs:
           assert all(x['source_page_url'].startswith('https://commons.wikimedia.org/') for x in d['candidates'])
           print({'entities': d['entities_queried'], 'candidates': d['candidate_count'], 'errors': len(d['errors'])})
           PY
-      - name: Commit candidate metadata only when changed
+      - name: Write observability manifest
+        env:
+          RUN_ID: ${{ github.run_id }}
+          CODE_SHA: ${{ github.sha }}
         run: |
-          file='data/candidates/wikimedia-media-candidates.json'
-          if git status --porcelain -- "$file" | grep -q .; then
-            git config user.name 'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add "$file"
-            git commit -m 'data(noema): refresh media candidates [skip noema-media]'
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          else
-            echo 'No media candidate change.'
-          fi
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          p=Path('data/candidates/wikimedia-media-candidates.json');d=json.loads(p.read_text());now=datetime.now(timezone.utc).isoformat()
+          m={'run_id':f"media-discovery-{os.environ['RUN_ID']}",'task_type':'MEDIA_DISCOVERY','status':'COMPLETED_PENDING_REVIEW','started_at':now,'completed_at':now,
+             'input_refs':['Wikimedia Commons','projects/noema/data/reference/belief-catalog-v1.json'],'artifact_digests':{'wikimedia-media-candidates':'sha256:'+hashlib.sha256(p.read_bytes()).hexdigest()},
+             'sources_examined':int(d.get('entities_queried',0)),'new_candidates':int(d.get('candidate_count',0)),'candidate_updates':0,'contradictions':0,'dating_revisions':0,'relationships_generated':0,
+             'hypotheses_revisited':0,'hypotheses_promoted':0,'confidence_or_scope_changes':0,'review_items_created':int(d.get('candidate_count',0)),'errors':[str(x) for x in d.get('errors',[])],
+             'summary':f"Discovered {d.get('candidate_count',0)} Wikimedia Commons media candidates across {d.get('entities_queried',0)} entities; none are public until identity and rights are approved.",
+             'code_commit':os.environ['CODE_SHA'],'epistemic_guards':{'model_output_is_evidence':False,'unknown_is_absent':False,'similarity_implies_descent':False,'automatic_claim_promotion':False}}
+          q=Path(f"data/runs/media-discovery-{os.environ['RUN_ID']}.json");q.parent.mkdir(parents=True,exist_ok=True);q.write_text(json.dumps(m,indent=2)+'\n')
+          PY
+      - name: Commit candidate metadata and run manifest
+        run: |
+          git config user.name 'github-actions[bot]';git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/candidates/wikimedia-media-candidates.json data/runs/media-discovery-${GITHUB_RUN_ID}.json
+          git commit -m 'data(noema): refresh media candidates and run manifest [skip noema-media]'
+          git push origin "HEAD:${GITHUB_REF_NAME}"
       - uses: actions/upload-artifact@v4
         with:
           name: noema-media-candidates

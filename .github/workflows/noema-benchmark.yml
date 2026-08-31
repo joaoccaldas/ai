@@ -5,7 +5,7 @@ on:
   schedule:
     - cron: "43 5 * * 1"
   push:
-    branches: [main]
+    branches: [main, noema/v1.0-religion-decomposition]
     paths:
       - 'projects/noema/scripts/build_benchmark.py'
       - '.github/workflows/noema-benchmark.yml'
@@ -19,6 +19,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -44,18 +46,31 @@ jobs:
           PY
       - name: Publish benchmark projection into observatory tree
         run: cp noema-benchmark-100.json projects/noema/site/societies.json
-      - name: Commit benchmark projection when upstream changed
+      - name: Write observability manifest
+        env:
+          RUN_ID: ${{ github.run_id }}
+          CODE_SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os
+          from datetime import datetime,timezone
+          from pathlib import Path
+          d=json.load(open('noema-benchmark-100.json'));raw=Path('noema-benchmark-100.json').read_bytes();now=datetime.now(timezone.utc).isoformat()
+          m={'run_id':f"dplace-benchmark-{os.environ['RUN_ID']}",'task_type':'DPLACE_BENCHMARK','status':'COMPLETED','started_at':now,'completed_at':now,
+             'input_refs':['https://raw.githubusercontent.com/D-PLACE/dplace-cldf/master/cldf/societies.csv'],'artifact_digests':{'noema-dplace-benchmark-100':'sha256:'+hashlib.sha256(raw).hexdigest()},
+             'sources_examined':1,'new_candidates':0,'candidate_updates':1,'contradictions':0,'dating_revisions':0,'relationships_generated':0,'hypotheses_revisited':0,'hypotheses_promoted':0,'confidence_or_scope_changes':0,'review_items_created':0,'errors':[],
+             'summary':f"Rebuilt deterministic D-PLACE benchmark with {d['actual_size']} societies; focal years remain observation metadata, never origin dates.",'code_commit':os.environ['CODE_SHA'],
+             'epistemic_guards':{'model_output_is_evidence':False,'unknown_is_absent':False,'similarity_implies_descent':False,'automatic_claim_promotion':False}}
+          p=Path(f"projects/noema/data/runs/dplace-benchmark-{os.environ['RUN_ID']}.json");p.parent.mkdir(parents=True,exist_ok=True);p.write_text(json.dumps(m,indent=2)+'\n')
+          PY
+      - name: Commit benchmark projection and run manifest
         run: |
           set -euo pipefail
-          if [ -z "$(git status --porcelain -- projects/noema/site/societies.json)" ]; then
-            echo "D-PLACE benchmark projection unchanged."
-            exit 0
-          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add projects/noema/site/societies.json
-          git commit -m "data(noema): refresh D-PLACE benchmark [skip noema-benchmark]"
-          git push
+          git add projects/noema/site/societies.json projects/noema/data/runs/dplace-benchmark-${GITHUB_RUN_ID}.json
+          git commit -m "data(noema): refresh D-PLACE benchmark and run manifest [skip noema-benchmark]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
       - uses: actions/upload-artifact@v4
         with:
           name: noema-dplace-benchmark-100

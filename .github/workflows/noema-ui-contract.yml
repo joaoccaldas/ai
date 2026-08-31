@@ -1,0 +1,71 @@
+name: NOEMA UI and Operations Contract
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, noema/v1.0-religion-decomposition]
+    paths:
+      - 'projects/noema/site/**'
+      - 'projects/noema/data/runs/**'
+      - 'projects/noema/data/candidates/wikimedia-media-candidates.json'
+      - 'projects/noema/schemas/run-manifest-v1.json'
+      - 'projects/noema/scripts/build_automation_pulse.py'
+      - '.github/workflows/noema-ui-contract.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax-check browser JavaScript
+        run: |
+          node --check projects/noema/site/dashboard-v2.js
+          node --check projects/noema/site/automation-pulse.js
+          node --check projects/noema/site/app-v1.js
+          node --check projects/noema/site/pattern-v2.js
+      - name: Build and validate automation pulse
+        run: |
+          python projects/noema/scripts/build_automation_pulse.py --output /tmp/automation-pulse.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.load(open('/tmp/automation-pulse.json'))
+          assert d['status']=='OBSERVABILITY_ONLY'
+          for p in Path('projects/noema/data/runs').glob('*.json'):
+              r=json.load(open(p));g=r['epistemic_guards']
+              assert r['run_id'] and r['task_type'] and r['status']
+              assert g['model_output_is_evidence'] is False
+              assert g['unknown_is_absent'] is False
+              assert g['similarity_implies_descent'] is False
+              assert g['automatic_claim_promotion'] is False
+          print('validated manifests', len(list(Path('projects/noema/data/runs').glob('*.json'))))
+          PY
+      - name: Validate visual-research contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('projects/noema/site/index.html').read_text()
+          assert '<title>NOEMA Research OS</title>' in root
+          for phrase in ['Human belief,','Automation Pulse','Pattern Lab','Research Health','Gods & Spirits']:
+              assert phrase in root
+          pulse=Path('projects/noema/site/automation-pulse.html').read_text();assert '<title>Automation Pulse · NOEMA</title>' in pulse
+          h=json.load(open('projects/noema/site/research-health.json'));p=json.load(open('projects/noema/site/pattern-candidates.json'))
+          assert h['metrics']['ontology_dimensions'] >= 16
+          assert p['status']=='HYPOTHESIS_GENERATION_ONLY'
+          for cohort in p['cohorts']:
+              assert 'explicitly PRESENT or explicitly ABSENT' in cohort['null_model']['missingness_rule']
+              for r in cohort['candidates']:
+                  assert r['n_comparable'] <= r['cohort_profiles'] and 'phylogeny' in r['unresolved_confounders']
+          media=json.load(open('projects/noema/data/candidates/wikimedia-media-candidates.json'))
+          assert media['status']=='PENDING_IDENTITY_AND_RIGHTS_REVIEW'
+          assert all(x['decision']=='PENDING_REVIEW' for x in media['candidates'])
+          print('visual contract green')
+          PY
