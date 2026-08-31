@@ -1,7 +1,33 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { saveBrandingAction, connectKeyAction, disconnectKeyAction } from "./actions";
+
+function TestConnection() {
+  const [state, setState] = useState<{ busy?: boolean; ok?: boolean; msg?: string }>({});
+  async function run() {
+    setState({ busy: true });
+    try {
+      const r = await fetch("/api/studio/test-key", { method: "POST" });
+      const j = await r.json();
+      setState({ ok: j.ok, msg: j.message || (j.ok ? "OK" : "Failed") });
+    } catch {
+      setState({ ok: false, msg: "Couldn't reach the service." });
+    }
+  }
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: ".6rem" }}>
+      <button type="button" className="btn btn-ghost btn-sm" onClick={run} disabled={state.busy}>
+        {state.busy ? "Testing…" : "Test connection"}
+      </button>
+      {state.msg && (
+        <span className="badge" style={{ color: state.ok ? "var(--good)" : "var(--bad)", borderColor: "transparent" }}>
+          {state.ok ? "✓ " : "✕ "}{state.msg}
+        </span>
+      )}
+    </div>
+  );
+}
 
 type Props = {
   name: string;
@@ -81,6 +107,7 @@ export default function SettingsClient(p: Props) {
           <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
             <span className="badge good">Connected</span>
             <span className="muted" style={{ fontSize: ".85rem" }}>Key ID {p.hfKeyIdMasked}</span>
+            <TestConnection />
             <form action={disconnectKeyAction} style={{ marginLeft: "auto" }}>
               <button className="btn btn-ghost btn-sm">Disconnect</button>
             </form>

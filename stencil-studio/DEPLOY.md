@@ -50,11 +50,23 @@ Studios sign up, then in **Settings → AI connection** paste their Higgsfield
 → API). The secret is encrypted with `APP_ENCRYPTION_KEY` before it's stored, and
 only decrypted server-side to submit renders.
 
+## After deploy — verify in 3 checks
+
+1. **Health:** open `https://YOURDOMAIN/api/health`. It returns `ok: true` plus which
+   integrations are configured (database, blob, stripe, render provider). Anything
+   missing is named in `missingRequired`.
+2. **Seed a demo (optional):** `npm run db:seed` against the prod `DATABASE_URL`
+   creates a login `demo@stencil.studio` / `demo12345` with one design, so you can
+   click through immediately.
+3. **AI key:** a studio connects its key in **Settings → AI connection** and clicks
+   **Test connection** — this validates the key against Higgsfield *without spending
+   credits* (it sends an intentionally invalid request that only checks auth).
+
 ## Verifying without spending
 
 Set `RENDER_PROVIDER=mock` in any environment to exercise the full flow (sign-up →
-photo → placement → "render" → share) without an AI key, blob token, or spend. The
-mock returns the placement composite as the result.
+photo → placement → "render" → share → booking) without an AI key, blob token, or
+spend. The mock returns the placement composite as the result.
 
 ## Notes on the AI endpoint
 

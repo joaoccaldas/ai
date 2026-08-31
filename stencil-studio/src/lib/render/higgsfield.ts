@@ -14,6 +14,30 @@ function authHeader(c: HfCreds): string {
   return `Key ${c.keyId}:${c.keySecret}`;
 }
 
+// Verify a studio's key WITHOUT spending credits: send an intentionally invalid
+// (empty) body. A valid key is rejected for the body (400/422) rather than for
+// auth (401/403), so no job is created either way.
+export async function higgsfieldTest(creds: HfCreds): Promise<{ ok: boolean; status: number; message: string }> {
+  let res: Response;
+  try {
+    res = await fetch(`${creds.base}${SUBMIT_PATH}`, {
+      method: "POST",
+      headers: { Authorization: authHeader(creds), "Content-Type": "application/json" },
+      body: JSON.stringify({ input: {} }),
+    });
+  } catch (e) {
+    return { ok: false, status: 0, message: e instanceof Error ? e.message : "network error" };
+  }
+  if (res.status === 401 || res.status === 403) {
+    return { ok: false, status: res.status, message: "Key rejected — check the Key ID and Secret." };
+  }
+  if (res.status >= 500) {
+    return { ok: false, status: res.status, message: "The AI service is unavailable right now." };
+  }
+  // 200/400/404/422 etc. → auth was accepted
+  return { ok: true, status: res.status, message: "Connection looks good." };
+}
+
 export const higgsfieldProvider: RenderProvider = {
   name: "higgsfield",
 

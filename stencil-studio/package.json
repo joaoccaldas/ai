@@ -11,6 +11,7 @@
     "lint": "eslint",
     "postinstall": "npm run db:provider && prisma generate",
     "db:push": "npm run db:provider && prisma db push",
+    "db:seed": "node prisma/seed.mjs",
     "db:studio": "prisma studio",
     "e2e": "node tests/e2e.mjs"
   },
