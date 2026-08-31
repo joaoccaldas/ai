@@ -13,7 +13,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: noema-writer-${{ github.ref }}
+  group: noema-automation-pulse-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -24,6 +24,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -39,7 +40,7 @@ jobs:
               g=r.get('epistemic_guards',{})
               assert g.get('model_output_is_evidence') is False and g.get('unknown_is_absent') is False
               assert g.get('similarity_implies_descent') is False and g.get('automatic_claim_promotion') is False
-          print('validated', len(d.get('recent_runs',[])), 'run manifests')
+          print('validated',len(d.get('recent_runs',[])),'run manifests')
           PY
       - name: Commit pulse when changed
         run: |
@@ -48,4 +49,9 @@ jobs:
           git config user.name "github-actions[bot]";git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add projects/noema/site/automation-pulse.json
           git commit -m "ops(noema): refresh automation pulse [skip noema-pulse]"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "push race on attempt ${attempt}; retrying"; sleep $((attempt*2))
+          done
+          exit 1

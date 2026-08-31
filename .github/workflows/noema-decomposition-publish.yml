@@ -29,7 +29,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: noema-writer-${{ github.ref }}
+  group: noema-religion-federation-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -43,6 +43,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref_name }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -64,18 +65,18 @@ jobs:
           python - <<'PY'
           import json
           p=json.load(open('site/religion-decomposition.json'));d=json.load(open('site/drh-decomposition.json'));c=json.load(open('site/drh-catalog.json'));v=json.load(open('site/dplace-religion-variables.json'));f=json.load(open('site/religion-federation.json'));pc=json.load(open('site/pattern-candidates.json'));cov=json.load(open('site/coverage-matrix.json'));h=json.load(open('site/research-health.json'))
-          assert p['summary']['subjects'] >= 100 and p['summary']['accepted_assertions'] > 1000
-          assert d['summary']['comparable_religious_groups'] > 500 and d['summary']['assertions'] > 10000
-          assert c['summary']['entries'] > 1500 and c['summary']['questions'] > 4000 and c['summary']['routed_answers_exported'] == 0
-          assert v['summary']['candidate_variables'] > 100
-          assert f['summary']['comparable_belief_system_profiles'] > 700 and f['summary']['accepted_semantic_assertions'] > 10000
+          assert p['summary']['subjects']>=100 and p['summary']['accepted_assertions']>1000
+          assert d['summary']['comparable_religious_groups']>500 and d['summary']['assertions']>10000
+          assert c['summary']['entries']>1500 and c['summary']['questions']>4000 and c['summary']['routed_answers_exported']==0
+          assert v['summary']['candidate_variables']>100
+          assert f['summary']['comparable_belief_system_profiles']>700 and f['summary']['accepted_semantic_assertions']>10000
           assert f['gates']['unknown_is_absence'] is False and f['gates']['shared_feature_implies_common_origin'] is False and f['gates']['ritual_implies_psychoactive_use'] is False
-          assert pc['status'] == 'HYPOTHESIS_GENERATION_ONLY' and [x['source'] for x in pc['cohorts']] == ['PULOTU','DRH']
+          assert pc['status']=='HYPOTHESIS_GENERATION_ONLY' and [x['source'] for x in pc['cohorts']]==['PULOTU','DRH']
           assert all('explicitly PRESENT or explicitly ABSENT' in x['null_model']['missingness_rule'] for x in pc['cohorts'])
-          assert all(0 <= r['q_bh'] <= 1 and r['n_comparable'] <= r['cohort_profiles'] for x in pc['cohorts'] for r in x['candidates'])
+          assert all(0<=r['q_bh']<=1 and r['n_comparable']<=r['cohort_profiles'] for x in pc['cohorts'] for r in x['candidates'])
           assert all('phylogeny' in r['unresolved_confounders'] for x in pc['cohorts'] for r in x['candidates'])
-          assert cov['dimensions'] and len(cov['sources']) == 2
-          assert h['metrics']['accepted_semantic_assertions'] == f['summary']['accepted_semantic_assertions']
+          assert cov['dimensions'] and len(cov['sources'])==2
+          assert h['metrics']['accepted_semantic_assertions']==f['summary']['accepted_semantic_assertions']
           print(json.dumps(f['summary'],indent=2));print(json.dumps(h['metrics'],indent=2))
           PY
       - name: Write observability manifest
@@ -93,10 +94,16 @@ jobs:
           PY
       - name: Commit refreshed federation and run manifest
         run: |
+          set -euo pipefail
           files='site/religion-decomposition.json site/drh-decomposition.json site/drh-catalog.json site/dplace-religion-variables.json site/religion-federation.json site/pattern-candidates.json site/coverage-matrix.json site/research-health.json data/runs/religion-federation-${GITHUB_RUN_ID}.json'
           git config user.name 'github-actions[bot]';git config user.email '41898282+github-actions[bot]@users.noreply.github.com';git add $files
           git commit -m 'data(noema): refresh religion federation and run manifest [skip noema-decomposition]'
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          for attempt in 1 2 3 4; do
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "push race on attempt ${attempt}; retrying"; sleep $((attempt*2))
+          done
+          exit 1
       - uses: actions/upload-artifact@v4
         with:
           name: noema-religion-federation

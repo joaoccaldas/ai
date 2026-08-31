@@ -34,8 +34,7 @@ jobs:
           python - <<'PY'
           import json
           q=json.load(open('data/candidates/discovery-pressure-2026-08-29.json'))
-          assert q['status'] == 'CANDIDATE_UNREVIEWED'
-          assert len(q['candidates']) >= 10
+          assert q['status']=='CANDIDATE_UNREVIEWED' and len(q['candidates'])>=10
           assert all(c.get('review_target') for c in q['candidates'])
           assert 'No record in this file is evidence' in q['promotion_rule']
           PY
@@ -43,16 +42,12 @@ jobs:
           python -m json.tool /tmp/noema-religion-decomposition.json >/dev/null
           python - <<'PY'
           import json
-          x=json.load(open('/tmp/noema-religion-decomposition.json'))
-          s=x['summary']
-          assert s['subjects'] >= 100, s
-          assert s['upstream_variables'] >= 70, s
-          assert s['assertions'] >= 1000, s
-          assert s['mapped_assertions'] > 0, s
-          assert s['raw_assertions'] > 0, s
-          assert all(a['state'] != 'UNKNOWN' for a in x['assertions'])
+          x=json.load(open('/tmp/noema-religion-decomposition.json'));s=x['summary']
+          assert s['subjects']>=100 and s['upstream_variables']>=70 and s['assertions']>=1000
+          assert s['mapped_assertions']>0 and s['raw_assertions']>0
+          assert all(a['state']!='UNKNOWN' for a in x['assertions'])
           assert all(a.get('source_locator',{}).get('variable_id') for a in x['assertions'])
-          print('PULOTU', json.dumps(s, indent=2))
+          print('PULOTU',json.dumps(s,indent=2))
           PY
       - name: Validate DRH/SCCSR compact decomposition corpus
         run: |
@@ -60,41 +55,35 @@ jobs:
           python -m json.tool /tmp/noema-drh-decomposition.json >/dev/null
           python - <<'PY'
           import json
-          x=json.load(open('/tmp/noema-drh-decomposition.json'))
-          s=x['summary']
-          assert x['dataset_id'] == 'NOEMA-RELIGION-DECOMPOSITION-DRH-V1'
-          assert s['subjects'] > 100, s
-          assert s['questions'] > 100, s
-          assert s['mapped_questions'] >= 20, s
-          assert s['assertions'] > 100, s
-          assert s['comparable_religious_groups'] > 0, s
+          x=json.load(open('/tmp/noema-drh-decomposition.json'));s=x['summary']
+          assert x['dataset_id']=='NOEMA-RELIGION-DECOMPOSITION-DRH-V1'
+          assert s['subjects']>100 and s['questions']>100 and s['mapped_questions']>=20 and s['assertions']>100 and s['comparable_religious_groups']>0
           assert all(a['state'] in {'PRESENT','ABSENT','UNKNOWN'} for a in x['assertions'])
           assert all(a.get('source_locator',{}).get('question_id') for a in x['assertions'])
           assert all('expert_name' in a and 'branching_question' in a for a in x['assertions'])
           assert any(not q['mapped'] for q in x['questions']), 'raw DRH question index was lost'
-          print('DRH', json.dumps(s, indent=2))
+          print('DRH',json.dumps(s,indent=2))
           PY
       - name: Validate v1 reference catalog and multi-page routes
         run: |
           python -m json.tool data/reference/belief-catalog-v1.json >/dev/null
           python -m json.tool data/candidates/discovery-triage-2026-08-29.json >/dev/null
+          python -m json.tool schemas/run-manifest-v1.json >/dev/null
           python - <<'PY'
           import json
           from pathlib import Path
-          c=json.load(open('data/reference/belief-catalog-v1.json'))
-          ids=[e['id'] for e in c['entities']]
-          assert len(ids) == len(set(ids)), 'duplicate reference entity IDs'
-          known=set(ids)
+          c=json.load(open('data/reference/belief-catalog-v1.json'));ids=[e['id'] for e in c['entities']]
+          assert len(ids)==len(set(ids));known=set(ids)
           for e in c['entities']:
               assert e.get('name') and e.get('kind')
               assert e.get('profile_status') in {'REFERENCE_ONLY','ANALYTIC_COMPONENT','ANALYTIC_TEMPLATE'}
-              assert e.get('profile_status') != 'EVIDENCE'
-              for r in e.get('related_entities',[]):
-                  assert r in known, f'unknown related entity {r} from {e["id"]}'
-              for s in e.get('sources',[]):
-                  assert str(s.get('url','')).startswith('https://')
+              for r in e.get('related_entities',[]): assert r in known, (e['id'],r)
+              for s in e.get('sources',[]): assert str(s.get('url','')).startswith('https://')
+          app=Path('site/app-v1.js').read_text();assert 'reference_traits' in app and 'normalizeCatalog' in app
+          dashboard=Path('site/index.html').read_text();assert '<title>NOEMA Research OS</title>' in dashboard and 'Human belief,' in dashboard and 'dashboard-v2.js' in dashboard
+          dashboard2=Path('site/dashboard-v1.html').read_text();assert '<title>NOEMA Research OS</title>' in dashboard2 and 'dashboard-v2.css' in dashboard2
+          pulse=Path('site/automation-pulse.html').read_text();assert '<title>Automation Pulse · NOEMA</title>' in pulse and 'automation-pulse.js' in pulse
           pages={
-              'site/dashboard-v1.html':'Search beneath religion.',
               'site/explore.html':'Break belief systems into parts.',
               'site/belief-systems.html':'No religion is one variable.',
               'site/gods.html':'Every god gets a card.',
@@ -109,12 +98,14 @@ jobs:
               'site/drh.html':'Entries, questions, metadata.',
           }
           for path,marker in pages.items():
-              text=Path(path).read_text(encoding='utf-8')
-              assert marker in text, (path,marker)
-              assert 'app-v1.css' in text
-              assert 'app-v1.js' in text
+              text=Path(path).read_text();assert marker in text,(path,marker);assert 'app-v1.css' in text and 'app-v1.js' in text
+          for p in Path('data/runs').glob('*.json'):
+              r=json.load(open(p));g=r['epistemic_guards'];assert r['run_id'] and r['task_type'] and r['status'];assert all(g[k] is False for k in ['model_output_is_evidence','unknown_is_absent','similarity_implies_descent','automatic_claim_promotion'])
           PY
           node --check site/app-v1.js
+          node --check site/dashboard-v2.js
+          node --check site/automation-pulse.js
+          node --check site/pattern-v2.js
       - name: Validate every evidence dossier and deterministic analysis projection
         run: |
           python -m json.tool site/data.json >/dev/null
@@ -128,65 +119,61 @@ jobs:
       - name: Validate construct-matched Deep Time comparison
         run: |
           python -m json.tool data/comparisons/deep-time-constructs.json >/dev/null
-          python scripts/compare_deep_time.py \
-            data/comparisons/deep-time-constructs.json \
-            data/reviewed/evidence-pack-002-deep-time.json \
-            data/reviewed/evidence-pack-003-homo-sapiens.json \
-            --output /tmp/noema-deep-time-comparison.json
-          python -m json.tool /tmp/noema-deep-time-comparison.json >/dev/null
+          python scripts/compare_deep_time.py data/comparisons/deep-time-constructs.json data/reviewed/evidence-pack-002-deep-time.json data/reviewed/evidence-pack-003-homo-sapiens.json --output /tmp/noema-deep-time-comparison.json
           python - <<'PY'
           import json
           x=json.load(open('/tmp/noema-deep-time-comparison.json'))
-          assert x['summary']['matched_constructs'] == 4
-          assert 'species intelligence score' in [v.lower() for v in x['forbidden_outputs']]
-          assert 'cognitive superiority ranking' in [v.lower() for v in x['forbidden_outputs']]
+          assert x['summary']['matched_constructs']==4
+          forbidden=[v.lower() for v in x['forbidden_outputs']]
+          assert 'species intelligence score' in forbidden and 'cognitive superiority ranking' in forbidden
           PY
       - name: Validate Human Meaning Atlas projection
         run: |
-          python scripts/build_human_meaning_atlas.py \
-            site/societies.json \
-            data/reviewed/evidence-pack-001.json \
-            data/reviewed/evidence-pack-002-deep-time.json \
-            data/reviewed/evidence-pack-003-homo-sapiens.json \
-            --output /tmp/noema-human-meaning-atlas.json
-          python -m json.tool /tmp/noema-human-meaning-atlas.json >/dev/null
+          python scripts/build_human_meaning_atlas.py site/societies.json data/reviewed/evidence-pack-001.json data/reviewed/evidence-pack-002-deep-time.json data/reviewed/evidence-pack-003-homo-sapiens.json --output /tmp/noema-human-meaning-atlas.json
           python - <<'PY'
           import json
           x=json.load(open('/tmp/noema-human-meaning-atlas.json'))
-          assert x['atlas_id'] == 'NOEMA-HUMAN-MEANING-ATLAS-001'
-          assert x['release'] == 'v0.9'
-          assert x['summary']['coverage_societies'] == 100
-          assert x['summary']['mapped_dated_events'] > 0
-          assert x['time_domain_bp']['max'] == 500000
+          assert x['atlas_id']=='NOEMA-HUMAN-MEANING-ATLAS-001' and x['release']=='v0.9'
+          assert x['summary']['coverage_societies']==100 and x['summary']['mapped_dated_events']>0 and x['time_domain_bp']['max']==500000
           assert all(e['site'] is not None for e in x['mapped_events'])
           assert 'species ranking from evidence counts' in [v.lower() for v in x['forbidden_inferences']]
           PY
-      - name: Syntax-check observatory JavaScript
+      - name: Validate federation, patterns, health and automation observability
+        run: |
+          python -m json.tool site/religion-federation.json >/dev/null
+          python -m json.tool site/pattern-candidates.json >/dev/null
+          python -m json.tool site/coverage-matrix.json >/dev/null
+          python -m json.tool site/research-health.json >/dev/null
+          python scripts/build_automation_pulse.py --output /tmp/automation-pulse.json
+          python - <<'PY'
+          import json
+          f=json.load(open('site/religion-federation.json'));p=json.load(open('site/pattern-candidates.json'));h=json.load(open('site/research-health.json'));a=json.load(open('/tmp/automation-pulse.json'))
+          assert f['summary']['comparable_belief_system_profiles']>700 and f['summary']['accepted_semantic_assertions']>10000
+          assert p['status']=='HYPOTHESIS_GENERATION_ONLY'
+          assert all('explicitly PRESENT or explicitly ABSENT' in c['null_model']['missingness_rule'] for c in p['cohorts'])
+          assert all(r['n_comparable']<=r['cohort_profiles'] and 'phylogeny' in r['unresolved_confounders'] for c in p['cohorts'] for r in c['candidates'])
+          assert h['metrics']['ontology_dimensions']>=16
+          assert a['status']=='OBSERVABILITY_ONLY'
+          PY
+      - name: Syntax-check inline research surfaces
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
-          pages = {
-              'site/index.html': ('<title>NOEMA Observatory</title>', 'Search beneath religion.'),
-              'site/deep-time.html': ('<title>NOEMA Deep Time</title>', 'behavioral evidence may climb toward interpretation'),
-              'site/deep-time-compare.html': ('<title>NOEMA Deep Time Compare</title>', 'no species ranking'),
-              'site/human-meaning-atlas.html': ('<title>NOEMA Human Meaning Atlas</title>', '500,000 BP → present'),
-              'site/religion-decomposition.html': ('<title>NOEMA Religion Decomposition</title>', 'Search religion beneath religion'),
-              'site/simulations.html': ('<title>Simulations · NOEMA</title>', 'Is a pattern surprising?'),
-              'site/drh.html': ('<title>DRH Explorer · NOEMA</title>', 'Entries, questions, metadata.'),
+          pages={
+              'site/deep-time.html':('<title>NOEMA Deep Time</title>','behavioral evidence may climb toward interpretation'),
+              'site/deep-time-compare.html':('<title>NOEMA Deep Time Compare</title>','no species ranking'),
+              'site/human-meaning-atlas.html':('<title>NOEMA Human Meaning Atlas</title>','500,000 BP → present'),
+              'site/religion-decomposition.html':('<title>NOEMA Religion Decomposition</title>','Search religion beneath religion'),
+              'site/simulations.html':('<title>Simulations · NOEMA</title>','Is a pattern surprising?'),
+              'site/drh.html':('<title>DRH Explorer · NOEMA</title>','Entries, questions, metadata.'),
           }
-          for path, required in pages.items():
-              html=Path(path).read_text(encoding='utf-8')
-              scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>', html, flags=re.S|re.I)
-              inline=[s for s in scripts if s.strip()]
-              assert inline, f'inline site script not found in {path}'
-              target=Path('/tmp')/(Path(path).stem + '-noema-site.js')
-              target.write_text('\n'.join(inline), encoding='utf-8')
-              for marker in required:
-                  assert marker in html, f'{marker!r} missing from {path}'
+          for path,required in pages.items():
+              html=Path(path).read_text();scripts=re.findall(r'<script(?:\s[^>]*)?>(.*?)</script>',html,flags=re.S|re.I);inline=[s for s in scripts if s.strip()];assert inline,path
+              target=Path('/tmp')/(Path(path).stem+'-noema-site.js');target.write_text('\n'.join(inline))
+              for marker in required: assert marker in html,(path,marker)
               print(target)
           PY
-          node --check /tmp/index-noema-site.js
           node --check /tmp/deep-time-noema-site.js
           node --check /tmp/deep-time-compare-noema-site.js
           node --check /tmp/human-meaning-atlas-noema-site.js
