@@ -16,6 +16,8 @@ export default async function SettingsPage() {
         tagline={studio.tagline}
         accentColor={studio.accentColor}
         logoUrl={studio.logoUrl}
+        bookingEnabled={studio.bookingEnabled}
+        depositHint={studio.depositHint ?? ""}
         hfConnected={studio.hfConnected}
         hfKeyIdMasked={masked}
         subscriptionStatus={studio.subscriptionStatus}

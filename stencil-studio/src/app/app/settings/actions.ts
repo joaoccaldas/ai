@@ -11,6 +11,7 @@ const brandSchema = z.object({
   name: z.string().min(2).max(60),
   tagline: z.string().max(80),
   accentColor: z.string().regex(/^#[0-9a-fA-F]{6}$/, "Use a hex colour like #d24b3f"),
+  depositHint: z.string().max(80),
 });
 
 export type FormState = { ok?: boolean; error?: string };
@@ -21,8 +22,10 @@ export async function saveBrandingAction(_prev: FormState, formData: FormData): 
     name: formData.get("name"),
     tagline: formData.get("tagline"),
     accentColor: formData.get("accentColor"),
+    depositHint: formData.get("depositHint") ?? "",
   });
   if (!parsed.success) return { error: parsed.error.issues[0]?.message ?? "Invalid" };
+  const bookingEnabled = formData.get("bookingEnabled") === "on";
 
   let logoUrl: string | undefined;
   const logo = formData.get("logo");
@@ -35,7 +38,7 @@ export async function saveBrandingAction(_prev: FormState, formData: FormData): 
 
   await prisma.studio.update({
     where: { id: studio.id },
-    data: { ...parsed.data, ...(logoUrl ? { logoUrl } : {}) },
+    data: { ...parsed.data, bookingEnabled, ...(logoUrl ? { logoUrl } : {}) },
   });
   revalidatePath("/app/settings");
   return { ok: true };

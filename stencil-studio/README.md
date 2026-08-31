@@ -41,17 +41,32 @@ sibling to the free client-side demo at `/stencil/` in the parent site.
 `RENDER_PROVIDER=mock` renders locally (returns the composite) so the whole flow
 works with no key — useful for demos and CI.
 
-## Local development
+## Local development (zero external services)
+
+The Prisma provider is chosen from `DATABASE_URL`: a `file:` URL uses **SQLite**,
+a `postgres://` URL uses **Postgres**. So local dev needs no cloud database.
 
 ```bash
-cp .env.example .env.local     # fill in the values (see below)
-npm install                    # runs `prisma generate`
-npm run db:push                # create the schema in your dev database
-RENDER_PROVIDER=mock npm run dev
+cp .env.example .env           # defaults to SQLite + mock renderer
+# set AUTH_SECRET and APP_ENCRYPTION_KEY:  openssl rand -base64 32
+npm install                    # sets provider + runs `prisma generate`
+npm run db:push                # creates ./dev.db
+npm run dev                    # RENDER_PROVIDER=mock in .env → no AI key/blob needed
 ```
 
-Open http://localhost:3000, create a studio, and run a try-on. With
-`RENDER_PROVIDER=mock` you don't need an AI key or blob token.
+Open http://localhost:3000, create a studio, and run a try-on. In `mock` mode the
+placement composite is returned as the "render," so the whole flow is clickable.
+
+## Testing
+
+`npm run build` type-checks the whole app. The end-to-end test drives the real
+sellable loop (sign up → try-on render → session → client share → booking →
+studio pipeline) against a running instance in mock mode:
+
+```bash
+npm run build && npm run start -- -p 3111 &     # start the built app
+BASE=http://127.0.0.1:3111 npm run e2e          # 7 checks
+```
 
 ## Data model
 

@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import type { Prisma } from "@prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { isActive } from "@/lib/plans";
@@ -60,7 +59,7 @@ export async function POST(req: Request) {
       designName: b.designName,
       bodyUrl: b.photoUrl,
       compositeUrl: b.compositeUrl,
-      placement: (b.placement ?? undefined) as Prisma.InputJsonValue | undefined,
+      placement: b.placement ? JSON.stringify(b.placement) : undefined,
       prompt: tryOnPrompt(b.designName),
       provider: isMock() ? "mock" : "higgsfield",
     },

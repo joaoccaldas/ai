@@ -8,6 +8,8 @@ type Props = {
   tagline: string;
   accentColor: string;
   logoUrl: string | null;
+  bookingEnabled: boolean;
+  depositHint: string;
   hfConnected: boolean;
   hfKeyIdMasked: string | null;
   subscriptionStatus: string;
@@ -52,6 +54,15 @@ export default function SettingsClient(p: Props) {
               <input className="input" name="logo" type="file" accept="image/*" />
             </label>
           </div>
+          <div className="hairline" style={{ margin: "1rem 0" }} />
+          <label style={{ display: "flex", gap: ".6rem", alignItems: "center", marginBottom: "1rem" }}>
+            <input type="checkbox" name="bookingEnabled" defaultChecked={p.bookingEnabled} style={{ width: 18, height: 18, accentColor: "var(--accent)" }} />
+            <span style={{ fontSize: ".9rem" }}>Let clients request a booking from their preview</span>
+          </label>
+          <label className="field">
+            <span className="label">Deposit hint (shown on the booking form)</span>
+            <input className="input" name="depositHint" defaultValue={p.depositHint} placeholder="e.g. A £50 deposit secures your slot" />
+          </label>
           {brand.error && <p style={{ color: "var(--bad)", fontSize: ".85rem" }}>{brand.error}</p>}
           <button className="btn btn-solid" disabled={brandPending}>{brandPending ? "Saving…" : "Save branding"}</button>
         </form>

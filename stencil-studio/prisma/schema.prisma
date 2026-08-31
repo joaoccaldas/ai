@@ -5,7 +5,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  // Provider is set from DATABASE_URL by scripts/set-db-provider.mjs
+  // (sqlite locally, postgresql in production). Do not edit by hand.
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -31,6 +33,11 @@ model Studio {
   plan                 String    @default("none")
   trialEndsAt          DateTime?
 
+  // booking / conversion
+  bookingEnabled Boolean @default(true)
+  currency       String  @default("GBP")
+  depositHint    String? // e.g. "£50 deposit secures your slot"
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -38,6 +45,7 @@ model Studio {
   designs  Design[]
   sessions ClientSession[]
   renders  Render[]
+  bookings Booking[]
 }
 
 model User {
@@ -76,9 +84,32 @@ model ClientSession {
   shareToken    String   @unique @default(cuid())
   createdAt     DateTime @default(now())
 
-  renders Render[]
+  renders  Render[]
+  bookings Booking[]
 
   @@index([studioId])
+}
+
+model Booking {
+  id        String  @id @default(cuid())
+  studioId  String
+  studio    Studio  @relation(fields: [studioId], references: [id], onDelete: Cascade)
+  sessionId String?
+  session   ClientSession? @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+
+  clientName    String
+  clientContact String
+  preferredDate String?
+  designName    String?
+  message       String?
+  status        String   @default("requested") // requested|booked|completed|cancelled
+  depositPaid   Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([studioId])
+  @@index([status])
 }
 
 model Render {
@@ -94,7 +125,7 @@ model Render {
   providerRequestId String?
   providerStatusUrl String?
   prompt            String?
-  placement         Json?
+  placement         String?
   bodyUrl           String?
   designUrl         String?
   compositeUrl      String?

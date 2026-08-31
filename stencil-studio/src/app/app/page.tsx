@@ -5,10 +5,11 @@ import { prisma } from "@/lib/db";
 export default async function Dashboard() {
   const { studio } = await requireStudio();
 
-  const [sessionCount, renderCount, designCount, recent] = await Promise.all([
+  const [sessionCount, renderCount, designCount, newRequests, recent] = await Promise.all([
     prisma.clientSession.count({ where: { studioId: studio.id } }),
     prisma.render.count({ where: { studioId: studio.id, status: "completed" } }),
     prisma.design.count({ where: { studioId: studio.id } }),
+    prisma.booking.count({ where: { studioId: studio.id, status: "requested" } }),
     prisma.clientSession.findMany({
       where: { studioId: studio.id },
       orderBy: { createdAt: "desc" },
@@ -34,6 +35,14 @@ export default async function Dashboard() {
         <Link href="/app/try" className="btn btn-solid btn-lg">＋ New client try-on</Link>
       </div>
 
+      {newRequests > 0 && (
+        <Link href="/app/bookings" className="card" style={{ display: "flex", alignItems: "center", gap: "1rem", marginBottom: "1.6rem", borderColor: "var(--gold)" }}>
+          <span className="badge warn">{newRequests} new</span>
+          <span>You have {newRequests} booking request{newRequests === 1 ? "" : "s"} waiting.</span>
+          <span style={{ marginLeft: "auto", color: "var(--gold)" }}>Open bookings →</span>
+        </Link>
+      )}
+
       {setupLeft.length > 0 && (
         <div className="card" style={{ marginBottom: "1.6rem", borderColor: "color-mix(in srgb, var(--gold) 40%, transparent)" }}>
           <div className="badge warn" style={{ marginBottom: ".8rem" }}>Finish setup</div>
@@ -51,6 +60,7 @@ export default async function Dashboard() {
       <div className="grid-cards" style={{ marginBottom: "2rem" }}>
         <div className="card stat"><div className="v">{sessionCount}</div><div className="k">Client sessions</div></div>
         <div className="card stat"><div className="v">{renderCount}</div><div className="k">AI renders</div></div>
+        <div className="card stat"><div className="v">{newRequests}</div><div className="k">Booking requests</div></div>
         <div className="card stat"><div className="v">{designCount}</div><div className="k">Your designs</div></div>
       </div>
 

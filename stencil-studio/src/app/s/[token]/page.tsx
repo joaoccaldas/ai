@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
+import BookingForm from "./BookingForm";
 
 export const dynamic = "force-dynamic";
 
@@ -41,6 +42,12 @@ export default async function SharePage({ params }: { params: Promise<{ token: s
                 {r.designName && <figcaption style={{ textAlign: "center", marginTop: ".5rem", fontSize: ".85rem" }} className="muted">{r.designName}</figcaption>}
               </figure>
             ))}
+          </div>
+        )}
+
+        {studio.bookingEnabled && session.renders.length > 0 && (
+          <div style={{ maxWidth: 560, margin: "2.5rem auto 0" }}>
+            <BookingForm token={session.shareToken} studioName={studio.name} depositHint={studio.depositHint} />
           </div>
         )}
 

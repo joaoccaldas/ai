@@ -16,25 +16,32 @@ export default function Landing() {
       </header>
 
       {/* hero */}
-      <section className="wrap" style={{ padding: "clamp(3rem,9vw,7rem) 0 clamp(2rem,5vw,4rem)" }}>
-        <div style={{ maxWidth: 760 }}>
-          <div className="kicker">AI tattoo try-on · for tattoo studios</div>
-          <h1 className="h-display" style={{ fontSize: "clamp(2.6rem,7vw,5rem)", marginTop: "1.2rem" }}>
-            Let clients see the tattoo<br /><span style={{ color: "var(--gold)" }}>on their own skin</span> — before the needle.
-          </h1>
-          <p className="muted" style={{ fontSize: "1.1rem", marginTop: "1.4rem", maxWidth: "56ch", fontWeight: 300 }}>
-            A white-label kiosk for your shop. Snap the client&apos;s photo, drop on a design from your
-            artists&apos; flash, and generate a photorealistic preview that wraps to their body. Fewer
-            second-guesses, more confident bookings and deposits.
-          </p>
-          <div style={{ display: "flex", gap: ".7rem", marginTop: "2rem", flexWrap: "wrap" }}>
-            <Link href="/signup" className="btn btn-solid btn-lg">Start {TRIAL_DAYS}-day free trial</Link>
-            <Link href="#how" className="btn btn-ghost btn-lg">See how it works</Link>
+      <section className="wrap" style={{ padding: "clamp(3rem,8vw,6rem) 0 clamp(2rem,5vw,4rem)" }}>
+        <div style={{ display: "grid", gap: "clamp(1.5rem,4vw,3rem)", gridTemplateColumns: "minmax(0,1.15fr) minmax(0,.85fr)", alignItems: "center" }} className="hero-grid">
+          <div>
+            <div className="kicker">AI tattoo try-on · for tattoo studios</div>
+            <h1 className="h-display" style={{ fontSize: "clamp(2.4rem,6vw,4.6rem)", marginTop: "1.2rem" }}>
+              Let clients see the tattoo<br /><span style={{ color: "var(--gold)" }}>on their own skin</span> — before the needle.
+            </h1>
+            <p className="muted" style={{ fontSize: "1.1rem", marginTop: "1.4rem", maxWidth: "52ch", fontWeight: 300 }}>
+              A white-label kiosk for your shop. Snap the client&apos;s photo, drop on a design from your
+              artists&apos; flash, and generate a photorealistic preview that wraps to their body — then
+              turn it into a booking.
+            </p>
+            <div style={{ display: "flex", gap: ".7rem", marginTop: "2rem", flexWrap: "wrap" }}>
+              <Link href="/signup" className="btn btn-solid btn-lg">Start {TRIAL_DAYS}-day free trial</Link>
+              <Link href="#how" className="btn btn-ghost btn-lg">See how it works</Link>
+            </div>
+            <p className="faint" style={{ fontSize: ".8rem", marginTop: "1rem" }}>
+              Bring your own AI key · no per-render fees from us · cancel anytime.
+            </p>
           </div>
-          <p className="faint" style={{ fontSize: ".8rem", marginTop: "1rem" }}>
-            Bring your own AI key · no per-render fees from us · cancel anytime.
-          </p>
+          <div style={{ position: "relative" }}>
+            <img src="/demo-render.jpg" alt="A koi tattoo previewed on a forearm" style={{ width: "100%", borderRadius: 16, border: "1px solid var(--line)", boxShadow: "0 40px 80px -40px rgba(0,0,0,.8)" }} />
+            <span className="badge" style={{ position: "absolute", left: 14, bottom: 14, background: "var(--bg-2)" }}>AI preview · real photo</span>
+          </div>
         </div>
+        <style>{`@media(max-width:820px){.hero-grid{grid-template-columns:1fr !important}}`}</style>
       </section>
 
       {/* value props */}
