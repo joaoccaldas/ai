@@ -3,6 +3,7 @@ import { z } from "zod";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/db";
 import { isActive } from "@/lib/plans";
+import { isAllowedMediaUrl } from "@/lib/media";
 import { getProvider, isMock, studioCreds, tryOnPrompt } from "@/lib/render";
 
 export const runtime = "nodejs";
@@ -32,6 +33,11 @@ export async function POST(req: Request) {
   const parsed = bodySchema.safeParse(await req.json());
   if (!parsed.success) return NextResponse.json({ error: "invalid body" }, { status: 400 });
   const b = parsed.data;
+
+  // Only render media we stored ourselves — never an arbitrary external URL.
+  if (!isAllowedMediaUrl(b.photoUrl) || !isAllowedMediaUrl(b.compositeUrl)) {
+    return NextResponse.json({ error: "media url not allowed" }, { status: 400 });
+  }
 
   // Reuse or create the client session.
   let sessionId = b.sessionId;

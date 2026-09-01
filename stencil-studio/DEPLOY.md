@@ -68,6 +68,26 @@ Set `RENDER_PROVIDER=mock` in any environment to exercise the full flow (sign-up
 photo → placement → "render" → share → booking) without an AI key, blob token, or
 spend. The mock returns the placement composite as the result.
 
+## Security & privacy
+
+Handled in code:
+- Passwords hashed with bcrypt; auth by short-lived JWT session cookies
+  (`SameSite=Lax`, which blocks the cross-site POSTs that would enable CSRF).
+- Each studio's AI **secret is encrypted at rest** (AES-256-GCM, `APP_ENCRYPTION_KEY`)
+  and only decrypted server-side to submit a render; the UI only ever shows the Key ID.
+- Every query is scoped by `studioId` from the session (multi-tenant isolation).
+- Stripe webhooks verify the signature; the render API only accepts media URLs we
+  produced (`isAllowedMediaUrl`); uploads are restricted to images.
+
+Before real customers, add:
+- **Rate limiting** on `/signup`, `/login`, `/api/bookings`, `/api/upload` (e.g.
+  Upstash Ratelimit) — serverless has no shared memory, so do it at the edge.
+- **Photo retention:** deleting a client session cascades its DB rows, but the
+  uploaded blobs are not deleted — add a blob cleanup + a "delete client data"
+  action, and publish a privacy policy (you store photos of real people).
+- **Email verification / password reset** (currently password-only signup).
+- Consider signed, expiring URLs for client photos instead of public blob URLs.
+
 ## Notes on the AI endpoint
 
 The provider adapter (`src/lib/render/higgsfield.ts`) targets

@@ -13,13 +13,16 @@ export async function POST(req: Request) {
   try {
     if (ct.includes("application/json")) {
       const { dataUrl, filename } = await req.json();
-      if (typeof dataUrl !== "string") return NextResponse.json({ error: "dataUrl required" }, { status: 400 });
+      if (typeof dataUrl !== "string" || !/^data:image\//.test(dataUrl)) {
+        return NextResponse.json({ error: "an image dataUrl is required" }, { status: 400 });
+      }
       const stored = await storeDataUrl(dataUrl, filename || "image.png");
       return NextResponse.json(stored);
     }
     const form = await req.formData();
     const file = form.get("file");
     if (!(file instanceof File)) return NextResponse.json({ error: "file required" }, { status: 400 });
+    if (!file.type.startsWith("image/")) return NextResponse.json({ error: "images only" }, { status: 415 });
     if (file.size > 12_000_000) return NextResponse.json({ error: "file too large" }, { status: 413 });
     const buf = Buffer.from(await file.arrayBuffer());
     const stored = await storeBuffer(buf, { filename: file.name || "image", contentType: file.type || "application/octet-stream" });
