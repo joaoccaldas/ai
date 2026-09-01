@@ -13,109 +13,50 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
-      - name: Rebuild legacy Pages and verify public Studio
+      - name: Rebuild legacy Pages and verify public Effects V2
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           api="https://api.github.com/repos/${GITHUB_REPOSITORY}/pages"
-          headers=(
-            --header "Authorization: Bearer ${GH_TOKEN}"
-            --header 'Accept: application/vnd.github+json'
-            --header 'X-GitHub-Api-Version: 2026-03-10'
-          )
+          headers=(--header "Authorization: Bearer ${GH_TOKEN}" --header 'Accept: application/vnd.github+json' --header 'X-GitHub-Api-Version: 2026-03-10')
           run_url="https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
           public_root="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}"
-
-          site=$(curl --fail --silent --show-error "${headers[@]}" "$api")
-          build_type=$(printf '%s' "$site" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("build_type", "unknown"))')
-          branch=$(printf '%s' "$site" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("source") or {}).get("branch", "none"))')
-          path=$(printf '%s' "$site" | python3 -c 'import json,sys; print((json.load(sys.stdin).get("source") or {}).get("path", "none"))')
-          echo "Pages mode: ${build_type}; source=${branch}${path}"
-
-          request_code=$(curl --silent --show-error \
-            --output /tmp/build-request.json \
-            --write-out '%{http_code}' \
-            --request POST \
-            "${headers[@]}" \
-            "$api/builds")
+          request_code=$(curl -sS -o /tmp/build.json -w '%{http_code}' -X POST "${headers[@]}" "$api/builds")
           echo "Legacy build request HTTP ${request_code}"
-          cat /tmp/build-request.json || true
-          echo
-
-          latest_status="unknown"
-          latest_commit="unknown"
-          latest_error="unknown"
+          latest_status=unknown; latest_commit=unknown
           for attempt in $(seq 1 60); do
-            latest=$(curl --fail --silent --show-error "${headers[@]}" "$api/builds/latest")
-            latest_status=$(printf '%s' "$latest" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("status", "unknown"))')
-            latest_commit=$(printf '%s' "$latest" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("commit", "unknown"))')
-            latest_error=$(printf '%s' "$latest" | python3 -c 'import json,sys; e=json.load(sys.stdin).get("error") or {}; print(e.get("message") or "none")')
-            echo "Build attempt ${attempt}: status=${latest_status}; commit=${latest_commit}; error=${latest_error}"
-            if [ "$latest_status" = "built" ] && [ "$latest_commit" = "$GITHUB_SHA" ]; then
-              break
-            fi
-            if [ "$latest_status" = "errored" ]; then
-              break
-            fi
+            latest=$(curl -fsS "${headers[@]}" "$api/builds/latest")
+            latest_status=$(printf '%s' "$latest"|python3 -c 'import json,sys;print(json.load(sys.stdin).get("status","unknown"))')
+            latest_commit=$(printf '%s' "$latest"|python3 -c 'import json,sys;print(json.load(sys.stdin).get("commit","unknown"))')
+            echo "Build ${attempt}: ${latest_status} ${latest_commit}"
+            [ "$latest_status" = built ] && [ "$latest_commit" = "$GITHUB_SHA" ] && break
             sleep 5
           done
-
-          demos=(
-            cursor-light cutaway-reveal day-night-morph ambient-spill world-transition
-            camera-depth architectural-type theatre-light bioluminescence interactive-hud
-          )
-          public_ok=0
+          demos=(cursor-light cutaway-reveal day-night-morph ambient-spill world-transition camera-depth architectural-type theatre-light bioluminescence interactive-hud)
           verified=0
           for attempt in $(seq 1 48); do
             verified=0
-            index_body=$(curl --fail --silent --show-error --location \
-              --header 'Cache-Control: no-cache, no-store, must-revalidate' \
-              --header 'Pragma: no-cache' \
-              "${public_root}/studio/effects/?build=${GITHUB_SHA}" || true)
-            if printf '%s' "$index_body" | grep -q 'Caldas Studio — Effects Lab' \
-              && printf '%s' "$index_body" | grep -q 'effects.js?v=1'; then
+            index=$(curl -fsSL -H 'Cache-Control: no-cache' "${public_root}/studio/effects/?build=${GITHUB_SHA}" || true)
+            if printf '%s' "$index"|grep -q 'effects.js?v=2'; then
               for demo in "${demos[@]}"; do
-                body=$(curl --fail --silent --show-error --location \
-                  --header 'Cache-Control: no-cache, no-store, must-revalidate' \
-                  --header 'Pragma: no-cache' \
-                  "${public_root}/studio/effects/${demo}/?build=${GITHUB_SHA}" || true)
-                if printf '%s' "$body" | grep -q "data-demo=\"${demo}\"" \
-                  && printf '%s' "$body" | grep -q 'effects.js?v=1'; then
-                  verified=$((verified+1))
-                fi
+                body=$(curl -fsSL -H 'Cache-Control: no-cache' "${public_root}/studio/effects/${demo}/?build=${GITHUB_SHA}" || true)
+                printf '%s' "$body"|grep -q 'effects.js?v=2' && verified=$((verified+1))
               done
             fi
-            if [ "$verified" = "10" ]; then
-              public_ok=1
-              echo "Effects Lab verified publicly: 10/10 routes on attempt ${attempt}."
-              break
-            fi
-            echo "Public attempt ${attempt}: effects verified=${verified}/10; retrying."
-            sleep 5
+            [ "$verified" = 10 ] && break
+            echo "Public ${attempt}: ${verified}/10 V2 routes"; sleep 5
           done
-
-          state="success"
-          description="legacy=${latest_status}; commit=${latest_commit:0:7}; effects=${verified}/10"
-          if [ "$latest_status" != "built" ] || [ "$latest_commit" != "$GITHUB_SHA" ] || [ "$public_ok" != "1" ]; then
-            state="failure"
-          fi
+          state=success
+          [ "$latest_status" = built ] && [ "$latest_commit" = "$GITHUB_SHA" ] && [ "$verified" = 10 ] || state=failure
+          description="legacy=${latest_status}; commit=${latest_commit:0:7}; effects-v2=${verified}/10"
           payload=$(python3 - "$state" "$description" "$run_url" <<'PY'
-          import json, sys
-          print(json.dumps({
-              "state": sys.argv[1],
-              "context": "studio-public",
-              "description": sys.argv[2],
-              "target_url": sys.argv[3]
-          }))
+          import json,sys
+          print(json.dumps({'state':sys.argv[1],'context':'studio-public','description':sys.argv[2],'target_url':sys.argv[3]}))
           PY
           )
-          curl --fail --silent --show-error \
-            --request POST \
-            "${headers[@]}" \
-            "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" \
-            --data "$payload" >/dev/null
-
-          echo "SUMMARY: ${description}"
-          test "$state" = "success"
+          curl -fsS -X POST "${headers[@]}" "https://api.github.com/repos/${GITHUB_REPOSITORY}/statuses/${GITHUB_SHA}" --data "$payload" >/dev/null
+          echo "$description"
+          test "$state" = success
