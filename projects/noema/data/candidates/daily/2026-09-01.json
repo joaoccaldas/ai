@@ -1,0 +1,298 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-01",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-01T06:20:00Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-33469994194",
+    "completed_at": "2026-09-01T04:29:18Z",
+    "code_commit": "41fe8044bbed32a861f5f63a85a4bd0577eadea6",
+    "candidate_count": 125,
+    "priority_candidate_count": 30,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 2,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 0,
+      "NEWLY_INDEXED_LEGACY": 28
+    },
+    "overall_distribution": {
+      "RECENT_PUBLICATION": 2,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 0,
+      "NEWLY_INDEXED_LEGACY": 123
+    },
+    "raw_payload_sha256": "10e819af540fff5d8bd8435522fdafd013d40007c4dd8e90c11bf30014e1a40f",
+    "github_artifact_bundle_sha256": "95640f0fedf09f1fafe2cd59554c39d25d1adb0d8db0ebd3f333a8f9cff262e4"
+  },
+  "rules": [
+    "Every record remains a candidate until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin, or diffusion.",
+    "Unknown is not absence.",
+    "Field discoveries remain separate from peer-reviewed evidence until formal publication or authoritative specialist documentation supports promotion.",
+    "Human remains, mortuary contexts, and living/traditional religious knowledge require cultural-sensitivity review before public presentation.",
+    "Publication/index dates are preserved separately; indexing novelty is not publication novelty."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION": [
+      {
+        "doi": "10.56315/pscf9-26harrison",
+        "published": "2026-09-01",
+        "indexed": "2026-08-27",
+        "title": "Some New World: Myths of Supernatural Belief in a Secular Age",
+        "note": "Crossref metadata requires identity/content verification before treating this as new scholarship; the same title is also a 2024 Cambridge University Press monograph."
+      },
+      {
+        "doi": "10.1002/9781394250592.ch34",
+        "published": "2026-08-21",
+        "indexed": "2026-08-31",
+        "title": "Demon Eaters and Bloody Charms",
+        "note": "Recent Wiley companion chapter; metadata retained but not promoted during this cycle because source content was not independently inspected."
+      }
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [],
+    "NEWLY_INDEXED_LEGACY_count": 28,
+    "NEWLY_INDEXED_LEGACY_note": "These are older publications newly indexed by Crossref and are not treated as newly published research."
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-KHAYBAR-CHRONOLOGY-2026-09-01",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Stratigraphic and chronological evidence for overlapping Bronze Age tomb types in the Khaybar region, Saudi Arabia",
+      "authors": [
+        "Noisette Bec Drelon",
+        "Modwene Poulmarc’h",
+        "Hala Alarashi",
+        "Shadi Shabo",
+        "Kévin Guadagnini",
+        "Munirah AlMushawh",
+        "Guillaume Charloux",
+        "Rémy Crassard"
+      ],
+      "publication_date": "2026-09-01",
+      "discovered_at": "2026-09-01",
+      "doi": "10.1016/j.jasrep.2026.105812",
+      "canonical_url": "https://doi.org/10.1016/j.jasrep.2026.105812",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": [
+        "MORTUARY",
+        "FUNERARY_ARCHITECTURE",
+        "RADIOCARBON",
+        "CHRONOLOGY",
+        "KHAYBAR",
+        "NORTHWEST_ARABIA"
+      ],
+      "candidate_relevance": "New stratigraphy and radiocarbon dates refine the sequence of Khaybar funerary monument types, including expansion around 2200 BCE, decline after 2000 BCE, and appearance of small alveolus tower-tombs around 1900–1800 BCE.",
+      "epistemic_caution": "A refined regional funerary chronology does not by itself identify ancestry, migration, cult continuity, or causal cultural transmission. Human remains are poorly preserved and interpretations remain context-specific.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": [
+        "HUMAN_REMAINS",
+        "MORTUARY_CONTEXT"
+      ]
+    },
+    {
+      "id": "DAILY-SABAZIOS-COLLET-2026",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Of snakes and gods: early evidence for the cult of Sabazios in the Roman villa of Collet",
+      "authors": [
+        "Marc Bouzas Sabater",
+        "Josep Burch Rius",
+        "Elisabet Moner Coll",
+        "Carles Roqué Pau",
+        "David Vivo Codina"
+      ],
+      "publication_date": "2026-08-26",
+      "discovered_at": "2026-09-01",
+      "doi": "10.15184/aqy.2026.10420",
+      "canonical_url": "https://doi.org/10.15184/aqy.2026.10420",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": [
+        "RELIGION",
+        "CULT",
+        "SABAZIOS",
+        "ICONOGRAPHY",
+        "ROMAN_IBERIA",
+        "RURAL_RELIGION",
+        "MATERIAL_CULTURE"
+      ],
+      "candidate_relevance": "Formal comparison, laboratory analysis and 3D modelling support an author interpretation linking a snake-headed vessel from an Augustan-period rural villa to Sabazios, extending the review surface for cult distribution beyond urban settings.",
+      "epistemic_caution": "Snake iconography is not unique to Sabazios and the paper itself frames the identification and diffusion implications as an argument. Do not create a historical-diffusion edge or provenance claim without direct review of comparative objects and context.",
+      "review_priority": "HIGH",
+      "sensitive": false
+    },
+    {
+      "id": "DAILY-DEATH-OMENS-ENGLAND-2026",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Magical thinking, folklore, and pluralities of belief: Death omens in nineteenth-century rural England",
+      "authors": [
+        "Claire Cock-Starkey"
+      ],
+      "publication_date": "2026-08-17",
+      "discovered_at": "2026-09-01",
+      "doi": "10.1093/jvcult/vcag018",
+      "canonical_url": "https://doi.org/10.1093/jvcult/vcag018",
+      "source_type": "PEER_REVIEWED_HISTORICAL_ANALYSIS",
+      "domains": [
+        "FOLKLORE",
+        "DIVINATION",
+        "OMENS",
+        "DEATH",
+        "MAGICAL_THINKING",
+        "RELIGION",
+        "HISTORICAL_SOURCES"
+      ],
+      "candidate_relevance": "The article argues that death-omen practices could coexist with religion, science and partial skepticism, and explicitly warns that customary engagement with omens does not establish firm propositional belief.",
+      "epistemic_caution": "Folklore collections are mediated historical sources with collection bias. Practice, narration, custom and belief should remain distinct coded variables.",
+      "review_priority": "HIGH",
+      "sensitive": false
+    },
+    {
+      "id": "DAILY-VR-ASC-2026",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Immersive virtual reality: distinct impact on altered states of consciousness",
+      "authors": [
+        "Liat Abouhav",
+        "Keren Nitzan",
+        "Ravid Doron"
+      ],
+      "publication_date": "2026-08-25",
+      "discovered_at": "2026-09-01",
+      "doi": "10.1007/s10055-026-01443-x",
+      "canonical_url": "https://doi.org/10.1007/s10055-026-01443-x",
+      "source_type": "PEER_REVIEWED_EXPERIMENTAL_STUDY",
+      "sample_size": 70,
+      "domains": [
+        "ALTERED_STATES",
+        "MYSTICAL_TYPE_EXPERIENCE",
+        "CONTEXT",
+        "IMMERSION",
+        "NON_PHARMACOLOGICAL_INDUCTION",
+        "COGNITION"
+      ],
+      "candidate_relevance": "With the same emotionally evocative content, immersive VR produced higher MEQ30 scores than standard-screen viewing, supplying experimental support for separating induction medium/context from phenomenological outcome.",
+      "epistemic_caution": "MEQ30 scores are psychometric reports and do not establish metaphysical content, historical ritual equivalence, or identity with psychedelic states.",
+      "review_priority": "MEDIUM",
+      "sensitive": false
+    },
+    {
+      "id": "DAILY-GEDIKKAYA-TURTLES-2026",
+      "triage_class": "RECENT_FIELD_DISCOVERY",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Epipaleolithic turtle figurines from Gedikkaya Hill and İn Cave, Bilecik, Türkiye",
+      "reported_date": "2026-08-20",
+      "discovered_at": "2026-09-01",
+      "canonical_url": "https://www.aa.com.tr/en/life/25-turtle-figurines-dating-back-16-500-years-found-in-turkiye/4032689",
+      "source_type": "AUTHORITATIVE_NEWS_REPORT_OF_MINISTRY_EXCAVATION",
+      "provenance": "Anadolu Agency report on excavations led by Prof. Deniz Sarı, Bilecik Şeyh Edebali University, on behalf of Türkiye’s Culture and Tourism Ministry.",
+      "domains": [
+        "EPIPALEOLITHIC",
+        "FIGURINES",
+        "SYMBOLIC_BEHAVIOR",
+        "RITUAL_INTERPRETATION",
+        "CAVE",
+        "TURKIYE"
+      ],
+      "dating": {
+        "associated_context_start_bce": 14500,
+        "associated_context_end_bce": 11200,
+        "method": "radiocarbon dates on archaeological context as reported"
+      },
+      "candidate_relevance": "Approximately 25 limestone turtle-shaped objects, some clay-coated and several inserted around circular stone arrangements, provide a potentially important deep-time material-context candidate.",
+      "epistemic_caution": "The reported dates apply to associated archaeological contexts, not necessarily direct dating of each figurine. Ritual purpose and turtle symbolism are excavator interpretations and must remain separate from the observed placement and morphology.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": [
+        "MEDIA_RIGHTS_RESTRICTED",
+        "FIELD_DISCOVERY_UNPUBLISHED"
+      ]
+    }
+  ],
+  "contradictions_or_pressure": [
+    {
+      "type": "BELIEF_PRACTICE_SEPARATION",
+      "target": "BELIEF_STATUS ontology and divination/omen coding",
+      "finding": "The death-omens study explicitly argues that participation in customary omen practices need not imply firm propositional belief.",
+      "action": "Review whether NOEMA separately codes practice, reported credence, social function and propositional belief."
+    },
+    {
+      "type": "ICONOGRAPHY_CAUSAL_GUARD",
+      "target": "cult identity and diffusion inference",
+      "finding": "The Sabazios vessel is a strong contextual identification candidate but snake imagery is not unique to one cult; iconographic similarity alone cannot establish descent or diffusion.",
+      "action": "Require contextual, chronological and comparative evidence before adding a cult-spread relationship."
+    },
+    {
+      "type": "CONTEXTUAL_INDUCTION",
+      "target": "ALTERED_STATE_INDUCTION and EXPERIENCE_PHENOMENOLOGY",
+      "finding": "Immersive presentation changed mystical-type scores despite constant content, pressuring any model that treats phenomenology as determined by substance or content alone.",
+      "action": "Keep induction medium, setting/context, expectation and phenomenology as separable dimensions."
+    },
+    {
+      "type": "DISCOVERY_METADATA_QUALITY",
+      "target": "Crossref RECENT_PUBLICATION classification",
+      "finding": "The priority item titled 'Some New World: Myths of Supernatural Belief in a Secular Age' is dated 2026-09-01 in the discovery artifact, while external bibliographic sources identify the same title as a Cambridge University Press monograph first published in 2024; the Crossref DOI may represent a distinct review or derivative record and requires identity verification.",
+      "action": "Do not ingest as a new primary research publication until DOI-level source identity is inspected."
+    }
+  ],
+  "dating_revisions": [
+    {
+      "id": "DATE-KHAYBAR-2026-105812",
+      "status": "CANDIDATE_UNREVIEWED",
+      "scope": "Regional Bronze Age funerary chronology, Khaybar oasis",
+      "finding": "New radiocarbon and stratigraphic evidence refines overlap and transition among tomb types, including large tailed tombs/other tower-tombs and later small alveolus tower-tombs.",
+      "impact": "Candidate chronology refinement; review against any existing Khaybar or Northwest Arabia temporal assertions before modifying them.",
+      "doi": "10.1016/j.jasrep.2026.105812"
+    }
+  ],
+  "relationships_generated": [],
+  "hypotheses_requiring_human_review": [
+    {
+      "target": "MORTUARY_ARCHITECTURE_TEMPORAL_SEQUENCE_KHAYBAR",
+      "reason": "New peer-reviewed dates refine regional monument sequence.",
+      "recommended_action": "Chronology review only; no cultural-descent inference."
+    },
+    {
+      "target": "SABAZIOS_RURAL_CULT_NETWORK",
+      "reason": "New Antiquity article argues for an early rural Iberian Sabazios context.",
+      "recommended_action": "Entity/source review; create GOD-SABAZIOS only after source review if absent."
+    },
+    {
+      "target": "BELIEF_VS_PRACTICE_DIVINATION",
+      "reason": "Historical death-omen evidence explicitly separates customary engagement from firm belief.",
+      "recommended_action": "Ontology review for belief/credence/practice/social-function separation."
+    },
+    {
+      "target": "ALTERED_STATE_CONTEXT_MODEL",
+      "reason": "VR experiment shows medium/context can modulate mystical-type experience with constant content.",
+      "recommended_action": "Review induction/context/phenomenology decomposition; no cross-state equivalence claim."
+    },
+    {
+      "target": "DEEP_TIME_SYMBOLIC_RITUAL_GEDIKKAYA",
+      "reason": "Field report adds dated figurine placement around circular architecture but ritual interpretation remains unpublished.",
+      "recommended_action": "Create field-review item; preserve observation vs interpretation and await excavation publication."
+    }
+  ],
+  "deduplication": {
+    "keys": [
+      "DOI",
+      "authoritative external ID",
+      "canonical URL"
+    ],
+    "checked_against": [
+      "projects/noema/data/candidates/daily/2026-08-31.json",
+      "default-branch code search for candidate DOI/name collisions"
+    ],
+    "excluded_as_already_known": [
+      "10.1007/s10816-026-09818-9",
+      "10.1038/s41467-026-69895-y",
+      "10.15184/aqy.2026.10291",
+      "10.1098/rspb.2025.0813",
+      "10.1038/s41597-026-06967-0",
+      "10.1038/s41597-025-06477-5",
+      "10.1080/1751696X.2026.2672539",
+      "10.18506/anemon.1853088",
+      "10.46222/pharosjot.107.223"
+    ]
+  }
+}
