@@ -22,15 +22,13 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - name: Verify complete NOEMA v1.2 bundle on GitHub Pages
+      - name: Verify complete NOEMA v1.3 bundle on GitHub Pages
         env:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
           SHA: ${{ github.sha }}
         run: |
-          # Do not enable pipefail here: grep -q intentionally closes its input early
-          # after a successful match, which can make printf report EPIPE and turn a
-          # valid public match into a false-negative verifier failure.
+          # grep -q intentionally closes input early after success; do not use pipefail.
           set -eu
           base="https://${OWNER}.github.io/${REPO}/projects/noema/site"; rootbase="https://${OWNER}.github.io/${REPO}/projects/noema"; bust="?build=${SHA}"
           echo "NOEMA_PUBLIC_URL=${base}/"
@@ -57,21 +55,23 @@ jobs:
             catalog=$(get "${rootbase}/data/reference/belief-catalog-v1.json${bust}")
             ontology=$(get "${rootbase}/ontology/decomposition_v1.json${bust}")
 
-            if printf '%s' "$root" | grep -q '<title>NOEMA · Human Belief, Decomposed</title>' \
-              && printf '%s' "$root" | grep -q 'Explore how humans have understood existence\|Human belief,' \
-              && printf '%s' "$root" | grep -q 'href="library.html">Library' \
-              && printf '%s' "$root" | grep -q 'href="research.html">Research' \
-              && printf '%s' "$meta" | grep -q '"release": "v1.2"' \
-              && printf '%s' "$meta" | grep -q 'five_area_navigation' \
-              && printf '%s' "$explore" | grep -q '<title>Explore · NOEMA</title>' \
+            if printf '%s' "$root" | grep -q '<title>NOEMA · Religion, Ritual & Belief, Decomposed</title>' \
+              && printf '%s' "$root" | grep -q 'evidence-backed atlas and comparison engine for religion, ritual, mythology and spiritual practice' \
+              && printf '%s' "$root" | grep -q '01 · LOOK UP' \
+              && printf '%s' "$root" | grep -q '02 · COMPARE' \
+              && printf '%s' "$root" | grep -q '03 · TRACE PATTERNS' \
+              && printf '%s' "$root" | grep -q '01 · IDENTIFY' \
+              && printf '%s' "$root" | grep -q '04 · TEST' \
+              && printf '%s' "$meta" | grep -q '"release": "v1.3"' \
+              && printf '%s' "$meta" | grep -q 'product_category_explicit' \
+              && printf '%s' "$meta" | grep -q 'worked_entity_example' \
+              && printf '%s' "$explore" | grep -q 'What do you want to understand?' \
+              && printf '%s' "$explore" | grep -q 'Map it' \
               && printf '%s' "$library" | grep -q '<title>Library · NOEMA</title>' \
-              && printf '%s' "$library" | grep -q 'Start with what you want to understand.' \
               && printf '%s' "$research" | grep -q '<title>Research · NOEMA</title>' \
-              && printf '%s' "$research" | grep -q 'The machinery stays available.' \
               && printf '%s' "$gods" | grep -q 'Every god gets a workspace.' \
               && printf '%s' "$entity" | grep -q 'entity-v2.js' \
               && printf '%s' "$connections" | grep -q 'Navigate associations. Attack patterns.' \
-              && printf '%s' "$connections" | grep -q 'href="library.html">Library' \
               && printf '%s' "$patterns" | grep -q '<title>Patterns · NOEMA</title>' \
               && printf '%s' "$simulations" | grep -q '<title>Simulations · NOEMA</title>' \
               && printf '%s' "$atlas_html" | grep -q '<title>NOEMA Human Meaning Atlas</title>' \
@@ -85,10 +85,10 @@ jobs:
               && printf '%s' "$catalog" | grep -q 'GOD-ODIN' \
               && printf '%s' "$ontology" | grep -q 'NOEMA-DECOMPOSITION-V1'; then
               ok=1
-              echo "NOEMA v1.2 simplified UX + federation + connections + media verified on attempt ${attempt}."
+              echo "NOEMA v1.3 product clarity + federation + analysis + media verified on attempt ${attempt}."
               break
             fi
-            echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA v1.2 bundle yet."
+            echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA v1.3 bundle yet."
             sleep 5
           done
           test "$ok" = "1"
