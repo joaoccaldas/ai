@@ -1,0 +1,72 @@
+{
+  "run_id": "chatgpt-monthly-2026-09-01",
+  "task_type": "MONTHLY_DISCOVERY",
+  "status": "COMPLETED",
+  "started_at": "2026-09-01T06:21:23+00:00",
+  "completed_at": "2026-09-01T06:25:10+00:00",
+  "input_refs": [
+    "github-actions:NOEMA Discovery/run/33469994194/artifact/noema-crossref-candidates",
+    "github-actions:NOEMA Benchmark/run/33361784511/artifact/noema-dplace-benchmark-100",
+    "projects/noema/data/candidates/daily/2026-09-01.json",
+    "projects/noema/data/candidates/discovery-pressure-2026-08-29.json",
+    "projects/noema/data/candidates/discovery-triage-2026-08-29.json",
+    "projects/noema/research/reanalysis/2026-08-30-weekly-reanalysis.md"
+  ],
+  "artifact_digests": {
+    "noema-crossref-candidates.zip": "sha256:95640f0fedf09f1fafe2cd59554c39d25d1adb0d8db0ebd3f333a8f9cff262e4",
+    "noema-crossref-candidates.raw": "sha256:10e819af540fff5d8bd8435522fdafd013d40007c4dd8e90c11bf30014e1a40f",
+    "noema-dplace-benchmark-100.zip": "sha256:5c53f9b61e84ba952c8ab13b2a876d38b364d35fe091060e9dd37ad60b1388f3",
+    "noema-dplace-benchmark-100.output": "sha256:83ff1ed66402b284d0cf2cd3ff4433ea0e632be0cfb64819143345f803ffeeb2",
+    "monthly-candidate-report-local-prewrite": "sha256:932951af01d68edc651e3fd91ea667a63b4d87995d23d738aeac42cf453cdddd"
+  },
+  "sources_examined": 16,
+  "new_candidates": 6,
+  "candidate_updates": 5,
+  "contradictions": 5,
+  "dating_revisions": 0,
+  "relationships_generated": 6,
+  "hypotheses_revisited": 5,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 5,
+  "review_items_created": 6,
+  "errors": [],
+  "summary": "September broad discovery produced six candidate relationships after explicit independence, chronology, contact, ancestry, ecology and coding checks. Mortuary-kinship and ritual mechanism candidates were strongest; astronomical alignment was retained as fragile. No hypothesis was promoted and no resemblance was converted into descent/common origin.",
+  "research_note": "projects/noema/research/monthly/2026-09-01-monthly-discovery.md",
+  "code_commit": "08580dd226bb4c1adb3699bfbc1a619cfc63ffd2",
+  "candidate_report": "projects/noema/data/candidates/monthly/2026-09-01.json",
+  "paradigm_challenge_cycle": false,
+  "sources": [
+    "https://doi.org/10.15184/aqy.2026.10291",
+    "https://doi.org/10.15184/aqy.2026.10357",
+    "https://doi.org/10.1098/rspb.2025.0813",
+    "https://doi.org/10.1007/s10816-026-09820-1",
+    "https://doi.org/10.1111/nyas.15403",
+    "https://doi.org/10.3389/fnhum.2021.610466",
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC5760525/",
+    "https://doi.org/10.1371/journal.pone.0291655",
+    "https://doi.org/10.1017/S0030605317000219",
+    "https://www.cambridge.org/core/journals/proceedings-of-the-international-astronomical-union/article/establishing-the-credibility-of-archaeoastronomical-sites/50BC6703D578C6868DF6F648910D3222",
+    "https://www.cambridge.org/core/books/abs/archaeoastronomy-in-the-old-world/survey-of-the-barbrook-stone-circles-and-their-claimed-astronomical-alignments/7ABDB1E6BA8EF6223DE738177F076F1A",
+    "https://doi.org/10.1007/s13752-025-00527-2",
+    "https://doi.org/10.1007/s12520-025-02243-1",
+    "https://doi.org/10.1007/s10816-026-09818-9",
+    "https://doi.org/10.1007/s10055-026-01443-x",
+    "https://doi.org/10.1093/jvcult/vcag018"
+  ],
+  "review_items_created_ids": [
+    "REVIEW-MORTUARY-KINSHIP-CROSS-CONTEXT",
+    "REVIEW-SENSORY-RITUAL-TECH",
+    "REVIEW-RITUAL-SYNCHRONY-BONDING",
+    "REVIEW-SACRED-ECOLOGY-CAUSALITY",
+    "REVIEW-ARCHAEOASTRONOMY-NULL-MODEL",
+    "REVIEW-HOMININ-COMPONENT-LADDER"
+  ],
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "dplace_focal_year_is_origin_date": false,
+    "relationship_outputs_are_evidence": false
+  }
+}
