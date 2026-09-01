@@ -1,0 +1,66 @@
+name: NOEMA v1.5 Synoptic Visual Contract
+
+on:
+  push:
+    paths:
+      - 'projects/noema/site/**'
+      - '.github/workflows/noema-v15-contract.yml'
+  pull_request:
+    paths:
+      - 'projects/noema/site/**'
+      - '.github/workflows/noema-v15-contract.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax check synchronized browser lens
+        run: |
+          node --check projects/noema/site/synoptic-v15.js
+      - name: Validate v1.5 synchronized state contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          meta=json.load(open('projects/noema/site/data.json'))
+          assert meta['release']=='v1.5'
+          vc=meta['visual_core']
+          assert vc['synchronized_synoptic_lens'] is True
+          assert vc['synoptic_lenses']==['MAP','TIME','GRAPH','EVIDENCE']
+          assert vc['synoptic_shared_state']==['SOURCE_FAMILY','TIME_FOCUS','PROFILE_SELECTION']
+          assert vc['synoptic_coordinate_policy']=='SOURCE_BOUNDED_ONLY'
+          gate=meta['publication_gate']
+          assert gate['synoptic_graph_edge_is_historical_relationship'] is False
+          assert gate['region_label_implies_coordinate'] is False
+
+          concept=Path('projects/noema/site/concept.html').read_text()
+          entity=Path('projects/noema/site/entity.html').read_text()
+          syn=Path('projects/noema/site/synoptic-v15.js').read_text()
+          css=Path('projects/noema/site/synoptic-v15.css').read_text()
+          for page in [concept,entity]:
+              assert 'synoptic-v15.css' in page
+              assert 'synoptic-v15.js' in page
+          for marker in [
+              'Map · Time · Graph · Evidence',
+              'Source-bounded coordinates only',
+              'Region-only profiles stay unlocated',
+              'state.source',
+              'state.focusYear',
+              'state.selected',
+              'renderMap();renderTimeline();renderGraph();renderDrawer()',
+              'They are not ancestry, influence, historical contact, diffusion or shared theology',
+              'does not promote the profile to a causal, historical-descent or theological claim'
+          ]:
+              assert marker in syn, marker
+          for marker in ['synoptic-map','synoptic-timeline','synoptic-graph','synoptic-drawer','synoptic-guard']:
+              assert marker in css, marker
+          print('NOEMA v1.5 synchronized visual contract green')
+          PY
