@@ -28,7 +28,10 @@ jobs:
           REPO: ${{ github.event.repository.name }}
           SHA: ${{ github.sha }}
         run: |
-          set -euo pipefail
+          # Do not enable pipefail here: grep -q intentionally closes its input early
+          # after a successful match, which can make printf report EPIPE and turn a
+          # valid public match into a false-negative verifier failure.
+          set -eu
           base="https://${OWNER}.github.io/${REPO}/projects/noema/site"; rootbase="https://${OWNER}.github.io/${REPO}/projects/noema"; bust="?build=${SHA}"
           echo "NOEMA_PUBLIC_URL=${base}/"
           ok=0
