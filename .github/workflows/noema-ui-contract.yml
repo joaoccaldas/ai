@@ -60,15 +60,26 @@ jobs:
           print('validated manifests', len(list(Path('projects/noema/data/runs').glob('*.json'))), 'and tasks', len(d['task_health']))
           PY
 
-      - name: Validate v1.2 progressive-disclosure contract
+      - name: Validate v1.3 product-clarity contract
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
 
           root=Path('projects/noema/site/index.html').read_text()
-          assert '<title>NOEMA · Human Belief, Decomposed</title>' in root
-          for phrase in ['Human belief,','href="explore.html">Explore','href="human-meaning-atlas.html">World','href="lineages.html">Connections','href="library.html">Library','href="research.html">Research','home-v2.js']:
+          assert '<title>NOEMA · Religion, Ritual & Belief, Decomposed</title>' in root
+          for phrase in [
+              'evidence-backed atlas and comparison engine for religion, ritual, mythology and spiritual practice',
+              'href="explore.html">Explore',
+              'href="human-meaning-atlas.html">Atlas',
+              'href="lineages.html">Analyze',
+              'href="library.html">Library',
+              'href="research.html">Research',
+              'What is NOEMA?',
+              '01 · LOOK UP','02 · COMPARE','03 · TRACE PATTERNS',
+              '01 · IDENTIFY','02 · DECOMPOSE','03 · COMPARE','04 · TEST',
+              'home-v2.js'
+          ]:
               assert phrase in root, phrase
           assert 'Automation pulse' not in root and 'DRH explorer' not in root, 'operations leaked back into discovery homepage'
 
@@ -81,6 +92,7 @@ jobs:
           assert 'NAV_GROUPS' in app and "label:'Explore'" in app and "label:'World'" in app and "label:'Connections'" in app and "label:'Library'" in app and "label:'Research'" in app
           assert 'let limit=36' in app and 'Evidence, provenance and technical metadata' in app
           assert Path('projects/noema/site/ux-v12.css').exists()
+          assert Path('projects/noema/site/clarity-v13.css').exists()
 
           entity=Path('projects/noema/site/entity.html').read_text()
           assert 'universal entity workspace' in entity and 'entity-v2.js' in entity
@@ -89,16 +101,21 @@ jobs:
           gods=Path('projects/noema/site/gods.html').read_text()
           assert 'Every god gets a workspace.' in gods and 'cards-v2.js' in gods
           explore=Path('projects/noema/site/explore.html').read_text()
-          assert 'Break belief systems into parts.' in explore and 'cards-v2.js' in explore
+          assert 'What do you want to understand?' in explore and 'Map it' in explore and 'Compare it' in explore and 'Analyze connections' in explore and 'cards-v2.js' in explore
 
           meta=json.load(open('projects/noema/site/data.json'))
-          assert meta['release']=='v1.2'
-          assert meta['visual_core']['five_area_navigation'] is True
-          assert meta['visual_core']['search_first_home'] is True
-          assert meta['visual_core']['progressive_result_loading'] is True
-          assert meta['visual_core']['research_metadata_collapsed_by_default'] is True
-          assert meta['visual_core']['entity_workspace_v2'] is True
-          assert meta['visual_core']['relationship_dual_mode'] is True
+          assert meta['release']=='v1.3'
+          vc=meta['visual_core']
+          assert vc['five_area_navigation'] is True
+          assert vc['product_category_explicit'] is True
+          assert vc['worked_entity_example'] is True
+          assert vc['search_first_home'] is True
+          assert vc['progressive_result_loading'] is True
+          assert vc['research_metadata_collapsed_by_default'] is True
+          assert vc['entity_workspace_v2'] is True
+          assert vc['relationship_dual_mode'] is True
+          assert set(vc['three_goal_entrypoints'])=={'LOOK_UP','COMPARE','TRACE_PATTERNS'}
+          assert vc['four_step_explainer']==['IDENTIFY','DECOMPOSE','COMPARE','TEST']
           assert meta['publication_gate']['reference_media_is_evidence'] is False
           assert meta['publication_gate']['pattern_candidate_is_causal_relationship'] is False
 
@@ -123,5 +140,5 @@ jobs:
           staged=json.load(open('projects/noema/data/candidates/wikimedia-media-candidates.json'))
           assert staged['status']=='PENDING_IDENTITY_AND_RIGHTS_REVIEW'
           assert all(x['decision']=='PENDING_REVIEW' for x in staged['candidates'])
-          print('NOEMA v1.2 progressive-disclosure + operations contract green')
+          print('NOEMA v1.3 product-clarity + operations contract green')
           PY
