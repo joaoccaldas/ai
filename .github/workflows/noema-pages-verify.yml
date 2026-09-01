@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - name: Verify complete NOEMA v1.3 bundle on GitHub Pages
+      - name: Verify complete NOEMA v1.4 bundle on GitHub Pages
         env:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
@@ -38,10 +38,14 @@ jobs:
             root=$(get "${base}/${bust}")
             meta=$(get "${base}/data.json${bust}")
             explore=$(get "${base}/explore.html${bust}")
+            explore_bridge=$(get "${base}/explore-v14.js${bust}")
+            concept=$(get "${base}/concept.html${bust}")
+            concept_js=$(get "${base}/concept-v1.js${bust}")
             library=$(get "${base}/library.html${bust}")
             research=$(get "${base}/research.html${bust}")
             gods=$(get "${base}/gods.html${bust}")
             entity=$(get "${base}/entity.html${bust}")
+            entity_depth=$(get "${base}/entity-depth-v14.js${bust}")
             connections=$(get "${base}/lineages.html${bust}")
             patterns=$(get "${base}/patterns.html${bust}")
             simulations=$(get "${base}/simulations.html${bust}")
@@ -62,15 +66,22 @@ jobs:
               && printf '%s' "$root" | grep -q '03 · TRACE PATTERNS' \
               && printf '%s' "$root" | grep -q '01 · IDENTIFY' \
               && printf '%s' "$root" | grep -q '04 · TEST' \
-              && printf '%s' "$meta" | grep -q '"release": "v1.3"' \
-              && printf '%s' "$meta" | grep -q 'product_category_explicit' \
-              && printf '%s' "$meta" | grep -q 'worked_entity_example' \
+              && printf '%s' "$meta" | grep -q '"release": "v1.4"' \
+              && printf '%s' "$meta" | grep -q 'concept_hubs' \
+              && printf '%s' "$meta" | grep -q 'concept_cooccurrence_is_causal_relationship' \
               && printf '%s' "$explore" | grep -q 'What do you want to understand?' \
-              && printf '%s' "$explore" | grep -q 'Map it' \
+              && printf '%s' "$explore" | grep -q 'explore-v14.js' \
+              && printf '%s' "$explore_bridge" | grep -q 'Open .* Concept Hub' \
+              && printf '%s' "$concept" | grep -q 'One idea, many contexts' \
+              && printf '%s' "$concept" | grep -q 'concept-v1.js' \
+              && printf '%s' "$concept_js" | grep -q 'Co-coded ≠ connected history' \
+              && printf '%s' "$concept_js" | grep -q 'earliest encoded record is not an origin date' \
               && printf '%s' "$library" | grep -q '<title>Library · NOEMA</title>' \
               && printf '%s' "$research" | grep -q '<title>Research · NOEMA</title>' \
               && printf '%s' "$gods" | grep -q 'Every god gets a workspace.' \
-              && printf '%s' "$entity" | grep -q 'entity-v2.js' \
+              && printf '%s' "$entity" | grep -q 'entity-depth-v14.js' \
+              && printf '%s' "$entity_depth" | grep -q 'concept.html?term=' \
+              && printf '%s' "$entity_depth" | grep -q 'Reference sources ≠ claim-level evidence' \
               && printf '%s' "$connections" | grep -q 'Navigate associations. Attack patterns.' \
               && printf '%s' "$patterns" | grep -q '<title>Patterns · NOEMA</title>' \
               && printf '%s' "$simulations" | grep -q '<title>Simulations · NOEMA</title>' \
@@ -85,10 +96,10 @@ jobs:
               && printf '%s' "$catalog" | grep -q 'GOD-ODIN' \
               && printf '%s' "$ontology" | grep -q 'NOEMA-DECOMPOSITION-V1'; then
               ok=1
-              echo "NOEMA v1.3 product clarity + federation + analysis + media verified on attempt ${attempt}."
+              echo "NOEMA v1.4 concept hubs + entity depth + federation + analysis + media verified on attempt ${attempt}."
               break
             fi
-            echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA v1.3 bundle yet."
+            echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA v1.4 bundle yet."
             sleep 5
           done
           test "$ok" = "1"

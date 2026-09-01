@@ -33,6 +33,9 @@ jobs:
           node --check projects/noema/site/app-v1.js
           node --check projects/noema/site/cards-v2.js
           node --check projects/noema/site/entity-v2.js
+          node --check projects/noema/site/entity-depth-v14.js
+          node --check projects/noema/site/explore-v14.js
+          node --check projects/noema/site/concept-v1.js
           node --check projects/noema/site/relationship-v2.js
           node --check projects/noema/site/automation-pulse.js
           node --check projects/noema/site/pattern-v2.js
@@ -60,7 +63,7 @@ jobs:
           print('validated manifests', len(list(Path('projects/noema/data/runs').glob('*.json'))), 'and tasks', len(d['task_health']))
           PY
 
-      - name: Validate v1.3 product-clarity contract
+      - name: Validate v1.4 product-depth contract
         run: |
           python - <<'PY'
           import json
@@ -70,18 +73,13 @@ jobs:
           assert '<title>NOEMA · Religion, Ritual & Belief, Decomposed</title>' in root
           for phrase in [
               'evidence-backed atlas and comparison engine for religion, ritual, mythology and spiritual practice',
-              'href="explore.html">Explore',
-              'href="human-meaning-atlas.html">Atlas',
-              'href="lineages.html">Analyze',
-              'href="library.html">Library',
-              'href="research.html">Research',
-              'What is NOEMA?',
+              'href="explore.html">Explore','href="human-meaning-atlas.html">Atlas','href="lineages.html">Analyze',
+              'href="library.html">Library','href="research.html">Research','What is NOEMA?',
               '01 · LOOK UP','02 · COMPARE','03 · TRACE PATTERNS',
-              '01 · IDENTIFY','02 · DECOMPOSE','03 · COMPARE','04 · TEST',
-              'home-v2.js'
+              '01 · IDENTIFY','02 · DECOMPOSE','03 · COMPARE','04 · TEST','home-v2.js'
           ]:
               assert phrase in root, phrase
-          assert 'Automation pulse' not in root and 'DRH explorer' not in root, 'operations leaked back into discovery homepage'
+          assert 'Automation pulse' not in root and 'DRH explorer' not in root
 
           library=Path('projects/noema/site/library.html').read_text()
           assert '<title>Library · NOEMA</title>' in library and 'Start with what you want to understand.' in library
@@ -95,29 +93,37 @@ jobs:
           assert Path('projects/noema/site/clarity-v13.css').exists()
 
           entity=Path('projects/noema/site/entity.html').read_text()
-          assert 'universal entity workspace' in entity and 'entity-v2.js' in entity
+          entity_depth=Path('projects/noema/site/entity-depth-v14.js').read_text()
+          assert 'universal entity workspace' in entity and 'entity-v2.js' in entity and 'entity-depth-v14.js' in entity
+          assert 'concept.html?term=' in entity_depth and 'Reference sources ≠ claim-level evidence' in entity_depth
+          concept=Path('projects/noema/site/concept.html').read_text()
+          concept_js=Path('projects/noema/site/concept-v1.js').read_text()
+          assert 'One idea, many contexts' in concept and 'concept-v1.js' in concept
+          for marker in ['Profiles','Regions','Time','Co-occurrence','Evidence','earliest encoded record is not an origin date','Co-coded ≠ connected history']:
+              assert marker in concept_js
+          explore=Path('projects/noema/site/explore.html').read_text()
+          assert 'What do you want to understand?' in explore and 'Map it' in explore and 'Compare it' in explore and 'Analyze connections' in explore and 'cards-v2.js' in explore and 'explore-v14.js' in explore
+          assert 'concept.html?term=' in Path('projects/noema/site/explore-v14.js').read_text()
+
           connections=Path('projects/noema/site/lineages.html').read_text()
           assert 'Reference association' in connections and 'Pattern candidate' in connections and 'relationship-v2.js' in connections
           gods=Path('projects/noema/site/gods.html').read_text()
           assert 'Every god gets a workspace.' in gods and 'cards-v2.js' in gods
-          explore=Path('projects/noema/site/explore.html').read_text()
-          assert 'What do you want to understand?' in explore and 'Map it' in explore and 'Compare it' in explore and 'Analyze connections' in explore and 'cards-v2.js' in explore
 
           meta=json.load(open('projects/noema/site/data.json'))
-          assert meta['release']=='v1.3'
+          assert meta['release']=='v1.4'
           vc=meta['visual_core']
-          assert vc['five_area_navigation'] is True
-          assert vc['product_category_explicit'] is True
-          assert vc['worked_entity_example'] is True
-          assert vc['search_first_home'] is True
-          assert vc['progressive_result_loading'] is True
-          assert vc['research_metadata_collapsed_by_default'] is True
-          assert vc['entity_workspace_v2'] is True
-          assert vc['relationship_dual_mode'] is True
+          assert vc['five_area_navigation'] is True and vc['product_category_explicit'] is True and vc['worked_entity_example'] is True
+          assert vc['search_first_home'] is True and vc['progressive_result_loading'] is True and vc['research_metadata_collapsed_by_default'] is True
+          assert vc['entity_workspace_v2'] is True and vc['relationship_dual_mode'] is True and vc['concept_hubs'] is True
+          assert vc['search_to_concept_bridge'] is True and vc['entity_components_open_concept_hubs'] is True and vc['visible_entity_source_trail'] is True
+          assert vc['concept_lenses']==['OVERVIEW','PROFILES','REGIONS','TIME','CO_OCCURRENCE','EVIDENCE']
+          assert vc['entity_lenses']==['OVERVIEW','COMPONENTS','MAP','TIME','GRAPH','COMPARE','EVIDENCE']
           assert set(vc['three_goal_entrypoints'])=={'LOOK_UP','COMPARE','TRACE_PATTERNS'}
           assert vc['four_step_explainer']==['IDENTIFY','DECOMPOSE','COMPARE','TEST']
-          assert meta['publication_gate']['reference_media_is_evidence'] is False
-          assert meta['publication_gate']['pattern_candidate_is_causal_relationship'] is False
+          gate=meta['publication_gate']
+          assert gate['reference_media_is_evidence'] is False and gate['pattern_candidate_is_causal_relationship'] is False
+          assert gate['concept_cooccurrence_is_causal_relationship'] is False and gate['concept_earliest_encoded_window_is_origin'] is False
 
           h=json.load(open('projects/noema/site/research-health.json'))
           p=json.load(open('projects/noema/site/pattern-candidates.json'))
@@ -132,13 +138,11 @@ jobs:
           assert museum['policy']['not_evidence'] is True and museum['record_count']>0
           assert all(r['evidence_status']=='NOT_EVIDENCE' for r in museum['records'])
           assert all(r['rights'] in {'PUBLIC_DOMAIN','CC0'} for r in museum['records'])
-
           commons=json.load(open('projects/noema/data/reference/media-reviewed-v1.json'))
           assert commons['policy']['reference_media_is_evidence'] is False
           assert all(r['evidence_status']=='REFERENCE_ONLY_NOT_EVIDENCE' for r in commons['items'])
-
           staged=json.load(open('projects/noema/data/candidates/wikimedia-media-candidates.json'))
           assert staged['status']=='PENDING_IDENTITY_AND_RIGHTS_REVIEW'
           assert all(x['decision']=='PENDING_REVIEW' for x in staged['candidates'])
-          print('NOEMA v1.3 product-clarity + operations contract green')
+          print('NOEMA v1.4 product-depth + operations contract green')
           PY
