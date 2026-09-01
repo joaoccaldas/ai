@@ -21,18 +21,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Syntax check new browser surfaces
+      - name: Syntax check v1.4 browser surfaces
         run: |
           node --check projects/noema/site/concept-v1.js
           node --check projects/noema/site/explore-v14.js
           node --check projects/noema/site/entity-depth-v14.js
-      - name: Validate v1.4 product contract
+      - name: Validate v1.4 regression contract
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           meta=json.load(open('projects/noema/site/data.json'))
-          assert meta['release']=='v1.4'
+          assert meta['release'] in {'v1.4','v1.5'}
           vc=meta['visual_core']
           assert vc['concept_hubs'] is True
           assert vc['search_to_concept_bridge'] is True
@@ -55,5 +55,5 @@ jobs:
           assert 'entity-depth-v14.js' in entity and 'entity-depth-v14.css' in entity
           assert 'concept.html?term=' in entity_js
           assert 'Reference sources ≠ claim-level evidence' in entity_js
-          print('NOEMA v1.4 entity + concept contract green')
+          print('NOEMA v1.4 regression contract green')
           PY
