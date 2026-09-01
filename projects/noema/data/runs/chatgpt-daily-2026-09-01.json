@@ -1,0 +1,47 @@
+{
+  "run_id": "chatgpt-daily-2026-09-01",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED_CANDIDATES_PERSISTED",
+  "started_at": "2026-09-01T06:18:57Z",
+  "completed_at": "2026-09-01T06:22:00Z",
+  "input_refs": [
+    "github-actions:joaoccaldas/ai:NOEMA Discovery:33469994194",
+    "github-artifact:9786189503:noema-crossref-candidates",
+    "projects/noema/data/candidates/daily/2026-08-31.json",
+    "projects/noema/schemas/run-manifest-v1.json",
+    "web:10.1016/j.jasrep.2026.105812",
+    "web:10.15184/aqy.2026.10420",
+    "web:10.1093/jvcult/vcag018",
+    "web:10.1007/s10055-026-01443-x",
+    "web:https://www.aa.com.tr/en/life/25-turtle-figurines-dating-back-16-500-years-found-in-turkiye/4032689",
+    "consensus:archaeology symbolic behavior ritual mortuary religion year:2026",
+    "consensus:altered states psychedelics breathwork mystical experience religion ritual year:2026",
+    "consensus:ancient DNA burial mortuary kinship chronology archaeology year:2026"
+  ],
+  "artifact_digests": {
+    "github_discovery_artifact_zip_sha256": "95640f0fedf09f1fafe2cd59554c39d25d1adb0d8db0ebd3f333a8f9cff262e4",
+    "github_discovery_raw_json_sha256": "10e819af540fff5d8bd8435522fdafd013d40007c4dd8e90c11bf30014e1a40f",
+    "candidate_pack_prewrite_sha256": "32c59ebf02dd779d27f13a9c0de0dbadba4bb99f9be02270a9bdb608654536fd"
+  },
+  "sources_examined": 24,
+  "new_candidates": 5,
+  "candidate_updates": 0,
+  "contradictions": 4,
+  "dating_revisions": 1,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 5,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 5,
+  "errors": [],
+  "summary": "Inspected successful NOEMA Discovery run 33469994194 and verified its artifact: 125 candidates, 30 priority records, with priority distribution 2 RECENT_PUBLICATION, 0 UPCOMING_OR_AHEAD_OF_PRINT, and 28 NEWLY_INDEXED_LEGACY. After DOI/canonical-URL deduplication and fresh web/Consensus screening, persisted five candidate-only additions: a same-day Khaybar funerary chronology refinement, a Sabazios rural-cult material-context paper, a death-omens historical analysis that pressures belief-versus-practice coding, an immersive-VR altered-state experiment that pressures context/phenomenology separation, and the Gedikkaya Epipaleolithic turtle-figurine field discovery. One candidate dating refinement and four interpretation/metadata pressures were recorded. No claims, evidence, relationships, or hypotheses were automatically promoted.",
+  "research_note": "The highest-priority human review is the Khaybar chronology paper because new radiocarbon and stratigraphic evidence may require temporal-scope updates. The death-omens paper is the highest ontology-value item because it explicitly separates customary participation from propositional belief. The Sabazios article should not yield a diffusion edge from iconographic similarity alone. The Gedikkaya dates apply to associated contexts as publicly reported, not direct dating of every figurine, and ritual purpose remains interpretive. The Crossref priority item 'Some New World' requires DOI-level identity verification because its 2026 discovery metadata shares a title with a 2024 Cambridge monograph.",
+  "code_commit": "715b516a68ad7e4ddfd6a88814eb519b568a1907",
+  "candidate_output": "projects/noema/data/candidates/daily/2026-09-01.json",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false
+  }
+}
