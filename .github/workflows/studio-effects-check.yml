@@ -1,0 +1,65 @@
+name: Studio Effects Lab Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'studio/effects/**'
+      - '.github/workflows/studio-effects-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.54.1 --silent
+          npx playwright install --with-deps chromium
+      - name: Start server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/effects-server.log 2>&1 &
+          sleep 2
+      - name: Exercise all effects
+        run: |
+          node <<'JS'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+          const demos = ['cursor-light','cutaway-reveal','day-night-morph','ambient-spill','world-transition','camera-depth','architectural-type','theatre-light','bioluminescence','interactive-hud'];
+          (async()=>{
+            fs.mkdirSync('effects-evidence',{recursive:true});
+            const browser=await chromium.launch({headless:true});
+            const errors=[];
+            for(const demo of demos){
+              const page=await browser.newPage({viewport:{width:1440,height:900}});
+              page.on('pageerror',e=>errors.push(`${demo}: ${e.message}`));
+              page.on('console',m=>{if(m.type()==='error')errors.push(`${demo}: ${m.text()}`)});
+              await page.goto(`http://127.0.0.1:4173/studio/effects/${demo}/`,{waitUntil:'networkidle'});
+              await page.waitForSelector('.lab');
+              const plate=await page.evaluate(()=>({lobby:(window.STUDIO_PLATES?.lobby||'').length,inner:(window.STUDIO_PLATES?.innergroup||'').length,title:document.querySelector('.copy h1')?.textContent||''}));
+              if(plate.lobby<10000||plate.inner<10000||!plate.title)throw new Error(`${demo}: generated plate or UI missing ${JSON.stringify(plate)}`);
+              await page.mouse.move(980,330,{steps:12});
+              if(['cutaway-reveal','day-night-morph','world-transition','theatre-light'].includes(demo))await page.mouse.click(820,430);
+              await page.waitForTimeout(650);
+              await page.screenshot({path:`effects-evidence/${demo}.png`,fullPage:false});
+              await page.close();
+            }
+            await browser.close();
+            if(errors.length)throw new Error(errors.join('\n'));
+          })();
+          JS
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: studio-effects-evidence
+          path: effects-evidence
+          if-no-files-found: error
