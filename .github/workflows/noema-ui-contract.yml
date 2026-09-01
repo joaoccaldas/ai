@@ -60,7 +60,7 @@ jobs:
           print('validated manifests', len(list(Path('projects/noema/data/runs').glob('*.json'))), 'and tasks', len(d['task_health']))
           PY
 
-      - name: Validate v1.1 visual-research contract
+      - name: Validate v1.2 progressive-disclosure contract
         run: |
           python - <<'PY'
           import json
@@ -68,20 +68,35 @@ jobs:
 
           root=Path('projects/noema/site/index.html').read_text()
           assert '<title>NOEMA · Human Belief, Decomposed</title>' in root
-          for phrase in ['Human belief,','Search everything','Follow the graph','See meaning move','home-v2.js']:
+          for phrase in ['Human belief,','href="explore.html">Explore','href="human-meaning-atlas.html">World','href="lineages.html">Connections','href="library.html">Library','href="research.html">Research','home-v2.js']:
               assert phrase in root, phrase
+          assert 'Automation pulse' not in root and 'DRH explorer' not in root, 'operations leaked back into discovery homepage'
+
+          library=Path('projects/noema/site/library.html').read_text()
+          assert '<title>Library · NOEMA</title>' in library and 'Start with what you want to understand.' in library
+          research=Path('projects/noema/site/research.html').read_text()
+          assert '<title>Research · NOEMA</title>' in research and 'The machinery stays available.' in research
+
+          app=Path('projects/noema/site/app-v1.js').read_text()
+          assert 'NAV_GROUPS' in app and "label:'Explore'" in app and "label:'World'" in app and "label:'Connections'" in app and "label:'Library'" in app and "label:'Research'" in app
+          assert 'let limit=36' in app and 'Evidence, provenance and technical metadata' in app
+          assert Path('projects/noema/site/ux-v12.css').exists()
 
           entity=Path('projects/noema/site/entity.html').read_text()
           assert 'universal entity workspace' in entity and 'entity-v2.js' in entity
           connections=Path('projects/noema/site/lineages.html').read_text()
-          assert 'Two edge languages' in connections and 'Pattern candidates' in connections and 'relationship-v2.js' in connections
+          assert 'Reference association' in connections and 'Pattern candidate' in connections and 'relationship-v2.js' in connections
           gods=Path('projects/noema/site/gods.html').read_text()
           assert 'Every god gets a workspace.' in gods and 'cards-v2.js' in gods
           explore=Path('projects/noema/site/explore.html').read_text()
           assert 'Break belief systems into parts.' in explore and 'cards-v2.js' in explore
 
           meta=json.load(open('projects/noema/site/data.json'))
-          assert meta['release']=='v1.1'
+          assert meta['release']=='v1.2'
+          assert meta['visual_core']['five_area_navigation'] is True
+          assert meta['visual_core']['search_first_home'] is True
+          assert meta['visual_core']['progressive_result_loading'] is True
+          assert meta['visual_core']['research_metadata_collapsed_by_default'] is True
           assert meta['visual_core']['entity_workspace_v2'] is True
           assert meta['visual_core']['relationship_dual_mode'] is True
           assert meta['publication_gate']['reference_media_is_evidence'] is False
@@ -108,5 +123,5 @@ jobs:
           staged=json.load(open('projects/noema/data/candidates/wikimedia-media-candidates.json'))
           assert staged['status']=='PENDING_IDENTITY_AND_RIGHTS_REVIEW'
           assert all(x['decision']=='PENDING_REVIEW' for x in staged['candidates'])
-          print('NOEMA v1.1 visual + operations contract green')
+          print('NOEMA v1.2 progressive-disclosure + operations contract green')
           PY
