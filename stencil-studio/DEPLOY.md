@@ -6,11 +6,16 @@ You connect four services — all have free tiers to start. Estimated time: ~30 
 
 1. Create a project at [neon.tech](https://neon.tech) (or Vercel Postgres / Supabase).
 2. Copy the **pooled** connection string → this is `DATABASE_URL`.
-3. Locally, create the schema:
+3. Create the schema. Either:
    ```bash
    npm install
-   DATABASE_URL="postgres://…" npm run db:push
+   DATABASE_URL="postgres://…" npm run db:push   # needs TCP :5432 egress
    ```
+   **or**, if your environment can't open a raw Postgres TCP connection (e.g. an
+   HTTPS-only proxy), paste [`prisma/deploy.sql`](./prisma/deploy.sql) into Neon's
+   web **SQL Editor** — it contains the full schema plus an optional demo studio
+   (`demo@stencil.studio` / `demo12345`). Regenerate it any time with:
+   `npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script`.
 
 ## 2. File storage — Vercel Blob
 
