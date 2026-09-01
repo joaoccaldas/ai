@@ -12,8 +12,10 @@
       const u=new URL(link.href,location.href),id=u.searchParams.get('id'),m=byEntity.get(id);
       card.dataset.visualCard='1';card.classList.add('vc-result-card');
       if(!m)continue;
-      const fig=document.createElement('a');fig.className='vc-card-media';fig.href=link.href;fig.innerHTML=`<img src="${esc(m.thumbnail_url||m.image_url)}" alt="${esc(m.provider_title||link.textContent)}" referrerpolicy="no-referrer"><span>${esc(m.rights)} · museum reference</span>`;
-      fig.querySelector('img').addEventListener('error',()=>fig.remove());
+      const fig=document.createElement('a');fig.className='vc-card-media vc-card-media-safe';fig.href=link.href;
+      const mark=(m.entity_name||link.textContent||'?').trim().slice(0,1).toUpperCase();
+      fig.innerHTML=`<span class="vc-local-mark" aria-hidden="true">${esc(mark)}</span><span>${esc(m.rights)} · museum reference available</span>`;
+      fig.title='External museum image is not auto-loaded because some provider CDNs block cross-origin embedding. Open the entity workspace for provenance.';
       card.prepend(fig);
     }
   }
