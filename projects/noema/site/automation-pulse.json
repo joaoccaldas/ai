@@ -1,26 +1,26 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-08-31T17:38:28.109869+00:00",
+  "generated_at": "2026-09-01T06:23:28.908685+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 16,
-    "new_candidates": 1540,
-    "contradictions": 2,
-    "dating_revisions": 0,
-    "hypotheses_revisited": 8,
-    "review_items_created": 193,
+    "runs": 19,
+    "new_candidates": 1685,
+    "contradictions": 6,
+    "dating_revisions": 1,
+    "hypotheses_revisited": 13,
+    "review_items_created": 228,
     "errors": 0
   },
   "latest_by_task": [
     {
       "task_type": "DAILY_INGEST",
-      "run_id": "chatgpt-daily-2026-08-31",
-      "status": "COMPLETED",
-      "completed_at": "2026-08-31T06:46:13Z",
-      "summary": "Verified the latest successful NOEMA Discovery artifact: 121 unreviewed Crossref candidates with a 30-item priority queue (2 RECENT_PUBLICATION, 1 UPCOMING_OR_AHEAD_OF_PRINT, 27 NEWLY_INDEXED_LEGACY). After DOI/canonical-URL deduplication against prior triage, persisted four material candidates: a 30 Aug 2026 Kura-Araxes/Trialeti publication, the authoritative Sekhentyu-Ptah Saqqara field discovery, SuperstitionsMap v1.0.1 as a structured discovery dataset with prevalence/stereotyping guards, and a culturally scoped 2026 Turkic/Kazakh shamanism-ASC synthesis. No verified dating revision and no automatic evidence or claim promotion occurred.",
+      "run_id": "chatgpt-daily-2026-09-01",
+      "status": "COMPLETED_CANDIDATES_PERSISTED",
+      "completed_at": "2026-09-01T06:22:00Z",
+      "summary": "Inspected successful NOEMA Discovery run 33469994194 and verified its artifact: 125 candidates, 30 priority records, with priority distribution 2 RECENT_PUBLICATION, 0 UPCOMING_OR_AHEAD_OF_PRINT, and 28 NEWLY_INDEXED_LEGACY. After DOI/canonical-URL deduplication and fresh web/Consensus screening, persisted five candidate-only additions: a same-day Khaybar funerary chronology refinement, a Sabazios rural-cult material-context paper, a death-omens historical analysis that pressures belief-versus-practice coding, an immersive-VR altered-state experiment that pressures context/phenomenology separation, and the Gedikkaya Epipaleolithic turtle-figurine field discovery. One candidate dating refinement and four interpretation/metadata pressures were recorded. No claims, evidence, relationships, or hypotheses were automatically promoted.",
       "errors": [],
-      "research_note": "projects/noema/data/candidates/daily/2026-08-31.json"
+      "research_note": "The highest-priority human review is the Khaybar chronology paper because new radiocarbon and stratigraphic evidence may require temporal-scope updates. The death-omens paper is the highest ontology-value item because it explicitly separates customary participation from propositional belief. The Sabazios article should not yield a diffusion edge from iconographic similarity alone. The Gedikkaya dates apply to associated contexts as publicly reported, not direct dating of every figurine, and ritual purpose remains interpretive. The Crossref priority item 'Some New World' requires DOI-level identity verification because its 2026 discovery metadata shares a title with a 2024 Cambridge monograph."
     },
     {
       "task_type": "WEEKLY_REANALYSIS",
@@ -33,10 +33,10 @@
     },
     {
       "task_type": "GITHUB_DISCOVERY",
-      "run_id": "github-discovery-33361678545",
+      "run_id": "github-discovery-33469994194",
       "status": "COMPLETED",
-      "completed_at": "2026-08-31T05:46:03.144490+00:00",
-      "summary": "Crossref discovery produced 121 unreviewed candidates and 30 priority items.",
+      "completed_at": "2026-09-01T04:29:11.423831+00:00",
+      "summary": "Crossref discovery produced 125 unreviewed candidates and 30 priority items.",
       "errors": [],
       "research_note": null
     },
@@ -69,9 +69,9 @@
     },
     {
       "task_type": "MUSEUM_MEDIA_DISCOVERY",
-      "run_id": "museum-media-33367157071",
+      "run_id": "museum-media-33420651247",
       "status": "COMPLETED_REFERENCE_ONLY",
-      "completed_at": "2026-08-31T07:10:12.338021+00:00",
+      "completed_at": "2026-08-31T17:38:36.109535+00:00",
       "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
       "errors": [],
       "research_note": null
@@ -87,10 +87,10 @@
       "next_stage": "DAILY_INGEST",
       "expected_interval_hours": 26.0,
       "health": "HEALTHY",
-      "last_run_id": "github-discovery-33361678545",
+      "last_run_id": "github-discovery-33469994194",
       "last_status": "COMPLETED",
-      "last_completed_at": "2026-08-31T05:46:03.144490+00:00",
-      "age_hours": 11.87,
+      "last_completed_at": "2026-09-01T04:29:11.423831+00:00",
+      "age_hours": 1.9,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -105,10 +105,10 @@
       "next_stage": "HUMAN_REVIEW",
       "expected_interval_hours": 30.0,
       "health": "HEALTHY",
-      "last_run_id": "chatgpt-daily-2026-08-31",
-      "last_status": "COMPLETED",
-      "last_completed_at": "2026-08-31T06:46:13Z",
-      "age_hours": 10.87,
+      "last_run_id": "chatgpt-daily-2026-09-01",
+      "last_status": "COMPLETED_CANDIDATES_PERSISTED",
+      "last_completed_at": "2026-09-01T06:22:00Z",
+      "age_hours": 0.02,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
         "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
@@ -126,7 +126,7 @@
       "last_run_id": "dplace-benchmark-33361784511",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:47:46.132148+00:00",
-      "age_hours": 11.84,
+      "age_hours": 24.6,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -144,7 +144,7 @@
       "last_run_id": "religion-federation-33361678540",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:46:27.262104+00:00",
-      "age_hours": 11.87,
+      "age_hours": 24.62,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -169,7 +169,7 @@
       "last_run_id": "chatgpt-weekly-2026-08-30",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-08-30T06:10:03Z",
-      "age_hours": 35.47,
+      "age_hours": 48.22,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -206,7 +206,7 @@
       "last_run_id": "media-discovery-33361678569",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-08-31T05:46:01.773622+00:00",
-      "age_hours": 11.87,
+      "age_hours": 24.62,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
@@ -214,6 +214,119 @@
     }
   ],
   "recent_runs": [
+    {
+      "run_id": "chatgpt-daily-2026-09-01",
+      "task_type": "DAILY_INGEST",
+      "status": "COMPLETED_CANDIDATES_PERSISTED",
+      "started_at": "2026-09-01T06:18:57Z",
+      "completed_at": "2026-09-01T06:22:00Z",
+      "input_refs": [
+        "github-actions:joaoccaldas/ai:NOEMA Discovery:33469994194",
+        "github-artifact:9786189503:noema-crossref-candidates",
+        "projects/noema/data/candidates/daily/2026-08-31.json",
+        "projects/noema/schemas/run-manifest-v1.json",
+        "web:10.1016/j.jasrep.2026.105812",
+        "web:10.15184/aqy.2026.10420",
+        "web:10.1093/jvcult/vcag018",
+        "web:10.1007/s10055-026-01443-x",
+        "web:https://www.aa.com.tr/en/life/25-turtle-figurines-dating-back-16-500-years-found-in-turkiye/4032689",
+        "consensus:archaeology symbolic behavior ritual mortuary religion year:2026",
+        "consensus:altered states psychedelics breathwork mystical experience religion ritual year:2026",
+        "consensus:ancient DNA burial mortuary kinship chronology archaeology year:2026"
+      ],
+      "artifact_digests": {
+        "github_discovery_artifact_zip_sha256": "95640f0fedf09f1fafe2cd59554c39d25d1adb0d8db0ebd3f333a8f9cff262e4",
+        "github_discovery_raw_json_sha256": "10e819af540fff5d8bd8435522fdafd013d40007c4dd8e90c11bf30014e1a40f",
+        "candidate_pack_prewrite_sha256": "32c59ebf02dd779d27f13a9c0de0dbadba4bb99f9be02270a9bdb608654536fd"
+      },
+      "sources_examined": 24,
+      "new_candidates": 5,
+      "candidate_updates": 0,
+      "contradictions": 4,
+      "dating_revisions": 1,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 5,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 5,
+      "errors": [],
+      "summary": "Inspected successful NOEMA Discovery run 33469994194 and verified its artifact: 125 candidates, 30 priority records, with priority distribution 2 RECENT_PUBLICATION, 0 UPCOMING_OR_AHEAD_OF_PRINT, and 28 NEWLY_INDEXED_LEGACY. After DOI/canonical-URL deduplication and fresh web/Consensus screening, persisted five candidate-only additions: a same-day Khaybar funerary chronology refinement, a Sabazios rural-cult material-context paper, a death-omens historical analysis that pressures belief-versus-practice coding, an immersive-VR altered-state experiment that pressures context/phenomenology separation, and the Gedikkaya Epipaleolithic turtle-figurine field discovery. One candidate dating refinement and four interpretation/metadata pressures were recorded. No claims, evidence, relationships, or hypotheses were automatically promoted.",
+      "research_note": "The highest-priority human review is the Khaybar chronology paper because new radiocarbon and stratigraphic evidence may require temporal-scope updates. The death-omens paper is the highest ontology-value item because it explicitly separates customary participation from propositional belief. The Sabazios article should not yield a diffusion edge from iconographic similarity alone. The Gedikkaya dates apply to associated contexts as publicly reported, not direct dating of every figurine, and ritual purpose remains interpretive. The Crossref priority item 'Some New World' requires DOI-level identity verification because its 2026 discovery metadata shares a title with a 2024 Cambridge monograph.",
+      "code_commit": "715b516a68ad7e4ddfd6a88814eb519b568a1907",
+      "candidate_output": "projects/noema/data/candidates/daily/2026-09-01.json",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "github-discovery-33469994194",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-09-01T04:29:11.423831+00:00",
+      "completed_at": "2026-09-01T04:29:11.423831+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:10e819af540fff5d8bd8435522fdafd013d40007c4dd8e90c11bf30014e1a40f"
+      },
+      "sources_examined": 0,
+      "new_candidates": 125,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 125 unreviewed candidates and 30 priority items.",
+      "code_commit": "41fe8044bbed32a861f5f63a85a4bd0577eadea6",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "museum-media-33420651247",
+      "task_type": "MUSEUM_MEDIA_DISCOVERY",
+      "status": "COMPLETED_REFERENCE_ONLY",
+      "started_at": "2026-08-31T17:38:36.109535+00:00",
+      "completed_at": "2026-08-31T17:38:36.109535+00:00",
+      "input_refs": [
+        "Art Institute of Chicago Open Access API",
+        "Cleveland Museum of Art Open Access API",
+        "projects/noema/data/reference/belief-catalog-v1.json"
+      ],
+      "artifact_digests": {
+        "museum-reference-media": "sha256:a7425dc77f9d16b426cee7ac59b98d63bad99872f7bafdff283afc95a0f9c4fb"
+      },
+      "sources_examined": 22,
+      "new_candidates": 15,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
+      "code_commit": "d0f17604aa417694debe381ee4879dee606fbae8",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
     {
       "run_id": "museum-media-33367157071",
       "task_type": "MUSEUM_MEDIA_DISCOVERY",
