@@ -7,6 +7,7 @@ on:
   push:
     paths:
       - 'projects/noema/scripts/discover_pubmed.py'
+      - 'projects/noema/scripts/build_automation_pulse.py'
       - 'projects/noema/data/reference/cognition-mechanism-ontology-v1.json'
       - 'projects/noema/data/automation-contract-v1.json'
       - '.github/workflows/noema-pubmed-discovery.yml'
@@ -94,6 +95,20 @@ jobs:
           out=Path(f"projects/noema/data/runs/pubmed-discovery-{os.environ['RUN_ID']}.json")
           out.write_text(json.dumps(manifest,indent=2)+'\n')
           PY
+      - name: Refresh Automation Pulse with this run
+        run: |
+          python projects/noema/scripts/build_automation_pulse.py \
+            --runs-dir projects/noema/data/runs \
+            --contract projects/noema/data/automation-contract-v1.json \
+            --output projects/noema/site/automation-pulse.json
+          python - <<'PY'
+          import json
+          d=json.load(open('projects/noema/site/automation-pulse.json'))
+          pub=next(x for x in d['task_health'] if x['task_type']=='PUBMED_DISCOVERY')
+          assert pub['health']=='HEALTHY', pub
+          assert pub['last_run_id'], pub
+          print('PubMed pulse:', pub['health'], pub['last_run_id'])
+          PY
       - name: Upload discovery artifact
         uses: actions/upload-artifact@v4
         with:
@@ -101,10 +116,10 @@ jobs:
           path: projects/noema/data/candidates/pubmed-latest.json
       - name: Commit deterministic discovery state
         run: |
-          if git status --porcelain projects/noema/data/candidates/pubmed-latest.json projects/noema/data/runs/ | grep -q .; then
+          if git status --porcelain projects/noema/data/candidates/pubmed-latest.json projects/noema/data/runs/ projects/noema/site/automation-pulse.json | grep -q .; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git add projects/noema/data/candidates/pubmed-latest.json projects/noema/data/runs/
-            git commit -m 'data(noema): refresh PubMed cognition candidates [skip pubmed-discovery]'
+            git add projects/noema/data/candidates/pubmed-latest.json projects/noema/data/runs/ projects/noema/site/automation-pulse.json
+            git commit -m 'data(noema): refresh PubMed cognition candidates and pulse [skip pubmed-discovery]'
             git push
           fi
