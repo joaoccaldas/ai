@@ -17,7 +17,13 @@
     "pattern_candidates_pulotu": 0,
     "pattern_candidates_drh": 62,
     "pulotu_dimensions_with_binary_coverage": 9,
-    "drh_dimensions_with_binary_coverage": 9
+    "drh_dimensions_with_binary_coverage": 9,
+    "source_fingerprints_encoded": 7,
+    "source_dependency_edges_encoded": 1,
+    "source_independence_groups_encoded": 6,
+    "pubmed_latest_candidates": 2,
+    "pubmed_latest_queries": 7,
+    "pubmed_rejected_by_relevance_gate": 19
   },
   "strengths": [
     "Source digests and upstream locators are preserved in generated federation products.",
@@ -26,14 +32,23 @@
     "Crosswalk-dependent feature pairs are removed from pattern testing.",
     "Pulotu and DRH remain separate statistical cohorts.",
     "Crosswalks include semantic-drift guards for curated DRH questions.",
+    "A versioned source-dependence primitive distinguishes same-work, derived, shared-dataset and shared-sample families without treating author overlap or citations as dependence.",
+    "PubMed/MEDLINE discovery is isolated as a candidate mechanism/context channel with anti-retrodiagnosis guardrails.",
+    "OpenAlex candidate metadata and Pleiades place linking have dedicated adapters with tests and non-evidentiary policies.",
     "Public projections are generated deterministically and validated in CI."
   ],
   "blind_spots": [
     {
       "severity": "CRITICAL",
       "area": "causal inference",
-      "finding": "Pattern screening does not yet control for phylogeny, spatial autocorrelation, known contact, source dependence, research intensity, or missing-data mechanisms beyond pairwise complete-case filtering.",
-      "next_gate": "Require phylogenetic/spatial/contact-aware models plus missing-data sensitivity before any relationship can be promoted beyond descriptive candidate status."
+      "finding": "Pattern screening does not yet control for phylogeny, spatial autocorrelation, known contact, research intensity, or richer missing-data mechanisms. A source-dependence graph now exists, but current pattern candidates do not yet consume it.",
+      "next_gate": "Make source-dependence groups an analysis input, then require phylogenetic/spatial/contact-aware models plus missing-data sensitivity before any relationship can be promoted beyond descriptive candidate status."
+    },
+    {
+      "severity": "HIGH",
+      "area": "source independence coverage",
+      "finding": "The v1.8 source-dependence graph currently fingerprints 7 sources and encodes 1 blocking dependency edge. Absence of an edge is explicitly not proof of independence.",
+      "next_gate": "Fingerprint every source entering promoted claims/tests with exact dataset snapshots, samples/cohorts and parent/derived relationships; link systematic reviews to included primary-study families."
     },
     {
       "severity": "HIGH",
@@ -50,14 +65,26 @@
     {
       "severity": "HIGH",
       "area": "reference taxonomy",
-      "finding": "The starter reference catalog still contains 8 pre-v1 dimension keys (KNOWLEDGE_AUTHORITY, MATERIAL_MEDIATION, MORALITY_ORDER, ONTOLOGY_AGENCY, PHENOMENOLOGY, SACRED_SPACE_TIME, SPECIALIST_ROLE, SUBSTANCE_RELATION). These are discovery tags, not accepted comparative ontology.",
+      "finding": "The starter reference catalog still contains 8 pre-v1 dimension keys. These are discovery tags, not accepted comparative ontology.",
       "next_gate": "Publish a normalized reference projection that preserves legacy tags for search but exposes comparative dimensions only after explicit canonical crosswalk review."
     },
     {
       "severity": "HIGH",
       "area": "runtime database",
-      "finding": "Repository migrations now model datasets, feature assertions, analyses, relationship candidates, identity names/links and media review, but the deployed runtime database is not yet verified at this schema level.",
+      "finding": "Repository migrations model datasets, feature assertions, analyses, relationship candidates, identity names/links and media review, but the deployed runtime database is not yet verified at this schema level.",
       "next_gate": "Apply and verify migrations 001-006 on the runtime database, then publish DB-backed projections through the read-only API."
+    },
+    {
+      "severity": "MEDIUM",
+      "area": "biomedical transportability",
+      "finding": "PubMed discovery is operational with 7 query families in the latest inspected run and 2 retained candidates after a strict title gate, but biomedical studies remain candidate mechanism/context sources and cannot be projected into historical populations.",
+      "next_gate": "Review underlying papers, fingerprint samples/datasets, and require explicit phenomenology/cultural-role bridge evidence before cross-domain hypothesis testing."
+    },
+    {
+      "severity": "MEDIUM",
+      "area": "source breadth",
+      "finding": "OpenAlex normalization and Pleiades linking are adapter-ready, while Seshat and ARIADNE remain next-stage integrations rather than live federation inputs.",
+      "next_gate": "Add a versioned Seshat snapshot adapter and a provider-preserving ARIADNE discovery adapter before expanding claims of source coverage."
     },
     {
       "severity": "MEDIUM",
@@ -74,18 +101,20 @@
     {
       "severity": "MEDIUM",
       "area": "media",
-      "finding": "0 media assets currently pass an explicit rights-status gate in the reference catalog.",
-      "next_gate": "Use the Commons candidate adapter to stage creator/license/source metadata, then require separate identity and rights approval before public rendering."
+      "finding": "0 media assets currently pass an explicit rights-status gate in the starter reference catalog, although separate reviewed museum/Commons reference-media projections exist.",
+      "next_gate": "Unify reviewed media identity/rights status into the entity-level provenance view without treating reference imagery as evidence."
     }
   ],
   "maturity": {
     "data_provenance": "STRONG",
     "ontology": "STRONG_BUT_EXPANDING",
-    "source_coverage": "MEDIUM",
+    "source_coverage": "MEDIUM_EXPANDING",
+    "source_dependence": "EARLY_OPERATIONAL",
     "semantic_mapping_coverage": "EARLY_TO_MEDIUM",
     "entity_resolution": "EARLY",
     "pattern_screening": "MEDIUM_DESCRIPTIVE",
     "causal_relationship_inference": "EARLY",
+    "biocultural_cognition": "EARLY_GUARDED_DISCOVERY",
     "simulation": "EARLY",
     "runtime_database_activation": "UNVERIFIED",
     "media_and_visual_provenance": "EARLY_WITH_STAGING_PIPELINE",
