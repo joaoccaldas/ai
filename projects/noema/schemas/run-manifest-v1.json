@@ -6,7 +6,7 @@
   "required": ["run_id", "task_type", "status", "started_at", "completed_at", "epistemic_guards"],
   "properties": {
     "run_id": {"type": "string", "minLength": 1},
-    "task_type": {"enum": ["DAILY_INGEST", "WEEKLY_REANALYSIS", "MONTHLY_DISCOVERY", "GITHUB_DISCOVERY", "DPLACE_BENCHMARK", "RELIGION_FEDERATION", "MEDIA_DISCOVERY", "OTHER"]},
+    "task_type": {"enum": ["DAILY_INGEST", "WEEKLY_REANALYSIS", "MONTHLY_DISCOVERY", "GITHUB_DISCOVERY", "PUBMED_DISCOVERY", "DPLACE_BENCHMARK", "RELIGION_FEDERATION", "MEDIA_DISCOVERY", "OTHER"]},
     "status": {"type": "string", "minLength": 1},
     "started_at": {"type": "string"},
     "completed_at": {"type": "string"},
@@ -33,7 +33,8 @@
         "model_output_is_evidence": {"const": false},
         "unknown_is_absent": {"const": false},
         "similarity_implies_descent": {"const": false},
-        "automatic_claim_promotion": {"const": false}
+        "automatic_claim_promotion": {"const": false},
+        "historical_diagnosis_from_resemblance": {"const": false}
       },
       "additionalProperties": true
     }
