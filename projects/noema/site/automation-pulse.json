@@ -1,15 +1,15 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-02T06:59:28.655224+00:00",
+  "generated_at": "2026-09-02T07:38:08.485592+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 23,
-    "new_candidates": 1842,
+    "runs": 24,
+    "new_candidates": 1824,
     "contradictions": 15,
     "dating_revisions": 1,
     "hypotheses_revisited": 19,
-    "review_items_created": 302,
+    "review_items_created": 269,
     "errors": 0
   },
   "latest_by_task": [
@@ -78,9 +78,9 @@
     },
     {
       "task_type": "MUSEUM_MEDIA_DISCOVERY",
-      "run_id": "museum-media-33420651247",
+      "run_id": "museum-media-33603946256",
       "status": "COMPLETED_REFERENCE_ONLY",
-      "completed_at": "2026-08-31T17:38:36.109535+00:00",
+      "completed_at": "2026-09-02T07:31:06.845662+00:00",
       "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
       "errors": [],
       "research_note": null
@@ -99,10 +99,29 @@
       "last_run_id": "github-discovery-33591103364",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-02T04:31:23.471386+00:00",
-      "age_hours": 2.47,
+      "age_hours": 3.11,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
+      ]
+    },
+    {
+      "task_type": "PUBMED_DISCOVERY",
+      "scheduler": "GITHUB_ACTIONS",
+      "cadence": "TWICE_WEEKLY_TUESDAY_FRIDAY",
+      "schedule": "47 4 * * 2,5 UTC",
+      "authority": "BIOMEDICAL_CANDIDATE_DISCOVERY_ONLY",
+      "next_stage": "HUMAN_REVIEW",
+      "expected_interval_hours": 96.0,
+      "health": "NEVER_RUN",
+      "last_run_id": null,
+      "last_status": null,
+      "last_completed_at": null,
+      "age_hours": null,
+      "writes": [
+        "Actions artifact: noema-pubmed-candidates",
+        "projects/noema/data/candidates/pubmed-latest.json",
+        "projects/noema/data/runs/pubmed-discovery-*.json"
       ]
     },
     {
@@ -117,7 +136,7 @@
       "last_run_id": "chatgpt-daily-2026-09-02",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-02T07:07:00+00:00",
-      "age_hours": -0.13,
+      "age_hours": 0.52,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
         "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
@@ -135,7 +154,7 @@
       "last_run_id": "dplace-benchmark-33361784511",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:47:46.132148+00:00",
-      "age_hours": 49.2,
+      "age_hours": 49.84,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -153,7 +172,7 @@
       "last_run_id": "religion-federation-33361678540",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:46:27.262104+00:00",
-      "age_hours": 49.22,
+      "age_hours": 49.86,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -178,7 +197,7 @@
       "last_run_id": "chatgpt-weekly-2026-08-30",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-08-30T06:10:03Z",
-      "age_hours": 72.82,
+      "age_hours": 73.47,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -196,7 +215,7 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 24.57,
+      "age_hours": 25.22,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
         "projects/noema/research/monthly/YYYY-MM-DD-monthly-discovery.md",
@@ -215,7 +234,7 @@
       "last_run_id": "media-discovery-33601263529",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-02T06:58:26.632314+00:00",
-      "age_hours": 0.02,
+      "age_hours": 0.66,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
@@ -223,6 +242,40 @@
     }
   ],
   "recent_runs": [
+    {
+      "run_id": "museum-media-33603946256",
+      "task_type": "MUSEUM_MEDIA_DISCOVERY",
+      "status": "COMPLETED_REFERENCE_ONLY",
+      "started_at": "2026-09-02T07:31:06.845662+00:00",
+      "completed_at": "2026-09-02T07:31:06.845662+00:00",
+      "input_refs": [
+        "Art Institute of Chicago Open Access API",
+        "Cleveland Museum of Art Open Access API",
+        "projects/noema/data/reference/belief-catalog-v1.json"
+      ],
+      "artifact_digests": {
+        "museum-reference-media": "sha256:d4bcbacca82ba42c5a1867824fab2c8290a40b0b00502c9ec76dda9f6cf4e49a"
+      },
+      "sources_examined": 22,
+      "new_candidates": 15,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
+      "code_commit": "3dccd699bbefa4e57283cb920c0ac02d1842ae8b",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
     {
       "run_id": "chatgpt-daily-2026-09-02",
       "task_type": "DAILY_INGEST",
@@ -899,39 +952,6 @@
       "review_items_created": 30,
       "errors": [],
       "summary": "Crossref discovery produced 122 unreviewed candidates and 30 priority items.",
-      "code_commit": "2444bc65bd92d03cbecb75c625b7cdc38562bb06",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "media-discovery-33359269147",
-      "task_type": "MEDIA_DISCOVERY",
-      "status": "COMPLETED_PENDING_REVIEW",
-      "started_at": "2026-08-31T05:05:38.858450+00:00",
-      "completed_at": "2026-08-31T05:05:38.858450+00:00",
-      "input_refs": [
-        "Wikimedia Commons",
-        "projects/noema/data/reference/belief-catalog-v1.json"
-      ],
-      "artifact_digests": {
-        "wikimedia-media-candidates": "sha256:85ca58e4eb4190c459ce43abbf75f571716d77cb6909251f8f4900a8ebfb4a6e"
-      },
-      "sources_examined": 11,
-      "new_candidates": 33,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 33,
-      "errors": [],
-      "summary": "Discovered 33 Wikimedia Commons media candidates across 11 entities; none are public until identity and rights are approved.",
       "code_commit": "2444bc65bd92d03cbecb75c625b7cdc38562bb06",
       "epistemic_guards": {
         "model_output_is_evidence": false,
