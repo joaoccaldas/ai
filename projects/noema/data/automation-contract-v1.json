@@ -1,13 +1,14 @@
 {
   "contract_id": "NOEMA-AUTOMATION-CONTRACT-V1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "timezone": "Europe/Stockholm",
   "principles": [
     "Automation output is workflow state, never evidence by itself.",
     "Discovery jobs may create candidates but may not approve claims or relationships.",
     "Every state-changing research job should emit a run manifest.",
     "Unknown, missing, contested and absent states remain distinct.",
-    "Scheduled outputs must write only to their declared destinations."
+    "Scheduled outputs must write only to their declared destinations.",
+    "Biomedical discovery may suggest mechanisms but may not retroactively diagnose historical persons or populations."
   ],
   "tasks": [
     {
@@ -19,6 +20,16 @@
       "authority": "CANDIDATE_DISCOVERY_ONLY",
       "writes": ["Actions artifact: noema-crossref-candidates", "projects/noema/data/runs/github-discovery-*.json"],
       "next_stage": "DAILY_INGEST"
+    },
+    {
+      "task_type": "PUBMED_DISCOVERY",
+      "scheduler": "GITHUB_ACTIONS",
+      "cadence": "TWICE_WEEKLY_TUESDAY_FRIDAY",
+      "schedule": "47 4 * * 2,5 UTC",
+      "expected_interval_hours": 96,
+      "authority": "BIOMEDICAL_CANDIDATE_DISCOVERY_ONLY",
+      "writes": ["Actions artifact: noema-pubmed-candidates", "projects/noema/data/candidates/pubmed-latest.json", "projects/noema/data/runs/pubmed-discovery-*.json"],
+      "next_stage": "HUMAN_REVIEW"
     },
     {
       "task_type": "DAILY_INGEST",
