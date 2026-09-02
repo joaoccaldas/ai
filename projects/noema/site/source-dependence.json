@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "principle": "Source independence is evaluated from work, dataset, sample and explicit derivation identity. Author overlap alone is not dependence.",
+  "nodes": [
+    {"source_id":"NOEMA-EVIDENCE-001:S001","doi":null,"pmid":null,"pmcid":null,"datasets":[],"samples":[],"parent_source_ids":[]},
+    {"source_id":"NOEMA-EVIDENCE-001:S002","doi":null,"pmid":null,"pmcid":null,"datasets":["pulotu comparative austronesian religion data"],"samples":["96 austronesian cultures"],"parent_source_ids":[]},
+    {"source_id":"NOEMA-EVIDENCE-001:S003","doi":null,"pmid":null,"pmcid":null,"datasets":["purzycki et al. cross-cultural behavioral allocation study"],"samples":["591 participants across eight societies"],"parent_source_ids":[]},
+    {"source_id":"NOEMA-EVIDENCE-001:S004","doi":null,"pmid":null,"pmcid":null,"datasets":["seshat global history databank"],"samples":[],"parent_source_ids":[]},
+    {"source_id":"NOEMA-EVIDENCE-001:S005","doi":null,"pmid":null,"pmcid":null,"datasets":["seshat global history databank"],"samples":[],"parent_source_ids":[]},
+    {"source_id":"PUBMED:42670176","doi":"10.1002/brb3.71733","pmid":"42670176","pmcid":"pmc13527413","datasets":[],"samples":[],"parent_source_ids":[]},
+    {"source_id":"PUBMED:42574736","doi":"10.1080/02791072.2026.2710057","pmid":"42574736","pmcid":null,"datasets":["retrospective psychedelic web survey"],"samples":[],"parent_source_ids":[]}
+  ],
+  "edges": [
+    {
+      "source_a":"NOEMA-EVIDENCE-001:S004",
+      "source_b":"NOEMA-EVIDENCE-001:S005",
+      "dependency_type":"SHARED_DATASET",
+      "reasons":["dataset:seshat global history databank"],
+      "independence_blocking":true
+    }
+  ],
+  "independence_groups": [
+    ["NOEMA-EVIDENCE-001:S001"],
+    ["NOEMA-EVIDENCE-001:S002"],
+    ["NOEMA-EVIDENCE-001:S003"],
+    ["NOEMA-EVIDENCE-001:S004","NOEMA-EVIDENCE-001:S005"],
+    ["PUBMED:42574736"],
+    ["PUBMED:42670176"]
+  ],
+  "counts":{"sources":7,"dependency_edges":1,"independence_groups":6,"singleton_groups":5},
+  "manifest_id":"NOEMA-SOURCE-FINGERPRINTS-V1",
+  "generated_from":"data/reference/source-fingerprints-v1.json",
+  "status":"RESEARCH_PREVIEW",
+  "guardrails":{
+    "author_overlap_is_dependence":false,
+    "shared_dataset_means_same_conclusion":false,
+    "independent_analysis_means_independent_data":false,
+    "dependence_edge_is_evidence_against_claim":false
+  },
+  "notes":[
+    "This seed is intentionally incomplete. Absence of a dependency edge means 'not yet encoded', not proof of independence.",
+    "Dataset names are normalized only after source-level verification; exact snapshots should replace broad dataset-family labels when available.",
+    "Systematic reviews and meta-analyses must later depend on their included primary-study family when those studies enter NOEMA."
+  ]
+}
