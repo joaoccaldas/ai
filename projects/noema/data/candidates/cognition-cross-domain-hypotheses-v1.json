@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "status": "HYPOTHESIS_GENERATION_ONLY",
+  "generated_at": "2026-09-02",
+  "principle": "Cross-domain resemblance is a prompt for discrimination among mechanisms, not a diagnosis, causal conclusion, or claim of common origin.",
+  "candidates": [
+    {
+      "id": "COG-H001",
+      "question": "Do culturally patterned possession and trance experiences share measurable dissociative phenomenology while remaining differently interpreted and socially organized across cultures?",
+      "historical_or_cultural_side": ["possession ritual", "trance", "spirit-medium roles"],
+      "modern_mechanism_side": ["dissociation", "self-model alteration", "absorption"],
+      "candidate_relationship": "PHENOMENOLOGICALLY_RESEMBLES",
+      "supporting_seed_pmids": ["27485275", "21507280", "18213511"],
+      "rivals": ["cultural learning/script", "social-role selection", "trauma/stress", "substance effects", "sleep phenomena", "source/translation bias", "null/chance"],
+      "required_tests": ["cross-cultural phenomenology using comparable measures", "functional-impairment distinction", "ritual-context stratification", "source-independent replication"],
+      "forbidden_conclusion": "possession ritual equals dissociative disorder"
+    },
+    {
+      "id": "COG-H002",
+      "question": "Can rhythmic music, drumming and sensorimotor entrainment explain part of the induction of trance-like states across otherwise unrelated traditions?",
+      "historical_or_cultural_side": ["drumming", "chanting", "dance", "repetitive rhythm", "trance ritual"],
+      "modern_mechanism_side": ["auditory entrainment", "sensorimotor synchronization", "altered-state phenomenology"],
+      "candidate_relationship": "POSSIBLE_MECHANISM_FOR",
+      "supporting_seed_pmids": ["42044758"],
+      "rivals": ["expectancy", "group synchrony", "hyperventilation/exertion", "sleep loss", "substance effects", "selection of highly absorptive participants", "null/chance"],
+      "required_tests": ["ritual-feature coding independent of outcome", "dose/intensity measures", "cross-cultural replication", "control for expectancy and group synchrony"],
+      "forbidden_conclusion": "shared trance induction proves shared historical origin or shared meaning"
+    },
+    {
+      "id": "COG-H003",
+      "question": "Do sleep paralysis, hypnagogic and hypnopompic experiences contribute to recurrent night-visitor, demon, spirit or witch narratives in some cultural settings?",
+      "historical_or_cultural_side": ["night visitor narrative", "demon/spirit attack", "witch-related nocturnal accusation or folklore"],
+      "modern_mechanism_side": ["sleep paralysis", "hypnagogia", "hypnopompia", "felt presence"],
+      "candidate_relationship": "POSSIBLE_MECHANISM_FOR",
+      "supporting_seed_pmids": [],
+      "rivals": ["cultural transmission", "nightmare phenomena", "trauma", "social accusation scripts", "deliberate storytelling", "source selection", "null/chance"],
+      "required_tests": ["historical text corpus with symptom-level coding", "modern cross-cultural sleep-paralysis studies", "translation audit", "temporal comparison of narrative motifs and documented sleep phenomena"],
+      "forbidden_conclusion": "witchcraft accusations were caused by sleep paralysis"
+    },
+    {
+      "id": "COG-H004",
+      "question": "Can rare ecstatic seizure phenomenology provide a mechanism analogue for a subset of reported experiences of overwhelming clarity, certainty or divine presence without explaining mystical experience generally?",
+      "historical_or_cultural_side": ["ecstatic revelation", "overwhelming certainty", "felt divine presence"],
+      "modern_mechanism_side": ["ecstatic aura", "focal seizure", "insula/interoception"],
+      "candidate_relationship": "PHENOMENOLOGICALLY_RESEMBLES",
+      "supporting_seed_pmids": ["34343961", "34827383"],
+      "rivals": ["non-pathological mystical experience", "psychedelic state", "meditation", "sleep-related experience", "psychosis-spectrum experience", "literary convention", "null/chance"],
+      "required_tests": ["symptom-level rather than narrative-label comparison", "base-rate correction", "neurological evidence in contemporaneous populations", "historical-source reliability audit"],
+      "forbidden_conclusion": "a historical visionary had epilepsy from narrative resemblance"
+    },
+    {
+      "id": "COG-H005",
+      "question": "Are some modern neurodevelopmental traits associated with distinctive patterns of religiosity, ritual preference, sensory response or specialist-role fit, and could analogous traits have been differently valued or stigmatized in historical societies?",
+      "historical_or_cultural_side": ["ritual specialist role", "ascetic or contemplative role", "social marginalization", "highly structured ritual practice"],
+      "modern_mechanism_side": ["autistic traits", "ADHD traits", "sensory processing variation", "attention/salience variation"],
+      "candidate_relationship": "SOCIAL_ROLE_ASSOCIATED_WITH",
+      "supporting_seed_pmids": ["37628416", "38947705"],
+      "rivals": ["education and family environment", "religious community accessibility", "personality", "social exclusion", "institutional selection", "measurement bias", "diagnostic ascertainment", "null/chance"],
+      "required_tests": ["large modern preregistered samples", "multidimensional religiosity measures", "culture-specific replication", "historical trait coding without diagnostic labels", "negative controls"],
+      "forbidden_conclusion": "historical shamans, witches, priests or mystics were autistic or had ADHD"
+    },
+    {
+      "id": "COG-H006",
+      "question": "Were unusual experiences selectively incorporated into witchcraft accusation narratives, or does the surviving record primarily reflect legal, theological, gendered and local social scripts?",
+      "historical_or_cultural_side": ["witchcraft accusation", "court testimony", "demonological narrative", "healer/diviner accusation"],
+      "modern_mechanism_side": ["hallucination", "dissociation", "sleep phenomena", "psychosis-spectrum experience", "trauma"],
+      "candidate_relationship": "HISTORICAL_DIAGNOSIS_DISPUTED",
+      "supporting_seed_pmids": ["336681", "7046480"],
+      "rivals": ["legal interrogation effects", "theological scripts", "gender/class conflict", "economic/local conflict", "coercion", "folklore transmission", "source survival bias", "null/chance"],
+      "required_tests": ["trial-record corpus with accusation versus first-person-experience separation", "jurisdiction/time controls", "interrogation-procedure coding", "comparison with non-witchcraft legal records", "historian review"],
+      "forbidden_conclusion": "European witch hunts were primarily persecution of mentally ill or neurodivergent people"
+    },
+    {
+      "id": "COG-H007",
+      "question": "How strongly do psychedelic pharmacology, expectation, ritual container and social context jointly shape mystical-type experiences?",
+      "historical_or_cultural_side": ["entheogenic ritual", "visionary ceremony", "sacred substance use"],
+      "modern_mechanism_side": ["psychedelic pharmacology", "mystical-type experience", "psychological flexibility", "set and setting"],
+      "candidate_relationship": "POSSIBLE_MECHANISM_FOR",
+      "supporting_seed_pmids": [],
+      "latest_pubmed_candidates": ["42574736"],
+      "rivals": ["expectancy", "group effects", "selection bias", "retrospective reporting", "dose", "therapeutic framing", "null/chance"],
+      "required_tests": ["prospective studies", "ritual-context coding", "dose and expectancy controls", "cross-cultural comparison", "measurement invariance"],
+      "forbidden_conclusion": "similar psychedelic phenomenology proves religions share a common source"
+    }
+  ]
+}
