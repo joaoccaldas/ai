@@ -1,0 +1,33 @@
+{
+  "run_id": "media-discovery-33601263529",
+  "task_type": "MEDIA_DISCOVERY",
+  "status": "COMPLETED_PENDING_REVIEW",
+  "started_at": "2026-09-02T06:58:26.632314+00:00",
+  "completed_at": "2026-09-02T06:58:26.632314+00:00",
+  "input_refs": [
+    "Wikimedia Commons",
+    "projects/noema/data/reference/belief-catalog-v1.json"
+  ],
+  "artifact_digests": {
+    "wikimedia-media-candidates": "sha256:d0fbc840956bb939d6bef0758733688fa1233ebbae26567118d65924763335da"
+  },
+  "sources_examined": 11,
+  "new_candidates": 33,
+  "candidate_updates": 0,
+  "contradictions": 0,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 0,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 33,
+  "errors": [],
+  "summary": "Discovered 33 Wikimedia Commons media candidates across 11 entities; none are public until identity and rights are approved.",
+  "code_commit": "e8304802bab911bf9bd17003929a179056d0156c",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false
+  }
+}
