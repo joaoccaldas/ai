@@ -1,0 +1,209 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-02",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-02T06:55:00Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-33591103364",
+    "completed_at": "2026-09-02T04:31:23.471386+00:00",
+    "code_commit": "d69ba3b3099cf919ac2654f26fb9e7753c93cc59",
+    "candidate_count": 119,
+    "priority_candidate_count": 30,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 2,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 0,
+      "NEWLY_INDEXED_LEGACY": 28
+    },
+    "overall_distribution": {
+      "RECENT_PUBLICATION": 2,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 0,
+      "NEWLY_INDEXED_LEGACY": 117
+    },
+    "raw_payload_sha256": "669bd5174c148d2c3d53c07d97fb9bdf06122e50e57e73d8526ec9c1cbfca851",
+    "github_artifact_bundle_sha256": "0768d45f2add79b3d5343b97a19c6234be22ec9fab8287183b1f29dfa9b3c063"
+  },
+  "rules": [
+    "Every record remains a candidate until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin, or diffusion.",
+    "Unknown is not absence.",
+    "Publication and index dates are preserved separately; indexing novelty is not publication novelty.",
+    "Preprints are not peer-reviewed evidence and remain separately labeled.",
+    "Human remains and mortuary contexts require cultural-sensitivity review before public presentation."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION": [
+      {
+        "doi": "10.56315/pscf9-26harrison",
+        "published": "2026-09-01",
+        "indexed": "2026-08-27",
+        "title": "Some New World: Myths of Supernatural Belief in a Secular Age",
+        "note": "Crossref identity remains ambiguous because the same title is a 2024 Cambridge monograph; treat as metadata-quality review, not automatically new primary scholarship."
+      },
+      {
+        "doi": "10.1002/9781394250592.ch34",
+        "published": "2026-08-21",
+        "indexed": "2026-08-31",
+        "title": "Demon Eaters and Bloody Charms",
+        "note": "Crossref classifies this as recent, but the parent Wiley Blackwell Companion to Religion and Violence is marketed with 2027 copyright/publication metadata. Review as possible ahead-of-print content before using publication year semantically."
+      }
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [],
+    "NEWLY_INDEXED_LEGACY_count": 28,
+    "NEWLY_INDEXED_LEGACY_note": "Older publications newly indexed by Crossref; not newly published research."
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-MODRICE-ISOARCH-2026",
+      "triage_class": "RECENT_DATASET",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Dataset to 'Rituals on the move? Unusual dietary habits among non-local elite female priestesses at the Hallstatt period cemetery of Modřice, Czech Republic'",
+      "authors": ["Zdeněk Vytlačil", "Petr Kos", "Zdeněk Tvrdý", "Roman Skála", "Sylva Drtikolová Kaupová"],
+      "publication_date": "2026-08-12",
+      "discovered_at": "2026-09-02",
+      "doi": "10.48530/isoarch.2026.021",
+      "canonical_url": "https://doi.org/10.48530/isoarch.2026.021",
+      "source_type": "STRUCTURED_ISOTOPE_DATASET",
+      "license": "CC BY 4.0",
+      "domains": ["MORTUARY", "ISOTOPES", "MOBILITY", "DIET", "HALLSTATT", "CZECH_REPUBLIC"],
+      "candidate_relevance": "Provides δ13C, δ15N and 87Sr/86Sr data for 24 inhumations and 24 cremations plus fauna, water and plant baselines, creating a reusable observation layer for mobility/diet claims around a mortuary context.",
+      "epistemic_caution": "The dataset records isotopic observations; labels such as 'priestesses' and interpretations of status, ritual role or non-local identity require review of the associated study and archaeological context.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "MORTUARY_CONTEXT"]
+    },
+    {
+      "id": "DAILY-TEPECIK-OBSIDIAN-INCISIONS-2026",
+      "triage_class": "NEWLY_DISCOVERED_RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Intentional incisions on Neolithic Obsidian arrowheads from Central Anatolia: A techno-functional and iconographic approach",
+      "authors": ["Alice Vinet", "Denis Guilbeau"],
+      "publication_date": "2026-07-28",
+      "discovered_at": "2026-09-02",
+      "doi": "10.1371/journal.pone.0354715",
+      "canonical_url": "https://doi.org/10.1371/journal.pone.0354715",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["NEOLITHIC", "OBSIDIAN", "INCISED_OBJECTS", "ICONOGRAPHY", "SYMBOLIC_BEHAVIOR", "CENTRAL_ANATOLIA"],
+      "candidate_relevance": "Eleven newly identified incised obsidian arrowheads from Tepecik-Çiftlik expand the regional corpus and show deliberately variable markings with no fixed relation to raw material, production stage, typology or use-wear.",
+      "epistemic_caution": "The authors explicitly call for cautious interpretation. Shared marks may indicate a flexible cultural practice, but do not establish identity coding, symbolic meaning, descent, or diffusion.",
+      "review_priority": "HIGH",
+      "sensitive": false
+    },
+    {
+      "id": "DAILY-CRYSTAL-ATTRACTION-CHIMP-2026",
+      "triage_class": "NEWLY_DISCOVERED_LEGACY_2026",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "On the origin of our fascination with crystals",
+      "authors": ["Juan Manuel García-Ruiz", "Tomás de la Rosa", "Irene Delval", "Guillermo Bustelo"],
+      "publication_date": "2026-03-04",
+      "discovered_at": "2026-09-02",
+      "doi": "10.3389/fpsyg.2026.1633599",
+      "canonical_url": "https://doi.org/10.3389/fpsyg.2026.1633599",
+      "source_type": "PEER_REVIEWED_EXPERIMENTAL_STUDY",
+      "domains": ["COGNITION", "MATERIAL_ENGAGEMENT", "CRYSTALS", "CHIMPANZEE", "SYMBOLIC_INFERENCE", "HUMAN_EVOLUTION"],
+      "candidate_relevance": "Experiments with enculturated chimpanzees found strong exploratory interest in crystals and identified transparency and geometric shape as salient attractors, providing a non-symbolic perceptual rival explanation for hominin crystal collection.",
+      "epistemic_caution": "Chimpanzee attraction does not establish ancient hominin motives. The value for NOEMA is as an alternative mechanism that weakens any automatic crystal-object -> symbolic-thought inference.",
+      "review_priority": "HIGH",
+      "sensitive": false
+    },
+    {
+      "id": "DAILY-BIAD-BURIAL-AFFILIATION-PREPRINT-2026",
+      "triage_class": "NEWLY_DISCOVERED_PREPRINT",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Cultural affiliation accounts for most of the spatiotemporal variation in burial rite practices",
+      "authors": ["Elisabetta Canteri", "Robert Staniuk", "Adrian Timpson", "Peter Schauer", "Jelena Bulatović", "Maria Ivanova-Bieg", "Samantha S. Reiter", "Helene Agerskov Rose", "Jan Kolář", "Mark G. Thomas", "Fernando Racimo", "Stephen Shennan"],
+      "publication_date": "2026-05-28",
+      "discovered_at": "2026-09-02",
+      "doi": "10.64898/2026.05.25.725982",
+      "canonical_url": "https://doi.org/10.64898/2026.05.25.725982",
+      "source_type": "PREPRINT_NOT_PEER_REVIEWED",
+      "domains": ["MORTUARY", "ANCIENT_DNA", "CULTURAL_AFFILIATION", "MOBILITY", "BIAD", "WESTERN_EURASIA"],
+      "candidate_relevance": "Uses mortuary data from approximately 4,200 individuals and ancestry/mobility data from more than 1,300 genomes across Western Eurasia ~10,000-2,000 BP; preliminary modeling reports cultural affiliation as the dominant predictor of burial orientation, with little ancestry effect.",
+      "epistemic_caution": "This is a bioRxiv preprint and must not be treated as peer-reviewed evidence. Cultural-affiliation variables, model structure and data harmonization require human methodological review before any NOEMA relationship or confidence update.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "ANCIENT_DNA", "PREPRINT"]
+    }
+  ],
+  "candidate_updates": [
+    {
+      "doi": "10.1002/9781394250592.ch34",
+      "type": "PUBLICATION_STATUS_REVIEW",
+      "finding": "Parent-volume metadata is marketed as 2027 despite a Crossref chapter publication date of 2026-08-21.",
+      "action": "Human-review publication semantics; preserve both Crossref chapter date and parent-volume year rather than overwriting either."
+    }
+  ],
+  "contradictions_or_pressure": [
+    {
+      "type": "SYMBOLIC_INFERENCE_ALTERNATIVE",
+      "target": "DEEP_TIME_SYMBOLIC_MATERIAL ontology",
+      "finding": "Chimpanzee crystal attraction supplies a perceptual-salience explanation that does not require symbolic meaning.",
+      "action": "Keep material attraction/salience separate from conventionalized symbolic use."
+    },
+    {
+      "type": "MARKS_MEANING_GUARD",
+      "target": "INCISED_OBJECT / IDENTITY_MARKER inference",
+      "finding": "Neolithic obsidian incisions are deliberate but variable and not tied to fixed production or use-wear patterns; authors caution against overclaiming identity function.",
+      "action": "Code deliberate incision as observation; keep iconographic/identity interpretation as hypothesis."
+    },
+    {
+      "type": "GENES_CULTURE_SEPARATION",
+      "target": "MORTUARY_TRANSMISSION_MODEL",
+      "finding": "A large preprint analysis reports burial orientation tracking cultural affiliation more strongly than genomic ancestry.",
+      "action": "Maintain ancestry, mobility, cultural affiliation and mortuary practice as competing/separable explanatory dimensions; await peer review."
+    },
+    {
+      "type": "DISCOVERY_PUBLICATION_METADATA",
+      "target": "RECENT_PUBLICATION classification",
+      "finding": "The Wiley chapter 'Demon Eaters and Bloody Charms' is dated 2026 in Crossref while the parent companion is marketed with 2027 publication metadata.",
+      "action": "Treat as possible ahead-of-print and require publication-status review."
+    }
+  ],
+  "dating_revisions": [],
+  "relationships_generated": [],
+  "hypotheses_requiring_human_review": [
+    {
+      "target": "MORTUARY_ISOTOPE_MOBILITY_MODRICE",
+      "reason": "New structured isotope dataset can support observation-level mobility/diet review in a ritualized mortuary context.",
+      "recommended_action": "Review associated article and role-label semantics before creating claims."
+    },
+    {
+      "target": "NEOLITHIC_INCISED_MARK_FUNCTION",
+      "reason": "New peer-reviewed Tepecik-Çiftlik corpus expands deliberate incised-object evidence but remains semantically underdetermined.",
+      "recommended_action": "Separate manufacture/marking observations from identity/symbolism hypotheses."
+    },
+    {
+      "target": "DEEP_TIME_CRYSTAL_SYMBOLISM",
+      "reason": "Comparative cognition provides a non-symbolic perceptual mechanism for attraction to crystals.",
+      "recommended_action": "Add perceptual salience as a rival explanation wherever crystal collection is used as symbolic evidence."
+    },
+    {
+      "target": "MORTUARY_GENES_CULTURE_MODEL",
+      "reason": "BIAD/aDNA preprint pressures simple ancestry-to-burial inference.",
+      "recommended_action": "Methodology review only until peer-reviewed; no relationship promotion."
+    },
+    {
+      "target": "DISCOVERY_PUBLICATION_STATUS_CLASSIFIER",
+      "reason": "Crossref recent-publication class can conflict with parent-volume ahead-of-print year.",
+      "recommended_action": "Add parent-volume publication-year check for book chapters."
+    }
+  ],
+  "deduplication": {
+    "keys": ["DOI", "authoritative external ID", "canonical URL"],
+    "checked_against": [
+      "projects/noema/data/candidates/daily/2026-09-01.json",
+      "latest NOEMA Discovery artifact",
+      "default-branch candidate records and research notes"
+    ]
+  },
+  "sources_examined": [
+    "GitHub NOEMA Discovery run 33591103364 and artifact 9831761814",
+    "Crossref candidate artifact",
+    "Consensus scholarly index",
+    "IsoArcH dataset registry",
+    "PubMed/PMC",
+    "Frontiers in Psychology",
+    "bioRxiv",
+    "Wiley parent-volume metadata / VitalSource",
+    "Open-access publisher and institutional repository pages"
+  ]
+}
