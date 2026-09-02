@@ -1,0 +1,66 @@
+{
+  "manifest_id": "NOEMA-SOURCE-FINGERPRINTS-V1",
+  "schema_version": "1.0",
+  "status": "RESEARCH_PREVIEW_HUMAN_REVIEW_REQUIRED",
+  "principle": "Source fingerprints record known work, dataset, sample and derivation identity. They do not imply agreement, causal validity or evidentiary strength.",
+  "sources": [
+    {
+      "source_id": "NOEMA-EVIDENCE-001:S001",
+      "datasets": [],
+      "samples": [],
+      "parent_source_ids": [],
+      "note": "Hunter-gatherer ancestral-state analysis; underlying comparative inputs require finer fingerprinting before independence claims."
+    },
+    {
+      "source_id": "NOEMA-EVIDENCE-001:S002",
+      "datasets": ["Pulotu comparative Austronesian religion data"],
+      "samples": ["96 Austronesian cultures"],
+      "parent_source_ids": [],
+      "note": "Dataset identity is broad; exact snapshot/version should be added when verified."
+    },
+    {
+      "source_id": "NOEMA-EVIDENCE-001:S003",
+      "datasets": ["Purzycki et al. cross-cultural behavioral allocation study"],
+      "samples": ["591 participants across eight societies"],
+      "parent_source_ids": []
+    },
+    {
+      "source_id": "NOEMA-EVIDENCE-001:S004",
+      "datasets": ["Seshat Global History Databank"],
+      "samples": [],
+      "parent_source_ids": [],
+      "note": "Reanalysis/missing-data critique. Shared Seshat dependence is explicit; exact version/snapshot remains to be fingerprinted."
+    },
+    {
+      "source_id": "NOEMA-EVIDENCE-001:S005",
+      "datasets": ["Seshat Global History Databank"],
+      "samples": [],
+      "parent_source_ids": [],
+      "note": "Corrected/extended Seshat retake. Sharing the database does not mean the analysis or conclusion is identical."
+    },
+    {
+      "source_id": "PUBMED:42670176",
+      "pmid": "42670176",
+      "pmcid": "PMC13527413",
+      "doi": "10.1002/brb3.71733",
+      "datasets": [],
+      "samples": [],
+      "parent_source_ids": [],
+      "note": "Systematic review candidate. Included primary studies must later be linked as dependencies if promoted."
+    },
+    {
+      "source_id": "PUBMED:42574736",
+      "pmid": "42574736",
+      "doi": "10.1080/02791072.2026.2710057",
+      "datasets": ["retrospective psychedelic web survey"],
+      "samples": [],
+      "parent_source_ids": [],
+      "note": "Candidate only; sample identity and overlap require paper-level review."
+    }
+  ],
+  "notes": [
+    "This seed is intentionally incomplete. Absence of a dependency edge means 'not yet encoded', not proof of independence.",
+    "Dataset names are normalized only after source-level verification; exact snapshots should replace broad dataset-family labels when available.",
+    "Systematic reviews and meta-analyses must later depend on their included primary-study family when those studies enter NOEMA."
+  ]
+}
