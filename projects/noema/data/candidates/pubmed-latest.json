@@ -1,0 +1,1443 @@
+{
+  "schema_version": "1.1",
+  "generated_at": "2026-09-02T07:50:08.452041+00:00",
+  "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
+  "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden.",
+  "query_stats": {
+    "trance_possession": {
+      "query": "(trance OR possession) AND (dissociation OR culture OR religion)",
+      "pmids": 8
+    },
+    "ecstatic_neurology": {
+      "query": "(ecstatic OR mystical OR religious experience) AND (epilepsy OR insula OR temporal lobe)",
+      "pmids": 3
+    },
+    "neurodiversity_religion": {
+      "query": "(autism OR ADHD OR neurodiversity) AND (religion OR spirituality OR ritual)",
+      "pmids": 12
+    },
+    "sleep_visions": {
+      "query": "(sleep paralysis OR hypnagogia OR dreaming) AND (religion OR supernatural OR spiritual)",
+      "pmids": 0
+    },
+    "music_trance": {
+      "query": "(music OR drumming OR rhythm) AND (trance OR altered state) AND (neuroscience OR cognition)",
+      "pmids": 20
+    },
+    "witchcraft_psychiatry_history": {
+      "query": "witchcraft AND (psychiatry OR mental illness OR psychology) AND history",
+      "pmids": 0
+    },
+    "psychedelic_ritual": {
+      "query": "(psychedelic OR entheogen OR hallucinogen) AND (ritual OR religion OR spirituality)",
+      "pmids": 5
+    }
+  },
+  "records": [
+    {
+      "pmid": "42490718",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "[Beyond words: The complexity of differential diagnosis and treatment of severe ritualized behaviors in an autistic adolescent without functional language and with an intellectual disability: A case report].",
+      "pubdate": "2026 Spring",
+      "source": "Sante Ment Que",
+      "authors": [
+        "Côté A",
+        "Grégoire P",
+        "Courchesne V"
+      ],
+      "articleids": {
+        "pubmed": "42490718",
+        "pii": "1125484ar"
+      },
+      "pubtypes": [
+        "Journal Article",
+        "Case Reports",
+        "English Abstract"
+      ]
+    },
+    {
+      "pmid": "42625903",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Phenomenology in pediatric nursing: Lessons from studies of mothers caring for children with chronic illnesses.",
+      "pubdate": "2026 Sep 9",
+      "source": "World J Clin Pediatr",
+      "authors": [
+        "Shattnawi KK"
+      ],
+      "articleids": {
+        "pubmed": "42625903",
+        "pmc": "PMC13491100",
+        "pmcid": "pmc-id: PMC13491100;embargo-date: 2026/09/09;",
+        "doi": "10.5409/wjcp.119267"
+      },
+      "pubtypes": [
+        "Journal Article",
+        "Review"
+      ]
+    },
+    {
+      "pmid": "42501781",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "The effects of visuomotor training and tDCS stimulation on visuomotor integration and visual processing: an electrophysiological approach.",
+      "pubdate": "2026 Sep 28",
+      "source": "Neuroscience",
+      "authors": [
+        "Bree JV",
+        "Poltavski D"
+      ],
+      "articleids": {
+        "pubmed": "42501781",
+        "doi": "10.1016/j.neuroscience.2026.07.048",
+        "pii": "S0306-4522(26)00492-6"
+      },
+      "pubtypes": [
+        "Journal Article",
+        "Randomized Controlled Trial"
+      ]
+    },
+    {
+      "pmid": "42471180",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "SMFF-Net: Spatiotemporal-frequency Multi-domain Feature Fusion Network for EEG-based brain state detection.",
+      "pubdate": "2026 Sep 28",
+      "source": "Neuroscience",
+      "authors": [
+        "Hu J",
+        "Wang Y",
+        "Yu H"
+      ],
+      "articleids": {
+        "pubmed": "42471180",
+        "doi": "10.1016/j.neuroscience.2026.07.025",
+        "pii": "S0306-4522(26)00469-0"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42670176",
+      "queries": [
+        "trance_possession",
+        "ecstatic_neurology"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "The Neuroscience of Religious and Spiritual Practices: A Systematic Review of Neurotheological Evidence.",
+      "pubdate": "2026 Sep",
+      "source": "Brain Behav",
+      "authors": [
+        "Husain W",
+        "Ammar A",
+        "Wusqa UT",
+        "Farooq M",
+        "Tariq Z",
+        "Pandi-Perumal SR",
+        "BaHammam AS",
+        "Trabelsi K",
+        "Griffiths MD",
+        "Pakpour A",
+        "Jahrami H"
+      ],
+      "articleids": {
+        "pubmed": "42670176",
+        "doi": "10.1002/brb3.71733",
+        "pmc": "PMC13527413",
+        "pmcid": "pmc-id: PMC13527413;"
+      },
+      "pubtypes": [
+        "Journal Article",
+        "Systematic Review",
+        "Review"
+      ]
+    },
+    {
+      "pmid": "42661240",
+      "queries": [
+        "psychedelic_ritual"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Development of Japanese Versions of the 4-Item Mystical Experience Questionnaire and 7-Item Challenging Experience Questionnaire.",
+      "pubdate": "2026 Sep",
+      "source": "Neuropsychopharmacol Rep",
+      "authors": [
+        "Umemura F",
+        "Kotajima-Murakami H",
+        "Strickland JC",
+        "Garcia-Romeu A",
+        "Johnson MW",
+        "Ikeda K"
+      ],
+      "articleids": {
+        "pubmed": "42661240",
+        "pmc": "PMC13522385",
+        "pmcid": "pmc-id: PMC13522385;",
+        "doi": "10.1002/npr2.70164"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42632169",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Co-designed yoga nidra targeting anxiety in autistic children: A mixed methods feasibility study.",
+      "pubdate": "2026 Sep",
+      "source": "Res Dev Disabil",
+      "authors": [
+        "Loftus T",
+        "Yau SH",
+        "Soares S",
+        "Byrne J",
+        "Mathersul DC"
+      ],
+      "articleids": {
+        "pubmed": "42632169",
+        "doi": "10.1016/j.ridd.2026.105367",
+        "pii": "S0891-4222(26)00162-9"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42550772",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Central Thyroid Hormone Deprivation Disrupts Cortical Cilia and Oligodendrocyte Lineage in an Allan-Herndon-Dudley Syndrome Mouse Model.",
+      "pubdate": "2026 Sep",
+      "source": "Thyroid",
+      "authors": [
+        "Molenaar A",
+        "Pathak E",
+        "Bernecker M",
+        "Mallet N",
+        "Gutierrez-Aguilar R",
+        "Mencias C",
+        "Lutter D",
+        "De Angelis M",
+        "Maity-Kumar G",
+        "Kühnen P",
+        "Obermayer B",
+        "Opitz R",
+        "Müller TD",
+        "Schriever SC",
+        "Pfluger PT"
+      ],
+      "articleids": {
+        "pubmed": "42550772",
+        "doi": "10.1177/10507256261475205"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42540454",
+      "queries": [
+        "ecstatic_neurology"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Lived experiences that influence the quality of life among patients with epilepsy at Mulago National Referral Hospital.",
+      "pubdate": "2026 Sep",
+      "source": "Epilepsy Behav Rep",
+      "authors": [
+        "Atwijukiire H",
+        "Namutundu J",
+        "Lubogo D",
+        "Kaddumukasa M",
+        "Sajatovic M"
+      ],
+      "articleids": {
+        "pubmed": "42540454",
+        "pmc": "PMC13425810",
+        "pmcid": "pmc-id: PMC13425810;",
+        "doi": "10.1016/j.ebr.2026.100889",
+        "pii": "S2589-9864(26)00043-2"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42539893",
+      "queries": [
+        "psychedelic_ritual"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Group Retreat Psilocybin Therapy for People with Metastatic Cancer with Anxiety and Depression: A Rite of Passage Facilitation Model for a Phase 1/2 Study.",
+      "pubdate": "2026 Sep",
+      "source": "Psychedelic Med (New Rochelle)",
+      "authors": [
+        "Back AL",
+        "McGregor BA",
+        "Billingsley L",
+        "Blom D",
+        "Callan G",
+        "Myers S",
+        "Guy J",
+        "Kumar S",
+        "Layer M",
+        "Levin J",
+        "Perez J",
+        "Thompson P",
+        "Salmonson K",
+        "Whinney J",
+        "Thorn LL"
+      ],
+      "articleids": {
+        "pubmed": "42539893",
+        "pmc": "PMC13424538",
+        "pmcid": "pmc-id: PMC13424538;embargo-date: 2026/12/09;",
+        "doi": "10.1177/28314425251404460",
+        "pii": "10.1177_28314425251404460"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42539819",
+      "queries": [
+        "psychedelic_ritual"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Predicting Nurses' Views on Decriminalization of Psychedelics.",
+      "pubdate": "2026 Sep",
+      "source": "Psychedelic Med (New Rochelle)",
+      "authors": [
+        "Porta CM",
+        "Wu CC",
+        "Graefe A",
+        "Grumdahl N",
+        "Dorsen C"
+      ],
+      "articleids": {
+        "pubmed": "42539819",
+        "pmc": "PMC13424522",
+        "pmcid": "pmc-id: PMC13424522;embargo-date: 2026/12/10;",
+        "doi": "10.1177/28314425251385531",
+        "pii": "10.1177_28314425251385531"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42492845",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Disentangling oscillatory and aperiodic neural activity in autism: A spectral parameterization analysis of neurofeedback intervention.",
+      "pubdate": "2026 Oct 2",
+      "source": "Behav Brain Res",
+      "authors": [
+        "Li Y",
+        "Wu J",
+        "Liu N",
+        "Li X",
+        "Zhou T",
+        "Kang J"
+      ],
+      "articleids": {
+        "pubmed": "42492845",
+        "doi": "10.1016/j.bbr.2026.116396",
+        "pii": "S0166-4328(26)00372-4"
+      },
+      "pubtypes": [
+        "Journal Article",
+        "Randomized Controlled Trial"
+      ]
+    },
+    {
+      "pmid": "42566754",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Type 1 diabetes differentially disrupts right and left ventricular daily rhythms.",
+      "pubdate": "2026 Oct 1",
+      "source": "Function (Oxf)",
+      "authors": [
+        "Bettadapura SS",
+        "Torres SJ",
+        "Schmitt MP",
+        "Roberts BL",
+        "Bruns DR"
+      ],
+      "articleids": {
+        "pubmed": "42566754",
+        "pmc": "PMC13521119",
+        "pmcid": "pmc-id: PMC13521119;",
+        "doi": "10.1152/function.041.2026"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42537854",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Distinct Theta-gamma network reorganization differentiates hippocampal sclerosis and MRI-negative mesial temporal lobe epilepsy.",
+      "pubdate": "2026 Oct 1",
+      "source": "Neurobiol Dis",
+      "authors": [
+        "Huang S",
+        "Tian Z",
+        "Wang Q",
+        "Chen C",
+        "Feng L",
+        "Tang W",
+        "Xiao B"
+      ],
+      "articleids": {
+        "pubmed": "42537854",
+        "doi": "10.1016/j.nbd.2026.107552",
+        "pii": "S0969-9961(26)00297-4"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42620834",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Voluntary wheel running behavior is reduced by SARS-CoV-2 S1 administration and mitigates hypothalamic neuroinflammatory processes.",
+      "pubdate": "2026 Oct",
+      "source": "Brain Behav Immun Health",
+      "authors": [
+        "Kelley T",
+        "Frank MG",
+        "Ball JB",
+        "Hopkins S",
+        "Nguyen TH",
+        "Thompson RS",
+        "Maier SF",
+        "Fleshner M"
+      ],
+      "articleids": {
+        "pubmed": "42620834",
+        "pmc": "PMC13487260",
+        "pmcid": "pmc-id: PMC13487260;",
+        "doi": "10.1016/j.bbih.2026.101331",
+        "pii": "S2666-3546(26)00164-X"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42614582",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Differential effects of P2Y12 inhibition on sleep and glymphatic function in male and female mice.",
+      "pubdate": "2026 Oct",
+      "source": "Brain Behav Immun Health",
+      "authors": [
+        "Su L",
+        "Tian M",
+        "Zhang S",
+        "Gao P",
+        "Zhang X",
+        "Xie M",
+        "Liu X",
+        "Xu W",
+        "Yao E"
+      ],
+      "articleids": {
+        "pubmed": "42614582",
+        "pmc": "PMC13482598",
+        "pmcid": "pmc-id: PMC13482598;",
+        "doi": "10.1016/j.bbih.2026.101330",
+        "pii": "S2666-3546(26)00163-8"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42542090",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Impaired low-frequency temporal prediction links to psychomotor dysfunction in depression.",
+      "pubdate": "2026 Oct",
+      "source": "J Psychiatr Res",
+      "authors": [
+        "Zhang J",
+        "Wang Y",
+        "Hua J",
+        "Zhang Y",
+        "Yuan J",
+        "Han J",
+        "Tan Z",
+        "Ding N",
+        "Northoff G"
+      ],
+      "articleids": {
+        "pubmed": "42542090",
+        "doi": "10.1016/j.jpsychires.2026.07.024",
+        "pii": "S0022-3956(26)00388-2"
+      },
+      "pubtypes": [
+        "Journal Article",
+        "Research Support, Non-U.S. Gov't"
+      ]
+    },
+    {
+      "pmid": "42534562",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Coping Strategies for Social Challenges in Mothers of Children With Autism: A Content Analysis Study.",
+      "pubdate": "2026 Mar",
+      "source": "J Family Reprod Health",
+      "authors": [
+        "Abdollahi R",
+        "Mohammadpour Y"
+      ],
+      "articleids": {
+        "pubmed": "42534562",
+        "pmc": "PMC13421168",
+        "pmcid": "pmc-id: PMC13421168;",
+        "doi": "10.18502/jfrh.v20i1.22017",
+        "pii": "JFRH-20-32"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42628305",
+      "queries": [
+        "ecstatic_neurology"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Surgical Candidacy, Barriers, and Facilitators of Pediatric Epilepsy Surgery at St. Francis Hospital Nsambya: A Mixed Methods Study.",
+      "pubdate": "2026 Jul 31",
+      "source": "Pediatr Neurol",
+      "authors": [
+        "Walube BH",
+        "Namata TT",
+        "Wegoye E",
+        "Rujumba J",
+        "Lam S",
+        "Sebunya R"
+      ],
+      "articleids": {
+        "pubmed": "42628305",
+        "doi": "10.1016/j.pediatrneurol.2026.07.031",
+        "pii": "S0887-8994(26)00241-9"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42475558",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "When children shape their families: Evocative effects analysis of 40,000 trios from the Norwegian Mother, Father and Child Cohort Study.",
+      "pubdate": "2026 Jul 28",
+      "source": "Proc Natl Acad Sci U S A",
+      "authors": [
+        "Akimova ET",
+        "Fauske A",
+        "Jørgensen RE",
+        "Havdahl A",
+        "Corfield EC",
+        "Mills MC",
+        "Lyngstad TH"
+      ],
+      "articleids": {
+        "pubmed": "42475558",
+        "pmc": "PMC13416551",
+        "pmcid": "pmc-id: PMC13416551;embargo-date: 2027/01/20;",
+        "doi": "10.1073/pnas.2532642123"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42493717",
+      "queries": [
+        "trance_possession"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Patterns of emergency care utilization among First Nations residents of Wood Buffalo, Alberta, during public health crises: An interrupted time series analysis.",
+      "pubdate": "2026 Jul 23",
+      "source": "Can J Public Health",
+      "authors": [
+        "Sjoblom E",
+        "Verstraeten BSE",
+        "Montesanti S"
+      ],
+      "articleids": {
+        "pubmed": "42493717",
+        "doi": "10.17269/s41997-026-01238-2",
+        "pii": "10.17269/s41997-026-01238-2"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42481009",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Mixed-Methods Exploratory Study on the Feasibility of a Yoga-Based Intervention for Adolescents with Autism Spectrum Disorder and Their Parents.",
+      "pubdate": "2026 Jul 21",
+      "source": "Int J Yoga Therap",
+      "authors": [
+        "Beaudoin MJ",
+        "Dupuis G",
+        "Poirier N"
+      ],
+      "articleids": {
+        "pubmed": "42481009",
+        "doi": "10.17761/2026-D-25-00016",
+        "pii": "Article 8"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42478038",
+      "queries": [
+        "trance_possession"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "TOP-DOWN TO BOTTOM-UP: RHYTHMIC SYNCHRONY RELAXES SOCIAL PRIORS TO ENABLE CHANGE.",
+      "pubdate": "2026 Jul 21",
+      "source": "Behav Brain Sci",
+      "authors": [
+        "Wood C"
+      ],
+      "articleids": {
+        "pubmed": "42478038",
+        "doi": "10.1017/S0140525X26106943",
+        "pii": "S0140525X26106943"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42478073",
+      "queries": [
+        "trance_possession"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Perceptions of masculinity and relationship power among young men in Durban and Soweto, South Africa.",
+      "pubdate": "2026 Jul 20",
+      "source": "Cult Health Sex",
+      "authors": [
+        "Zharima C",
+        "Rowlands A",
+        "Gibbs A",
+        "Mkhwanazi S",
+        "Dietrich JJ",
+        "Beksinska M",
+        "Kaida A",
+        "Closson K"
+      ],
+      "articleids": {
+        "pubmed": "42478073",
+        "doi": "10.1080/13691058.2026.2696290"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42558759",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Introducing the Concept of Embodied Interconnectedness: Perspectives on Tactile Massage for Adolescents With Attention Deficit Hyperactivity Disorder (adhd).",
+      "pubdate": "2026 Jan-Dec",
+      "source": "Glob Adv Integr Med Health",
+      "authors": [
+        "Robertz AC",
+        "Kantzer AK",
+        "Nyman V",
+        "Törnhage CJ",
+        "Nilsson S"
+      ],
+      "articleids": {
+        "pubmed": "42558759",
+        "pmc": "PMC13438357",
+        "pmcid": "pmc-id: PMC13438357;",
+        "doi": "10.1177/27536130261475332",
+        "pii": "10.1177_27536130261475332"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42647593",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Tissue corticosteroid rhythms are dysregulated predominantly during sleep in primary aldosteronism.",
+      "pubdate": "2026 Aug 26",
+      "source": "Sci Transl Med",
+      "authors": [
+        "Grytaas MA",
+        "Upton T",
+        "Marinelli I",
+        "Methlie P",
+        "Øksnes M",
+        "Vassiliadi DA",
+        "Bensing S",
+        "Russell G",
+        "Løvås K",
+        "Margaritopoulos D",
+        "Botusan IR",
+        "Simunkova K",
+        "Balomenaki M",
+        "Berinder K",
+        "Lombard B",
+        "Sjøgren T",
+        "Løvik I",
+        "Oftedal BE",
+        "Heie A",
+        "Ueland GÅ",
+        "Kämpe O",
+        "Tsagarakis S",
+        "Lightman SL",
+        "Zavala E",
+        "Husebye ES"
+      ],
+      "articleids": {
+        "pubmed": "42647593",
+        "doi": "10.1126/scitranslmed.aeb7517"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42624383",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Doxorubicin administration modulates cancer-related fatigue in a time-of-day-dependent manner.",
+      "pubdate": "2026 Aug 20",
+      "source": "Brain Behav Immun",
+      "authors": [
+        "Kastelein A",
+        "Kelters IR",
+        "On AC",
+        "Jiao H",
+        "Arenas SM",
+        "Derks RJE",
+        "Sánchez-López E",
+        "Smits AM",
+        "Angeli F",
+        "Guglielmo M",
+        "Sluijter JPG",
+        "Giera M",
+        "Yi CX",
+        "Neefjes J",
+        "Sampaio-Pinto V",
+        "Kervezee L",
+        "van Laake LW",
+        "Meijer JH"
+      ],
+      "articleids": {
+        "pubmed": "42624383",
+        "doi": "10.1016/j.bbi.2026.106962",
+        "pii": "S0889-1591(26)00710-5"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42641585",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Cortical adaptation following motor fatigue: Dynamic changes in primary motor cortex excitability in healthy young adults.",
+      "pubdate": "2026 Aug 19",
+      "source": "Clin Neurophysiol",
+      "authors": [
+        "Aloisio S",
+        "Passaretti M",
+        "De Riggi M",
+        "Birreci D",
+        "Grandolfo AS",
+        "Cirinei S",
+        "Angelini L",
+        "Bologna M"
+      ],
+      "articleids": {
+        "pubmed": "42641585",
+        "doi": "10.1016/j.clinph.2026.2112379",
+        "pii": "S1388-2457(26)00879-5"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42613658",
+      "queries": [
+        "trance_possession"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Assessing Challenges and Barriers to Effective Wound Care in Rural Indigenous Communities.",
+      "pubdate": "2026 Aug 19",
+      "source": "Adv Skin Wound Care",
+      "authors": [
+        "Akouris PP",
+        "Perlmutter JW",
+        "Javidan AP",
+        "Behdinan A",
+        "Walker J",
+        "Kayssi A",
+        "Sibbald RG",
+        "Asiniwasis RN"
+      ],
+      "articleids": {
+        "pubmed": "42613658",
+        "doi": "10.1097/ASW.0000000000000522",
+        "pii": "00129334-990000000-00229"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42612664",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Global, regional, and national burden of HIV/AIDS, 1990-2023, with the estimated burden attributable to intimate partner violence and forecasted impacts of funding cuts through 2030: results from the Global Burden of Disease Study 2023.",
+      "pubdate": "2026 Aug 18",
+      "source": "Lancet HIV",
+      "authors": [
+        "GBD 2023 HIV Collaborators"
+      ],
+      "articleids": {
+        "pubmed": "42612664",
+        "doi": "10.1016/S2352-3018(26)00147-5",
+        "pii": "S2352-3018(26)00147-5"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42611703",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Circadian rhythms in microglia mediate early life synaptic development in a sex-specific manner.",
+      "pubdate": "2026 Aug 17",
+      "source": "Cell Rep",
+      "authors": [
+        "Routh BN",
+        "Gibson CR",
+        "Yang CC",
+        "Doan L",
+        "Gaudet AD",
+        "Hofmann HA",
+        "Mangieri RA",
+        "Fonken LK"
+      ],
+      "articleids": {
+        "pubmed": "42611703",
+        "doi": "10.1016/j.celrep.2026.117834",
+        "pii": "S2211-1247(26)00912-5"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42617572",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Sleep-wake control with age and neurodegenerative diseases.",
+      "pubdate": "2026 Aug 14",
+      "source": "Sleep Med Rev",
+      "authors": [
+        "Tang WX",
+        "Yang C",
+        "Zhang M",
+        "Kushida CA",
+        "de Lecea L",
+        "Li SB"
+      ],
+      "articleids": {
+        "pubmed": "42617572",
+        "doi": "10.1016/j.smrv.2026.102352",
+        "pii": "S1087-0792(26)00124-3"
+      },
+      "pubtypes": [
+        "Journal Article",
+        "Review"
+      ]
+    },
+    {
+      "pmid": "42593989",
+      "queries": [
+        "psychedelic_ritual"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "A contemporary exploration of motivations and practices of psychedelic use among emerging adult cannabis users in the United States: A qualitative analysis.",
+      "pubdate": "2026 Aug 13",
+      "source": "Psychol Addict Behav",
+      "authors": [
+        "Conn BM",
+        "Osornio A",
+        "Sheean K",
+        "Finkelstein M",
+        "Ataiants J",
+        "Fedorova EV",
+        "Lankenau SE",
+        "Prince M",
+        "Wong CF"
+      ],
+      "articleids": {
+        "pubmed": "42593989",
+        "mid": "NIHMS2196598",
+        "pmc": "PMC13474678",
+        "pmcid": "pmc-id: PMC13474678;manuscript-id: NIHMS2196598;",
+        "doi": "10.1037/adb0001180",
+        "pii": "2028-11897-001"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42586959",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Understanding Autism Through Indigenous Relational Ecologies: A Phenomenographic Exploratory Study With Potawatomi Participants.",
+      "pubdate": "2026 Aug 12",
+      "source": "Autism",
+      "authors": [
+        "Kitchens JC",
+        "Wake D"
+      ],
+      "articleids": {
+        "pubmed": "42586959",
+        "doi": "10.1177/13623613261470856"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42581780",
+      "queries": [
+        "psychedelic_ritual"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Improving Psychedelic Harm Reduction and Therapy: Community Perspectives from Individuals Who Use Recreationally and for Mental Health Purposes.",
+      "pubdate": "2026 Aug 12",
+      "source": "J Psychoactive Drugs",
+      "authors": [
+        "Jewell JS",
+        "James C",
+        "Black JC"
+      ],
+      "articleids": {
+        "pubmed": "42581780",
+        "doi": "10.1080/02791072.2026.2710054"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42573085",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Chronic Mild Circadian Disruption Alters Anxiety-Like Behavior and Spatial Navigation in Adult Mice.",
+      "pubdate": "2026 Aug 10",
+      "source": "J Biol Rhythms",
+      "authors": [
+        "Gearey JEJ",
+        "Wong C",
+        "Yang AK",
+        "Antle MC"
+      ],
+      "articleids": {
+        "pubmed": "42573085",
+        "doi": "10.1177/07487304261471574"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42618786",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Psychedelics align brain activity with context.",
+      "pubdate": "2026 Aug",
+      "source": "Nature",
+      "authors": [
+        "Stoliker D",
+        "Novelli L",
+        "Khajehnejad M",
+        "Biabani M",
+        "Greaves MD",
+        "Barta T",
+        "Williams M",
+        "Chopra S",
+        "Bazin O",
+        "Simonsson O",
+        "Chambers R",
+        "Barrett FS",
+        "Deco G",
+        "Preller KH",
+        "Carhart-Harris RL",
+        "Seth AK",
+        "Sundram S",
+        "Egan GF",
+        "Razi A"
+      ],
+      "articleids": {
+        "pubmed": "42618786",
+        "pmc": "PMC13518247",
+        "pmcid": "pmc-id: PMC13518247;",
+        "doi": "10.1038/s41586-026-10910-z",
+        "pii": "10.1038/s41586-026-10910-z"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42534568",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Effortful Control but Not Negative Affectivity Predicts Intensity of Restricted Repetitive Behaviors in Toddlers With Neurodevelopmental Conditions.",
+      "pubdate": "2026 Aug",
+      "source": "JAACAP Open",
+      "authors": [
+        "Macari SL",
+        "Bell GK",
+        "Bianco C",
+        "Hamilton S",
+        "Torres-Viso M",
+        "Powell KK",
+        "Vernetti A",
+        "Wang LAL",
+        "Morgan C",
+        "Lyons M",
+        "Hinz JR",
+        "Fernandez TV",
+        "Chawarska K"
+      ],
+      "articleids": {
+        "pubmed": "42534568",
+        "pmc": "PMC13420594",
+        "pmcid": "pmc-id: PMC13420594;",
+        "doi": "10.1016/j.jaacop.2026.03.008",
+        "pii": "S2949-7329(26)00038-4"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42672002",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Longitudinal changes in intracortical excitability during Ramadan diurnal intermittent fasting: A paired-pulse transcranial magnetic stimulation study.",
+      "pubdate": "2026",
+      "source": "PLoS One",
+      "authors": [
+        "Kim M",
+        "Mostafa IM",
+        "Al-Sharman A",
+        "Saad N",
+        "Khalil H",
+        "Hadoush H"
+      ],
+      "articleids": {
+        "pubmed": "42672002",
+        "doi": "10.1371/journal.pone.0349740",
+        "pii": "PONE-D-26-21947",
+        "pmc": "PMC13529010",
+        "pmcid": "pmc-id: PMC13529010;"
+      },
+      "pubtypes": [
+        "Journal Article",
+        "Observational Study"
+      ]
+    },
+    {
+      "pmid": "42638680",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Effects of exergaming on brain health in aging: a scoping review of current evidence.",
+      "pubdate": "2026",
+      "source": "Front Public Health",
+      "authors": [
+        "Liang S",
+        "Yin J"
+      ],
+      "articleids": {
+        "pubmed": "42638680",
+        "pmc": "PMC13500335",
+        "pmcid": "pmc-id: PMC13500335;",
+        "doi": "10.3389/fpubh.2026.1912065"
+      },
+      "pubtypes": [
+        "Journal Article",
+        "Scoping Review",
+        "Systematic Review"
+      ]
+    },
+    {
+      "pmid": "42627810",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Quality of life, stress and its coping strategies among the parents of children with autism spectrum disorder in Kathmandu Valley: A mixed method study.",
+      "pubdate": "2026",
+      "source": "PLOS Glob Public Health",
+      "authors": [
+        "Basan S",
+        "Arjyal A",
+        "Bhandary S"
+      ],
+      "articleids": {
+        "pubmed": "42627810",
+        "pmc": "PMC13496449",
+        "pmcid": "pmc-id: PMC13496449;",
+        "doi": "10.1371/journal.pgph.0006997",
+        "pii": "PGPH-D-25-01666"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42627790",
+      "queries": [
+        "trance_possession"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Determinants of post-campaign measles vaccination coverage in Madagascar: A geographically stratified analysis.",
+      "pubdate": "2026",
+      "source": "PLOS Glob Public Health",
+      "authors": [
+        "Alain F",
+        "Randrianasolo FH",
+        "Razafimahatratra MJJ",
+        "Ramananjanahary H",
+        "Raharinivo M",
+        "Andriambelo MM",
+        "Andrianirinarison JC",
+        "Tsivahiny P",
+        "Sahondranirina HP",
+        "Yasmine LL",
+        "Ratsiambakaina D"
+      ],
+      "articleids": {
+        "pubmed": "42627790",
+        "pmc": "PMC13496406",
+        "pmcid": "pmc-id: PMC13496406;",
+        "doi": "10.1371/journal.pgph.0006390",
+        "pii": "PGPH-D-26-01253"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42626363",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "A pathway to health: Spiritual health and health-promoting behaviors in parents of children with ASD.",
+      "pubdate": "2026",
+      "source": "J Educ Health Promot",
+      "authors": [
+        "Yousefizadeh F",
+        "Ebrahimpour Roodposhti M",
+        "Ebrahimpour Roodposhti M"
+      ],
+      "articleids": {
+        "pubmed": "42626363",
+        "pmc": "PMC13492828",
+        "pmcid": "pmc-id: PMC13492828;",
+        "doi": "10.4103/jehp.jehp_600_25",
+        "pii": "JEHP-15-316"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42620521",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Epilepsy and multidimensional time: a phenomenological and neurocognitive perspective inspired by theoretical physics.",
+      "pubdate": "2026",
+      "source": "Front Psychol",
+      "authors": [
+        "Di Gennaro G",
+        "Tomasini A",
+        "Salamone EM"
+      ],
+      "articleids": {
+        "pubmed": "42620521",
+        "pmc": "PMC13485933",
+        "pmcid": "pmc-id: PMC13485933;",
+        "doi": "10.3389/fpsyg.2026.1884775"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42599922",
+      "queries": [
+        "music_trance"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Sex differences in the effects of shift work-like schedules on gut microbiome and intestinal barrier in relation to stroke survival.",
+      "pubdate": "2026",
+      "source": "PLoS One",
+      "authors": [
+        "Barnum E",
+        "Turck JL",
+        "Souza KA",
+        "Mani KK",
+        "Pilla R",
+        "Selvamani A",
+        "Sohrabji F",
+        "Earnest DJ"
+      ],
+      "articleids": {
+        "pubmed": "42599922",
+        "pmc": "PMC13475815",
+        "pmcid": "pmc-id: PMC13475815;",
+        "doi": "10.1371/journal.pone.0355842",
+        "pii": "PONE-D-26-20020"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42564269",
+      "queries": [
+        "trance_possession"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "TNF-α blockade with adalimumab restores bone metabolism in rheumatoid arthritis by regulating cytokines and inflammatory cell infiltration.",
+      "pubdate": "2026",
+      "source": "Front Immunol",
+      "authors": [
+        "Krishnamurthy A",
+        "Revu S",
+        "Neregård P",
+        "Hensvold A",
+        "Af Klint E",
+        "Makrygiannakis D",
+        "Catrina AI",
+        "Parodis I"
+      ],
+      "articleids": {
+        "pubmed": "42564269",
+        "pmc": "PMC13442820",
+        "pmcid": "pmc-id: PMC13442820;",
+        "doi": "10.3389/fimmu.2026.1866519"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
+    {
+      "pmid": "42516986",
+      "queries": [
+        "trance_possession"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "title": "Mental Health Beyond Conflict: Cultural and Structural Barriers to Psychiatric Care in Somalia.",
+      "pubdate": "2026",
+      "source": "J Multidiscip Healthc",
+      "authors": [
+        "Adam Mohamed N"
+      ],
+      "articleids": {
+        "pubmed": "42516986",
+        "pmc": "PMC13402983",
+        "pmcid": "pmc-id: PMC13402983;",
+        "doi": "10.2147/JMDH.S626677",
+        "pii": "626677"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    }
+  ],
+  "counts": {
+    "unique_candidates": 47,
+    "query_count": 7,
+    "summary_batches": 1
+  }
+}
