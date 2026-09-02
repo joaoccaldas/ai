@@ -1,0 +1,103 @@
+{
+  "schema_version": "1.0",
+  "status": "RESEARCH_PREVIEW",
+  "title": "NOEMA cognition, neurophenomenology and historical-role ontology",
+  "principle": "Modern biomedical mechanisms may contextualize reported experiences, but they do not retroactively diagnose historical individuals or groups.",
+  "domains": [
+    {
+      "id": "ALTERED_STATE_PHENOMENOLOGY",
+      "label": "Altered-state phenomenology",
+      "examples": ["trance", "ecstasy", "visions", "auditory phenomena", "out-of-body experience", "felt presence", "certainty", "possession experience"]
+    },
+    {
+      "id": "ATTENTION_AND_SALIENCE",
+      "label": "Attention and salience",
+      "examples": ["hyperfocus", "novelty salience", "pattern sensitivity", "absorptive attention", "attentional variability"]
+    },
+    {
+      "id": "SENSORY_PROCESSING",
+      "label": "Sensory processing",
+      "examples": ["sensory sensitivity", "sensory seeking", "interoception", "auditory entrainment", "rhythmic stimulation"]
+    },
+    {
+      "id": "DISSOCIATION_AND_SELF",
+      "label": "Dissociation and self-model",
+      "examples": ["depersonalization", "derealization", "amnesia", "identity disruption", "possession-form experience"]
+    },
+    {
+      "id": "SLEEP_AND_DREAMING",
+      "label": "Sleep and dreaming",
+      "examples": ["sleep paralysis", "hypnagogia", "hypnopompia", "lucid dreaming", "dream incubation", "sleep deprivation"]
+    },
+    {
+      "id": "SEIZURE_AND_NEUROLOGICAL_PHENOMENA",
+      "label": "Seizure and neurological phenomena",
+      "examples": ["ecstatic aura", "temporal-lobe seizure", "insula-related certainty", "postictal experience", "migraine aura"]
+    },
+    {
+      "id": "PSYCHOSIS_SPECTRUM_EXPERIENCE",
+      "label": "Psychosis-spectrum experience",
+      "examples": ["hallucination", "delusional conviction", "thought disorder", "paranoia", "hyperreligiosity"]
+    },
+    {
+      "id": "NEURODEVELOPMENTAL_VARIATION",
+      "label": "Neurodevelopmental variation",
+      "examples": ["autistic traits", "ADHD traits", "social-cognitive variation", "repetitive or ritualized preference", "systemizing"]
+    },
+    {
+      "id": "TRAUMA_AND_STRESS",
+      "label": "Trauma and stress",
+      "examples": ["trauma-related dissociation", "bereavement experience", "social threat", "chronic stress", "idioms of distress"]
+    },
+    {
+      "id": "SUBSTANCE_AND_PHARMACOLOGY",
+      "label": "Substance and pharmacology",
+      "examples": ["psychedelic", "deliriant", "stimulant", "sedative", "entheogen", "toxicity"]
+    },
+    {
+      "id": "SOCIAL_ROLE_AND_SELECTION",
+      "label": "Social role and selection",
+      "examples": ["ritual specialist", "seer", "medium", "shaman", "healer", "prophet", "ascetic", "accused witch"]
+    },
+    {
+      "id": "CULTURAL_SCRIPT_AND_INTERPRETATION",
+      "label": "Cultural script and interpretation",
+      "examples": ["spirit possession model", "divine revelation model", "witchcraft accusation", "ancestor communication", "healing idiom", "ritual expectation"]
+    }
+  ],
+  "relationship_types": [
+    "PHENOMENOLOGICALLY_RESEMBLES",
+    "POSSIBLE_MECHANISM_FOR",
+    "CULTURALLY_INTERPRETED_AS",
+    "SOCIAL_ROLE_ASSOCIATED_WITH",
+    "CLINICALLY_DISTINGUISH_FROM",
+    "HISTORICAL_DIAGNOSIS_PROPOSED",
+    "HISTORICAL_DIAGNOSIS_DISPUTED"
+  ],
+  "forbidden_inferences": [
+    "Do not diagnose a historical person from narrative resemblance alone.",
+    "Do not infer that a cultural role such as witch, shaman, medium, prophet or mystic denotes mental illness or neurodivergence.",
+    "Do not infer that unusual experience is pathological without functional impairment and culturally appropriate clinical evidence.",
+    "Do not infer that modern diagnostic prevalence estimates apply to historical populations.",
+    "Do not infer causal direction from co-occurrence between a cognitive trait and a religious practice.",
+    "Do not treat biomedical explanation and cultural meaning as mutually exclusive.",
+    "Do not use neurodiversity labels as euphemisms for historical psychiatric diagnosis.",
+    "Do not equate accusation records with self-reported experience or actual practice."
+  ],
+  "candidate_hypothesis_template": {
+    "required_rivals": [
+      "cultural learning/script",
+      "social-role selection",
+      "ecological or material context",
+      "institutional incentives",
+      "trauma/stress",
+      "neurological or psychiatric mechanism",
+      "neurodevelopmental variation",
+      "substance effect",
+      "source/translation bias",
+      "null/chance"
+    ],
+    "minimum_evidence_channels": 2,
+    "historical_diagnosis_allowed": false
+  }
+}
