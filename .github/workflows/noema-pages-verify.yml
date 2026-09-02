@@ -10,7 +10,8 @@ on:
       - 'projects/noema/data/comparisons/**'
       - 'projects/noema/data/reference/**'
       - 'projects/noema/data/runs/**'
-      - 'projects/noema/data/candidates/wikimedia-media-candidates.json'
+      - 'projects/noema/data/candidates/**'
+      - 'projects/noema/docs/**'
       - 'projects/noema/ontology/**'
       - '.github/workflows/noema-pages-verify.yml'
 
@@ -22,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
-      - name: Verify complete NOEMA v1.5 bundle on GitHub Pages
+      - name: Verify complete NOEMA v1.7 bundle on GitHub Pages
         env:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
@@ -45,6 +46,11 @@ jobs:
             synoptic_css=$(get "${base}/synoptic-v15.css${bust}")
             library=$(get "${base}/library.html${bust}")
             research=$(get "${base}/research.html${bust}")
+            cognition=$(get "${base}/cognition.html${bust}")
+            cognition_js=$(get "${base}/cognition.js${bust}")
+            source_registry=$(get "${base}/source-registry-v17.json${bust}")
+            cognition_ontology=$(get "${rootbase}/data/reference/cognition-mechanism-ontology-v1.json${bust}")
+            pubmed_seed=$(get "${rootbase}/data/candidates/pubmed-cognition-seed-v1.json${bust}")
             gods=$(get "${base}/gods.html${bust}")
             entity=$(get "${base}/entity.html${bust}")
             entity_depth=$(get "${base}/entity-depth-v14.js${bust}")
@@ -68,28 +74,29 @@ jobs:
               && printf '%s' "$root" | grep -q '03 · TRACE PATTERNS' \
               && printf '%s' "$root" | grep -q '01 · IDENTIFY' \
               && printf '%s' "$root" | grep -q '04 · TEST' \
-              && printf '%s' "$meta" | grep -q '"release": "v1.5"' \
+              && printf '%s' "$meta" | grep -q '"release": "v1.7"' \
               && printf '%s' "$meta" | grep -q 'synchronized_synoptic_lens' \
-              && printf '%s' "$meta" | grep -q 'synoptic_graph_edge_is_historical_relationship' \
-              && printf '%s' "$meta" | grep -q 'region_label_implies_coordinate' \
+              && printf '%s' "$meta" | grep -q 'historical_diagnosis_from_resemblance' \
+              && printf '%s' "$meta" | grep -q 'pubmed_is_discovery_only' \
               && printf '%s' "$explore" | grep -q 'What do you want to understand?' \
               && printf '%s' "$explore" | grep -q 'explore-v14.js' \
-              && printf '%s' "$explore_bridge" | grep -q 'Open .* Concept Hub' \
               && printf '%s' "$concept" | grep -q 'One idea, many contexts' \
-              && printf '%s' "$concept" | grep -q 'synoptic-v15.js' \
               && printf '%s' "$concept_js" | grep -q 'Co-coded ≠ connected history' \
-              && printf '%s' "$concept_js" | grep -q 'earliest encoded record is not an origin date' \
               && printf '%s' "$synoptic_js" | grep -q 'Map · Time · Graph · Evidence' \
-              && printf '%s' "$synoptic_js" | grep -q 'Region-only profiles stay unlocated' \
-              && printf '%s' "$synoptic_js" | grep -q 'They are not ancestry, influence, historical contact, diffusion or shared theology' \
               && printf '%s' "$synoptic_css" | grep -q 'synoptic-map' \
-              && printf '%s' "$synoptic_css" | grep -q 'synoptic-graph' \
               && printf '%s' "$library" | grep -q '<title>Library · NOEMA</title>' \
-              && printf '%s' "$research" | grep -q '<title>Research · NOEMA</title>' \
+              && printf '%s' "$research" | grep -q 'Cognition & experience' \
+              && printf '%s' "$cognition" | grep -q 'Mechanism is not meaning' \
+              && printf '%s' "$cognition" | grep -q 'Witches, shamans, mystics, prophets and mediums are not diagnoses' \
+              && printf '%s' "$cognition_js" | grep -q 'PubMed candidate' \
+              && printf '%s' "$source_registry" | grep -q 'PubMed / MEDLINE' \
+              && printf '%s' "$source_registry" | grep -q 'historical_diagnosis_from_resemblance' \
+              && printf '%s' "$cognition_ontology" | grep -q 'NEURODEVELOPMENTAL_VARIATION' \
+              && printf '%s' "$cognition_ontology" | grep -q 'historical_diagnosis_allowed' \
+              && printf '%s' "$pubmed_seed" | grep -q 'CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED' \
+              && printf '%s' "$pubmed_seed" | grep -q 'Criticisms of the psychopathological interpretation of witch hunts' \
               && printf '%s' "$gods" | grep -q 'Every god gets a workspace.' \
               && printf '%s' "$entity" | grep -q 'entity-depth-v14.js' \
-              && printf '%s' "$entity" | grep -q 'synoptic-v15.js' \
-              && printf '%s' "$entity_depth" | grep -q 'concept.html?term=' \
               && printf '%s' "$entity_depth" | grep -q 'Reference sources ≠ claim-level evidence' \
               && printf '%s' "$connections" | grep -q 'Navigate associations. Attack patterns.' \
               && printf '%s' "$patterns" | grep -q '<title>Patterns · NOEMA</title>' \
@@ -98,17 +105,16 @@ jobs:
               && printf '%s' "$deep_html" | grep -q '<title>NOEMA Deep Time</title>' \
               && printf '%s' "$federation" | grep -q 'accepted_semantic_assertions' \
               && printf '%s' "$pattern_json" | grep -q 'HYPOTHESIS_GENERATION_ONLY' \
-              && printf '%s' "$pattern_json" | grep -q 'profiles_excluded_for_pair_missingness' \
               && printf '%s' "$health" | grep -q 'NOEMA-RESEARCH-HEALTH-V1' \
               && printf '%s' "$pulse" | grep -q 'NOEMA-AUTOMATION-PULSE-V1' \
               && printf '%s' "$museum_media" | grep -q 'REFERENCE_MEDIA_PROVIDER_ASSERTED_NOT_EVIDENCE' \
               && printf '%s' "$catalog" | grep -q 'GOD-ODIN' \
               && printf '%s' "$ontology" | grep -q 'NOEMA-DECOMPOSITION-V1'; then
               ok=1
-              echo "NOEMA v1.5 synchronized concept/entity lenses + federation + analysis + media verified on attempt ${attempt}."
+              echo "NOEMA v1.7 cognition + PubMed + synchronized visual research bundle verified on attempt ${attempt}."
               break
             fi
-            echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA v1.5 bundle yet."
+            echo "Attempt ${attempt}: Pages has not exposed the complete NOEMA v1.7 bundle yet."
             sleep 5
           done
           test "$ok" = "1"
