@@ -1,0 +1,102 @@
+{
+  "hypothesis_family_id": "NOEMA-BIOCULTURAL-COGNITION-V1",
+  "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
+  "scope": "Generate testable relationships among modern cognitive/biomedical evidence, phenomenology, cultural interpretation, social roles, and historical institutional responses without retrospective diagnosis.",
+  "forbidden_inferences": [
+    "witches were autistic",
+    "witches had ADHD",
+    "shamans are neurodivergent",
+    "prophets had epilepsy",
+    "mysticism is mental illness",
+    "possession ritual is a dissociative disorder",
+    "modern prevalence can be projected into historical populations"
+  ],
+  "hypotheses": [
+    {
+      "id": "BIOCULTURAL-H001",
+      "title": "Individual sensory and neurocognitive variation may influence the probability or structure of unusual experiences",
+      "epistemic_status": "PLAUSIBLE_RESEARCH_QUESTION",
+      "claim_distance": "MODERN_POPULATION_MECHANISM_TO_HISTORICAL_PHENOMENOLOGY",
+      "supporting_candidates": [
+        {
+          "title": "Sensory supernatural experiences in autism",
+          "authors": "Ingela Visuri",
+          "year": 2019,
+          "journal": "Religion, Brain & Behavior",
+          "url": "https://consensus.app/papers/sensory-supernatural-experiences-in-autism-visuri/34f5e00a68785415bc41d61ff7fcfb52/?utm_source=chatgpt",
+          "use": "Small modern Swedish sample relevant to sensory phenomenology and attribution, not historical prevalence or diagnosis."
+        },
+        {
+          "title": "Creativity and ADHD: A review of behavioral studies, the effect of psychostimulants and neural underpinnings.",
+          "authors": "M. Hoogman, M. Stolte, M. Baas, E. Kroesbergen",
+          "year": 2020,
+          "journal": "Neuroscience and Biobehavioral Reviews",
+          "url": "https://consensus.app/papers/creativity-and-adhd-a-review-of-behavioral-studies-the-hoogman-stolte/1bea32ead42a56b6a6aa33545aa213a6/?utm_source=chatgpt",
+          "use": "Review relevant to attentional variation and creativity; does not establish historical religious-role selection."
+        }
+      ],
+      "rivals": ["cultural learning", "training/practice", "trauma/stress", "sleep phenomena", "substances", "neurological conditions", "measurement bias", "null"],
+      "discriminating_evidence": ["large preregistered modern samples", "phenomenology-first measures", "sensory/attentional trait measures independent of religious interpretation", "cross-cultural replication"]
+    },
+    {
+      "id": "BIOCULTURAL-H002",
+      "title": "Cultural scripts shape how non-ordinary experiences are categorized and narrated",
+      "epistemic_status": "SUPPORTED_AS_GENERAL_MECHANISM_CANDIDATE",
+      "supporting_candidates": [
+        {
+          "title": "Investigating Mediumship/Possession-Relevant Experiences: Contributions from a Feature-Based, Subject-Dependent Approach to Definition and Measurement",
+          "authors": "E. Maraldi et al.",
+          "year": 2026,
+          "journal": "Transcultural Psychiatry",
+          "url": "https://consensus.app/papers/investigating-mediumshippossessionrelevant-maraldi-fischer/7640d609b8ca5db29fce724df13c313c/?utm_source=chatgpt",
+          "use": "Feature-based Brazilian studies distinguish phenomenological features from culturally specific interpretations."
+        },
+        {
+          "title": "Sensory supernatural experiences in autism",
+          "authors": "Ingela Visuri",
+          "year": 2019,
+          "journal": "Religion, Brain & Behavior",
+          "url": "https://consensus.app/papers/sensory-supernatural-experiences-in-autism-visuri/34f5e00a68785415bc41d61ff7fcfb52/?utm_source=chatgpt",
+          "use": "Suggests attributional content is enculturated in a small modern sample."
+        }
+      ],
+      "rivals": ["stable universal categories", "source translation imposed by researcher", "clinical/pathological state dominates interpretation", "null"],
+      "discriminating_evidence": ["same phenomenological instrument across cultures", "emic labels stored separately from etic features", "within-person changes across cultural contexts or training"]
+    },
+    {
+      "id": "BIOCULTURAL-H003",
+      "title": "Societies may differentially channel people with unusual experiential or cognitive profiles into specialist roles, stigma, or exclusion",
+      "epistemic_status": "SPECULATIVE_TESTABLE",
+      "relationship_type": "SOCIAL_ROLE_SELECTION",
+      "rivals": ["roles are primarily learned/trained", "kinship/hereditary office", "economic specialization", "gender/status constraints", "trauma and life history", "institutional recruitment", "source-selection bias", "null"],
+      "discriminating_evidence": ["prospective or contemporary practitioner cohorts", "non-practitioner comparison groups", "role-selection histories", "trait measures before intensive training where possible", "cross-cultural replication"],
+      "historical_rule": "Historical descriptions may be coded as traits/experiences only when source-bounded. They cannot be converted into a modern diagnosis."
+    },
+    {
+      "id": "BIOCULTURAL-H004",
+      "title": "Large-scale witch-hunting is better modeled through ideational, institutional and network diffusion than through presumed neurological traits of accused persons",
+      "epistemic_status": "SUPPORTED_DIRECTION_FOR_MODEL_COMPARISON",
+      "supporting_candidates": [
+        {
+          "title": "Ideational diffusion and the great witch hunt in Central Europe",
+          "authors": "Kerice Doten-Snitker, Steven Pfaff, Yuan Hsiao",
+          "year": 2024,
+          "journal": "Theory and Society",
+          "url": "https://consensus.app/papers/ideational-diffusion-and-the-great-witch-hunt-in-central-doten-snitker-pfaff/fa1bdbb5e6f25780bf3e6b42461ffb43/?utm_source=chatgpt",
+          "use": "Models print diffusion, nearby trials and contextual variables as mechanisms of persecution spread."
+        },
+        {
+          "title": "Witchcraft or Mycotoxin? The Salem Witch Trials",
+          "authors": "A. Woolf",
+          "year": 2000,
+          "journal": "Journal of Toxicology: Clinical Toxicology",
+          "url": "https://consensus.app/papers/witchcraft-or-mycotoxin-the-salem-witch-trials-woolf/5e8b8d75865758f48a8c5f20de95db73/?utm_source=chatgpt",
+          "use": "Adversarial check on a famous biomedical/environmental monocausal account; concludes ergotism is unlikely to explain much of Salem."
+        }
+      ],
+      "rivals": ["local economic conflict", "gendered institutions", "state capacity", "religious competition", "climate/stress", "disease/toxin exposure", "individual unusual experiences", "combined mechanisms", "null"],
+      "discriminating_evidence": ["trial-level person data linked to city/network timing", "print diffusion chronology", "local institutional variables", "accusation narrative features", "negative-control regions with witch beliefs but few trials"]
+    }
+  ],
+  "publication_rule": "No hypothesis in this file is an approved NOEMA claim. Cross-domain historical transport requires explicit human review and rival-model testing."
+}
