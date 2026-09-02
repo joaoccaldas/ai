@@ -12,7 +12,9 @@ def load():
 def test_family_is_candidate_only():
     data = load()
     assert data['status'] == 'CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED'
-    assert 'not an approved NOEMA claim' in data['publication_rule']
+    rule = data['publication_rule'].lower()
+    assert 'approved noema claim' in rule
+    assert rule.startswith('no hypothesis')
 
 
 def test_forbidden_retrodiagnosis_shortcuts_are_explicit():
