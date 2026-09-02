@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
+  "generated_at": "2026-09-02",
+  "purpose": "Seed NOEMA's cognition/neurophenomenology source family with reviewed discovery metadata. These records are not approved claims or evidence.",
+  "records": [
+    {
+      "pmid": "27485275",
+      "doi": "10.1111/pcn.12425",
+      "title": "Dissociative trance and spirit possession: Challenges for cultures in transition",
+      "year": 2016,
+      "publication_type": "Review",
+      "domains": ["DISSOCIATION_AND_SELF", "CULTURAL_SCRIPT_AND_INTERPRETATION"],
+      "candidate_use": "Cross-cultural framework for distinguishing culturally patterned possession/trance from clinical dissociative disorder.",
+      "guardrail": "Phenomenological overlap does not make culturally sanctioned possession a disorder."
+    },
+    {
+      "pmid": "21507280",
+      "doi": "10.1177/070674371105600407",
+      "title": "A critical review of dissociative trance and possession disorders: etiological, diagnostic, therapeutic, and nosological issues",
+      "year": 2011,
+      "publication_type": "Review",
+      "domains": ["DISSOCIATION_AND_SELF", "CULTURAL_SCRIPT_AND_INTERPRETATION", "TRAUMA_AND_STRESS"],
+      "candidate_use": "Candidate phenomenology and differential-classification source for trance/possession.",
+      "guardrail": "Clinical case literature is not a prevalence estimate for ritual possession populations."
+    },
+    {
+      "pmid": "18213511",
+      "doi": "10.1007/s11013-007-9077-8",
+      "title": "Dissociative experience and cultural neuroscience: narrative, metaphor and mechanism",
+      "year": 2008,
+      "publication_type": "Review/Framework",
+      "domains": ["DISSOCIATION_AND_SELF", "CULTURAL_SCRIPT_AND_INTERPRETATION"],
+      "candidate_use": "Key integrative framework joining neuropsychological mechanism with sociocultural construction and presentation.",
+      "guardrail": "Avoid either/or framing in which an experience must be purely biological or purely cultural."
+    },
+    {
+      "pmid": "34343961",
+      "doi": "10.1016/j.yebeh.2021.108219",
+      "title": "Religion, spirituality, and epilepsy",
+      "year": 2021,
+      "publication_type": "Review",
+      "domains": ["SEIZURE_AND_NEUROLOGICAL_PHENOMENA", "ALTERED_STATE_PHENOMENOLOGY", "CULTURAL_SCRIPT_AND_INTERPRETATION"],
+      "candidate_use": "Modern review of epilepsy/religious experience and historical-retrodiagnosis limits.",
+      "guardrail": "The review explicitly warns that retrospective epilepsy claims for famous religious figures are weak and that the relationship has been overstated."
+    },
+    {
+      "pmid": "34827383",
+      "doi": "10.3390/brainsci11111384",
+      "title": "Epilepsy and Ecstatic Experiences: The Role of the Insula",
+      "year": 2021,
+      "publication_type": "Review",
+      "domains": ["SEIZURE_AND_NEUROLOGICAL_PHENOMENA", "ALTERED_STATE_PHENOMENOLOGY", "SENSORY_PROCESSING"],
+      "candidate_use": "Mechanism candidate for rare ecstatic auras involving clarity/certainty and anterior-insula/interoceptive processing.",
+      "guardrail": "A mechanism observed in rare focal epilepsy does not explain ordinary mystical or religious experience generally."
+    },
+    {
+      "pmid": "37628416",
+      "doi": "10.3390/children10081417",
+      "title": "Autism and Religion",
+      "year": 2023,
+      "publication_type": "Review",
+      "domains": ["NEURODEVELOPMENTAL_VARIATION", "CULTURAL_SCRIPT_AND_INTERPRETATION"],
+      "candidate_use": "Candidate literature map for autism, cognition, religion and cultural fit.",
+      "guardrail": "Modern autism/religiosity findings cannot be projected backward onto historical religious specialists."
+    },
+    {
+      "pmid": "38947705",
+      "title": "The Intersection of Faith and Neurodiversity: Unraveling Religiosity in Autistic Adolescents-A Critical Review Analysis",
+      "year": 2024,
+      "publication_type": "Review",
+      "domains": ["NEURODEVELOPMENTAL_VARIATION", "CULTURAL_SCRIPT_AND_INTERPRETATION", "SOCIAL_ROLE_AND_SELECTION"],
+      "candidate_use": "Candidate contemporary neurodiversity/religiosity source with multidimensional framing.",
+      "guardrail": "Adolescent contemporary studies do not validate historical-role analogies."
+    },
+    {
+      "pmid": "336681",
+      "title": "The role of mental illness in the European witch hunts of the sixteenth and seventeenth centuries: an assessment",
+      "year": 1977,
+      "publication_type": "Historical Article",
+      "domains": ["SOCIAL_ROLE_AND_SELECTION", "CULTURAL_SCRIPT_AND_INTERPRETATION", "PSYCHOSIS_SPECTRUM_EXPERIENCE"],
+      "candidate_use": "Counterevidence to simple psychopathology explanations of witch hunts.",
+      "guardrail": "Accusation records are social/historical documents and cannot be treated as diagnostic case notes."
+    },
+    {
+      "pmid": "7046480",
+      "doi": "10.1176/ajp.139.8.1028",
+      "title": "Criticisms of the psychopathological interpretation of witch hunts: a review",
+      "year": 1982,
+      "publication_type": "Review",
+      "domains": ["SOCIAL_ROLE_AND_SELECTION", "CULTURAL_SCRIPT_AND_INTERPRETATION"],
+      "candidate_use": "Methodological critique of psychiatric reductionism in witch-hunt historiography.",
+      "guardrail": "Historical witchcraft accusation is not evidence of mental illness or neurodivergence."
+    },
+    {
+      "pmid": "42044758",
+      "doi": "10.1016/j.neubiorev.2026.106706",
+      "title": "The rhythms of trance: Cultural phenomenology and neural mechanisms of music-induced non-ordinary states of consciousness",
+      "year": 2026,
+      "publication_type": "Review",
+      "domains": ["ALTERED_STATE_PHENOMENOLOGY", "SENSORY_PROCESSING", "CULTURAL_SCRIPT_AND_INTERPRETATION"],
+      "candidate_use": "High-value bridge between anthropology and neuroscience of music-induced trance.",
+      "guardrail": "Shared induction mechanisms do not establish shared ritual meaning or historical descent."
+    }
+  ],
+  "forbidden_outputs": [
+    "historical-person diagnosis",
+    "witchcraft accusation equals psychopathology",
+    "shamanism equals neurodivergence",
+    "mysticism equals epilepsy",
+    "modern prevalence projected into historical populations",
+    "biomedical mechanism treated as complete explanation of cultural meaning"
+  ]
+}
