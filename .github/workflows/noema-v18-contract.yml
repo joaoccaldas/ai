@@ -7,30 +7,40 @@ on:
       - 'projects/noema/src/noema/openalex.py'
       - 'projects/noema/src/noema/pleiades.py'
       - 'projects/noema/scripts/build_source_dependence.py'
+      - 'projects/noema/scripts/build_research_health.py'
       - 'projects/noema/data/reference/source-fingerprints-v1.json'
       - 'projects/noema/data/candidates/biocultural-cognition-hypotheses-v1.json'
       - 'projects/noema/site/source-dependence.json'
       - 'projects/noema/site/source-registry-v18.json'
+      - 'projects/noema/site/research-health.json'
+      - 'projects/noema/site/data.json'
       - 'projects/noema/tests/test_source_dependence.py'
       - 'projects/noema/tests/test_openalex_adapter.py'
       - 'projects/noema/tests/test_pleiades_adapter.py'
       - 'projects/noema/tests/test_biocultural_hypotheses.py'
+      - '.github/workflows/noema-v14-contract.yml'
       - '.github/workflows/noema-v18-contract.yml'
+      - '.github/workflows/noema-pages-verify.yml'
   pull_request:
     paths:
       - 'projects/noema/src/noema/source_dependence.py'
       - 'projects/noema/src/noema/openalex.py'
       - 'projects/noema/src/noema/pleiades.py'
       - 'projects/noema/scripts/build_source_dependence.py'
+      - 'projects/noema/scripts/build_research_health.py'
       - 'projects/noema/data/reference/source-fingerprints-v1.json'
       - 'projects/noema/data/candidates/biocultural-cognition-hypotheses-v1.json'
       - 'projects/noema/site/source-dependence.json'
       - 'projects/noema/site/source-registry-v18.json'
+      - 'projects/noema/site/research-health.json'
+      - 'projects/noema/site/data.json'
       - 'projects/noema/tests/test_source_dependence.py'
       - 'projects/noema/tests/test_openalex_adapter.py'
       - 'projects/noema/tests/test_pleiades_adapter.py'
       - 'projects/noema/tests/test_biocultural_hypotheses.py'
+      - '.github/workflows/noema-v14-contract.yml'
       - '.github/workflows/noema-v18-contract.yml'
+      - '.github/workflows/noema-pages-verify.yml'
 
 jobs:
   source-breadth:
@@ -55,7 +65,7 @@ jobs:
           generated=json.load(open('/tmp/source-dependence.json'))
           assert committed == generated, 'committed source-dependence projection is stale'
           PY
-      - name: Validate epistemic and source registry contract
+      - name: Validate complete v1.8 release contract
         run: |
           python - <<'PY'
           import json
@@ -77,6 +87,22 @@ jobs:
           assert by_id['ARIADNE']['status']=='DISCOVERY_CONTRACT_RESEARCHED_ADAPTER_PENDING'
           assert reg['source_dependence']['absence_of_edge_means_independent'] is False
           assert reg['cognition_policy']['historical_diagnosis_from_resemblance'] is False
+
+          meta=json.load(open('site/data.json'))
+          assert meta['release']=='v1.8'
+          assert meta['research_os']['source_registry']=='./source-registry-v18.json'
+          assert meta['source_governance']['absence_of_dependency_edge_means_independent'] is False
+          assert meta['source_governance']['openalex_citation_is_dependence'] is False
+          assert meta['source_governance']['pleiades_place_is_religious_evidence'] is False
+          assert meta['publication_gate']['historical_diagnosis_from_resemblance'] is False
+          assert meta['publication_gate']['citation_implies_shared_data'] is False
+          assert meta['counts']['source_fingerprints_encoded']>=7
+
+          health=json.load(open('site/research-health.json'))
+          assert health['maturity']['source_dependence']=='EARLY_OPERATIONAL'
+          assert health['maturity']['biocultural_cognition']=='EARLY_GUARDED_DISCOVERY'
+          assert health['metrics']['source_fingerprints_encoded']>=7
+          assert any(b['area']=='source independence coverage' for b in health['blind_spots'])
           PY
       - name: Run v1.8 adapter, dependence and biocultural tests
         run: pytest tests/test_source_dependence.py tests/test_openalex_adapter.py tests/test_pleiades_adapter.py tests/test_biocultural_hypotheses.py
