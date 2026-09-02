@@ -8,10 +8,13 @@ on:
       - 'projects/noema/src/noema/pleiades.py'
       - 'projects/noema/scripts/build_source_dependence.py'
       - 'projects/noema/data/reference/source-fingerprints-v1.json'
+      - 'projects/noema/data/candidates/biocultural-cognition-hypotheses-v1.json'
       - 'projects/noema/site/source-dependence.json'
+      - 'projects/noema/site/source-registry-v18.json'
       - 'projects/noema/tests/test_source_dependence.py'
       - 'projects/noema/tests/test_openalex_adapter.py'
       - 'projects/noema/tests/test_pleiades_adapter.py'
+      - 'projects/noema/tests/test_biocultural_hypotheses.py'
       - '.github/workflows/noema-v18-contract.yml'
   pull_request:
     paths:
@@ -20,10 +23,13 @@ on:
       - 'projects/noema/src/noema/pleiades.py'
       - 'projects/noema/scripts/build_source_dependence.py'
       - 'projects/noema/data/reference/source-fingerprints-v1.json'
+      - 'projects/noema/data/candidates/biocultural-cognition-hypotheses-v1.json'
       - 'projects/noema/site/source-dependence.json'
+      - 'projects/noema/site/source-registry-v18.json'
       - 'projects/noema/tests/test_source_dependence.py'
       - 'projects/noema/tests/test_openalex_adapter.py'
       - 'projects/noema/tests/test_pleiades_adapter.py'
+      - 'projects/noema/tests/test_biocultural_hypotheses.py'
       - '.github/workflows/noema-v18-contract.yml'
 
 jobs:
@@ -49,7 +55,7 @@ jobs:
           generated=json.load(open('/tmp/source-dependence.json'))
           assert committed == generated, 'committed source-dependence projection is stale'
           PY
-      - name: Validate epistemic contract
+      - name: Validate epistemic and source registry contract
         run: |
           python - <<'PY'
           import json
@@ -62,6 +68,15 @@ jobs:
           assert any(e['dependency_type']=='SHARED_DATASET' for e in x['edges'])
           assert any(len(group)>1 for group in x['independence_groups'])
           assert any('not proof of independence' in n for n in x['notes'])
+
+          reg=json.load(open('site/source-registry-v18.json'))
+          by_id={s['id']:s for s in reg['sources']}
+          assert by_id['OPENALEX']['status']=='ADAPTER_READY_CANDIDATE_ONLY'
+          assert by_id['PLEIADES']['status']=='LINKER_READY'
+          assert by_id['SESHAT']['status']=='SNAPSHOT_ADAPTER_NEXT'
+          assert by_id['ARIADNE']['status']=='DISCOVERY_CONTRACT_RESEARCHED_ADAPTER_PENDING'
+          assert reg['source_dependence']['absence_of_edge_means_independent'] is False
+          assert reg['cognition_policy']['historical_diagnosis_from_resemblance'] is False
           PY
-      - name: Run v1.8 adapter and dependence tests
-        run: pytest tests/test_source_dependence.py tests/test_openalex_adapter.py tests/test_pleiades_adapter.py
+      - name: Run v1.8 adapter, dependence and biocultural tests
+        run: pytest tests/test_source_dependence.py tests/test_openalex_adapter.py tests/test_pleiades_adapter.py tests/test_biocultural_hypotheses.py
