@@ -1,6 +1,6 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-02T07:38:08.485592+00:00",
+  "generated_at": "2026-09-02T07:38:29.986407+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
@@ -99,7 +99,7 @@
       "last_run_id": "github-discovery-33591103364",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-02T04:31:23.471386+00:00",
-      "age_hours": 3.11,
+      "age_hours": 3.12,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -154,7 +154,7 @@
       "last_run_id": "dplace-benchmark-33361784511",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:47:46.132148+00:00",
-      "age_hours": 49.84,
+      "age_hours": 49.85,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -172,7 +172,7 @@
       "last_run_id": "religion-federation-33361678540",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:46:27.262104+00:00",
-      "age_hours": 49.86,
+      "age_hours": 49.87,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -234,7 +234,7 @@
       "last_run_id": "media-discovery-33601263529",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-02T06:58:26.632314+00:00",
-      "age_hours": 0.66,
+      "age_hours": 0.67,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
