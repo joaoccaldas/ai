@@ -1,0 +1,37 @@
+{
+  "run_id": "chatgpt-daily-2026-09-02",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED",
+  "started_at": "2026-09-02T06:55:14+00:00",
+  "completed_at": "2026-09-02T07:07:00+00:00",
+  "input_refs": [
+    "github-actions:NOEMA Discovery/run/33591103364/artifact/noema-crossref-candidates",
+    "projects/noema/data/runs/github-discovery-33591103364.json",
+    "projects/noema/data/candidates/daily/2026-09-01.json",
+    "projects/noema/schemas/run-manifest-v1.json"
+  ],
+  "artifact_digests": {
+    "noema-crossref-candidates.raw-json": "sha256:669bd5174c148d2c3d53c07d97fb9bdf06122e50e57e73d8526ec9c1cbfca851",
+    "noema-crossref-candidates.github-artifact": "sha256:0768d45f2add79b3d5343b97a19c6234be22ec9fab8287183b1f29dfa9b3c063"
+  },
+  "sources_examined": 9,
+  "new_candidates": 4,
+  "candidate_updates": 1,
+  "contradictions": 4,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 5,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 5,
+  "errors": [],
+  "summary": "Inspected the latest successful NOEMA Discovery artifact (119 candidates; priority queue 2 RECENT_PUBLICATION, 0 UPCOMING_OR_AHEAD_OF_PRINT, 28 NEWLY_INDEXED_LEGACY). Added four deduplicated candidate-only records: the Modrice Hallstatt isotope dataset, Tepecik-Ciftlik incised obsidian arrowheads, an experimental chimpanzee crystal-attraction study, and a clearly labeled non-peer-reviewed BIAD/aDNA mortuary preprint. Recorded a publication-status contradiction for a Wiley chapter whose Crossref 2026 date conflicts with a parent volume marketed as 2027. No evidence or relationships were promoted and no verified dating revision was found.",
+  "research_note": "projects/noema/data/candidates/daily/2026-09-02.json",
+  "code_commit": "d69ba3b3099cf919ac2654f26fb9e7753c93cc59",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false
+  }
+}
