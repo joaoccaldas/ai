@@ -5,21 +5,25 @@ on:
     paths:
       - 'projects/noema/src/noema/source_dependence.py'
       - 'projects/noema/src/noema/openalex.py'
+      - 'projects/noema/src/noema/pleiades.py'
       - 'projects/noema/scripts/build_source_dependence.py'
       - 'projects/noema/data/reference/source-fingerprints-v1.json'
       - 'projects/noema/site/source-dependence.json'
       - 'projects/noema/tests/test_source_dependence.py'
       - 'projects/noema/tests/test_openalex_adapter.py'
+      - 'projects/noema/tests/test_pleiades_adapter.py'
       - '.github/workflows/noema-v18-contract.yml'
   pull_request:
     paths:
       - 'projects/noema/src/noema/source_dependence.py'
       - 'projects/noema/src/noema/openalex.py'
+      - 'projects/noema/src/noema/pleiades.py'
       - 'projects/noema/scripts/build_source_dependence.py'
       - 'projects/noema/data/reference/source-fingerprints-v1.json'
       - 'projects/noema/site/source-dependence.json'
       - 'projects/noema/tests/test_source_dependence.py'
       - 'projects/noema/tests/test_openalex_adapter.py'
+      - 'projects/noema/tests/test_pleiades_adapter.py'
       - '.github/workflows/noema-v18-contract.yml'
 
 jobs:
@@ -60,4 +64,4 @@ jobs:
           assert any('not proof of independence' in n for n in x['notes'])
           PY
       - name: Run v1.8 adapter and dependence tests
-        run: pytest tests/test_source_dependence.py tests/test_openalex_adapter.py
+        run: pytest tests/test_source_dependence.py tests/test_openalex_adapter.py tests/test_pleiades_adapter.py
