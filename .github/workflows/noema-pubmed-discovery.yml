@@ -1,0 +1,110 @@
+name: NOEMA PubMed Discovery
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '47 4 * * 2,5'
+  push:
+    paths:
+      - 'projects/noema/scripts/discover_pubmed.py'
+      - 'projects/noema/data/reference/cognition-mechanism-ontology-v1.json'
+      - 'projects/noema/data/automation-contract-v1.json'
+      - '.github/workflows/noema-pubmed-discovery.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: noema-pubmed-discovery
+  cancel-in-progress: false
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Discover PubMed candidates
+        env:
+          NCBI_EMAIL: ${{ vars.NCBI_EMAIL }}
+        run: |
+          python projects/noema/scripts/discover_pubmed.py \
+            --days 45 \
+            --per-query 20 \
+            --output projects/noema/data/candidates/pubmed-latest.json
+      - name: Validate candidate-only guardrails
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('projects/noema/data/candidates/pubmed-latest.json')
+          d=json.loads(p.read_text())
+          assert d['status']=='CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED'
+          assert d['principle'].lower().find('historical diagnosis is forbidden') >= 0
+          assert all(r.get('candidate_only') is True for r in d.get('records',[]))
+          assert all(r.get('status')=='CANDIDATE_UNREVIEWED' for r in d.get('records',[]))
+          print('validated',len(d.get('records',[])),'PubMed candidates')
+          PY
+      - name: Emit run manifest
+        env:
+          RUN_ID: ${{ github.run_id }}
+          SHA: ${{ github.sha }}
+        run: |
+          python - <<'PY'
+          import hashlib, json, os
+          from datetime import datetime, timezone
+          from pathlib import Path
+          p=Path('projects/noema/data/candidates/pubmed-latest.json')
+          d=json.loads(p.read_text())
+          now=datetime.now(timezone.utc).isoformat()
+          manifest={
+            'run_id':f"pubmed-discovery-{os.environ['RUN_ID']}",
+            'task_type':'PUBMED_DISCOVERY',
+            'status':'COMPLETED_CANDIDATES_ONLY',
+            'started_at':now,
+            'completed_at':now,
+            'input_refs':['NCBI PubMed E-utilities','projects/noema/scripts/discover_pubmed.py'],
+            'artifact_digests':{'pubmed-latest.json':'sha256:'+hashlib.sha256(p.read_bytes()).hexdigest()},
+            'sources_examined':d.get('counts',{}).get('unique_candidates',0),
+            'new_candidates':d.get('counts',{}).get('unique_candidates',0),
+            'candidate_updates':0,
+            'contradictions':0,
+            'dating_revisions':0,
+            'relationships_generated':0,
+            'hypotheses_revisited':0,
+            'hypotheses_promoted':0,
+            'confidence_or_scope_changes':0,
+            'review_items_created':d.get('counts',{}).get('unique_candidates',0),
+            'errors':[],
+            'summary':'PubMed biomedical/cognition discovery produced candidate-only records; no evidence, diagnosis or relationship was promoted.',
+            'research_note':'projects/noema/data/candidates/pubmed-latest.json',
+            'code_commit':os.environ['SHA'],
+            'epistemic_guards':{
+              'model_output_is_evidence':False,
+              'unknown_is_absent':False,
+              'similarity_implies_descent':False,
+              'automatic_claim_promotion':False,
+              'historical_diagnosis_from_resemblance':False
+            }
+          }
+          out=Path(f"projects/noema/data/runs/pubmed-discovery-{os.environ['RUN_ID']}.json")
+          out.write_text(json.dumps(manifest,indent=2)+'\n')
+          PY
+      - name: Upload discovery artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: noema-pubmed-candidates
+          path: projects/noema/data/candidates/pubmed-latest.json
+      - name: Commit deterministic discovery state
+        run: |
+          if git status --porcelain projects/noema/data/candidates/pubmed-latest.json projects/noema/data/runs/ | grep -q .; then
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add projects/noema/data/candidates/pubmed-latest.json projects/noema/data/runs/
+            git commit -m 'data(noema): refresh PubMed cognition candidates [skip pubmed-discovery]'
+            git push
+          fi
