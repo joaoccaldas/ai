@@ -30,9 +30,11 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          import re
           from pathlib import Path
           meta=json.load(open('projects/noema/site/data.json'))
-          assert meta['release'] in {'v1.4','v1.5'}
+          match=re.fullmatch(r'v(\d+)\.(\d+)', meta['release'])
+          assert match and (int(match.group(1)), int(match.group(2))) >= (1, 4), meta['release']
           vc=meta['visual_core']
           assert vc['concept_hubs'] is True
           assert vc['search_to_concept_bridge'] is True
@@ -55,5 +57,5 @@ jobs:
           assert 'entity-depth-v14.js' in entity and 'entity-depth-v14.css' in entity
           assert 'concept.html?term=' in entity_js
           assert 'Reference sources ≠ claim-level evidence' in entity_js
-          print('NOEMA v1.4 regression contract green')
+          print('NOEMA v1.4 capabilities remain green on', meta['release'])
           PY
