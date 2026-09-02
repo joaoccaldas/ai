@@ -35,7 +35,12 @@ jobs:
         run: |
           python scripts/build_source_dependence.py --manifest data/reference/source-fingerprints-v1.json --output /tmp/source-dependence.json
           python -m json.tool /tmp/source-dependence.json >/dev/null
-          diff -u site/source-dependence.json /tmp/source-dependence.json
+          python - <<'PY'
+          import json
+          committed=json.load(open('site/source-dependence.json'))
+          generated=json.load(open('/tmp/source-dependence.json'))
+          assert committed == generated, 'committed source-dependence projection is stale'
+          PY
       - name: Validate epistemic contract
         run: |
           python - <<'PY'
