@@ -1,0 +1,102 @@
+{
+  "dataset_id": "NOEMA-HISTORICAL-FORCES-V18",
+  "status": "CURATED_STARTER_SET_RESEARCH_PREVIEW",
+  "principle": "Historical events are modeled as pressures and mechanisms that may reshape institutions, practices, identities and interpretations. An event-to-belief association is not a monocausal explanation.",
+  "events": [
+    {
+      "id": "HF-SECOND-TEMPLE-70",
+      "label": "Destruction of the Second Temple",
+      "period": "70 CE",
+      "regions": ["Judea", "Roman Empire"],
+      "force_types": ["WAR", "INSTITUTIONAL_DESTRUCTION", "DIASPORA"],
+      "tradition_scope": ["Judaism", "early Christianity"],
+      "statement": "The destruction of the Second Temple is a major historical boundary in the history of Judaism. NOEMA should trace institutional, liturgical, legal and identity changes without treating one event as a complete explanation of later Jewish diversity.",
+      "mechanisms_to_test": ["loss of central cult institution", "diaspora network adaptation", "textual and legal authority shifts", "community reorganization"],
+      "source_links": [
+        {"title": "Introduction to Judaism", "institution": "United States Holocaust Memorial Museum", "url": "https://encyclopedia.ushmm.org/content/en/article/introduction-to-judaism?parent=en%2F3225", "class": "SCHOLARLY_REFERENCE"}
+      ]
+    },
+    {
+      "id": "HF-MONGOL-CONTACT-13C",
+      "label": "Mongol imperial expansion and religious contact",
+      "period": "13th–14th centuries",
+      "regions": ["Eurasia", "Greater Iran"],
+      "force_types": ["CONQUEST", "TRADE_AND_CONTACT", "STATE_PATRONAGE"],
+      "tradition_scope": ["Islam", "Buddhism", "Christianity", "Judaism", "Zoroastrianism", "Manichaeism", "Mongol shamanic traditions"],
+      "statement": "Mongol rule created historically important zones of religious plurality, political experimentation and cultural exchange. NOEMA should model different Mongol polities separately rather than assigning one timeless religious policy to the empire.",
+      "mechanisms_to_test": ["elite patronage", "imperial pluralism", "mobility of specialists", "translation and artistic exchange", "later elite conversion"],
+      "source_links": [
+        {"title": "The Religious Arts under the Ilkhanids", "institution": "The Metropolitan Museum of Art", "url": "https://www.metmuseum.org/es/essays/the-religious-arts-under-the-ilkhanids", "class": "MUSEUM_SCHOLARSHIP"}
+      ]
+    },
+    {
+      "id": "HF-PRINT-REFORMATION",
+      "label": "Print, vernacularization and Reformation-era religious change",
+      "period": "15th–16th centuries",
+      "regions": ["Europe"],
+      "force_types": ["PRINT_AND_MEDIA_CHANGE", "REFORMATION", "STATE_FORMATION"],
+      "tradition_scope": ["Western Christianity"],
+      "statement": "Print interacted with political authority, reform movements, vernacular texts and institutional conflict. NOEMA should test media effects alongside patronage, literacy, coercion, networks and theology rather than treating the printing press as a sufficient cause of the Reformation.",
+      "mechanisms_to_test": ["lower reproduction cost", "vernacular access", "rapid polemical circulation", "state-sponsored publication", "standardization"],
+      "source_links": [
+        {"title": "Printing for the Reformation", "institution": "Library of Congress digital collection", "url": "https://tile.loc.gov/storage-services/master/gdc/gdcebookspublic/20/21/01/33/16/2021013316/2021013316.pdf", "class": "SCHOLARLY_MONOGRAPH"}
+      ]
+    },
+    {
+      "id": "HF-ATLANTIC-DIASPORA",
+      "label": "Atlantic slavery, forced migration and African-diaspora religious formation",
+      "period": "15th–19th centuries",
+      "regions": ["Africa", "Atlantic", "Americas"],
+      "force_types": ["ENSLAVEMENT_AND_DIASPORA", "MIGRATION", "COLONIZATION", "SYNCRETIC_CONTACT"],
+      "tradition_scope": ["African traditional religions", "diaspora religions", "Catholicism and other Christian traditions"],
+      "statement": "Forced migration and colonial religious regimes transformed communities while African religious practices, healing, divination, kinship and ritual logics persisted and recombined in different local settings. NOEMA must preserve regional variation and avoid treating 'African religion' as one source tradition.",
+      "mechanisms_to_test": ["forced demographic mixing", "institutional coercion", "ritual continuity", "new kinship networks", "syncretic translation", "resistance"],
+      "source_links": [
+        {"title": "Recreating Africa: culture, kinship, and religion in the African-Portuguese world, 1441-1770", "institution": "Smithsonian Libraries and Archives", "url": "https://www.si.edu/object/recreating-africa-culture-kinship-and-religion-african-portuguese-world-1441-1770-james-h-sweet%3Asiris_sil_1046594", "class": "SCHOLARLY_MONOGRAPH_METADATA"},
+        {"title": "Slavery, Memory and Religion in Southeastern Ghana, c.1850-present", "institution": "Smithsonian Libraries and Archives", "url": "https://www.si.edu/object/slavery-memory-and-religion-southeastern-ghana-c1850-present-meera-venkatachalam%3Asiris_sil_1094484", "class": "SCHOLARLY_MONOGRAPH_METADATA"}
+      ]
+    },
+    {
+      "id": "HF-HOLOCAUST",
+      "label": "The Holocaust and religious communities",
+      "period": "1933–1945 and postwar aftermath",
+      "regions": ["Europe", "global postwar communities"],
+      "force_types": ["GENOCIDE", "PERSECUTION", "WAR", "MIGRATION"],
+      "tradition_scope": ["Judaism", "Christian traditions", "Jehovah's Witnesses and other persecuted communities", "interreligious relations"],
+      "statement": "The Holocaust destroyed communities and institutions, transformed demographic geography and generated major postwar theological, ethical and interreligious responses. NOEMA should separately model victim experience, institutional actions, resistance, postwar theology and later memory.",
+      "mechanisms_to_test": ["community destruction", "displacement", "clandestine religious continuity", "postwar theological response", "interreligious reassessment", "memory institutions"],
+      "source_links": [
+        {"title": "Religion and the Holocaust: Resources for Further Learning", "institution": "United States Holocaust Memorial Museum", "url": "https://www.ushmm.org/research/about-the-mandel-center/initiatives/religion-holocaust/resources", "class": "RESEARCH_INSTITUTION"},
+        {"title": "Jewish Religious Life During the Holocaust", "institution": "United States Holocaust Memorial Museum", "url": "https://www.ushmm.org/research/about-the-mandel-center/initiatives/religion-holocaust/resources/jewish-religious-life-during-the-holocaust", "class": "RESEARCH_INSTITUTION"}
+      ]
+    },
+    {
+      "id": "HF-VATICAN-II",
+      "label": "Second Vatican Council",
+      "period": "1962–1965",
+      "regions": ["global Catholic Church"],
+      "force_types": ["INSTITUTIONAL_REFORM", "THEOLOGICAL_DEVELOPMENT", "ECUMENISM"],
+      "tradition_scope": ["Catholicism", "Christian ecumenism", "Catholic relations with non-Christian religions"],
+      "statement": "The Council produced authoritative Catholic documents on religious freedom, ecumenism and relations with non-Christian religions. NOEMA should distinguish the text of council documents from later reception, implementation and sociological consequences.",
+      "mechanisms_to_test": ["authoritative doctrinal statement", "liturgical and institutional reform", "ecumenical engagement", "interreligious engagement", "local reception"],
+      "source_links": [
+        {"title": "Dignitatis humanae", "institution": "The Holy See", "url": "https://www.vatican.va/archive/hist_councils/ii_vatican_council/documents/vat-ii_decl_19651207_dignitatis-humanae_en.html", "class": "PRIMARY_INSTITUTIONAL_TEXT"},
+        {"title": "Nostra aetate", "institution": "The Holy See", "url": "https://www.vatican.va/content/dam/wss/archive/hist_councils/ii_vatican_council/documents/vat-ii_decl_19651028_nostra-aetate_en.html", "class": "PRIMARY_INSTITUTIONAL_TEXT"}
+      ]
+    },
+    {
+      "id": "HF-CONTEMPORARY-GLOBAL-CHANGE",
+      "label": "Contemporary demographic and affiliation change",
+      "period": "2010–2020 dataset window",
+      "regions": ["global"],
+      "force_types": ["DEMOGRAPHIC_SHIFT", "MIGRATION", "SECULARIZATION", "DIFFERENTIAL_GROWTH"],
+      "tradition_scope": ["global religious populations"],
+      "statement": "Contemporary affiliation shares change through fertility, age structure, religious switching, migration and other demographic processes. NOEMA should keep demographic change separate from changes in doctrine, practice or individual conviction.",
+      "mechanisms_to_test": ["fertility", "age structure", "religious switching", "migration", "survey and census classification"],
+      "source_links": [
+        {"title": "How the Global Religious Landscape Changed from 2010 to 2020", "institution": "Pew Research Center", "url": "https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/", "class": "DEMOGRAPHIC_RESEARCH"},
+        {"title": "Dataset of Global Religious Composition Estimates for 2010 and 2020", "institution": "Pew Research Center", "url": "https://www.pewresearch.org/dataset/dataset-of-global-religious-composition-estimates-for-2010-and-2020/", "class": "DATASET"}
+      ]
+    }
+  ]
+}
