@@ -81,19 +81,31 @@ jobs:
           node --check projects/noema/site/entity-v18.js
           node --check projects/noema/site/shell-v18.js
 
-      - name: Commit generated projection when changed
+      - name: Commit generated projection when missing or changed
         id: commit
         run: |
-          set -eu
-          if git diff --quiet -- projects/noema/site/search-index-v18.json; then
+          set -euo pipefail
+          artifact='projects/noema/site/search-index-v18.json'
+          tracked=0
+          if git ls-files --error-unmatch "$artifact" >/dev/null 2>&1; then
+            tracked=1
+          fi
+          if [ "$tracked" = 1 ] && git diff --quiet -- "$artifact"; then
             echo 'changed=false' >> "$GITHUB_OUTPUT"
-            echo 'Compact search projection already current.'
+            echo 'Compact search projection is tracked and current.'
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add projects/noema/site/search-index-v18.json
-          git commit -m 'NOEMA v1.8.1: refresh compact search projection'
+          # The site projection may match a broad generated-file ignore rule. It is a
+          # deliberate public build artifact, so force-add it when first introduced.
+          git add -f "$artifact"
+          if git diff --cached --quiet -- "$artifact"; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+            echo 'No staged projection change after add.'
+            exit 0
+          fi
+          git commit -m 'NOEMA v1.8.1: publish compact search projection'
           git push
           echo 'changed=true' >> "$GITHUB_OUTPUT"
 
@@ -112,7 +124,7 @@ jobs:
               -H 'Accept: application/vnd.github+json' \
               -H 'X-GitHub-Api-Version: 2026-03-10' \
               "$api" || true)
-            status=$(printf '%s' "$body" | python3 -c 'import json,sys; d=json.load(sys.stdin) if sys.stdin.readable() else {}; print(d.get("status","unavailable"))' 2>/dev/null || echo unavailable)
+            status=$(printf '%s' "$body" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("status","unavailable"))' 2>/dev/null || echo unavailable)
             commit=$(printf '%s' "$body" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("commit","unknown"))' 2>/dev/null || echo unknown)
             echo "Pages attempt ${attempt}: status=${status}; commit=${commit}"
             if [ "$status" = "built" ] && [ "$commit" = "$expected" ]; then
@@ -147,7 +159,7 @@ jobs:
 
           ok=0
           for attempt in $(seq 1 60); do
-            nonce="${GITHUB_SHA}-${attempt}"
+            nonce="$(git rev-parse HEAD)-${attempt}"
             c_explore=$(fetch_asset explore "${base}/explore.html?delivery=${nonce}")
             c_entity=$(fetch_asset entity "${base}/entity.html?id=GOD-ODIN&delivery=${nonce}")
             c_index=$(fetch_asset index "${base}/search-index-v18.json?delivery=${nonce}")
