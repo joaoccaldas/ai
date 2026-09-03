@@ -24,6 +24,7 @@ on:
 
 permissions:
   contents: write
+  pages: read
 
 concurrency:
   group: noema-delivery-integrity-v18
@@ -32,7 +33,7 @@ concurrency:
 jobs:
   build-test-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -96,34 +97,77 @@ jobs:
           git push
           echo 'changed=true' >> "$GITHUB_OUTPUT"
 
+      - name: Wait for matching GitHub Pages build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          expected=$(git rev-parse HEAD)
+          api="https://api.github.com/repos/${GITHUB_REPOSITORY}/pages/builds/latest"
+          echo "Waiting for Pages build of ${expected}"
+          matched=0
+          for attempt in $(seq 1 120); do
+            body=$(curl --fail --silent --show-error \
+              -H "Authorization: Bearer ${GH_TOKEN}" \
+              -H 'Accept: application/vnd.github+json' \
+              -H 'X-GitHub-Api-Version: 2026-03-10' \
+              "$api" || true)
+            status=$(printf '%s' "$body" | python3 -c 'import json,sys; d=json.load(sys.stdin) if sys.stdin.readable() else {}; print(d.get("status","unavailable"))' 2>/dev/null || echo unavailable)
+            commit=$(printf '%s' "$body" | python3 -c 'import json,sys; d=json.load(sys.stdin); print(d.get("commit","unknown"))' 2>/dev/null || echo unknown)
+            echo "Pages attempt ${attempt}: status=${status}; commit=${commit}"
+            if [ "$status" = "built" ] && [ "$commit" = "$expected" ]; then
+              matched=1
+              break
+            fi
+            if [ "$status" = "errored" ] && [ "$commit" = "$expected" ]; then
+              echo "Matching Pages build errored."
+              break
+            fi
+            sleep 5
+          done
+          test "$matched" = 1
+
       - name: Verify deployed GitHub Pages contract
         env:
           OWNER: ${{ github.repository_owner }}
           REPO: ${{ github.event.repository.name }}
         run: |
-          set -eu
+          set -euo pipefail
           base="https://${OWNER}.github.io/${REPO}/projects/noema/site"
           echo "NOEMA_PUBLIC_URL=${base}/"
+
+          fetch_asset() {
+            name="$1"; url="$2"; out="/tmp/noema-${name}"
+            code=$(curl --silent --show-error --location \
+              -H 'Cache-Control: no-cache, no-store, must-revalidate' \
+              -H 'Pragma: no-cache' \
+              -o "$out" -w '%{http_code}' "$url" || true)
+            printf '%s' "$code"
+          }
+
           ok=0
-          for attempt in $(seq 1 120); do
-            explore=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/explore.html?delivery=v181-${attempt}" || true)
-            entity=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/entity.html?id=GOD-ODIN&delivery=v181-${attempt}" || true)
-            index=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/search-index-v18.json?delivery=v181-${attempt}" || true)
-            shell=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/shell-v18.js?delivery=v181-${attempt}" || true)
-            entityjs=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/entity-v18.js?delivery=v181-${attempt}" || true)
-            if printf '%s' "$explore" | grep -q 'explore-v18.js' \
-              && ! printf '%s' "$explore" | grep -q 'app-v1.js' \
-              && printf '%s' "$entity" | grep -q 'entity-v18.js' \
-              && ! printf '%s' "$entity" | grep -q 'app-v1.js' \
-              && printf '%s' "$entityjs" | grep -q 'requestIdleCallback' \
-              && ! printf '%s' "$entityjs" | grep -q 'drh-decomposition.json' \
-              && printf '%s' "$index" | grep -q 'NOEMA_COMPACT_SEARCH_V18' \
-              && printf '%s' "$shell" | grep -q 'Skip to main content'; then
+          for attempt in $(seq 1 60); do
+            nonce="${GITHUB_SHA}-${attempt}"
+            c_explore=$(fetch_asset explore "${base}/explore.html?delivery=${nonce}")
+            c_entity=$(fetch_asset entity "${base}/entity.html?id=GOD-ODIN&delivery=${nonce}")
+            c_index=$(fetch_asset index "${base}/search-index-v18.json?delivery=${nonce}")
+            c_shell=$(fetch_asset shell "${base}/shell-v18.js?delivery=${nonce}")
+            c_entityjs=$(fetch_asset entityjs "${base}/entity-v18.js?delivery=${nonce}")
+            echo "Public attempt ${attempt}: explore=${c_explore} entity=${c_entity} index=${c_index} shell=${c_shell} entityjs=${c_entityjs}"
+
+            if [ "$c_explore" = 200 ] && [ "$c_entity" = 200 ] && [ "$c_index" = 200 ] && [ "$c_shell" = 200 ] && [ "$c_entityjs" = 200 ] \
+              && grep -q 'explore-v18.js' /tmp/noema-explore \
+              && ! grep -q 'app-v1.js' /tmp/noema-explore \
+              && grep -q 'entity-v18.js' /tmp/noema-entity \
+              && ! grep -q 'app-v1.js' /tmp/noema-entity \
+              && grep -q 'requestIdleCallback' /tmp/noema-entityjs \
+              && ! grep -q 'drh-decomposition.json' /tmp/noema-entityjs \
+              && grep -q 'NOEMA_COMPACT_SEARCH_V18' /tmp/noema-index \
+              && grep -q 'Skip to main content' /tmp/noema-shell; then
               ok=1
-              echo "NOEMA v1.8.1 Explore + Entity delivery contract visible on GitHub Pages (attempt ${attempt})."
+              echo "NOEMA v1.8.1 Explore + Entity delivery contract is publicly visible (attempt ${attempt})."
               break
             fi
-            echo "Attempt ${attempt}: waiting for Pages to expose v1.8.1 delivery bundle."
-            sleep 5
+            sleep 3
           done
           test "$ok" = 1
