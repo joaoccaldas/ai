@@ -32,8 +32,8 @@ jobs:
           node --check projects/noema/site/home-v2.js
           node --check projects/noema/site/app-v1.js
           node --check projects/noema/site/cards-v2.js
-          node --check projects/noema/site/entity-v2.js
-          node --check projects/noema/site/entity-depth-v14.js
+          node --check projects/noema/site/entity-v18.js
+          node --check projects/noema/site/shell-v18.js
           node --check projects/noema/site/explore-v14.js
           node --check projects/noema/site/concept-v1.js
           node --check projects/noema/site/synoptic-v15.js
@@ -64,7 +64,7 @@ jobs:
           print('validated manifests', len(list(Path('projects/noema/data/runs').glob('*.json'))), 'and tasks', len(d['task_health']))
           PY
 
-      - name: Validate v1.5 product-depth contract
+      - name: Validate product-depth and delivery contract
         run: |
           python - <<'PY'
           import json
@@ -93,11 +93,21 @@ jobs:
           assert Path('projects/noema/site/ux-v12.css').exists()
           assert Path('projects/noema/site/clarity-v13.css').exists()
 
+          # v1.8.1 Entity contract: preserve user-visible research semantics while forbidding
+          # the former global/full-corpus dependency shape.
           entity=Path('projects/noema/site/entity.html').read_text()
-          entity_depth=Path('projects/noema/site/entity-depth-v14.js').read_text()
-          assert 'universal entity workspace' in entity and 'entity-v2.js' in entity and 'entity-depth-v14.js' in entity
-          assert 'synoptic-v15.js' in entity and 'synoptic-v15.css' in entity
-          assert 'concept.html?term=' in entity_depth and 'Reference sources ≠ claim-level evidence' in entity_depth
+          entity_js=Path('projects/noema/site/entity-v18.js').read_text()
+          assert 'universal entity workspace' in entity and 'entity-v18.js' in entity and 'shell-v18.js' in entity
+          assert 'app-v1.js' not in entity and 'entity-depth-v14.js' not in entity and 'synoptic-v15.js' not in entity
+          assert 'drh-decomposition.json' not in entity_js and 'religion-decomposition.json' not in entity_js
+          assert "../data/reference/belief-catalog-v1.json" in entity_js and "../ontology/decomposition_v1.json" in entity_js
+          assert 'Reference sources ≠ claim-level evidence' in entity_js
+          assert 'reference depiction, not evidence' in entity_js
+          assert 'Reference media loads separately from identity data and is never treated as scientific evidence.' in entity_js
+          assert 'Entity not found in the public reference catalog.' in entity_js
+          assert 'requestIdleCallback' in entity_js and 'loading="lazy"' in entity_js
+          assert "fetch(u)" in entity_js and "cache:'no-store'" not in entity_js and 'cache:"no-store"' not in entity_js
+
           concept=Path('projects/noema/site/concept.html').read_text()
           concept_js=Path('projects/noema/site/concept-v1.js').read_text()
           assert 'One idea, many contexts' in concept and 'concept-v1.js' in concept
@@ -135,7 +145,7 @@ jobs:
           assert gate['region_label_implies_coordinate'] is False
 
           syn=Path('projects/noema/site/synoptic-v15.js').read_text()
-          for marker in ['Map · Time · Graph · Evidence','SOURCE_BOUNDED_ONLY' if False else 'Source-bounded coordinates only','shares at least one encoded comparable component','They are not ancestry, influence, historical contact, diffusion or shared theology','Region-only profiles stay unlocated']:
+          for marker in ['Map · Time · Graph · Evidence','Source-bounded coordinates only','shares at least one encoded comparable component','They are not ancestry, influence, historical contact, diffusion or shared theology','Region-only profiles stay unlocated']:
               assert marker in syn, marker
 
           h=json.load(open('projects/noema/site/research-health.json'))
@@ -157,5 +167,5 @@ jobs:
           staged=json.load(open('projects/noema/data/candidates/wikimedia-media-candidates.json'))
           assert staged['status']=='PENDING_IDENTITY_AND_RIGHTS_REVIEW'
           assert all(x['decision']=='PENDING_REVIEW' for x in staged['candidates'])
-          print('NOEMA v1.5 product-depth + operations contract green')
+          print('NOEMA product-depth + v1.8.1 delivery contract green')
           PY
