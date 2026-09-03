@@ -9,7 +9,6 @@ entity/source-specific routes.
 from __future__ import annotations
 
 import argparse
-import datetime as dt
 import hashlib
 import json
 from pathlib import Path
@@ -31,11 +30,6 @@ def load(path: Path) -> Any:
 
 
 def display_path(path: Path) -> str:
-    """Return a stable repo-relative path when possible, absolute otherwise.
-
-    Unit tests and external adapter callers may intentionally provide fixtures
-    outside the NOEMA project root. That must not make projection building fail.
-    """
     try:
         return str(path.resolve().relative_to(ROOT.resolve()))
     except ValueError:
@@ -148,12 +142,15 @@ def project(path: Path, d: dict[str, Any]) -> dict[str, Any]:
 def build(inputs: Iterable[Path]) -> dict[str, Any]:
     records: dict[str, dict[str, Any]] = {}
     sources: list[dict[str, Any]] = []
+    fingerprints: list[str] = []
     for path in inputs:
         if not path.exists():
             sources.append({"path": display_path(path), "status": "MISSING"})
+            fingerprints.append(f"{display_path(path)}:MISSING")
             continue
         raw = path.read_bytes()
         digest = hashlib.sha256(raw).hexdigest()
+        fingerprints.append(f"{display_path(path)}:{digest}")
         count_before = len(records)
         data = json.loads(raw)
         for d in walk(data):
@@ -172,7 +169,7 @@ def build(inputs: Iterable[Path]) -> dict[str, Any]:
     return {
         "schema_version": "1.0",
         "projection": "NOEMA_COMPACT_SEARCH_V18",
-        "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
+        "source_fingerprint": hashlib.sha256("\n".join(fingerprints).encode("utf-8")).hexdigest(),
         "epistemic_note": "Search metadata only. Matching, co-occurrence and semantic proximity are not evidence of historical relationship, descent, diffusion or causation.",
         "sources": sources,
         "counts": {
