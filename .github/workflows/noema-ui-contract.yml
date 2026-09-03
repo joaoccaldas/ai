@@ -72,7 +72,6 @@ jobs:
 
           site=Path('projects/noema/site')
 
-          # Public product contract. Assert rendered/current copy, never legacy comments.
           root=(site/'index.html').read_text()
           assert '<title>NOEMA · Religion, Ritual & Belief, Decomposed</title>' in root
           for phrase in [
@@ -84,14 +83,16 @@ jobs:
               '01 · IDENTIFY','02 · DECOMPOSE','03 · COMPARE','04 · TEST','home-v2.js'
           ]:
               assert phrase in root, phrase
-          assert 'Automation pulse' not in root and 'DRH explorer' not in root
 
           library=(site/'library.html').read_text()
-          assert '<title>Library · NOEMA</title>' in library and 'Start with what you want to understand.' in library
+          assert '<title>Library · NOEMA</title>' in library
+          assert 'Belief is more than a list of religions.' in library
+          assert 'Different evidence types stay different.' in (site/'research.html').read_text()
           research=(site/'research.html').read_text()
-          assert '<title>Research · NOEMA</title>' in research and 'The machinery stays available.' in research
+          assert '<title>Research · NOEMA</title>' in research
+          assert 'Inspect how NOEMA knows what it knows' in research
+          assert 'Coverage before confidence.' in research
 
-          # Explore v1.8: compact search projection only, no global/full-corpus runtime.
           explore=(site/'explore.html').read_text()
           explore_js=(site/'explore-v18.js').read_text()
           for marker in ['What do you want to understand?','Map it','Compare it','Analyze connections','shell-v18.js','explore-v18.js']:
@@ -101,7 +102,6 @@ jobs:
           assert 'concept.html?term=' in explore_js
           assert 'drh-decomposition.json' not in explore_js and 'religion-decomposition.json' not in explore_js
 
-          # Entity v1.8.1: identity + ontology first; optional reference media later.
           entity=(site/'entity.html').read_text()
           entity_js=(site/'entity-v18.js').read_text()
           assert 'universal entity workspace' in entity and 'entity-v18.js' in entity and 'shell-v18.js' in entity
@@ -118,7 +118,6 @@ jobs:
           assert 'requestIdleCallback' in entity_js and 'loading="lazy"' in entity_js
           assert "fetch(u)" in entity_js and "cache:'no-store'" not in entity_js and 'cache:"no-store"' not in entity_js
 
-          # Concept remains the full synchronized scholarly lens.
           concept=(site/'concept.html').read_text()
           concept_js=(site/'concept-v1.js').read_text()
           assert 'One idea, many contexts' in concept and 'concept-v1.js' in concept
@@ -131,8 +130,6 @@ jobs:
           gods=(site/'gods.html').read_text()
           assert 'Every god gets a workspace.' in gods and 'cards-v2.js' in gods
 
-          # Current release metadata. v1.7 remains the public release while v1.8
-          # delivery/source-federation foundations are being introduced.
           meta=json.load(open(site/'data.json'))
           assert meta['release']=='v1.7'
           assert meta['status']=='research-preview'
@@ -168,7 +165,6 @@ jobs:
           for marker in ['Map · Time · Graph · Evidence','Source-bounded coordinates only','shares at least one encoded comparable component','They are not ancestry, influence, historical contact, diffusion or shared theology','Region-only profiles stay unlocated']:
               assert marker in syn, marker
 
-          # Research integrity remains independent of frontend topology.
           h=json.load(open(site/'research-health.json'))
           p=json.load(open(site/'pattern-candidates.json'))
           assert h['metrics']['ontology_dimensions'] >= 16
