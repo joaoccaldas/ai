@@ -108,11 +108,13 @@ jobs:
           assert 'reference_traits' in app and 'normalizeCatalog' in app
 
           home=Path('site/index.html').read_text()
-          assert '<title>NOEMA · Human Belief, Decomposed</title>' in home
-          assert 'Human belief,' in home and 'home-v2.js' in home
+          assert '<title>NOEMA · Religion, Ritual & Belief, Decomposed</title>' in home
+          assert 'Understand what humans believe, and how beliefs connect.' in home and 'home-v2.js' in home
 
+          # Route contract checks visible product semantics and each route's current
+          # runtime. Explore + Entity are intentionally lightweight in v1.8.1.
           expectations={
-              'site/explore.html':('Break belief systems into parts.','app-v1.js'),
+              'site/explore.html':('What do you want to understand?','explore-v18.js'),
               'site/belief-systems.html':('No religion is one variable.','app-v1.js'),
               'site/gods.html':('Every god gets a workspace.','app-v1.js'),
               'site/rituals.html':('Compare actions before meanings.','app-v1.js'),
@@ -121,7 +123,7 @@ jobs:
               'site/compare.html':('Same words do not mean same history.','app-v1.js'),
               'site/lineages.html':('Connection is not origin.','relationship-v2.js'),
               'site/sources-v1.html':('Every conclusion should have a trail.','app-v1.js'),
-              'site/entity.html':('universal entity workspace','entity-v2.js'),
+              'site/entity.html':('universal entity workspace','entity-v18.js'),
               'site/simulations.html':('Is a pattern surprising?',None),
               'site/drh.html':('Entries, questions, metadata.',None),
           }
@@ -131,6 +133,15 @@ jobs:
               assert 'app-v1.css' in text,path
               if script: assert script in text,(path,script)
 
+          explore=Path('site/explore.html').read_text()
+          entity=Path('site/entity.html').read_text()
+          entity_js=Path('site/entity-v18.js').read_text()
+          assert 'app-v1.js' not in explore
+          assert 'app-v1.js' not in entity and 'entity-depth-v14.js' not in entity
+          assert 'drh-decomposition.json' not in entity_js and 'religion-decomposition.json' not in entity_js
+          assert 'Reference sources ≠ claim-level evidence' in entity_js
+          assert 'reference depiction, not evidence' in entity_js
+
           for p in Path('data/runs').glob('*.json'):
               r=json.load(open(p)); g=r['epistemic_guards']
               assert r['run_id'] and r['task_type'] and r['status']
@@ -139,7 +150,9 @@ jobs:
           node --check site/app-v1.js
           node --check site/home-v2.js
           node --check site/cards-v2.js
-          node --check site/entity-v2.js
+          node --check site/explore-v18.js
+          node --check site/entity-v18.js
+          node --check site/shell-v18.js
           node --check site/relationship-v2.js
           node --check site/dashboard-v2.js
           node --check site/automation-pulse.js
