@@ -53,10 +53,47 @@ def test_explore_client_has_compact_index_and_safe_fallback() -> None:
     assert "Search similarity does not establish shared origin" in js
 
 
-def test_accessibility_foundation_is_wired() -> None:
-    html = (ROOT / "site/explore.html").read_text(encoding="utf-8")
-    css = (ROOT / "site/foundation-v18.css").read_text(encoding="utf-8")
+def test_entity_workspace_does_not_load_heavy_global_runtime() -> None:
+    html = (ROOT / "site/entity.html").read_text(encoding="utf-8")
+    assert "shell-v18.js" in html
+    assert "entity-v18.js" in html
     assert "foundation-v18.css" in html
-    assert "aria-live=\"polite\"" in html
+    assert "app-v1.js" not in html
+    assert "entity-v2.js" not in html
+    assert "entity-depth-v14.js" not in html
+    assert "synoptic-v15.js" not in html
+    assert "drh-decomposition.json" not in html
+    assert "religion-decomposition.json" not in html
+
+
+def test_entity_client_loads_only_reference_identity_before_optional_media() -> None:
+    js = (ROOT / "site/entity-v18.js").read_text(encoding="utf-8")
+    assert "belief-catalog-v1.json" in js
+    assert "decomposition_v1.json" in js
+    assert "requestIdleCallback" in js
+    assert "museum-reference-media.json" in js
+    assert "media-reviewed-v1.json" in js
+    assert "drh-decomposition.json" not in js
+    assert "religion-decomposition.json" not in js
+    assert "cache:'no-store'" not in js
+    assert "Similarity, graph proximity and shared components do not establish descent, diffusion or causation" in js
+
+
+def test_entity_media_is_reference_only_and_failure_isolated() -> None:
+    js = (ROOT / "site/entity-v18.js").read_text(encoding="utf-8")
+    assert "reference depiction, not evidence" in js
+    assert "Identity and evidence remain unaffected" in js
+    assert "REFERENCE_ONLY_NOT_EVIDENCE" in js
+    assert "REFERENCE_RENDER_ALLOWED_PROVIDER_ASSERTED_IDENTITY" in js
+
+
+def test_accessibility_foundation_is_wired() -> None:
+    explore = (ROOT / "site/explore.html").read_text(encoding="utf-8")
+    entity = (ROOT / "site/entity.html").read_text(encoding="utf-8")
+    css = (ROOT / "site/foundation-v18.css").read_text(encoding="utf-8")
+    assert "foundation-v18.css" in explore
+    assert "foundation-v18.css" in entity
+    assert "aria-live=\"polite\"" in explore
+    assert "aria-live=\"polite\"" in entity
     assert "prefers-reduced-motion" in css
     assert "focus-visible" in css
