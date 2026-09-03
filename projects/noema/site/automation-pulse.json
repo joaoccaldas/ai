@@ -1,26 +1,26 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-02T07:54:34.567709+00:00",
+  "generated_at": "2026-09-03T06:58:11.631937+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 27,
-    "new_candidates": 1631,
-    "contradictions": 15,
+    "runs": 29,
+    "new_candidates": 1194,
+    "contradictions": 19,
     "dating_revisions": 1,
-    "hypotheses_revisited": 19,
-    "review_items_created": 260,
+    "hypotheses_revisited": 24,
+    "review_items_created": 262,
     "errors": 0
   },
   "latest_by_task": [
     {
       "task_type": "DAILY_INGEST",
-      "run_id": "chatgpt-daily-2026-09-02",
-      "status": "COMPLETED",
-      "completed_at": "2026-09-02T07:07:00+00:00",
-      "summary": "Inspected the latest successful NOEMA Discovery artifact (119 candidates; priority queue 2 RECENT_PUBLICATION, 0 UPCOMING_OR_AHEAD_OF_PRINT, 28 NEWLY_INDEXED_LEGACY). Added four deduplicated candidate-only records: the Modrice Hallstatt isotope dataset, Tepecik-Ciftlik incised obsidian arrowheads, an experimental chimpanzee crystal-attraction study, and a clearly labeled non-peer-reviewed BIAD/aDNA mortuary preprint. Recorded a publication-status contradiction for a Wiley chapter whose Crossref 2026 date conflicts with a parent volume marketed as 2027. No evidence or relationships were promoted and no verified dating revision was found.",
+      "run_id": "chatgpt-daily-2026-09-03",
+      "status": "COMPLETED_CANDIDATES_PERSISTED",
+      "completed_at": "2026-09-03T06:56:56+00:00",
+      "summary": "Inspected successful NOEMA Discovery run 33718587607 and verified its 118-candidate artifact with a 30-item priority queue: 4 RECENT_PUBLICATION, 0 UPCOMING_OR_AHEAD_OF_PRINT, 26 NEWLY_INDEXED_LEGACY. After DOI/canonical deduplication and fresh scholarly/public screening, staged four candidate-only additions: Cerny aDNA versus hunting-associated funerary practice, ancient human DNA preservation on cave walls/rock art, a hallucinogenic-versus-non-hallucinogenic signaling study, and northwest Arabian arrowhead variation combining cross-regional similarity with local innovation. No claim/evidence/relationship was promoted and no verified dating revision was found.",
       "errors": [],
-      "research_note": "projects/noema/data/candidates/daily/2026-09-02.json"
+      "research_note": "projects/noema/data/candidates/daily/2026-09-03.json"
     },
     {
       "task_type": "WEEKLY_REANALYSIS",
@@ -42,10 +42,10 @@
     },
     {
       "task_type": "GITHUB_DISCOVERY",
-      "run_id": "github-discovery-33591103364",
+      "run_id": "github-discovery-33718587607",
       "status": "COMPLETED",
-      "completed_at": "2026-09-02T04:31:23.471386+00:00",
-      "summary": "Crossref discovery produced 119 unreviewed candidates and 30 priority items.",
+      "completed_at": "2026-09-03T05:22:57.311665+00:00",
+      "summary": "Crossref discovery produced 118 unreviewed candidates and 30 priority items.",
       "errors": [],
       "research_note": null
     },
@@ -105,10 +105,10 @@
       "next_stage": "DAILY_INGEST",
       "expected_interval_hours": 26.0,
       "health": "HEALTHY",
-      "last_run_id": "github-discovery-33591103364",
+      "last_run_id": "github-discovery-33718587607",
       "last_status": "COMPLETED",
-      "last_completed_at": "2026-09-02T04:31:23.471386+00:00",
-      "age_hours": 3.39,
+      "last_completed_at": "2026-09-03T05:22:57.311665+00:00",
+      "age_hours": 1.59,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -126,7 +126,7 @@
       "last_run_id": "pubmed-discovery-33605923218",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
       "last_completed_at": "2026-09-02T07:54:34.520026+00:00",
-      "age_hours": 0.0,
+      "age_hours": 23.06,
       "writes": [
         "Actions artifact: noema-pubmed-candidates",
         "projects/noema/data/candidates/pubmed-latest.json",
@@ -142,10 +142,10 @@
       "next_stage": "HUMAN_REVIEW",
       "expected_interval_hours": 30.0,
       "health": "HEALTHY",
-      "last_run_id": "chatgpt-daily-2026-09-02",
-      "last_status": "COMPLETED",
-      "last_completed_at": "2026-09-02T07:07:00+00:00",
-      "age_hours": 0.79,
+      "last_run_id": "chatgpt-daily-2026-09-03",
+      "last_status": "COMPLETED_CANDIDATES_PERSISTED",
+      "last_completed_at": "2026-09-03T06:56:56+00:00",
+      "age_hours": 0.02,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
         "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
@@ -163,7 +163,7 @@
       "last_run_id": "dplace-benchmark-33361784511",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:47:46.132148+00:00",
-      "age_hours": 50.11,
+      "age_hours": 73.17,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -181,7 +181,7 @@
       "last_run_id": "religion-federation-33361678540",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:46:27.262104+00:00",
-      "age_hours": 50.14,
+      "age_hours": 73.2,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -206,7 +206,7 @@
       "last_run_id": "chatgpt-weekly-2026-08-30",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-08-30T06:10:03Z",
-      "age_hours": 73.74,
+      "age_hours": 96.8,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -224,7 +224,7 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 25.49,
+      "age_hours": 48.55,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
         "projects/noema/research/monthly/YYYY-MM-DD-monthly-discovery.md",
@@ -243,7 +243,7 @@
       "last_run_id": "media-discovery-33601263529",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-02T06:58:26.632314+00:00",
-      "age_hours": 0.94,
+      "age_hours": 24.0,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
@@ -251,6 +251,77 @@
     }
   ],
   "recent_runs": [
+    {
+      "run_id": "chatgpt-daily-2026-09-03",
+      "task_type": "DAILY_INGEST",
+      "status": "COMPLETED_CANDIDATES_PERSISTED",
+      "started_at": "2026-09-03T06:51:27+00:00",
+      "completed_at": "2026-09-03T06:56:56+00:00",
+      "input_refs": [
+        "github-actions:NOEMA Discovery:33718587607",
+        "projects/noema/data/runs/github-discovery-33718587607.json",
+        "projects/noema/data/candidates/daily/2026-09-02.json",
+        "projects/noema/data/candidates/pubmed-latest.json",
+        "projects/noema/schemas/run-manifest-v1.json"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates.raw": "sha256:22d0501f09e968ade33ca1bbb6767b3c195877beec586f6b0a2534678eaa3b7f",
+        "noema-crossref-candidates.github": "sha256:5ad742feaa4ee1cde716190347f38922ad837c49f985010b29febeb54498fc27"
+      },
+      "sources_examined": 10,
+      "new_candidates": 4,
+      "candidate_updates": 1,
+      "contradictions": 4,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 5,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 5,
+      "errors": [],
+      "summary": "Inspected successful NOEMA Discovery run 33718587607 and verified its 118-candidate artifact with a 30-item priority queue: 4 RECENT_PUBLICATION, 0 UPCOMING_OR_AHEAD_OF_PRINT, 26 NEWLY_INDEXED_LEGACY. After DOI/canonical deduplication and fresh scholarly/public screening, staged four candidate-only additions: Cerny aDNA versus hunting-associated funerary practice, ancient human DNA preservation on cave walls/rock art, a hallucinogenic-versus-non-hallucinogenic signaling study, and northwest Arabian arrowhead variation combining cross-regional similarity with local innovation. No claim/evidence/relationship was promoted and no verified dating revision was found.",
+      "research_note": "projects/noema/data/candidates/daily/2026-09-03.json",
+      "code_commit": "11974eabbcb89373a9853a1d41bd989025f859fd",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false,
+        "historical_diagnosis_from_resemblance": false
+      }
+    },
+    {
+      "run_id": "github-discovery-33718587607",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-09-03T05:22:57.311665+00:00",
+      "completed_at": "2026-09-03T05:22:57.311665+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:22d0501f09e968ade33ca1bbb6767b3c195877beec586f6b0a2534678eaa3b7f"
+      },
+      "sources_examined": 0,
+      "new_candidates": 118,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 118 unreviewed candidates and 30 priority items.",
+      "code_commit": "15f128749de0775213d40b63ef6aeab36768048e",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
     {
       "run_id": "pubmed-discovery-33605923218",
       "task_type": "PUBMED_DISCOVERY",
@@ -907,70 +978,6 @@
       "errors": [],
       "summary": "Rebuilt deterministic D-PLACE benchmark with 100 societies; focal years remain observation metadata, never origin dates.",
       "code_commit": "34328e0e6855a386dd2432d1b170debc10cb63c3",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "religion-federation-33360918327",
-      "task_type": "RELIGION_FEDERATION",
-      "status": "COMPLETED",
-      "started_at": "2026-08-31T05:33:29.175706+00:00",
-      "completed_at": "2026-08-31T05:33:29.175706+00:00",
-      "input_refs": [
-        "Pulotu",
-        "DRH/SCCSR",
-        "D-PLACE audit"
-      ],
-      "sources_examined": 3,
-      "new_candidates": 526,
-      "candidate_updates": 24452,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 62,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 0,
-      "errors": [],
-      "summary": "Federation refreshed 1063 comparable profiles and 24452 accepted assertions; pattern outputs remain descriptive candidates.",
-      "code_commit": "2784cd65955894d8e7e43553479b8617480758fc",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "media-discovery-33359642500",
-      "task_type": "MEDIA_DISCOVERY",
-      "status": "COMPLETED_PENDING_REVIEW",
-      "started_at": "2026-08-31T05:11:49.840434+00:00",
-      "completed_at": "2026-08-31T05:11:49.840434+00:00",
-      "input_refs": [
-        "Wikimedia Commons",
-        "projects/noema/data/reference/belief-catalog-v1.json"
-      ],
-      "artifact_digests": {
-        "wikimedia-media-candidates": "sha256:c736e270aa68bd494c7e64aa8cd4728d4a0b025c97e6ad78e14957847f6ce819"
-      },
-      "sources_examined": 11,
-      "new_candidates": 33,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 33,
-      "errors": [],
-      "summary": "Discovered 33 Wikimedia Commons media candidates across 11 entities; none are public until identity and rights are approved.",
-      "code_commit": "5aae390dcdfe6b7b3ba18f7c6b4acfe986af86c3",
       "epistemic_guards": {
         "model_output_is_evidence": false,
         "unknown_is_absent": false,
