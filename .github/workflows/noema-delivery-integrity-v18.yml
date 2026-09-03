@@ -9,9 +9,14 @@ on:
       - 'projects/noema/tests/test_delivery_integrity_v18.py'
       - 'projects/noema/site/explore.html'
       - 'projects/noema/site/explore-v18.js'
+      - 'projects/noema/site/entity.html'
+      - 'projects/noema/site/entity-v18.js'
       - 'projects/noema/site/shell-v18.js'
       - 'projects/noema/site/foundation-v18.css'
       - 'projects/noema/data/reference/belief-catalog-v1.json'
+      - 'projects/noema/data/reference/media-reviewed-v1.json'
+      - 'projects/noema/ontology/decomposition_v1.json'
+      - 'projects/noema/site/museum-reference-media.json'
       - 'projects/noema/site/religion-decomposition.json'
       - 'projects/noema/site/drh-decomposition.json'
       - 'projects/noema/docs/V1_8_1_DELIVERY_INTEGRITY.md'
@@ -61,9 +66,19 @@ jobs:
           ! grep -q 'app-v1.js' projects/noema/site/explore.html
           ! grep -q 'drh-decomposition.json' projects/noema/site/explore.html
           ! grep -q 'religion-decomposition.json' projects/noema/site/explore.html
+          ! grep -q 'app-v1.js' projects/noema/site/entity.html
+          ! grep -q 'entity-depth-v14.js' projects/noema/site/entity.html
+          ! grep -q 'drh-decomposition.json' projects/noema/site/entity-v18.js
+          ! grep -q 'religion-decomposition.json' projects/noema/site/entity-v18.js
 
       - name: Run v1.8.1 regression tests
         run: python -m pytest -q projects/noema/tests/test_delivery_integrity_v18.py
+
+      - name: JavaScript syntax smoke checks
+        run: |
+          node --check projects/noema/site/explore-v18.js
+          node --check projects/noema/site/entity-v18.js
+          node --check projects/noema/site/shell-v18.js
 
       - name: Commit generated projection when changed
         id: commit
@@ -92,14 +107,20 @@ jobs:
           ok=0
           for attempt in $(seq 1 120); do
             explore=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/explore.html?delivery=v181-${attempt}" || true)
+            entity=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/entity.html?id=GOD-ODIN&delivery=v181-${attempt}" || true)
             index=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/search-index-v18.json?delivery=v181-${attempt}" || true)
             shell=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/shell-v18.js?delivery=v181-${attempt}" || true)
+            entityjs=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/entity-v18.js?delivery=v181-${attempt}" || true)
             if printf '%s' "$explore" | grep -q 'explore-v18.js' \
               && ! printf '%s' "$explore" | grep -q 'app-v1.js' \
+              && printf '%s' "$entity" | grep -q 'entity-v18.js' \
+              && ! printf '%s' "$entity" | grep -q 'app-v1.js' \
+              && printf '%s' "$entityjs" | grep -q 'requestIdleCallback' \
+              && ! printf '%s' "$entityjs" | grep -q 'drh-decomposition.json' \
               && printf '%s' "$index" | grep -q 'NOEMA_COMPACT_SEARCH_V18' \
               && printf '%s' "$shell" | grep -q 'Skip to main content'; then
               ok=1
-              echo "NOEMA v1.8.1 delivery contract visible on GitHub Pages (attempt ${attempt})."
+              echo "NOEMA v1.8.1 Explore + Entity delivery contract visible on GitHub Pages (attempt ${attempt})."
               break
             fi
             echo "Attempt ${attempt}: waiting for Pages to expose v1.8.1 delivery bundle."
