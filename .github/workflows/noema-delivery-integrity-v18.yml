@@ -1,0 +1,108 @@
+name: NOEMA v1.8.1 Delivery Integrity
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/noema/scripts/build_search_index_v18.py'
+      - 'projects/noema/tests/test_delivery_integrity_v18.py'
+      - 'projects/noema/site/explore.html'
+      - 'projects/noema/site/explore-v18.js'
+      - 'projects/noema/site/shell-v18.js'
+      - 'projects/noema/site/foundation-v18.css'
+      - 'projects/noema/data/reference/belief-catalog-v1.json'
+      - 'projects/noema/site/religion-decomposition.json'
+      - 'projects/noema/site/drh-decomposition.json'
+      - 'projects/noema/docs/V1_8_1_DELIVERY_INTEGRITY.md'
+      - '.github/workflows/noema-delivery-integrity-v18.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: noema-delivery-integrity-v18
+  cancel-in-progress: false
+
+jobs:
+  build-test-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install test dependency
+        run: python -m pip install --disable-pip-version-check pytest
+
+      - name: Build compact search projection
+        run: python projects/noema/scripts/build_search_index_v18.py
+
+      - name: Validate projection contract and payload budget
+        run: |
+          set -eu
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('projects/noema/site/search-index-v18.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d['projection']=='NOEMA_COMPACT_SEARCH_V18'
+          assert d['counts']['records'] >= 20, d['counts']
+          assert len(d.get('sources', [])) >= 3
+          size=p.stat().st_size
+          assert size <= 2_621_440, f'compact search index exceeded 2.5 MiB budget: {size}'
+          print({'records':d['counts']['records'],'source_families':d['counts']['source_families'],'bytes':size})
+          PY
+          ! grep -q 'app-v1.js' projects/noema/site/explore.html
+          ! grep -q 'drh-decomposition.json' projects/noema/site/explore.html
+          ! grep -q 'religion-decomposition.json' projects/noema/site/explore.html
+
+      - name: Run v1.8.1 regression tests
+        run: python -m pytest -q projects/noema/tests/test_delivery_integrity_v18.py
+
+      - name: Commit generated projection when changed
+        id: commit
+        run: |
+          set -eu
+          if git diff --quiet -- projects/noema/site/search-index-v18.json; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+            echo 'Compact search projection already current.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add projects/noema/site/search-index-v18.json
+          git commit -m 'NOEMA v1.8.1: refresh compact search projection'
+          git push
+          echo 'changed=true' >> "$GITHUB_OUTPUT"
+
+      - name: Verify deployed GitHub Pages contract
+        env:
+          OWNER: ${{ github.repository_owner }}
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          set -eu
+          base="https://${OWNER}.github.io/${REPO}/projects/noema/site"
+          echo "NOEMA_PUBLIC_URL=${base}/"
+          ok=0
+          for attempt in $(seq 1 120); do
+            explore=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/explore.html?delivery=v181-${attempt}" || true)
+            index=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/search-index-v18.json?delivery=v181-${attempt}" || true)
+            shell=$(curl --fail --silent --show-error --location -H 'Cache-Control: no-cache' "${base}/shell-v18.js?delivery=v181-${attempt}" || true)
+            if printf '%s' "$explore" | grep -q 'explore-v18.js' \
+              && ! printf '%s' "$explore" | grep -q 'app-v1.js' \
+              && printf '%s' "$index" | grep -q 'NOEMA_COMPACT_SEARCH_V18' \
+              && printf '%s' "$shell" | grep -q 'Skip to main content'; then
+              ok=1
+              echo "NOEMA v1.8.1 delivery contract visible on GitHub Pages (attempt ${attempt})."
+              break
+            fi
+            echo "Attempt ${attempt}: waiting for Pages to expose v1.8.1 delivery bundle."
+            sleep 5
+          done
+          test "$ok" = 1
