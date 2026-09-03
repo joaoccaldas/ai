@@ -1,0 +1,156 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-03",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-03T06:56:00Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-33718587607",
+    "completed_at": "2026-09-03T05:22:57.311665+00:00",
+    "code_commit": "15f128749de0775213d40b63ef6aeab36768048e",
+    "candidate_count": 118,
+    "priority_candidate_count": 30,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 4,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 0,
+      "NEWLY_INDEXED_LEGACY": 26
+    },
+    "overall_distribution": {
+      "RECENT_PUBLICATION": 4,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 0,
+      "NEWLY_INDEXED_LEGACY": 114
+    },
+    "raw_payload_sha256": "22d0501f09e968ade33ca1bbb6767b3c195877beec586f6b0a2534678eaa3b7f",
+    "github_artifact_digest": "sha256:5ad742feaa4ee1cde716190347f38922ad837c49f985010b29febeb54498fc27",
+    "artifact_id": 9879401013
+  },
+  "rules": [
+    "Every record remains a candidate until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin, or diffusion.",
+    "Unknown is not absence.",
+    "Publication and index dates are preserved separately; indexing novelty is not publication novelty.",
+    "Preprints are not peer-reviewed evidence and remain separately labeled.",
+    "Human remains, ancient DNA, and mortuary contexts require cultural-sensitivity review before public presentation.",
+    "Biomedical mechanism is not evidence of historical religious meaning or diagnosis."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION": [
+      {
+        "doi": "10.4324/9781003683551-11",
+        "published": "2026-09-02",
+        "title": "The implications of AI myth for religion, science, and mythology",
+        "note": "Recent Crossref item; relevant mainly to contemporary religion/myth discourse, not historical-evidence promotion."
+      },
+      {
+        "doi": "10.4324/9781003683551-2",
+        "published": "2026-09-02",
+        "title": "Religion, mythology, and AI",
+        "note": "Recent Crossref book chapter; candidate metadata only."
+      },
+      {
+        "doi": "10.56315/pscf9-26harrison",
+        "published": "2026-09-01",
+        "title": "Some New World: Myths of Supernatural Belief in a Secular Age",
+        "note": "Title identity has prior metadata ambiguity with Peter Harrison's 2024 Cambridge monograph; DOI-level identity review remains required."
+      },
+      {
+        "doi": "10.1002/9781394250592.ch34",
+        "published": "2026-08-21",
+        "title": "Demon Eaters and Bloody Charms",
+        "note": "Parent-volume year has previously conflicted with Crossref chapter date; preserve both and review publication semantics."
+      }
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [],
+    "NEWLY_INDEXED_LEGACY_count": 26,
+    "NEWLY_INDEXED_LEGACY_note": "Priority legacy records include Palaeolithic burial, ancestor worship, mortuary ritual, religious cognition, shamanism, and related older literature; newly indexed is not newly published."
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-CERNY-ADNA-CULTURE-2026",
+      "triage_class": "NEWLY_DISCOVERED_RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Ancient DNA Reveals Limited Hunter-Gatherer Ancestry in the Cerny Culture (Middle Neolithic, France) Despite Hunting-Associated Practices",
+      "publication_date": "2026-08-27",
+      "discovered_at": "2026-09-03",
+      "doi": "10.1002/ajpa.70351",
+      "canonical_url": "https://doi.org/10.1002/ajpa.70351",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["ANCIENT_DNA", "MORTUARY", "NEOLITHIC", "CULTURAL_AFFILIATION", "HUNTING_ASSOCIATED_PRACTICES", "FRANCE"],
+      "candidate_relevance": "Genome-wide data from 28 individuals indicate that distinctive Cerny hunting-associated funerary traits were not accompanied by unusually high Mesolithic hunter-gatherer ancestry, directly pressuring ancestry-to-cultural-practice inference.",
+      "epistemic_caution": "Distinctive material or funerary practices do not by themselves identify ancestry, descent, migration, or the beliefs that motivated those practices.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "ANCIENT_DNA", "MORTUARY_CONTEXT"],
+      "provenance": {"source": "American Journal of Biological Anthropology / Wiley", "publication_date": "2026-08-27", "index_or_discovery_date": "2026-09-03"}
+    },
+    {
+      "id": "DAILY-ROCK-ART-DNA-2026",
+      "triage_class": "NEWLY_DISCOVERED_LEGACY_2026",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Investigating ancient human DNA preservation on cave walls and in rock art",
+      "publication_date": "2026-06-23",
+      "discovered_at": "2026-09-03",
+      "doi": "10.1038/s41467-026-74234-2",
+      "canonical_url": "https://doi.org/10.1038/s41467-026-74234-2",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["ROCK_ART", "ANCIENT_DNA", "PALEOLITHIC", "CAVE_USE", "SYMBOLIC_BEHAVIOR", "IBERIA"],
+      "candidate_relevance": "Ancient human DNA was recovered from cave-wall contexts, including one pigmented sample, showing that wall surfaces can preserve human biological traces and may eventually help connect cave use to populations.",
+      "epistemic_caution": "The authors explicitly do not establish that recovered DNA belongs to the maker of the art; pigment and DNA deposition may be separated by long periods and unpigmented surfaces can also contain human DNA.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["ANCIENT_HUMAN_DNA", "ROCK_ART_SAMPLING", "CULTURAL_HERITAGE"],
+      "provenance": {"source": "Nature Communications", "publication_date": "2026-06-23", "index_or_discovery_date": "2026-09-03"}
+    },
+    {
+      "id": "DAILY-PSYCHEDELIC-SIGNALING-2026",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "A signaling signature distinguishes hallucinogenic from non-hallucinogenic psychedelics",
+      "publication_date": "2026-09-01",
+      "discovered_at": "2026-09-03",
+      "doi": "10.1038/s41398-026-04390-y",
+      "canonical_url": "https://doi.org/10.1038/s41398-026-04390-y",
+      "source_type": "PEER_REVIEWED_EARLY_ACCESS_JOURNAL_ARTICLE",
+      "domains": ["ALTERED_STATES", "PSYCHEDELICS", "NEUROBIOLOGY", "SEROTONIN", "MECHANISM"],
+      "candidate_relevance": "The study reports a distinct intracellular phosphorylation signature separating hallucinogenic serotonergic compounds from related non-hallucinogenic compounds under defined experimental conditions, offering a mechanistic layer for altered-state research.",
+      "epistemic_caution": "In-vitro signaling is not equivalent to subjective mystical experience, religious interpretation, ritual function, or historical entheogen use.",
+      "review_priority": "MEDIUM",
+      "sensitive": false,
+      "provenance": {"source": "Translational Psychiatry / Springer Nature", "publication_date": "2026-09-01", "index_or_discovery_date": "2026-09-03", "version_note": "early peer-reviewed citable version, subject to later copyediting"}
+    },
+    {
+      "id": "DAILY-NW-ARABIA-ARROWHEAD-INNOVATION-2026",
+      "triage_class": "RECENT_ISSUE_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "What’s the point? Variation and innovation of Neolithic arrowhead technology in northwest Arabia",
+      "publication_date": "2026-09",
+      "discovered_at": "2026-09-03",
+      "doi": "10.1016/j.jasrep.2026.105882",
+      "canonical_url": "https://doi.org/10.1016/j.jasrep.2026.105882",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["NEOLITHIC", "NORTHWEST_ARABIA", "LITHIC_TECHNOLOGY", "CULTURAL_TRANSMISSION", "INDEPENDENT_INNOVATION", "IDENTITY"],
+      "candidate_relevance": "Attribute analysis reports both similarities with Levantine arrowhead forms and a newly recognized local form, making the record valuable for explicitly testing shared history against regional practice and independent innovation.",
+      "epistemic_caution": "Technological resemblance is compatible with contact, shared ancestry of traditions, convergence, or independent innovation; no historical edge should be generated without chronology and contact evidence.",
+      "review_priority": "HIGH",
+      "sensitive": false,
+      "provenance": {"source": "Journal of Archaeological Science: Reports / Elsevier", "issue_date": "2026-09", "index_or_discovery_date": "2026-09-03"}
+    }
+  ],
+  "candidate_updates": [{"target": "DISCOVERY_PRIORITY_METADATA", "type": "CLASSIFIER_QUALITY_REVIEW", "finding": "The 30-item priority queue contains four RECENT_PUBLICATION records and no UPCOMING_OR_AHEAD_OF_PRINT records, but two recent book/chapter records retain known publication-identity or parent-volume date ambiguity.", "action": "Keep DOI-level identity and parent-volume-year checks in the discovery classifier."}],
+  "contradictions_or_pressure": [
+    {"type": "GENES_CULTURE_SEPARATION", "target": "MORTUARY_TRANSMISSION_MODEL", "finding": "Cerny hunting-associated funerary traits are not explained by elevated hunter-gatherer ancestry.", "action": "Model ancestry, material practice, cultural affiliation and social identity as separable dimensions."},
+    {"type": "AUTHORSHIP_ATTRIBUTION_GUARD", "target": "ROCK_ART_POPULATION_LINK", "finding": "Ancient human DNA can persist on cave walls, but current results do not securely bind DNA deposition to art production.", "action": "Require temporal/depositional linkage before assigning a maker population to art."},
+    {"type": "MECHANISM_MEANING_SEPARATION", "target": "ALTERED_STATE_ONTOLOGY", "finding": "Hallucinogenic intracellular signaling can be mechanistically distinguished without establishing subjective or religious meaning.", "action": "Keep biological induction mechanism, phenomenology and cultural interpretation in separate layers."},
+    {"type": "SIMILARITY_INNOVATION_RIVAL", "target": "CULTURAL_DIFFUSION_GRAPH", "finding": "Northwest Arabian arrowhead assemblages combine Levantine similarities with evidence of independent/local innovation.", "action": "Require explicit contact/chronology tests before converting technological resemblance into diffusion/descent edges."}
+  ],
+  "dating_revisions": [],
+  "relationships_generated": [],
+  "hypotheses_requiring_human_review": [
+    {"target": "CERNY_MORTUARY_ANCESTRY", "reason": "New aDNA evidence pressures ancestry-based explanations for distinctive funerary practices.", "recommended_action": "Review as a counterexample in the culture-versus-genes mechanism model; no ancestry-to-belief edge."},
+    {"target": "ROCK_ART_AUTHORSHIP_POPULATION", "reason": "Cave-wall aDNA creates a possible future population-link method but current depositional ambiguity blocks attribution.", "recommended_action": "Add an authorship-evidence ladder distinguishing presence, contact, pigment association and direct maker attribution."},
+    {"target": "ALTERED_STATE_MECHANISM_LAYER", "reason": "New peer-reviewed signaling work supports a lower-level biological mechanism layer.", "recommended_action": "Connect only to mechanism/induction ontology, not to mystical-experience or ritual claims without separate evidence."},
+    {"target": "ARABIA_TECHNOLOGY_TRANSMISSION", "reason": "The same assemblage shows both cross-regional similarity and local innovation.", "recommended_action": "Use as a benchmark case for diffusion-vs-convergence-vs-independent-innovation discrimination."},
+    {"target": "DISCOVERY_PUBLICATION_STATUS_CLASSIFIER", "reason": "Recent book/chapter records still expose publication-year and identity ambiguity.", "recommended_action": "Retain parent-volume and canonical-work identity checks before treating metadata recency as publication recency."}
+  ],
+  "deduplication": {"keys": ["DOI", "authoritative external ID", "canonical URL"], "checked_against": ["projects/noema/data/candidates/daily/2026-09-02.json", "projects/noema/data/candidates/pubmed-latest.json", "NOEMA Discovery artifact 9879401013", "default-branch candidate records surfaced by DOI/canonical search"]},
+  "sources_examined": ["GitHub NOEMA Discovery run 33718587607", "GitHub artifact 9879401013 / noema-crossref-candidates.json", "projects/noema/data/candidates/daily/2026-09-02.json", "projects/noema/data/candidates/pubmed-latest.json", "Consensus scholarly index", "American Journal of Biological Anthropology / Wiley", "Nature Communications", "Translational Psychiatry / Springer Nature", "Journal of Archaeological Science: Reports / Elsevier", "Crossref-derived artifact metadata"]
+}
