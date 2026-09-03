@@ -25,13 +25,16 @@ jobs:
       - name: Syntax check synchronized browser lens
         run: |
           node --check projects/noema/site/synoptic-v15.js
-      - name: Validate v1.5 synchronized state contract
+          node --check projects/noema/site/entity-v18.js
+      - name: Validate synchronized state capability contract
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           meta=json.load(open('projects/noema/site/data.json'))
-          assert meta['release']=='v1.5'
+          # Preserve the v1.5 scientific/visual capabilities without pinning the
+          # public release number or requiring every route to share one runtime.
+          assert meta.get('release')
           vc=meta['visual_core']
           assert vc['synchronized_synoptic_lens'] is True
           assert vc['synoptic_lenses']==['MAP','TIME','GRAPH','EVIDENCE']
@@ -43,11 +46,12 @@ jobs:
 
           concept=Path('projects/noema/site/concept.html').read_text()
           entity=Path('projects/noema/site/entity.html').read_text()
+          entity_js=Path('projects/noema/site/entity-v18.js').read_text()
           syn=Path('projects/noema/site/synoptic-v15.js').read_text()
           css=Path('projects/noema/site/synoptic-v15.css').read_text()
-          for page in [concept,entity]:
-              assert 'synoptic-v15.css' in page
-              assert 'synoptic-v15.js' in page
+
+          # Concept remains the full synchronized Map/Time/Graph/Evidence implementation.
+          assert 'synoptic-v15.css' in concept and 'synoptic-v15.js' in concept
           for marker in [
               'Map · Time · Graph · Evidence',
               'Source-bounded coordinates only',
@@ -62,5 +66,14 @@ jobs:
               assert marker in syn, marker
           for marker in ['synoptic-map','synoptic-timeline','synoptic-graph','synoptic-drawer','synoptic-guard']:
               assert marker in css, marker
-          print('NOEMA v1.5 synchronized visual contract green')
+
+          # Entity now implements lightweight route-local lenses rather than importing
+          # the full synoptic corpus/runtime. Scientific guardrails remain visible.
+          assert 'entity-v18.js' in entity and 'synoptic-v15.js' not in entity
+          for marker in ['Overview','Components','Map','Time','Graph','Compare','Evidence']:
+              assert marker in entity_js, marker
+          assert 'Regional labels are reference context, not an origin claim.' in entity_js
+          assert 'A visible reference edge means catalogued association, not historical descent.' in entity_js
+          assert 'drh-decomposition.json' not in entity_js and 'religion-decomposition.json' not in entity_js
+          print('NOEMA synchronized visual capability contract green')
           PY
