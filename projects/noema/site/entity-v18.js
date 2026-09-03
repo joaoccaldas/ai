@@ -9,6 +9,7 @@
   const state={entity:null,catalog:null,ontology:null};
 
   function splitReference(e,ontology){
+    if(!e)return null;
     const canonical=new Set(Object.keys(ontology?.dimensions||{})),dimensions={},reference_traits={};
     for(const [k,v] of Object.entries(e?.dimensions||{}))(canonical.has(k)?dimensions:reference_traits)[k]=v;
     return {...e,dimensions,reference_traits,source_profile:'REFERENCE_CATALOG'};
