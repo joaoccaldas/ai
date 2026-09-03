@@ -30,6 +30,18 @@ def load(path: Path) -> Any:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def display_path(path: Path) -> str:
+    """Return a stable repo-relative path when possible, absolute otherwise.
+
+    Unit tests and external adapter callers may intentionally provide fixtures
+    outside the NOEMA project root. That must not make projection building fail.
+    """
+    try:
+        return str(path.resolve().relative_to(ROOT.resolve()))
+    except ValueError:
+        return str(path)
+
+
 def first(d: dict[str, Any], keys: Iterable[str]) -> Any:
     for key in keys:
         value = d.get(key)
@@ -138,7 +150,7 @@ def build(inputs: Iterable[Path]) -> dict[str, Any]:
     sources: list[dict[str, Any]] = []
     for path in inputs:
         if not path.exists():
-            sources.append({"path": str(path.relative_to(ROOT)), "status": "MISSING"})
+            sources.append({"path": display_path(path), "status": "MISSING"})
             continue
         raw = path.read_bytes()
         digest = hashlib.sha256(raw).hexdigest()
@@ -151,7 +163,7 @@ def build(inputs: Iterable[Path]) -> dict[str, Any]:
             if current is None or len(record["search_text"]) > len(current["search_text"]):
                 records[key] = record
         sources.append({
-            "path": str(path.relative_to(ROOT)),
+            "path": display_path(path),
             "status": "LOADED",
             "sha256": digest,
             "records_added": len(records) - count_before,
