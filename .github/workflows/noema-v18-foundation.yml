@@ -1,0 +1,66 @@
+name: NOEMA v1.8 Foundation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/noema/site/foundation-v18.css'
+      - 'projects/noema/site/shell-v18.js'
+      - 'projects/noema/site/history-v18.js'
+      - 'projects/noema/site/history.html'
+      - 'projects/noema/site/historical-forces-v18.json'
+      - 'projects/noema/site/source-registry-v18.json'
+      - 'projects/noema/site/library.html'
+      - 'projects/noema/site/research.html'
+      - 'projects/noema/docs/SOURCE_FEDERATION_V18.md'
+      - '.github/workflows/noema-v18-foundation.yml'
+  pull_request:
+    paths:
+      - 'projects/noema/site/**v18*'
+      - 'projects/noema/site/library.html'
+      - 'projects/noema/site/research.html'
+      - 'projects/noema/docs/SOURCE_FEDERATION_V18.md'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate JSON and JavaScript
+        run: |
+          python -m json.tool projects/noema/site/historical-forces-v18.json >/dev/null
+          python -m json.tool projects/noema/site/source-registry-v18.json >/dev/null
+          node --check projects/noema/site/shell-v18.js
+          node --check projects/noema/site/history-v18.js
+      - name: Validate epistemic and accessibility contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          h=json.load(open('projects/noema/site/historical-forces-v18.json'))
+          assert h['status']=='CURATED_STARTER_SET_RESEARCH_PREVIEW'
+          assert len(h['events']) >= 7
+          for e in h['events']:
+              assert e['force_types'] and e['mechanisms_to_test'] and e['source_links']
+              assert all(s['url'].startswith('https://') for s in e['source_links'])
+          r=json.load(open('projects/noema/site/source-registry-v18.json'))
+          ids={s['id'] for s in r['sources']}
+          assert {'DRH','PULOTU','DPLACE','SESHAT','ARIADNE','PLEIADES','OPENALEX','WVS','EVS','PEW_RELIGION','PRIMARY_TEXT'} <= ids
+          assert r['supernatural_policy']['report_is_metaphysical_proof'] is False
+          assert r['supernatural_policy']['report_is_pathology'] is False
+          css=Path('projects/noema/site/foundation-v18.css').read_text()
+          assert 'prefers-reduced-motion' in css and ':focus-visible' in css and '.skip-link' in css
+          for path in ['projects/noema/site/library.html','projects/noema/site/research.html','projects/noema/site/history.html']:
+              text=Path(path).read_text()
+              assert 'foundation-v18.css' in text
+              assert 'shell-v18.js' in text
+              assert 'app-v1.js' not in text, f'{path} must remain lightweight'
+          print('NOEMA v1.8 foundation contract validated')
+          PY
