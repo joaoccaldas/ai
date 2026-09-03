@@ -10,7 +10,6 @@ workbenches.
 from __future__ import annotations
 
 import argparse
-import datetime as dt
 import hashlib
 import json
 from pathlib import Path
@@ -29,6 +28,11 @@ def load(path: Path) -> dict[str, Any]:
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def source_fingerprint(paths: list[Path]) -> str:
+    payload = "\n".join(f"{path.name}:{sha256(path)}" for path in paths)
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def uniq(values: list[Any]) -> list[str]:
@@ -147,7 +151,7 @@ def build(catalog_path: Path = CATALOG, pulotu_path: Path = PULOTU, drh_path: Pa
     return {
         "schema_version": "1.0",
         "projection": "NOEMA_COMPACT_COMPARE_V18",
-        "generated_at": dt.datetime.now(dt.timezone.utc).isoformat(),
+        "source_fingerprint": source_fingerprint(inputs),
         "epistemic_note": "Pairwise component overlap is descriptive comparison only. Shared coding does not establish equivalent meaning, descent, diffusion, contact or causation.",
         "mapping_rules": {
             "REFERENCE": "catalog canonical dimensions only",
