@@ -1,4 +1,4 @@
-name: NOEMA v1.8.1 Delivery Integrity
+name: NOEMA v1.8.2 Delivery Integrity
 
 on:
   workflow_dispatch:
@@ -6,11 +6,14 @@ on:
     branches: [main]
     paths:
       - 'projects/noema/scripts/build_search_index_v18.py'
+      - 'projects/noema/scripts/build_compare_index_v18.py'
       - 'projects/noema/tests/test_delivery_integrity_v18.py'
       - 'projects/noema/site/explore.html'
       - 'projects/noema/site/explore-v18.js'
       - 'projects/noema/site/entity.html'
       - 'projects/noema/site/entity-v18.js'
+      - 'projects/noema/site/compare.html'
+      - 'projects/noema/site/compare-v18.js'
       - 'projects/noema/site/shell-v18.js'
       - 'projects/noema/site/foundation-v18.css'
       - 'projects/noema/data/reference/belief-catalog-v1.json'
@@ -46,23 +49,48 @@ jobs:
       - name: Install test dependency
         run: python -m pip install --disable-pip-version-check pytest
 
-      - name: Build compact search projection
-        run: python projects/noema/scripts/build_search_index_v18.py
+      - name: Build compact browser projections
+        run: |
+          python projects/noema/scripts/build_search_index_v18.py
+          python projects/noema/scripts/build_compare_index_v18.py
 
-      - name: Validate projection contract and payload budget
+      - name: Validate projection contracts and payload budgets
         run: |
           set -eu
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path('projects/noema/site/search-index-v18.json')
-          d=json.loads(p.read_text(encoding='utf-8'))
-          assert d['projection']=='NOEMA_COMPACT_SEARCH_V18'
-          assert d['counts']['records'] >= 20, d['counts']
-          assert len(d.get('sources', [])) >= 3
-          size=p.stat().st_size
-          assert size <= 2_621_440, f'compact search index exceeded 2.5 MiB budget: {size}'
-          print({'records':d['counts']['records'],'source_families':d['counts']['source_families'],'bytes':size})
+
+          search=Path('projects/noema/site/search-index-v18.json')
+          s=json.loads(search.read_text(encoding='utf-8'))
+          assert s['projection']=='NOEMA_COMPACT_SEARCH_V18'
+          assert s['counts']['records'] >= 20, s['counts']
+          assert len(s.get('sources', [])) >= 3
+          assert len(s.get('source_fingerprint','')) == 64
+          search_size=search.stat().st_size
+          assert search_size <= 2_621_440, f'compact search index exceeded 2.5 MiB budget: {search_size}'
+
+          compare=Path('projects/noema/site/compare-index-v18.json')
+          c=json.loads(compare.read_text(encoding='utf-8'))
+          assert c['projection']=='NOEMA_COMPACT_COMPARE_V18'
+          assert c['counts']['records'] >= 1000, c['counts']
+          assert c['counts']['source_families'] == 3, c['counts']
+          assert c['counts']['comparable_records'] > 100, c['counts']
+          assert c['counts']['dimensions'] >= 10, c['counts']
+          assert len(c.get('source_fingerprint','')) == 64
+          assert c['mapping_rules']['unknown_or_uncoded']=='render explicitly; never infer absence'
+          compare_size=compare.stat().st_size
+          assert compare_size <= 5_242_880, f'compact compare index exceeded 5 MiB budget: {compare_size}'
+          assert all('sources' not in r and 'assertions' not in r for r in c['records'])
+
+          print({
+            'search_records':s['counts']['records'],
+            'search_bytes':search_size,
+            'compare_records':c['counts']['records'],
+            'compare_comparable':c['counts']['comparable_records'],
+            'compare_dimensions':c['counts']['dimensions'],
+            'compare_bytes':compare_size,
+          })
           PY
           ! grep -q 'app-v1.js' projects/noema/site/explore.html
           ! grep -q 'drh-decomposition.json' projects/noema/site/explore.html
@@ -71,41 +99,39 @@ jobs:
           ! grep -q 'entity-depth-v14.js' projects/noema/site/entity.html
           ! grep -q 'drh-decomposition.json' projects/noema/site/entity-v18.js
           ! grep -q 'religion-decomposition.json' projects/noema/site/entity-v18.js
+          ! grep -q 'app-v1.js' projects/noema/site/compare.html
+          ! grep -q 'drh-decomposition.json' projects/noema/site/compare-v18.js
+          ! grep -q 'religion-decomposition.json' projects/noema/site/compare-v18.js
 
-      - name: Run v1.8.1 regression tests
+      - name: Run v1.8 delivery regression tests
         run: python -m pytest -q projects/noema/tests/test_delivery_integrity_v18.py
 
       - name: JavaScript syntax smoke checks
         run: |
           node --check projects/noema/site/explore-v18.js
           node --check projects/noema/site/entity-v18.js
+          node --check projects/noema/site/compare-v18.js
           node --check projects/noema/site/shell-v18.js
 
-      - name: Commit generated projection when missing or changed
+      - name: Commit generated projections when missing or changed
         id: commit
         run: |
           set -euo pipefail
-          artifact='projects/noema/site/search-index-v18.json'
-          tracked=0
-          if git ls-files --error-unmatch "$artifact" >/dev/null 2>&1; then
-            tracked=1
-          fi
-          if [ "$tracked" = 1 ] && git diff --quiet -- "$artifact"; then
-            echo 'changed=false' >> "$GITHUB_OUTPUT"
-            echo 'Compact search projection is tracked and current.'
-            exit 0
-          fi
+          artifacts=(
+            'projects/noema/site/search-index-v18.json'
+            'projects/noema/site/compare-index-v18.json'
+          )
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          # The site projection may match a broad generated-file ignore rule. It is a
-          # deliberate public build artifact, so force-add it when first introduced.
-          git add -f "$artifact"
-          if git diff --cached --quiet -- "$artifact"; then
+          for artifact in "${artifacts[@]}"; do
+            git add -f "$artifact"
+          done
+          if git diff --cached --quiet -- "${artifacts[@]}"; then
             echo 'changed=false' >> "$GITHUB_OUTPUT"
-            echo 'No staged projection change after add.'
+            echo 'Compact projections are tracked and current.'
             exit 0
           fi
-          git commit -m 'NOEMA v1.8.1: publish compact search projection'
+          git commit -m 'NOEMA v1.8.2: publish compact browser projections'
           git push
           echo 'changed=true' >> "$GITHUB_OUTPUT"
 
@@ -162,22 +188,32 @@ jobs:
             nonce="$(git rev-parse HEAD)-${attempt}"
             c_explore=$(fetch_asset explore "${base}/explore.html?delivery=${nonce}")
             c_entity=$(fetch_asset entity "${base}/entity.html?id=GOD-ODIN&delivery=${nonce}")
-            c_index=$(fetch_asset index "${base}/search-index-v18.json?delivery=${nonce}")
+            c_compare=$(fetch_asset compare "${base}/compare.html?a=GOD-ODIN&b=GOD-ZEUS&delivery=${nonce}")
+            c_searchindex=$(fetch_asset searchindex "${base}/search-index-v18.json?delivery=${nonce}")
+            c_compareindex=$(fetch_asset compareindex "${base}/compare-index-v18.json?delivery=${nonce}")
             c_shell=$(fetch_asset shell "${base}/shell-v18.js?delivery=${nonce}")
             c_entityjs=$(fetch_asset entityjs "${base}/entity-v18.js?delivery=${nonce}")
-            echo "Public attempt ${attempt}: explore=${c_explore} entity=${c_entity} index=${c_index} shell=${c_shell} entityjs=${c_entityjs}"
+            c_comparejs=$(fetch_asset comparejs "${base}/compare-v18.js?delivery=${nonce}")
+            echo "Public attempt ${attempt}: explore=${c_explore} entity=${c_entity} compare=${c_compare} searchindex=${c_searchindex} compareindex=${c_compareindex} shell=${c_shell} entityjs=${c_entityjs} comparejs=${c_comparejs}"
 
-            if [ "$c_explore" = 200 ] && [ "$c_entity" = 200 ] && [ "$c_index" = 200 ] && [ "$c_shell" = 200 ] && [ "$c_entityjs" = 200 ] \
+            if [ "$c_explore" = 200 ] && [ "$c_entity" = 200 ] && [ "$c_compare" = 200 ] \
+              && [ "$c_searchindex" = 200 ] && [ "$c_compareindex" = 200 ] && [ "$c_shell" = 200 ] \
+              && [ "$c_entityjs" = 200 ] && [ "$c_comparejs" = 200 ] \
               && grep -q 'explore-v18.js' /tmp/noema-explore \
               && ! grep -q 'app-v1.js' /tmp/noema-explore \
               && grep -q 'entity-v18.js' /tmp/noema-entity \
               && ! grep -q 'app-v1.js' /tmp/noema-entity \
+              && grep -q 'compare-v18.js' /tmp/noema-compare \
+              && ! grep -q 'app-v1.js' /tmp/noema-compare \
               && grep -q 'requestIdleCallback' /tmp/noema-entityjs \
               && ! grep -q 'drh-decomposition.json' /tmp/noema-entityjs \
-              && grep -q 'NOEMA_COMPACT_SEARCH_V18' /tmp/noema-index \
+              && grep -q 'NOEMA_COMPACT_SEARCH_V18' /tmp/noema-searchindex \
+              && grep -q 'NOEMA_COMPACT_COMPARE_V18' /tmp/noema-compareindex \
+              && grep -q 'unknown / uncoded' /tmp/noema-comparejs \
+              && ! grep -q 'drh-decomposition.json' /tmp/noema-comparejs \
               && grep -q 'Skip to main content' /tmp/noema-shell; then
               ok=1
-              echo "NOEMA v1.8.1 Explore + Entity delivery contract is publicly visible (attempt ${attempt})."
+              echo "NOEMA v1.8.2 Explore + Entity + Compare delivery contract is publicly visible (attempt ${attempt})."
               break
             fi
             sleep 3
