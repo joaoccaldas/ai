@@ -1,0 +1,39 @@
+{
+  "run_id": "chatgpt-daily-2026-09-03",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED_CANDIDATES_PERSISTED",
+  "started_at": "2026-09-03T06:51:27+00:00",
+  "completed_at": "2026-09-03T06:56:56+00:00",
+  "input_refs": [
+    "github-actions:NOEMA Discovery:33718587607",
+    "projects/noema/data/runs/github-discovery-33718587607.json",
+    "projects/noema/data/candidates/daily/2026-09-02.json",
+    "projects/noema/data/candidates/pubmed-latest.json",
+    "projects/noema/schemas/run-manifest-v1.json"
+  ],
+  "artifact_digests": {
+    "noema-crossref-candidates.raw": "sha256:22d0501f09e968ade33ca1bbb6767b3c195877beec586f6b0a2534678eaa3b7f",
+    "noema-crossref-candidates.github": "sha256:5ad742feaa4ee1cde716190347f38922ad837c49f985010b29febeb54498fc27"
+  },
+  "sources_examined": 10,
+  "new_candidates": 4,
+  "candidate_updates": 1,
+  "contradictions": 4,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 5,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 5,
+  "errors": [],
+  "summary": "Inspected successful NOEMA Discovery run 33718587607 and verified its 118-candidate artifact with a 30-item priority queue: 4 RECENT_PUBLICATION, 0 UPCOMING_OR_AHEAD_OF_PRINT, 26 NEWLY_INDEXED_LEGACY. After DOI/canonical deduplication and fresh scholarly/public screening, staged four candidate-only additions: Cerny aDNA versus hunting-associated funerary practice, ancient human DNA preservation on cave walls/rock art, a hallucinogenic-versus-non-hallucinogenic signaling study, and northwest Arabian arrowhead variation combining cross-regional similarity with local innovation. No claim/evidence/relationship was promoted and no verified dating revision was found.",
+  "research_note": "projects/noema/data/candidates/daily/2026-09-03.json",
+  "code_commit": "11974eabbcb89373a9853a1d41bd989025f859fd",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "historical_diagnosis_from_resemblance": false
+  }
+}
