@@ -21,39 +21,45 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Syntax check v1.4 browser surfaces
+      - name: Syntax check entity and concept browser surfaces
         run: |
           node --check projects/noema/site/concept-v1.js
-          node --check projects/noema/site/explore-v14.js
-          node --check projects/noema/site/entity-depth-v14.js
-      - name: Validate v1.4 regression contract
+          node --check projects/noema/site/explore-v18.js
+          node --check projects/noema/site/entity-v18.js
+      - name: Validate entity and concept capability contract
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
           meta=json.load(open('projects/noema/site/data.json'))
-          assert meta['release'] in {'v1.4','v1.5'}
+          # This is a regression contract for capabilities introduced in v1.4,
+          # not a pin that prevents later releases from shipping.
+          assert meta.get('release')
           vc=meta['visual_core']
           assert vc['concept_hubs'] is True
-          assert vc['search_to_concept_bridge'] is True
-          assert vc['entity_components_open_concept_hubs'] is True
-          assert vc['concept_lenses']==['OVERVIEW','PROFILES','REGIONS','TIME','CO_OCCURRENCE','EVIDENCE']
-          assert vc['entity_lenses']==['OVERVIEW','COMPONENTS','MAP','TIME','GRAPH','COMPARE','EVIDENCE']
+          assert vc['entity_workspace_v2'] is True
+          assert vc['synchronized_synoptic_lens'] is True
           gate=meta['publication_gate']
           assert gate['concept_cooccurrence_is_causal_relationship'] is False
           assert gate['concept_earliest_encoded_window_is_origin'] is False
+
           concept=Path('projects/noema/site/concept.html').read_text()
           concept_js=Path('projects/noema/site/concept-v1.js').read_text()
           explore=Path('projects/noema/site/explore.html').read_text()
+          explore_js=Path('projects/noema/site/explore-v18.js').read_text()
           entity=Path('projects/noema/site/entity.html').read_text()
-          entity_js=Path('projects/noema/site/entity-depth-v14.js').read_text()
+          entity_js=Path('projects/noema/site/entity-v18.js').read_text()
+
           for marker in ['One idea, many contexts','concept-v1.js','concept-v1.css']:
               assert marker in concept
           for marker in ['Profiles','Regions','Time','Co-occurrence','Evidence','earliest encoded record is not an origin date','Co-coded ≠ connected history']:
               assert marker in concept_js
-          assert 'explore-v14.js' in explore and 'concept.html?term=' in Path('projects/noema/site/explore-v14.js').read_text()
-          assert 'entity-depth-v14.js' in entity and 'entity-depth-v14.css' in entity
+
+          assert 'explore-v18.js' in explore and 'concept.html?term=' in explore_js
+          assert 'entity-v18.js' in entity and 'shell-v18.js' in entity
+          assert 'app-v1.js' not in entity and 'entity-depth-v14.js' not in entity
           assert 'concept.html?term=' in entity_js
           assert 'Reference sources ≠ claim-level evidence' in entity_js
-          print('NOEMA v1.4 regression contract green')
+          assert 'drh-decomposition.json' not in entity_js and 'religion-decomposition.json' not in entity_js
+          print('NOEMA entity + concept capability contract green')
           PY
