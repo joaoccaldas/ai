@@ -1,0 +1,216 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-04",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-04T06:56:00Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-33836960441",
+    "completed_at": "2026-09-04T04:29:07.658953+00:00",
+    "code_commit": "28c1664642125bb24742a50714a755e9fc9ce27e",
+    "candidate_count": 115,
+    "priority_candidate_count": 30,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 6,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 1,
+      "NEWLY_INDEXED_LEGACY": 23
+    },
+    "overall_distribution": {
+      "RECENT_PUBLICATION": 6,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 1,
+      "NEWLY_INDEXED_LEGACY": 108
+    },
+    "raw_payload_sha256": "e5c8b8b9c8433dc9c944d21d26ca8f1cad2c81e96acf2ec42fb12e1083bb6a9c",
+    "github_artifact_digest": "sha256:92487b95f88268061c95ea355a29c4880cd93260052796b6011320b4c7b65d94",
+    "artifact_id": 9923591885,
+    "manifest_digest_value": "sha256:e5c8b8b9c8433dc9c944d21d26ca8f1cad2c81e96acf2ec42fb12e1083bb6a9c",
+    "digest_semantics_note": "The discovery run manifest records the uncompressed JSON payload SHA-256 under artifact_digests, whereas GitHub Actions metadata reports the ZIP artifact digest. Both are preserved separately."
+  },
+  "rules": [
+    "Every record remains a candidate until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin, or diffusion.",
+    "Unknown is not absence.",
+    "Publication and index dates are preserved separately; indexing novelty is not publication novelty.",
+    "Human remains and mortuary contexts require cultural-sensitivity review.",
+    "Biomedical or psychiatric correlation is not evidence of historical religious meaning, neurodivergence, diagnosis, or identity.",
+    "Observed practice is not equivalent to explicit propositional belief."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION": [
+      {"doi":"10.4324/9781003683551-11","published":"2026-09-02","indexed":"2026-09-02","title":"The implications of AI myth for religion, science, and mythology"},
+      {"doi":"10.4324/9781003683551-2","published":"2026-09-02","indexed":"2026-09-02","title":"Religion, mythology, and AI"},
+      {"doi":"10.56315/pscf9-26harrison","published":"2026-09-01","indexed":"2026-08-27","title":"Some New World: Myths of Supernatural Belief in a Secular Age","note":"Canonical-work identity ambiguity remains."},
+      {"doi":"10.1086/742088","published":"2026-09-01","indexed":"2026-09-03","title":"Some New World: Myths of Supernatural Belief in a Secular Age","note":"Distinct DOI but identical title to another priority record; DOI-level identity inspection required."},
+      {"doi":"10.1016/j.evolhumbehav.2026.106943","published":"2026-09-01","indexed":"2026-09-04","title":"Moralistic supernatural explanations were widespread and attributed to many different supernatural agents in historical societies","note":"High-value peer-reviewed candidate for morality, agent-type and social-scale review."},
+      {"doi":"10.1002/9781394250592.ch34","published":"2026-08-21","indexed":"2026-08-31","title":"Demon Eaters and Bloody Charms","note":"Parent-volume publication-year ambiguity remains."}
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [
+      {"doi":"10.3366/9781399564618-005","published":"2026-12-31","indexed":"2026-09-03","title":"Introduction: Revelation and Divination"}
+    ],
+    "NEWLY_INDEXED_LEGACY_count": 23,
+    "NEWLY_INDEXED_LEGACY_note": "Priority legacy records span Palaeolithic burial, mortuary ritual, ancestor worship, religious cognition, ritual uncanniness, Taoist/Zhuang specialists and related older literature."
+  },
+  "new_candidates": [
+    {
+      "id":"DAILY-MAGIC-PREDICTIVE-PROCESSING-2026",
+      "triage_class":"RECENT_PUBLICATION",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"Acting under uncertainty: Prediction, contingency, and the function of magic",
+      "publication_date":"2026-09",
+      "discovered_at":"2026-09-04",
+      "doi":"10.1016/j.evolhumbehav.2026.106941",
+      "canonical_url":"https://doi.org/10.1016/j.evolhumbehav.2026.106941",
+      "source_type":"PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains":["MAGIC","RITUAL","COGNITION","PREDICTIVE_PROCESSING","UNCERTAINTY","SOCIAL_FUNCTION"],
+      "candidate_relevance":"Proposes a bio-cultural model in which magical ritual applies high-level explanatory priors to uncertain or opaque contingency events and may coordinate responses across family/community social levels.",
+      "epistemic_caution":"Theoretical model only. It does not establish the function of any particular archaeological or historical practice.",
+      "review_priority":"HIGH",
+      "sensitive":false,
+      "provenance":{"source":"Evolution and Human Behavior / Elsevier","publication_date":"2026-09","index_or_discovery_date":"2026-09-04","peer_reviewed":true}
+    },
+    {
+      "id":"DAILY-SUPERNATURAL-CONCEPT-COHERENCE-2026",
+      "triage_class":"UPCOMING_OR_AHEAD_OF_PRINT",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"Coherence and the memorability of supernatural concepts",
+      "publication_date":"2026-11",
+      "online_or_article_date":"2026-07-15",
+      "discovered_at":"2026-09-04",
+      "doi":"10.1016/j.cognition.2026.106661",
+      "pmid":"42456400",
+      "canonical_url":"https://doi.org/10.1016/j.cognition.2026.106661",
+      "source_type":"PEER_REVIEWED_AHEAD_OF_PRINT_JOURNAL_ARTICLE",
+      "domains":["COGNITIVE_SCIENCE_OF_RELIGION","SUPERNATURAL_CONCEPTS","MEMORY","COHERENCE"],
+      "candidate_relevance":"Two studies suggest recall effects may be driven by conceptual coherence rather than simply the number of ontological violations, pressuring minimally-counterintuitive accounts.",
+      "epistemic_caution":"Laboratory recall mechanisms do not establish historical transmission, origin, prevalence, or meaning.",
+      "review_priority":"HIGH",
+      "sensitive":false,
+      "provenance":{"source":"Cognition / Elsevier; PubMed","publication_date":"2026-11","online_or_article_date":"2026-07-15","index_or_discovery_date":"2026-09-04","peer_reviewed":true}
+    },
+    {
+      "id":"DAILY-MAGICAL-THINKING-SYSTEMATIC-REVIEW-2026",
+      "triage_class":"NEWLY_DISCOVERED_LEGACY_2026",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"The many manifestations of magical thinking: a systematic review",
+      "publication_date":"2026-05-20",
+      "discovered_at":"2026-09-04",
+      "doi":"10.3389/fpsyt.2026.1759906",
+      "pmid":"42245212",
+      "canonical_url":"https://doi.org/10.3389/fpsyt.2026.1759906",
+      "source_type":"PEER_REVIEWED_SYSTEMATIC_REVIEW",
+      "domains":["MAGICAL_THINKING","PSYCHIATRY","PSYCHOLOGY","SOCIAL_COGNITION","RELIGION","SPIRITUALITY","CULTURE"],
+      "candidate_relevance":"Review of 191 studies finds magical thinking across clinical and non-clinical populations and cultural contexts, providing a strong guard against pathologizing magical or supernatural ideas by themselves.",
+      "epistemic_caution":"Do not retroactively diagnose historical people, accused witches, ritual specialists, shamans or archaeological populations from cultural resemblance.",
+      "review_priority":"HIGH",
+      "sensitive":true,
+      "sensitivity_flags":["PSYCHIATRIC_TERMINOLOGY","HISTORICAL_DIAGNOSIS_RISK"],
+      "provenance":{"source":"Frontiers in Psychiatry; PubMed; Consensus","publication_date":"2026-05-20","index_or_discovery_date":"2026-09-04","peer_reviewed":true}
+    },
+    {
+      "id":"DAILY-RELIGIOUS-ALIEF-2026",
+      "triage_class":"NEWLY_DISCOVERED_LEGACY_2026",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"Religious Alief",
+      "publication_date":"2026-04-10",
+      "discovered_at":"2026-09-04",
+      "doi":"10.1017/epi.2026.10109",
+      "canonical_url":"https://doi.org/10.1017/epi.2026.10109",
+      "source_type":"PEER_REVIEWED_THEORETICAL_JOURNAL_ARTICLE",
+      "domains":["RELIGION","BELIEF","PRACTICE","ALIEF","APOTROPAIC_RITUAL","PURIFICATION","TABOO"],
+      "candidate_relevance":"Develops religious alief as an analytical category for automatic or habitual states that influence behavior without explicit or tacit propositional belief, directly relevant to NOEMA's practice-versus-belief ontology.",
+      "epistemic_caution":"A philosophical analytical proposal, not an observed mental state in historical actors.",
+      "review_priority":"HIGH",
+      "sensitive":false,
+      "provenance":{"source":"Episteme / Cambridge University Press; Consensus","publication_date":"2026-04-10","index_or_discovery_date":"2026-09-04","peer_reviewed":true}
+    },
+    {
+      "id":"DAILY-ZORAWINA-TOOTH-NECKLACE-2026",
+      "triage_class":"RECENT_FIELD_DISCOVERY",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"Żórawina prehistoric burial mound with 42-tooth necklace and additional skull remains",
+      "publication_date":"2026-09-02",
+      "discovered_at":"2026-09-04",
+      "doi":null,
+      "canonical_url":"https://www.polskieradio.pl/395/7791/artykul/3727071,5000yearold-tooth-necklace-found-in-burial-mound-in-southwestern-poland",
+      "source_type":"PUBLIC_FIELD_DISCOVERY_REPORT_NON_PEER_REVIEWED",
+      "domains":["MORTUARY","CORDED_WARE","ORNAMENT","ANIMAL_TEETH","HUMAN_REMAINS","POLAND"],
+      "candidate_relevance":"A burial mound near Żórawina contained an adult male, a necklace of 42 drilled teeth, stone/flint implements and remains from two additional human skulls. Planned radiocarbon, DNA and species analyses could materially change interpretation.",
+      "epistemic_caution":"The date shortly before 2900 BCE is preliminary; radiocarbon is pending. Tooth species, relation of the skulls, and warrior/leader/ritual/decapitation interpretations remain unresolved.",
+      "review_priority":"HIGH",
+      "sensitive":true,
+      "sensitivity_flags":["HUMAN_REMAINS","MORTUARY_CONTEXT","POSSIBLE_HUMAN_TEETH","POSSIBLE_DECAPITATION"],
+      "provenance":{"source":"Polish Radio / PAP reporting Wrocław university excavation","report_date":"2026-09-02","index_or_discovery_date":"2026-09-04","peer_reviewed":false,"dating_status":"PRELIMINARY_RADIOCARBON_PENDING"}
+    }
+  ],
+  "candidate_updates": [
+    {
+      "target":"10.1016/j.evolhumbehav.2026.106943",
+      "type":"PRIORITY_TRIAGE",
+      "finding":"Analysis of 822 supernatural explanations from 114 historical societies reports moralistic explanations across social scales and varied agents, including minor spirits, witches, shamans/ritual specialists, superior gods and high gods.",
+      "action":"Review agent type, reward/punishment, moral content and social scale as separate dimensions; do not collapse agent categories or infer historical descent."
+    },
+    {
+      "target":"PUBMED-42670176",
+      "type":"CROSS_PIPELINE_REVIEW",
+      "finding":"Current PubMed pipeline added DOI 10.1002/brb3.71733, a systematic review of 105 neuroimaging/neurophysiology studies spanning multiple religious and spiritual practices.",
+      "action":"Review for practice-specific neural correlates while keeping neural correlation, phenomenology, theology, clinical outcome and historical interpretation separate."
+    },
+    {
+      "target":"DISCOVERY_ARTIFACT_DIGEST_SEMANTICS",
+      "type":"PROVENANCE_METADATA_CONTRADICTION",
+      "finding":"The discovery manifest's artifact digest is the uncompressed JSON payload hash; GitHub Actions metadata reports a different ZIP artifact digest.",
+      "action":"Split future provenance fields into payload_sha256 and github_artifact_digest."
+    },
+    {
+      "target":"NEURODIVERSITY_WITCHCRAFT_CORRELATION_SCREEN",
+      "type":"NEGATIVE_RELEVANCE_SCREEN",
+      "finding":"Current PubMed neurodiversity+religion search returned six records before title gating but zero title-relevant candidates; witchcraft+psychiatry/history returned zero.",
+      "action":"Treat as no qualified candidate from this screen, not evidence of absence. Keep historical-diagnosis guard active."
+    }
+  ],
+  "contradictions_or_pressure": [
+    {"type":"MORALIZING_HIGH_GOD_OVERSIMPLIFICATION","target":"SUPERNATURAL_NORM_ENFORCEMENT_MODEL","finding":"Moralistic supernatural explanations occur across social scales and multiple supernatural/human agent classes.","action":"Separate agent type, reward/punishment, moral content and social scale."},
+    {"type":"MAGIC_FUNCTION_VS_TRUTH","target":"MAGIC_ONTOLOGY","finding":"Predictive-processing theory offers uncertainty management and coordination as possible functions without validating supernatural causation.","action":"Separate belief content, action, uncertainty context, social function and empirical outcome."},
+    {"type":"COUNTERINTUITIVENESS_MODEL_PRESSURE","target":"SUPERNATURAL_CONCEPT_TRANSMISSION","finding":"Ahead-of-print cognition research suggests coherence may explain memorability effects attributed to ontological violations.","action":"Treat minimally-counterintuitive and coherence accounts as competing models."},
+    {"type":"PATHOLOGY_OVERREACH_GUARD","target":"NEURODIVERSITY_WITCHCRAFT_HYPOTHESES","finding":"Magical thinking appears in both clinical and non-clinical populations and multiple cultural settings.","action":"Never infer psychopathology or neurodivergence from magical/supernatural practice alone."},
+    {"type":"BELIEF_PRACTICE_SEPARATION","target":"RELIGIOUS_CREDENCE_ONTOLOGY","finding":"Religious-alief theory formalizes habitual action/affect without propositional belief.","action":"Keep observed practice, stated belief, inferred credence and habitual response distinct."},
+    {"type":"FIELD_INTERPRETATION_AND_DATING_GUARD","target":"ZORAWINA_MORTUARY_INTERPRETATION","finding":"Core date, tooth species, skull association and ritual/status interpretations remain pending.","action":"Do not create dating or ritual claims until scientific analyses are published."},
+    {"type":"PROVENANCE_DIGEST_SEMANTICS","target":"RUN_MANIFEST_PROVENANCE","finding":"Payload and ZIP artifact hashes are both SHA-256 values but refer to different byte scopes.","action":"Make hash scope explicit."}
+  ],
+  "dating_revisions": [],
+  "relationships_generated": [],
+  "hypotheses_requiring_human_review": [
+    {"target":"MORALITY_SUPERNATURAL_AGENT_DISTRIBUTION","reason":"New historical-society study challenges high-god-centric models.","recommended_action":"Review source coding and sampling before ontology changes."},
+    {"target":"MAGIC_UNCERTAINTY_PREDICTIVE_PROCESSING","reason":"New theoretical model proposes uncertainty/social mechanisms.","recommended_action":"Stage as mechanistic hypothesis only; seek independent tests."},
+    {"target":"SUPERNATURAL_CONCEPT_MEMORABILITY","reason":"New cognition work pressures minimally-counterintuitive accounts.","recommended_action":"Add competing models and study-design limitations."},
+    {"target":"NEUROTHEOLOGY_PRACTICE_SIGNATURES","reason":"New PubMed systematic review synthesizes 105 objective studies.","recommended_action":"Map practice-specific correlates only, never theological truth claims."},
+    {"target":"MAGICAL_THINKING_HISTORICAL_DIAGNOSIS_GUARD","reason":"Systematic review shows magical thinking is non-specific to pathology.","recommended_action":"Use as guardrail for witchcraft/neurodiversity hypotheses."},
+    {"target":"PRACTICE_VS_PROPOSITIONAL_BELIEF","reason":"Religious alief offers an explicit theory for habitual religious behavior without overt belief.","recommended_action":"Compare against NOEMA's existing belief-vs-practice pressure and retain as labeled theory if useful."},
+    {"target":"ZORAWINA_CORDED_WARE_MORTUARY_RECORD","reason":"New field discovery has potentially distinctive ornament/multiple-remains context but unresolved chronology and taphonomy.","recommended_action":"Await radiocarbon, DNA/species and osteological publication."},
+    {"target":"DISCOVERY_PROVENANCE_HASH_SCHEMA","reason":"Manifest hash scope is ambiguous.","recommended_action":"Persist payload and GitHub artifact digests separately."}
+  ],
+  "deduplication": {
+    "keys":["DOI","PMID/authoritative external ID","canonical URL"],
+    "checked_against":["projects/noema/data/candidates/daily/2026-09-03.json","projects/noema/data/candidates/pubmed-latest.json","NOEMA Discovery artifact 9923591885","default-branch DOI search"],
+    "notes":[
+      "10.1002/brb3.71733 already exists in pubmed-latest.json, so it is a candidate update rather than a duplicate new candidate.",
+      "10.1016/j.evolhumbehav.2026.106943 already exists in today's Crossref artifact, so it is a priority-triage update rather than an additional discovery.",
+      "Two priority DOIs share the title 'Some New World: Myths of Supernatural Belief in a Secular Age'; they are not auto-merged."
+    ]
+  },
+  "sources_examined": [
+    "GitHub NOEMA Discovery run 33836960441",
+    "GitHub Actions artifact 9923591885 / noema-crossref-candidates.json",
+    "projects/noema/data/runs/github-discovery-33836960441.json",
+    "projects/noema/data/candidates/daily/2026-09-03.json",
+    "projects/noema/data/candidates/pubmed-latest.json",
+    "PubMed / NCBI",
+    "Consensus scholarly index",
+    "Evolution and Human Behavior / Elsevier",
+    "Cognition / Elsevier",
+    "Frontiers in Psychiatry",
+    "Episteme / Cambridge University Press",
+    "Brain and Behavior / Wiley",
+    "Polish Radio / PAP and Wrocław university excavation reporting",
+    "Aarhus University research portal"
+  ]
+}
