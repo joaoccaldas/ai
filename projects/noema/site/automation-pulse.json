@@ -1,26 +1,26 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-04T04:50:12.711172+00:00",
+  "generated_at": "2026-09-04T06:58:56.631390+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 31,
-    "new_candidates": 1278,
-    "contradictions": 19,
+    "runs": 32,
+    "new_candidates": 1162,
+    "contradictions": 26,
     "dating_revisions": 1,
-    "hypotheses_revisited": 24,
-    "review_items_created": 261,
+    "hypotheses_revisited": 32,
+    "review_items_created": 239,
     "errors": 0
   },
   "latest_by_task": [
     {
       "task_type": "DAILY_INGEST",
-      "run_id": "chatgpt-daily-2026-09-03",
+      "run_id": "chatgpt-daily-2026-09-04",
       "status": "COMPLETED_CANDIDATES_PERSISTED",
-      "completed_at": "2026-09-03T06:56:56+00:00",
-      "summary": "Inspected successful NOEMA Discovery run 33718587607 and verified its 118-candidate artifact with a 30-item priority queue: 4 RECENT_PUBLICATION, 0 UPCOMING_OR_AHEAD_OF_PRINT, 26 NEWLY_INDEXED_LEGACY. After DOI/canonical deduplication and fresh scholarly/public screening, staged four candidate-only additions: Cerny aDNA versus hunting-associated funerary practice, ancient human DNA preservation on cave walls/rock art, a hallucinogenic-versus-non-hallucinogenic signaling study, and northwest Arabian arrowhead variation combining cross-regional similarity with local innovation. No claim/evidence/relationship was promoted and no verified dating revision was found.",
+      "completed_at": "2026-09-04T06:57:00Z",
+      "summary": "Verified NOEMA Discovery run 33836960441: 115 candidates and a 30-item priority queue (6 RECENT_PUBLICATION, 1 UPCOMING_OR_AHEAD_OF_PRINT, 23 NEWLY_INDEXED_LEGACY). Staged five deduplicated candidate-only additions covering magic/predictive processing, supernatural-concept memorability, magical-thinking psychopathology guardrails, belief-versus-practice ontology, and the Żórawina mortuary field discovery; triaged the new 114-society moralistic-supernatural paper and current neurotheology PubMed review as updates. No evidence, relationship, diagnosis, or dating revision was promoted.",
       "errors": [],
-      "research_note": "projects/noema/data/candidates/daily/2026-09-03.json"
+      "research_note": "projects/noema/data/candidates/daily/2026-09-04.json"
     },
     {
       "task_type": "WEEKLY_REANALYSIS",
@@ -108,7 +108,7 @@
       "last_run_id": "github-discovery-33836960441",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-04T04:29:07.658953+00:00",
-      "age_hours": 0.35,
+      "age_hours": 2.5,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -126,7 +126,7 @@
       "last_run_id": "pubmed-discovery-33838256202",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
       "last_completed_at": "2026-09-04T04:50:12.656120+00:00",
-      "age_hours": 0.0,
+      "age_hours": 2.15,
       "writes": [
         "Actions artifact: noema-pubmed-candidates",
         "projects/noema/data/candidates/pubmed-latest.json",
@@ -142,10 +142,10 @@
       "next_stage": "HUMAN_REVIEW",
       "expected_interval_hours": 30.0,
       "health": "HEALTHY",
-      "last_run_id": "chatgpt-daily-2026-09-03",
+      "last_run_id": "chatgpt-daily-2026-09-04",
       "last_status": "COMPLETED_CANDIDATES_PERSISTED",
-      "last_completed_at": "2026-09-03T06:56:56+00:00",
-      "age_hours": 21.89,
+      "last_completed_at": "2026-09-04T06:57:00Z",
+      "age_hours": 0.03,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
         "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
@@ -163,7 +163,7 @@
       "last_run_id": "dplace-benchmark-33361784511",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:47:46.132148+00:00",
-      "age_hours": 95.04,
+      "age_hours": 97.19,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -181,7 +181,7 @@
       "last_run_id": "religion-federation-33361678540",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:46:27.262104+00:00",
-      "age_hours": 95.06,
+      "age_hours": 97.21,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -206,7 +206,7 @@
       "last_run_id": "chatgpt-weekly-2026-08-30",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-08-30T06:10:03Z",
-      "age_hours": 118.67,
+      "age_hours": 120.81,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -224,7 +224,7 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 70.42,
+      "age_hours": 72.56,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
         "projects/noema/research/monthly/YYYY-MM-DD-monthly-discovery.md",
@@ -243,7 +243,7 @@
       "last_run_id": "media-discovery-33601263529",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-02T06:58:26.632314+00:00",
-      "age_hours": 45.86,
+      "age_hours": 48.01,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
@@ -251,6 +251,49 @@
     }
   ],
   "recent_runs": [
+    {
+      "run_id": "chatgpt-daily-2026-09-04",
+      "task_type": "DAILY_INGEST",
+      "status": "COMPLETED_CANDIDATES_PERSISTED",
+      "started_at": "2026-09-04T06:51:32Z",
+      "completed_at": "2026-09-04T06:57:00Z",
+      "input_refs": [
+        "github-discovery-33836960441",
+        "GitHub Actions artifact 9923591885",
+        "projects/noema/data/candidates/pubmed-latest.json",
+        "projects/noema/data/candidates/daily/2026-09-03.json",
+        "Consensus scholarly index",
+        "PubMed / NCBI",
+        "fresh public web research"
+      ],
+      "artifact_digests": {
+        "source_noema_crossref_payload": "sha256:e5c8b8b9c8433dc9c944d21d26ca8f1cad2c81e96acf2ec42fb12e1083bb6a9c",
+        "source_github_actions_zip": "sha256:92487b95f88268061c95ea355a29c4880cd93260052796b6011320b4c7b65d94",
+        "source_pubmed_latest": "sha256:b8401172964c36d471fc4054324bc5e9cef7ff2b6f3e2613899cb96af4f46e54",
+        "daily_candidate_triage": "sha256:1fd17179caa56cfe94358810e973910d0c8037d9b266e763ad232800f26ad729"
+      },
+      "sources_examined": 14,
+      "new_candidates": 5,
+      "candidate_updates": 4,
+      "contradictions": 7,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 8,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 8,
+      "errors": [],
+      "summary": "Verified NOEMA Discovery run 33836960441: 115 candidates and a 30-item priority queue (6 RECENT_PUBLICATION, 1 UPCOMING_OR_AHEAD_OF_PRINT, 23 NEWLY_INDEXED_LEGACY). Staged five deduplicated candidate-only additions covering magic/predictive processing, supernatural-concept memorability, magical-thinking psychopathology guardrails, belief-versus-practice ontology, and the Żórawina mortuary field discovery; triaged the new 114-society moralistic-supernatural paper and current neurotheology PubMed review as updates. No evidence, relationship, diagnosis, or dating revision was promoted.",
+      "research_note": "projects/noema/data/candidates/daily/2026-09-04.json",
+      "code_commit": "de320feafc04f9a7c1479621652e6e5a93b15153",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false,
+        "historical_diagnosis_from_resemblance": false
+      }
+    },
     {
       "run_id": "pubmed-discovery-33838256202",
       "task_type": "PUBMED_DISCOVERY",
@@ -947,38 +990,6 @@
       "review_items_created": 0,
       "errors": [],
       "summary": "Federation refreshed 1063 comparable profiles and 24452 accepted assertions; pattern outputs remain descriptive candidates.",
-      "code_commit": "34328e0e6855a386dd2432d1b170debc10cb63c3",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "github-discovery-33361678545",
-      "task_type": "GITHUB_DISCOVERY",
-      "status": "COMPLETED",
-      "started_at": "2026-08-31T05:46:03.144490+00:00",
-      "completed_at": "2026-08-31T05:46:03.144490+00:00",
-      "input_refs": [
-        ".github/workflows/noema-discovery.yml"
-      ],
-      "artifact_digests": {
-        "noema-crossref-candidates": "sha256:c5a03866e15f372adf57611862bf424852c5d4be1b3d846744abcc8eff342a77"
-      },
-      "sources_examined": 0,
-      "new_candidates": 121,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 30,
-      "errors": [],
-      "summary": "Crossref discovery produced 121 unreviewed candidates and 30 priority items.",
       "code_commit": "34328e0e6855a386dd2432d1b170debc10cb63c3",
       "epistemic_guards": {
         "model_output_is_evidence": false,
