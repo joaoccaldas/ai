@@ -1,122 +1,254 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<title>Neon Echoes — First Person Las Vegas</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#070707">
+<title>Memory World — Las Vegas, 29–31 October 2022</title>
 <style>
-*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#03040a;color:#fff;font-family:Inter,system-ui,sans-serif;touch-action:none}canvas{display:block}
-#hud{position:fixed;inset:0;z-index:10;pointer-events:none;padding:calc(env(safe-area-inset-top) + 14px) 16px}.top{display:flex;justify-content:space-between}.brand{font-size:10px;letter-spacing:.18em;color:#9da4b2}.brand b{display:block;color:#fff;font-size:17px}.stat{text-align:right;color:#9da4b2;font-size:10px}.stat b{display:block;color:#62edff;font-size:17px}
-#mission{position:absolute;left:16px;top:72px;background:rgba(5,7,12,.62);border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(10px);padding:10px 12px;border-radius:12px;max-width:70vw}.k{font-size:9px;color:#ff4dc9;letter-spacing:.14em;text-transform:uppercase}.m{font-size:14px;font-weight:800;margin-top:3px}.d{font-size:10px;color:#9da4b2;margin-top:2px}
-#cross{position:absolute;left:50%;top:50%;width:8px;height:8px;border:1px solid rgba(255,255,255,.8);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 10px #62edff}
-#prompt{position:absolute;left:50%;bottom:100px;transform:translateX(-50%);padding:11px 16px;background:rgba(5,8,14,.8);border:1px solid rgba(98,237,255,.4);border-radius:13px;font-weight:800;opacity:0;transition:.15s;backdrop-filter:blur(10px)}#prompt.on{opacity:1}
-#help{position:absolute;right:16px;bottom:16px;color:#9da4b2;font-size:10px}
-#intro{position:fixed;inset:0;z-index:30;display:grid;place-items:end;padding:24px 20px 30px;background:linear-gradient(to top,rgba(2,3,8,.98),rgba(2,3,8,.18) 65%),url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Las_Vegas_at_Night.JPG/1280px-Las_Vegas_at_Night.JPG') center/cover;transition:.4s opacity}.intro{width:min(620px,100%)}.ey{font-size:10px;letter-spacing:.22em;color:#62edff;text-transform:uppercase}h1{font-size:clamp(44px,11vw,84px);line-height:.9;letter-spacing:-.055em;margin:10px 0 15px}.intro p{color:#c7cad1;line-height:1.55;font-size:14px}.intro button{width:100%;border:0;border-radius:14px;padding:15px;font-weight:900;background:#fff;color:#05060b}.hide{opacity:0!important;pointer-events:none!important}
-#card{position:fixed;inset:0;z-index:25;display:flex;align-items:flex-end;justify-content:center;padding:14px;background:linear-gradient(to top,rgba(2,3,8,.98),rgba(2,3,8,.2) 65%,transparent);opacity:0;pointer-events:none;transition:.2s}.cardin{width:min(620px,100%);background:rgba(8,10,16,.96);border:1px solid rgba(255,255,255,.12);border-radius:19px;overflow:hidden}.pic{height:min(36vh,270px)}.pic img{width:100%;height:100%;object-fit:cover}.copy{padding:17px}.copy h2{margin:0 0 4px}.meta{color:#62edff;font-size:11px}.copy p{color:#c5c9d1;line-height:1.55}.actions{display:flex;gap:8px}.actions button{flex:1;border:0;border-radius:11px;padding:12px;font-weight:800}.back{background:#20232b;color:#fff}.next{background:#fff;color:#05060b}#card.open{opacity:1;pointer-events:auto}
-#joy,#jump,#sprint{display:none;pointer-events:auto;position:absolute;z-index:12}#joy{left:20px;bottom:25px;width:108px;height:108px;border-radius:50%;border:1px solid #ffffff22;background:#080a1088}#stick{position:absolute;left:50%;top:50%;width:46px;height:46px;border-radius:50%;transform:translate(-50%,-50%);background:#ffffff1e;border:1px solid #62edff55}#jump,#sprint{right:20px;border-radius:50%;border:1px solid #ffffff22;background:#080a10aa;color:#fff;font-weight:800}#jump{bottom:28px;width:66px;height:66px}#sprint{bottom:105px;width:66px;height:66px}#lookzone{display:none;pointer-events:auto;position:absolute;z-index:11;inset:0 0 0 42%}
-#loading{position:fixed;inset:0;z-index:40;background:#03040a;display:grid;place-items:center;color:#aeb4c2;font-size:12px;letter-spacing:.12em;text-transform:uppercase}
-@media(pointer:coarse){#joy,#jump,#sprint,#lookzone{display:block}#help{display:none}}
+:root{--ink:#f4f1ea;--muted:#a8a39b;--glass:rgba(7,7,8,.62);--line:rgba(255,255,255,.13);--warm:#e7b987;--blue:#a9dcff}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#020205;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;touch-action:none}
+canvas{display:block;position:fixed;inset:0}
+#grade{position:fixed;inset:0;pointer-events:none;z-index:4;background:radial-gradient(circle at 50% 45%,transparent 35%,rgba(0,0,0,.34) 76%,rgba(0,0,0,.78) 120%),linear-gradient(to bottom,rgba(8,12,24,.02),rgba(18,7,4,.09));mix-blend-mode:normal}
+#grain{position:fixed;inset:-30%;pointer-events:none;z-index:5;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");animation:noise .22s steps(2) infinite}
+@keyframes noise{0%{transform:translate(0,0)}25%{transform:translate(3%,-2%)}50%{transform:translate(-2%,3%)}75%{transform:translate(2%,2%)}100%{transform:translate(-3%,-1%)}}
+#hud{position:fixed;inset:0;z-index:10;pointer-events:none;padding:calc(env(safe-area-inset-top) + 18px) 18px calc(env(safe-area-inset-bottom) + 18px)}
+#stamp{position:absolute;left:18px;top:calc(env(safe-area-inset-top) + 18px);text-shadow:0 2px 16px #000}
+#date{font:600 11px/1.1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.18em;color:#d6d1c8}
+#clock{font:300 30px/1.05 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:-.04em;margin-top:5px}
+#place{font-size:11px;color:#aaa59c;margin-top:4px;letter-spacing:.06em}
+#controls{position:absolute;right:18px;top:calc(env(safe-area-inset-top) + 18px);display:flex;gap:8px;pointer-events:auto}
+.iconbtn{height:35px;border:1px solid var(--line);border-radius:999px;padding:0 13px;background:rgba(8,8,10,.46);backdrop-filter:blur(12px);color:#e9e5dc;font-size:10px;letter-spacing:.11em;font-weight:700}
+#whisper{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom) + 108px);transform:translateX(-50%) translateY(8px);width:min(620px,calc(100vw - 34px));padding:13px 16px;background:linear-gradient(90deg,rgba(5,5,7,.26),rgba(5,5,7,.72),rgba(5,5,7,.26));text-align:center;opacity:0;transition:.4s;pointer-events:none;text-shadow:0 2px 12px #000}
+#whisper.on{opacity:1;transform:translateX(-50%) translateY(0)}
+#whisper .ey{font-size:9px;letter-spacing:.2em;color:var(--warm);text-transform:uppercase}
+#whisper .tx{font-family:Georgia,serif;font-size:16px;line-height:1.45;margin-top:5px}
+#near{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom) + 82px);transform:translateX(-50%);font-size:9px;letter-spacing:.15em;color:#ddd8ce;opacity:0;transition:.25s;text-shadow:0 2px 12px #000}
+#near.on{opacity:.9}
+#reticle{position:absolute;left:50%;top:50%;width:3px;height:3px;background:rgba(255,255,255,.55);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 10px rgba(255,255,255,.5)}
+#timeline{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom) + 17px);transform:translateX(-50%);display:flex;gap:3px;padding:4px;border:1px solid var(--line);border-radius:15px;background:rgba(8,8,9,.56);backdrop-filter:blur(18px);pointer-events:auto}
+.day{border:0;background:transparent;color:#928d85;min-width:88px;padding:8px 11px;border-radius:11px;text-align:left;transition:.25s}.day.active{background:rgba(255,255,255,.09);color:#fff}.day b{display:block;font-size:11px}.day span{font-size:8px;letter-spacing:.11em;text-transform:uppercase}
+#intro{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;padding:34px clamp(20px,5vw,70px) 38px;background:linear-gradient(to top,rgba(2,2,4,.98),rgba(2,2,4,.47) 47%,rgba(2,2,4,.08)),url("https://commons.wikimedia.org/wiki/Special:FilePath/Hotel_Luxor-2022_%281%29.jpg?width=1800") center/cover;transition:opacity .9s}
+#intro.hide{opacity:0;pointer-events:none}
+.introcopy{width:min(760px,100%)}.label{font:600 10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.22em;color:#ded7cd}
+h1{font-family:Georgia,Times,serif;font-weight:400;font-size:clamp(50px,9vw,112px);letter-spacing:-.06em;line-height:.82;margin:14px 0 18px}
+.lead{max-width:650px;color:#d0cbc2;font-size:14px;line-height:1.65}.truth{display:flex;gap:14px;flex-wrap:wrap;margin:18px 0 20px;color:#a9a39a;font-size:10px}.truth i{width:6px;height:6px;border-radius:50%;display:inline-block;margin-right:6px;background:#dcb27e}
+.enter{border:0;border-radius:999px;padding:14px 19px;background:#f3efe7;color:#09090a;font-weight:800;font-size:11px;letter-spacing:.1em}.credit{font-size:8px;color:#8e8982;margin-top:11px}
+#evidence{position:fixed;z-index:32;right:0;top:0;height:100%;width:min(440px,92vw);background:rgba(10,10,11,.92);backdrop-filter:blur(24px);border-left:1px solid var(--line);padding:calc(env(safe-area-inset-top) + 24px) 22px calc(env(safe-area-inset-bottom) + 24px);transform:translateX(101%);transition:.4s cubic-bezier(.2,.8,.2,1);overflow:auto}
+#evidence.open{transform:none}.close{position:absolute;right:18px;top:calc(env(safe-area-inset-top) + 17px);border:1px solid var(--line);background:#111;color:#eee;width:34px;height:34px;border-radius:50%}
+#evidence h2{font:400 34px/1 Georgia,serif;margin:42px 0 8px}.sub{color:#9e9991;font-size:12px;line-height:1.5;margin-bottom:24px}
+.ev{border-top:1px solid var(--line);padding:15px 0}.evhead{display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:.14em;text-transform:uppercase}.dot{width:7px;height:7px;border-radius:50%}.confirmed .dot{background:#93d8b2}.historical .dot{background:#e7b987}.reconstructed .dot{background:#9994c9}.ev h3{font-size:14px;margin:7px 0 4px}.ev p{font-size:11px;color:#aaa59d;line-height:1.55;margin:0}.ev a{color:#d8d2c8;text-decoration:underline;text-underline-offset:3px}
+.notice{padding:12px;border:1px solid rgba(147,216,178,.18);background:rgba(147,216,178,.05);border-radius:10px;color:#aaa59c;font-size:10px;line-height:1.5;margin:18px 0}
+#photo{position:fixed;inset:0;z-index:35;background:#020203;opacity:0;pointer-events:none;transition:.65s;display:flex;align-items:center;justify-content:center;padding:18px}
+#photo.open{opacity:1;pointer-events:auto}.photoWrap{width:min(1100px,100%);height:min(78vh,780px);position:relative}.photoWrap img{width:100%;height:100%;object-fit:contain}.photoMeta{position:absolute;left:0;bottom:-54px;font-size:10px;color:#aaa49c;line-height:1.5}.photoMeta b{color:#f0ebe2}.photoClose{position:absolute;right:0;top:-48px;border:1px solid var(--line);background:#111;color:#fff;border-radius:999px;padding:9px 13px;font-size:10px}
+#transition{position:fixed;inset:0;z-index:30;background:#050506;opacity:0;pointer-events:none;transition:.55s}
+#transition.on{opacity:1}
+#touchLook{display:none;position:fixed;z-index:11;right:0;top:0;width:56vw;height:100%;pointer-events:auto}
+#joy{display:none;position:fixed;z-index:12;left:18px;bottom:calc(env(safe-area-inset-bottom) + 92px);width:96px;height:96px;border:1px solid rgba(255,255,255,.13);border-radius:50%;background:rgba(0,0,0,.16);pointer-events:auto}
+#stick{position:absolute;left:50%;top:50%;width:38px;height:38px;margin:-19px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06)}
+#startHint{position:fixed;z-index:12;left:50%;top:50%;transform:translate(-50%,-50%);font-size:9px;letter-spacing:.15em;color:#ddd8cf;opacity:0;pointer-events:none;text-shadow:0 2px 12px #000;transition:.3s}
+#startHint.on{opacity:.9}
+@media(pointer:coarse){#touchLook,#joy{display:block}#reticle{display:none}#timeline{bottom:calc(env(safe-area-inset-bottom) + 13px)}#whisper{bottom:calc(env(safe-area-inset-bottom) + 190px)}#near{bottom:calc(env(safe-area-inset-bottom) + 167px)}.day{min-width:78px;padding:7px 9px}#controls{right:12px}.iconbtn{padding:0 10px}}
+@media(max-width:560px){#intro{padding:24px 20px 28px}h1{font-size:58px}.lead{font-size:13px}.truth{display:none}#place{max-width:52vw}.day span{display:none}.day{min-width:72px;text-align:center}#timeline{width:auto}}
 </style>
 </head>
 <body>
-<div id="loading">Building Las Vegas…</div>
-<div id="hud"><div class="top"><div class="brand"><b>NEON ECHOES</b>FIRST PERSON • LAS VEGAS</div><div class="stat"><b id="count">0 / 6</b>MEMORIES</div></div><div id="mission"><div class="k">Objective</div><div class="m" id="mt">Reach the Bellagio fountains</div><div class="d" id="md">Follow the Strip</div></div><div id="cross"></div><div id="prompt">E • INTERACT</div><div id="help">Click to lock mouse • WASD move • Shift sprint • Space jump • E interact • Esc release mouse</div></div>
-<div id="joy"><div id="stick"></div></div><button id="jump">JUMP</button><button id="sprint">RUN</button><div id="lookzone"></div>
-<div id="intro"><div class="intro"><div class="ey">Physics-driven first-person build</div><h1>STEP INTO<br>LAS VEGAS</h1><p>Real satellite ground, Vegas-scale landmarks, moving traffic, physical collision, gravity, jumping, sprinting, street furniture, fountains and memory objects. This is now controlled as a first-person game.</p><button id="enter">ENTER THE STRIP</button></div></div>
-<div id="card"><div class="cardin"><div class="pic"><img id="img"></div><div class="copy"><h2 id="title"></h2><div class="meta" id="meta"></div><p id="text"></p><div class="actions"><button class="back" id="back">BACK TO STREET</button><button class="next" id="next">NEXT MEMORY</button></div></div></div></div>
+<div id="grade"></div><div id="grain"></div>
+<div id="hud">
+  <div id="stamp"><div id="date">SAT 29 OCT 2022</div><div id="clock">19:14</div><div id="place">Luxor · South Las Vegas Boulevard</div></div>
+  <div id="controls"><button class="iconbtn" id="soundBtn">SOUND</button><button class="iconbtn" id="evidenceBtn">EVIDENCE</button></div>
+  <div id="reticle"></div>
+  <div id="whisper"><div class="ey" id="whisperEy">Historical anchor</div><div class="tx" id="whisperTx"></div></div>
+  <div id="near">PRESS E TO ENTER THE PHOTOGRAPH</div>
+  <div id="timeline">
+    <button class="day active" data-day="29"><b>29 OCT</b><span>arrival · 19:14</span></button>
+    <button class="day" data-day="30"><b>30 OCT</b><span>city · 17:08</span></button>
+    <button class="day" data-day="31"><b>31 OCT</b><span>departure · 11:20</span></button>
+  </div>
+</div>
+<div id="touchLook"></div><div id="joy"><div id="stick"></div></div>
+<div id="startHint">CLICK TO LOOK AROUND · WASD TO WALK</div>
+<div id="transition"></div>
 
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+<div id="intro">
+  <div class="introcopy">
+    <div class="label">MEMORY WORLD · LAS VEGAS · 29–31 OCTOBER 2022</div>
+    <h1>Re-enter<br>a time.</h1>
+    <div class="lead">Not an album and not a game. This is a first-person reconstruction built from the traces that remain: your travel records, period photographs, historical weather, the city that existed then, and clearly marked approximation where the evidence ends.</div>
+    <div class="truth"><span><i></i>Luxor stay · 29–31 Oct</span><span><i></i>approved arrival window · 19:00–20:00</span><span><i></i>sunset · 17:48</span></div>
+    <button class="enter" id="enter">ENTER 29 OCTOBER 2022</button>
+    <div class="credit">Background reference: Alberto-g-rovi, Luxor 2022 · CC BY 3.0 · Wikimedia Commons</div>
+  </div>
+</div>
+
+<aside id="evidence">
+<button class="close" id="closeEvidence">×</button>
+<h2>Evidence</h2>
+<div class="sub">The reconstruction separates what is known from what is merely plausible. Personal records are summarized without publishing booking numbers, email addresses, or other private identifiers.</div>
+<div class="notice">Your actual 2022 Las Vegas photos have not yet been located in the connected Drive index, so none are silently substituted with stock images. Period public references are used only where identified.</div>
+<div class="ev confirmed"><div class="evhead"><span class="dot"></span>Confirmed · personal record</div><h3>Luxor, 29–31 October</h3><p>A two-night Luxor stay is confirmed. An approved check-in window was 19:00–20:00 on Saturday 29 October.</p></div>
+<div class="ev confirmed"><div class="evhead"><span class="dot"></span>Confirmed · personal record</div><h3>Las Vegas Airport context, 29 October</h3><p>Avis records place the rental transaction at Las Vegas Airport on the evening of 29 October. The exact minute-by-minute route from the airport to Luxor is not known.</p></div>
+<div class="ev historical"><div class="evhead"><span class="dot"></span>Historical · public record</div><h3>Dark by the time of arrival</h3><p>NWS records show sunset at 17:48 PDT. The day had light winds, very low humidity, little cloud and no significant weather. <a href="https://mesonet.agron.iastate.edu/wx/afos/p.php?e=202210300822&pil=CLILAS" target="_blank" rel="noreferrer">NWS archive</a></p></div>
+<div class="ev historical"><div class="evhead"><span class="dot"></span>Historical · period photography</div><h3>Luxor interior, late summer 2022</h3><p>The embedded photo anchors use Alberto-g-rovi photographs captured 29 August / 1 September 2022 and uploaded to Commons in October 2022 under CC BY 3.0. <a href="https://commons.wikimedia.org/wiki/File:Hotel_Luxor-2022_(2).jpg" target="_blank" rel="noreferrer">Commons</a></p></div>
+<div class="ev historical"><div class="evhead"><span class="dot"></span>Historical · city context</div><h3>Saturday night, 29 October</h3><p>John Legend was scheduled at Planet Hollywood and Usher at Park MGM; When We Were Young was running at the Las Vegas Festival Grounds. These affect ambient city context, not claims that you attended them.</p></div>
+<div class="ev historical"><div class="evhead"><span class="dot"></span>Historical · city context</div><h3>Sunday, 30 October · 17:08</h3><p>Vegas Golden Knights vs Winnipeg Jets began at T-Mobile Arena at 17:08 PDT with 17,824 attendance. Vegas won 2–1 in overtime. Crowd ambience is reconstructed around this confirmed event.</p></div>
+<div class="ev confirmed"><div class="evhead"><span class="dot"></span>Confirmed · personal record</div><h3>Monday, 31 October · departure</h3><p>Your itinerary scheduled LAS → LAX at 12:35, so this memory world ends at the airport before Halloween night.</p></div>
+<div class="ev reconstructed"><div class="evhead"><span class="dot"></span>Reconstructed</div><h3>The spaces between evidence</h3><p>Pedestrians, individual cars, exact room/corridor appearance, precise walking path, traffic density and unsourced conversations are environmental approximations. They are never presented as personal memories.</p></div>
+</aside>
+
+<div id="photo">
+  <div class="photoWrap">
+    <button class="photoClose" id="photoClose">RETURN TO 2022</button>
+    <img id="photoImg" alt="Period reference">
+    <div class="photoMeta" id="photoMeta"></div>
+  </div>
+</div>
+
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {EffectComposer} from 'three/addons/postprocessing/EffectComposer.js';
-import {RenderPass} from 'three/addons/postprocessing/RenderPass.js';
-import {UnrealBloomPass} from 'three/addons/postprocessing/UnrealBloomPass.js';
-import * as RAPIER from 'https://cdn.jsdelivr.net/npm/@dimforge/rapier3d-compat@0.17.3/+esm';
-await RAPIER.init();
 
-const ORIGIN=[-115.17391,36.11262], R=Math.PI/180, mLon=111320*Math.cos(ORIGIN[1]*R), mLat=110540;
-const local=([lng,lat])=>new THREE.Vector3((lng-ORIGIN[0])*mLon,0,-(lat-ORIGIN[1])*mLat);
-const memories=[
-['Bellagio Fountains',[-115.17374,36.11245],'Bellagio • Night','We stopped longer than planned. Water rose into the light and, for a few minutes, the Strip felt choreographed instead of chaotic.'],
-['Paris Las Vegas',[-115.17218,36.11243],'Paris Las Vegas • Night','The Eiffel Tower became a compass. You could lose track of blocks and time, but not that silhouette.'],
-['Caesars Palace',[-115.17378,36.11548],'Caesars Palace • Late evening','Marble, fountains, fake daylight and corridors designed to erase orientation. Just having a look became an hour.'],
-['The Cosmopolitan',[-115.17510,36.11035],'Cosmopolitan • Late night','Glass, escalators and reflections. Vegas kept folding exterior and interior into one continuous scene.'],
-['Flamingo Corner',[-115.17172,36.11615],'Flamingo • Night','Older Vegas pink surviving between the newer towers. Layers of the city sitting beside one another.'],
-['Afterimage',[-115.17275,36.11355],'Las Vegas • Later','The city does not remain as a map. It breaks into light, signs, fragments of conversation and a few photographs that still carry the feeling.']
-];
-const photos=['1581351721010-8cf859cb14a4','1605833556294-ea5c7a74f57d','1598935898639-81586f7d2129','1582719478250-c89cae4dc85b','1596627116790-af6f46dddbca','1605833556294-ea5c7a74f57d'];
-let found=new Set(JSON.parse(localStorage.getItem('neon-fps-found')||'[]')),objective=0,paused=true,entered=false;
-const $=s=>document.querySelector(s); $('#count').textContent=`${found.size} / ${memories.length}`;
+const $=s=>document.querySelector(s);
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));
+renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.78;
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;document.body.prepend(renderer.domElement);
 
-const scene=new THREE.Scene(); scene.background=new THREE.Color(0x03040a); scene.fog=new THREE.FogExp2(0x070913,.0018);
-const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,.05,1800);
-const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'}); renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.9;renderer.shadowMap.enabled=true;document.body.prepend(renderer.domElement);
-const composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.38,.55,.88);composer.addPass(bloom);
-scene.add(new THREE.HemisphereLight(0x6d7c9f,0x130f18,1.1));const moon=new THREE.DirectionalLight(0xaec7ff,2.3);moon.position.set(-80,160,40);scene.add(moon);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x02040a);scene.fog=new THREE.FogExp2(0x07070a,.0024);
+const camera=new THREE.PerspectiveCamera(72,innerWidth/innerHeight,.05,1400);
+const hemi=new THREE.HemisphereLight(0x65749b,0x130d08,.75);scene.add(hemi);
+const moon=new THREE.DirectionalLight(0xb6c9ff,1.6);moon.position.set(-90,170,80);moon.castShadow=true;moon.shadow.mapSize.set(2048,2048);moon.shadow.camera.left=-240;moon.shadow.camera.right=240;moon.shadow.camera.top=240;moon.shadow.camera.bottom=-240;scene.add(moon);
 
-const world=new RAPIER.World({x:0,y:-9.81,z:0});
-world.createCollider(RAPIER.ColliderDesc.cuboid(380,.1,380).setTranslation(0,-.1,0).setFriction(1.2));
-const body=world.createRigidBody(RAPIER.RigidBodyDesc.kinematicPositionBased().setTranslation(-45,1.1,74));
-const capsule=world.createCollider(RAPIER.ColliderDesc.capsule(.55,.38).setFriction(0),body);
-const controller=world.createCharacterController(.025);controller.enableAutostep(.42,.18,true);controller.enableSnapToGround(.35);controller.setMaxSlopeClimbAngle(45*Math.PI/180);controller.setApplyImpulsesToDynamicBodies(true);
-
-function staticBox(name,pos,size,color=0x202532,emissive=0x000000){
- const mat=new THREE.MeshStandardMaterial({color,roughness:.52,metalness:.32,emissive,emissiveIntensity:.35});
- const mesh=new THREE.Mesh(new THREE.BoxGeometry(size.x,size.y,size.z),mat);mesh.position.copy(pos);mesh.position.y=size.y/2;mesh.castShadow=mesh.receiveShadow=true;scene.add(mesh);
- world.createCollider(RAPIER.ColliderDesc.cuboid(size.x/2,size.y/2,size.z/2).setTranslation(pos.x,size.y/2,pos.z));
- if(name){const c=document.createElement('canvas');c.width=512;c.height=96;const x=c.getContext('2d');x.fillStyle='#05060b';x.fillRect(0,0,c.width,c.height);x.font='700 38px sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillStyle='#fff';x.fillText(name,c.width/2,c.height/2);const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.SRGBColorSpace;const s=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true}));s.position.set(pos.x,size.y*.72,pos.z-size.z/2-.5);s.scale.set(Math.min(size.x*.7,70),12,1);scene.add(s)}
- return mesh;
+const MAT={
+ asphalt:new THREE.MeshStandardMaterial({color:0x101115,roughness:.96}),
+ concrete:new THREE.MeshStandardMaterial({color:0x66615b,roughness:.92}),
+ glass:new THREE.MeshPhysicalMaterial({color:0x060a0e,metalness:.2,roughness:.14,transmission:.02}),
+ gold:new THREE.MeshStandardMaterial({color:0x9d6c30,metalness:.55,roughness:.35,emissive:0x2c1705,emissiveIntensity:.35}),
+ warm:new THREE.MeshStandardMaterial({color:0x8f745a,roughness:.7,emissive:0x2d1708,emissiveIntensity:.26}),
+ white:new THREE.MeshStandardMaterial({color:0xaaa69f,roughness:.76}),
+ dark:new THREE.MeshStandardMaterial({color:0x191a1e,roughness:.72}),
+ green:new THREE.MeshStandardMaterial({color:0x32443c,roughness:.62,emissive:0x07150d,emissiveIntensity:.25})
+};
+function box(parent,size,pos,mat=MAT.dark,cast=true){const m=new THREE.Mesh(new THREE.BoxGeometry(...size),mat);m.position.set(...pos);m.castShadow=cast;m.receiveShadow=true;parent.add(m);return m}
+function cyl(parent,r1,r2,h,pos,mat=MAT.dark,seg=12){const m=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,h,seg),mat);m.position.set(...pos);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m}
+function textSprite(parent,text,pos,scale=[28,6],fg='#f3eadb',bg='rgba(8,8,9,.72)'){
+ const c=document.createElement('canvas');c.width=1024;c.height=192;const x=c.getContext('2d');x.fillStyle=bg;x.fillRect(0,0,c.width,c.height);x.font='700 68px Arial';x.textAlign='center';x.textBaseline='middle';x.fillStyle=fg;x.fillText(text,c.width/2,c.height/2);
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthWrite:false}));s.position.set(...pos);s.scale.set(scale[0],scale[1],1);parent.add(s);return s
 }
-function landmark(name,ll,size,color,em){const p=local(ll);return staticBox(name,p,size,color,em)}
-landmark('BELLAGIO',[-115.17612,36.11314],new THREE.Vector3(178,112,72),0x77736f,0x161024);
-landmark('CAESARS PALACE',[-115.17585,36.11592],new THREE.Vector3(180,88,110),0x8b7b69,0x24160e);
-landmark('COSMOPOLITAN',[-115.17530,36.11015],new THREE.Vector3(86,154,78),0x3b4656,0x141b2e);
-landmark('PARIS',[-115.17055,36.11276],new THREE.Vector3(118,108,92),0x8a7966,0x29120d);
-landmark('PLANET HOLLYWOOD',[-115.17063,36.11042],new THREE.Vector3(112,84,94),0x36323d,0x251025);
+function ground(parent,w,d,pos=[0,-.03,0],mat=MAT.asphalt){const m=new THREE.Mesh(new THREE.PlaneGeometry(w,d),mat);m.rotation.x=-Math.PI/2;m.position.set(...pos);m.receiveShadow=true;parent.add(m);return m}
+function lamp(parent,x,z,color=0xffc889,intensity=28){cyl(parent,.12,.16,7,[x,3.5,z],MAT.dark,8);const bulb=new THREE.PointLight(color,intensity,26,2);bulb.position.set(x,7,z);parent.add(bulb);const g=new THREE.Mesh(new THREE.SphereGeometry(.18,8,6),new THREE.MeshBasicMaterial({color}));g.position.copy(bulb.position);parent.add(g)}
+function palm(parent,x,z,s=1){cyl(parent,.28*s,.48*s,7*s,[x,3.5*s,z],new THREE.MeshStandardMaterial({color:0x53402d,roughness:1}),8);for(let i=0;i<9;i++){const leaf=new THREE.Mesh(new THREE.ConeGeometry(.7*s,5*s,4),new THREE.MeshStandardMaterial({color:0x243624,roughness:1}));leaf.position.set(x,7.4*s,z);leaf.rotation.z=Math.PI/2+(Math.random()-.5)*.25;leaf.rotation.y=i/9*Math.PI*2;leaf.translateY(1.4*s);parent.add(leaf)}}
+function customPyramid(parent,half,height,pos,mat){
+ const v=new Float32Array([-half,0,-half, half,0,-half, half,0,half, -half,0,half, 0,height,0]);
+ const idx=[0,1,4,1,2,4,2,3,4,3,0,4,0,3,2,0,2,1];const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(v,3));g.setIndex(idx);g.computeVertexNormals();
+ const m=new THREE.Mesh(g,mat);m.position.set(...pos);m.castShadow=m.receiveShadow=true;parent.add(m);return m
+}
+function addWindowGrid(parent,half,height,pos){
+ const material=new THREE.LineBasicMaterial({color:0xdcb57a,transparent:true,opacity:.12});
+ const group=new THREE.Group();group.position.set(...pos);parent.add(group);
+ for(let y=6;y<height-4;y+=5.3){const ratio=1-y/height,span=half*ratio;const points=[new THREE.Vector3(-span,y,-span),new THREE.Vector3(span,y,-span),new THREE.Vector3(span,y,span),new THREE.Vector3(-span,y,span),new THREE.Vector3(-span,y,-span)];group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(points),material))}
+ for(let i=-8;i<=8;i++){const f=i/8;const p1=new THREE.Vector3(f*half,0,-half),p2=new THREE.Vector3(0,height,0);group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p1,p2]),material))}
+}
+function car(parent,x,z,dir=1,speed=10,color=0x252b36){const g=new THREE.Group();box(g,[3.6,.72,1.65],[0,.48,0],new THREE.MeshStandardMaterial({color,metalness:.35,roughness:.42}));box(g,[1.9,.55,1.46],[-.25,1.0,0],new THREE.MeshStandardMaterial({color:0x10151c,metalness:.15,roughness:.18}));for(const dz of [-.55,.55]){const l=new THREE.Mesh(new THREE.SphereGeometry(.12,8,6),new THREE.MeshBasicMaterial({color:dir>0?0xfff1c5:0xd6241f}));l.position.set(dir>0?1.82:-1.82,.54,dz);g.add(l)}g.position.set(x,0,z);g.rotation.y=dir>0?0:Math.PI;parent.add(g);return{g,dir,speed}}
+function person(parent,x,z,shade=0x27272d){const g=new THREE.Group();const m=new THREE.MeshStandardMaterial({color:shade,roughness:.9});cyl(g,.18,.21,1.1,[0,.75,0],m,8);const h=new THREE.Mesh(new THREE.SphereGeometry(.18,8,6),new THREE.MeshStandardMaterial({color:0x8b715f,roughness:1}));h.position.y=1.48;g.add(h);g.position.set(x,0,z);parent.add(g);return g}
 
-const waterP=local([-115.17465,36.1123]);const water=new THREE.Mesh(new THREE.PlaneGeometry(170,95),new THREE.MeshPhysicalMaterial({color:0x071624,metalness:.15,roughness:.18,transparent:true,opacity:.88}));water.rotation.x=-Math.PI/2;water.position.set(waterP.x,.03,waterP.z);scene.add(water);
-const jets=[];for(let i=0;i<28;i++){const g=new THREE.CylinderGeometry(.08,.18,1,5),m=new THREE.MeshBasicMaterial({color:0xbbefff,transparent:true,opacity:.75});const j=new THREE.Mesh(g,m);j.position.set(waterP.x-70+i*5.2,.5,waterP.z+(i%3-1)*9);scene.add(j);jets.push(j)}
+const chapters={};
+function makeLuxor(){
+ const root=new THREE.Group();scene.add(root);chapters['29']=root;
+ ground(root,700,900,[0,-.04,0],new THREE.MeshStandardMaterial({color:0x09090c,roughness:1}));
+ ground(root,56,900,[94,.005,0],MAT.asphalt);ground(root,12,900,[61,.012,0],MAT.concrete);ground(root,12,900,[127,.012,0],MAT.concrete);
+ for(let z=-420;z<420;z+=18){box(root,[.28,.025,7],[94,.02,z],new THREE.MeshBasicMaterial({color:0xd8d5c8}),false)}
+ for(let z=-420;z<420;z+=40){lamp(root,58,z);lamp(root,130,z)}
+ customPyramid(root,98.5,106.7,[-52,0,18],MAT.glass);addWindowGrid(root,98.5,106.7,[-52,0,18]);
+ const apex=new THREE.Vector3(-52,106.7,18);const beamMat=new THREE.MeshBasicMaterial({color:0x9fd8ff,transparent:true,opacity:.17,blending:THREE.AdditiveBlending,depthWrite:false});
+ const beam=new THREE.Mesh(new THREE.CylinderGeometry(1.1,2.7,750,12,1,true),beamMat);beam.position.set(apex.x,apex.y+375,apex.z);root.add(beam);const apexLight=new THREE.PointLight(0xbbe6ff,90,150,1.4);apexLight.position.copy(apex);root.add(apexLight);
+ for(const z of [-92,126]){box(root,[57,76,28],[-88,38,z],new THREE.MeshStandardMaterial({color:0x24252a,metalness:.45,roughness:.28,emissive:0x130d08,emissiveIntensity:.25}));for(let y=8;y<72;y+=6)box(root,[58,.08,29],[-88,y,z],new THREE.MeshBasicMaterial({color:0xaa7d4f,transparent:true,opacity:.11}),false)}
+ const sph=new THREE.Group();sph.position.set(34,0,20);root.add(sph);box(sph,[54,9,24],[0,4.5,0],new THREE.MeshStandardMaterial({color:0xb49a72,roughness:.9}));
+ const chest=new THREE.Mesh(new THREE.SphereGeometry(15,22,14),new THREE.MeshStandardMaterial({color:0xb49a72,roughness:.92}));chest.scale.set(1.3,.72,.85);chest.position.set(0,14,0);sph.add(chest);
+ const head=new THREE.Mesh(new THREE.SphereGeometry(8.7,20,14),new THREE.MeshStandardMaterial({color:0xbda17b,roughness:.88}));head.scale.set(.8,1.05,.82);head.position.set(0,28,0);sph.add(head);
+ const crown=new THREE.Mesh(new THREE.ConeGeometry(13,19,4),new THREE.MeshStandardMaterial({color:0x8f6a4b,roughness:.7}));crown.rotation.y=Math.PI/4;crown.position.set(0,27.5,1.5);sph.add(crown);
+ box(sph,[35,2,31],[0,7,0],new THREE.MeshStandardMaterial({color:0x201810,roughness:.8}));textSprite(sph,'LUXOR',[0,13,13],[25,5],'#d9b57f','rgba(30,19,9,.72)');
+ const ob=new THREE.Mesh(new THREE.ConeGeometry(3.3,41,4),new THREE.MeshStandardMaterial({color:0x9b7955,roughness:.76,emissive:0x241307,emissiveIntensity:.3}));ob.position.set(68,20.5,-23);ob.rotation.y=Math.PI/4;root.add(ob);textSprite(root,'L U X O R',[68,24,-19],[16,3.4],'#f5c979','rgba(0,0,0,.25)');
+ box(root,[95,92,24],[-92,46,300],new THREE.MeshStandardMaterial({color:0x8b652d,metalness:.38,roughness:.4,emissive:0x241406,emissiveIntensity:.36}));textSprite(root,'MANDALAY BAY',[-92,78,287],[48,5],'#f6d697');
+ const exc=new THREE.Group();exc.position.set(0,0,-260);root.add(exc);box(exc,[94,37,40],[-48,18.5,0],MAT.white);for(const [x,z,c] of [[-78,-12,0xd93d41],[-52,15,0x3d69c9],[-24,-11,0xe2c84f],[-5,12,0xd93d41]]){cyl(exc,6,8,39,[x,19.5,z],MAT.white,10);const roof=new THREE.Mesh(new THREE.ConeGeometry(8,18,8),new THREE.MeshStandardMaterial({color:c,roughness:.55}));roof.position.set(x,48,z);exc.add(roof)}textSprite(exc,'EXCALIBUR',[-47,30,-21],[38,5],'#f1e8d5');
+ for(let z=-210;z<250;z+=36){palm(root,48,z,.9);palm(root,140,z,.85)}
+ const cars=[];for(let i=0;i<18;i++){const lane=[82,91,99,107][i%4],dir=i%2?1:-1;cars.push(car(root,lane,-400+i*47,dir,10+Math.random()*7,[0x202734,0x5a1718,0x5a5b5e,0x172c3f][i%4]))}
+ root.userData.cars=cars;
+ const people=[];for(let i=0;i<28;i++){const side=i%2?55:135,shade=[0x202126,0x3b2632,0x19191d,0x3c3a31][i%4];const p=person(root,side+(Math.random()-.5)*4,-180+Math.random()*360,shade);p.userData.speed=.35+Math.random()*.6;p.userData.dir=Math.random()>.5?1:-1;people.push(p)}root.userData.people=people;
+ box(root,[56,1.2,19],[33,5,20],new THREE.MeshStandardMaterial({color:0x6e6253,metalness:.25,roughness:.55}));for(const z of [12,28])for(const x of [10,27,44,58])cyl(root,.28,.35,5,[x,2.5,z],MAT.warm,8);
+ return root
+}
+function makeArena(){
+ const root=new THREE.Group();root.position.z=-1800;scene.add(root);chapters['30']=root;ground(root,760,760,[0,-.04,0],new THREE.MeshStandardMaterial({color:0x09090c,roughness:1}));
+ ground(root,52,760,[100,.005,0],MAT.asphalt);ground(root,12,760,[67,.012,0],MAT.concrete);ground(root,12,760,[133,.012,0],MAT.concrete);
+ const arenaMat=new THREE.MeshStandardMaterial({color:0x4a4b4c,metalness:.62,roughness:.38,emissive:0x17120a,emissiveIntensity:.3});
+ const arena=new THREE.Mesh(new THREE.CylinderGeometry(78,92,44,48),arenaMat);arena.scale.z=.72;arena.position.set(-76,22,0);arena.castShadow=arena.receiveShadow=true;root.add(arena);
+ const ring=new THREE.Mesh(new THREE.TorusGeometry(83,2.1,8,64),new THREE.MeshBasicMaterial({color:0xd6b66d}));ring.rotation.x=Math.PI/2;ring.scale.y=.72;ring.position.set(-76,42,0);root.add(ring);textSprite(root,'T-MOBILE ARENA',[-76,31,64],[48,6],'#f4e7cf','rgba(19,17,16,.76)');
+ box(root,[95,78,30],[29,39,-172],new THREE.MeshStandardMaterial({color:0x3d5146,roughness:.38,metalness:.42,emissive:0x0a160f,emissiveIntensity:.4}));textSprite(root,'PARK MGM',[29,62,-188],[35,5],'#e6f0e8');
+ const ny=new THREE.Group();ny.position.set(0,0,165);root.add(ny);for(let i=0;i<8;i++){const h=34+Math.random()*48, x=-15+i*18;box(ny,[14,h,17],[x,h/2,(i%2)*9],new THREE.MeshStandardMaterial({color:[0x594d48,0x524949,0x3e4d5a][i%3],roughness:.6,emissive:0x100a08,emissiveIntensity:.18}))}textSprite(ny,'NEW YORK · NEW YORK',[45,52,-14],[52,5],'#f0e2cc');
+ textSprite(root,'VGK  vs  WPG  ·  5:08 PM',[-75,18,67],[44,5],'#f6d277','rgba(12,12,12,.86)');
+ const crowd=[];for(let i=0;i<150;i++){const a=Math.random()*Math.PI*1.1-Math.PI*.05,r=92+Math.random()*58;let x=-76+Math.cos(a)*r,z=Math.sin(a)*r;const p=person(root,x,z,[0x17191c,0x3d3421,0x1f2931,0x232323][i%4]);p.scale.setScalar(.9+Math.random()*.18);p.userData.base=p.position.clone();p.userData.phase=Math.random()*6;crowd.push(p)}root.userData.crowd=crowd;
+ const cars=[];for(let i=0;i<16;i++)cars.push(car(root,[88,97,105,114][i%4],-340+i*43,i%2?1:-1,8+Math.random()*7));root.userData.cars=cars;
+ for(let z=-300;z<300;z+=38){lamp(root,62,z);lamp(root,138,z)}
+ return root
+}
+function makeAirport(){
+ const root=new THREE.Group();root.position.z=1800;scene.add(root);chapters['31']=root;ground(root,820,720,[0,-.04,0],new THREE.MeshStandardMaterial({color:0x111216,roughness:.95}));
+ box(root,[310,32,58],[-68,16,-40],new THREE.MeshStandardMaterial({color:0x4e5358,metalness:.42,roughness:.36,emissive:0x0c1116,emissiveIntensity:.26}));for(let x=-200;x<70;x+=18)box(root,[10,11,.12],[x,14,-69.1],new THREE.MeshPhysicalMaterial({color:0x223447,metalness:.2,roughness:.18,transparent:true,opacity:.78}),false);
+ textSprite(root,'LAS · TERMINAL 3',[-66,26,-70],[55,6],'#eef2f6','rgba(15,17,20,.76)');
+ ground(root,62,720,[150,.005,0],MAT.asphalt);for(let z=-320;z<320;z+=20)box(root,[.25,.025,8],[150,.02,z],new THREE.MeshBasicMaterial({color:0xdedbd0}),false);
+ const plane=new THREE.Group();plane.position.set(-85,0,100);root.add(plane);const pm=new THREE.MeshStandardMaterial({color:0xd8dbe0,metalness:.25,roughness:.42});
+ const fus=cyl(plane,2.3,2.3,54,[0,6,0],pm,16);fus.rotation.z=Math.PI/2;box(plane,[22,.6,5],[0,6,0],pm);box(plane,[7,.45,14],[-19,8,0],pm);const nose=new THREE.Mesh(new THREE.SphereGeometry(2.35,12,8),pm);nose.position.set(27,6,0);plane.add(nose);
+ textSprite(root,'AS 3304 · LAX · 12:35',[-82,18,67],[48,5],'#e6eef8','rgba(15,17,20,.78)');
+ for(let z=-290;z<290;z+=42){lamp(root,115,z,0xeaf0ff,22);lamp(root,185,z,0xeaf0ff,22)}
+ const cars=[];for(let i=0;i<12;i++)cars.push(car(root,[138,148,157,166][i%4],-280+i*50,i%2?1:-1,7+Math.random()*6));root.userData.cars=cars;
+ return root
+}
+makeLuxor();makeArena();makeAirport();
 
-function eiffel(){const p=local([-115.17237,36.11253]),g=new THREE.Group();g.position.copy(p);const mat=new THREE.MeshStandardMaterial({color:0xb18b5d,metalness:.8,roughness:.25,emissive:0x3b1a08,emissiveIntensity:.5});for(const [x,z] of [[-13,-13],[13,-13],[-13,13],[13,13]]){const leg=new THREE.Mesh(new THREE.CylinderGeometry(1.2,3.2,74,8),mat);leg.position.set(x*.48,37,z*.48);leg.rotation.z=(x>0?-1:1)*.11;leg.rotation.x=(z>0?1:-1)*.11;g.add(leg)}for(const [y,r] of [[28,12],[55,7],[82,3]]){const ring=new THREE.Mesh(new THREE.TorusGeometry(r,.7,6,24),mat);ring.rotation.x=Math.PI/2;ring.position.y=y;g.add(ring)}const spire=new THREE.Mesh(new THREE.CylinderGeometry(.35,1.5,70,8),mat);spire.position.y=110;g.add(spire);scene.add(g);world.createCollider(RAPIER.ColliderDesc.cuboid(10,42,10).setTranslation(p.x,42,p.z))}
-eiffel();
+const chapterData={
+ '29':{date:'SAT 29 OCT 2022',clock:'19:14',place:'Luxor · South Las Vegas Boulevard',pos:new THREE.Vector3(72,1.66,78),yaw:-2.35,pitch:-.04,fog:0x07070a,whisper:'You arrive after sunset. The pyramid is not a destination marker now; it is the first confirmed place in the surviving record.',ey:'29 OCT · ARRIVAL'},
+ '30':{date:'SUN 30 OCT 2022',clock:'17:08',place:'T-Mobile Arena · city context',pos:new THREE.Vector3(62,1.66,-1800+85),yaw:-2.65,pitch:-.03,fog:0x0d0b0b,whisper:'This crowd belongs to the city, not necessarily to your story. At 17:08, 17,824 people were inside for Vegas vs Winnipeg.',ey:'30 OCT · THE CITY AROUND YOU'},
+ '31':{date:'MON 31 OCT 2022',clock:'11:20',place:'Harry Reid International Airport · Terminal 3',pos:new THREE.Vector3(94,1.66,1800+82),yaw:-2.4,pitch:-.02,fog:0xb7c1cb,whisper:'The timeline has an edge. A 12:35 departure is in the record, so this reconstruction ends before Halloween night begins.',ey:'31 OCT · DEPARTURE'}
+};
+const blockers29=[new THREE.Box3(new THREE.Vector3(-154,0,-81),new THREE.Vector3(49,110,117)),new THREE.Box3(new THREE.Vector3(4,0,5),new THREE.Vector3(64,36,35)),new THREE.Box3(new THREE.Vector3(56,0,-30),new THREE.Vector3(75,43,-13))];
+const blockers30=[new THREE.Box3(new THREE.Vector3(-170,0,-1870),new THREE.Vector3(25,60,-1730)),new THREE.Box3(new THREE.Vector3(-20,0,-1990),new THREE.Vector3(85,90,-1940))];
+const blockers31=[new THREE.Box3(new THREE.Vector3(-225,0,1715),new THREE.Vector3(90,40,1795))];
+const blockers={'29':blockers29,'30':blockers30,'31':blockers31};
+const anchors={
+ '29':[
+  {p:new THREE.Vector3(68,0,22),r:16,title:'Porte-cochère',text:'The Sphinx contains the arrival drive. Your check-in window is confirmed; the exact vehicle path and queue are reconstructed.',photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Hotel_Luxor-2022_%282%29.jpg?width=1800',meta:'Luxor interior · 29 Aug 2022 · Alberto-g-rovi · CC BY 3.0 · Wikimedia Commons'},
+  {p:new THREE.Vector3(67,0,43),r:15,title:'Atrium threshold',text:'Period photographs become more valuable here: the enormous atrium existed exactly as a spatial fact, while your precise route through it is unknown.',photo:'https://commons.wikimedia.org/wiki/Special:FilePath/Hotel_Luxor-2022_%286%29.jpg?width=1600',meta:'Luxor interior · 29 Aug 2022 · Alberto-g-rovi · CC BY 3.0 · Wikimedia Commons'}
+ ],
+ '30':[{p:new THREE.Vector3(-8,0,-1738),r:28,title:'Arena edge',text:'This is historical city context only. The game started at 17:08 and ended at 19:39; nothing here asserts that you were in this crowd.',photo:null,meta:''}],
+ '31':[{p:new THREE.Vector3(-35,0,1860),r:26,title:'Departure edge',text:'The itinerary schedules LAS → LAX at 12:35. After this point, the Las Vegas reconstruction should stop rather than invent a Halloween night you were scheduled to miss.',photo:null,meta:''}]
+};
 
-const TILE_Z=18, n=2**TILE_Z, lon=ORIGIN[0], lat=ORIGIN[1]*Math.PI/180, xf=(lon+180)/360*n, yf=(1-Math.log(Math.tan(lat)+1/Math.cos(lat))/Math.PI)/2*n, tileM=40075016.686*Math.cos(lat)/n;
-const tl=new THREE.TextureLoader();for(let dx=-2;dx<=2;dx++)for(let dy=-2;dy<=2;dy++){const tx=Math.floor(xf)+dx,ty=Math.floor(yf)+dy;const tex=tl.load(`https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${TILE_Z}/${ty}/${tx}`);tex.colorSpace=THREE.SRGBColorSpace;tex.anisotropy=renderer.capabilities.getMaxAnisotropy();const tile=new THREE.Mesh(new THREE.PlaneGeometry(tileM,tileM),new THREE.MeshStandardMaterial({map:tex,roughness:1}));tile.rotation.x=-Math.PI/2;tile.position.set((tx+.5-xf)*tileM,.005,(ty+.5-yf)*tileM);scene.add(tile)}
-
-const BASE='https://raw.githubusercontent.com/bevyengine/bevy_asset_files/main/kenney', loader=new GLTFLoader();
-async function asset(url,pos,scale=1,rot=0,physics=false){return new Promise(res=>loader.load(url,g=>{g.scene.position.copy(pos);g.scene.scale.setScalar(scale);g.scene.rotation.y=rot;g.scene.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true}});scene.add(g.scene);if(physics)world.createCollider(RAPIER.ColliderDesc.cuboid(1.2*scale,1*scale,2.2*scale).setTranslation(pos.x,1*scale,pos.z));res(g.scene)},undefined,()=>res(null)))}
-const roadX=local([-115.1727,36.11262]).x;
-for(let z=-250;z<260;z+=34){asset(`${BASE}/city-kit-roads/light-curved-double.glb`,new THREE.Vector3(roadX-18,0,z),1.9,0);asset(`${BASE}/city-kit-roads/light-curved-double.glb`,new THREE.Vector3(roadX+18,0,z),1.9,Math.PI)}
-for(let i=0;i<9;i++)asset(`${BASE}/city-kit-roads/construction-cone.glb`,new THREE.Vector3(roadX-9,0,-68+i*2.2),1.15,0,true);
-const cars=[];const carNames=['taxi','sedan-sports','suv-luxury','police','sedan','hatchback-sports'];for(let i=0;i<12;i++){const lane=i%2?roadX-5:roadX+5,z=-280+i*48;asset(`${BASE}/car-kit/${carNames[i%carNames.length]}.glb`,new THREE.Vector3(lane,.12,z),2.0,i%2?Math.PI:0,true).then(mesh=>{if(mesh)cars.push({mesh,lane,dir:i%2?1:-1,speed:10+Math.random()*5})})}
-
-const lamps=[];for(let z=-230;z<230;z+=45){for(const x of [roadX-18,roadX+18]){const l=new THREE.PointLight(0xffc88a,24,30,2);l.position.set(x,7,z);scene.add(l);lamps.push(l)}}
-const beacons=[];memories.forEach((m,i)=>{const p=local(m[1]),g=new THREE.Group();g.position.set(p.x,1,p.z);const orb=new THREE.Mesh(new THREE.IcosahedronGeometry(.38,2),new THREE.MeshStandardMaterial({color:found.has(i)?0x62edff:0xffffff,emissive:found.has(i)?0x1b7480:0x87276d,emissiveIntensity:2}));orb.position.y=1.2;g.add(orb);const ring=new THREE.Mesh(new THREE.TorusGeometry(.8,.05,8,40),new THREE.MeshBasicMaterial({color:0xff4dc9}));ring.rotation.x=Math.PI/2;g.add(ring);g.userData={orb,ring};scene.add(g);beacons.push(g)});
-
-let yaw=0,pitch=0,vy=0,grounded=false,last=performance.now(),bob=0,audio=null,stepTimer=0;
-const keys={};addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyE')interact();if(e.code==='Space'&&grounded){vy=6.1;grounded=false}});addEventListener('keyup',e=>keys[e.code]=false);
-renderer.domElement.addEventListener('click',()=>{if(entered&&!paused&&matchMedia('(pointer:fine)').matches)renderer.domElement.requestPointerLock()});document.addEventListener('mousemove',e=>{if(document.pointerLockElement===renderer.domElement&&!paused){yaw-=e.movementX*.0022;pitch=Math.max(-1.35,Math.min(1.25,pitch-e.movementY*.0022))}});
-const joy={x:0,y:0};let jid=null,jcx=0,jcy=0;const je=$('#joy'),stick=$('#stick');je.onpointerdown=e=>{jid=e.pointerId;je.setPointerCapture(jid);const r=je.getBoundingClientRect();jcx=r.left+r.width/2;jcy=r.top+r.height/2;jmove(e)};je.onpointermove=e=>{if(e.pointerId===jid)jmove(e)};je.onpointerup=e=>{if(e.pointerId===jid){jid=null;joy.x=joy.y=0;stick.style.transform='translate(-50%,-50%)'}};function jmove(e){let x=e.clientX-jcx,y=e.clientY-jcy,l=Math.hypot(x,y),mx=35;if(l>mx){x=x/l*mx;y=y/l*mx}joy.x=x/mx;joy.y=-y/mx;stick.style.transform=`translate(calc(-50% + ${x}px),calc(-50% + ${y}px))`}
-let lookId=null,lx=0,ly=0;$('#lookzone').onpointerdown=e=>{lookId=e.pointerId;lx=e.clientX;ly=e.clientY;$('#lookzone').setPointerCapture(lookId)};$('#lookzone').onpointermove=e=>{if(e.pointerId!==lookId)return;yaw-=(e.clientX-lx)*.004;pitch=Math.max(-1.2,Math.min(1.1,pitch-(e.clientY-ly)*.004));lx=e.clientX;ly=e.clientY};
-$('#jump').onclick=()=>{if(grounded){vy=6.1;grounded=false}};let mobileSprint=false;$('#sprint').onpointerdown=()=>mobileSprint=true;$('#sprint').onpointerup=()=>mobileSprint=false;
-
-function nearest(){const t=body.translation();let bi=-1,bd=1e9;memories.forEach((m,i)=>{const p=local(m[1]),d=Math.hypot(t.x-p.x,t.z-p.z);if(d<bd){bd=d;bi=i}});return[bi,bd]}
-function interact(){if(paused)return;const [i,d]=nearest();if(d<3.4)openMemory(i)}
-function openMemory(i){paused=true;document.exitPointerLock?.();const m=memories[i];$('#title').textContent=m[0];$('#meta').textContent=m[2];$('#text').textContent=m[3];$('#img').src=`https://images.unsplash.com/photo-${photos[i]}?auto=format&fit=crop&w=1200&q=82`;$('#card').classList.add('open');if(!found.has(i)){found.add(i);localStorage.setItem('neon-fps-found',JSON.stringify([...found]));$('#count').textContent=`${found.size} / ${memories.length}`;beacons[i].userData.orb.material.color.setHex(0x62edff)}objective=(i+1)%memories.length}
-$('#back').onclick=()=>{$('#card').classList.remove('open');paused=false};$('#next').onclick=()=>{$('#card').classList.remove('open');paused=false;updateMission()};
-function updateMission(){const t=body.translation(),m=memories[objective],p=local(m[1]),d=Math.hypot(t.x-p.x,t.z-p.z);$('#mt').textContent=`Reach ${m[0]}`;$('#md').textContent=`${Math.round(d)} m away • ${m[2].split(' • ')[0]}`}
-function initAudio(){if(audio)return;audio=new AudioContext();const o=audio.createOscillator(),g=audio.createGain();o.type='sawtooth';o.frequency.value=52;g.gain.value=.012;o.connect(g).connect(audio.destination);o.start()}
-$('#enter').onclick=()=>{entered=true;paused=false;$('#intro').classList.add('hide');initAudio();setTimeout(()=>$('#loading').style.display='none',200);if(matchMedia('(pointer:fine)').matches)renderer.domElement.requestPointerLock()};
-setTimeout(()=>{$('#loading').style.display='none'},5000);
-
-function frame(now){requestAnimationFrame(frame);const dt=Math.min(.033,(now-last)/1000);last=now,t=now*.001;
-if(entered&&!paused){let x=(keys.KeyD?1:0)-(keys.KeyA?1:0)+joy.x,z=(keys.KeyS?1:0)-(keys.KeyW?1:0)-joy.y,l=Math.hypot(x,z),s=(keys.ShiftLeft||keys.ShiftRight||mobileSprint)?7.6:4.6;if(l>1){x/=l;z/=l}const sy=Math.sin(yaw),cy=Math.cos(yaw),dx=(x*cy+z*sy)*s*dt,dz=(-x*sy+z*cy)*s*dt;vy+=-18*dt;if(grounded&&vy<0)vy=-.4;controller.computeColliderMovement(capsule,{x:dx,y:vy*dt,z:dz});const mv=controller.computedMovement(),p=body.translation();body.setNextKinematicTranslation({x:p.x+mv.x,y:p.y+mv.y,z:p.z+mv.z});grounded=controller.computedGrounded();if(grounded&&vy<0)vy=0;world.step();const q=body.translation();bob+=(l>.1?s*dt:0);camera.position.set(q.x,q.y+.55+Math.sin(bob*2.2)*Math.min(.035,l),q.z);camera.rotation.order='YXZ';camera.rotation.set(pitch,yaw,0);if(l>.1){stepTimer-=dt;if(stepTimer<=0){stepTimer=(s>6?0.32:.48)}}}
-const [ni,nd]=nearest();$('#prompt').classList.toggle('on',nd<3.4);if(nd<3.4)$('#prompt').textContent=`E • ${memories[ni][0].toUpperCase()}`;updateMission();
-jets.forEach((j,i)=>{const h=.5+Math.max(0,Math.sin(t*1.7+i*.65))*((i%7===0)?18:7);j.scale.y=h;j.position.y=h*.5});
-cars.forEach(c=>{c.mesh.position.z+=c.dir*c.speed*dt;if(c.mesh.position.z>300)c.mesh.position.z=-300;if(c.mesh.position.z<-300)c.mesh.position.z=300});
-beacons.forEach((b,i)=>{b.userData.ring.rotation.z=t*.8+i;b.position.y=1+Math.sin(t*2+i)*.12});
-composer.render()}
-requestAnimationFrame(frame);
-addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight)});
+let entered=false,paused=true,current='29',yaw=chapterData['29'].yaw,pitch=chapterData['29'].pitch,audioCtx=null,soundOn=false,last=performance.now(),bob=0,nearAnchor=null,whisperUntil=0;
+camera.position.copy(chapterData['29'].pos);camera.rotation.order='YXZ';camera.rotation.set(pitch,yaw,0);
+const keys={};addEventListener('keydown',e=>{keys[e.code]=true;if(e.code==='KeyE')enterPhoto();if(e.code==='Escape'){$('#photo').classList.remove('open')}});addEventListener('keyup',e=>keys[e.code]=false);
+renderer.domElement.addEventListener('click',()=>{if(entered&&!paused&&matchMedia('(pointer:fine)').matches)renderer.domElement.requestPointerLock()});
+document.addEventListener('mousemove',e=>{if(document.pointerLockElement===renderer.domElement&&!paused){yaw-=e.movementX*.00205;pitch=Math.max(-1.15,Math.min(1.15,pitch-e.movementY*.0019))}});
+document.addEventListener('pointerlockchange',()=>$('#startHint').classList.toggle('on',entered&&!paused&&matchMedia('(pointer:fine)').matches&&document.pointerLockElement!==renderer.domElement));
+let joy={x:0,y:0},joyId=null,jcx=0,jcy=0;const j=$('#joy'),stick=$('#stick');
+j.onpointerdown=e=>{joyId=e.pointerId;j.setPointerCapture(joyId);const r=j.getBoundingClientRect();jcx=r.left+r.width/2;jcy=r.top+r.height/2;moveJoy(e)};
+j.onpointermove=e=>{if(e.pointerId===joyId)moveJoy(e)};j.onpointerup=e=>{if(e.pointerId===joyId){joyId=null;joy={x:0,y:0};stick.style.transform='translate(0,0)'}};
+function moveJoy(e){let x=e.clientX-jcx,y=e.clientY-jcy,l=Math.hypot(x,y),m=31;if(l>m){x=x/l*m;y=y/l*m}joy={x:x/m,y:-y/m};stick.style.transform=`translate(${x}px,${y}px)`}
+let lookId=null,lx=0,ly=0;const look=$('#touchLook');look.onpointerdown=e=>{lookId=e.pointerId;lx=e.clientX;ly=e.clientY;look.setPointerCapture(lookId)};look.onpointermove=e=>{if(e.pointerId!==lookId||paused)return;yaw-=(e.clientX-lx)*.0038;pitch=Math.max(-1.1,Math.min(1.1,pitch-(e.clientY-ly)*.0035));lx=e.clientX;ly=e.clientY};
+function startAudio(){if(audioCtx)return;audioCtx=new (window.AudioContext||window.webkitAudioContext)();const master=audioCtx.createGain();master.gain.value=.16;master.connect(audioCtx.destination);const buf=audioCtx.createBuffer(1,audioCtx.sampleRate*2,audioCtx.sampleRate),data=buf.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=(Math.random()*2-1)*.16;const noise=audioCtx.createBufferSource();noise.buffer=buf;noise.loop=true;const filt=audioCtx.createBiquadFilter();filt.type='lowpass';filt.frequency.value=620;const ng=audioCtx.createGain();ng.gain.value=.08;noise.connect(filt).connect(ng).connect(master);noise.start();const hum=audioCtx.createOscillator(),hg=audioCtx.createGain();hum.type='sine';hum.frequency.value=43;hg.gain.value=.025;hum.connect(hg).connect(master);hum.start();audioCtx.suspend();soundOn=false}
+function toggleSound(){startAudio();soundOn=!soundOn;if(soundOn)audioCtx.resume();else audioCtx.suspend();$('#soundBtn').textContent=soundOn?'SOUND ON':'SOUND'}
+$('#soundBtn').onclick=toggleSound;
+$('#enter').onclick=()=>{entered=true;paused=false;$('#intro').classList.add('hide');startAudio();setTimeout(()=>{$('#whisperTx').textContent=chapterData[current].whisper;$('#whisperEy').textContent=chapterData[current].ey;$('#whisper').classList.add('on');whisperUntil=performance.now()+6500},700);if(matchMedia('(pointer:fine)').matches)setTimeout(()=>renderer.domElement.requestPointerLock(),700)};
+$('#evidenceBtn').onclick=()=>{$('#evidence').classList.add('open');paused=true;document.exitPointerLock?.()};$('#closeEvidence').onclick=()=>{$('#evidence').classList.remove('open');paused=false};
+$('#photoClose').onclick=()=>{$('#photo').classList.remove('open');paused=false};
+function enterPhoto(){if(!nearAnchor||!nearAnchor.photo)return;paused=true;document.exitPointerLock?.();$('#photoImg').src=nearAnchor.photo;$('#photoMeta').innerHTML=`<b>${nearAnchor.title}</b><br>${nearAnchor.meta}`;$('#photo').classList.add('open')}
+function collision(next){const radius=.42;for(const b of blockers[current]){if(next.x>b.min.x-radius&&next.x<b.max.x+radius&&next.z>b.min.z-radius&&next.z<b.max.z+radius)return true}return false}
+function updateAnchors(now){nearAnchor=null;let best=1e9;for(const a of anchors[current]){const d=Math.hypot(camera.position.x-a.p.x,camera.position.z-a.p.z);if(d<a.r&&d<best){nearAnchor=a;best=d}}$('#near').classList.toggle('on',!!(nearAnchor&&nearAnchor.photo));if(nearAnchor&&now>whisperUntil){$('#whisperTx').textContent=nearAnchor.text;$('#whisperEy').textContent=nearAnchor.title;$('#whisper').classList.add('on')}else if(now>whisperUntil&&!nearAnchor)$('#whisper').classList.remove('on')}
+function switchDay(day){if(day===current)return;paused=true;document.exitPointerLock?.();$('#transition').classList.add('on');setTimeout(()=>{current=day;const d=chapterData[day];camera.position.copy(d.pos);yaw=d.yaw;pitch=d.pitch;camera.rotation.set(pitch,yaw,0);scene.fog.color.setHex(d.fog);$('#date').textContent=d.date;$('#clock').textContent=d.clock;$('#place').textContent=d.place;document.querySelectorAll('.day').forEach(b=>b.classList.toggle('active',b.dataset.day===day));$('#whisperTx').textContent=d.whisper;$('#whisperEy').textContent=d.ey;$('#whisper').classList.add('on');whisperUntil=performance.now()+7000;$('#transition').classList.remove('on');paused=false;if(matchMedia('(pointer:fine)').matches)setTimeout(()=>renderer.domElement.requestPointerLock(),250)},600)}
+document.querySelectorAll('.day').forEach(b=>b.onclick=()=>switchDay(b.dataset.day));
+function animate(now){requestAnimationFrame(animate);const dt=Math.min(.035,(now-last)/1000);last=now;const t=now*.001;if(entered&&!paused){let sx=(keys.KeyD?1:0)-(keys.KeyA?1:0)+joy.x,sz=(keys.KeyW?1:0)-(keys.KeyS?1:0)+joy.y,l=Math.hypot(sx,sz);if(l>1){sx/=l;sz/=l}const speed=(keys.ShiftLeft||keys.ShiftRight)?5.4:3.2,sy=Math.sin(yaw),cy=Math.cos(yaw);const dx=(sx*cy-sz*sy)*speed*dt,dz=(-sx*sy-sz*cy)*speed*dt;const next=camera.position.clone().add(new THREE.Vector3(dx,0,dz));if(!collision(next)){camera.position.x=next.x;camera.position.z=next.z}if(l>.05)bob+=dt*speed*2.1;camera.position.y=1.66+(l>.05?Math.sin(bob)*.022:0);camera.rotation.set(pitch,yaw,0)}for(const root of Object.values(chapters)){if(root.userData.cars)for(const c of root.userData.cars){c.g.position.z+=c.dir*c.speed*dt;if(c.g.position.z>430)c.g.position.z=-430;if(c.g.position.z<-430)c.g.position.z=430}}const r29=chapters['29'];if(r29.userData.people)for(const p of r29.userData.people){p.position.z+=p.userData.dir*p.userData.speed*dt;if(p.position.z>210)p.position.z=-210;if(p.position.z<-210)p.position.z=210}const r30=chapters['30'];if(r30.userData.crowd)for(const p of r30.userData.crowd){p.position.y=Math.sin(t*1.4+p.userData.phase)*.018}updateAnchors(now);renderer.render(scene,camera)}
+requestAnimationFrame(animate);
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
 </script>
-</body></html>
+</body>
+</html>
