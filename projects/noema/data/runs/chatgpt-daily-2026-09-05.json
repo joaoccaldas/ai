@@ -1,0 +1,42 @@
+{
+  "run_id": "chatgpt-daily-2026-09-05",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED_CANDIDATES_PERSISTED",
+  "started_at": "2026-09-05T06:12:31Z",
+  "completed_at": "2026-09-05T06:16:51Z",
+  "input_refs": [
+    "github-discovery-33944564338",
+    "GitHub Actions artifact 9962908277",
+    "projects/noema/data/candidates/daily/2026-09-04.json",
+    "projects/noema/schemas/run-manifest-v1.json",
+    "Consensus scholarly index",
+    "PubMed / NCBI",
+    "fresh public web research",
+    "candidate triage commit 88b0f43599685cc0a95139c92822553907c99bfe"
+  ],
+  "artifact_digests": {
+    "source_noema_crossref_payload": "sha256:8f788dcb365125b60824796c9338f258117bf6162becb50315c55c7b3a44fb1c",
+    "source_github_actions_zip": "sha256:961ec4082f8422f0609618731785905b498f165d22df6ab2fd77c005b1f0b0ab"
+  },
+  "sources_examined": 15,
+  "new_candidates": 4,
+  "candidate_updates": 5,
+  "contradictions": 5,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 5,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 7,
+  "errors": [],
+  "summary": "Verified NOEMA Discovery run 33944564338 and downloaded its artifact: 113 unreviewed candidates with a 30-item priority queue (5 RECENT_PUBLICATION, 1 UPCOMING_OR_AHEAD_OF_PRINT, 24 NEWLY_INDEXED_LEGACY). Added four deduplicated candidate-only records covering parchment paleogenomics, early-Christian burial genomics, ancient-Egyptian paint paleoproteomics, and a Deultum taphonomic field-discovery control. Triaged current priority metadata, retained DOI/title ambiguities for human review, and preserved separate raw-payload and GitHub-ZIP digest scopes. No evidence, historical relationship, diagnosis, confidence change, or dating revision was promoted.",
+  "research_note": "projects/noema/data/candidates/daily/2026-09-05.json",
+  "code_commit": "a894b336f05e88c811741642bd7ffaf271057239",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "historical_diagnosis_from_resemblance": false
+  }
+}
