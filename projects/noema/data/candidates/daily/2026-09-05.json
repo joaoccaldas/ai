@@ -1,0 +1,151 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-05",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-05T06:15:14Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-33944564338",
+    "completed_at": "2026-09-05T04:26:55.134935+00:00",
+    "code_commit": "a894b336f05e88c811741642bd7ffaf271057239",
+    "candidate_count": 113,
+    "priority_candidate_count": 30,
+    "priority_queue_distribution": {"RECENT_PUBLICATION": 5, "UPCOMING_OR_AHEAD_OF_PRINT": 1, "NEWLY_INDEXED_LEGACY": 24},
+    "overall_distribution": {"RECENT_PUBLICATION": 5, "UPCOMING_OR_AHEAD_OF_PRINT": 1, "NEWLY_INDEXED_LEGACY": 107},
+    "raw_payload_sha256": "8f788dcb365125b60824796c9338f258117bf6162becb50315c55c7b3a44fb1c",
+    "github_artifact_digest": "sha256:961ec4082f8422f0609618731785905b498f165d22df6ab2fd77c005b1f0b0ab",
+    "artifact_id": 9962908277,
+    "manifest_digest_value": "sha256:8f788dcb365125b60824796c9338f258117bf6162becb50315c55c7b3a44fb1c",
+    "digest_semantics_note": "Discovery manifest hash covers the uncompressed JSON payload; GitHub Actions digest covers the ZIP artifact. Both scopes are preserved separately."
+  },
+  "rules": [
+    "Every record remains a candidate until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin, or diffusion.",
+    "Unknown is not absence.",
+    "Publication and index dates are preserved separately; indexing novelty is not publication novelty.",
+    "Human remains and mortuary contexts require cultural-sensitivity review.",
+    "Biological material identification does not by itself establish symbolic, ritual, religious, or semantic meaning.",
+    "Containerized or unusual human-remains context does not by itself establish intentional burial or ritual deposition.",
+    "Biomedical or psychiatric correlation is not evidence of historical diagnosis or identity."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION": [
+      {"doi":"10.4324/9781003683551-11","published":"2026-09-02","indexed":"2026-09-02","title":"The implications of AI myth for religion, science, and mythology","triage":"CONCEPTUAL_BOOK_CHAPTER; retain as candidate metadata, not empirical evidence."},
+      {"doi":"10.4324/9781003683551-2","published":"2026-09-02","indexed":"2026-09-02","title":"Religion, mythology, and AI","triage":"CONCEPTUAL_BOOK_CHAPTER; retain as candidate metadata, not empirical evidence."},
+      {"doi":"10.56315/pscf9-26harrison","published":"2026-09-01","indexed":"2026-08-27","title":"Some New World: Myths of Supernatural Belief in a Secular Age","triage":"Identity/publication-status ambiguity persists; DOI-level review required."},
+      {"doi":"10.1086/742088","published":"2026-09-01","indexed":"2026-09-03","title":"Some New World: Myths of Supernatural Belief in a Secular Age","triage":"Distinct DOI with identical title; deduplicate only after bibliographic identity review."},
+      {"doi":"10.1016/j.evolhumbehav.2026.106943","published":"2026-09-01","indexed":"2026-09-04","title":"Moralistic supernatural explanations were widespread and attributed to many different supernatural agents in historical societies","triage":"Already staged 2026-09-04; no duplicate candidate created."}
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [
+      {"doi":"10.3366/9781399564618-005","published":"2026-12-31","indexed":"2026-09-03","title":"Introduction: Revelation and Divination","triage":"Ahead-of-print chapter metadata; human review before use as substantive evidence."}
+    ],
+    "NEWLY_INDEXED_LEGACY_count": 24,
+    "NEWLY_INDEXED_LEGACY_note": "Priority legacy records span Palaeolithic mortuary behavior, Dolní Věstonice/Předmostí burial studies, ancestor worship, ritual cognition, Zhuang ritual specialists, collective emotion, pattern perception and other older literature; retained for targeted review rather than treated as newly published."
+  },
+  "new_candidates": [
+    {
+      "id":"DAILY-PARCHMENT-SHEEPPOX-BIOARCHIVE-2026",
+      "triage_class":"RECENT_PUBLICATION",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"Three thousand five hundred years of sheeppox virus evolution inferred from archaeological and codicological genomes",
+      "publication_date":"2026-09-02",
+      "discovered_at":"2026-09-05",
+      "doi":"10.1126/sciadv.aeh3571",
+      "canonical_url":"https://doi.org/10.1126/sciadv.aeh3571",
+      "source_type":"PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains":["ANCIENT_DNA","HISTORICAL_SOURCES","CODICOLOGY","PALEOPATHOGENOMICS","DOMESTICATION","MANUSCRIPTS"],
+      "candidate_relevance":"Recovers sheeppox-virus genomes from medieval parchment and Bronze Age sheep teeth, demonstrating that manuscript material can function as a biological archive in addition to a textual source. This broadens NOEMA source ontology for historical documents and material culture.",
+      "epistemic_caution":"Pathogen DNA in parchment records source-animal biology and production history, not the manuscript text's religious meaning, author community, or ritual function. Virus detected on non-sheep parchment may reflect cross-species infection or production contamination.",
+      "review_priority":"HIGH",
+      "sensitive":true,
+      "sensitivity_flags":["ARCHIVAL_SAMPLING","CULTURAL_HERITAGE_OBJECTS"],
+      "provenance":{"source":"Science Advances; University College Dublin public research release","publication_date":"2026-09-02","index_or_discovery_date":"2026-09-05","peer_reviewed":true}
+    },
+    {
+      "id":"DAILY-EARLY-CHRISTIAN-CHILD-BURIAL-GENOMICS-2026",
+      "triage_class":"NEWLY_DISCOVERED_LEGACY_2026",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"Equal in death: Ancient genomic analysis of children's early Christian burials",
+      "publication_date":"2026-07-10",
+      "discovered_at":"2026-09-05",
+      "doi":"10.1126/sciadv.aeb8588",
+      "pmid":"42430491",
+      "canonical_url":"https://doi.org/10.1126/sciadv.aeb8588",
+      "source_type":"PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains":["ANCIENT_DNA","MORTUARY","EARLY_CHRISTIANITY","KINSHIP","CHILDHOOD","GENDER","SWEDEN"],
+      "candidate_relevance":"Genomic screening of 142 late-Viking/medieval individuals in Sweden found that children interred with adults in collective graves rarely shared close biological ties; burial spatial patterns also showed sex/gender-pattern structure with flexibility. Useful for separating co-burial, kinship and social organization.",
+      "epistemic_caution":"Biological relatedness does not exhaust social kinship, and burial spatial pattern does not by itself establish theology, belief, or prescribed Christian doctrine.",
+      "review_priority":"HIGH",
+      "sensitive":true,
+      "sensitivity_flags":["HUMAN_REMAINS","CHILDREN","ANCIENT_DNA","MORTUARY_CONTEXT"],
+      "provenance":{"source":"Science Advances; PubMed PMID 42430491","publication_date":"2026-07-10","index_or_discovery_date":"2026-09-05","peer_reviewed":true}
+    },
+    {
+      "id":"DAILY-EGYPTIAN-PAINT-PALEOPROTEOMICS-2026",
+      "triage_class":"NEWLY_DISCOVERED_LEGACY_2026",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"Beyond animal glue: Paleoproteomic analysis of paint binders and adhesives in ancient Egypt",
+      "publication_date":"2026-08-28",
+      "online_date":"2026-08-26",
+      "discovered_at":"2026-09-05",
+      "doi":"10.1126/sciadv.ady3618",
+      "pmid":"42647611",
+      "canonical_url":"https://doi.org/10.1126/sciadv.ady3618",
+      "source_type":"PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains":["PALEOPROTEOMICS","ANCIENT_EGYPT","MATERIAL_CULTURE","ART","MORTUARY_OBJECTS","RELIGIOUS_ICONOGRAPHY"],
+      "candidate_relevance":"Proteomics identifies animal collagen and previously undocumented plant proteins including sesame and moringa in painted Egyptian artifacts dating roughly 1425 BCE-400 CE. It creates source-bounded material-composition observations that can later be compared with textual and iconographic evidence.",
+      "epistemic_caution":"Chemical or biological identification of a material does not establish why it was selected. Proposed symbolic or religious significance requires independent contextual/textual evidence.",
+      "review_priority":"HIGH",
+      "sensitive":true,
+      "sensitivity_flags":["MUSEUM_OBJECT_MICROSAMPLING","MORTUARY_OBJECTS"],
+      "provenance":{"source":"Science Advances; PubMed PMID 42647611","publication_date":"2026-08-28","online_date":"2026-08-26","index_or_discovery_date":"2026-09-05","peer_reviewed":true}
+    },
+    {
+      "id":"DAILY-DEULTUM-DOLIUM-HUMAN-REMAINS-2026",
+      "triage_class":"RECENT_FIELD_DISCOVERY",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"Human remains discovered inside a dolium in a gate tower at Roman Deultum, Bulgaria",
+      "publication_date":"2026-09-04",
+      "discovered_at":"2026-09-05",
+      "doi":null,
+      "canonical_url":"https://archaeology.org/news/2026/09/04/human-remains-found-in-jar-at-roman-fort-in-bulgaria/",
+      "source_type":"PUBLIC_FIELD_DISCOVERY_REPORT_NON_PEER_REVIEWED",
+      "domains":["TAPHONOMY","HUMAN_REMAINS","ROMAN","CONFLICT","CONTEXT_INTERPRETATION","BULGARIA"],
+      "candidate_relevance":"A man was found inside a large storage vessel in a burned gate-tower context with knives still on his person. Excavator interpretation reported publicly is that he may have hidden during an attack rather than having been intentionally interred. This is a useful negative-control case for burial/ritual classification.",
+      "epistemic_caution":"Public field report only. Do not label as burial, sacrifice, ritual deposition, or funerary practice without primary excavation publication and contextual analysis.",
+      "review_priority":"MEDIUM_HIGH",
+      "sensitive":true,
+      "sensitivity_flags":["HUMAN_REMAINS","VIOLENT_DEATH_CONTEXT"],
+      "provenance":{"source":"Archaeology Magazine reporting Archaeologia Bulgarica / Bulgarian Academy of Sciences excavation","report_date":"2026-09-04","index_or_discovery_date":"2026-09-05","peer_reviewed":false}
+    }
+  ],
+  "candidate_updates": [
+    {"target":"10.1016/j.evolhumbehav.2026.106943","type":"DEDUPLICATION","finding":"Still in the latest Crossref recent-publication queue; already staged on 2026-09-04.","action":"No duplicate candidate."},
+    {"target":"10.56315/pscf9-26harrison + 10.1086/742088","type":"BIBLIOGRAPHIC_IDENTITY_AMBIGUITY","finding":"Two priority records share the title Some New World: Myths of Supernatural Belief in a Secular Age but carry distinct DOIs.","action":"Keep distinct candidate metadata until DOI-level work identity and publication type are manually resolved."},
+    {"target":"10.4324/9781003683551-11 + 10.4324/9781003683551-2","type":"SOURCE_TYPE_TRIAGE","finding":"Two recent priority records are conceptual book chapters about AI, religion and mythology.","action":"Retain for conceptual/literature review; do not treat as empirical evidence."},
+    {"target":"10.3366/9781399564618-005","type":"AHEAD_OF_PRINT_TRIAGE","finding":"Crossref lists an Introduction: Revelation and Divination chapter with 2026-12-31 publication date and 2026-09-03 index date.","action":"Preserve ahead-of-print status and review substantive content before evidence staging."},
+    {"target":"DISCOVERY_ARTIFACT_HASH_SCOPE","type":"PROVENANCE_VALIDATION","finding":"Raw JSON SHA-256 8f788d...fb1c matches the discovery manifest; GitHub Actions ZIP digest is 961ec4...b0ab.","action":"Preserve both with explicit byte-scope semantics."}
+  ],
+  "contradictions_or_pressure": [
+    {"type":"TEXTUAL_SOURCE_IS_ALSO_BIOLOGICAL_ARCHIVE","target":"HISTORICAL_SOURCE_ONTOLOGY","finding":"Parchment can retain biological/pathogen information independent of manuscript text.","action":"Allow parallel TEXTUAL_CONTENT and MATERIAL_SUBSTRATE evidence channels with separate provenance."},
+    {"type":"COBURIAL_DOES_NOT_EQUAL_CLOSE_KINSHIP","target":"KINSHIP_MORTUARY_MODEL","finding":"Early-Christian collective graves in the Swedish study often joined children and adults without close biological relatedness.","action":"Keep co-burial, biological kinship, social kinship and religious community membership separate."},
+    {"type":"MATERIAL_COMPOSITION_DOES_NOT_EQUAL_SYMBOLIC_MEANING","target":"MATERIAL_SYMBOLISM_INFERENCE","finding":"Paleoproteomics can identify paint/adhesive ingredients, but selection motives remain underdetermined.","action":"Require independent contextual/textual/iconographic support before symbolic interpretation."},
+    {"type":"CONTAINER_CONTEXT_DOES_NOT_EQUAL_BURIAL","target":"MORTUARY_CLASSIFICATION","finding":"Deultum human remains in a dolium may result from sheltering during an attack rather than intentional interment.","action":"Model taphonomic/event alternatives before assigning burial or ritual classes."},
+    {"type":"BIBLIOGRAPHIC_DUPLICATE_TITLE_PRESSURE","target":"DISCOVERY_DEDUPLICATION","finding":"Distinct DOIs can share identical titles and may represent different publication objects or metadata errors.","action":"Deduplicate by authoritative identity, not title string alone."}
+  ],
+  "dating_revisions": [],
+  "relationships_generated": [],
+  "hypotheses_requiring_human_review": [
+    {"target":"HISTORICAL_SOURCE_MATERIALITY","reason":"Consider a substrate-evidence layer for parchment/manuscript biomolecular data."},
+    {"target":"KINSHIP_MORTUARY_ORGANIZATION","reason":"Review co-burial vs biological/social kinship distinctions using the Swedish early-Christian dataset."},
+    {"target":"ANCIENT_EGYPT_MATERIAL_SYMBOLISM","reason":"Review whether identified moringa/sesame/animal-source binders connect to any independently sourced ritual or deity associations."},
+    {"target":"MORTUARY_TAPHONOMY_CLASSIFIER","reason":"Add explicit accidental/conflict-death and concealment alternatives before ritual/burial labels."},
+    {"target":"DISCOVERY_METADATA_IDENTITY","reason":"Resolve identical-title Some New World DOI records and ahead-of-print divination chapter identity/status."}
+  ],
+  "restricted_or_culturally_sensitive_material": [
+    {"candidate_id":"DAILY-EARLY-CHRISTIAN-CHILD-BURIAL-GENOMICS-2026","flags":["HUMAN_REMAINS","CHILDREN","ANCIENT_DNA"]},
+    {"candidate_id":"DAILY-DEULTUM-DOLIUM-HUMAN-REMAINS-2026","flags":["HUMAN_REMAINS","VIOLENT_DEATH_CONTEXT"]},
+    {"candidate_id":"DAILY-EGYPTIAN-PAINT-PALEOPROTEOMICS-2026","flags":["MUSEUM_OBJECT_MICROSAMPLING","MORTUARY_OBJECTS"]},
+    {"candidate_id":"DAILY-PARCHMENT-SHEEPPOX-BIOARCHIVE-2026","flags":["CULTURAL_HERITAGE_OBJECTS","ARCHIVAL_SAMPLING"]}
+  ],
+  "summary": "Verified Discovery run 33944564338 and its downloaded artifact: 113 candidates; priority queue 5 RECENT_PUBLICATION, 1 UPCOMING_OR_AHEAD_OF_PRINT, 24 NEWLY_INDEXED_LEGACY. Added four deduplicated candidate-only records covering codicological paleogenomics, early-Christian burial genomics, Egyptian paint paleoproteomics, and a Deultum taphonomic field-discovery control. No claims, evidence, historical relationships, diagnoses, or dating revisions were promoted."
+}
