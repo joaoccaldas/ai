@@ -2,25 +2,17 @@ version: 2
 updates:
   - package-ecosystem: npm
     directory: /stencil
-    schedule:
-      interval: weekly
-      day: monday
-      time: "06:00"
-      timezone: Europe/Stockholm
+    schedule: { interval: weekly, day: monday, time: "06:00", timezone: Europe/Stockholm }
     open-pull-requests-limit: 3
   - package-ecosystem: npm
     directory: /mashlab
-    schedule:
-      interval: weekly
-      day: monday
-      time: "06:00"
-      timezone: Europe/Stockholm
+    schedule: { interval: weekly, day: monday, time: "06:00", timezone: Europe/Stockholm }
     open-pull-requests-limit: 3
   - package-ecosystem: npm
     directory: /margin-bridge
-    schedule:
-      interval: weekly
-      day: monday
-      time: "06:00"
-      timezone: Europe/Stockholm
+    schedule: { interval: weekly, day: monday, time: "06:00", timezone: Europe/Stockholm }
+    open-pull-requests-limit: 3
+  - package-ecosystem: pip
+    directory: /projects/noema
+    schedule: { interval: weekly, day: monday, time: "06:00", timezone: Europe/Stockholm }
     open-pull-requests-limit: 3
