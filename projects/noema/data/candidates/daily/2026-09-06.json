@@ -1,0 +1,309 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-06",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-06T06:52:00Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-34011541822",
+    "completed_at": "2026-09-06T04:27:41.573312+00:00",
+    "code_commit": "5112c2a476cc2d1b2e6354eb2ae8db16e725445a",
+    "candidate_count": 112,
+    "priority_candidate_count": 30,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 5,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 1,
+      "NEWLY_INDEXED_LEGACY": 24
+    },
+    "overall_distribution": {
+      "RECENT_PUBLICATION": 5,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 1,
+      "NEWLY_INDEXED_LEGACY": 106
+    },
+    "raw_payload_sha256": "cade8b65ca0497ea6f31e6cdef4b94aa738fa65c91f3355c1e2f46681588df33",
+    "github_artifact_digest": "sha256:54c5b8a851004bd1509fb4626ce54ca3789d68c1aca2efb2dce1ee1f924e94e5",
+    "artifact_id": 9982609785,
+    "manifest_digest_value": "sha256:cade8b65ca0497ea6f31e6cdef4b94aa738fa65c91f3355c1e2f46681588df33",
+    "digest_semantics_note": "Discovery manifest hash covers the uncompressed JSON payload; GitHub Actions digest covers the ZIP artifact."
+  },
+  "rules": [
+    "Every record remains a candidate until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin, or diffusion.",
+    "Unknown is not absence.",
+    "Publication and index dates are preserved separately; indexing novelty is not publication novelty.",
+    "Archaeological interpretation must distinguish observation from inferred symbolic, ritual, cognitive, or social meaning.",
+    "Modern cognitive models may generate mechanism hypotheses but do not establish historical mental states.",
+    "Biomedical or psychiatric correlation is not evidence of historical diagnosis or identity."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION": [
+      {
+        "doi": "10.4324/9781003683551-11",
+        "published": "2026-09-02",
+        "indexed": "2026-09-02",
+        "title": "The implications of AI myth for religion, science, and mythology",
+        "triage": "Conceptual book chapter; retain as candidate metadata, not empirical evidence."
+      },
+      {
+        "doi": "10.4324/9781003683551-2",
+        "published": "2026-09-02",
+        "indexed": "2026-09-02",
+        "title": "Religion, mythology, and AI",
+        "triage": "Conceptual book chapter; retain as candidate metadata, not empirical evidence."
+      },
+      {
+        "doi": "10.56315/pscf9-26harrison",
+        "published": "2026-09-01",
+        "indexed": "2026-08-27",
+        "title": "Some New World: Myths of Supernatural Belief in a Secular Age",
+        "triage": "Publication-object identity ambiguity persists; DOI-level review required."
+      },
+      {
+        "doi": "10.1086/742088",
+        "published": "2026-09-01",
+        "indexed": "2026-09-03",
+        "title": "Some New World: Myths of Supernatural Belief in a Secular Age",
+        "triage": "Distinct DOI with identical title; do not title-deduplicate before bibliographic review."
+      },
+      {
+        "doi": "10.1016/j.evolhumbehav.2026.106943",
+        "published": "2026-09-01",
+        "indexed": "2026-09-04",
+        "title": "Moralistic supernatural explanations were widespread and attributed to many different supernatural agents in historical societies",
+        "triage": "Already staged on 2026-09-04; no duplicate candidate created."
+      }
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [
+      {
+        "doi": "10.3366/9781399564618-005",
+        "published": "2026-12-31",
+        "indexed": "2026-09-03",
+        "title": "Introduction: Revelation and Divination",
+        "triage": "Ahead-of-print chapter metadata; retain separately from published evidence."
+      }
+    ],
+    "NEWLY_INDEXED_LEGACY_count": 24,
+    "NEWLY_INDEXED_LEGACY_note": "Priority legacy records span Palaeolithic mortuary behavior, Dolní Věstonice/Předmostí burial studies, ancestor worship, ritual cognition, collective emotion, supernatural belief, and pattern perception. They are indexing-new, not publication-new."
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-RITUAL-REINFORCEMENT-LEARNING-2026",
+      "triage_class": "NEWLY_DISCOVERED_LEGACY_2026",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Cognitive computations underlying ritual performance and persistence",
+      "publication_date": "2026-05-18",
+      "discovered_at": "2026-09-06",
+      "doi": "10.1016/j.tics.2026.04.009",
+      "pmid": "42150984",
+      "canonical_url": "https://doi.org/10.1016/j.tics.2026.04.009",
+      "source_type": "PEER_REVIEWED_REVIEW_ARTICLE",
+      "domains": [
+        "RITUAL",
+        "COGNITION",
+        "REINFORCEMENT_LEARNING",
+        "UNCERTAINTY",
+        "SOCIAL_COHESION",
+        "CULTURAL_TRANSMISSION"
+      ],
+      "candidate_relevance": "Integrates model-free reinforcement of affective/social rewards with model-based reinforcement of culturally shared world models. Useful for decomposing ritual persistence into multiple learning pathways rather than assigning one universal function.",
+      "epistemic_caution": "A modern cognitive framework is a mechanism hypothesis, not evidence that a specific historical or archaeological ritual was maintained by these computations.",
+      "review_priority": "HIGH",
+      "sensitive": false,
+      "sensitivity_flags": [],
+      "provenance": {
+        "source": "Trends in Cognitive Sciences; PubMed PMID 42150984; Consensus",
+        "publication_date": "2026-05-18",
+        "index_or_discovery_date": "2026-09-06",
+        "peer_reviewed": true
+      }
+    },
+    {
+      "id": "DAILY-TECHNOLOGICAL-COMPLEXITY-HETERARCHY-2026",
+      "triage_class": "NEWLY_DISCOVERED_LEGACY_2026",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Blowing Leaves in Archaeology—The Multidimensionality of Technological Complexity in Human Origins Research",
+      "publication_date": "2026-08-03",
+      "issue_year": "2027",
+      "discovered_at": "2026-09-06",
+      "doi": "10.1007/s10816-026-09814-z",
+      "canonical_url": "https://doi.org/10.1007/s10816-026-09814-z",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": [
+        "HUMAN_ORIGINS",
+        "TECHNOLOGY",
+        "COGNITIVE_ARCHAEOLOGY",
+        "BEHAVIORAL_MODERNITY",
+        "METHODS",
+        "BIAS"
+      ],
+      "candidate_relevance": "Argues that technological complexity is multidimensional and should be represented heterarchically rather than as a single ladder ranking artifacts or hominin groups. Strong ontology pressure against linear 'primitive-to-complex' comparisons.",
+      "epistemic_caution": "This is a methodological/theoretical argument, not primary evidence for the cognitive capacities of any particular hominin population.",
+      "review_priority": "HIGH",
+      "sensitive": false,
+      "sensitivity_flags": [],
+      "provenance": {
+        "source": "Journal of Archaeological Method and Theory / Springer Nature; Consensus",
+        "publication_date": "2026-08-03",
+        "issue_year": "2027",
+        "index_or_discovery_date": "2026-09-06",
+        "peer_reviewed": true
+      }
+    },
+    {
+      "id": "DAILY-METAPLASTICITY-DEEP-TIME-COGNITION-2026",
+      "triage_class": "NEWLY_DISCOVERED_LEGACY_2026",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Metaplasticity: Extending cognition through the distant human past",
+      "publication_date": "2026",
+      "discovered_at": "2026-09-06",
+      "doi": "10.1016/j.jas.2026.106503",
+      "canonical_url": "https://doi.org/10.1016/j.jas.2026.106503",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": [
+        "COGNITIVE_ARCHAEOLOGY",
+        "4E_COGNITION",
+        "MATERIAL_ENGAGEMENT",
+        "HUMAN_ORIGINS",
+        "MIDDLE_STONE_AGE"
+      ],
+      "candidate_relevance": "Develops metaplasticity as a framework in which neural, bodily, material, and cultural change interact across timescales. It offers an alternative to locating cognition only inside brains or using 'behavioral modernity' as a binary threshold.",
+      "epistemic_caution": "The framework can structure hypotheses about material-cognitive coupling but does not directly recover ancient subjective experience or prove neural states from artifacts.",
+      "review_priority": "HIGH",
+      "sensitive": false,
+      "sensitivity_flags": [],
+      "provenance": {
+        "source": "Journal of Archaeological Science; Consensus; Crossref-indexed bibliographic sources",
+        "publication_date": "2026",
+        "index_or_discovery_date": "2026-09-06",
+        "peer_reviewed": true
+      }
+    },
+    {
+      "id": "DAILY-NATUFIAN-CLAY-ORNAMENTS-2026",
+      "triage_class": "NEWLY_DISCOVERED_LEGACY_2026",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Modeling identities among the first-sedentary communities: Emergence of clay personal ornaments in Epipaleolithic Southwest Asia",
+      "publication_date": "2026-03-20",
+      "online_date": "2026-03-18",
+      "discovered_at": "2026-09-06",
+      "doi": "10.1126/sciadv.aea2158",
+      "pmid": "41849587",
+      "canonical_url": "https://doi.org/10.1126/sciadv.aea2158",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": [
+        "NATUFIAN",
+        "PERSONAL_ORNAMENTS",
+        "SYMBOLIC_BEHAVIOR",
+        "CRAFT_PRODUCTION",
+        "SEDENTISM",
+        "LEVANT"
+      ],
+      "candidate_relevance": "Reports 142 clay personal ornaments from five Natufian sites dated broadly to 15,000–11,650 cal BP, with evidence that both children and adults participated in production. Useful for separating material innovation, craft participation, display, and inferred identity signaling.",
+      "epistemic_caution": "Personal ornament classification supports deliberate display/use but specific identity categories, meanings, or continuity into later Neolithic symbolic systems require independent evidence.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": [
+        "ARCHAEOLOGICAL_HERITAGE",
+        "REGIONAL_CULTURAL_CONTEXT"
+      ],
+      "provenance": {
+        "source": "Science Advances; PubMed PMID 41849587; Consensus",
+        "publication_date": "2026-03-20",
+        "online_date": "2026-03-18",
+        "index_or_discovery_date": "2026-09-06",
+        "peer_reviewed": true
+      }
+    }
+  ],
+  "candidate_updates": [
+    {
+      "target": "10.1016/j.evolhumbehav.2026.106943",
+      "type": "DEDUPLICATION",
+      "finding": "Remains in the latest RECENT_PUBLICATION priority queue and was already staged on 2026-09-04.",
+      "action": "No duplicate candidate."
+    },
+    {
+      "target": "10.56315/pscf9-26harrison + 10.1086/742088",
+      "type": "BIBLIOGRAPHIC_IDENTITY_AMBIGUITY",
+      "finding": "Two priority records still share an identical title but distinct DOIs.",
+      "action": "Keep separate until publication-object identity is resolved."
+    },
+    {
+      "target": "10.3366/9781399564618-005",
+      "type": "AHEAD_OF_PRINT_TRIAGE",
+      "finding": "Still carries a future 2026-12-31 publication date with 2026-09-03 indexing.",
+      "action": "Preserve ahead-of-print classification."
+    },
+    {
+      "target": "DAILY-DEULTUM-DOLIUM-HUMAN-REMAINS-2026",
+      "type": "WEB_DEDUPLICATION",
+      "finding": "Fresh public archaeology search resurfaced the Deultum dolium case already staged on 2026-09-05.",
+      "action": "No duplicate candidate."
+    },
+    {
+      "target": "DISCOVERY_ARTIFACT_HASH_SCOPE",
+      "type": "PROVENANCE_VALIDATION",
+      "finding": "Raw JSON SHA-256 cade8b65...df33 matches the discovery manifest; GitHub Actions ZIP digest is 54c5b8a8...e94e5.",
+      "action": "Preserve both digest scopes explicitly."
+    }
+  ],
+  "contradictions_or_pressure": [
+    {
+      "type": "RITUAL_HAS_MULTIPLE_REINFORCEMENT_PATHWAYS",
+      "target": "RITUAL_FUNCTION_ONTOLOGY",
+      "finding": "Current cognitive synthesis supports simultaneous habitual/affective and model-based/social-pragmatic reinforcement rather than a single ritual function.",
+      "action": "Represent ritual persistence as a multi-mechanism model; do not infer mechanism from form alone."
+    },
+    {
+      "type": "COMPLEXITY_IS_MULTIDIMENSIONAL",
+      "target": "HUMAN_ORIGINS_COMPLEXITY_MODEL",
+      "finding": "A single scalar hierarchy can conceal different, even competing dimensions of technological complexity.",
+      "action": "Replace linear complexity ranking with dimension-specific measures and heterarchical comparisons."
+    },
+    {
+      "type": "COGNITION_MAY_BE_MATERIAL_COUPLED",
+      "target": "DEEP_TIME_COGNITION_ONTOLOGY",
+      "finding": "Metaplasticity/4E models challenge brain-only or threshold accounts of ancient cognition.",
+      "action": "Allow material, embodied, social, and neural explanatory layers without treating artifacts as direct readouts of mental states."
+    },
+    {
+      "type": "ORNAMENT_DOES_NOT_EQUAL_SPECIFIC_IDENTITY",
+      "target": "SYMBOLIC_BEHAVIOR_INFERENCE",
+      "finding": "Natufian clay ornaments document deliberate manufacture/display and participation, but specific social identities or symbolic meanings remain underdetermined.",
+      "action": "Separate object class, production participation, display, social signaling, and semantic interpretation."
+    }
+  ],
+  "dating_revisions": [],
+  "relationships_generated": [],
+  "hypotheses_requiring_human_review": [
+    {
+      "target": "RITUAL_PERSISTENCE_MECHANISMS",
+      "reason": "Evaluate reinforcement-learning decomposition as a mechanism layer for ethnographic and historical ritual datasets."
+    },
+    {
+      "target": "HUMAN_ORIGINS_COMPLEXITY",
+      "reason": "Review replacing any scalar 'complexity' field with multidimensional technology descriptors."
+    },
+    {
+      "target": "DEEP_TIME_COGNITION_4E",
+      "reason": "Assess whether Material Engagement / metaplasticity should be encoded as an explanatory framework rather than an evidentiary claim."
+    },
+    {
+      "target": "NATUFIAN_ORNAMENTATION_AND_SEDENTISM",
+      "reason": "Review craft participation and display evidence separately from identity or symbolic-semantic claims."
+    }
+  ],
+  "restricted_or_culturally_sensitive_material": [
+    {
+      "candidate_id": "DAILY-NATUFIAN-CLAY-ORNAMENTS-2026",
+      "flags": [
+        "ARCHAEOLOGICAL_HERITAGE",
+        "REGIONAL_CULTURAL_CONTEXT"
+      ]
+    }
+  ],
+  "source_notes": [
+    "Consensus search results were fetched before use; web sources were used to verify DOI/publication metadata and current field-report resurfacing.",
+    "Repository-wide DOI searches returned no prior NOEMA records for the four new candidate DOIs before persistence.",
+    "No newly verified dating revision was identified in this cycle."
+  ]
+}
