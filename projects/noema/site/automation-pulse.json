@@ -1,15 +1,15 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-05T06:17:09.944428+00:00",
+  "generated_at": "2026-09-06T06:47:11.348812+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 34,
-    "new_candidates": 753,
-    "contradictions": 31,
+    "runs": 36,
+    "new_candidates": 846,
+    "contradictions": 35,
     "dating_revisions": 1,
-    "hypotheses_revisited": 37,
-    "review_items_created": 276,
+    "hypotheses_revisited": 39,
+    "review_items_created": 308,
     "errors": 0
   },
   "latest_by_task": [
@@ -24,12 +24,12 @@
     },
     {
       "task_type": "WEEKLY_REANALYSIS",
-      "run_id": "chatgpt-weekly-2026-08-30",
+      "run_id": "chatgpt-weekly-2026-09-06",
       "status": "COMPLETED_WITHOUT_PROMOTION",
-      "completed_at": "2026-08-30T06:10:03Z",
-      "summary": "Category-risk increased around artifact-to-symbol inference; DT-H002 and HS-H001 retained status with narrower semantics; DT-H003 remained speculative; late-Neanderthal climate-fragmentation edge should be downweighted without transferring support to cultural alternatives.",
+      "completed_at": "2026-09-06T06:55:00+00:00",
+      "summary": "Four material revision candidates were recorded without promotion: decompose supernatural norm enforcement by agent/reward/punishment/scale; downweight ancestry as the explanation for sampled Cerny hunting-associated funerary practice; downweight co-burial as a default proxy for close biological kinship; and model conceptual coherence as an explicit competitor to minimally-counterintuitive accounts of supernatural-concept memorability. Magic-function and neurotheology findings were retained as ontology/guardrail pressure only. No verified dating revision or species re-attribution materially changed the focal deep-time graph.",
       "errors": [],
-      "research_note": "projects/noema/research/reanalysis/2026-08-30-weekly-reanalysis.md"
+      "research_note": "projects/noema/research/reanalysis/2026-09-06-weekly-reanalysis.md"
     },
     {
       "task_type": "MONTHLY_DISCOVERY",
@@ -42,10 +42,10 @@
     },
     {
       "task_type": "GITHUB_DISCOVERY",
-      "run_id": "github-discovery-33944564338",
+      "run_id": "github-discovery-34011541822",
       "status": "COMPLETED",
-      "completed_at": "2026-09-05T04:26:55.134935+00:00",
-      "summary": "Crossref discovery produced 113 unreviewed candidates and 30 priority items.",
+      "completed_at": "2026-09-06T04:27:41.573312+00:00",
+      "summary": "Crossref discovery produced 112 unreviewed candidates and 30 priority items.",
       "errors": [],
       "research_note": null
     },
@@ -105,10 +105,10 @@
       "next_stage": "DAILY_INGEST",
       "expected_interval_hours": 26.0,
       "health": "HEALTHY",
-      "last_run_id": "github-discovery-33944564338",
+      "last_run_id": "github-discovery-34011541822",
       "last_status": "COMPLETED",
-      "last_completed_at": "2026-09-05T04:26:55.134935+00:00",
-      "age_hours": 1.84,
+      "last_completed_at": "2026-09-06T04:27:41.573312+00:00",
+      "age_hours": 2.32,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -126,7 +126,7 @@
       "last_run_id": "pubmed-discovery-33838256202",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
       "last_completed_at": "2026-09-04T04:50:12.656120+00:00",
-      "age_hours": 25.45,
+      "age_hours": 49.95,
       "writes": [
         "Actions artifact: noema-pubmed-candidates",
         "projects/noema/data/candidates/pubmed-latest.json",
@@ -145,7 +145,7 @@
       "last_run_id": "chatgpt-daily-2026-09-05",
       "last_status": "COMPLETED_CANDIDATES_PERSISTED",
       "last_completed_at": "2026-09-05T06:16:51Z",
-      "age_hours": 0.01,
+      "age_hours": 24.51,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
         "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
@@ -163,7 +163,7 @@
       "last_run_id": "dplace-benchmark-33361784511",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:47:46.132148+00:00",
-      "age_hours": 120.49,
+      "age_hours": 144.99,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -181,7 +181,7 @@
       "last_run_id": "religion-federation-33361678540",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-08-31T05:46:27.262104+00:00",
-      "age_hours": 120.51,
+      "age_hours": 145.01,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -203,10 +203,10 @@
       "next_stage": "HUMAN_REVIEW",
       "expected_interval_hours": 190.0,
       "health": "HEALTHY",
-      "last_run_id": "chatgpt-weekly-2026-08-30",
+      "last_run_id": "chatgpt-weekly-2026-09-06",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
-      "last_completed_at": "2026-08-30T06:10:03Z",
-      "age_hours": 144.12,
+      "last_completed_at": "2026-09-06T06:55:00+00:00",
+      "age_hours": -0.13,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -224,7 +224,7 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 95.87,
+      "age_hours": 120.37,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
         "projects/noema/research/monthly/YYYY-MM-DD-monthly-discovery.md",
@@ -243,7 +243,7 @@
       "last_run_id": "media-discovery-33601263529",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-02T06:58:26.632314+00:00",
-      "age_hours": 71.31,
+      "age_hours": 95.81,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
@@ -251,6 +251,140 @@
     }
   ],
   "recent_runs": [
+    {
+      "run_id": "chatgpt-weekly-2026-09-06",
+      "task_type": "WEEKLY_REANALYSIS",
+      "status": "COMPLETED_WITHOUT_PROMOTION",
+      "started_at": "2026-09-06T06:41:12+00:00",
+      "completed_at": "2026-09-06T06:55:00+00:00",
+      "input_refs": [
+        "github-actions:NOEMA Discovery/run/34011541822/artifact/noema-crossref-candidates",
+        "projects/noema/data/runs/github-discovery-34011541822.json",
+        "github-actions:NOEMA Benchmark/run/33361784511/artifact/noema-dplace-benchmark-100",
+        "projects/noema/data/runs/dplace-benchmark-33361784511.json",
+        "projects/noema/data/runs/chatgpt-daily-2026-09-02.json",
+        "projects/noema/data/runs/chatgpt-daily-2026-09-03.json",
+        "projects/noema/data/runs/chatgpt-daily-2026-09-04.json",
+        "projects/noema/data/runs/chatgpt-daily-2026-09-05.json",
+        "projects/noema/data/candidates/pubmed-latest.json",
+        "projects/noema/research/reanalysis/2026-08-30-weekly-reanalysis.md",
+        "projects/noema/schemas/run-manifest-v1.json"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates.raw-json": "sha256:cade8b65ca0497ea6f31e6cdef4b94aa738fa65c91f3355c1e2f46681588df33",
+        "noema-crossref-candidates.github-artifact": "sha256:54c5b8a851004bd1509fb4626ce54ca3789d68c1aca2efb2dce1ee1f924e94e5",
+        "noema-dplace-benchmark-100": "sha256:83ff1ed66402b284d0cf2cd3ff4433ea0e632be0cfb64819143345f803ffeeb2"
+      },
+      "sources_examined": 11,
+      "new_candidates": 0,
+      "candidate_updates": 0,
+      "contradictions": 6,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 6,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 4,
+      "review_items_created": 6,
+      "errors": [],
+      "summary": "Four material revision candidates were recorded without promotion: decompose supernatural norm enforcement by agent/reward/punishment/scale; downweight ancestry as the explanation for sampled Cerny hunting-associated funerary practice; downweight co-burial as a default proxy for close biological kinship; and model conceptual coherence as an explicit competitor to minimally-counterintuitive accounts of supernatural-concept memorability. Magic-function and neurotheology findings were retained as ontology/guardrail pressure only. No verified dating revision or species re-attribution materially changed the focal deep-time graph.",
+      "research_note": "projects/noema/research/reanalysis/2026-09-06-weekly-reanalysis.md",
+      "code_commit": null,
+      "sources_examined_detail": [
+        "10.1016/j.evolhumbehav.2026.106943",
+        "10.1016/j.evolhumbehav.2026.106941",
+        "10.1002/ajpa.70351",
+        "10.1126/sciadv.aeb8588",
+        "10.1016/j.cognition.2026.106661",
+        "10.3389/fpsyt.2026.1759906",
+        "10.1017/epi.2026.10109",
+        "10.1002/brb3.71733",
+        "10.1016/j.jasrep.2026.105882",
+        "10.1038/s41467-026-74234-2",
+        "10.1126/sciadv.ady3618"
+      ],
+      "contradictions_detail": [
+        "Moralistic supernatural explanation is not reducible to high-god punishment; agent type, reward, punishment, moral content and social scale require separate coding.",
+        "Distinctive Cerny hunting-associated funerary practice does not map cleanly to elevated Mesolithic hunter-gatherer biological ancestry in the sampled individuals.",
+        "Collective/co-burial does not reliably imply close biological kinship in the sampled early-Christian Swedish cemeteries.",
+        "Supernatural-concept memorability is not uniquely explained by ontological violations; conceptual coherence is a directly tested competing mechanism.",
+        "Magical/supernatural ideas or practices do not by themselves establish psychopathology or neurodivergent identity; retrospective historical diagnosis remains prohibited.",
+        "Cross-regional technological similarity and material composition/presence do not uniquely establish diffusion, authorship, or symbolic motive."
+      ],
+      "dating_revisions_detail": [],
+      "hypotheses_revisited_detail": [
+        "SUPERNATURAL_NORM_ENFORCEMENT_MODEL",
+        "CERNY_MORTUARY_ANCESTRY",
+        "KINSHIP_MORTUARY_ORGANIZATION",
+        "SUPERNATURAL_CONCEPT_TRANSMISSION",
+        "MAGIC_ONTOLOGY",
+        "NEUROTHEOLOGY_NEURODIVERSITY_WITCHCRAFT_GUARD"
+      ],
+      "revision_candidates": [
+        {
+          "target": "SUPERNATURAL_NORM_ENFORCEMENT_MODEL",
+          "change": "SCOPE_DECOMPOSITION",
+          "reason": "New 114-society evidence shows moralistic explanations across social scales and heterogeneous agent classes; scale association is stronger for reward than punishment."
+        },
+        {
+          "target": "CERNY_MORTUARY_ANCESTRY",
+          "change": "CONFIDENCE_DECREASE_FOR_ANCESTRY_EXPLANATION",
+          "reason": "Genome-wide data from the sampled Cerny individuals do not show unusually elevated Mesolithic hunter-gatherer ancestry despite hunting-associated funerary traits."
+        },
+        {
+          "target": "KINSHIP_MORTUARY_ORGANIZATION",
+          "change": "SCOPE_DECOMPOSITION",
+          "reason": "Early-Christian Swedish co-burials often pair children and adults without close biological relatedness; biological kinship, social kinship, community membership and burial proximity must remain separate."
+        },
+        {
+          "target": "SUPERNATURAL_CONCEPT_TRANSMISSION",
+          "change": "MODEL_COMPETITION",
+          "reason": "Experimental work supports conceptual coherence as a competitor to minimally-counterintuitive ontological-violation accounts of memorability."
+        }
+      ],
+      "no_change_statement": "No approved claim was edited; no speculative relationship was promoted; no graph relationship was generated automatically; no verified revised dating or species re-attribution materially changed the focal deep-time evidence; and D-PLACE focal years remain observation metadata only.",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false,
+        "historical_diagnosis_from_resemblance": false,
+        "dplace_focal_year_is_origin_date": false,
+        "rescore_is_evidence": false,
+        "approved_claim_auto_edit": false
+      }
+    },
+    {
+      "run_id": "github-discovery-34011541822",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-09-06T04:27:41.573312+00:00",
+      "completed_at": "2026-09-06T04:27:41.573312+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:cade8b65ca0497ea6f31e6cdef4b94aa738fa65c91f3355c1e2f46681588df33"
+      },
+      "sources_examined": 0,
+      "new_candidates": 112,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 112 unreviewed candidates and 30 priority items.",
+      "code_commit": "5112c2a476cc2d1b2e6354eb2ae8db16e725445a",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
     {
       "run_id": "chatgpt-daily-2026-09-05",
       "task_type": "DAILY_INGEST",
@@ -925,83 +1059,6 @@
       "errors": [],
       "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
       "code_commit": "d0f17604aa417694debe381ee4879dee606fbae8",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "museum-media-33367157071",
-      "task_type": "MUSEUM_MEDIA_DISCOVERY",
-      "status": "COMPLETED_REFERENCE_ONLY",
-      "started_at": "2026-08-31T07:10:12.338021+00:00",
-      "completed_at": "2026-08-31T07:10:12.338021+00:00",
-      "input_refs": [
-        "Art Institute of Chicago Open Access API",
-        "Cleveland Museum of Art Open Access API",
-        "projects/noema/data/reference/belief-catalog-v1.json"
-      ],
-      "artifact_digests": {
-        "museum-reference-media": "sha256:26d9a62a3794247805341b46ce0814a25e19b31a916e5fbbee6f0ced3d1c8299"
-      },
-      "sources_examined": 22,
-      "new_candidates": 15,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 0,
-      "errors": [],
-      "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
-      "code_commit": "78ff6d22b4581b68ac98470f32196cf36e86bb0d",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "chatgpt-daily-2026-08-31",
-      "task_type": "DAILY_INGEST",
-      "status": "COMPLETED",
-      "started_at": "2026-08-31T06:42:31Z",
-      "completed_at": "2026-08-31T06:46:13Z",
-      "input_refs": [
-        "projects/noema/data/runs/github-discovery-33361678545.json",
-        ".github/workflows/noema-discovery.yml",
-        "projects/noema/schemas/run-manifest-v1.json",
-        "projects/noema/data/candidates/discovery-triage-2026-08-29.json",
-        "projects/noema/data/candidates/daily/2026-08-31.json",
-        "https://dergipark.org.tr/en/pub/anemon/article/1853088",
-        "https://sis.gov.eg/en/media-center/news/old-kingdom-tomb-discovered-at-egypt-s-saqqara-necropolis/",
-        "https://superstitionsmap.com/dataset/",
-        "https://superstitionsmap.com/data-license/",
-        "https://doi.org/10.46222/pharosjot.107.223"
-      ],
-      "artifact_digests": {
-        "noema-crossref-candidates-json": "sha256:c5a03866e15f372adf57611862bf424852c5d4be1b3d846744abcc8eff342a77",
-        "noema-crossref-candidates-artifact-bundle": "sha256:900cbbfdca976a65847529c8a2563b708126281ce150b917f73378088fb7bdc0"
-      },
-      "sources_examined": 14,
-      "new_candidates": 4,
-      "candidate_updates": 0,
-      "contradictions": 2,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 4,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 4,
-      "errors": [],
-      "summary": "Verified the latest successful NOEMA Discovery artifact: 121 unreviewed Crossref candidates with a 30-item priority queue (2 RECENT_PUBLICATION, 1 UPCOMING_OR_AHEAD_OF_PRINT, 27 NEWLY_INDEXED_LEGACY). After DOI/canonical-URL deduplication against prior triage, persisted four material candidates: a 30 Aug 2026 Kura-Araxes/Trialeti publication, the authoritative Sekhentyu-Ptah Saqqara field discovery, SuperstitionsMap v1.0.1 as a structured discovery dataset with prevalence/stereotyping guards, and a culturally scoped 2026 Turkic/Kazakh shamanism-ASC synthesis. No verified dating revision and no automatic evidence or claim promotion occurred.",
-      "research_note": "projects/noema/data/candidates/daily/2026-08-31.json",
-      "code_commit": "203e3164ea512f87373f5ec75e9a3366e03b44eb",
       "epistemic_guards": {
         "model_output_is_evidence": false,
         "unknown_is_absent": false,
