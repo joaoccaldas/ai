@@ -1,0 +1,60 @@
+{
+  "run_id": "chatgpt-daily-2026-09-07",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED_WITH_LIMITATION",
+  "started_at": "2026-09-07T06:09:34Z",
+  "completed_at": "2026-09-07T06:09:34Z",
+  "input_refs": [
+    "projects/noema/data/runs/github-discovery-34083319162.json",
+    "projects/noema/data/candidates/daily/2026-09-06.json",
+    ".github/workflows/noema-discovery.yml",
+    "projects/noema/scripts/discover_crossref.py",
+    "projects/noema/schemas/run-manifest-v1.json",
+    "github-actions-artifact:10004380486",
+    "consensus:eca126e688cc5805b4c9bef2777e64fb"
+  ],
+  "artifact_digests": {
+    "noema-crossref-candidates.raw-json": "sha256:332d1d6f24e8dcff2c600c26fb127063264f0acaa77db201ba84d9a6731a9952",
+    "noema-crossref-candidates.github-zip": "sha256:17486117049231ef1a8e702e3eeeba12a4340489926ed33146f26692d7c48238"
+  },
+  "sources_examined": 14,
+  "sources_examined_detail": [
+    "GitHub successful Actions run feed",
+    "GitHub Actions artifact metadata for run 34083319162",
+    "NOEMA GitHub discovery manifest 34083319162",
+    "NOEMA discovery workflow definition",
+    "NOEMA Crossref discovery generator source",
+    "NOEMA 2026-09-06 daily triage",
+    "NOEMA run-manifest-v1 schema",
+    "Chinese Academy of Sciences IVPP release for Cell DOI 10.1016/j.cell.2026.07.050",
+    "Cell bibliographic/publication records for DOI 10.1016/j.cell.2026.07.050",
+    "Australian Archaeology publisher record for DOI 10.1080/03122417.2026.2694015",
+    "Quaternary Science Reviews publisher record for DOI 10.1016/j.quascirev.2026.110079",
+    "Quaternary Science Reviews publisher record for DOI 10.1016/j.quascirev.2026.110076",
+    "PubMed PMID 42447862 / DOI 10.1016/j.cub.2026.06.046",
+    "Consensus record eca126e688cc5805b4c9bef2777e64fb"
+  ],
+  "new_candidates": 5,
+  "candidate_updates": 5,
+  "contradictions": 5,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 5,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 7,
+  "errors": [
+    "The GitHub connector exposed the current Actions artifact metadata and both digest scopes but could not decode/download the binary ZIP payload as text. Exact current priority-class counts therefore could not be directly read from the artifact. The candidate triage marks the 5 RECENT / 1 UPCOMING / 24 LEGACY priority split as reconstructed from the immediately preceding captured queue plus unchanged deterministic workflow semantics, not binary-verified."
+  ],
+  "summary": "Daily triage staged five deduplicated candidate-only additions. The strongest new result is the 2026-09-03 Cell ancient-DNA study of 149 individuals from Mogou and other Gansu sites, which separates agricultural/cultural diffusion from demic diffusion and shows that sampled co-burial at Mogou was not organized around close biological kin. Additional candidates cover Indigenous Australian directly dated tooth ornaments, Swedish Mesolithic paleoecology, South African biomolecular preservation bias, and Current Biology evidence for genetic continuity during early millet adoption. No candidate was promoted to evidence, no historical relationship was inferred, and no verified dating revision was recorded.",
+  "research_note": "Key review pressure: model technology/subsistence transmission separately from ancestry; make co-burial-to-kinship edges context dependent; preserve a hard boundary between ornament function and semantic meaning; separate paleoenvironmental proxies from inferred motivation; and attach preservation/detection probability to negative paleogenetic evidence. Quinkan Country material is flagged for Indigenous cultural governance and rock-art image permission.",
+  "code_commit": "abe2a252b56b29621e660a357dfbfdf743b70c34",
+  "candidate_pack_commit": "e7237e1cca7d4fdbbac5432acb4c01f0314ef93a",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "historical_diagnosis_from_resemblance": false
+  }
+}
