@@ -1,0 +1,220 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-07",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-07T06:09:34Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-34083319162",
+    "completed_at": "2026-09-07T04:30:18.682786+00:00",
+    "code_commit": "abe2a252b56b29621e660a357dfbfdf743b70c34",
+    "candidate_count": 111,
+    "priority_candidate_count": 30,
+    "raw_payload_sha256": "332d1d6f24e8dcff2c600c26fb127063264f0acaa77db201ba84d9a6731a9952",
+    "github_artifact_digest": "sha256:17486117049231ef1a8e702e3eeeba12a4340489926ed33146f26692d7c48238",
+    "artifact_id": 10004380486,
+    "digest_semantics_note": "The discovery manifest SHA-256 covers the uncompressed noema-crossref-candidates.json payload; the GitHub Actions digest covers the uploaded ZIP artifact.",
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 5,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 1,
+      "NEWLY_INDEXED_LEGACY": 24,
+      "verification_status": "RECONSTRUCTED_NOT_BINARY_VERIFIED",
+      "note": "GitHub connector exposed the successful run, artifact metadata, digests and deterministic generator but could not decode the binary artifact ZIP. Counts are reconstructed from the immediately preceding captured queue plus unchanged workflow classification semantics and are explicitly not represented as a direct binary read."
+    },
+    "overall_distribution_reconstructed": {
+      "RECENT_PUBLICATION": 5,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 1,
+      "NEWLY_INDEXED_LEGACY": 105,
+      "verification_status": "RECONSTRUCTED_NOT_BINARY_VERIFIED"
+    }
+  },
+  "rules": [
+    "Every discovered record remains CANDIDATE_UNREVIEWED until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin or diffusion.",
+    "Unknown is not absence.",
+    "Publication, online, issue and discovery/index dates are preserved separately where available.",
+    "Archaeological observations are separated from inferred symbolic, ritual, social or cognitive meaning.",
+    "Ancient-DNA ancestry, cultural affiliation, technology, language and social identity are not interchangeable variables.",
+    "Historical diagnosis or identity is never inferred from resemblance to modern biomedical categories."
+  ],
+  "artifact_priority_queue": {
+    "classification_status": "RECONSTRUCTED_FROM_PREVIOUS_CAPTURE_AND_CURRENT_WORKFLOW; BINARY_PAYLOAD_NOT_DIRECTLY_EXPOSED",
+    "RECENT_PUBLICATION": [
+      {"doi": "10.4324/9781003683551-11", "published": "2026-09-02", "title": "The implications of AI myth for religion, science, and mythology", "triage": "Conceptual book chapter; candidate metadata only."},
+      {"doi": "10.4324/9781003683551-2", "published": "2026-09-02", "title": "Religion, mythology, and AI", "triage": "Conceptual book chapter; candidate metadata only."},
+      {"doi": "10.56315/pscf9-26harrison", "published": "2026-09-01", "title": "Some New World: Myths of Supernatural Belief in a Secular Age", "triage": "Publication-object identity ambiguity remains; DOI-level review required."},
+      {"doi": "10.1086/742088", "published": "2026-09-01", "title": "Some New World: Myths of Supernatural Belief in a Secular Age", "triage": "Distinct DOI with identical title; do not title-deduplicate before bibliographic review."},
+      {"doi": "10.1016/j.evolhumbehav.2026.106943", "published": "2026-09-01", "title": "Moralistic supernatural explanations were widespread and attributed to many different supernatural agents in historical societies", "triage": "Already staged on 2026-09-04; no duplicate candidate."}
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [
+      {"doi": "10.3366/9781399564618-005", "published": "2026-12-31", "indexed": "2026-09-03", "title": "Introduction: Revelation and Divination", "triage": "Ahead-of-print chapter metadata; candidate only."}
+    ],
+    "NEWLY_INDEXED_LEGACY_count": 24,
+    "NEWLY_INDEXED_LEGACY_note": "The priority tail is indexing-new rather than publication-new. It must not be presented as newly published research."
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-MOGOU-GANSU-ADNA-SOCIAL-PRACTICES-2026",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Genomics and social practices at Mogou and other Gansu sites during prehistoric trans-Eurasian exchange",
+      "publication_date": "2026-09-03",
+      "discovered_at": "2026-09-07",
+      "doi": "10.1016/j.cell.2026.07.050",
+      "pmid": "42691998",
+      "canonical_url": "https://doi.org/10.1016/j.cell.2026.07.050",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["ANCIENT_DNA", "AGRICULTURAL_DIFFUSION", "MORTUARY", "KINSHIP", "SOCIAL_ORGANIZATION", "EAST_ASIA"],
+      "candidate_relevance": "Genome data from 149 ancient individuals from Mogou and ten other Gansu sites indicate adoption of western-derived crops and livestock without detectable western or central Eurasian genetic influence. At Mogou, close biological relatedness did not strongly determine burial proximity and no first- or second-degree relatives were found among sampled multiple burials. Useful for separating cultural/technical diffusion from demic diffusion and co-burial from biological kinship.",
+      "epistemic_caution": "Absence of detectable western/central Eurasian ancestry in the sampled individuals does not prove zero historical contact. Statistical associations between ancestry and burial treatment do not define individual social identity or status deterministically. Co-burial patterns are site-specific and must not be universalized.",
+      "review_priority": "CRITICAL",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "ANCIENT_DNA", "MORTUARY_CONTEXT", "ARCHAEOLOGICAL_HERITAGE"],
+      "provenance": {
+        "primary_or_authoritative_sources": ["Cell DOI 10.1016/j.cell.2026.07.050", "Chinese Academy of Sciences IVPP research release dated 2026-09-03"],
+        "publication_date": "2026-09-03",
+        "index_or_discovery_date": "2026-09-07",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1016/j.cell.2026.07.050",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-QUINKAN-MACROPOD-RESIN-ORNAMENTS-2026",
+      "triage_class": "NEWLY_INDEXED_LEGACY",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "An assemblage of resin-mounted macropod incisors from Quinkan Country, Cape York Peninsula, Queensland",
+      "publication_date": "2026-08-14",
+      "discovered_at": "2026-09-07",
+      "doi": "10.1080/03122417.2026.2694015",
+      "canonical_url": "https://doi.org/10.1080/03122417.2026.2694015",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["INDIGENOUS_ARCHAEOLOGY", "PERSONAL_ORNAMENT", "RESIDUE_ANALYSIS", "DIRECT_DATING", "ROCK_ART", "SYMBOLIC_BEHAVIOR"],
+      "candidate_relevance": "Twelve macropod incisors with resin residues from Windmill Way were analyzed by microscopy, FTIR, LC-MS and AMS. Two directly dated resin samples place at least part of the assemblage around 1,100-1,300 years ago. Evidence supports personal adornment while leaving single-versus-multiple-object history and semantic or ceremonial meaning unresolved.",
+      "epistemic_caution": "Personal-adornment interpretation is supported by resin, fibres, hide and lack of utilitarian wear, but specific ceremonial or symbolic meanings are not established. The authors explicitly reject unsupported trade inference and refrain from assigning ceremonial meaning without evidence. Traditional Owner permissions and cultural context must govern any reuse of rock-art imagery or sensitive knowledge.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["INDIGENOUS_CULTURAL_HERITAGE", "TRADITIONAL_OWNER_CONTEXT", "ROCK_ART_IMAGE_PERMISSION", "CULTURALLY_SENSITIVE_MATERIAL"],
+      "provenance": {
+        "source": "Australian Archaeology / Taylor & Francis; publication date cross-checked in public bibliographic reporting",
+        "publication_date": "2026-08-14",
+        "index_or_discovery_date": "2026-09-07",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1080/03122417.2026.2694015",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-DAGSMOSSE-WETLAND-SOCIOECOLOGY-2026",
+      "triage_class": "UPCOMING_OR_AHEAD_OF_PRINT",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Wetland life: Exploring Mesolithic Hunter-Gatherer-Fisher socioecologies using high-resolution palaeoenvironmental reconstructions of pollen and NPP at Dagsmosse, Sweden",
+      "issue_date": "2026-09-15",
+      "discovered_at": "2026-09-07",
+      "doi": "10.1016/j.quascirev.2026.110079",
+      "canonical_url": "https://doi.org/10.1016/j.quascirev.2026.110079",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE_AHEAD_OF_ISSUE_DATE",
+      "domains": ["PALEOCLIMATE", "MESOLITHIC", "HUNTER_GATHERER_FISHER", "PALEOECOLOGY", "NICHE_CONSTRUCTION", "SWEDEN"],
+      "candidate_relevance": "High-resolution pollen, macrofossil, charcoal and non-pollen-palynomorph reconstruction from Dagsmosse links Mesolithic occupation phases with changing lake ecology, fishing, dwelling and landscape modification. Useful environmental context for testing human-environment interaction without reducing it to passive adaptation.",
+      "epistemic_caution": "Palaeoecological proxies support environmental and activity reconstructions but do not establish ritual, cosmological or symbolic motivations. Some causal language about decision-making remains interpretive and should be represented separately from measured proxies.",
+      "review_priority": "HIGH",
+      "sensitive": false,
+      "sensitivity_flags": ["ARCHAEOLOGICAL_HERITAGE"],
+      "provenance": {
+        "source": "Quaternary Science Reviews / Elsevier",
+        "issue_date": "2026-09-15",
+        "online_access_confirmed": "2026-09-07",
+        "index_or_discovery_date": "2026-09-07",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1016/j.quascirev.2026.110079",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-SOUTH-AFRICA-BOVID-PALEOGENETIC-PRESERVATION-2026",
+      "triage_class": "UPCOMING_OR_AHEAD_OF_PRINT",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Evaluation of DNA and collagen preservation in Late Pleistocene and Holocene bovid fossils from South Africa",
+      "issue_date": "2026-09-15",
+      "discovered_at": "2026-09-07",
+      "doi": "10.1016/j.quascirev.2026.110076",
+      "canonical_url": "https://doi.org/10.1016/j.quascirev.2026.110076",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE_AHEAD_OF_ISSUE_DATE",
+      "domains": ["PALEOGENETICS", "BIOMOLECULAR_PRESERVATION", "LATE_PLEISTOCENE", "HOLOCENE", "SOUTH_AFRICA", "DATA_INFRASTRUCTURE"],
+      "candidate_relevance": "The study screens DNA in 144 bovid specimens and collagen in 54 from a 320-specimen documented collection. DNA preservation was detected in 45% of screened specimens and collagen in 35%, with four Late Pleistocene specimens preserving authentic ancient DNA. Site strongly influenced preservation, and specimens were digitally recorded before destructive sampling.",
+      "epistemic_caution": "Preservation is site- and age-dependent. Failure to recover biomolecules is not evidence that a taxon, population or behavior was historically absent. Results concern bovid fossils and cannot be transferred mechanically to human remains or other substrates.",
+      "review_priority": "MEDIUM_HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["ARCHAEOLOGICAL_HERITAGE", "DESTRUCTIVE_SAMPLING", "PERMIT_GOVERNED_COLLECTIONS"],
+      "provenance": {
+        "source": "Quaternary Science Reviews / Elsevier",
+        "issue_date": "2026-09-15",
+        "online_access_confirmed": "2026-09-07",
+        "index_or_discovery_date": "2026-09-07",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1016/j.quascirev.2026.110076",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-XINGLONG-MILLET-GENETIC-CONTINUITY-2026",
+      "triage_class": "NEWLY_INDEXED_LEGACY",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Genetic continuity and dietary change during the emergence of millet farming in northern China",
+      "online_date": "2026-07-14",
+      "issue_publication_date": "2026-08-03",
+      "discovered_at": "2026-09-07",
+      "doi": "10.1016/j.cub.2026.06.046",
+      "pmid": "42447862",
+      "canonical_url": "https://doi.org/10.1016/j.cub.2026.06.046",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["ANCIENT_DNA", "STABLE_ISOTOPES", "AGRICULTURE", "MORTUARY", "KINSHIP", "EARLY_HOLOCENE", "EAST_ASIA"],
+      "candidate_relevance": "Genome-wide and isotope data from eleven Xinglong individuals directly dated to roughly 9,000-5,000 cal BP indicate long regional genetic continuity across the transition toward millet cultivation, with later admixture. Two residential co-burials at different periods contained first-degree relatives. This provides a useful contextual counterpoint to Mogou: co-burial can be kin-structured in one setting and not in another.",
+      "epistemic_caution": "Small sample size and site-specific mortuary contexts prevent universal inference about agricultural transitions or co-burial. The study supports context dependence, not a general rule that agriculture spreads without migration or that residential burials are necessarily kin-based.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "ANCIENT_DNA", "MORTUARY_CONTEXT"],
+      "provenance": {
+        "sources": ["Current Biology / PubMed PMID 42447862", "Consensus paper record eca126e688cc5805b4c9bef2777e64fb"],
+        "online_date": "2026-07-14",
+        "issue_publication_date": "2026-08-03",
+        "index_or_discovery_date": "2026-09-07",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1016/j.cub.2026.06.046",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    }
+  ],
+  "candidate_updates": [
+    {"target": "10.1016/j.evolhumbehav.2026.106943", "type": "DEDUPLICATION", "finding": "Previously staged on 2026-09-04; no duplicate created."},
+    {"target": "10.56315/pscf9-26harrison + 10.1086/742088", "type": "BIBLIOGRAPHIC_IDENTITY_AMBIGUITY", "finding": "Identical title with distinct DOIs remains unresolved; keep separate."},
+    {"target": "10.3366/9781399564618-005", "type": "AHEAD_OF_PRINT_TRIAGE", "finding": "Future publication date remains distinct from September indexing."},
+    {"target": "DISCOVERY_ARTIFACT_HASH_SCOPE", "type": "PROVENANCE_VALIDATION", "finding": "Raw JSON SHA-256 and GitHub ZIP digest differ because they hash different byte scopes; both preserved."},
+    {"target": "DISCOVERY_ARTIFACT_BINARY_ACCESS", "type": "OBSERVABILITY_LIMITATION", "finding": "Connector exposed run/artifact metadata and source generator but not binary ZIP contents; queue distribution is marked reconstructed rather than directly verified."}
+  ],
+  "contradictions_or_pressure": [
+    {"type": "TECHNOLOGY_DOES_NOT_REQUIRE_DEMIC_DIFFUSION", "target": "CULTURAL_TRANSMISSION_MODEL", "finding": "Mogou/Gansu shows western-derived domesticates without detectable western/central Eurasian ancestry in sampled individuals; Xinglong also shows dietary transition during substantial local genetic continuity.", "action": "Keep demic diffusion, cultural transmission, intermediary exchange and local adoption as competing mechanisms."},
+    {"type": "CO_BURIAL_KINSHIP_IS_CONTEXT_DEPENDENT", "target": "MORTUARY_KINSHIP_MODEL", "finding": "Mogou multiple burials lacked sampled first-/second-degree relatives, whereas Xinglong residential co-burials at two periods contained first-degree kin.", "action": "Never infer kinship from co-burial alone and never infer non-kin social organization universally from a single cemetery."},
+    {"type": "ORNAMENT_FUNCTION_DOES_NOT_FIX_SEMANTICS", "target": "SYMBOLIC_BEHAVIOR_INFERENCE", "finding": "Quinkan resin-mounted teeth support personal adornment but do not recover specific ceremonial or symbolic meaning.", "action": "Separate object function, display, cultural context and semantic interpretation."},
+    {"type": "PALEOECOLOGICAL_PROXY_DOES_NOT_FIX_MOTIVATION", "target": "HUMAN_ENVIRONMENT_ONTOLOGY", "finding": "Dagsmosse proxies support niche construction and activity phases but cannot establish ritual or cosmological motivations.", "action": "Separate measured environmental proxy, inferred activity and inferred motivation."},
+    {"type": "NON_RECOVERY_IS_NOT_ABSENCE", "target": "PALEOGENETIC_EVIDENCE_MODEL", "finding": "South African biomolecular preservation varies materially by site and age.", "action": "Encode preservation/detection probability before interpreting negative biomolecular results."}
+  ],
+  "dating_revisions": [],
+  "relationships_generated": [],
+  "hypotheses_requiring_human_review": [
+    {"target": "CULTURAL_VS_DEMIC_DIFFUSION", "priority": "CRITICAL", "reason": "Mogou/Gansu and Xinglong supply complementary empirical cases where subsistence/technology change is not reducible to population replacement."},
+    {"target": "MORTUARY_CO_BURIAL_KINSHIP", "priority": "CRITICAL", "reason": "Directly conflicting site patterns show that co-burial-to-kinship edges must be conditional and evidence-specific."},
+    {"target": "INDIGENOUS_ORNAMENT_AND_SYMBOLISM", "priority": "HIGH", "reason": "Quinkan objects warrant object-function review with Traditional Owner cultural-governance flags before any semantic interpretation or image reuse."},
+    {"target": "MESOLITHIC_HUMAN_ENVIRONMENT_INTERACTION", "priority": "HIGH", "reason": "Dagsmosse can enrich paleoclimate and niche-construction layers while preserving a boundary between proxy and motivation."},
+    {"target": "PALEOGENETIC_PRESERVATION_BIAS", "priority": "HIGH", "reason": "Preservation-aware inference should be explicit in negative-evidence handling."}
+  ],
+  "review_items": [
+    "Review Cell Mogou/Gansu study for claim-level extraction and sampling limits.",
+    "Compare Mogou and Xinglong co-burial results before altering mortuary-kinship ontology.",
+    "Require Indigenous cultural-governance review for Quinkan Country material and any associated rock-art media.",
+    "Review Dagsmosse proxy-to-activity causal language before creating environment-behavior edges.",
+    "Consider adding preservation/detection metadata to paleogenetic negative evidence.",
+    "Resolve duplicate-title Harrison publication-object identity by DOI-level bibliographic inspection.",
+    "Obtain/decode the current Crossref artifact payload outside the connector if exact priority-class counts are required; current counts are transparently marked reconstructed."
+  ],
+  "summary": "Five material candidate-only additions: a new Cell ancient-DNA/social-practice study from Gansu; Indigenous Australian directly dated resin-mounted tooth ornaments; two ahead-of-issue Quaternary Science Reviews studies on Swedish Mesolithic paleoecology and South African biomolecular preservation; and a Current Biology ancient-DNA/isotope study of early millet farming. No evidence promotion, historical relationship generation or verified chronology revision occurred."
+}
