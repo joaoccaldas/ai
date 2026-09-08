@@ -1,0 +1,172 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-08",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-08T06:12:35Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-34187093872",
+    "completed_at": "2026-09-08T04:28:28.505091+00:00",
+    "code_commit": "d97bdf6170c1c06667e7e541b5462f63e8ad6655",
+    "candidate_count": 114,
+    "priority_candidate_count": 30,
+    "raw_payload_sha256": "53ab8740be0d0664c557195b46eeef83aa8bf77b538507b42f95fcd4910bc8ac",
+    "github_artifact_digest": "sha256:04c4678199152b31362bbb4ab2d98fb2101630f0228e5fa726efd18cab965b7d",
+    "artifact_id": 10040880705,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 5,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 23,
+      "verification_status": "BINARY_VERIFIED"
+    },
+    "overall_distribution": {
+      "RECENT_PUBLICATION": 5,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 107
+    }
+  },
+  "rules": [
+    "Every discovered record remains CANDIDATE_UNREVIEWED until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin or diffusion.",
+    "Unknown is not absence.",
+    "Publication, online, issue, index and discovery dates are preserved separately where available.",
+    "Archaeological observations are separated from inferred symbolic, ritual, social or cognitive meaning.",
+    "Ancient-DNA ancestry, cultural affiliation, technology, language and social identity are not interchangeable variables.",
+    "Historical diagnosis or identity is never inferred from resemblance to modern biomedical categories."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION": [
+      {"doi": "10.4324/9781003683551-11", "published": "2026-09-02", "indexed": "2026-09-02", "title": "The implications of AI myth for religion, science, and mythology", "triage": "Conceptual book chapter; candidate metadata only."},
+      {"doi": "10.4324/9781003683551-2", "published": "2026-09-02", "indexed": "2026-09-02", "title": "Religion, mythology, and AI", "triage": "Conceptual book chapter; candidate metadata only."},
+      {"doi": "10.56315/pscf9-26harrison", "published": "2026-09-01", "indexed": "2026-08-27", "title": "Some New World: Myths of Supernatural Belief in a Secular Age", "triage": "Publication-object identity ambiguity remains; DOI-level review required."},
+      {"doi": "10.1086/742088", "published": "2026-09-01", "indexed": "2026-09-03", "title": "Some New World: Myths of Supernatural Belief in a Secular Age", "triage": "Distinct DOI with identical title; do not title-deduplicate."},
+      {"doi": "10.1016/j.evolhumbehav.2026.106943", "published": "2026-09-01", "indexed": "2026-09-04", "title": "Moralistic supernatural explanations were widespread and attributed to many different supernatural agents in historical societies", "triage": "Already staged on 2026-09-04; no duplicate."}
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [
+      {"doi": "10.3366/9781399564618-005", "published": "2026-12-31", "indexed": "2026-09-03", "title": "Introduction: Revelation and Divination", "triage": "Ahead-of-print metadata; candidate only."},
+      {"doi": "10.1515/9780691266329-009", "published": "2026-12-31", "indexed": "2026-09-07", "title": "5 Beyond Transaction: Maintaining Sacred Relationships in Daily Life", "triage": "Newly indexed ahead-of-print conceptual chapter; human bibliographic review before substantive use."}
+    ],
+    "NEWLY_INDEXED_LEGACY_count": 23,
+    "NEWLY_INDEXED_LEGACY_note": "These are indexing-new, not publication-new. Do not present them as newly published research."
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-TRACE-GHOST-HOMININ-INTROGRESSION-2026",
+      "triage_class": "NEWLY_DISCOVERED_PEER_REVIEWED",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Recovering signatures of archaic hominin introgression using ancestral recombination graphs",
+      "online_date": "2026-07-30",
+      "issue_date": "2026-08-27",
+      "discovered_at": "2026-09-08",
+      "doi": "10.1126/science.aef8874",
+      "pmid": "42531349",
+      "canonical_url": "https://doi.org/10.1126/science.aef8874",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["HUMAN_EVOLUTION", "POPULATION_GENETICS", "ARCHAIC_INTROGRESSION", "COGNITIVE_EVOLUTION_CONTEXT"],
+      "candidate_relevance": "TRACE detects archaic ancestry from present-day genomes without requiring archaic reference genomes or unadmixed outgroups. It recovers known Neanderthal/Denisovan signals and reports ghost ancestry in Africans and non-Africans, including in regions previously described as Neanderthal/Denisovan ancestry deserts.",
+      "epistemic_caution": "The method infers genetic lineages and introgression signals; it does not identify the ghost populations with named fossil taxa such as Homo erectus or Homo heidelbergensis. Divergence/admixture estimates must not be converted into cultural, linguistic, cognitive or religious descent claims.",
+      "review_priority": "CRITICAL",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_GENOMIC_DATA", "ANCESTRY_INTERPRETATION"],
+      "provenance": {"sources": ["Science DOI 10.1126/science.aef8874", "PubMed PMID 42531349"], "publication_date_online": "2026-07-30", "issue_date": "2026-08-27", "index_or_discovery_date": "2026-09-08", "peer_reviewed": true, "dedup_key": "doi:10.1126/science.aef8874", "github_dedup_result": "NO_EXISTING_MATCH"}
+    },
+    {
+      "id": "DAILY-AQUAHENOSIS-FLOATATION-REST-2026",
+      "triage_class": "NEWLY_INDEXED_LEGACY",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Aquahenosis: a non-pharmacological altered state of consciousness induced by floatation-REST in individuals with anxiety and depression",
+      "publication_date": "2026-08-26",
+      "discovered_at": "2026-09-08",
+      "doi": "10.1093/nc/niag044",
+      "pmid": "42657182",
+      "canonical_url": "https://doi.org/10.1093/nc/niag044",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE_SECONDARY_RCT_ANALYSIS",
+      "domains": ["ALTERED_STATES", "INTEROCEPTION", "SELF_BOUNDARY", "SPIRITUAL_EXPERIENCE", "COGNITION"],
+      "candidate_relevance": "A secondary analysis of a randomized feasibility trial reports that Floatation-REST increased interoceptive awareness and dimensions including Oceanic Boundlessness, Disembodiment, Experience of Unity and Spiritual Experience relative to a zero-gravity-chair comparison.",
+      "epistemic_caution": "Phenomenological overlap with psychedelic states does not imply identical mechanisms, historical ritual equivalence or supernatural causation. Mediation analyses are statistical and do not prove causal mechanisms.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["MENTAL_HEALTH_PARTICIPANTS", "ALTERED_STATE_INTERPRETATION"],
+      "provenance": {"source": "Oxford Academic / Neuroscience of Consciousness", "publication_date": "2026-08-26", "index_or_discovery_date": "2026-09-08", "peer_reviewed": true, "dedup_key": "doi:10.1093/nc/niag044", "github_dedup_result": "NO_EXISTING_MATCH"}
+    },
+    {
+      "id": "DAILY-MEDIUMSHIP-POSSESSION-FEATURE-MEASURE-2026",
+      "triage_class": "NEWLY_INDEXED_LEGACY",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Investigating Mediumship/Possession-Relevant Experiences: Contributions from a Feature-Based, Subject-Dependent Approach to Definition and Measurement",
+      "publication_date": "2026-07-02",
+      "discovered_at": "2026-09-08",
+      "doi": "10.1177/13634615261459751",
+      "canonical_url": "https://doi.org/10.1177/13634615261459751",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["MEDIUMSHIP", "POSSESSION", "ALTERED_STATES", "CROSS_CULTURAL_PSYCHOLOGY", "MEASUREMENT", "RELIGION"],
+      "candidate_relevance": "Develops and validates a feature-based, subject-dependent measurement approach for mediumship/possession-relevant experiences using Brazilian systematic-review, practitioner/religious-leader input, psychometric validation and representative-sample work. Supports separating phenomenological features from culturally specific interpretations.",
+      "epistemic_caution": "Prevalence of reported experiences does not validate supernatural explanations and does not imply psychopathology. Brazilian results should not be universalized to other religious traditions or historical populations.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["RELIGIOUS_PRACTICE", "CULTURAL_CONTEXT", "MENTAL_HEALTH_STIGMA"],
+      "provenance": {"sources": ["Transcultural Psychiatry / SAGE", "Consensus full record"], "publication_date": "2026-07-02", "index_or_discovery_date": "2026-09-08", "peer_reviewed": true, "dedup_key": "doi:10.1177/13634615261459751", "github_dedup_result": "NO_EXISTING_MATCH"}
+    },
+    {
+      "id": "DAILY-SAQQARA-YUNMIN-ITY-MASTABA-2026",
+      "triage_class": "RECENT_FIELD_DISCOVERY",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Late Fifth Dynasty mastaba of Yunmin and Ity at Saqqara",
+      "reported_date": "2026-09-07",
+      "discovered_at": "2026-09-08",
+      "canonical_url": "https://english.news.cn/20260907/dca38b788f974e588d885a26184e92ff/c.html",
+      "source_type": "OFFICIAL-MINISTRY-BASED_FIELD_DISCOVERY_REPORT",
+      "domains": ["ARCHAEOLOGY", "MORTUARY", "ANCIENT_EGYPT", "FUNERARY_TEXT", "OFFERING_PRACTICE", "ADMINISTRATION"],
+      "candidate_relevance": "A joint Egyptian-Spanish mission reported a late Fifth Dynasty mastaba in the Mariette Cemetery with two funerary chapels belonging to Yunmin and his father Ity, including funerary texts, an offering formula, reliefs of agricultural activity and offering processions, and a false door in Ity's chapel.",
+      "epistemic_caution": "This is field-report metadata, not a peer-reviewed excavation publication. Titles, kinship and depicted/offering practices should be transcribed from primary documentation before entity promotion. Iconography and formulae do not by themselves establish private belief states.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["MORTUARY_CONTEXT", "ARCHAEOLOGICAL_HERITAGE", "EGYPTIAN_ANTIQUITIES"],
+      "provenance": {"sources": ["Egypt Ministry of Tourism and Antiquities statement as reported by Xinhua 2026-09-07", "Ahraminfo 2026-09-07", "Egyptian Gazette 2026-09-07"], "reported_date": "2026-09-07", "index_or_discovery_date": "2026-09-08", "peer_reviewed": false, "dedup_key": "canonical:https://english.news.cn/20260907/dca38b788f974e588d885a26184e92ff/c.html", "github_dedup_result": "NO_EXISTING_MATCH"}
+    },
+    {
+      "id": "DAILY-UPTON-LOVELL-SEX-REATTRIBUTION-2026",
+      "triage_class": "NEWLY_DISCOVERED_IDENTITY_REVISION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Ancient-DNA reattribution of the Upton Lovell burial as biologically female",
+      "reported_date": "2026-07-15",
+      "discovered_at": "2026-09-08",
+      "canonical_url": "https://www.wiltshiremuseum.org.uk/news-articles/startling-new-dna-evidence-shows-goldworker-from-the-time-of-stonehenge-was-female/",
+      "source_type": "MUSEUM_AND_RESEARCH_INSTITUTE_PUBLIC_RELEASE_NOT_YET_FULLY_PUBLISHED",
+      "domains": ["ANCIENT_DNA", "BRONZE_AGE", "MORTUARY", "GENDER_ASSUMPTIONS", "CRAFT_SPECIALIZATION"],
+      "candidate_relevance": "Wiltshire Museum reports Ancient Genomics Laboratory results identifying the individual long called the 'Upton Lovell Shaman' as biologically female, overturning a longstanding male attribution. The burial includes goldworking-related tools and unusual grave goods.",
+      "epistemic_caution": "The full scientific report is not yet released. Biological sex does not determine gender identity, occupation or ritual role. The labels 'shaman' and 'goldworker' are archaeological interpretations and must remain distinct from the DNA observation.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "ANCIENT_DNA", "GENDER_IDENTITY_INFERENCE", "MORTUARY_CONTEXT"],
+      "provenance": {"sources": ["Wiltshire Museum research release 2026-07-15", "Francis Crick Institute ancient genomics work reported publicly"], "reported_date": "2026-07-15", "index_or_discovery_date": "2026-09-08", "peer_reviewed": false, "dedup_key": "canonical:https://www.wiltshiremuseum.org.uk/news-articles/startling-new-dna-evidence-shows-goldworker-from-the-time-of-stonehenge-was-female/", "github_dedup_result": "NO_EXISTING_MATCH"}
+    }
+  ],
+  "contradictions_and_pressures": [
+    {"id": "PRESSURE-TRACE-ANCESTRY-DESERT", "summary": "Genomic regions depleted of Neanderthal/Denisovan ancestry are not necessarily Homo-sapiens-specific; TRACE reports other archaic ancestry in some such regions.", "review": ["DEEP_TIME_HUMAN_EVOLUTION", "ARCHAIC_INTROGRESSION_ONTOLOGY"]},
+    {"id": "PRESSURE-ASC-MECHANISM-EQUIVALENCE", "summary": "Similar phenomenological dimensions can arise under sensory attenuation and psychedelics without establishing mechanistic or historical equivalence.", "review": ["ALTERED_STATE_ONTOLOGY", "RITUAL_INDUCTION_HYPOTHESES"]},
+    {"id": "PRESSURE-PHENOMENOLOGY-VS-INTERPRETATION", "summary": "Mediumship/possession research supports coding cross-culturally recognizable experiential features separately from participants' culturally specific explanations.", "review": ["MEDIUMSHIP_POSSESSION_ONTOLOGY", "BELIEF_PRACTICE_PHENOMENOLOGY"]},
+    {"id": "PRESSURE-SEX-ROLE-INFERENCE", "summary": "Upton Lovell illustrates that grave-goods/status assumptions can contaminate biological-sex attribution; DNA observation, craft inference and ritual-role label must remain separate.", "review": ["MORTUARY_IDENTITY_INFERENCE", "GENDER_ROLE_ASSUMPTIONS"]},
+    {"id": "PRESSURE-FUNERARY-TEXT-VS-BELIEF", "summary": "Saqqara offering formulae, false doors and offering scenes are direct textual/material observations, but they should not be collapsed into individual private belief states.", "review": ["ANCIENT_EGYPT_MORTUARY", "BELIEF_VS_PRACTICE"]}
+  ],
+  "dating_revisions": [],
+  "relationships_generated": [],
+  "hypotheses_revisited": [
+    "ARCHAIC_INTROGRESSION_AND_HOMO_SAPIENS_SPECIFIC_REGIONS",
+    "ALTERED_STATE_INDUCTION_MECHANISMS",
+    "MEDIUMSHIP_POSSESSION_FEATURE_VS_INTERPRETATION",
+    "MORTUARY_IDENTITY_AND_SEX_ROLE_INFERENCE",
+    "ANCIENT_EGYPT_FUNERARY_PRACTICE_VS_PRIVATE_BELIEF",
+    "SIMILARITY_DOES_NOT_IMPLY_HISTORICAL_DESCENT"
+  ],
+  "human_review_items": [
+    {"priority": "CRITICAL", "item": "TRACE ghost-lineage article", "action": "Review inference strength, simulations and implications for any NOEMA Homo-sapiens-specific-region claims; do not map unnamed lineages to fossil taxa."},
+    {"priority": "HIGH", "item": "Aquahenosis study", "action": "Review induction-condition → phenomenology → mechanism separation before adding altered-state ontology edges."},
+    {"priority": "HIGH", "item": "Mediumship/possession measurement paper", "action": "Review culturally sensitive feature ontology and whether NOEMA needs explicit experiential-feature vs interpretation fields."},
+    {"priority": "HIGH", "item": "Yunmin/Ity mastaba", "action": "Await/locate primary excavation publication and verified inscription transcription before entity or claim promotion."},
+    {"priority": "HIGH", "item": "Upton Lovell burial", "action": "Treat biological-sex reattribution as provisional public research release until full scientific publication; retire unsupported male attribution if repository contains it."},
+    {"priority": "MEDIUM", "item": "Ahead-of-print sacred-relationships chapter", "action": "Verify bibliographic status and scope before substantive review."},
+    {"priority": "MEDIUM", "item": "Duplicate-title Harrison/Eire records", "action": "Resolve publication-object identity by DOI; never deduplicate by title alone."}
+  ],
+  "errors": [],
+  "promotion_summary": {"candidates_promoted_to_evidence": 0, "claims_written": 0, "historical_relationships_generated": 0, "automatic_confidence_changes": 0}
+}
