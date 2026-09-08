@@ -1,0 +1,83 @@
+{
+  "run_id": "chatgpt-daily-2026-09-08",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED",
+  "started_at": "2026-09-08T06:12:35Z",
+  "completed_at": "2026-09-08T06:18:00Z",
+  "input_refs": [
+    "projects/noema/data/runs/github-discovery-34187093872.json",
+    "projects/noema/schemas/run-manifest-v1.json",
+    "projects/noema/data/candidates/daily/2026-09-07.json",
+    "GitHub Actions artifact noema-crossref-candidates id 10040880705"
+  ],
+  "artifact_digests": {
+    "noema-crossref-candidates-json": "sha256:53ab8740be0d0664c557195b46eeef83aa8bf77b538507b42f95fcd4910bc8ac",
+    "noema-crossref-candidates-zip": "sha256:04c4678199152b31362bbb4ab2d98fb2101630f0228e5fa726efd18cab965b7d"
+  },
+  "sources_examined": 18,
+  "new_candidates": 5,
+  "candidate_updates": 0,
+  "contradictions": 5,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 6,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 7,
+  "errors": [],
+  "summary": "Binary-verified the 2026-09-08 NOEMA Discovery artifact (114 candidates; priority queue 5 recent, 2 upcoming/ahead-of-print, 23 newly-indexed legacy), deduplicated against repository state, and persisted five material unreviewed candidates: TRACE ghost-hominin introgression, Floatation-REST aquahenosis, culturally sensitive mediumship/possession measurement, the Yunmin/Ity Saqqara mastaba field report, and the Upton Lovell biological-sex reattribution. No dating revisions, historical relationships, evidence promotions, hypothesis promotions, or confidence changes were made.",
+  "research_note": "All discovered material remains candidate metadata. TRACE does not license mapping unnamed genetic lineages to named fossil taxa. Phenomenological similarity across altered states does not establish mechanism or historical continuity. Mediumship/possession features remain separate from cultural interpretation and psychopathology. Saqqara field reports require primary excavation/inscription review. Upton Lovell's DNA sex reattribution remains separate from gender, occupation, and 'shaman' role labels.",
+  "code_commit": "d97bdf6170c1c06667e7e541b5462f63e8ad6655",
+  "candidate_pack_commit": "bcb475403cea2ad48c10254908beb3576f51f7f6",
+  "sources": [
+    {"type": "GITHUB_DISCOVERY_ARTIFACT", "ref": "github-discovery-34187093872", "date": "2026-09-08"},
+    {"type": "PEER_REVIEWED", "doi": "10.1126/science.aef8874", "publication_online": "2026-07-30", "issue_date": "2026-08-27"},
+    {"type": "PEER_REVIEWED", "doi": "10.1093/nc/niag044", "publication_date": "2026-08-26"},
+    {"type": "PEER_REVIEWED", "doi": "10.1177/13634615261459751", "publication_date": "2026-07-02"},
+    {"type": "FIELD_REPORT", "url": "https://english.news.cn/20260907/dca38b788f974e588d885a26184e92ff/c.html", "reported_date": "2026-09-07"},
+    {"type": "MUSEUM_RESEARCH_RELEASE", "url": "https://www.wiltshiremuseum.org.uk/news-articles/startling-new-dna-evidence-shows-goldworker-from-the-time-of-stonehenge-was-female/", "reported_date": "2026-07-15"},
+    {"type": "CONSENSUS", "paper": "Investigating Mediumship/Possession-Relevant Experiences", "checked": "2026-09-08"},
+    {"type": "WEB_RESEARCH", "scope": "fresh archaeology, ancient DNA, ritual/religion/cognition, altered states, datasets", "checked": "2026-09-08"}
+  ],
+  "new_candidate_ids": [
+    "DAILY-TRACE-GHOST-HOMININ-INTROGRESSION-2026",
+    "DAILY-AQUAHENOSIS-FLOATATION-REST-2026",
+    "DAILY-MEDIUMSHIP-POSSESSION-FEATURE-MEASURE-2026",
+    "DAILY-SAQQARA-YUNMIN-ITY-MASTABA-2026",
+    "DAILY-UPTON-LOVELL-SEX-REATTRIBUTION-2026"
+  ],
+  "candidate_updates_detail": [],
+  "contradictions_detail": [
+    "Neanderthal/Denisovan ancestry deserts are not automatically Homo-sapiens-specific.",
+    "Phenomenological overlap across floatation and psychedelic states does not imply mechanistic or historical equivalence.",
+    "Mediumship/possession phenomenological features should be represented separately from culturally specific explanations.",
+    "Biological sex, grave goods, craft role and ritual-role labels are distinct inference layers.",
+    "Funerary texts/iconography/practice do not directly reveal an individual's private belief state."
+  ],
+  "dating_revisions_detail": [],
+  "relationships_generated_detail": [],
+  "hypotheses_revisited_detail": [
+    "ARCHAIC_INTROGRESSION_AND_HOMO_SAPIENS_SPECIFIC_REGIONS",
+    "ALTERED_STATE_INDUCTION_MECHANISMS",
+    "MEDIUMSHIP_POSSESSION_FEATURE_VS_INTERPRETATION",
+    "MORTUARY_IDENTITY_AND_SEX_ROLE_INFERENCE",
+    "ANCIENT_EGYPT_FUNERARY_PRACTICE_VS_PRIVATE_BELIEF",
+    "SIMILARITY_DOES_NOT_IMPLY_HISTORICAL_DESCENT"
+  ],
+  "review_items_detail": [
+    "TRACE ghost-lineage inference and ancestry-desert implications",
+    "Aquahenosis induction/phenomenology/mechanism separation",
+    "Mediumship/possession culturally sensitive feature ontology",
+    "Yunmin/Ity primary excavation and inscription verification",
+    "Upton Lovell full scientific publication and identity-layer cleanup",
+    "Ahead-of-print sacred-relationships chapter bibliographic review",
+    "Harrison/Eire identical-title distinct-DOI identity review"
+  ],
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "historical_diagnosis_from_resemblance": false
+  }
+}
