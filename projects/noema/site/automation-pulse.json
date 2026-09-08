@@ -1,28 +1,26 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-08T04:50:23.296686+00:00",
+  "generated_at": "2026-09-08T06:21:23.205045+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 43,
-    "new_candidates": 1301,
-    "contradictions": 31,
+    "runs": 44,
+    "new_candidates": 1291,
+    "contradictions": 36,
     "dating_revisions": 0,
-    "hypotheses_revisited": 33,
-    "review_items_created": 274,
+    "hypotheses_revisited": 39,
+    "review_items_created": 281,
     "errors": 1
   },
   "latest_by_task": [
     {
       "task_type": "DAILY_INGEST",
-      "run_id": "chatgpt-daily-2026-09-07",
-      "status": "COMPLETED_WITH_LIMITATION",
-      "completed_at": "2026-09-07T06:09:34Z",
-      "summary": "Daily triage staged five deduplicated candidate-only additions. The strongest new result is the 2026-09-03 Cell ancient-DNA study of 149 individuals from Mogou and other Gansu sites, which separates agricultural/cultural diffusion from demic diffusion and shows that sampled co-burial at Mogou was not organized around close biological kin. Additional candidates cover Indigenous Australian directly dated tooth ornaments, Swedish Mesolithic paleoecology, South African biomolecular preservation bias, and Current Biology evidence for genetic continuity during early millet adoption. No candidate was promoted to evidence, no historical relationship was inferred, and no verified dating revision was recorded.",
-      "errors": [
-        "The GitHub connector exposed the current Actions artifact metadata and both digest scopes but could not decode/download the binary ZIP payload as text. Exact current priority-class counts therefore could not be directly read from the artifact. The candidate triage marks the 5 RECENT / 1 UPCOMING / 24 LEGACY priority split as reconstructed from the immediately preceding captured queue plus unchanged deterministic workflow semantics, not binary-verified."
-      ],
-      "research_note": "Key review pressure: model technology/subsistence transmission separately from ancestry; make co-burial-to-kinship edges context dependent; preserve a hard boundary between ornament function and semantic meaning; separate paleoenvironmental proxies from inferred motivation; and attach preservation/detection probability to negative paleogenetic evidence. Quinkan Country material is flagged for Indigenous cultural governance and rock-art image permission."
+      "run_id": "chatgpt-daily-2026-09-08",
+      "status": "COMPLETED",
+      "completed_at": "2026-09-08T06:18:00Z",
+      "summary": "Binary-verified the 2026-09-08 NOEMA Discovery artifact (114 candidates; priority queue 5 recent, 2 upcoming/ahead-of-print, 23 newly-indexed legacy), deduplicated against repository state, and persisted five material unreviewed candidates: TRACE ghost-hominin introgression, Floatation-REST aquahenosis, culturally sensitive mediumship/possession measurement, the Yunmin/Ity Saqqara mastaba field report, and the Upton Lovell biological-sex reattribution. No dating revisions, historical relationships, evidence promotions, hypothesis promotions, or confidence changes were made.",
+      "errors": [],
+      "research_note": "All discovered material remains candidate metadata. TRACE does not license mapping unnamed genetic lineages to named fossil taxa. Phenomenological similarity across altered states does not establish mechanism or historical continuity. Mediumship/possession features remain separate from cultural interpretation and psychopathology. Saqqara field reports require primary excavation/inscription review. Upton Lovell's DNA sex reattribution remains separate from gender, occupation, and 'shaman' role labels."
     },
     {
       "task_type": "WEEKLY_REANALYSIS",
@@ -110,7 +108,7 @@
       "last_run_id": "github-discovery-34187093872",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-08T04:28:28.505091+00:00",
-      "age_hours": 0.37,
+      "age_hours": 1.88,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -128,7 +126,7 @@
       "last_run_id": "pubmed-discovery-34188399198",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
       "last_completed_at": "2026-09-08T04:50:23.256685+00:00",
-      "age_hours": 0.0,
+      "age_hours": 1.52,
       "writes": [
         "Actions artifact: noema-pubmed-candidates",
         "projects/noema/data/candidates/pubmed-latest.json",
@@ -143,11 +141,11 @@
       "authority": "CANDIDATE_TRIAGE_ONLY",
       "next_stage": "HUMAN_REVIEW",
       "expected_interval_hours": 30.0,
-      "health": "ERROR",
-      "last_run_id": "chatgpt-daily-2026-09-07",
-      "last_status": "COMPLETED_WITH_LIMITATION",
-      "last_completed_at": "2026-09-07T06:09:34Z",
-      "age_hours": 22.68,
+      "health": "HEALTHY",
+      "last_run_id": "chatgpt-daily-2026-09-08",
+      "last_status": "COMPLETED",
+      "last_completed_at": "2026-09-08T06:18:00Z",
+      "age_hours": 0.06,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
         "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
@@ -165,7 +163,7 @@
       "last_run_id": "dplace-benchmark-34088171878",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:47:50.813731+00:00",
-      "age_hours": 23.04,
+      "age_hours": 24.56,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -183,7 +181,7 @@
       "last_run_id": "religion-federation-34086988852",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:29:44.885603+00:00",
-      "age_hours": 23.34,
+      "age_hours": 24.86,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -208,7 +206,7 @@
       "last_run_id": "chatgpt-weekly-2026-09-06",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-09-06T06:55:00+00:00",
-      "age_hours": 45.92,
+      "age_hours": 47.44,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -226,7 +224,7 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 166.42,
+      "age_hours": 167.94,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
         "projects/noema/research/monthly/YYYY-MM-DD-monthly-discovery.md",
@@ -245,7 +243,7 @@
       "last_run_id": "media-discovery-33601263529",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-02T06:58:26.632314+00:00",
-      "age_hours": 141.87,
+      "age_hours": 143.38,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
@@ -253,6 +251,122 @@
     }
   ],
   "recent_runs": [
+    {
+      "run_id": "chatgpt-daily-2026-09-08",
+      "task_type": "DAILY_INGEST",
+      "status": "COMPLETED",
+      "started_at": "2026-09-08T06:12:35Z",
+      "completed_at": "2026-09-08T06:18:00Z",
+      "input_refs": [
+        "projects/noema/data/runs/github-discovery-34187093872.json",
+        "projects/noema/schemas/run-manifest-v1.json",
+        "projects/noema/data/candidates/daily/2026-09-07.json",
+        "GitHub Actions artifact noema-crossref-candidates id 10040880705"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates-json": "sha256:53ab8740be0d0664c557195b46eeef83aa8bf77b538507b42f95fcd4910bc8ac",
+        "noema-crossref-candidates-zip": "sha256:04c4678199152b31362bbb4ab2d98fb2101630f0228e5fa726efd18cab965b7d"
+      },
+      "sources_examined": 18,
+      "new_candidates": 5,
+      "candidate_updates": 0,
+      "contradictions": 5,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 6,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 7,
+      "errors": [],
+      "summary": "Binary-verified the 2026-09-08 NOEMA Discovery artifact (114 candidates; priority queue 5 recent, 2 upcoming/ahead-of-print, 23 newly-indexed legacy), deduplicated against repository state, and persisted five material unreviewed candidates: TRACE ghost-hominin introgression, Floatation-REST aquahenosis, culturally sensitive mediumship/possession measurement, the Yunmin/Ity Saqqara mastaba field report, and the Upton Lovell biological-sex reattribution. No dating revisions, historical relationships, evidence promotions, hypothesis promotions, or confidence changes were made.",
+      "research_note": "All discovered material remains candidate metadata. TRACE does not license mapping unnamed genetic lineages to named fossil taxa. Phenomenological similarity across altered states does not establish mechanism or historical continuity. Mediumship/possession features remain separate from cultural interpretation and psychopathology. Saqqara field reports require primary excavation/inscription review. Upton Lovell's DNA sex reattribution remains separate from gender, occupation, and 'shaman' role labels.",
+      "code_commit": "d97bdf6170c1c06667e7e541b5462f63e8ad6655",
+      "candidate_pack_commit": "bcb475403cea2ad48c10254908beb3576f51f7f6",
+      "sources": [
+        {
+          "type": "GITHUB_DISCOVERY_ARTIFACT",
+          "ref": "github-discovery-34187093872",
+          "date": "2026-09-08"
+        },
+        {
+          "type": "PEER_REVIEWED",
+          "doi": "10.1126/science.aef8874",
+          "publication_online": "2026-07-30",
+          "issue_date": "2026-08-27"
+        },
+        {
+          "type": "PEER_REVIEWED",
+          "doi": "10.1093/nc/niag044",
+          "publication_date": "2026-08-26"
+        },
+        {
+          "type": "PEER_REVIEWED",
+          "doi": "10.1177/13634615261459751",
+          "publication_date": "2026-07-02"
+        },
+        {
+          "type": "FIELD_REPORT",
+          "url": "https://english.news.cn/20260907/dca38b788f974e588d885a26184e92ff/c.html",
+          "reported_date": "2026-09-07"
+        },
+        {
+          "type": "MUSEUM_RESEARCH_RELEASE",
+          "url": "https://www.wiltshiremuseum.org.uk/news-articles/startling-new-dna-evidence-shows-goldworker-from-the-time-of-stonehenge-was-female/",
+          "reported_date": "2026-07-15"
+        },
+        {
+          "type": "CONSENSUS",
+          "paper": "Investigating Mediumship/Possession-Relevant Experiences",
+          "checked": "2026-09-08"
+        },
+        {
+          "type": "WEB_RESEARCH",
+          "scope": "fresh archaeology, ancient DNA, ritual/religion/cognition, altered states, datasets",
+          "checked": "2026-09-08"
+        }
+      ],
+      "new_candidate_ids": [
+        "DAILY-TRACE-GHOST-HOMININ-INTROGRESSION-2026",
+        "DAILY-AQUAHENOSIS-FLOATATION-REST-2026",
+        "DAILY-MEDIUMSHIP-POSSESSION-FEATURE-MEASURE-2026",
+        "DAILY-SAQQARA-YUNMIN-ITY-MASTABA-2026",
+        "DAILY-UPTON-LOVELL-SEX-REATTRIBUTION-2026"
+      ],
+      "candidate_updates_detail": [],
+      "contradictions_detail": [
+        "Neanderthal/Denisovan ancestry deserts are not automatically Homo-sapiens-specific.",
+        "Phenomenological overlap across floatation and psychedelic states does not imply mechanistic or historical equivalence.",
+        "Mediumship/possession phenomenological features should be represented separately from culturally specific explanations.",
+        "Biological sex, grave goods, craft role and ritual-role labels are distinct inference layers.",
+        "Funerary texts/iconography/practice do not directly reveal an individual's private belief state."
+      ],
+      "dating_revisions_detail": [],
+      "relationships_generated_detail": [],
+      "hypotheses_revisited_detail": [
+        "ARCHAIC_INTROGRESSION_AND_HOMO_SAPIENS_SPECIFIC_REGIONS",
+        "ALTERED_STATE_INDUCTION_MECHANISMS",
+        "MEDIUMSHIP_POSSESSION_FEATURE_VS_INTERPRETATION",
+        "MORTUARY_IDENTITY_AND_SEX_ROLE_INFERENCE",
+        "ANCIENT_EGYPT_FUNERARY_PRACTICE_VS_PRIVATE_BELIEF",
+        "SIMILARITY_DOES_NOT_IMPLY_HISTORICAL_DESCENT"
+      ],
+      "review_items_detail": [
+        "TRACE ghost-lineage inference and ancestry-desert implications",
+        "Aquahenosis induction/phenomenology/mechanism separation",
+        "Mediumship/possession culturally sensitive feature ontology",
+        "Yunmin/Ity primary excavation and inscription verification",
+        "Upton Lovell full scientific publication and identity-layer cleanup",
+        "Ahead-of-print sacred-relationships chapter bibliographic review",
+        "Harrison/Eire identical-title distinct-DOI identity review"
+      ],
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false,
+        "historical_diagnosis_from_resemblance": false
+      }
+    },
     {
       "run_id": "pubmed-discovery-34188399198",
       "task_type": "PUBMED_DISCOVERY",
@@ -1011,40 +1125,6 @@
         "similarity_implies_descent": false,
         "automatic_claim_promotion": false,
         "historical_diagnosis_from_resemblance": false
-      }
-    },
-    {
-      "run_id": "museum-media-33603946256",
-      "task_type": "MUSEUM_MEDIA_DISCOVERY",
-      "status": "COMPLETED_REFERENCE_ONLY",
-      "started_at": "2026-09-02T07:31:06.845662+00:00",
-      "completed_at": "2026-09-02T07:31:06.845662+00:00",
-      "input_refs": [
-        "Art Institute of Chicago Open Access API",
-        "Cleveland Museum of Art Open Access API",
-        "projects/noema/data/reference/belief-catalog-v1.json"
-      ],
-      "artifact_digests": {
-        "museum-reference-media": "sha256:d4bcbacca82ba42c5a1867824fab2c8290a40b0b00502c9ec76dda9f6cf4e49a"
-      },
-      "sources_examined": 22,
-      "new_candidates": 15,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 0,
-      "errors": [],
-      "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
-      "code_commit": "3dccd699bbefa4e57283cb920c0ac02d1842ae8b",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
       }
     }
   ]
