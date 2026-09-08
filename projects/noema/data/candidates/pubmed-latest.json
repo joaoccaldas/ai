@@ -1,12 +1,12 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-09-04T04:50:12.555905+00:00",
+  "generated_at": "2026-09-08T04:50:23.181236+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
     "trance_possession": {
       "query": "((\"trance\"[Title/Abstract]) OR (\"spirit possession\"[Title/Abstract]) OR (\"possession trance\"[Title/Abstract])) AND ((dissociation[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (culture[Title/Abstract]) OR (cultural[Title/Abstract]))",
-      "pmids_returned": 2,
+      "pmids_returned": 1,
       "title_relevant": 0
     },
     "ecstatic_neurology": {
@@ -16,7 +16,7 @@
     },
     "neurodiversity_religion": {
       "query": "((autism[Title/Abstract]) OR (autistic[Title/Abstract]) OR (ADHD[Title/Abstract]) OR (neurodiversity[Title/Abstract]) OR (neurodivergent[Title/Abstract])) AND ((religion[Title/Abstract]) OR (religiosity[Title/Abstract]) OR (religious[Title/Abstract]) OR (spirituality[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (faith[Title/Abstract]))",
-      "pmids_returned": 6,
+      "pmids_returned": 7,
       "title_relevant": 0
     },
     "sleep_visions": {
@@ -26,7 +26,7 @@
     },
     "music_trance": {
       "query": "((music[Title/Abstract]) OR (drumming[Title/Abstract]) OR (rhythm[Title/Abstract]) OR (rhythmic[Title/Abstract])) AND ((trance[Title/Abstract]) OR (\"altered state of consciousness\"[Title/Abstract]) OR (\"non-ordinary state\"[Title/Abstract]) OR (ecstatic[Title/Abstract]))",
-      "pmids_returned": 2,
+      "pmids_returned": 1,
       "title_relevant": 0
     },
     "witchcraft_psychiatry_history": {
@@ -36,7 +36,7 @@
     },
     "psychedelic_ritual": {
       "query": "((psychedelic[Title/Abstract]) OR (psilocybin[Title/Abstract]) OR (ayahuasca[Title/Abstract]) OR (entheogen*[Title/Abstract]) OR (hallucinogen*[Title/Abstract])) AND ((ritual[Title/Abstract]) OR (ceremony[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (mystical[Title/Abstract]))",
-      "pmids_returned": 13,
+      "pmids_returned": 14,
       "title_relevant": 1
     }
   },
@@ -107,8 +107,8 @@
   "counts": {
     "unique_candidates": 2,
     "query_count": 7,
-    "retrieved_before_title_gate": 22,
-    "rejected_by_title_gate": 20,
+    "retrieved_before_title_gate": 23,
+    "rejected_by_title_gate": 21,
     "summary_batches": 1
   }
 }
