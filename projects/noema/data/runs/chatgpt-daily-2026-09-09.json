@@ -1,0 +1,42 @@
+{
+  "run_id": "chatgpt-daily-2026-09-09",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED_WITH_MATERIAL_CANDIDATES",
+  "started_at": "2026-09-09T06:41:37Z",
+  "completed_at": "2026-09-09T06:49:00Z",
+  "input_refs": [
+    "github:joaoccaldas/ai/actions/runs/34311117547",
+    "github-artifact:10088390316:noema-crossref-candidates",
+    "projects/noema/data/candidates/daily/2026-09-08.json",
+    "projects/noema/schemas/run-manifest-v1.json"
+  ],
+  "artifact_digests": {
+    "noema-crossref-candidates.json": "sha256:56c5a225ab27bb6d2b0714461ad27cb91a0fca44b4b487a23effefb00bb2df5e",
+    "github-artifact-zip": "sha256:5bd1e73068b723fac2bd4f826a5e6107b145f0cfbe1b19487ff7e511a7760f9a"
+  },
+  "sources_examined": 18,
+  "new_candidates": 3,
+  "candidate_updates": 2,
+  "contradictions": 4,
+  "dating_revisions": 1,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 5,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 6,
+  "errors": [],
+  "summary": "Verified NOEMA Discovery artifact and triaged fresh scholarly/public research. Staged three candidate-only records: Les Rois 2 taxonomic reassessment to H. sapiens, new direct radiocarbon/taphonomic chronology for three Granada Neolithic cannibalism assemblages, and aDNA/paleopathology of an exceptional Semigallian multiple burial. No historical relationship, approved claim, or evidence promotion was made.",
+  "research_note": "Material pressures: taxonomic uncertainty can be revised without implying population-history relationships; behavioral labels such as cannibalism require episode-level chronology and context; co-burial can mix close kin and unrelated individuals; violent context does not identify attackers or establish a raid.",
+  "code_commit": "60f9698d6ebf53a126f57bc0ad2999b0e7757247",
+  "persistence": {
+    "candidate_file": "projects/noema/data/candidates/daily/2026-09-09.json",
+    "candidate_commit": "dea02de8fc8b33171f992dcd8d68a8536a64224f"
+  },
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "historical_diagnosis_from_resemblance": false
+  }
+}
