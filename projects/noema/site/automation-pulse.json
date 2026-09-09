@@ -1,26 +1,26 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-08T06:21:23.205045+00:00",
+  "generated_at": "2026-09-09T06:46:35.358854+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 44,
-    "new_candidates": 1291,
-    "contradictions": 36,
-    "dating_revisions": 0,
-    "hypotheses_revisited": 39,
-    "review_items_created": 281,
+    "runs": 46,
+    "new_candidates": 1358,
+    "contradictions": 40,
+    "dating_revisions": 1,
+    "hypotheses_revisited": 44,
+    "review_items_created": 268,
     "errors": 1
   },
   "latest_by_task": [
     {
       "task_type": "DAILY_INGEST",
-      "run_id": "chatgpt-daily-2026-09-08",
-      "status": "COMPLETED",
-      "completed_at": "2026-09-08T06:18:00Z",
-      "summary": "Binary-verified the 2026-09-08 NOEMA Discovery artifact (114 candidates; priority queue 5 recent, 2 upcoming/ahead-of-print, 23 newly-indexed legacy), deduplicated against repository state, and persisted five material unreviewed candidates: TRACE ghost-hominin introgression, Floatation-REST aquahenosis, culturally sensitive mediumship/possession measurement, the Yunmin/Ity Saqqara mastaba field report, and the Upton Lovell biological-sex reattribution. No dating revisions, historical relationships, evidence promotions, hypothesis promotions, or confidence changes were made.",
+      "run_id": "chatgpt-daily-2026-09-09",
+      "status": "COMPLETED_WITH_MATERIAL_CANDIDATES",
+      "completed_at": "2026-09-09T06:49:00Z",
+      "summary": "Verified NOEMA Discovery artifact and triaged fresh scholarly/public research. Staged three candidate-only records: Les Rois 2 taxonomic reassessment to H. sapiens, new direct radiocarbon/taphonomic chronology for three Granada Neolithic cannibalism assemblages, and aDNA/paleopathology of an exceptional Semigallian multiple burial. No historical relationship, approved claim, or evidence promotion was made.",
       "errors": [],
-      "research_note": "All discovered material remains candidate metadata. TRACE does not license mapping unnamed genetic lineages to named fossil taxa. Phenomenological similarity across altered states does not establish mechanism or historical continuity. Mediumship/possession features remain separate from cultural interpretation and psychopathology. Saqqara field reports require primary excavation/inscription review. Upton Lovell's DNA sex reattribution remains separate from gender, occupation, and 'shaman' role labels."
+      "research_note": "Material pressures: taxonomic uncertainty can be revised without implying population-history relationships; behavioral labels such as cannibalism require episode-level chronology and context; co-burial can mix close kin and unrelated individuals; violent context does not identify attackers or establish a raid."
     },
     {
       "task_type": "WEEKLY_REANALYSIS",
@@ -42,10 +42,10 @@
     },
     {
       "task_type": "GITHUB_DISCOVERY",
-      "run_id": "github-discovery-34187093872",
+      "run_id": "github-discovery-34311117547",
       "status": "COMPLETED",
-      "completed_at": "2026-09-08T04:28:28.505091+00:00",
-      "summary": "Crossref discovery produced 114 unreviewed candidates and 30 priority items.",
+      "completed_at": "2026-09-09T04:28:59.091012+00:00",
+      "summary": "Crossref discovery produced 113 unreviewed candidates and 30 priority items.",
       "errors": [],
       "research_note": null
     },
@@ -105,10 +105,10 @@
       "next_stage": "DAILY_INGEST",
       "expected_interval_hours": 26.0,
       "health": "HEALTHY",
-      "last_run_id": "github-discovery-34187093872",
+      "last_run_id": "github-discovery-34311117547",
       "last_status": "COMPLETED",
-      "last_completed_at": "2026-09-08T04:28:28.505091+00:00",
-      "age_hours": 1.88,
+      "last_completed_at": "2026-09-09T04:28:59.091012+00:00",
+      "age_hours": 2.29,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -126,7 +126,7 @@
       "last_run_id": "pubmed-discovery-34188399198",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
       "last_completed_at": "2026-09-08T04:50:23.256685+00:00",
-      "age_hours": 1.52,
+      "age_hours": 25.94,
       "writes": [
         "Actions artifact: noema-pubmed-candidates",
         "projects/noema/data/candidates/pubmed-latest.json",
@@ -142,10 +142,10 @@
       "next_stage": "HUMAN_REVIEW",
       "expected_interval_hours": 30.0,
       "health": "HEALTHY",
-      "last_run_id": "chatgpt-daily-2026-09-08",
-      "last_status": "COMPLETED",
-      "last_completed_at": "2026-09-08T06:18:00Z",
-      "age_hours": 0.06,
+      "last_run_id": "chatgpt-daily-2026-09-09",
+      "last_status": "COMPLETED_WITH_MATERIAL_CANDIDATES",
+      "last_completed_at": "2026-09-09T06:49:00Z",
+      "age_hours": -0.04,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
         "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
@@ -163,7 +163,7 @@
       "last_run_id": "dplace-benchmark-34088171878",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:47:50.813731+00:00",
-      "age_hours": 24.56,
+      "age_hours": 48.98,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -181,7 +181,7 @@
       "last_run_id": "religion-federation-34086988852",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:29:44.885603+00:00",
-      "age_hours": 24.86,
+      "age_hours": 49.28,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -206,7 +206,7 @@
       "last_run_id": "chatgpt-weekly-2026-09-06",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-09-06T06:55:00+00:00",
-      "age_hours": 47.44,
+      "age_hours": 71.86,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -224,7 +224,7 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 167.94,
+      "age_hours": 192.36,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
         "projects/noema/research/monthly/YYYY-MM-DD-monthly-discovery.md",
@@ -243,7 +243,7 @@
       "last_run_id": "media-discovery-33601263529",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-02T06:58:26.632314+00:00",
-      "age_hours": 143.38,
+      "age_hours": 167.8,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
@@ -251,6 +251,80 @@
     }
   ],
   "recent_runs": [
+    {
+      "run_id": "chatgpt-daily-2026-09-09",
+      "task_type": "DAILY_INGEST",
+      "status": "COMPLETED_WITH_MATERIAL_CANDIDATES",
+      "started_at": "2026-09-09T06:41:37Z",
+      "completed_at": "2026-09-09T06:49:00Z",
+      "input_refs": [
+        "github:joaoccaldas/ai/actions/runs/34311117547",
+        "github-artifact:10088390316:noema-crossref-candidates",
+        "projects/noema/data/candidates/daily/2026-09-08.json",
+        "projects/noema/schemas/run-manifest-v1.json"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates.json": "sha256:56c5a225ab27bb6d2b0714461ad27cb91a0fca44b4b487a23effefb00bb2df5e",
+        "github-artifact-zip": "sha256:5bd1e73068b723fac2bd4f826a5e6107b145f0cfbe1b19487ff7e511a7760f9a"
+      },
+      "sources_examined": 18,
+      "new_candidates": 3,
+      "candidate_updates": 2,
+      "contradictions": 4,
+      "dating_revisions": 1,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 5,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 6,
+      "errors": [],
+      "summary": "Verified NOEMA Discovery artifact and triaged fresh scholarly/public research. Staged three candidate-only records: Les Rois 2 taxonomic reassessment to H. sapiens, new direct radiocarbon/taphonomic chronology for three Granada Neolithic cannibalism assemblages, and aDNA/paleopathology of an exceptional Semigallian multiple burial. No historical relationship, approved claim, or evidence promotion was made.",
+      "research_note": "Material pressures: taxonomic uncertainty can be revised without implying population-history relationships; behavioral labels such as cannibalism require episode-level chronology and context; co-burial can mix close kin and unrelated individuals; violent context does not identify attackers or establish a raid.",
+      "code_commit": "60f9698d6ebf53a126f57bc0ad2999b0e7757247",
+      "persistence": {
+        "candidate_file": "projects/noema/data/candidates/daily/2026-09-09.json",
+        "candidate_commit": "dea02de8fc8b33171f992dcd8d68a8536a64224f"
+      },
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false,
+        "historical_diagnosis_from_resemblance": false
+      }
+    },
+    {
+      "run_id": "github-discovery-34311117547",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-09-09T04:28:59.091012+00:00",
+      "completed_at": "2026-09-09T04:28:59.091012+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:56c5a225ab27bb6d2b0714461ad27cb91a0fca44b4b487a23effefb00bb2df5e"
+      },
+      "sources_examined": 0,
+      "new_candidates": 113,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 113 unreviewed candidates and 30 priority items.",
+      "code_commit": "60f9698d6ebf53a126f57bc0ad2999b0e7757247",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
     {
       "run_id": "chatgpt-daily-2026-09-08",
       "task_type": "DAILY_INGEST",
@@ -1049,76 +1123,6 @@
       "summary": "PubMed biomedical/cognition discovery produced candidate-only records; no evidence, diagnosis or relationship was promoted.",
       "research_note": "projects/noema/data/candidates/pubmed-latest.json",
       "code_commit": "fb7d62ed0b8d1cc0f03e90a3f53943383cd678cc",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false,
-        "historical_diagnosis_from_resemblance": false
-      }
-    },
-    {
-      "run_id": "pubmed-discovery-33605689800",
-      "task_type": "PUBMED_DISCOVERY",
-      "status": "COMPLETED_CANDIDATES_ONLY",
-      "started_at": "2026-09-02T07:51:50.530230+00:00",
-      "completed_at": "2026-09-02T07:51:50.530230+00:00",
-      "input_refs": [
-        "NCBI PubMed E-utilities",
-        "projects/noema/scripts/discover_pubmed.py"
-      ],
-      "artifact_digests": {
-        "pubmed-latest.json": "sha256:73906192928026e5fe08b47ebf820ee233b4943295475eecbf86308b45c6665a"
-      },
-      "sources_examined": 2,
-      "new_candidates": 2,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 2,
-      "errors": [],
-      "summary": "PubMed biomedical/cognition discovery produced candidate-only records; no evidence, diagnosis or relationship was promoted.",
-      "research_note": "projects/noema/data/candidates/pubmed-latest.json",
-      "code_commit": "fa973232083fc9fbb9ee43a7d37258b3fc528219",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false,
-        "historical_diagnosis_from_resemblance": false
-      }
-    },
-    {
-      "run_id": "pubmed-discovery-33605549868",
-      "task_type": "PUBMED_DISCOVERY",
-      "status": "COMPLETED_CANDIDATES_ONLY",
-      "started_at": "2026-09-02T07:50:08.547138+00:00",
-      "completed_at": "2026-09-02T07:50:08.547138+00:00",
-      "input_refs": [
-        "NCBI PubMed E-utilities",
-        "projects/noema/scripts/discover_pubmed.py"
-      ],
-      "artifact_digests": {
-        "pubmed-latest.json": "sha256:41d93202659eb35e1e9b8aad619b89377c327ebd51bfa470bbc1a1dfb4e28f7e"
-      },
-      "sources_examined": 47,
-      "new_candidates": 47,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 47,
-      "errors": [],
-      "summary": "PubMed biomedical/cognition discovery produced candidate-only records; no evidence, diagnosis or relationship was promoted.",
-      "research_note": "projects/noema/data/candidates/pubmed-latest.json",
-      "code_commit": "db4f163bdb6dd30cfcdbb9bc32f2302aae01d47b",
       "epistemic_guards": {
         "model_output_is_evidence": false,
         "unknown_is_absent": false,
