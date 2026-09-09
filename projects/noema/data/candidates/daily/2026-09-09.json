@@ -1,0 +1,200 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-09",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-09T06:41:37Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-34311117547",
+    "completed_at": "2026-09-09T04:29:06Z",
+    "code_commit": "60f9698d6ebf53a126f57bc0ad2999b0e7757247",
+    "candidate_count": 113,
+    "priority_candidate_count": 30,
+    "raw_payload_sha256": "56c5a225ab27bb6d2b0714461ad27cb91a0fca44b4b487a23effefb00bb2df5e",
+    "github_artifact_digest": "sha256:5bd1e73068b723fac2bd4f826a5e6107b145f0cfbe1b19487ff7e511a7760f9a",
+    "artifact_id": 10088390316,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 5,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 23,
+      "verification_status": "BINARY_VERIFIED"
+    },
+    "overall_distribution": {
+      "RECENT_PUBLICATION": 5,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 106
+    }
+  },
+  "rules": [
+    "Every discovered record remains CANDIDATE_UNREVIEWED until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin or diffusion.",
+    "Unknown is not absence.",
+    "Publication, online, issue, index and discovery dates are preserved separately where available.",
+    "Archaeological observations are separated from inferred symbolic, ritual, social or cognitive meaning.",
+    "Ancient-DNA ancestry, cultural affiliation, technology, language and social identity are not interchangeable variables.",
+    "Historical diagnosis or identity is never inferred from resemblance to modern biomedical categories."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION_count": 5,
+    "UPCOMING_OR_AHEAD_OF_PRINT_count": 2,
+    "NEWLY_INDEXED_LEGACY_count": 23,
+    "notes": [
+      {
+        "doi": "10.54254/2753-7064/2025.23062",
+        "published": "2025-05-19",
+        "indexed": "2026-09-09",
+        "classification": "NEWLY_INDEXED_LEGACY",
+        "title": "Analysis of the Influencing Society Factors of the Burial Ritual Evolution and Formation in Ancient Egypt",
+        "triage": "Index-new, not publication-new; secondary interpretive article and lower priority than primary archaeological or chronometric evidence."
+      },
+      {
+        "doi": "10.1016/j.evolhumbehav.2010.07.008",
+        "published": "2011-01-01",
+        "indexed": "2026-09-08",
+        "classification": "NEWLY_INDEXED_LEGACY",
+        "title": "Beliefs about God, the afterlife and morality support the role of supernatural policing in human cooperation",
+        "triage": "Legacy experimental literature; candidate metadata only and should not override newer cross-cultural work already staged."
+      },
+      {
+        "doi": "10.3366/9781399564618-005",
+        "published": "2026-12-31",
+        "indexed": "2026-09-03",
+        "classification": "UPCOMING_OR_AHEAD_OF_PRINT",
+        "title": "Introduction: Revelation and Divination",
+        "triage": "Ahead-of-print metadata only."
+      },
+      {
+        "doi": "10.1515/9780691266329-009",
+        "published": "2026-12-31",
+        "indexed": "2026-09-07",
+        "classification": "UPCOMING_OR_AHEAD_OF_PRINT",
+        "title": "5 Beyond Transaction: Maintaining Sacred Relationships in Daily Life",
+        "triage": "Ahead-of-print conceptual chapter; no evidentiary promotion."
+      }
+    ]
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-LES-ROIS-2-TAXONOMIC-REASSESSMENT-2026",
+      "triage_class": "NEWLY_DISCOVERED_PEER_REVIEWED_TAXONOMIC_REVISION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "The Dentition of the Aurignacian Mandible Les Rois 2, France: New Data and Taxonomic Reassessment",
+      "publication_date": "2026-09",
+      "discovered_at": "2026-09-09",
+      "doi": "10.1002/ajpa.70354",
+      "canonical_url": "https://doi.org/10.1002/ajpa.70354",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["HUMAN_EVOLUTION", "AURIGNACIAN", "DENTAL_MORPHOLOGY", "TAXONOMIC_ATTRIBUTION", "MORTUARY_CONTEXT"],
+      "candidate_relevance": "Micro-CT, dental tissue proportions, EDJ morphology and geometric morphometrics place Les Rois 2 within Late Pleistocene Homo sapiens variation and distinct from typical Neanderthal morphology. The authors conclude that all human remains from Les Rois are attributable to H. sapiens.",
+      "epistemic_caution": "Taxonomic reassignment does not establish population replacement, cultural authorship for every Aurignacian assemblage, recent Neanderthal ancestry, or the meaning of cut marks and tooth modification. Plesiomorphic traits should not be equated with hybrid ancestry without independent genomic evidence.",
+      "review_priority": "CRITICAL",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "HOMININ_TAXONOMY"],
+      "provenance": {
+        "sources": ["American Journal of Biological Anthropology DOI 10.1002/ajpa.70354", "Archaeology Magazine report 2026-09-08"],
+        "index_or_discovery_date": "2026-09-09",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1002/ajpa.70354",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-GRANADA-NEOLITHIC-CANNIBALISM-CHRONOLOGY-2026",
+      "triage_class": "NEWLY_DISCOVERED_PEER_REVIEWED_DATING_REVISION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Multiphase human cannibalism in Neolithic southern Iberia: Chronological and taphonomic evidence from Malalmuerzo, Carigüela, and Majolicas Caves",
+      "issue_date": "2026-10-01",
+      "reported_publication_window": "2026-09",
+      "discovered_at": "2026-09-09",
+      "doi": "10.1016/j.jas.2026.106666",
+      "canonical_url": "https://doi.org/10.1016/j.jas.2026.106666",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["ARCHAEOLOGY", "MORTUARY", "TAPHONOMY", "RADIOCARBON_DATING", "CANNIBALISM", "RITUAL_INTERPRETATION"],
+      "candidate_relevance": "Reanalysis of nearly 1,000 human remains from three classic Granada cave collections combines direct radiocarbon dating with taphonomic analysis and separates previously generalized Neolithic cannibalism into temporally distinct episodes. Malalmuerzo is placed around 5300-4950 BCE with evidence compatible with collective violence and consumption; Carigüela shows recurrent episodes; Majolicas includes a later episode around 3800 BCE with red pigment or cinnabar associations.",
+      "epistemic_caution": "Anthropogenic processing and consumption evidence does not uniquely identify motive. Violence, funerary processing, ritual, coercion, famine and other social explanations must remain separate hypotheses. Cinnabar or red coloration does not by itself establish ritual meaning.",
+      "review_priority": "CRITICAL",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "VIOLENCE", "CANNIBALISM", "MORTUARY_CONTEXT"],
+      "provenance": {
+        "sources": ["Journal of Archaeological Science DOI 10.1016/j.jas.2026.106666", "Universidad de Granada release 2026-09-08", "Euronews reporting 2026-09-08"],
+        "issue_date": "2026-10-01",
+        "index_or_discovery_date": "2026-09-09",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1016/j.jas.2026.106666",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-SEMIGALLIA-MULTIPLE-BURIAL-ADNA-2026",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "A multiple burial from the Viking Age in Semigallia, Latvia",
+      "publication_date": "2026-09",
+      "discovered_at": "2026-09-09",
+      "doi": "10.1016/j.jasrep.2026.105790",
+      "canonical_url": "https://doi.org/10.1016/j.jasrep.2026.105790",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["ARCHAEOLOGY", "ANCIENT_DNA", "KINSHIP", "PALEOPATHOLOGY", "MORTUARY", "VIKING_AGE"],
+      "candidate_relevance": "Bioarchaeology and aDNA of an exceptional six-person burial at Cunkani-Drengeri identify sharp-force perimortem trauma in three adult males, a father-son pair and a third-degree relative, while other individuals were unrelated. Population-genetic analyses place the individuals closer to local ancient Baltic populations than predominantly Scandinavian groups.",
+      "epistemic_caution": "The authors describe a Viking-age raid as a possibility, not an established cause. Local genetic affinity and Semigallian burial custom do not prove political identity, language, attacker identity, or the precise event that produced the burial.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "ANCIENT_DNA", "VIOLENT_DEATH", "KINSHIP"],
+      "provenance": {
+        "sources": ["University of Latvia research record", "Journal of Archaeological Science: Reports DOI 10.1016/j.jasrep.2026.105790"],
+        "publication_date": "2026-09",
+        "index_or_discovery_date": "2026-09-09",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1016/j.jasrep.2026.105790",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    }
+  ],
+  "contradictions_and_pressures": [
+    {
+      "id": "PRESSURE-LES-ROIS-TAXONOMY",
+      "summary": "Earlier uncertainty or Neanderthal-leaning interpretations of Les Rois 2 are directly challenged by a multi-method dental reassessment favoring H. sapiens.",
+      "review": ["AURIGNACIAN_HOMININ_ATTRIBUTION", "LES_ROIS_ENTITY"]
+    },
+    {
+      "id": "PRESSURE-CANNIBALISM-NONUNIFORMITY",
+      "summary": "A single behavioral label can conceal distinct episodes with different chronologies and contexts; NOEMA should not encode cannibalism as one uniform ritual practice.",
+      "review": ["MORTUARY_PRACTICE_ONTOLOGY", "RITUAL_VS_VIOLENCE_INFERENCE"]
+    },
+    {
+      "id": "PRESSURE-MULTIPLE-BURIAL-KINSHIP",
+      "summary": "The Semigallian multiple burial contains both close relatives and unrelated individuals, reinforcing that co-burial cannot be treated as a direct proxy for biological family.",
+      "review": ["MORTUARY_KINSHIP_ONTOLOGY"]
+    },
+    {
+      "id": "PRESSURE-EVENT-CAUSE",
+      "summary": "Perimortem violence plus chronological context permits event hypotheses such as raiding, but does not identify attackers or political or cultural causation.",
+      "review": ["VIOLENCE_EVENT_INFERENCE", "VIKING_AGE_RELATIONSHIPS"]
+    }
+  ],
+  "dating_revisions": [
+    {
+      "id": "DATING-GRANADA-NEOLITHIC-CAVES-2026",
+      "candidate_id": "DAILY-GRANADA-NEOLITHIC-CANNIBALISM-CHRONOLOGY-2026",
+      "summary": "Direct radiocarbon dates resolve legacy collections into multiple Neolithic episodes rather than a single undifferentiated practice; human review required before changing entity chronologies.",
+      "status": "HUMAN_REVIEW_REQUIRED"
+    }
+  ],
+  "relationships_generated": [],
+  "hypotheses_revisited": [
+    "AURIGNACIAN_HOMININ_ATTRIBUTION",
+    "MORTUARY_PRACTICE_ONTOLOGY",
+    "RITUAL_VS_VIOLENCE_INFERENCE",
+    "MORTUARY_KINSHIP_ONTOLOGY",
+    "VIKING_AGE_EVENT_CAUSATION"
+  ],
+  "review_items": [
+    {"priority": "CRITICAL", "item": "Review Les Rois 2 taxonomic node and any claims that depend on Neanderthal attribution."},
+    {"priority": "CRITICAL", "item": "Review Granada cave chronologies and split any monolithic cannibalism entity into site and episode-specific observations."},
+    {"priority": "HIGH", "item": "Review Semigallia Burial 351 kinship graph; encode related and unrelated individuals separately."},
+    {"priority": "HIGH", "item": "Do not encode Viking raid as a relationship or event fact; retain as author hypothesis."},
+    {"priority": "HIGH", "item": "Keep direct taphonomic observations separate from ritual or cannibalism motive inference."},
+    {"priority": "MEDIUM", "item": "Review newly indexed legacy queue items for bibliographic quality before future evidence consideration."}
+  ],
+  "errors": [],
+  "summary": "Binary-verified discovery artifact: 113 candidates, priority queue 5 recent / 2 ahead-of-print / 23 newly indexed legacy. Three material deduplicated candidates staged: Les Rois 2 H. sapiens taxonomic reassessment, direct-dated multiphase Neolithic cannibalism in Granada, and aDNA/paleopathology of an exceptional Semigallian multiple burial. One dating revision requires human review. No relationships or evidence promotions were generated."
+}
