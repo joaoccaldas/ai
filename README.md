@@ -10,6 +10,10 @@ GitHub Pages site with several experiences:
 - **`/stencil/`** — *Stencil*, a browser tattoo try-on: place a design on your
   photo, blend it into the skin, and export. See [`stencil/README.md`](stencil/README.md).
   → https://joaoccaldas.github.io/ai/stencil/
+- **`/wepartner/`** — *Wepartner*, a professional, clean and immersive redesign
+  of [wepartner.se](https://www.wepartner.se) with an AI · automation · machine
+  learning differentiator. See [`wepartner/README.md`](wepartner/README.md).
+  → https://joaoccaldas.github.io/ai/wepartner/
 
 A golden portal in the corner of the home page links into the Belong experience.
 
