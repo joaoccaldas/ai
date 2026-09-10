@@ -7,6 +7,9 @@ on:
       - 'projects/noema/site/observatory.html'
       - 'projects/noema/site/observatory-simple-v7.js'
       - 'projects/noema/site/observatory-simple-v7.css'
+      - 'projects/noema/site/lens-readiness-v1.json'
+      - 'projects/noema/site/lens-readiness-v1.js'
+      - 'projects/noema/site/lens-readiness-v1.css'
       - 'projects/noema/site/research-health.json'
       - '.github/workflows/noema-observatory-v7.yml'
 
@@ -22,8 +25,10 @@ jobs:
         with:
           node-version: '22'
       - name: JavaScript syntax
-        run: node --check projects/noema/site/observatory-simple-v7.js
-      - name: Validate guided UX and coverage honesty
+        run: |
+          node --check projects/noema/site/observatory-simple-v7.js
+          node --check projects/noema/site/lens-readiness-v1.js
+      - name: Validate guided UX, coverage honesty, and lens readiness
         run: |
           python - <<'PY'
           import json
@@ -31,9 +36,12 @@ jobs:
           html=Path('projects/noema/site/observatory.html').read_text()
           js=Path('projects/noema/site/observatory-simple-v7.js').read_text()
           css=Path('projects/noema/site/observatory-simple-v7.css').read_text()
+          readiness=json.loads(Path('projects/noema/site/lens-readiness-v1.json').read_text())
+          rjs=Path('projects/noema/site/lens-readiness-v1.js').read_text()
           health=json.loads(Path('projects/noema/site/research-health.json').read_text())
           assert 'CIVILIZATION OBSERVATORY · V7' in html
           assert 'observatory-simple-v7.css' in html and 'observatory-simple-v7.js' in html
+          assert 'lens-readiness-v1.css' in html and 'lens-readiness-v1.js' in html
           assert 'Start with one moment.' in js
           assert 'Begin guided journey' in js
           assert 'Research Mode' in js
@@ -44,8 +52,20 @@ jobs:
           assert health['metrics']['source_families'] >= 1
           assert health['metrics']['drh_question_mapping_coverage_pct'] < 100
           assert 'will not substitute invented completeness metrics' in js
-          forbidden=['complete civilization model','100% complete data','fully complete historical record']
-          low=(html+js).lower()
+          assert readiness['status']=='PUBLIC_READINESS_REGISTRY'
+          expected={'civilization','belief','ritual','mortuary','altered','technology','environment','language','ancestry'}
+          assert set(readiness['lenses'])==expected
+          allowed={'PARTIAL','PARTIAL_STRONG_EXAMPLES','RESEARCH_PREVIEW'}
+          for key,lens in readiness['lenses'].items():
+              assert lens['readiness'] in allowed
+              assert lens['available'] and lens['missing'] and lens['blocked_inferences']
+              assert lens['public_use'] in {'GUIDED_AND_RESEARCH','RESEARCH_ONLY'}
+          assert readiness['lenses']['environment']['public_use']=='RESEARCH_ONLY'
+          assert readiness['lenses']['language']['public_use']=='RESEARCH_ONLY'
+          assert readiness['lenses']['ancestry']['public_use']=='RESEARCH_ONLY'
+          assert 'Readiness describes current public data/model maturity' in rjs
+          forbidden=['complete civilization model','100% complete data','fully complete historical record','all lenses complete']
+          low=(html+js+rjs+json.dumps(readiness)).lower()
           assert all(x not in low for x in forbidden)
-          print('NOEMA V7 guided UX contract: PASS')
+          print('NOEMA V7 guided UX + lens readiness contract: PASS')
           PY
