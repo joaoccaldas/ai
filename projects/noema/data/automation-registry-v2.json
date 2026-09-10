@@ -1,0 +1,193 @@
+{
+  "registry_id": "NOEMA-AUTOMATION-REGISTRY-V2",
+  "version": "2.0.0",
+  "timezone": "Europe/Stockholm",
+  "status": "CANONICAL_AUTOMATION_INVENTORY",
+  "principles": [
+    "Automation output is workflow state, never evidence by itself.",
+    "Every NOEMA GitHub workflow must be registered here.",
+    "Discovery jobs may create candidates but may not approve claims or relationships.",
+    "Scheduled outputs may write only to declared destinations.",
+    "Scientific authority is bounded per task and cannot be widened implicitly by implementation changes.",
+    "Unknown, missing, contested and absent states remain distinct.",
+    "Model agreement, citation count and workflow success are not scientific validation."
+  ],
+  "tasks": [
+    {
+      "task_type": "GITHUB_DISCOVERY",
+      "scheduler": "GITHUB_ACTIONS",
+      "workflow_path": ".github/workflows/noema-discovery.yml",
+      "cadence": "DAILY",
+      "schedule": "17 4 * * * UTC",
+      "expected_interval_hours": 26,
+      "authority": "CANDIDATE_DISCOVERY_ONLY",
+      "max_epistemic_stage": null,
+      "writes": [
+        "Actions artifact: noema-crossref-candidates",
+        "projects/noema/data/runs/github-discovery-*.json"
+      ],
+      "next_stage": "DAILY_INGEST"
+    },
+    {
+      "task_type": "PUBMED_DISCOVERY",
+      "scheduler": "GITHUB_ACTIONS",
+      "workflow_path": ".github/workflows/noema-pubmed-discovery.yml",
+      "cadence": "TWICE_WEEKLY_TUESDAY_FRIDAY",
+      "schedule": "47 4 * * 2,5 UTC",
+      "expected_interval_hours": 96,
+      "authority": "BIOMEDICAL_CANDIDATE_DISCOVERY_ONLY",
+      "max_epistemic_stage": null,
+      "writes": [
+        "Actions artifact: noema-pubmed-candidates",
+        "projects/noema/data/candidates/pubmed-latest.json",
+        "projects/noema/data/runs/pubmed-discovery-*.json"
+      ],
+      "next_stage": "HUMAN_REVIEW"
+    },
+    {
+      "task_type": "DAILY_INGEST",
+      "scheduler": "CHATGPT_AUTOMATION",
+      "workflow_path": null,
+      "cadence": "DAILY",
+      "schedule": "approximately 08:00 Europe/Stockholm",
+      "expected_interval_hours": 30,
+      "authority": "CANDIDATE_TRIAGE_ONLY",
+      "max_epistemic_stage": null,
+      "writes": [
+        "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
+        "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
+      ],
+      "next_stage": "HUMAN_REVIEW"
+    },
+    {
+      "task_type": "DPLACE_BENCHMARK",
+      "scheduler": "GITHUB_ACTIONS",
+      "workflow_path": ".github/workflows/noema-benchmark.yml",
+      "cadence": "WEEKLY_MONDAY",
+      "schedule": "43 5 * * 1 UTC",
+      "expected_interval_hours": 190,
+      "authority": "COVERAGE_REFRESH_ONLY",
+      "max_epistemic_stage": "OBSERVED",
+      "writes": [
+        "projects/noema/site/societies.json",
+        "projects/noema/data/runs/dplace-benchmark-*.json"
+      ],
+      "next_stage": "RELIGION_FEDERATION"
+    },
+    {
+      "task_type": "RELIGION_FEDERATION",
+      "scheduler": "GITHUB_ACTIONS",
+      "workflow_path": ".github/workflows/noema-decomposition-publish.yml",
+      "cadence": "WEEKLY_MONDAY",
+      "schedule": "17 5 * * 1 UTC",
+      "expected_interval_hours": 190,
+      "authority": "DETERMINISTIC_PROJECTION_AND_DESCRIPTIVE_ANALYSIS",
+      "max_epistemic_stage": "NOMINATION",
+      "writes": [
+        "projects/noema/site/religion-decomposition.json",
+        "projects/noema/site/drh-decomposition.json",
+        "projects/noema/site/drh-catalog.json",
+        "projects/noema/site/dplace-religion-variables.json",
+        "projects/noema/site/religion-federation.json",
+        "projects/noema/site/pattern-candidates.json",
+        "projects/noema/site/coverage-matrix.json",
+        "projects/noema/site/research-health.json",
+        "projects/noema/data/runs/religion-federation-*.json"
+      ],
+      "next_stage": "PATTERN_REVIEW"
+    },
+    {
+      "task_type": "WEEKLY_REANALYSIS",
+      "scheduler": "CHATGPT_AUTOMATION",
+      "workflow_path": null,
+      "cadence": "WEEKLY_SUNDAY",
+      "schedule": "approximately 08:00 Europe/Stockholm",
+      "expected_interval_hours": 190,
+      "authority": "HYPOTHESIS_REVISION_CANDIDATES_ONLY",
+      "max_epistemic_stage": "STRATIFIED",
+      "writes": [
+        "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
+        "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
+      ],
+      "next_stage": "HUMAN_REVIEW"
+    },
+    {
+      "task_type": "MONTHLY_DISCOVERY",
+      "scheduler": "CHATGPT_AUTOMATION",
+      "workflow_path": null,
+      "cadence": "MONTHLY_FIRST_DAY",
+      "schedule": "approximately 08:00 Europe/Stockholm",
+      "expected_interval_hours": 780,
+      "authority": "RELATIONSHIP_AND_HYPOTHESIS_CANDIDATES_ONLY",
+      "max_epistemic_stage": "NOMINATION",
+      "writes": [
+        "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
+        "projects/noema/research/monthly/YYYY-MM-DD-monthly-discovery.md",
+        "projects/noema/data/runs/chatgpt-monthly-YYYY-MM-DD.json"
+      ],
+      "next_stage": "HUMAN_REVIEW"
+    },
+    {
+      "task_type": "MEDIA_DISCOVERY",
+      "scheduler": "GITHUB_ACTIONS",
+      "workflow_path": ".github/workflows/noema-media-discovery.yml",
+      "cadence": "WEEKLY_WEDNESDAY",
+      "schedule": "43 6 * * 3 UTC",
+      "expected_interval_hours": 190,
+      "authority": "MEDIA_CANDIDATE_DISCOVERY_ONLY",
+      "max_epistemic_stage": null,
+      "writes": [
+        "projects/noema/data/candidates/wikimedia-media-candidates.json",
+        "projects/noema/data/runs/media-discovery-*.json"
+      ],
+      "next_stage": "IDENTITY_AND_RIGHTS_REVIEW"
+    },
+    {
+      "task_type": "MUSEUM_MEDIA_DISCOVERY",
+      "scheduler": "GITHUB_ACTIONS",
+      "workflow_path": ".github/workflows/noema-museum-media.yml",
+      "cadence": "WEEKLY_WEDNESDAY",
+      "schedule": "17 7 * * 3 UTC",
+      "expected_interval_hours": 190,
+      "authority": "REFERENCE_MEDIA_DISCOVERY_ONLY",
+      "max_epistemic_stage": null,
+      "writes": [
+        "projects/noema/site/museum-reference-media.json",
+        "projects/noema/data/runs/museum-media-*.json"
+      ],
+      "next_stage": "IDENTITY_AND_RIGHTS_REVIEW"
+    }
+  ],
+  "scheduled_overlays": [
+    {
+      "overlay_id": "QUARTERLY_PARADIGM_CHALLENGE",
+      "scheduler": "CHATGPT_AUTOMATION",
+      "cadence": "QUARTERLY_JAN_APR_JUL_OCT",
+      "execution_model": "FOLDED_INTO_MONTHLY_DISCOVERY",
+      "authority": "CHALLENGE_EXISTING_HYPOTHESES_ONLY",
+      "max_epistemic_stage": "NOMINATION"
+    }
+  ],
+  "github_workflows": [
+    {"path": ".github/workflows/noema-analysis-publish.yml", "kind": "DERIVED_ANALYSIS_PROJECTION", "authority": "REVIEWED_INPUTS_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-automation-pulse.yml", "kind": "OBSERVABILITY", "authority": "OBSERVABILITY_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-benchmark.yml", "kind": "RESEARCH_DATA_REFRESH", "authority": "COVERAGE_REFRESH_ONLY", "cron": "43 5 * * 1"},
+    {"path": ".github/workflows/noema-ci.yml", "kind": "CI", "authority": "VALIDATION_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-decomposition-publish.yml", "kind": "RESEARCH_PROJECTION", "authority": "DETERMINISTIC_PROJECTION_AND_DESCRIPTIVE_ANALYSIS", "cron": "17 5 * * 1"},
+    {"path": ".github/workflows/noema-delivery-integrity-v18.yml", "kind": "DELIVERY_VALIDATION", "authority": "VALIDATION_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-discovery.yml", "kind": "DISCOVERY", "authority": "CANDIDATE_DISCOVERY_ONLY", "cron": "17 4 * * *"},
+    {"path": ".github/workflows/noema-dplace-variable-audit.yml", "kind": "SOURCE_AUDIT", "authority": "AUDIT_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-drh-audit.yml", "kind": "SOURCE_AUDIT", "authority": "AUDIT_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-ingestion-analysis-v2.yml", "kind": "SCIENTIFIC_CONTRACT", "authority": "VALIDATION_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-media-discovery.yml", "kind": "MEDIA_DISCOVERY", "authority": "MEDIA_CANDIDATE_DISCOVERY_ONLY", "cron": "43 6 * * 3"},
+    {"path": ".github/workflows/noema-museum-media.yml", "kind": "REFERENCE_MEDIA_DISCOVERY", "authority": "REFERENCE_MEDIA_DISCOVERY_ONLY", "cron": "17 7 * * 3"},
+    {"path": ".github/workflows/noema-observatory-contract.yml", "kind": "UI_EPISTEMIC_CONTRACT", "authority": "VALIDATION_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-pages-verify.yml", "kind": "DEPLOYMENT_VERIFICATION", "authority": "VALIDATION_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-pubmed-discovery.yml", "kind": "BIOMEDICAL_DISCOVERY", "authority": "BIOMEDICAL_CANDIDATE_DISCOVERY_ONLY", "cron": "47 4 * * 2,5"},
+    {"path": ".github/workflows/noema-review-queue.yml", "kind": "REVIEW_OPERATIONS", "authority": "REVIEW_QUEUE_PROJECTION_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-ui-contract.yml", "kind": "UI_CONTRACT", "authority": "VALIDATION_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-v14-contract.yml", "kind": "LEGACY_VERSION_CONTRACT", "authority": "VALIDATION_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-v15-contract.yml", "kind": "LEGACY_VERSION_CONTRACT", "authority": "VALIDATION_ONLY", "cron": null},
+    {"path": ".github/workflows/noema-v18-foundation.yml", "kind": "FOUNDATION_CONTRACT", "authority": "VALIDATION_ONLY", "cron": null}
+  ]
+}

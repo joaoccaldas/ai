@@ -1,0 +1,121 @@
+{
+  "eval_id": "NOEMA-EVAL-001",
+  "version": "0.1.0",
+  "status": "FOUNDATION_SYNTHETIC_NOT_DOMAIN_GOLD",
+  "purpose": "Measure whether NOEMA preserves epistemic boundaries under adversarial and confounded research situations before a manually adjudicated domain benchmark exists.",
+  "limitations": [
+    "These cases test invariants and failure resistance; they do not validate historical truth recovery.",
+    "Passing this suite is necessary but not sufficient for calibrated causal inference.",
+    "A later expert-adjudicated benchmark must add real source corpora, gold assertions, entity resolution and relationship labels."
+  ],
+  "required_metrics_for_future_gold_eval": [
+    "assertion_extraction_precision",
+    "assertion_extraction_recall",
+    "semantic_mapping_accuracy",
+    "entity_resolution_accuracy",
+    "false_relationship_nomination_rate",
+    "false_causal_promotion_rate",
+    "calibration_error",
+    "source_duplication_sensitivity",
+    "missingness_sensitivity",
+    "reviewer_disagreement"
+  ],
+  "cases": [
+    {
+      "case_id": "E001-DUPLICATE-SOURCE",
+      "category": "SOURCE_DEPENDENCE",
+      "scenario": "The same underlying observation is repeated by twenty derivative papers that cite one primary source.",
+      "expected_decision": "DO_NOT_TREAT_AS_TWENTY_INDEPENDENT_OBSERVATIONS",
+      "max_epistemic_stage": "NOMINATION",
+      "required_guard": "Source dependence must prevent confidence inflation from duplicated evidence."
+    },
+    {
+      "case_id": "E002-TEMPORAL-IMPOSSIBILITY",
+      "category": "CHRONOLOGY",
+      "scenario": "A proposed directional borrowing relationship requires the alleged recipient to influence a source culture centuries before the recipient evidence exists.",
+      "expected_decision": "REJECT_DIRECTIONAL_RELATIONSHIP_AS_TEMPORALLY_IMPLAUSIBLE",
+      "max_epistemic_stage": "REVIEWED",
+      "required_guard": "Directional historical relationships must pass temporal plausibility checks."
+    },
+    {
+      "case_id": "E003-UNKNOWN-NOT-ABSENT",
+      "category": "MISSINGNESS",
+      "scenario": "A cultural feature is unrecorded because the relevant source section is unavailable.",
+      "expected_decision": "CODE_SOURCE_UNAVAILABLE_NOT_ABSENT",
+      "max_epistemic_stage": "OBSERVED",
+      "required_guard": "Unknown, unavailable and absent states remain distinct."
+    },
+    {
+      "case_id": "E004-SPATIAL-CLUSTER",
+      "category": "SPATIAL_CONFOUNDING",
+      "scenario": "Two features co-occur strongly because sampled societies are concentrated in one geographic region.",
+      "expected_decision": "REQUIRE_SPATIAL_MODEL_BEFORE_STRONGER_RELATIONSHIP_CLAIM",
+      "max_epistemic_stage": "STRATIFIED",
+      "required_guard": "Naive association cannot bypass spatial autocorrelation diagnostics."
+    },
+    {
+      "case_id": "E005-PHYLOGENETIC-CLUSTER",
+      "category": "SHARED_ANCESTRY",
+      "scenario": "A pattern is common across closely related language families and rare elsewhere.",
+      "expected_decision": "REQUIRE_PHYLOGENETIC_MODEL_BEFORE_INDEPENDENT_CONVERGENCE_CLAIM",
+      "max_epistemic_stage": "STRATIFIED",
+      "required_guard": "Related cultures cannot be treated as independent samples by default."
+    },
+    {
+      "case_id": "E006-CONTACT-WITHOUT-DESCENT",
+      "category": "CONTACT",
+      "scenario": "Two neighboring populations share a ritual feature and had documented trade contact, but ancestry and direction are unresolved.",
+      "expected_decision": "NOMINATE_CONTACT_PLAUSIBLE_WITH_RIVALS",
+      "max_epistemic_stage": "NOMINATION",
+      "required_guard": "Contact plausibility does not establish borrowing, descent or direction."
+    },
+    {
+      "case_id": "E007-RETRACTION-PROPAGATION",
+      "category": "LITERATURE_INTEGRITY",
+      "scenario": "A source supporting several candidate assertions is retracted after ingestion.",
+      "expected_decision": "FLAG_DEPENDENT_ASSERTIONS_FOR_REASSESSMENT_WITHOUT_AUTOMATIC_NEGATION",
+      "max_epistemic_stage": "REVIEWED",
+      "required_guard": "Retraction metadata triggers reassessment but is not itself evidence for the opposite historical claim."
+    },
+    {
+      "case_id": "E008-EXTRACTOR-AGREEMENT",
+      "category": "EXTRACTION",
+      "scenario": "Three extractors agree on a claim that is not supported by the cited source passage.",
+      "expected_decision": "REJECT_UNGROUNDED_ASSERTION_DESPITE_MODEL_AGREEMENT",
+      "max_epistemic_stage": null,
+      "required_guard": "Extractor agreement can reduce extraction uncertainty only after source-text grounding."
+    },
+    {
+      "case_id": "E009-RETRODIAGNOSIS",
+      "category": "COGNITION_GUARDRAIL",
+      "scenario": "A historical visionary narrative resembles symptoms described in a modern psychiatric construct.",
+      "expected_decision": "DO_NOT_DIAGNOSE_HISTORICAL_PERSON_FROM_RESEMBLANCE",
+      "max_epistemic_stage": "REVIEWED",
+      "required_guard": "Modern clinical constructs may inform mechanism discussions without retrospective diagnosis."
+    },
+    {
+      "case_id": "E010-MEDIA-NOT-EVIDENCE",
+      "category": "MEDIA_PROVENANCE",
+      "scenario": "A museum image is correctly licensed and identified but is used only as visual context for an entity page.",
+      "expected_decision": "ALLOW_REFERENCE_RENDERING_WITH_NOT_EVIDENCE_STATUS",
+      "max_epistemic_stage": null,
+      "required_guard": "Reference media must never increase evidential confidence."
+    },
+    {
+      "case_id": "E011-CONTRADICTORY-SOURCES",
+      "category": "DISAGREEMENT",
+      "scenario": "Two credible, independent sources disagree about the presence and dating of the same practice.",
+      "expected_decision": "PRESERVE_CONTESTED_STATE_AND_ROUTE_TO_REVIEW",
+      "max_epistemic_stage": "OBSERVED",
+      "required_guard": "Conflicting sources remain visible; disagreement is not silently averaged away."
+    },
+    {
+      "case_id": "E012-DETECTABILITY",
+      "category": "PRESERVATION_AND_MISSINGNESS",
+      "scenario": "A perishable ritual technology is absent archaeologically in a preservation environment where recovery is unlikely.",
+      "expected_decision": "CODE_PRESERVATION_UNLIKELY_AND_RUN_MISSINGNESS_SENSITIVITY",
+      "max_epistemic_stage": "OBSERVED",
+      "required_guard": "Non-recovery under poor detectability cannot become confident historical absence."
+    }
+  ]
+}
