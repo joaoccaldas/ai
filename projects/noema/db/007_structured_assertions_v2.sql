@@ -5,7 +5,8 @@
 CREATE TABLE IF NOT EXISTS structured_assertion_candidates (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   assertion_key text NOT NULL UNIQUE,
-  source_id uuid NOT NULL REFERENCES sources(id) ON DELETE CASCADE,
+  source_ref text NOT NULL,
+  source_id uuid REFERENCES sources(id) ON DELETE SET NULL,
   assertion_kind text NOT NULL,
   assertion_text text NOT NULL,
   source_locator jsonb NOT NULL,
@@ -44,8 +45,11 @@ CREATE TABLE IF NOT EXISTS structured_assertion_candidates (
 
 CREATE INDEX IF NOT EXISTS idx_structured_assertions_review
   ON structured_assertion_candidates(review_status, assertion_kind, first_seen_at);
-CREATE INDEX IF NOT EXISTS idx_structured_assertions_source
-  ON structured_assertion_candidates(source_id, review_status);
+CREATE INDEX IF NOT EXISTS idx_structured_assertions_source_ref
+  ON structured_assertion_candidates(source_ref, review_status);
+CREATE INDEX IF NOT EXISTS idx_structured_assertions_source_id
+  ON structured_assertion_candidates(source_id, review_status)
+  WHERE source_id IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_structured_assertions_subject_ref
   ON structured_assertion_candidates(subject_ref)
   WHERE subject_ref IS NOT NULL;
@@ -64,7 +68,8 @@ CREATE TABLE IF NOT EXISTS assertion_field_confidence (
 
 CREATE TABLE IF NOT EXISTS source_integrity_events (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
-  source_id uuid NOT NULL REFERENCES sources(id) ON DELETE CASCADE,
+  source_ref text NOT NULL,
+  source_id uuid REFERENCES sources(id) ON DELETE SET NULL,
   event_type text NOT NULL,
   event_date_text text,
   related_source_id uuid REFERENCES sources(id) ON DELETE SET NULL,
@@ -73,12 +78,21 @@ CREATE TABLE IF NOT EXISTS source_integrity_events (
   integrity_effect text NOT NULL DEFAULT 'REASSESS_DEPENDENCIES',
   metadata jsonb NOT NULL DEFAULT '{}'::jsonb,
   first_seen_at timestamptz NOT NULL DEFAULT now(),
-  CHECK (integrity_effect IN ('REASSESS_DEPENDENCIES','METADATA_ONLY','NO_ACTION')),
-  UNIQUE(source_id, event_type, event_date_text, related_source_ref)
+  CHECK (integrity_effect IN ('REASSESS_DEPENDENCIES','METADATA_ONLY','NO_ACTION'))
 );
 
-CREATE INDEX IF NOT EXISTS idx_source_integrity_events_source
-  ON source_integrity_events(source_id, first_seen_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_source_integrity_event_identity
+  ON source_integrity_events(
+    source_ref,
+    event_type,
+    COALESCE(event_date_text, ''),
+    COALESCE(related_source_ref, '')
+  );
+CREATE INDEX IF NOT EXISTS idx_source_integrity_events_source_ref
+  ON source_integrity_events(source_ref, first_seen_at DESC);
+CREATE INDEX IF NOT EXISTS idx_source_integrity_events_source_id
+  ON source_integrity_events(source_id, first_seen_at DESC)
+  WHERE source_id IS NOT NULL;
 CREATE INDEX IF NOT EXISTS idx_source_integrity_events_type
   ON source_integrity_events(event_type, first_seen_at DESC);
 
@@ -86,7 +100,7 @@ CREATE TABLE IF NOT EXISTS assertion_extractor_votes (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   assertion_key text NOT NULL,
   extractor_id text NOT NULL,
-  extractor_version text,
+  extractor_version text NOT NULL DEFAULT 'UNKNOWN',
   signature_hash text NOT NULL,
   assertion_payload jsonb NOT NULL,
   source_grounding_checked boolean NOT NULL DEFAULT false,
