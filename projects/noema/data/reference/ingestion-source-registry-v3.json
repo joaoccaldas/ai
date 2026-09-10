@@ -1,0 +1,56 @@
+{
+  "registry_id": "NOEMA-INGESTION-SOURCE-REGISTRY-V3",
+  "version": "3.0.0",
+  "status": "PLANNING_AND_ORCHESTRATION_CONTRACT",
+  "principles": [
+    "Discovery breadth is optimized for information gain, source independence and coverage gaps, not raw item volume.",
+    "Discovery metadata is never evidence.",
+    "Every source uses an explicit freshness cursor or immutable version identifier where available.",
+    "Every source declares rights/redistribution policy before full-text or record persistence.",
+    "Candidate identity is deduplicated by authoritative IDs and canonical locators; title-only deduplication is forbidden.",
+    "Source dependence is tracked separately from source count.",
+    "Human review remains required before promotion to approved evidence.",
+    "Unknown, unobserved, absent-after-search and preservation-unlikely remain distinct states."
+  ],
+  "sources": [
+    {"id":"CROSSREF","role":"DISCOVERY_INTEGRITY","state":"ACTIVE","cadence_hours":24,"durability":"CURRENT_ARTIFACT_NOT_DURABLY_PERSISTED_BY_GITHUB_JOB","cursor":"indexed_or_updated_timestamp","priority":0.88,"dimensions":["literature","corrections","retractions","versions"]},
+    {"id":"PUBMED","role":"BIOMEDICAL_DISCOVERY","state":"ACTIVE","cadence_hours":84,"durability":"DURABLE_LATEST_PLUS_RUN_MANIFEST","cursor":"entrez_date_window","priority":0.72,"dimensions":["cognition","altered_states","biomedical_mechanism"]},
+    {"id":"OPENALEX","role":"BIBLIOMETRIC_DEPENDENCE_ENRICHMENT","state":"ADAPTER_EXISTS_NOT_SCHEDULED","cadence_hours":24,"durability":"NONE_CURRENTLY","cursor":"publication_date","priority":0.90,"dimensions":["literature_identity","citation_graph","source_dependence"]},
+    {"id":"DRH","role":"HISTORICAL_RELIGION_DATA","state":"INTEGRATED_AUDIT_NOT_CONTINUOUS_REFRESH","cadence_hours":168,"durability":"DERIVED_SITE_PROJECTIONS","cursor":"version_or_source_digest","priority":0.95,"dimensions":["belief","ritual","institutions","mortuary","agents"]},
+    {"id":"PULOTU","role":"COMPARATIVE_RELIGION_DATA","state":"INTEGRATED","cadence_hours":168,"durability":"DERIVED_SITE_PROJECTIONS","cursor":"version_or_source_digest","priority":0.82,"dimensions":["belief","ritual","ancestry_context"]},
+    {"id":"DPLACE","role":"CROSS_CULTURAL_CONTEXT","state":"PARTIAL_BENCHMARK_AND_VARIABLE_AUDIT","cadence_hours":168,"durability":"BENCHMARK_PLUS_DERIVED_SITE_PROJECTIONS","cursor":"versioned_release","priority":0.98,"dimensions":["societies","language","environment","subsistence","social_structure","religion"]},
+    {"id":"SESHAT","role":"POLITY_TIME_CONTEXT","state":"PLANNED","cadence_hours":168,"durability":"NONE_CURRENTLY","cursor":"versioned_snapshot","priority":1.00,"dimensions":["polity","complexity","institutions","warfare","ritual","religion"]},
+    {"id":"ARIADNE","role":"ARCHAEOLOGICAL_DATA_FEDERATION","state":"PLANNED","cadence_hours":168,"durability":"NONE_CURRENTLY","cursor":"dataset_version_or_provider_update","priority":1.00,"dimensions":["sites","objects","contexts","dating","archaeology"]},
+    {"id":"EUROPE_PMC","role":"RIGHTS_AWARE_FULLTEXT_ENRICHMENT","state":"PLANNED","cadence_hours":24,"durability":"NONE_CURRENTLY","cursor":"first_index_or_update_date","priority":0.94,"dimensions":["fulltext","methods","tables","references","cognition"]},
+    {"id":"PLEIADES","role":"ANCIENT_PLACE_RECONCILIATION","state":"PLANNED","cadence_hours":168,"durability":"NONE_CURRENTLY","cursor":"dataset_version","priority":0.91,"dimensions":["historical_geography","place_identity"]},
+    {"id":"WHG","role":"TEMPORAL_PLACE_RECONCILIATION","state":"PLANNED","cadence_hours":168,"durability":"NONE_CURRENTLY","cursor":"dataset_version","priority":0.91,"dimensions":["historical_geography","place_identity","temporal_extent"]}
+  ],
+  "planner_weights": {
+    "coverage_gap": 0.30,
+    "source_independence": 0.22,
+    "hypothesis_information_gain": 0.20,
+    "freshness": 0.12,
+    "data_richness": 0.10,
+    "review_cost_inverse": 0.06
+  },
+  "required_pipeline_stages": [
+    "DISCOVER",
+    "NORMALIZE",
+    "IDENTITY_DEDUP",
+    "RIGHTS_AND_SENSITIVITY_GATE",
+    "DEPENDENCE_ENRICH",
+    "DURABLE_CANDIDATE_LEDGER",
+    "CLAIM_DECOMPOSITION",
+    "ENTITY_RESOLUTION",
+    "HUMAN_REVIEW",
+    "APPROVED_EVIDENCE",
+    "REANALYSIS"
+  ],
+  "forbidden": {
+    "automatic_claim_promotion": true,
+    "title_only_deduplication": true,
+    "citation_count_as_truth_score": true,
+    "metadata_as_evidence": true,
+    "source_count_as_independence_count": true
+  }
+}
