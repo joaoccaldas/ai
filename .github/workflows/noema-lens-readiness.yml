@@ -1,0 +1,46 @@
+name: NOEMA Lens Readiness
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'projects/noema/site/coverage-matrix.json'
+      - 'projects/noema/site/lens-readiness-v1.json'
+      - 'projects/noema/scripts/build_lens_readiness.py'
+      - '.github/workflows/noema-lens-readiness.yml'
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Build readiness
+        working-directory: projects/noema
+        run: python scripts/build_lens_readiness.py
+      - name: Validate epistemic gates
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('projects/noema/site/lens-readiness-derived-v2.json'); d=json.loads(p.read_text())
+          assert d['status']=='DERIVED_PUBLIC_READINESS'
+          assert len(d['lenses'])==9
+          allowed={'RESEARCH_PREVIEW','PARTIAL','PARTIAL_STRONG_EXAMPLES','ANALYSIS_READY'}
+          for k,v in d['lenses'].items():
+            assert v['readiness'] in allowed
+            assert v['promotion_gate']['automatic'] is False
+            assert v['blocked_inferences']
+            assert 'derived_metrics' in v
+          for k in ['environment','language','ancestry','altered','technology']:
+            assert d['lenses'][k]['readiness']=='RESEARCH_PREVIEW'
+            assert d['lenses'][k]['public_use']=='RESEARCH_ONLY'
+          print('NOEMA derived readiness: PASS')
+          PY
+      - name: Persist projection
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add projects/noema/site/lens-readiness-derived-v2.json
+          if ! git diff --cached --quiet; then git commit -m 'data(noema): refresh derived lens readiness'; git push; fi
