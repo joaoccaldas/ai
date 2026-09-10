@@ -1,0 +1,76 @@
+name: NOEMA Civilization Observatory Contract
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/noema/site/observatory.html'
+      - 'projects/noema/site/observatory-v2.css'
+      - 'projects/noema/site/observatory-v2.js'
+      - 'projects/noema/site/research-health.json'
+      - 'projects/noema/site/pattern-candidates.json'
+      - 'projects/noema/site/review-queue.json'
+      - '.github/workflows/noema-observatory-contract.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax check observatory runtime
+        run: node --check projects/noema/site/observatory-v2.js
+      - name: Validate scientific visual contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          site=Path('projects/noema/site')
+          html=(site/'observatory.html').read_text()
+          js=(site/'observatory-v2.js').read_text()
+          css=(site/'observatory-v2.css').read_text()
+          for marker in [
+            'Civilization Observatory','Watch civilization unfold.','Challenge this interpretation',
+            'unknown ≠ absent','Rival mechanisms','Review debt','Scientific state','three@0.180.0'
+          ]:
+            assert marker in html, marker
+          for marker in [
+            "pattern-candidates.json","review-queue.json","research-health.json",
+            'Association only. Phylogeny, space, contact and source dependence remain unresolved.',
+            'Unknown ≠ absent','Technology without migration shortcuts','Language is evidence, not ancestry',
+            'Ancestry without cultural essentialism','Candidate only · automatic promotion false'
+          ]:
+            assert marker in js, marker
+          assert len([x for x in [
+            'Demography','Kinship','Subsistence','Economy','Exchange','Settlement','Governance','Law & norms',
+            'Inequality','Conflict','Technology','Mobility','Ancestry','Language','Environment','Health','Cognition',
+            'Ritual','Supernatural agents','Myth','Divination & magic','Altered states','Mortuary practices','Symbolism',
+            'Institutions','Intergroup contact'] if x in js]) == 26
+          h=json.load(open(site/'research-health.json'))
+          p=json.load(open(site/'pattern-candidates.json'))
+          q=json.load(open(site/'review-queue.json'))
+          assert h['status']=='ENGINEERING_AND_EPISTEMIC_AUDIT'
+          assert p['status']=='HYPOTHESIS_GENERATION_ONLY'
+          assert q['status']=='REVIEW_REQUIRED_NO_AUTOMATIC_PROMOTION'
+          assert all(x['automatic_promotion'] is False for x in q['items'])
+          assert '#world' in css and '.evidence-panel' in css and '.time-dock' in css
+          print('NOEMA observatory scientific visual contract green')
+          PY
+      - name: Verify no invented geographic evidence
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          js=Path('projects/noema/site/observatory-v2.js').read_text()
+          banned=['fakeSite','mockCoordinate','inventedLatitude','inventedLongitude']
+          assert not any(x in js for x in banned)
+          assert 'new THREE.Points' in js  # ambient star field only
+          assert 'research-health.json' in js and 'pattern-candidates.json' in js
+          print('No synthetic civilization coordinates in observatory runtime')
+          PY
