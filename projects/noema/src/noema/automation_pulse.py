@@ -4,6 +4,9 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
+from .epistemic_stage import is_valid_stage
+
+
 TASK_ORDER = {
     "DAILY_INGEST": 0,
     "WEEKLY_REANALYSIS": 1,
@@ -13,7 +16,8 @@ TASK_ORDER = {
     "DPLACE_BENCHMARK": 5,
     "RELIGION_FEDERATION": 6,
     "MEDIA_DISCOVERY": 7,
-    "OTHER": 9,
+    "MUSEUM_MEDIA_DISCOVERY": 8,
+    "OTHER": 99,
 }
 
 
@@ -52,8 +56,13 @@ def parse_time(value: str | None) -> datetime | None:
         return None
 
 
+def _safe_stage(value: str | None) -> str | None:
+    return value if is_valid_stage(value) else None
+
+
 def build(manifests: list[dict], contract: dict | None = None, now: datetime | None = None) -> dict:
     now = (now or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    contract = contract or {}
 
     def key(m: dict):
         return m.get("completed_at") or m.get("started_at") or ""
@@ -73,12 +82,13 @@ def build(manifests: list[dict], contract: dict | None = None, now: datetime | N
         "errors": sum(len(m.get("errors", []) or []) for m in recent),
     }
     latest = []
-    for task, m in sorted(latest_by_type.items(), key=lambda kv: TASK_ORDER.get(kv[0], 99)):
+    for task, m in sorted(latest_by_type.items(), key=lambda kv: TASK_ORDER.get(kv[0], 98)):
         latest.append({
             "task_type": task,
             "run_id": m.get("run_id"),
             "status": m.get("status"),
             "completed_at": m.get("completed_at"),
+            "max_epistemic_stage": _safe_stage(m.get("max_epistemic_stage")),
             "summary": m.get("summary", ""),
             "errors": m.get("errors", []),
             "research_note": m.get("research_note"),
@@ -86,7 +96,7 @@ def build(manifests: list[dict], contract: dict | None = None, now: datetime | N
 
     task_health = []
     clock_skew_events = []
-    for spec in (contract or {}).get("tasks", []):
+    for spec in contract.get("tasks", []):
         task = spec.get("task_type", "OTHER")
         last = latest_by_type.get(task)
         completed = parse_time((last or {}).get("completed_at") or (last or {}).get("started_at"))
@@ -113,9 +123,12 @@ def build(manifests: list[dict], contract: dict | None = None, now: datetime | N
         task_health.append({
             "task_type": task,
             "scheduler": spec.get("scheduler"),
+            "workflow_path": spec.get("workflow_path"),
             "cadence": spec.get("cadence"),
             "schedule": spec.get("schedule"),
             "authority": spec.get("authority"),
+            "authority_epistemic_ceiling": _safe_stage(spec.get("max_epistemic_stage")),
+            "run_reported_epistemic_stage": _safe_stage((last or {}).get("max_epistemic_stage")),
             "next_stage": spec.get("next_stage"),
             "expected_interval_hours": interval,
             "health": health,
@@ -128,8 +141,10 @@ def build(manifests: list[dict], contract: dict | None = None, now: datetime | N
         })
 
     return {
-        "report_id": "NOEMA-AUTOMATION-PULSE-V1",
+        "report_id": "NOEMA-AUTOMATION-PULSE-V2",
         "generated_at": now.isoformat(),
+        "registry_id": contract.get("registry_id") or contract.get("contract_id"),
+        "registry_version": contract.get("version"),
         "status": "OBSERVABILITY_ONLY",
         "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
         "totals_recent": totals,
