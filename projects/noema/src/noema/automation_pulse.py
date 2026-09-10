@@ -141,7 +141,7 @@ def build(manifests: list[dict], contract: dict | None = None, now: datetime | N
         })
 
     return {
-        "report_id": "NOEMA-AUTOMATION-PULSE-V2",
+        "report_id": "NOEMA-AUTOMATION-PULSE-V1",
         "generated_at": now.isoformat(),
         "registry_id": contract.get("registry_id") or contract.get("contract_id"),
         "registry_version": contract.get("version"),
