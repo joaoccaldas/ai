@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "status": "PUBLIC_READINESS_REGISTRY",
+  "principle": "Readiness describes current public data and model maturity, never truth, importance, or confidence in a historical claim.",
+  "lenses": {
+    "civilization": {
+      "label": "Civilization",
+      "readiness": "PARTIAL",
+      "public_use": "GUIDED_AND_RESEARCH",
+      "why": "Comparative profiles exist, but institutional, archaeological, environmental and historical coverage are not yet equally federated.",
+      "available": ["DRH comparative profiles", "Pulotu comparative profiles", "controlled D-PLACE coverage projection", "dated Human Meaning Atlas events"],
+      "missing": ["Seshat polity-time federation", "ARIADNE archaeological federation", "full D-PLACE semantic integration"],
+      "blocked_inferences": ["single civilization score", "causal civilization ranking"]
+    },
+    "belief": {
+      "label": "Belief",
+      "readiness": "PARTIAL",
+      "public_use": "GUIDED_AND_RESEARCH",
+      "why": "DRH and Pulotu provide meaningful comparative material, but DRH question crosswalk coverage remains sparse.",
+      "available": ["DRH curated mappings", "Pulotu mappings", "Human Meaning Atlas bounded interpretations"],
+      "missing": ["broader DRH semantic crosswalk", "historical-text federation", "full source-dependence graph"],
+      "blocked_inferences": ["private belief from text or artifact alone", "religion from isolated symbolism"]
+    },
+    "ritual": {
+      "label": "Ritual",
+      "readiness": "PARTIAL",
+      "public_use": "GUIDED_AND_RESEARCH",
+      "why": "Ritual variables exist across current comparative sources, but archaeological and ethnographic harmonization remains incomplete.",
+      "available": ["DRH and Pulotu ritual variables", "selected dated archaeological contexts"],
+      "missing": ["ARIADNE contexts", "broader reviewed D-PLACE ritual crosswalk", "ethnographic source-dependence mapping"],
+      "blocked_inferences": ["practice equals belief", "ritual equals one function"]
+    },
+    "mortuary": {
+      "label": "Mortuary",
+      "readiness": "PARTIAL_STRONG_EXAMPLES",
+      "public_use": "GUIDED_AND_RESEARCH",
+      "why": "NOEMA has strong site-specific examples, but global comparative mortuary coverage is not complete.",
+      "available": ["Qafzeh and La Ferrassie source-bounded moments", "mortuary comparative variables"],
+      "missing": ["broader archaeological burial federation", "systematic taphonomy and detectability fields"],
+      "blocked_inferences": ["burial equals afterlife belief", "grave goods equal identity"]
+    },
+    "altered": {
+      "label": "Altered states",
+      "readiness": "RESEARCH_PREVIEW",
+      "public_use": "RESEARCH_ONLY",
+      "why": "Modern cognition and selected ethnographic evidence exist, but cross-cultural historical harmonization is early.",
+      "available": ["selected modern cognition literature", "selected comparative variables"],
+      "missing": ["systematic ethnographic federation", "historical exposure/context datasets", "mechanism-to-meaning separation at scale"],
+      "blocked_inferences": ["historical diagnosis", "psychoactive exposure equals ritual meaning"]
+    },
+    "technology": {
+      "label": "Technology",
+      "readiness": "RESEARCH_PREVIEW",
+      "public_use": "RESEARCH_ONLY",
+      "why": "Selected archaeological technology observations exist, but technology is not yet broadly federated across time and societies.",
+      "available": ["Blombos functional ochre evidence", "selected archaeological technology claims"],
+      "missing": ["large archaeological technology datasets", "contact-network integration", "chronology-normalized diffusion tests"],
+      "blocked_inferences": ["technology equals migration", "similarity equals diffusion"]
+    },
+    "environment": {
+      "label": "Environment",
+      "readiness": "RESEARCH_PREVIEW",
+      "public_use": "RESEARCH_ONLY",
+      "why": "Environmental context is conceptually modeled but paleoclimate federation is not yet active at the level needed for causal analysis.",
+      "available": ["some D-PLACE environmental context"],
+      "missing": ["paleoclimate time series", "historical biome layers", "spatiotemporal exposure models"],
+      "blocked_inferences": ["environment equals cause", "proxy equals motive"]
+    },
+    "language": {
+      "label": "Language",
+      "readiness": "RESEARCH_PREVIEW",
+      "public_use": "RESEARCH_ONLY",
+      "why": "Language identifiers are present in comparative data, but full tree-aware phylogenetic modeling is not yet active.",
+      "available": ["Glottocode-linked D-PLACE coverage", "language-family sensitivity diagnostics"],
+      "missing": ["versioned linguistic phylogenies", "tree-aware comparative models"],
+      "blocked_inferences": ["language equals ancestry", "language family equals cultural identity"]
+    },
+    "ancestry": {
+      "label": "Ancestry",
+      "readiness": "RESEARCH_PREVIEW",
+      "public_use": "RESEARCH_ONLY",
+      "why": "Ancient-DNA reasoning guards exist, but a broad individual-level aDNA federation is not yet integrated into the public analysis layer.",
+      "available": ["selected aDNA literature and guardrails"],
+      "missing": ["individual-level aDNA federation", "kinship/context harmonization", "population uncertainty models"],
+      "blocked_inferences": ["ancestry equals culture", "presence equals artifact authorship"]
+    }
+  }
+}
