@@ -1,120 +1,19 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#02040a">
-<title>Civilization Observatory · NOEMA</title>
-<meta name="description" content="An immersive, evidence-aware observatory for exploring human civilization across space, time, belief, ecology, ancestry, language, technology and social structure.">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="observatory-v3.css">
-</head>
-<body>
-<div id="app" class="app">
-  <canvas id="world" aria-label="Interactive three-dimensional civilization observatory. Atmospheric globe graphics are not historical evidence."></canvas>
-  <div class="aurora" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
-  <div id="liveStatus" class="sr-only" role="status" aria-live="polite">Loading NOEMA research federation</div>
-
-  <header class="topbar glass">
-    <a class="brand" href="index.html" aria-label="NOEMA home"><span class="brand-mark">N</span><span><strong>NOEMA</strong><small>CIVILIZATION OBSERVATORY · V3</small></span></a>
-    <nav class="topnav" aria-label="Primary"><a href="explore.html">Explore</a><a href="human-meaning-atlas.html">Atlas</a><a href="compare.html">Compare</a><a href="lineages.html">Analyze</a><a href="review.html">Review</a><a href="research.html">Research</a></nav>
-    <button id="commandOpen" class="top-action" type="button" data-tip="Open the command palette · ⌘K">Search / jump</button>
-    <button id="focusMode" class="top-action primary" type="button" aria-pressed="false" data-tip="Hide analytical chrome and focus on time + world">Focus</button>
-  </header>
-
-  <aside class="mode-rail glass" aria-label="Civilization lenses">
-    <div class="rail-label">Analytical lenses · keys 1–9</div>
-    <div class="mode-list">
-      <button class="lens active" data-lens="civilization" type="button"><b>◎</b><span>Civilization</span><em>26D</em></button>
-      <button class="lens" data-lens="belief" type="button"><b>✦</b><span>Belief</span><em>meaning</em></button>
-      <button class="lens" data-lens="ritual" type="button"><b>◌</b><span>Ritual</span><em>practice</em></button>
-      <button class="lens" data-lens="mortuary" type="button"><b>◇</b><span>Mortuary</span><em>death</em></button>
-      <button class="lens" data-lens="altered" type="button"><b>∿</b><span>Altered states</span><em>experience</em></button>
-      <button class="lens" data-lens="technology" type="button"><b>⌘</b><span>Technology</span><em>making</em></button>
-      <button class="lens" data-lens="environment" type="button"><b>△</b><span>Environment</span><em>ecology</em></button>
-      <button class="lens" data-lens="language" type="button"><b>⌁</b><span>Language</span><em>speech</em></button>
-      <button class="lens" data-lens="ancestry" type="button"><b>⋈</b><span>Ancestry</span><em>population</em></button>
-    </div>
-  </aside>
-
-  <main>
-    <section class="hero" aria-labelledby="heroTitle">
-      <div class="kicker"><i></i>Human civilization · evidence through time</div>
-      <h1 id="heroTitle">See humanity <span>unfold.</span></h1>
-      <p>Move across hundreds of thousands of years and ask how ecology, ancestry, language, technology, institutions, ritual, myth, altered states and social organization relate. NOEMA exposes patterns without turning resemblance into ancestry or correlation into causation.</p>
-      <div class="hero-actions">
-        <button id="playTime" class="primary" type="button">Play through time</button>
-        <button id="surpriseMe" type="button">Surface a pattern</button>
-        <button id="storyOpen" type="button">Guided journey</button>
-      </div>
-    </section>
-
-    <section class="data-ribbon" aria-label="Live research metrics">
-      <div class="metric" data-tip="Profiles currently comparable in generated federation products"><b id="profiles">—</b><span>Comparable profiles</span><small class="metric-note">generated federation</small></div>
-      <div class="metric" data-tip="Accepted semantic assertion rows in the current research-health projection"><b id="assertions">—</b><span>Accepted assertions</span><small class="metric-note">not model prose</small></div>
-      <div class="metric" data-tip="Independent source families reported by research health"><b id="sources">—</b><span>Source families</span><small class="metric-note">kept separable</small></div>
-      <div class="metric" data-tip="Current comparative ontology dimensions in research health"><b id="ontology">—</b><span>Ontology dimensions</span><small class="metric-note">current federation</small></div>
-      <div class="metric" data-tip="Pattern candidates actually present in the current rendered cohorts"><b id="patternCount">—</b><span>Pattern candidates</span><small class="metric-note">hypothesis generation</small></div>
-      <div class="metric" data-tip="Deduplicated items requiring human judgment"><b id="reviewDebt">—</b><span>Review debt</span><small class="metric-note">no auto-promotion</small></div>
-    </section>
-  </main>
-
-  <aside class="right-stack" aria-label="Evidence and reference inspector">
-    <section class="inspector glass">
-      <div class="panel-head"><div><div class="eyebrow">EVIDENCE INSPECTOR</div><h2 id="insightTitle">Civilization is multidimensional</h2></div><span id="stateBadge" class="badge">LENS</span></div>
-      <p id="insightText" class="inspector-text">Human societies are modeled across 26 separable dimensions. There is no single civilization score, ladder, or implied direction of progress.</p>
-      <div class="evidence-facts" aria-label="Computed research facts">
-        <div class="fact good"><b id="factSources">—</b><span>source families</span><small>research health</small></div>
-        <div class="fact"><b id="factPatterns">—</b><span>patterns visible</span><small>current snapshot</small></div>
-        <div class="fact review"><b id="factCritical">—</b><span>critical reviews</span><small>human judgment</small></div>
-        <div class="fact warn"><b id="factCoverage">—</b><span>DRH mapped groups</span><small>coverage, not truth</small></div>
-      </div>
-      <div class="rival-block">
-        <div class="rival-head"><span>Competing explanations</span><span>no fake probabilities</span></div>
-        <div id="rivalList" class="rival-list"></div>
-        <p id="rivalNote" class="rival-note">No numeric mechanism probabilities are shown until a calibrated causal model exists.</p>
-      </div>
-      <div class="challenge-row"><button id="why" type="button">Why this?</button><button id="challenge" class="challenge" type="button">Challenge interpretation</button></div>
-    </section>
-
-    <section class="media-panel glass" aria-labelledby="mediaTitle">
-      <div class="panel-head"><div><div class="eyebrow">MATERIAL MEMORY</div><h2 id="mediaTitle">Objects across belief worlds</h2></div><span class="badge">REFERENCE ONLY</span></div>
-      <div id="mediaStrip" class="media-strip"><div class="data-empty"><strong>Loading institution-catalogued imagery…</strong></div></div>
-      <p class="media-note">Only Public Domain/CC0 institution-catalogued images that pass NOEMA’s render gate appear here. A displayed object is visual context, not evidence for origin, theology, diffusion or a NOEMA claim.</p>
-    </section>
-  </aside>
-
-  <aside class="legend glass" aria-label="Scientific visual grammar">
-    <h3>Scientific visual grammar</h3>
-    <div class="legend-row"><i class="accepted"></i><span>accepted observation</span></div>
-    <div class="legend-row"><i class="candidate"></i><span>candidate / hypothesis</span></div>
-    <div class="legend-row"><i class="uncertain"></i><span>uncertainty</span></div>
-    <div class="legend-row"><i class="contradiction"></i><span>contradiction</span></div>
-    <div class="legend-row"><i class="unknown"></i><span>unknown ≠ absent</span></div>
-  </aside>
-
-  <section class="bottom-zone" aria-label="Time and analysis controls">
-    <div class="analysis-drawer glass">
-      <div class="drawer-tabs" role="tablist" aria-label="Analysis views"><button class="active" role="tab" aria-selected="true" data-tab="patterns">Patterns</button><button role="tab" aria-selected="false" data-tab="dimensions">26 dimensions</button><button role="tab" aria-selected="false" data-tab="review">Review debt</button><button role="tab" aria-selected="false" data-tab="method">Scientific state</button></div>
-      <div id="drawerContent" class="drawer-content"></div>
-    </div>
-    <div class="time-dock glass">
-      <div class="time-top"><div class="time-copy"><span id="eraLabel">Deep Pleistocene</span><strong id="timeLabel">300,000 BP</strong></div><div class="time-actions"><button id="slower" type="button" aria-label="Slow timeline">−</button><button id="playPause" type="button" aria-label="Play timeline">▶</button><button id="faster" type="button" aria-label="Speed timeline">+</button></div></div>
-      <div class="timeline-wrap"><input id="timeSlider" type="range" min="0" max="1000" value="0" aria-label="Explore historical time from 300,000 years before present to 2026"><div class="epoch-band" aria-hidden="true"></div><div class="ticks"><span>300k BP</span><span>50k BP</span><span>10k BP</span><span>3000 BCE</span><span>1 CE</span><span>1000</span><span>2026</span></div></div>
-      <div class="time-warning"><i></i><span id="timelineNarrative">Temporal focus changes the exploratory lens. It does not invent events for periods lacking evidence.</span></div>
-    </div>
-  </section>
-
-  <div class="floating-tools"><button id="helpOpen" type="button" data-tip="Keyboard shortcuts · ?">Shortcuts</button><a class="sr-only" href="#heroTitle">Skip to overview</a></div>
-  <div id="tooltip" class="tooltip" role="tooltip"></div>
-
-  <div id="palette" class="palette" aria-hidden="true"><div class="palette-box glass" role="dialog" aria-modal="true" aria-label="NOEMA command palette"><input id="paletteSearch" class="palette-search" placeholder="Jump to a NOEMA workspace…" autocomplete="off"><div id="paletteResults" class="palette-results"></div></div></div>
-
-  <div id="shortcuts" class="modal" aria-hidden="true"><div class="modal-card glass" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle"><div class="eyebrow">NAVIGATION</div><h2 id="shortcutsTitle">Move through NOEMA quickly.</h2><p>The Observatory is fully usable without the WebGL scene. Keyboard controls operate the analytical interface and timeline.</p><div class="shortcut-grid"><div class="shortcut"><span>Command palette</span><kbd>⌘/Ctrl K</kbd></div><div class="shortcut"><span>Search / jump</span><kbd>/</kbd></div><div class="shortcut"><span>Play / pause time</span><kbd>Space</kbd></div><div class="shortcut"><span>Open help</span><kbd>?</kbd></div><div class="shortcut"><span>Select lenses</span><kbd>1–9</kbd></div><div class="shortcut"><span>Close overlays</span><kbd>Esc</kbd></div></div><div class="hero-actions"><button id="helpClose" class="primary" type="button">Close</button></div></div></div>
-
-  <section id="storyline" class="storyline" aria-label="Guided civilization journey"><button id="storyClose" class="story-close" type="button" aria-label="Close guided journey">×</button><div class="story-stage"><div class="story-copy"><div id="storyKicker" class="eyebrow">Journey</div><h2 id="storyTitle">Before writing, evidence is fragmentary.</h2><p id="storyText">Move through deep time while keeping preservation, chronology and sampling uncertainty visible.</p><div class="story-controls"><button id="storyPrev" type="button">Previous</button><span id="storyIndex" class="badge">1 / 4</span><button id="storyNext" type="button">Next</button></div></div><div class="story-visual" aria-hidden="true"><div class="story-ring"></div><div class="story-ring"></div><div class="story-node a"></div><div class="story-node b"></div><div class="story-node c"></div></div></div></section>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js"></script>
-<script src="observatory-v3.js"></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#03050a"><title>Civilization Observatory · NOEMA</title><meta name="description" content="An immersive evidence-aware observatory for human civilization across deep time, geography, belief, ecology, ancestry, language, technology and social structure."><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="observatory-v4.css"></head>
+<body><div id="app" class="app">
+<canvas id="world" aria-label="Interactive three-dimensional civilization observatory. Atmospheric graphics are decorative; rendered historical points come from source-bounded NOEMA projections."></canvas><div class="nebula" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div><div id="liveStatus" class="sr-only" role="status" aria-live="polite">Loading NOEMA world</div>
+<header class="topbar"><a class="brand" href="index.html"><span class="brand-orbit"><i></i></span><span><b>NOEMA</b><small>CIVILIZATION OBSERVATORY · V4</small></span></a><nav aria-label="Primary"><a href="explore.html">Explore</a><a href="human-meaning-atlas.html">Atlas</a><a href="compare.html">Compare</a><a href="lineages.html">Patterns</a><a href="review.html">Review</a><a href="research.html">Research</a></nav><div class="top-actions"><button id="commandOpen">⌘ K</button><button id="focusMode" aria-pressed="false">Focus</button></div></header>
+<aside class="lens-rail" aria-label="Civilization lenses"><span class="rail-title">LENSES</span><button class="lens active" data-lens="civilization"><i>◎</i><span>Civilization</span></button><button class="lens" data-lens="belief"><i>✦</i><span>Belief</span></button><button class="lens" data-lens="ritual"><i>◌</i><span>Ritual</span></button><button class="lens" data-lens="mortuary"><i>◇</i><span>Mortuary</span></button><button class="lens" data-lens="altered"><i>∿</i><span>Altered states</span></button><button class="lens" data-lens="technology"><i>⌘</i><span>Technology</span></button><button class="lens" data-lens="environment"><i>△</i><span>Environment</span></button><button class="lens" data-lens="language"><i>⌁</i><span>Language</span></button><button class="lens" data-lens="ancestry"><i>⋈</i><span>Ancestry</span></button></aside>
+<section class="hero"><div class="eyebrow"><span></span>HUMANITY · SPACE × TIME × MEANING</div><h1>Enter the <em>human story.</em></h1><p>Drag the world. Scrub 300,000 years. Watch source-bounded archaeological evidence pulse into view, compare cultural coverage, surface statistical patterns, and challenge every tempting explanation.</p><div class="hero-actions"><button id="playTime" class="primary">▶ Travel through time</button><button id="surpriseMe">Surface a pattern</button><button id="storyOpen">Guided journey</button></div><div class="hero-proof"><span><b id="profiles">—</b> profiles</span><span><b id="assertions">—</b> assertions</span><span><b id="eventCount">—</b> dated events</span><span><b id="reviewDebt">—</b> reviews</span></div></section>
+<section id="epochTitle" class="epoch-title" aria-live="polite"><small>YOU ARE HERE</small><strong>Deep Pleistocene</strong><span>300,000 BP</span></section>
+<aside class="world-controls"><div class="layer-toggle"><span>WORLD LAYERS</span><label><input id="toggleEvidence" type="checkbox" checked><i class="dot evidence"></i> Dated evidence</label><label><input id="toggleCoverage" type="checkbox" checked><i class="dot coverage"></i> D-PLACE coverage</label><label><input id="toggleAtmosphere" type="checkbox" checked><i class="dot atmosphere"></i> Atmosphere</label></div></aside>
+<aside class="inspector" id="inspector"><div class="inspector-top"><span class="eyebrow">EVIDENCE INSPECTOR</span><span id="stateBadge" class="badge">WORLD</span></div><h2 id="insightTitle">A real map, not a decorative globe.</h2><p id="insightText">Bright pulses are dated NOEMA atlas events with source-bounded coordinates. Smaller dim points are D-PLACE coverage records. Coverage is not evidence of a belief.</p><div id="selectedEvent" class="selected-event"><span class="empty-mark">◎</span><p>Select or hover a bright evidence point to inspect its site, date, source, claim, scope and epistemic status.</p></div><div class="rivals"><span>RIVAL EXPLANATIONS</span><div id="rivalList"></div><small>No numeric mechanism probabilities are shown until a calibrated causal model exists.</small></div><div class="inspector-actions"><button id="why">Why this?</button><button id="challenge">Challenge interpretation</button></div></aside>
+<section class="pattern-marquee" id="patternMarquee"><span>LIVE PATTERN CANDIDATE</span><strong id="marqueeTitle">Loading current statistical candidates…</strong><small id="marqueeMeta">Association only · causal interpretation remains gated</small></section>
+<section class="media-ribbon"><div class="media-heading"><span>MATERIAL MEMORY</span><small>Institution-catalogued · Public Domain / CC0 · reference only</small></div><div id="mediaStrip" class="media-strip"></div></section>
+<section class="time-dock"><div class="time-readout"><small id="eraLabel">Deep Pleistocene</small><b id="timeLabel">300,000 BP</b></div><div class="time-track"><input id="timeSlider" type="range" min="0" max="1000" value="0" aria-label="Explore historical time from 300,000 years before present to 2026"><div class="epoch-band"></div><div class="ticks"><span>300k</span><span>50k</span><span>10k</span><span>3000 BCE</span><span>1 CE</span><span>1000</span><span>2026</span></div></div><div class="time-actions"><button id="slower">−</button><button id="playPause">▶</button><button id="faster">+</button></div><p id="timelineNarrative">Temporal focus filters source-bounded dated events. It does not invent evidence for empty periods.</p></section>
+<section class="drawer" id="drawer"><div class="drawer-tabs" role="tablist"><button class="active" role="tab" aria-selected="true" data-tab="patterns">Patterns</button><button role="tab" aria-selected="false" data-tab="dimensions">26 dimensions</button><button role="tab" aria-selected="false" data-tab="review">Review debt</button><button role="tab" aria-selected="false" data-tab="method">Scientific state</button></div><div id="drawerContent" class="drawer-content"></div></section>
+<div class="legend"><span><i class="lg evidence"></i>dated evidence</span><span><i class="lg coverage"></i>coverage only</span><span><i class="lg candidate"></i>pattern candidate</span><span><i class="lg contradiction"></i>contradiction</span><span><i class="lg unknown"></i>unknown ≠ absent</span></div>
+<div id="palette" class="palette" aria-hidden="true"><div class="palette-box" role="dialog" aria-modal="true"><input id="paletteSearch" placeholder="Search NOEMA workspaces…"><div id="paletteResults"></div></div></div>
+<section id="storyline" class="storyline" aria-hidden="true"><button id="storyClose">×</button><div class="story-copy"><span id="storyKicker">JOURNEY 01</span><h2 id="storyTitle">Before writing, the evidence arrives in fragments.</h2><p id="storyText">Travel through deep time while keeping preservation, dating and sampling uncertainty visible.</p><div><button id="storyPrev">Previous</button><b id="storyIndex">1 / 4</b><button id="storyNext">Next</button></div></div></section>
+<div id="tooltip" class="tooltip" role="tooltip"></div>
+</div><script src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js"></script><script src="observatory-v4.js"></script></body></html>
