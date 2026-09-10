@@ -1,0 +1,71 @@
+{
+  "contract_id": "NOEMA-SCIENTIFIC-REASONING-V2",
+  "status": "ACTIVE_GUARDRAIL",
+  "principles": [
+    "correlation does not imply causation",
+    "similarity does not imply descent or diffusion",
+    "non-detection does not imply historical absence without a detectability model",
+    "point dates must not erase chronological uncertainty",
+    "historical relationships require competing causal mechanisms",
+    "model output is never evidence",
+    "restricted or community-sensitive knowledge cannot be automatically published",
+    "human review is required before evidence promotion"
+  ],
+  "required_for_pattern_claims": {
+    "minimum_source_count": 2,
+    "source_independence_must_be_recorded": true,
+    "temporal_order_must_be_recorded": true,
+    "confounders_must_be_listed": true,
+    "alternative_mechanisms_minimum": 2,
+    "null_or_negative_result_allowed": true,
+    "automatic_causal_promotion": false
+  },
+  "required_for_negative_evidence": {
+    "preservation_probability": true,
+    "sampling_probability": true,
+    "identification_probability": true,
+    "reporting_probability": true,
+    "absence_may_be_called_informative_only_if_detection_probability_gte": 0.8
+  },
+  "required_for_chronology": {
+    "retain_method": true,
+    "retain_source": true,
+    "retain_direct_vs_contextual": true,
+    "retain_uncertainty": true,
+    "prefer_full_calibrated_posterior_when_available": true,
+    "directional_edges_use_probability_not_point_date_when_uncertain": true
+  },
+  "causal_alternatives": [
+    "DIFFUSION",
+    "SHARED_ANCESTRY",
+    "CONVERGENCE",
+    "ECOLOGICAL_PRESSURE",
+    "INDEPENDENT_INNOVATION",
+    "CONTACT",
+    "CODING_ARTEFACT",
+    "RESEARCHER_BIAS",
+    "PRESERVATION_BIAS",
+    "UNKNOWN"
+  ],
+  "evidence_court": {
+    "direct_observations_required": true,
+    "source_provenance_required": true,
+    "alternative_explanation_required": true,
+    "falsification_criteria_required": true,
+    "contradictions_supported": true,
+    "prohibited_inferences_supported": true,
+    "human_review_required": true,
+    "automatic_promotion": false
+  },
+  "future_eval_metrics": [
+    "citation_correctness",
+    "provenance_completeness",
+    "false_descent_rate",
+    "false_causation_rate",
+    "false_attribution_rate",
+    "chronology_direction_error_rate",
+    "abstention_quality",
+    "calibration_error",
+    "sensitive_material_release_violations"
+  ]
+}
