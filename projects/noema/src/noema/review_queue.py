@@ -124,8 +124,10 @@ def build_review_queue(candidate_docs: Iterable[tuple[str, dict]]) -> dict:
     counts = {p: sum(1 for x in items if x.priority == p) for p in PRIORITY_WEIGHT}
     return {
         "queue_id": "NOEMA-HUMAN-REVIEW-QUEUE-V1",
+        "queue_version": 1,
         "status": "REVIEW_REQUIRED_NO_AUTOMATIC_PROMOTION",
         "principle": "The queue prioritizes review work only. Rank is not evidential strength and cannot promote a candidate, claim, relationship or hypothesis.",
+        "ranking_note": "Priority, recurrence and recency rank workflow attention only; they are not measures of truth, effect size or evidential strength.",
         "summary": {
             "source_documents": source_doc_count,
             "raw_review_items": raw_item_count,
