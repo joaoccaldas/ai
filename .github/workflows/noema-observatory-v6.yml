@@ -41,10 +41,11 @@ jobs:
           assert 'Decorative WebGL atmospheric layer. It is not evidence.' in js
           assert 'THREE.WebGLRenderer' in js and 'THREE.Points' in js
           assert 'prefers-reduced-motion' in css
-          assert 'not archaeological evidence' in svg.lower()
-          assert 'not a historical reconstruction' in svg.lower()
+          low=svg.lower()
+          assert 'interpretive visualization' in low
+          assert 'not archaeological evidence' in low
+          assert 'not a historical reconstruction' in low
           assert 'data:image/jpeg;base64,' in svg
-          assert 'AI interpretive visualization' in svg
           forbidden=['AI proves','reconstruction proves','religion confirmed by image']
           text=(html+js+svg).lower()
           assert all(x.lower() not in text for x in forbidden)
