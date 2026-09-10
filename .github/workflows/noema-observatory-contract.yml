@@ -39,9 +39,10 @@ jobs:
           from pathlib import Path
           js=Path('projects/noema/site/observatory-v4.js').read_text()
           assert 'societies.json' in js and 'human-meaning-atlas.json' in js
+          assert 'latLon(' in js and 'buildDataLayers' in js
+          assert 'source_url' in js and 'epistemic_status' in js and 'scope' in js
           assert 'new THREE.Line' not in js and 'CatmullRomCurve3' not in js
-          assert 'source_url' in js and 'coordinate' not in js.lower() or True
-          print('Observed locations render; no synthetic relationship arcs are created')
+          print('Observed source-bounded locations render; no synthetic relationship arcs are created')
           PY
       - name: Validate rights and publication boundaries
         run: |
