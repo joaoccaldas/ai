@@ -76,12 +76,25 @@ def build(manifests: list[dict], contract: dict | None = None, now: datetime | N
         })
 
     task_health = []
+    clock_skew_events = []
     for spec in (contract or {}).get("tasks", []):
         task = spec.get("task_type", "OTHER")
         last = latest_by_type.get(task)
         completed = parse_time((last or {}).get("completed_at") or (last or {}).get("started_at"))
         interval = float(spec.get("expected_interval_hours") or 0)
-        age_hours = ((now - completed).total_seconds() / 3600) if completed else None
+        raw_age_hours = ((now - completed).total_seconds() / 3600) if completed else None
+        clock_skew = bool(raw_age_hours is not None and raw_age_hours < 0)
+        # Negative ages make dashboards appear to know the future. Clamp presentation
+        # to zero but preserve an explicit anomaly record for auditability.
+        age_hours = max(0.0, raw_age_hours) if raw_age_hours is not None else None
+        if clock_skew:
+            clock_skew_events.append({
+                "task_type": task,
+                "run_id": (last or {}).get("run_id"),
+                "observed_completed_at": (last or {}).get("completed_at") or (last or {}).get("started_at"),
+                "pulse_generated_at": now.isoformat(),
+                "raw_age_hours": round(raw_age_hours, 4),
+            })
         if not last:
             health = "NEVER_RUN"
         elif (last.get("errors") or []) or str(last.get("status", "")).upper() in {"FAILED", "ERROR"}:
@@ -103,6 +116,7 @@ def build(manifests: list[dict], contract: dict | None = None, now: datetime | N
             "last_status": (last or {}).get("status"),
             "last_completed_at": (last or {}).get("completed_at"),
             "age_hours": round(age_hours, 2) if age_hours is not None else None,
+            "clock_skew_detected": clock_skew,
             "writes": spec.get("writes", []),
         })
 
@@ -114,6 +128,7 @@ def build(manifests: list[dict], contract: dict | None = None, now: datetime | N
         "totals_recent": totals,
         "latest_by_task": latest,
         "task_health": task_health,
+        "observability_anomalies": {"clock_skew": clock_skew_events},
         "recent_runs": [{k: v for k, v in m.items() if k != "_path"} for m in recent],
     }
 
