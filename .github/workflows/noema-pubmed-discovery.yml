@@ -9,7 +9,7 @@ on:
       - 'projects/noema/scripts/discover_pubmed.py'
       - 'projects/noema/scripts/build_automation_pulse.py'
       - 'projects/noema/data/reference/cognition-mechanism-ontology-v1.json'
-      - 'projects/noema/data/automation-contract-v1.json'
+      - 'projects/noema/data/automation-registry-v2.json'
       - '.github/workflows/noema-pubmed-discovery.yml'
 
 permissions:
@@ -80,6 +80,7 @@ jobs:
             'hypotheses_promoted':0,
             'confidence_or_scope_changes':0,
             'review_items_created':d.get('counts',{}).get('unique_candidates',0),
+            'max_epistemic_stage':None,
             'errors':[],
             'summary':'PubMed biomedical/cognition discovery produced candidate-only records; no evidence, diagnosis or relationship was promoted.',
             'research_note':'projects/noema/data/candidates/pubmed-latest.json',
@@ -99,14 +100,16 @@ jobs:
         run: |
           python projects/noema/scripts/build_automation_pulse.py \
             --runs-dir projects/noema/data/runs \
-            --contract projects/noema/data/automation-contract-v1.json \
+            --contract projects/noema/data/automation-registry-v2.json \
             --output projects/noema/site/automation-pulse.json
           python - <<'PY'
           import json
           d=json.load(open('projects/noema/site/automation-pulse.json'))
+          assert d['registry_id']=='NOEMA-AUTOMATION-REGISTRY-V2'
           pub=next(x for x in d['task_health'] if x['task_type']=='PUBMED_DISCOVERY')
           assert pub['health']=='HEALTHY', pub
           assert pub['last_run_id'], pub
+          assert pub['authority_epistemic_ceiling'] is None
           print('PubMed pulse:', pub['health'], pub['last_run_id'])
           PY
       - name: Upload discovery artifact
