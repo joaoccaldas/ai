@@ -1,0 +1,51 @@
+name: NOEMA Observatory V7 Guided UX
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'projects/noema/site/observatory.html'
+      - 'projects/noema/site/observatory-simple-v7.js'
+      - 'projects/noema/site/observatory-simple-v7.css'
+      - 'projects/noema/site/research-health.json'
+      - '.github/workflows/noema-observatory-v7.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: node --check projects/noema/site/observatory-simple-v7.js
+      - name: Validate guided UX and coverage honesty
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          html=Path('projects/noema/site/observatory.html').read_text()
+          js=Path('projects/noema/site/observatory-simple-v7.js').read_text()
+          css=Path('projects/noema/site/observatory-simple-v7.css').read_text()
+          health=json.loads(Path('projects/noema/site/research-health.json').read_text())
+          assert 'CIVILIZATION OBSERVATORY · V7' in html
+          assert 'observatory-simple-v7.css' in html and 'observatory-simple-v7.js' in html
+          assert 'Start with one moment.' in js
+          assert 'Begin guided journey' in js
+          assert 'Research Mode' in js
+          assert 'Coverage, not confidence' in js
+          assert 'current public coverage is strongest' in js
+          assert 'v7-advanced-hidden' in css
+          assert len([x for x in ['ORIENT','OBSERVE','INTERPRET','CHALLENGE'] if x in js]) == 4
+          assert health['metrics']['source_families'] >= 1
+          assert health['metrics']['drh_question_mapping_coverage_pct'] < 100
+          assert 'will not substitute invented completeness metrics' in js
+          forbidden=['complete civilization model','100% complete data','fully complete historical record']
+          low=(html+js).lower()
+          assert all(x not in low for x in forbidden)
+          print('NOEMA V7 guided UX contract: PASS')
+          PY
