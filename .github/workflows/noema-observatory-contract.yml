@@ -6,11 +6,13 @@ on:
     branches: [main]
     paths:
       - 'projects/noema/site/observatory.html'
-      - 'projects/noema/site/observatory-v2.css'
-      - 'projects/noema/site/observatory-v2.js'
+      - 'projects/noema/site/observatory-v3.css'
+      - 'projects/noema/site/observatory-v3.js'
       - 'projects/noema/site/research-health.json'
       - 'projects/noema/site/pattern-candidates.json'
       - 'projects/noema/site/review-queue.json'
+      - 'projects/noema/site/museum-reference-media.json'
+      - 'projects/noema/scripts/validate_observatory_ux100.py'
       - '.github/workflows/noema-observatory-contract.yml'
 
 permissions:
@@ -19,58 +21,55 @@ permissions:
 jobs:
   contract:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Syntax check observatory runtime
-        run: node --check projects/noema/site/observatory-v2.js
-      - name: Validate scientific visual contract
+      - name: Syntax check Observatory v3 runtime
+        run: node --check projects/noema/site/observatory-v3.js
+      - name: Execute 100-point UI UX data and epistemic contract
+        run: python projects/noema/scripts/validate_observatory_ux100.py
+      - name: Validate no hard-coded pseudo evidence meters
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html=Path('projects/noema/site/observatory.html').read_text()
+          js=Path('projects/noema/site/observatory-v3.js').read_text()
+          assert 'style="width:68%"' not in html
+          assert 'style="width:52%"' not in html
+          assert 'style="width:44%"' not in html
+          assert 'No numeric mechanism probabilities are shown until a calibrated causal model exists.' in html
+          assert "style=\"--v:0%\"" in js
+          print('No pseudo-quantitative evidence or causal probability meters')
+          PY
+      - name: Validate reference image rights gate
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          site=Path('projects/noema/site')
-          html=(site/'observatory.html').read_text()
-          js=(site/'observatory-v2.js').read_text()
-          css=(site/'observatory-v2.css').read_text()
-          for marker in [
-            'Civilization Observatory','Watch civilization unfold.','Challenge this interpretation',
-            'unknown ≠ absent','Rival mechanisms','Review debt','Scientific state','three@0.180.0'
-          ]:
-            assert marker in html, marker
-          for marker in [
-            "pattern-candidates.json","review-queue.json","research-health.json",
-            'Association only. Phylogeny, space, contact and source dependence remain unresolved.',
-            'Unknown ≠ absent','Technology without migration shortcuts','Language is evidence, not ancestry',
-            'Ancestry without cultural essentialism','Candidate only · automatic promotion false'
-          ]:
-            assert marker in js, marker
-          assert len([x for x in [
-            'Demography','Kinship','Subsistence','Economy','Exchange','Settlement','Governance','Law & norms',
-            'Inequality','Conflict','Technology','Mobility','Ancestry','Language','Environment','Health','Cognition',
-            'Ritual','Supernatural agents','Myth','Divination & magic','Altered states','Mortuary practices','Symbolism',
-            'Institutions','Intergroup contact'] if x in js]) == 26
-          h=json.load(open(site/'research-health.json'))
-          p=json.load(open(site/'pattern-candidates.json'))
-          q=json.load(open(site/'review-queue.json'))
-          assert h['status']=='ENGINEERING_AND_EPISTEMIC_AUDIT'
-          assert p['status']=='HYPOTHESIS_GENERATION_ONLY'
-          assert q['status']=='REVIEW_REQUIRED_NO_AUTOMATIC_PROMOTION'
-          assert all(x['automatic_promotion'] is False for x in q['items'])
-          assert '#world' in css and '.evidence-panel' in css and '.time-dock' in css
-          print('NOEMA observatory scientific visual contract green')
+          d=json.load(open('projects/noema/site/museum-reference-media.json'))
+          assert d['policy']['not_evidence'] is True
+          assert d['record_count'] == len(d['records'])
+          assert all(x['rights'] in {'PUBLIC_DOMAIN','CC0'} for x in d['records'])
+          assert all(x['evidence_status']=='NOT_EVIDENCE' for x in d['records'])
+          print('Reference imagery rights + epistemic gate green:', len(d['records']), 'records')
           PY
-      - name: Verify no invented geographic evidence
+      - name: Validate live scientific feeds
         run: |
           python - <<'PY'
+          import json
           from pathlib import Path
-          js=Path('projects/noema/site/observatory-v2.js').read_text()
-          banned=['fakeSite','mockCoordinate','inventedLatitude','inventedLongitude']
-          assert not any(x in js for x in banned)
-          assert 'new THREE.Points' in js  # ambient star field only
-          assert 'research-health.json' in js and 'pattern-candidates.json' in js
-          print('No synthetic civilization coordinates in observatory runtime')
+          s=Path('projects/noema/site')
+          h=json.load(open(s/'research-health.json'))
+          p=json.load(open(s/'pattern-candidates.json'))
+          q=json.load(open(s/'review-queue.json'))
+          assert h['status']=='ENGINEERING_AND_EPISTEMIC_AUDIT'
+          assert h['metrics']['comparable_profiles']>0
+          assert h['metrics']['accepted_semantic_assertions']>0
+          assert p['status']=='HYPOTHESIS_GENERATION_ONLY'
+          assert q['status']=='REVIEW_REQUIRED_NO_AUTOMATIC_PROMOTION'
+          assert all(x['candidate_only'] is True and x['human_review_required'] is True and x['automatic_promotion'] is False for x in q['items'])
+          print('Live scientific feed contract green')
           PY
