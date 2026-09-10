@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0",
+  "status": "SOURCE_BOUNDED_IMMERSIVE_CONTEXT",
+  "principle": "Atmosphere may support orientation, but it must never fabricate historical evidence, private belief, causal mechanism, soundscape, social structure or religious meaning beyond the cited source boundary.",
+  "moments": [
+    {
+      "id": "LOS_AVIONES_117500_BP",
+      "claim_id": "DT-C004",
+      "title": "Pigment, shell, coast",
+      "place": "Cueva de los Aviones · Iberian Mediterranean coast",
+      "center_bp": 117500,
+      "lens": "belief",
+      "scene": "A coastal cave context. Marine shells, ochre and pigment residues survive where intentions do not.",
+      "survives": ["Perforated and ochred marine shells", "Red and yellow colorants", "Pigment-mixture residues", "A minimum-age archaeological context"],
+      "interpretation": "The assemblage supports deliberate material selection and modification. Symbolic display is plausible in the cited research context, but a specific religion, deity, ritual script or private belief is not directly recoverable.",
+      "unknown": "Who used the objects, what they called them, whether every object carried the same meaning, and whether the behavior belonged to ritual, identity display, aesthetics, technology or overlapping practices.",
+      "biases": ["Symbolism-from-color bias", "Single-function bias", "Survivorship / preservation bias", "Modern category projection"],
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Cueva_de_los_Aviones.JPG",
+        "page": "https://commons.wikimedia.org/wiki/File:Cueva_de_los_Aviones.JPG",
+        "credit": "P4K1T0 · Wikimedia Commons",
+        "license": "CC0 / CC BY-SA 3.0",
+        "role": "PRESENT-DAY SITE CONTEXT · NOT HISTORICAL RECONSTRUCTION"
+      }
+    },
+    {
+      "id": "QAFZEH_105000_BP",
+      "claim_id": "HS-C005",
+      "title": "A body placed, a meaning uncertain",
+      "place": "Qafzeh Cave · Lower Galilee",
+      "center_bp": 105000,
+      "lens": "mortuary",
+      "scene": "A rock-shelter landscape. Human burials survive as spatial relationships between body, sediment and objects. Theology does not fossilize with them.",
+      "survives": ["Multiple Homo sapiens burials", "Middle Paleolithic archaeological context", "A broad dated burial cluster", "Excavation observations relevant to funerary interpretation"],
+      "interpretation": "Structured mortuary behavior is supported at the site. That can inform hypotheses about social treatment of the dead without establishing an afterlife doctrine or formal religion.",
+      "unknown": "The mourners' concepts of personhood, death, ancestors or afterlife; the emotional meaning of a burial; and whether mortuary actions were religious, social, practical, symbolic or inseparably mixed.",
+      "biases": ["Burial-equals-religion shortcut", "Grave-good overinterpretation", "Present-day theology projection", "Excavation and preservation bias"],
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Eingang_der_Qafzeh-H%C3%B6hle.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Eingang_der_Qafzeh-H%C3%B6hle.jpg",
+        "credit": "LS · Wikimedia Commons",
+        "license": "CC BY-SA 4.0",
+        "role": "PRESENT-DAY SITE CONTEXT · NOT HISTORICAL RECONSTRUCTION"
+      }
+    },
+    {
+      "id": "BLOMBOS_80000_BP",
+      "claim_id": "HS-C004",
+      "title": "Ochre was not one thing",
+      "place": "Blombos Cave · Southern Cape",
+      "center_bp": 80000,
+      "lens": "technology",
+      "scene": "Layered cave deposits preserve repeated human activity. Ochre can participate in technology and display at the same site, warning against a single universal meaning.",
+      "survives": ["Deliberately modified ochre pieces", "Use-wear", "Experimental functional matches", "Stratified Middle Stone Age deposits"],
+      "interpretation": "Some ochre pieces functioned as lithic retouchers. This is positive evidence against treating every pigment artifact as automatically symbolic or ritual.",
+      "unknown": "Whether the same pieces also carried social or symbolic significance, how uses changed through time, and how people categorized material, color or technique.",
+      "biases": ["Ritualization bias", "Utilitarian-only bias", "Artifact-class essentialism", "Context-collapse across layers"],
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Blombos_Cave_-_deposit_layers.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Blombos_Cave_-_deposit_layers.jpg",
+        "credit": "Kari Janne Stenersen · Wikimedia Commons",
+        "license": "CC BY-SA 2.5",
+        "role": "SITE STRATIGRAPHY CONTEXT · NOT HISTORICAL RECONSTRUCTION"
+      }
+    },
+    {
+      "id": "BLOMBOS_73000_BP",
+      "claim_id": "HS-C003",
+      "title": "A deliberate line, not a decoded message",
+      "place": "Blombos Cave · Southern Cape",
+      "center_bp": 73000,
+      "lens": "belief",
+      "scene": "A small silcrete flake carries deliberate red-ochre lines. Intention survives at the level of mark-making; the code behind the mark does not.",
+      "survives": ["Cross-hatched red-ochre marks", "Microscopic and chemical evidence of deliberate drawing", "A dated archaeological context"],
+      "interpretation": "The object supports deliberate graphic production and capacity for designed visual marking. It does not establish writing, ritual use or religious content.",
+      "unknown": "What the design referred to, whether it communicated to others, how common the convention was, and whether its significance was aesthetic, mnemonic, social, ritual or something outside modern categories.",
+      "biases": ["Writing-from-pattern bias", "Symbol-decoding fantasy", "Unique-object overgeneralization", "Modern art/religion category projection"],
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Blombos_Cave_-_deposit_layers.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Blombos_Cave_-_deposit_layers.jpg",
+        "credit": "Kari Janne Stenersen · Wikimedia Commons",
+        "license": "CC BY-SA 2.5",
+        "role": "SITE STRATIGRAPHY CONTEXT · NOT OBJECT RECONSTRUCTION"
+      }
+    },
+    {
+      "id": "LA_FERRASSIE_41250_BP",
+      "claim_id": "DT-C003",
+      "title": "Careful deposition, cautious interpretation",
+      "place": "La Ferrassie · Dordogne",
+      "center_bp": 41250,
+      "lens": "mortuary",
+      "scene": "A limestone rockshelter in Dordogne. A child's body and a dug pit provide unusually concrete mortuary evidence; cosmology remains beyond direct observation.",
+      "survives": ["A pit cut into sterile sediment", "A young Neanderthal child placed within the feature", "A directly dated Neanderthal-associated bone", "Multidisciplinary archaeological context"],
+      "interpretation": "Purposeful deposition is supported for this context. Specific funerary theology, ancestor belief or afterlife concepts are not identified by the burial alone.",
+      "unknown": "The social relationship to the child, emotional experience, spoken practices, concepts of death and whether repeated mortuary customs had shared meanings.",
+      "biases": ["Burial-equals-afterlife bias", "Emotional projection", "Single-event generalization", "Chronology/context conflation"],
+      "image": {
+        "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Grand_abri_de_la_Ferrassie_-_Savignac-de-Miremont_-_20090924.jpg",
+        "page": "https://commons.wikimedia.org/wiki/File:Grand_abri_de_la_Ferrassie_-_Savignac-de-Miremont_-_20090924.jpg",
+        "credit": "Sémhur · Wikimedia Commons",
+        "license": "CC BY-SA 4.0",
+        "role": "PRESENT-DAY SITE CONTEXT · NOT HISTORICAL RECONSTRUCTION"
+      }
+    }
+  ]
+}
