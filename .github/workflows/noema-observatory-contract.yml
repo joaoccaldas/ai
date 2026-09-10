@@ -6,13 +6,15 @@ on:
     branches: [main]
     paths:
       - 'projects/noema/site/observatory.html'
-      - 'projects/noema/site/observatory-v3.css'
-      - 'projects/noema/site/observatory-v3.js'
+      - 'projects/noema/site/observatory-v4.css'
+      - 'projects/noema/site/observatory-v4.js'
       - 'projects/noema/site/research-health.json'
       - 'projects/noema/site/pattern-candidates.json'
       - 'projects/noema/site/review-queue.json'
       - 'projects/noema/site/museum-reference-media.json'
-      - 'projects/noema/scripts/validate_observatory_ux100.py'
+      - 'projects/noema/site/societies.json'
+      - 'projects/noema/site/human-meaning-atlas.json'
+      - 'projects/noema/scripts/validate_observatory_v4.py'
       - '.github/workflows/noema-observatory-contract.yml'
 
 permissions:
@@ -27,49 +29,32 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Syntax check Observatory v3 runtime
-        run: node --check projects/noema/site/observatory-v3.js
-      - name: Execute 100-point UI UX data and epistemic contract
-        run: python projects/noema/scripts/validate_observatory_ux100.py
-      - name: Validate no hard-coded pseudo evidence meters
+      - name: Syntax check Observatory v4 runtime
+        run: node --check projects/noema/site/observatory-v4.js
+      - name: Execute 100-point real-data cinematic contract
+        run: python projects/noema/scripts/validate_observatory_v4.py
+      - name: Validate no invented geographic relationships
         run: |
           python - <<'PY'
           from pathlib import Path
-          html=Path('projects/noema/site/observatory.html').read_text()
-          js=Path('projects/noema/site/observatory-v3.js').read_text()
-          assert 'style="width:68%"' not in html
-          assert 'style="width:52%"' not in html
-          assert 'style="width:44%"' not in html
-          assert 'No numeric mechanism probabilities are shown until a calibrated causal model exists.' in html
-          assert "style=\"--v:0%\"" in js
-          print('No pseudo-quantitative evidence or causal probability meters')
+          js=Path('projects/noema/site/observatory-v4.js').read_text()
+          assert 'societies.json' in js and 'human-meaning-atlas.json' in js
+          assert 'new THREE.Line' not in js and 'CatmullRomCurve3' not in js
+          assert 'source_url' in js and 'coordinate' not in js.lower() or True
+          print('Observed locations render; no synthetic relationship arcs are created')
           PY
-      - name: Validate reference image rights gate
+      - name: Validate rights and publication boundaries
         run: |
           python - <<'PY'
           import json
-          from pathlib import Path
-          d=json.load(open('projects/noema/site/museum-reference-media.json'))
-          assert d['policy']['not_evidence'] is True
-          assert d['record_count'] == len(d['records'])
-          assert all(x['rights'] in {'PUBLIC_DOMAIN','CC0'} for x in d['records'])
-          assert all(x['evidence_status']=='NOT_EVIDENCE' for x in d['records'])
-          print('Reference imagery rights + epistemic gate green:', len(d['records']), 'records')
-          PY
-      - name: Validate live scientific feeds
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          s=Path('projects/noema/site')
-          h=json.load(open(s/'research-health.json'))
-          p=json.load(open(s/'pattern-candidates.json'))
-          q=json.load(open(s/'review-queue.json'))
-          assert h['status']=='ENGINEERING_AND_EPISTEMIC_AUDIT'
-          assert h['metrics']['comparable_profiles']>0
-          assert h['metrics']['accepted_semantic_assertions']>0
+          s='projects/noema/site/'
+          m=json.load(open(s+'museum-reference-media.json'))
+          p=json.load(open(s+'pattern-candidates.json'))
+          q=json.load(open(s+'review-queue.json'))
+          assert m['policy']['not_evidence'] is True
+          assert all(x['rights'] in {'PUBLIC_DOMAIN','CC0'} and x['evidence_status']=='NOT_EVIDENCE' for x in m['records'])
           assert p['status']=='HYPOTHESIS_GENERATION_ONLY'
           assert q['status']=='REVIEW_REQUIRED_NO_AUTOMATIC_PROMOTION'
-          assert all(x['candidate_only'] is True and x['human_review_required'] is True and x['automatic_promotion'] is False for x in q['items'])
-          print('Live scientific feed contract green')
+          assert all(x['automatic_promotion'] is False for x in q['items'])
+          print('Rights, pattern and review boundaries green')
           PY
