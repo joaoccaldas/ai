@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Civilization Observatory · NOEMA</title>
+<meta name="description" content="An immersive, evidence-aware observatory for exploring human civilization across space, time, belief, ecology, technology and social structure.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="observatory-v2.css">
+</head>
+<body>
+<div id="app" class="app">
+  <canvas id="world" aria-label="Interactive civilization globe"></canvas>
+  <div class="veil"></div>
+  <header class="topbar glass">
+    <a class="brand" href="index.html"><span class="brand-mark">N</span><span><strong>NOEMA</strong><small>Civilization Observatory</small></span></a>
+    <nav>
+      <a href="explore.html">Explore</a><a href="human-meaning-atlas.html">Atlas</a><a href="lineages.html">Analyze</a><a href="review.html">Review</a><a href="research.html">Research</a>
+    </nav>
+    <button id="focusMode" class="icon-btn" type="button" aria-pressed="false">Focus</button>
+  </header>
+
+  <aside class="left-rail glass">
+    <div class="eyebrow">LENSES</div>
+    <button class="lens active" data-lens="civilization"><b>◎</b><span>Civilization</span></button>
+    <button class="lens" data-lens="belief"><b>✦</b><span>Belief</span></button>
+    <button class="lens" data-lens="ritual"><b>◌</b><span>Ritual</span></button>
+    <button class="lens" data-lens="mortuary"><b>◇</b><span>Mortuary</span></button>
+    <button class="lens" data-lens="altered"><b>∿</b><span>Altered states</span></button>
+    <button class="lens" data-lens="technology"><b>⌘</b><span>Technology</span></button>
+    <button class="lens" data-lens="environment"><b>△</b><span>Environment</span></button>
+    <button class="lens" data-lens="language"><b>⌁</b><span>Language</span></button>
+    <button class="lens" data-lens="ancestry"><b>⋈</b><span>Ancestry</span></button>
+  </aside>
+
+  <section class="hero-panel glass">
+    <div class="eyebrow">A LIVING MODEL OF HUMAN HISTORY</div>
+    <h1>Watch civilization unfold.</h1>
+    <p>Explore patterns across time, geography, ecology, ancestry, language, technology, institutions, ritual, mythology and altered states. Every visual claim remains tethered to provenance, uncertainty and rival explanations.</p>
+    <div class="hero-actions">
+      <button id="playTime" class="primary" type="button">Play deep time</button>
+      <button id="surpriseMe" type="button">Find a surprising pattern</button>
+    </div>
+    <div class="status-strip">
+      <span><b id="profiles">—</b> comparable profiles</span>
+      <span><b id="assertions">—</b> accepted assertions</span>
+      <span><b id="patterns">—</b> pattern candidates</span>
+      <span><b id="reviewDebt">—</b> reviews pending</span>
+    </div>
+  </section>
+
+  <aside class="evidence-panel glass" id="evidencePanel">
+    <div class="panel-head"><div><div class="eyebrow">WHY THIS VIEW?</div><h2 id="insightTitle">Evidence, not spectacle</h2></div><span id="stateBadge" class="badge">OBSERVATORY</span></div>
+    <p id="insightText">The globe is a navigation and synthesis surface. It never upgrades correlation into causation, similarity into descent, or absence into non-existence.</p>
+    <div class="meter-grid">
+      <div><span>Evidence density</span><i><b id="evidenceMeter" style="width:68%"></b></i></div>
+      <div><span>Source independence</span><i><b id="independenceMeter" style="width:52%"></b></i></div>
+      <div><span>Chronology resolution</span><i><b id="chronologyMeter" style="width:44%"></b></i></div>
+    </div>
+    <div class="rivals">
+      <span>Rival mechanisms</span>
+      <div id="rivalList"><button>Convergence</button><button>Contact</button><button>Diffusion</button><button>Shared ancestry</button><button>Ecology</button><button>Unknown</button></div>
+    </div>
+    <button id="challenge" class="challenge" type="button">Challenge this interpretation</button>
+  </aside>
+
+  <section class="time-dock glass">
+    <div class="time-label"><span id="eraLabel">Deep time</span><strong id="timeLabel">300,000 BP</strong></div>
+    <input id="timeSlider" type="range" min="0" max="1000" value="0" aria-label="Historical time">
+    <div class="ticks"><span>300k BP</span><span>50k BP</span><span>10k BP</span><span>3000 BCE</span><span>1 CE</span><span>1000</span><span>2026</span></div>
+    <div class="time-controls"><button id="slower" type="button">−</button><button id="playPause" type="button">▶</button><button id="faster" type="button">+</button></div>
+  </section>
+
+  <section class="drawer glass" id="drawer" aria-live="polite">
+    <div class="drawer-tabs"><button class="active" data-tab="patterns">Patterns</button><button data-tab="dimensions">Dimensions</button><button data-tab="review">Review debt</button><button data-tab="method">Scientific state</button></div>
+    <div id="drawerContent" class="drawer-content"></div>
+  </section>
+
+  <div class="legend glass">
+    <span><i class="solid"></i>observed / accepted</span><span><i class="candidate"></i>candidate</span><span><i class="uncertain"></i>uncertain</span><span><i class="contradiction"></i>contradiction</span><span><i class="unknown"></i>unknown ≠ absent</span>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js"></script>
+<script src="observatory-v2.js"></script>
+</body>
+</html>
