@@ -1,0 +1,256 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-10",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-10T06:08:08Z",
+  "source_discovery_run": {
+    "run_id": "github-discovery-34437325927",
+    "completed_at": "2026-09-10T04:28:55.185320+00:00",
+    "code_commit": "8873869ffa19b5031fec55ca323522394e2c73bb",
+    "candidate_count": 105,
+    "priority_candidate_count": 30,
+    "raw_payload_sha256": "160c7ffcfcde6b68dcee4ae60708eff9a8e874760997c7b071a50add875eb60e",
+    "github_artifact_digest": "sha256:d00160d69318ffb86830be664d59941a592fda80e9c495c9290e150b0bc76437",
+    "artifact_id": 10136643442,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 6,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 22,
+      "verification_status": "BINARY_VERIFIED"
+    },
+    "overall_distribution": {
+      "RECENT_PUBLICATION": 6,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 97
+    }
+  },
+  "rules": [
+    "Every discovered record remains CANDIDATE_UNREVIEWED until human review.",
+    "Model-generated synthesis is not evidence.",
+    "Similarity does not imply historical descent, common origin or diffusion.",
+    "Unknown is not absence.",
+    "Publication, online, issue, index and discovery dates are preserved separately where available.",
+    "Archaeological observations are separated from inferred symbolic, ritual, social or cognitive meaning.",
+    "Ancient-DNA/proteomic affinity, morphology, culture, language, technology and social identity are not interchangeable variables.",
+    "Historical diagnosis or identity is never inferred from resemblance to modern biomedical categories."
+  ],
+  "artifact_priority_queue": {
+    "RECENT_PUBLICATION_count": 6,
+    "UPCOMING_OR_AHEAD_OF_PRINT_count": 2,
+    "NEWLY_INDEXED_LEGACY_count": 22,
+    "notes": [
+      {
+        "doi": "10.1177/09610006261481847",
+        "published": "2026-09-06",
+        "indexed": "2026-09-08",
+        "classification": "RECENT_PUBLICATION",
+        "title": "Can ritual behavior influence user identity? A study of library ritual activities effects",
+        "triage": "Recent but modern library-behavior research; peripheral to historical inference and lower priority than archaeological or chronometric material."
+      },
+      {
+        "doi": "10.1016/j.evolhumbehav.2026.106943",
+        "published": "2026-09-01",
+        "indexed": "2026-09-04",
+        "classification": "RECENT_PUBLICATION",
+        "title": "Moralistic supernatural explanations were widespread and attributed to many different supernatural agents in historical societies",
+        "triage": "Already staged in prior daily triage; deduplicated."
+      },
+      {
+        "doi": "10.3366/9781399564618-005",
+        "published": "2026-12-31",
+        "indexed": "2026-09-03",
+        "classification": "UPCOMING_OR_AHEAD_OF_PRINT",
+        "title": "Introduction: Revelation and Divination",
+        "triage": "Ahead-of-print conceptual chapter; candidate metadata only."
+      },
+      {
+        "doi": "10.1515/9780691266329-009",
+        "published": "2026-12-31",
+        "indexed": "2026-09-07",
+        "classification": "UPCOMING_OR_AHEAD_OF_PRINT",
+        "title": "5 Beyond Transaction: Maintaining Sacred Relationships in Daily Life",
+        "triage": "Ahead-of-print conceptual chapter; no evidentiary promotion."
+      }
+    ]
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-SULAWESI-BETEL-NUT-2026",
+      "triage_class": "RECENT_PUBLICATION_DATING_REVISION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Betel nut sucking is the earliest recorded evidence for the habitual use of a neuroactive plant drug",
+      "publication_date": "2026-09-09",
+      "discovered_at": "2026-09-10",
+      "doi": "10.1126/sciadv.aei1901",
+      "canonical_url": "https://doi.org/10.1126/sciadv.aei1901",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["ARCHAEOLOGY", "ALTERED_STATES", "PSYCHOACTIVE_PLANTS", "BIOARCHAEOLOGY", "DENTAL_WEAR", "DEEP_TIME"],
+      "candidate_relevance": "Two pre-agricultural individuals from Sulawesi show unusual dental grooves linked experimentally and chemically to habitual sucking of Areca catechu. One individual dates to approximately 25,000-16,000 years ago, pushing direct evidence for habitual neuroactive-plant use far earlier than previously documented examples.",
+      "epistemic_caution": "This demonstrates habitual exposure/use in these individuals, not ritual use, shamanism, intoxication intensity, religious meaning, or uninterrupted cultural continuity into later betel-chewing traditions. The proposed analgesic motive is plausible but not directly observed.",
+      "review_priority": "CRITICAL",
+      "sensitive": true,
+      "sensitivity_flags": ["HUMAN_REMAINS", "PSYCHOACTIVE_SUBSTANCE_USE"],
+      "provenance": {
+        "sources": ["Science Advances DOI 10.1126/sciadv.aei1901", "Griffith University/EurekAlert release 2026-09-09", "ABC Science report 2026-09-10"],
+        "publication_date": "2026-09-09",
+        "index_or_discovery_date": "2026-09-10",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1126/sciadv.aei1901",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-BIANFU-DENISOVAN-PROTEOMICS-2026",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Ancient proteins identify various Denisovan remains from Southwest China",
+      "publication_date": "2026-09-09",
+      "discovered_at": "2026-09-10",
+      "doi": "10.1038/s41586-026-10976-9",
+      "canonical_url": "https://doi.org/10.1038/s41586-026-10976-9",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["HUMAN_EVOLUTION", "DENISOVANS", "PALEOPROTEOMICS", "ZOOARCHAEOLOGY", "MORPHOLOGY", "PLEISTOCENE"],
+      "candidate_relevance": "Proteomic screening identifies two parietal fragments, a proximal radius and two teeth from Bianfu Cave as Denisovan. The relevant layers are dated to roughly 167-134 ka, filling a geographic gap in southwestern China and providing rare postcranial morphology.",
+      "epistemic_caution": "Proteomic population assignment does not establish language, culture, social identity, specific ancestry contributions to later populations, or authorship of all associated lithics. Morphological resemblance to Neanderthal or modern-human traits does not imply direct descent from either.",
+      "review_priority": "CRITICAL",
+      "sensitive": true,
+      "sensitivity_flags": ["HOMININ_REMAINS", "ANCIENT_PROTEOMICS"],
+      "provenance": {
+        "sources": ["Nature DOI 10.1038/s41586-026-10976-9"],
+        "publication_date": "2026-09-09",
+        "index_or_discovery_date": "2026-09-10",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1038/s41586-026-10976-9",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-BIANFU-DENISOVAN-SUBSISTENCE-2026",
+      "triage_class": "RECENT_PUBLICATION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Denisovans from southwestern China and their subsistence strategies",
+      "publication_date": "2026-09-09",
+      "discovered_at": "2026-09-10",
+      "doi": "10.1038/s41586-026-10997-4",
+      "canonical_url": "https://doi.org/10.1038/s41586-026-10997-4",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["HUMAN_EVOLUTION", "DENISOVANS", "SUBSISTENCE", "PALEOENVIRONMENT", "LITHICS", "PLEISTOCENE"],
+      "candidate_relevance": "Companion Bianfu Cave work documents Denisovan occupation in southwestern China and contextualizes associated fauna, lithics and environmental conditions across Middle Pleistocene layers, creating a stronger ecological context for the proteomic identifications.",
+      "epistemic_caution": "Association by archaeological layer does not prove that every artifact or faunal modification was made by the molecularly identified individuals. Environmental suitability and resource abundance do not establish specific mobility routes or behavioral motives.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["HOMININ_REMAINS"],
+      "provenance": {
+        "sources": ["Nature DOI 10.1038/s41586-026-10997-4"],
+        "publication_date": "2026-09-09",
+        "index_or_discovery_date": "2026-09-10",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1038/s41586-026-10997-4",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-AUTISTIC-SCHIZOTYPAL-RELIGIOSITY-2026",
+      "triage_class": "NEWLY_DISCOVERED_LEGACY_2026_PEER_REVIEWED",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Losing one's religion: relationships between autistic and schizotypal traits, religiosity, spirituality, and faith changes",
+      "publication_date": "2026-03-18",
+      "discovered_at": "2026-09-10",
+      "doi": "10.3389/fpsyg.2026.1689818",
+      "canonical_url": "https://doi.org/10.3389/fpsyg.2026.1689818",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["COGNITION", "RELIGION", "SPIRITUALITY", "AUTISTIC_TRAITS", "SCHIZOTYPAL_TRAITS", "FAITH_CHANGE"],
+      "candidate_relevance": "A questionnaire study of 2,091 participants reports associations between autistic and positive-schizotypal trait measures and self-reported religious/spiritual experiences and faith changes, providing modern comparative data for cognition-religion hypotheses.",
+      "epistemic_caution": "Cross-sectional trait associations are not diagnoses, do not establish causality, and cannot be projected onto historical religious specialists, mystics, witches, shamans or other past individuals. Cultural and sampling context limits generalization.",
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "sensitivity_flags": ["MENTAL_HEALTH", "NEURODIVERSITY", "RELIGION"],
+      "provenance": {
+        "sources": ["Frontiers in Psychology DOI 10.3389/fpsyg.2026.1689818", "PubMed PMID 41929800", "Consensus scholarly index"],
+        "publication_date": "2026-03-18",
+        "index_or_discovery_date": "2026-09-10",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.3389/fpsyg.2026.1689818",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-CHINA-GHOST-BELIEF-CORPUS-2026",
+      "triage_class": "NEWLY_DISCOVERED_STRUCTURED_HISTORICAL_DATASET",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "The Rhetoric of Disenchantment: Ghost Belief and Secular Critique in Early Twentieth-Century China",
+      "publication_date": "2026-01-19",
+      "discovered_at": "2026-09-10",
+      "doi": "10.1111/cogs.70158",
+      "canonical_url": "https://doi.org/10.1111/cogs.70158",
+      "source_type": "PEER_REVIEWED_HISTORICAL_ARTICLE_WITH_STRUCTURED_DATASET",
+      "domains": ["HISTORICAL_SOURCES", "SUPERNATURAL_BELIEF", "SECULARIZATION", "GHOSTS", "DIVINATION", "COGNITION", "DATASET"],
+      "candidate_relevance": "The study analyzes more than 2,000 digitized newspapers, periodicals and essays from 1890-1949 using close reading, AI-assisted annotation and statistical modeling, and exposes an OSF data/analysis package. It distinguishes rhetorical stance and argument type rather than reducing the corpus to a simple believer/non-believer label.",
+      "epistemic_caution": "AI-assisted annotation is a research method, not independent evidence; claims should trace back to the historical texts and validated coding. Public rhetoric is not identical to private belief or population prevalence, and elite print culture may not represent broader society.",
+      "review_priority": "HIGH",
+      "sensitive": false,
+      "sensitivity_flags": [],
+      "provenance": {
+        "sources": ["Cognitive Science DOI 10.1111/cogs.70158", "PubMed PMID 41553787", "OSF dataset linked by publisher", "Consensus scholarly index"],
+        "publication_date": "2026-01-19",
+        "index_or_discovery_date": "2026-09-10",
+        "peer_reviewed": true,
+        "dedup_key": "doi:10.1111/cogs.70158",
+        "github_dedup_result": "NO_EXISTING_MATCH"
+      }
+    }
+  ],
+  "contradictions_and_pressures": [
+    {
+      "id": "PRESSURE-PSYCHOACTIVE-DEEP-TIME",
+      "summary": "Habitual neuroactive-plant use is directly evidenced in Late Pleistocene Sulawesi, challenging chronologies that confine habitual psychoactive-plant use to agricultural or later societies; ritual or religious interpretation remains unproven.",
+      "review": ["PSYCHOACTIVE_PLANT_CHRONOLOGY", "ALTERED_STATE_BEHAVIOR_ONTOLOGY"]
+    },
+    {
+      "id": "PRESSURE-DENISOVAN-GEOGRAPHY",
+      "summary": "Molecularly identified Denisovan remains now fill a major southwestern-China gap, requiring review of any NOEMA geographic model that treated Denisovans there as merely hypothetical.",
+      "review": ["DENISOVAN_DISTRIBUTION", "BIANFU_CAVE_ENTITY"]
+    },
+    {
+      "id": "PRESSURE-ARTIFACT-AUTHORSHIP",
+      "summary": "Molecular identification of hominins within a layer strengthens context but does not automatically assign every lithic or faunal trace to those individuals.",
+      "review": ["HOMININ_ARTIFACT_AUTHORSHIP_INFERENCE"]
+    },
+    {
+      "id": "PRESSURE-NEURODIVERSITY-HISTORICAL-DIAGNOSIS",
+      "summary": "Modern associations among autistic traits, positive schizotypy and religious/spiritual experiences provide comparative hypotheses only and must not be used to retrospectively diagnose historical actors.",
+      "review": ["COGNITION_RELIGION_COMPARATIVE_MODEL", "HISTORICAL_DIAGNOSIS_GUARD"]
+    },
+    {
+      "id": "PRESSURE-PUBLIC-RHETORIC-VS-BELIEF",
+      "summary": "Historical print discourse can quantify rhetorical strategies but should not be collapsed into private belief, lived practice or population prevalence.",
+      "review": ["BELIEF_PRACTICE_RHETORIC_ONTOLOGY", "HISTORICAL_SOURCE_REPRESENTATIVENESS"]
+    }
+  ],
+  "dating_revisions": [
+    {
+      "id": "DATING-SULAWESI-PSYCHOACTIVE-USE-2026",
+      "candidate_id": "DAILY-SULAWESI-BETEL-NUT-2026",
+      "summary": "Direct bioarchaeological/chemical evidence places habitual neuroactive betel-nut use in Sulawesi as early as approximately 25,000-16,000 years ago, substantially earlier than previously cited Neolithic/Bronze Age chronologies. Human review required before altering approved chronology claims.",
+      "status": "HUMAN_REVIEW_REQUIRED"
+    }
+  ],
+  "relationships_generated": [],
+  "hypotheses_revisited": [
+    "PSYCHOACTIVE_PLANT_CHRONOLOGY",
+    "ALTERED_STATE_BEHAVIOR_ONTOLOGY",
+    "DENISOVAN_DISTRIBUTION",
+    "HOMININ_ARTIFACT_AUTHORSHIP_INFERENCE",
+    "COGNITION_RELIGION_COMPARATIVE_MODEL",
+    "BELIEF_PRACTICE_RHETORIC_ONTOLOGY"
+  ],
+  "review_items": [
+    {"priority": "CRITICAL", "item": "Review Sulawesi betel-nut chronology and any NOEMA claims that place habitual psychoactive-plant use only in later agricultural societies."},
+    {"priority": "CRITICAL", "item": "Review Bianfu Cave and Denisovan distribution entities against the two 9 September Nature papers."},
+    {"priority": "HIGH", "item": "Keep molecular taxonomic attribution separate from authorship of associated lithics and subsistence traces."},
+    {"priority": "HIGH", "item": "Evaluate the 2,000+ text China ghost-belief corpus as a structured historical-source dataset while preserving rhetoric/private-belief separation."},
+    {"priority": "HIGH", "item": "Use modern autism/schizotypy-religiosity results only as comparative population-level hypotheses; enforce no retrospective diagnosis."},
+    {"priority": "MEDIUM", "item": "Review newly indexed legacy priority records for bibliographic and methodological quality before any future claim extraction."}
+  ],
+  "errors": [],
+  "summary": "Binary-verified discovery artifact: 105 candidates, priority queue 6 recent / 2 ahead-of-print / 22 newly indexed legacy. Five material deduplicated candidates staged: Late Pleistocene habitual betel-nut use in Sulawesi; two complementary Bianfu Cave Denisovan Nature papers; a modern cognition-religion trait study; and a structured 2,000+ text historical corpus on ghost belief and secular critique in early twentieth-century China. One chronology revision requires human review. No relationships or evidence promotions were generated."
+}
