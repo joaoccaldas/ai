@@ -49,8 +49,10 @@ def test_pubmed_registry_is_discovery_not_evidence():
     assert doc["cognition_policy"]["historical_diagnosis_from_resemblance"] is False
 
 
-def test_automation_contract_contains_pubmed_candidate_only_job():
-    doc = load("data/automation-contract-v1.json")
+def test_automation_registry_contains_pubmed_candidate_only_job():
+    doc = load("data/automation-registry-v2.json")
+    assert doc["status"] == "CANONICAL_AUTOMATION_INVENTORY"
     task = next(t for t in doc["tasks"] if t["task_type"] == "PUBMED_DISCOVERY")
     assert task["authority"] == "BIOMEDICAL_CANDIDATE_DISCOVERY_ONLY"
+    assert task["max_epistemic_stage"] is None
     assert task["next_stage"] == "HUMAN_REVIEW"
