@@ -1,0 +1,72 @@
+name: NOEMA Observatory V5 Immersive Moments
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/noema/site/observatory.html'
+      - 'projects/noema/site/observatory-moments-v5.js'
+      - 'projects/noema/site/observatory-moments-v5.css'
+      - 'projects/noema/site/immersive-moments-v1.json'
+      - 'projects/noema/site/human-meaning-atlas.json'
+      - '.github/workflows/noema-observatory-v5.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax check immersive runtime
+        run: node --check projects/noema/site/observatory-moments-v5.js
+      - name: Validate source-bounded moment contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('projects/noema/site')
+          html=(root/'observatory.html').read_text()
+          js=(root/'observatory-moments-v5.js').read_text()
+          css=(root/'observatory-moments-v5.css').read_text()
+          moments=json.loads((root/'immersive-moments-v1.json').read_text())
+          atlas=json.loads((root/'human-meaning-atlas.json').read_text())
+          assert moments['status']=='SOURCE_BOUNDED_IMMERSIVE_CONTEXT'
+          rows=moments['moments']; assert len(rows)>=5
+          atlas_ids={x['claim_id'] for x in atlas['mapped_events']}
+          assert all(x['claim_id'] in atlas_ids for x in rows)
+          assert all(x['center_bp']>0 for x in rows)
+          assert all(x['image']['page'].startswith('https://commons.wikimedia.org/wiki/File:') for x in rows)
+          assert all(('CC BY' in x['image']['license'] or 'CC0' in x['image']['license']) for x in rows)
+          assert all('NOT HISTORICAL RECONSTRUCTION' in x['image']['role'] or 'NOT OBJECT RECONSTRUCTION' in x['image']['role'] for x in rows)
+          assert all(x['survives'] and x['interpretation'] and x['unknown'] and x['biases'] for x in rows)
+          assert 'observatory-moments-v5.css' in html and 'observatory-moments-v5.js' in html
+          assert 'CIVILIZATION OBSERVATORY · V5' in html
+          assert 'Enter this moment' in js
+          assert 'What remains unknown' in js and 'Biases to resist' in js and 'Evidence boundary' in js
+          assert 'historical reconstruction' in js.lower()
+          assert '.moment-layer' in css and '.moment-backdrop' in css and '.moment-mode' in css
+          print('NOEMA Observatory V5 moment contract: green', len(rows), 'source-bounded moments')
+          PY
+      - name: Audit epistemic and media boundaries
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('projects/noema/site/immersive-moments-v1.json').read_text())
+          forbidden=['we know they believed','this proves religion','this proves ritual','reconstruction of daily life']
+          blob=json.dumps(d).lower()
+          assert not any(x in blob for x in forbidden)
+          assert 'must never fabricate' in d['principle'].lower()
+          assert all(len(x['biases'])>=4 for x in d['moments'])
+          print('epistemic/media boundary audit: green')
+          PY
