@@ -1,0 +1,55 @@
+name: NOEMA Analysis V3 Contract
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/noema/src/noema/analysis_v2.py'
+      - 'projects/noema/src/noema/analysis_v3.py'
+      - 'projects/noema/tests/test_analysis_v3.py'
+      - '.github/workflows/noema-analysis-v3.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile analysis modules
+        run: python -m compileall -q src/noema/analysis_v2.py src/noema/analysis_v3.py
+      - name: Run Analysis V3 tests
+        env:
+          PYTHONPATH: src
+        run: pytest -q tests/test_analysis_v3.py
+      - name: Audit noncausal invariants
+        env:
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          from noema.analysis_v2 import BinaryObservation
+          from noema.analysis_v3 import model_survival_profile
+          rows=[]
+          for i in range(16):
+              rows.append(BinaryObservation(
+                  subject_id=str(i), feature_a=i%2==0, feature_b=i%3!=0,
+                  strata={'language_family':'A' if i<8 else 'B','region':'N' if i%2 else 'S'},
+                  source_family='X' if i<10 else 'Y', latitude=10+i*.1, longitude=20+i*.1,
+              ))
+          r=model_survival_profile(rows)
+          assert r['candidate_only'] is True
+          assert r['automatic_causal_promotion'] is False
+          assert 'score' not in r
+          assert 'spatial_lag_or_gaussian_process_model' in r['required_next_models']
+          assert 'explicit_phylogenetic_comparative_model' in r['required_next_models']
+          print('Analysis V3 epistemic invariants green')
+          PY
