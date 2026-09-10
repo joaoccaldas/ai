@@ -1,0 +1,42 @@
+{
+  "ontology_id": "NOEMA-CIVILIZATION-CONTEXT-V1",
+  "status": "ANALYTIC_CONTEXT_ONLY",
+  "purpose": "Provide explicit contextual dimensions for cross-civilizational pattern analysis without collapsing association into causation, culture into ancestry, or observed practice into private belief.",
+  "unit_rule": "Every value must retain its original unit of observation, time interval, geography, source, coding rule and uncertainty. Society-level values must not be projected onto individuals.",
+  "dimensions": [
+    {"id":"DEMOGRAPHY","label":"Demography and population","examples":["population size","density","age structure"],"guards":["population estimates are uncertain","aggregate values do not describe every individual"]},
+    {"id":"KINSHIP","label":"Kinship and household organization","examples":["descent rules","residence","household structure"],"guards":["co-burial does not establish biological kinship","biological kinship does not exhaust social kinship"]},
+    {"id":"SUBSISTENCE","label":"Subsistence and food systems","examples":["foraging","pastoralism","horticulture","agriculture"],"guards":["subsistence similarity does not imply common origin"]},
+    {"id":"ECONOMY","label":"Economy and production","examples":["specialization","surplus","labor organization"],"guards":["material wealth is not a direct measure of wellbeing"]},
+    {"id":"EXCHANGE","label":"Trade and exchange","examples":["exchange networks","market integration","gift exchange"],"guards":["object movement does not prove person movement","similar objects do not by themselves prove contact"]},
+    {"id":"SETTLEMENT","label":"Settlement and urbanism","examples":["mobility","village size","urban hierarchy"],"guards":["settlement scale is not a scalar measure of social complexity"]},
+    {"id":"GOVERNANCE","label":"Governance and political organization","examples":["leadership","centralization","bureaucracy"],"guards":["institutional labels must retain source-specific definitions"]},
+    {"id":"LAW_NORMS","label":"Law, norms and social control","examples":["formal law","custom","sanctions","norm enforcement"],"guards":["reported rule does not prove compliance","supernatural sanction and secular sanction are separate dimensions"]},
+    {"id":"INEQUALITY","label":"Status and inequality","examples":["wealth differentiation","rank","hereditary status"],"guards":["grave wealth does not uniquely identify lifetime rank"]},
+    {"id":"CONFLICT","label":"Conflict and warfare","examples":["interpersonal violence","raiding","organized warfare"],"guards":["trauma does not identify attacker","weapon presence does not prove warrior identity"]},
+    {"id":"TECHNOLOGY","label":"Technology and material systems","examples":["production stages","materials","transport","energy use"],"guards":["technology similarity does not imply diffusion","complexity is multidimensional rather than a single ladder"]},
+    {"id":"MOBILITY","label":"Mobility and migration","examples":["seasonal mobility","residential mobility","migration"],"guards":["isotopic non-locality is not identical to migration","cultural change does not imply population replacement"]},
+    {"id":"ANCESTRY","label":"Population history and ancestry","examples":["ancient DNA","admixture","relatedness"],"guards":["genetic ancestry does not determine cultural identity","ghost ancestry cannot be assigned to a named fossil taxon without independent evidence"]},
+    {"id":"LANGUAGE","label":"Language and communication","examples":["language family","writing","oral transmission","lexicon"],"guards":["linguistic similarity does not by itself establish borrowing or descent","writing is not equivalent to language"]},
+    {"id":"ENVIRONMENT","label":"Environment and climate","examples":["temperature","precipitation","biome","resource variability"],"guards":["environmental correlation does not prove environmental causation"]},
+    {"id":"HEALTH","label":"Health, disease and nutrition","examples":["pathogens","diet","stress markers","mortality"],"guards":["skeletal or molecular markers require preservation and sampling models","historical observations do not license modern psychiatric diagnosis"]},
+    {"id":"COGNITION","label":"Cognition, learning and memory","examples":["learning mechanisms","attention","memory","reasoning"],"guards":["modern experiments are comparative evidence, not direct access to ancient minds","cognitive difference is not a hierarchy of intelligence"]},
+    {"id":"RITUAL","label":"Ritualized practice","examples":["repetition","formalization","synchrony","costly action"],"guards":["practice does not prove private belief","ritual does not have one universal function"]},
+    {"id":"SUPERNATURAL_AGENTS","label":"Supernatural agents and cosmology","examples":["gods","spirits","ancestors","cosmological agents"],"guards":["agent categories must preserve emic distinctions","similar agents do not imply shared origin"]},
+    {"id":"MYTH_NARRATIVE","label":"Myth, narrative and oral tradition","examples":["origin narratives","hero narratives","cosmogony"],"guards":["motif resemblance is hypothesis-generating only","recorded text may postdate oral traditions by an unknown interval"]},
+    {"id":"DIVINATION_MAGIC","label":"Divination, magic and uncertainty practices","examples":["omens","oracles","lot casting","protective rites"],"guards":["practice is distinct from propositional belief","modern category labels may not match local categories"]},
+    {"id":"ALTERED_STATES","label":"Altered states and induction","examples":["trance","fasting","psychoactive exposure","sensory restriction"],"guards":["exposure does not establish ritual use","phenomenological resemblance does not prove common mechanism or historical continuity"]},
+    {"id":"MORTUARY","label":"Mortuary and ancestor-related practice","examples":["burial","cremation","secondary treatment","memorialization"],"guards":["human remains in an unusual context do not automatically indicate ritual deposition","burial form does not uniquely identify belief"]},
+    {"id":"SYMBOLISM","label":"Symbolic, graphic and representational behavior","examples":["pigment","ornament","marking","figurative art"],"guards":["anthropogenic modification does not automatically establish semantics","pigment may have production or perceptual functions"]},
+    {"id":"INSTITUTIONS","label":"Institutions and collective organization","examples":["temples","guilds","monasteries","schools","ritual specialists"],"guards":["institutional presence does not imply uniform participation or belief"]},
+    {"id":"INTERGROUP_CONTACT","label":"Intergroup contact and network position","examples":["trade contact","frontiers","diaspora","political incorporation"],"guards":["contact makes transmission possible but does not prove transmission"]}
+  ],
+  "cross_dimension_rules": [
+    "No single dimension is a civilization score.",
+    "Missing values remain unknown and are never converted to absent.",
+    "Correlation requires matched units, chronology and geography plus explicit confounder review.",
+    "Directional claims require temporal ordering and competing mechanisms.",
+    "Phylogenetic, spatial and source dependence must be modeled when relevant.",
+    "Patterns may be descriptive, associational or causal candidates; only domain-appropriate identification strategies can support causal claims."
+  ]
+}
