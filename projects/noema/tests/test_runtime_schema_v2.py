@@ -61,6 +61,14 @@ def test_migration_007_covers_v2_assertion_and_epistemic_contracts():
     assert "INTERPRETATION' OR cardinality(alternatives) > 0" in sql
 
 
+def test_migration_007_uses_plain_statements_for_neon_transport():
+    sql = (ROOT / "db" / "007_structured_assertions_v2.sql").read_text()
+    assert "DO $$" not in sql
+    assert "DROP CONSTRAINT IF EXISTS analysis_runs_epistemic_stage_check" in sql
+    assert "ADD CONSTRAINT analysis_runs_epistemic_stage_check" in sql
+    assert "DROP CONSTRAINT IF EXISTS relationship_candidates_epistemic_stage_check" in sql
+
+
 def test_store_structured_assertion_preserves_raw_source_and_creates_review_work():
     conn = FakeConnection()
     assertion = StructuredAssertion(
