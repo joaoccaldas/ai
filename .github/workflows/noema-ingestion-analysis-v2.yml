@@ -1,0 +1,62 @@
+name: NOEMA Ingestion and Analysis V2 Contract
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/noema/src/noema/evidence_ingestion_v2.py'
+      - 'projects/noema/src/noema/analysis_v2.py'
+      - 'projects/noema/tests/test_evidence_ingestion_v2.py'
+      - 'projects/noema/tests/test_analysis_v2.py'
+      - 'projects/noema/docs/INGESTION_ANALYSIS_V2.md'
+      - '.github/workflows/noema-ingestion-analysis-v2.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependency
+        run: python -m pip install pytest
+      - name: Compile V2 modules
+        run: python -m compileall -q src/noema/evidence_ingestion_v2.py src/noema/analysis_v2.py
+      - name: Run ingestion and analysis V2 tests
+        env:
+          PYTHONPATH: src
+        run: pytest -q tests/test_evidence_ingestion_v2.py tests/test_analysis_v2.py
+      - name: Audit epistemic invariants
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          ingest=Path('src/noema/evidence_ingestion_v2.py').read_text()
+          analysis=Path('src/noema/analysis_v2.py').read_text()
+          docs=Path('docs/INGESTION_ANALYSIS_V2.md').read_text()
+          required_ingest=[
+              'ABSENT_AFTER_SEARCH','UNKNOWN','PRESERVATION_UNLIKELY',
+              'extraction_confidence','evidential_confidence',
+              'agreement_is_not_truth','automatic_promotion',
+              'RETRACTION_RELATED','CORRECTION_RELATED'
+          ]
+          required_analysis=[
+              'STRATIFIED','SPATIAL','PHYLOGENETIC','TEMPORAL',
+              'leave_one_group_out','chronological_direction',
+              'Earliest observed evidence is not necessarily earliest historical presence',
+              'automatic_causal_promotion'
+          ]
+          assert all(x in ingest for x in required_ingest)
+          assert all(x in analysis for x in required_analysis)
+          assert 'Agreement among extractors is not truth' in docs
+          assert 'No stage automatically becomes `CAUSAL_SUPPORTED`' in docs
+          print('NOEMA ingestion/analysis V2 epistemic invariants: green')
+          PY
