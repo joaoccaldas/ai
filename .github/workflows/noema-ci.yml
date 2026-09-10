@@ -74,6 +74,9 @@ jobs:
           python -m json.tool site/museum-reference-media.json >/dev/null
           python -m json.tool data/candidates/discovery-triage-2026-08-29.json >/dev/null
           python -m json.tool schemas/run-manifest-v1.json >/dev/null
+          python -m json.tool data/scientific-reasoning-contract-v2.json >/dev/null
+          python -m json.tool ontology/civilization_context_v1.json >/dev/null
+          python -m json.tool data/evals/scientific-guardrails-v1.json >/dev/null
           python - <<'PY'
           import json
           from pathlib import Path
@@ -111,8 +114,6 @@ jobs:
           assert '<title>NOEMA · Religion, Ritual & Belief, Decomposed</title>' in home
           assert 'Understand what humans believe, and how beliefs connect.' in home and 'home-v2.js' in home
 
-          # Route contract checks visible product semantics and each route's current
-          # runtime. Explore + Entity are intentionally lightweight in v1.8.1.
           expectations={
               'site/explore.html':('What do you want to understand?','explore-v18.js'),
               'site/belief-systems.html':('No religion is one variable.','app-v1.js'),
@@ -120,7 +121,7 @@ jobs:
               'site/rituals.html':('Compare actions before meanings.','app-v1.js'),
               'site/altered-states.html':('Substance is only one part of the experience.','app-v1.js'),
               'site/patterns.html':('What keeps appearing together?','app-v1.js'),
-              'site/compare.html':('Same words do not mean same history.','app-v1.js'),
+              'site/compare.html':('Same words do not mean same history.','compare-v18.js'),
               'site/lineages.html':('Connection is not origin.','relationship-v2.js'),
               'site/sources-v1.html':('Every conclusion should have a trail.','app-v1.js'),
               'site/entity.html':('universal entity workspace','entity-v18.js'),
@@ -153,6 +154,7 @@ jobs:
           node --check site/explore-v18.js
           node --check site/entity-v18.js
           node --check site/shell-v18.js
+          node --check site/compare-v18.js
           node --check site/relationship-v2.js
           node --check site/dashboard-v2.js
           node --check site/automation-pulse.js
@@ -212,6 +214,7 @@ jobs:
           assert all(r['n_comparable']<=r['cohort_profiles'] and 'phylogeny' in r['unresolved_confounders'] for c in p['cohorts'] for r in c['candidates'])
           assert h['metrics']['ontology_dimensions']>=16
           assert a['status']=='OBSERVABILITY_ONLY'
+          assert not any(x.get('age_hours', 0) < 0 for x in a.get('task_health', []))
           PY
 
       - name: Syntax-check inline research surfaces
