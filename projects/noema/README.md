@@ -47,12 +47,13 @@ Pulotu / ARIADNE ───────────┘                           
 - `src/noema/resolution.py` — conservative entity resolution
 - `src/noema/patterns.py` — pairwise complete-case enrichment, effect size and BH-corrected pattern nomination
 - `src/noema/analysis_v2.py` — staged robustness diagnostics including stratification, leave-one-source-family-out sensitivity and descriptive temporal ordering
+- `src/noema/analysis_v3.py` — geography-required spatial diagnostics, deterministic geocoded permutation screening, language-family sensitivity and model-survival/fragility profiles; these remain diagnostics rather than causal or full phylogenetic models
 - `src/noema/scientific_reasoning.py` — chronology, detectability, competing mechanisms and Evidence Court primitives
 - `src/noema/hypothesis_engine.py` — dependence-aware probability revision
 - `src/noema/publish.py` — public projection safety gate
 - `src/noema/api.py` — read-only observatory API
 
-See `docs/INGESTION_ANALYSIS_V2.md` for the active ingestion and analysis contract.
+See `docs/INGESTION_ANALYSIS_V2.md` and `docs/ANALYSIS_V3_AUDIT_2026-09-10.md` for the active ingestion and analysis contracts and explicit open-model boundaries.
 
 ### Evidence sources and discovery
 
@@ -72,6 +73,7 @@ See `docs/INGESTION_ANALYSIS_V2.md` for the active ingestion and analysis contra
 - `NOEMA Discovery` — daily Crossref candidate artifact, no direct evidence writes
 - `NOEMA Benchmark` — weekly deterministic 100-society D-PLACE artifact
 - `NOEMA Ingestion and Analysis V2 Contract` — tests richer ingestion semantics and staged analytical guardrails
+- `NOEMA Analysis V3 Contract` — tests spatial/language-family robustness diagnostics and enforces noncausal model-survival semantics
 - `NOEMA Civilization Observatory Contract` — tests data-to-visual semantics and epistemic UI boundaries
 - ChatGPT scheduled research cycles — daily discovery, weekly re-analysis, monthly cross-domain discovery, with quarterly paradigm challenge folded into Jan/Apr/Jul/Oct
 
@@ -104,15 +106,32 @@ python scripts/seed_db.py
 
 The Neon ChatGPT connector currently exposes a casing mismatch between its declared tool schema and backend migration endpoint. The initial schema was successfully verified on the connector-created temporary branch, but promotion through that broken endpoint cannot be truthfully marked complete until the connector accepts a valid completion call or the schema is applied by another authorized database path.
 
+## Evidence gates for an internal 10/10 rating
+
+NOEMA must not award itself a 10/10 merely because code paths or UI controls exist. A top internal rating requires evidence that the corresponding capability is populated, exercised and independently validated. In particular:
+
+1. source breadth requires multiple independently useful structured evidence families rather than discovery pointers alone;
+2. semantic coverage requires reviewed crosswalk depth sufficient for representative analyses, with unknown retained as unknown;
+3. spatial rigor requires an explicit covariance-aware model beyond the current diagnostics;
+4. phylogenetic rigor requires a versioned tree-aware comparative model beyond language-family sensitivity;
+5. temporal rigor requires probabilistic chronology where dating uncertainty materially affects ordering;
+6. contact/diffusion analysis requires a separately evidenced historical-contact network;
+7. missingness rigor requires detectability/preservation sensitivity in model outputs;
+8. causal claims require domain-appropriate identification and cannot be produced by correlation or robustness screening alone;
+9. calibrated probabilities require expert/manual NOEMA-EVAL evidence before public probability language;
+10. public UX requires the above model states, fragility and provenance to be visible without implying certainty.
+
+Passing deterministic tests proves tested contracts, not historical truth or scientific completeness.
+
 ## Next milestones
 
-1. Wire `StructuredAssertion` records into the durable database and human review flow.
-2. Add an operational Crossref integrity/update job that revisits corrections, retractions and related versions without promoting claims.
-3. Add Europe PMC structured full-text ingestion where licensing permits.
-4. Expand from the D-PLACE benchmark to a version-pinned full federation and add Seshat / ARIADNE crosswalks.
-5. Add probabilistic chronology distributions and dating-method metadata to historical observations.
-6. Add spatial autocorrelation and phylogenetic comparative model adapters, preserving the current nomination layer as Stage 0 only.
-7. Add missingness/detectability sensitivity and contact-network models.
-8. Build a manually adjudicated NOEMA-EVAL benchmark before exposing calibrated causal probabilities.
+1. Operational Crossref integrity/update watcher over DOI-backed evidence, propagating corrections/retractions into review queues without automatic claim promotion.
+2. Europe PMC structured full-text ingestion where licensing permits.
+3. Expand from the D-PLACE benchmark to a version-pinned full federation and add reviewed Seshat / ARIADNE crosswalks.
+4. Add probabilistic chronology distributions and dating-method metadata to historical observations.
+5. Add covariance-aware spatial models and explicit versioned phylogenetic comparative models while preserving Stage 0 nomination.
+6. Add missingness/detectability sensitivity and historically evidenced contact-network models.
+7. Build a manually/expert-adjudicated NOEMA-EVAL benchmark before exposing calibrated causal probabilities.
+8. Wire model-survival outputs into live pattern candidates and the Observatory so users can see which relationships survive each control.
 9. Add hypothesis revision ledger UI and "what would falsify this?" view.
 10. Add expert/community review queues for sensitive cultural interpretations.
