@@ -19,19 +19,19 @@ NOEMA is a provenance-first research system for mapping beliefs, rituals, myths,
 9. Sacred or community-restricted knowledge is excluded from public projections.
 10. Hypotheses require alternatives and falsification criteria.
 
-## v0 architecture
+## Architecture
 
 ```text
 Public scholarly discovery ─┐
-Consensus / research review ├─> Source envelopes ─> claim review ─> evidence graph
-D-PLACE / DRH / Seshat ─────┤                         │
-Pulotu / ARIADNE ───────────┘                         ├─> entity resolution queue
-                                                      ├─> candidate relationships
-                                                      └─> hypothesis revisions
-                                                                  │
-                                        publication safety gate ──┘
-                                                                  │
-                                                     read-only API / Site
+Consensus / research review ├─> Source envelopes ─> typed assertions ─> claim review ─> evidence graph
+D-PLACE / DRH / Seshat ─────┤                              │
+Pulotu / ARIADNE ───────────┘                              ├─> entity resolution queue
+                                                           ├─> candidate relationships
+                                                           └─> hypothesis revisions
+                                                                       │
+                                             publication safety gate ──┘
+                                                                       │
+                                                          read-only API / Site
 ```
 
 ### Durable data layer
@@ -43,30 +43,39 @@ Pulotu / ARIADNE ───────────┘                         �
 - `src/noema/models.py` — typed epistemic primitives
 - `src/noema/scoring.py` — conservative relationship scoring
 - `src/noema/ingest.py` — source envelopes + stable deduplication
+- `src/noema/evidence_ingestion_v2.py` — typed assertion decomposition, nonbinary absence semantics, Crossref integrity envelopes, field-level confidence, multi-extractor disagreement handling
 - `src/noema/resolution.py` — conservative entity resolution
+- `src/noema/patterns.py` — pairwise complete-case enrichment, effect size and BH-corrected pattern nomination
+- `src/noema/analysis_v2.py` — staged robustness diagnostics including stratification, leave-one-source-family-out sensitivity and descriptive temporal ordering
+- `src/noema/scientific_reasoning.py` — chronology, detectability, competing mechanisms and Evidence Court primitives
 - `src/noema/hypothesis_engine.py` — dependence-aware probability revision
 - `src/noema/publish.py` — public projection safety gate
 - `src/noema/api.py` — read-only observatory API
+
+See `docs/INGESTION_ANALYSIS_V2.md` for the active ingestion and analysis contract.
 
 ### Evidence sources and discovery
 
 - `data/seeds/initial_sources.json` — initial adversarial source fabric
 - `scripts/discover_crossref.py` — credential-free recent literature discovery
+- `scripts/discover_openalex.py` — work-identity and citation-neighborhood discovery; bibliometric links are not evidence
 - `scripts/build_benchmark.py` — deterministic D-PLACE 100-society benchmark generator
 - `scripts/seed_db.py` — idempotent source seed loader using `DATABASE_URL`
 
 ### Observatory
 
-`site/index.html` consumes `site/data.json`. Production data must be exported only after the publication gate. The current map nodes are explicitly schematic and make no geographic claim.
+`site/observatory.html` is the flagship immersive research surface. Evidence-bearing geographic marks must come from source-bounded coordinates; atmosphere and reference imagery are visually distinct from evidence. Production data must pass publication and rights gates.
 
 ## Automation
 
 - `NOEMA CI` — tests changes under `projects/noema/**`
 - `NOEMA Discovery` — daily Crossref candidate artifact, no direct evidence writes
 - `NOEMA Benchmark` — weekly deterministic 100-society D-PLACE artifact
+- `NOEMA Ingestion and Analysis V2 Contract` — tests richer ingestion semantics and staged analytical guardrails
+- `NOEMA Civilization Observatory Contract` — tests data-to-visual semantics and epistemic UI boundaries
 - ChatGPT scheduled research cycles — daily discovery, weekly re-analysis, monthly cross-domain discovery, with quarterly paradigm challenge folded into Jan/Apr/Jul/Oct
 
-No automated discovery channel has authority to promote candidates directly into evidence.
+No automated discovery or analysis channel has authority to promote candidates directly into approved evidence.
 
 ## Local setup
 
@@ -97,10 +106,13 @@ The Neon ChatGPT connector currently exposes a casing mismatch between its decla
 
 ## Next milestones
 
-1. Wire reviewed claim extraction into the database.
-2. Export approved PostGIS geometry to the Site.
-3. Add D-PLACE / DRH / Seshat / Pulotu adapters with source-specific licenses and caveats.
-4. Add chronological uncertainty distributions and dating-method metadata.
-5. Add phylogenetic and spatial model adapters rather than relying on generic similarity scores.
-6. Add hypothesis revision ledger UI and "what would falsify this?" view.
-7. Add expert/community review queues for sensitive cultural interpretations.
+1. Wire `StructuredAssertion` records into the durable database and human review flow.
+2. Add an operational Crossref integrity/update job that revisits corrections, retractions and related versions without promoting claims.
+3. Add Europe PMC structured full-text ingestion where licensing permits.
+4. Expand from the D-PLACE benchmark to a version-pinned full federation and add Seshat / ARIADNE crosswalks.
+5. Add probabilistic chronology distributions and dating-method metadata to historical observations.
+6. Add spatial autocorrelation and phylogenetic comparative model adapters, preserving the current nomination layer as Stage 0 only.
+7. Add missingness/detectability sensitivity and contact-network models.
+8. Build a manually adjudicated NOEMA-EVAL benchmark before exposing calibrated causal probabilities.
+9. Add hypothesis revision ledger UI and "what would falsify this?" view.
+10. Add expert/community review queues for sensitive cultural interpretations.
