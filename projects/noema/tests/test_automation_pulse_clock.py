@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from scripts.build_automation_pulse import build
+from noema.automation_pulse import build
 
 
 def test_clock_skew_is_clamped_and_audited():
