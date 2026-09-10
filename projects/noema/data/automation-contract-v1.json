@@ -1,6 +1,8 @@
 {
   "contract_id": "NOEMA-AUTOMATION-CONTRACT-V1",
-  "version": "1.1.0",
+  "version": "1.2.0",
+  "status": "DEPRECATED_COMPATIBILITY_MIRROR",
+  "canonical_registry": "projects/noema/data/automation-registry-v2.json",
   "timezone": "Europe/Stockholm",
   "principles": [
     "Automation output is workflow state, never evidence by itself.",
@@ -89,6 +91,16 @@
       "expected_interval_hours": 190,
       "authority": "MEDIA_CANDIDATE_DISCOVERY_ONLY",
       "writes": ["projects/noema/data/candidates/wikimedia-media-candidates.json", "projects/noema/data/runs/media-discovery-*.json"],
+      "next_stage": "IDENTITY_AND_RIGHTS_REVIEW"
+    },
+    {
+      "task_type": "MUSEUM_MEDIA_DISCOVERY",
+      "scheduler": "GITHUB_ACTIONS",
+      "cadence": "WEEKLY_WEDNESDAY",
+      "schedule": "17 7 * * 3 UTC",
+      "expected_interval_hours": 190,
+      "authority": "REFERENCE_MEDIA_DISCOVERY_ONLY",
+      "writes": ["projects/noema/site/museum-reference-media.json", "projects/noema/data/runs/museum-media-*.json"],
       "next_stage": "IDENTITY_AND_RIGHTS_REVIEW"
     }
   ]
