@@ -133,46 +133,41 @@ CREATE TABLE IF NOT EXISTS assertion_reconciliations (
 
 -- Record how far an analysis legitimately progressed. These fields report
 -- epistemic workflow stage; they are not confidence/truth scores.
-ALTER TABLE analysis_runs
-  ADD COLUMN IF NOT EXISTS max_epistemic_stage text;
-ALTER TABLE analysis_results
-  ADD COLUMN IF NOT EXISTS epistemic_stage text;
-ALTER TABLE relationship_candidates
-  ADD COLUMN IF NOT EXISTS epistemic_stage text NOT NULL DEFAULT 'NOMINATION';
-ALTER TABLE hypothesis_tests
-  ADD COLUMN IF NOT EXISTS epistemic_stage text;
+ALTER TABLE analysis_runs ADD COLUMN IF NOT EXISTS max_epistemic_stage text;
+ALTER TABLE analysis_results ADD COLUMN IF NOT EXISTS epistemic_stage text;
+ALTER TABLE relationship_candidates ADD COLUMN IF NOT EXISTS epistemic_stage text NOT NULL DEFAULT 'NOMINATION';
+ALTER TABLE hypothesis_tests ADD COLUMN IF NOT EXISTS epistemic_stage text;
 
-DO $$
-BEGIN
-  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'analysis_runs_epistemic_stage_check') THEN
-    ALTER TABLE analysis_runs ADD CONSTRAINT analysis_runs_epistemic_stage_check
-      CHECK (max_epistemic_stage IS NULL OR max_epistemic_stage IN (
-        'OBSERVED','REVIEWED','NOMINATION','STRATIFIED','ADJUSTED',
-        'SPATIAL','PHYLOGENETIC','TEMPORAL','CAUSAL_CANDIDATE'
-      ));
-  END IF;
-  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'analysis_results_epistemic_stage_check') THEN
-    ALTER TABLE analysis_results ADD CONSTRAINT analysis_results_epistemic_stage_check
-      CHECK (epistemic_stage IS NULL OR epistemic_stage IN (
-        'OBSERVED','REVIEWED','NOMINATION','STRATIFIED','ADJUSTED',
-        'SPATIAL','PHYLOGENETIC','TEMPORAL','CAUSAL_CANDIDATE'
-      ));
-  END IF;
-  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'relationship_candidates_epistemic_stage_check') THEN
-    ALTER TABLE relationship_candidates ADD CONSTRAINT relationship_candidates_epistemic_stage_check
-      CHECK (epistemic_stage IN (
-        'OBSERVED','REVIEWED','NOMINATION','STRATIFIED','ADJUSTED',
-        'SPATIAL','PHYLOGENETIC','TEMPORAL','CAUSAL_CANDIDATE'
-      ));
-  END IF;
-  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'hypothesis_tests_epistemic_stage_check') THEN
-    ALTER TABLE hypothesis_tests ADD CONSTRAINT hypothesis_tests_epistemic_stage_check
-      CHECK (epistemic_stage IS NULL OR epistemic_stage IN (
-        'OBSERVED','REVIEWED','NOMINATION','STRATIFIED','ADJUSTED',
-        'SPATIAL','PHYLOGENETIC','TEMPORAL','CAUSAL_CANDIDATE'
-      ));
-  END IF;
-END $$;
+-- Avoid procedural DO blocks here. Neon's migration-preparation path parses plain
+-- statements reliably, while dollar-quoted procedural blocks are not portable
+-- through every migration transport. Replacing these checks is safe and idempotent.
+ALTER TABLE analysis_runs DROP CONSTRAINT IF EXISTS analysis_runs_epistemic_stage_check;
+ALTER TABLE analysis_runs ADD CONSTRAINT analysis_runs_epistemic_stage_check
+  CHECK (max_epistemic_stage IS NULL OR max_epistemic_stage IN (
+    'OBSERVED','REVIEWED','NOMINATION','STRATIFIED','ADJUSTED',
+    'SPATIAL','PHYLOGENETIC','TEMPORAL','CAUSAL_CANDIDATE'
+  ));
+
+ALTER TABLE analysis_results DROP CONSTRAINT IF EXISTS analysis_results_epistemic_stage_check;
+ALTER TABLE analysis_results ADD CONSTRAINT analysis_results_epistemic_stage_check
+  CHECK (epistemic_stage IS NULL OR epistemic_stage IN (
+    'OBSERVED','REVIEWED','NOMINATION','STRATIFIED','ADJUSTED',
+    'SPATIAL','PHYLOGENETIC','TEMPORAL','CAUSAL_CANDIDATE'
+  ));
+
+ALTER TABLE relationship_candidates DROP CONSTRAINT IF EXISTS relationship_candidates_epistemic_stage_check;
+ALTER TABLE relationship_candidates ADD CONSTRAINT relationship_candidates_epistemic_stage_check
+  CHECK (epistemic_stage IN (
+    'OBSERVED','REVIEWED','NOMINATION','STRATIFIED','ADJUSTED',
+    'SPATIAL','PHYLOGENETIC','TEMPORAL','CAUSAL_CANDIDATE'
+  ));
+
+ALTER TABLE hypothesis_tests DROP CONSTRAINT IF EXISTS hypothesis_tests_epistemic_stage_check;
+ALTER TABLE hypothesis_tests ADD CONSTRAINT hypothesis_tests_epistemic_stage_check
+  CHECK (epistemic_stage IS NULL OR epistemic_stage IN (
+    'OBSERVED','REVIEWED','NOMINATION','STRATIFIED','ADJUSTED',
+    'SPATIAL','PHYLOGENETIC','TEMPORAL','CAUSAL_CANDIDATE'
+  ));
 
 CREATE TABLE IF NOT EXISTS schema_migrations (
   migration_id text PRIMARY KEY,
