@@ -6,7 +6,7 @@
   "required": ["run_id", "task_type", "status", "started_at", "completed_at", "epistemic_guards"],
   "properties": {
     "run_id": {"type": "string", "minLength": 1},
-    "task_type": {"enum": ["DAILY_INGEST", "WEEKLY_REANALYSIS", "MONTHLY_DISCOVERY", "GITHUB_DISCOVERY", "PUBMED_DISCOVERY", "DPLACE_BENCHMARK", "RELIGION_FEDERATION", "MEDIA_DISCOVERY", "OTHER"]},
+    "task_type": {"enum": ["DAILY_INGEST", "WEEKLY_REANALYSIS", "MONTHLY_DISCOVERY", "GITHUB_DISCOVERY", "PUBMED_DISCOVERY", "DPLACE_BENCHMARK", "RELIGION_FEDERATION", "MEDIA_DISCOVERY", "MUSEUM_MEDIA_DISCOVERY", "OTHER"]},
     "status": {"type": "string", "minLength": 1},
     "started_at": {"type": "string"},
     "completed_at": {"type": "string"},
@@ -22,6 +22,11 @@
     "hypotheses_promoted": {"type": "integer", "minimum": 0},
     "confidence_or_scope_changes": {"type": "integer", "minimum": 0},
     "review_items_created": {"type": "integer", "minimum": 0},
+    "max_epistemic_stage": {
+      "type": ["string", "null"],
+      "enum": [null, "OBSERVED", "REVIEWED", "NOMINATION", "STRATIFIED", "ADJUSTED", "SPATIAL", "PHYLOGENETIC", "TEMPORAL", "CAUSAL_CANDIDATE"],
+      "description": "Highest epistemic stage legitimately reached by outputs of this run. Null means workflow state only, such as discovery/triage/media. A later stage is never automatic evidence of truth."
+    },
     "errors": {"type": "array", "items": {"type": "string"}},
     "summary": {"type": "string"},
     "research_note": {"type": "string"},
