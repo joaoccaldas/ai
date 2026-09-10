@@ -1,0 +1,200 @@
+{
+  "queue_id": "NOEMA-HUMAN-REVIEW-QUEUE-V1",
+  "queue_version": 1,
+  "status": "REVIEW_REQUIRED_NO_AUTOMATIC_PROMOTION",
+  "principle": "The queue prioritizes review work only. Rank is not evidential strength and cannot promote a candidate, claim, relationship or hypothesis.",
+  "ranking_note": "Priority, recurrence and recency rank workflow attention only; they are not measures of truth, effect size or evidential strength.",
+  "summary": {
+    "source_documents": 3,
+    "raw_review_items": 19,
+    "deduplicated_review_items": 12,
+    "by_priority": {
+      "CRITICAL": 4,
+      "HIGH": 6,
+      "MEDIUM": 2,
+      "LOW": 0
+    }
+  },
+  "items": [
+    {
+      "review_id": "REV-582C3D6D64B639FC9640",
+      "priority": "CRITICAL",
+      "target": "GENERAL_REVIEW",
+      "reason": "Review Sulawesi betel-nut chronology and any NOEMA claims that place habitual psychoactive-plant use only in later agricultural societies.",
+      "first_seen": "2026-09-10",
+      "last_seen": "2026-09-10",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-10.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-ED6C7E1169EE91596549",
+      "priority": "CRITICAL",
+      "target": "GENERAL_REVIEW",
+      "reason": "Review Bianfu Cave and Denisovan distribution entities against the two 9 September Nature papers.",
+      "first_seen": "2026-09-10",
+      "last_seen": "2026-09-10",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-10.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-2ECB417EA24BD502D2F9",
+      "priority": "CRITICAL",
+      "target": "GENERAL_REVIEW",
+      "reason": "Review Granada cave chronologies and split any monolithic cannibalism entity into site and episode-specific observations.",
+      "first_seen": "2026-09-09",
+      "last_seen": "2026-09-09",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-09.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-9FB23BBE1553B30B61E0",
+      "priority": "CRITICAL",
+      "target": "GENERAL_REVIEW",
+      "reason": "Review Les Rois 2 taxonomic node and any claims that depend on Neanderthal attribution.",
+      "first_seen": "2026-09-09",
+      "last_seen": "2026-09-09",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-09.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-4A1199383C32AB352C5B",
+      "priority": "HIGH",
+      "target": "GENERAL_REVIEW",
+      "reason": "Evaluate the 2,000+ text China ghost-belief corpus as a structured historical-source dataset while preserving rhetoric/private-belief separation.",
+      "first_seen": "2026-09-10",
+      "last_seen": "2026-09-10",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-10.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-70CF03587BBF6EC78465",
+      "priority": "HIGH",
+      "target": "GENERAL_REVIEW",
+      "reason": "Keep molecular taxonomic attribution separate from authorship of associated lithics and subsistence traces.",
+      "first_seen": "2026-09-10",
+      "last_seen": "2026-09-10",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-10.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-9EA8EECFF787BE1AB6D4",
+      "priority": "HIGH",
+      "target": "GENERAL_REVIEW",
+      "reason": "Use modern autism/schizotypy-religiosity results only as comparative population-level hypotheses; enforce no retrospective diagnosis.",
+      "first_seen": "2026-09-10",
+      "last_seen": "2026-09-10",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-10.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-AAA6DB634297A8BF42ED",
+      "priority": "HIGH",
+      "target": "GENERAL_REVIEW",
+      "reason": "Do not encode Viking raid as a relationship or event fact; retain as author hypothesis.",
+      "first_seen": "2026-09-09",
+      "last_seen": "2026-09-09",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-09.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-BF939C864290A21B3ADD",
+      "priority": "HIGH",
+      "target": "GENERAL_REVIEW",
+      "reason": "Review Semigallia Burial 351 kinship graph; encode related and unrelated individuals separately.",
+      "first_seen": "2026-09-09",
+      "last_seen": "2026-09-09",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-09.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-EBB1DD812D693F51F0FA",
+      "priority": "HIGH",
+      "target": "GENERAL_REVIEW",
+      "reason": "Keep direct taphonomic observations separate from ritual or cannibalism motive inference.",
+      "first_seen": "2026-09-09",
+      "last_seen": "2026-09-09",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-09.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-729A49AD406FED3926E6",
+      "priority": "MEDIUM",
+      "target": "GENERAL_REVIEW",
+      "reason": "Review newly indexed legacy priority records for bibliographic and methodological quality before any future claim extraction.",
+      "first_seen": "2026-09-10",
+      "last_seen": "2026-09-10",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-10.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    },
+    {
+      "review_id": "REV-7AAA129435FAFF1ACEA4",
+      "priority": "MEDIUM",
+      "target": "GENERAL_REVIEW",
+      "reason": "Review newly indexed legacy queue items for bibliographic quality before future evidence consideration.",
+      "first_seen": "2026-09-09",
+      "last_seen": "2026-09-09",
+      "occurrences": 1,
+      "source_files": [
+        "data/candidates/daily/2026-09-09.json"
+      ],
+      "candidate_only": true,
+      "human_review_required": true,
+      "automatic_promotion": false
+    }
+  ]
+}
