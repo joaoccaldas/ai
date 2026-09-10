@@ -1,0 +1,63 @@
+name: NOEMA Ingestion V3 Contract
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'projects/noema/src/noema/ingestion_orchestrator.py'
+      - 'projects/noema/tests/test_ingestion_orchestrator.py'
+      - 'projects/noema/data/reference/ingestion-source-registry-v3.json'
+      - 'projects/noema/docs/INGESTION_V3_ARCHITECTURE.md'
+      - '.github/workflows/noema-ingestion-v3.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install test dependency
+        run: python -m pip install pytest
+      - name: Compile planner
+        run: python -m compileall -q src/noema/ingestion_orchestrator.py
+      - name: Run planner tests
+        env:
+          PYTHONPATH: src
+        run: python -m pytest -q tests/test_ingestion_orchestrator.py
+      - name: Validate ingestion registry
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('data/reference/ingestion-source-registry-v3.json').read_text())
+          assert d['registry_id']=='NOEMA-INGESTION-SOURCE-REGISTRY-V3'
+          assert abs(sum(d['planner_weights'].values())-1.0)<1e-9
+          ids={x['id'] for x in d['sources']}
+          assert {'CROSSREF','PUBMED','OPENALEX','DRH','PULOTU','DPLACE','SESHAT','ARIADNE','EUROPE_PMC','PLEIADES','WHG'} <= ids
+          assert d['forbidden']['automatic_claim_promotion'] is True
+          assert d['forbidden']['title_only_deduplication'] is True
+          assert 'DURABLE_CANDIDATE_LEDGER' in d['required_pipeline_stages']
+          print('NOEMA ingestion V3 registry: green')
+          PY
+      - name: Audit epistemic boundaries
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          code=Path('src/noema/ingestion_orchestrator.py').read_text()
+          docs=Path('docs/INGESTION_V3_ARCHITECTURE.md').read_text()
+          for token in ['automatic_promotion', 'title-only deduplication is forbidden', 'candidate_only']:
+              assert token in code
+          for token in ['metadata != evidence','source count != independent evidence count','operational priority != evidence strength']:
+              assert token in docs
+          print('NOEMA ingestion V3 epistemic boundaries: green')
+          PY
