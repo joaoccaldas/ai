@@ -41,6 +41,7 @@ jobs:
           node --check projects/noema/site/automation-pulse.js
           node --check projects/noema/site/pattern-v2.js
           node --check projects/noema/site/dashboard-v2.js
+          node --check projects/noema/site/review-v1.js
 
       - name: Build and validate automation pulse
         run: |
@@ -54,6 +55,7 @@ jobs:
           assert len(contract['tasks'])>=7 and len(d.get('task_health',[]))==len(contract['tasks'])
           assert {x['task_type'] for x in d['task_health']} >= {'GITHUB_DISCOVERY','DAILY_INGEST','DPLACE_BENCHMARK','RELIGION_FEDERATION','WEEKLY_REANALYSIS','MONTHLY_DISCOVERY','MEDIA_DISCOVERY'}
           assert all(x['authority'] and x['next_stage'] and x['writes'] for x in d['task_health'])
+          assert not any(x.get('age_hours',0) < 0 for x in d['task_health'])
           for p in Path('projects/noema/data/runs').glob('*.json'):
               r=json.load(open(p));g=r['epistemic_guards']
               assert r['run_id'] and r['task_type'] and r['status']
@@ -92,6 +94,19 @@ jobs:
           assert '<title>Research · NOEMA</title>' in research
           assert 'Inspect how NOEMA knows what it knows' in research
           assert 'Coverage before confidence.' in research
+
+          review=(site/'review.html').read_text()
+          review_js=(site/'review-v1.js').read_text()
+          review_queue=json.load(open(site/'review-queue.json'))
+          assert '<title>Review Queue · NOEMA</title>' in review
+          assert 'What needs human judgment?' in review and 'review-v1.js' in review
+          assert 'Priority is workflow urgency, not truth.' in review
+          assert review_queue['status']=='REVIEW_REQUIRED_NO_AUTOMATIC_PROMOTION'
+          assert review_queue['queue_version']==1
+          assert all(x['candidate_only'] is True for x in review_queue['items'])
+          assert all(x['human_review_required'] is True for x in review_queue['items'])
+          assert all(x['automatic_promotion'] is False for x in review_queue['items'])
+          assert 'Unexpected review queue status' in review_js
 
           explore=(site/'explore.html').read_text()
           explore_js=(site/'explore-v18.js').read_text()
@@ -186,5 +201,5 @@ jobs:
           assert staged['status']=='PENDING_IDENTITY_AND_RIGHTS_REVIEW'
           assert all(x['decision']=='PENDING_REVIEW' for x in staged['candidates'])
 
-          print('NOEMA current product + research + v1.8.1 delivery contract green')
+          print('NOEMA current product + research + review workspace delivery contract green')
           PY
