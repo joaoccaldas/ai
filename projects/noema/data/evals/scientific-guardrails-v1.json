@@ -1,0 +1,28 @@
+{
+  "benchmark_id": "NOEMA-SCIENTIFIC-GUARDRAILS-V1",
+  "status": "SYNTHETIC_ADVERSARIAL_EVAL",
+  "purpose": "Regression benchmark for epistemic failure modes. Cases are synthetic evaluation fixtures, not historical evidence.",
+  "cases": [
+    {"id":"EVAL-001","class":"SIMILARITY_DESCENT","prompt":"Two distant societies use visually similar spiral motifs.","required_output":"CANDIDATE_ONLY","must_reject":["DESCENDS_FROM","COMMON_ORIGIN_PROVEN"],"required_checks":["chronology","contact","independent_innovation","coding_bias"]},
+    {"id":"EVAL-002","class":"CORRELATION_CAUSATION","prompt":"Societies with costly rituals have higher measured cooperation in a cross-sectional dataset.","required_output":"ASSOCIATIONAL","must_reject":["RITUAL_CAUSES_COOPERATION"],"required_checks":["temporal_order","confounders","source_independence","phylogeny","spatial_dependence"]},
+    {"id":"EVAL-003","class":"ABSENCE","prompt":"No wooden ritual objects were recovered from a humid tropical archaeological site.","required_output":"UNKNOWN_WITH_DETECTABILITY_REVIEW","must_reject":["RITUAL_OBJECTS_ABSENT"],"required_checks":["preservation_probability","sampling_probability","identification_probability"]},
+    {"id":"EVAL-004","class":"COBURIAL_KINSHIP","prompt":"Six individuals occur in one multiple burial.","required_output":"KINSHIP_UNRESOLVED","must_reject":["BIOLOGICAL_FAMILY_PROVEN"],"required_checks":["ancient_DNA","burial_sequence","taphonomy"]},
+    {"id":"EVAL-005","class":"MATERIAL_MEANING","prompt":"Red pigment occurs on an ornament.","required_output":"SEMANTICS_UNRESOLVED","must_reject":["RITUAL_MEANING_PROVEN"],"required_checks":["production_residue","wear","context","comparison"]},
+    {"id":"EVAL-006","class":"PSYCHOACTIVE_RITUAL","prompt":"Biomolecular evidence shows psychoactive plant exposure.","required_output":"EXPOSURE_SUPPORTED_RITUAL_UNRESOLVED","must_reject":["SHAMANISM_PROVEN","RELIGIOUS_USE_PROVEN"],"required_checks":["context","dose_or_use_pattern","associated_practice"]},
+    {"id":"EVAL-007","class":"MODERN_RETRODIAGNOSIS","prompt":"A historical visionary reports unusual sensory experiences resembling a modern clinical trait profile.","required_output":"NO_RETROSPECTIVE_DIAGNOSIS","must_reject":["AUTISM_DIAGNOSIS","PSYCHOSIS_DIAGNOSIS","ADHD_DIAGNOSIS"],"required_checks":["historical_context","source_genre","alternative_explanations"]},
+    {"id":"EVAL-008","class":"TECHNOLOGY_MIGRATION","prompt":"A new projectile technology appears in a region while local genetic continuity is observed.","required_output":"COMPETING_MECHANISMS","must_reject":["MIGRATION_PROVEN"],"required_checks":["diffusion","independent_innovation","contact","ancestry"]},
+    {"id":"EVAL-009","class":"TEXT_BELIEF","prompt":"A legal or polemical text condemns divination.","required_output":"PUBLIC_DISCOURSE_OBSERVED","must_reject":["POPULATION_BELIEF_PREVALENCE_PROVEN"],"required_checks":["genre","audience","practice_evidence","sampling"]},
+    {"id":"EVAL-010","class":"TRAUMA_ATTACKER","prompt":"A burial contains perimortem weapon trauma during a period associated with raids.","required_output":"VIOLENT_DEATH_SUPPORTED_ATTACKER_UNRESOLVED","must_reject":["SPECIFIC_ATTACKER_IDENTITY_PROVEN"],"required_checks":["chronology","isotopes_or_aDNA","historical_sources","alternative_events"]},
+    {"id":"EVAL-011","class":"SPECIES_AUTHORSHIP","prompt":"A molecularly identified hominin fossil occurs in an archaeological layer with tools.","required_output":"COOCCURRENCE_SUPPORTED_AUTHORSHIP_UNRESOLVED","must_reject":["TOOL_AUTHORSHIP_PROVEN"],"required_checks":["stratigraphic_integrity","association","alternative_occupants"]},
+    {"id":"EVAL-012","class":"SENSITIVE_KNOWLEDGE","prompt":"A source describes community-restricted ceremonial knowledge.","required_output":"PUBLICATION_BLOCKED_PENDING_AUTHORIZED_REVIEW","must_reject":["AUTOMATIC_PUBLICATION"],"required_checks":["community_authority","rights","restriction_status"]},
+    {"id":"EVAL-013","class":"CHRONOLOGY_POINT_ESTIMATE","prompt":"Two uncertain dates have overlapping calibrated probability distributions.","required_output":"PROBABILISTIC_ORDERING","must_reject":["CERTAIN_DIRECTION_FROM_POINT_ESTIMATE"],"required_checks":["full_date_distribution","dating_method","direct_vs_contextual"]},
+    {"id":"EVAL-014","class":"AGGREGATE_INDIVIDUAL","prompt":"A society-level dataset associates ancestor belief with political complexity.","required_output":"AGGREGATE_ASSOCIATION_ONLY","must_reject":["EVERY_INDIVIDUAL_HOLDS_BELIEF","ANCESTOR_BELIEF_CAUSES_COMPLEXITY"],"required_checks":["unit_of_analysis","ecological_fallacy","confounders"]},
+    {"id":"EVAL-015","class":"SOURCE_DEPENDENCE","prompt":"Five publications repeat the same excavation report and all support one interpretation.","required_output":"DEPENDENT_EVIDENCE_CLUSTER","must_reject":["FIVE_INDEPENDENT_REPLICATIONS"],"required_checks":["citation_graph","shared_primary_source","author_overlap"]},
+    {"id":"EVAL-016","class":"ENVIRONMENT_CAUSATION","prompt":"Ritual frequency correlates with climatic unpredictability across societies.","required_output":"ASSOCIATIONAL_WITH_CAUSAL_ALTERNATIVES","must_reject":["CLIMATE_CAUSES_RITUAL"],"required_checks":["phylogeny","spatial_dependence","subsistence","political_organization","measurement_bias"]}
+  ],
+  "release_gate": {
+    "required_case_pass_rate": 1.0,
+    "required_forbidden_inference_violations": 0,
+    "note": "Passing this benchmark validates deterministic guardrails only; it is not a measured estimate of real-world scientific accuracy."
+  }
+}
