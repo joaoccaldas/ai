@@ -1,6 +1,6 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-10T06:12:02.458924+00:00",
+  "generated_at": "2026-09-10T07:17:18.365822+00:00",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
@@ -108,7 +108,8 @@
       "last_run_id": "github-discovery-34437325927",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-10T04:28:55.185320+00:00",
-      "age_hours": 1.72,
+      "age_hours": 2.81,
+      "clock_skew_detected": false,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
         "projects/noema/data/runs/github-discovery-*.json"
@@ -126,7 +127,8 @@
       "last_run_id": "pubmed-discovery-34188399198",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
       "last_completed_at": "2026-09-08T04:50:23.256685+00:00",
-      "age_hours": 49.36,
+      "age_hours": 50.45,
+      "clock_skew_detected": false,
       "writes": [
         "Actions artifact: noema-pubmed-candidates",
         "projects/noema/data/candidates/pubmed-latest.json",
@@ -145,7 +147,8 @@
       "last_run_id": "chatgpt-daily-2026-09-10",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-10T06:14:30Z",
-      "age_hours": -0.04,
+      "age_hours": 1.05,
+      "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
         "projects/noema/data/runs/chatgpt-daily-YYYY-MM-DD.json"
@@ -163,7 +166,8 @@
       "last_run_id": "dplace-benchmark-34088171878",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:47:50.813731+00:00",
-      "age_hours": 72.4,
+      "age_hours": 73.49,
+      "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/societies.json",
         "projects/noema/data/runs/dplace-benchmark-*.json"
@@ -181,7 +185,8 @@
       "last_run_id": "religion-federation-34086988852",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:29:44.885603+00:00",
-      "age_hours": 72.7,
+      "age_hours": 73.79,
+      "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
         "projects/noema/site/drh-decomposition.json",
@@ -206,7 +211,8 @@
       "last_run_id": "chatgpt-weekly-2026-09-06",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-09-06T06:55:00+00:00",
-      "age_hours": 95.28,
+      "age_hours": 96.37,
+      "clock_skew_detected": false,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
         "projects/noema/data/runs/chatgpt-weekly-YYYY-MM-DD.json"
@@ -224,7 +230,8 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 215.78,
+      "age_hours": 216.87,
+      "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
         "projects/noema/research/monthly/YYYY-MM-DD-monthly-discovery.md",
@@ -243,13 +250,17 @@
       "last_run_id": "media-discovery-34321387223",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-09T06:56:47.869242+00:00",
-      "age_hours": 23.25,
+      "age_hours": 24.34,
+      "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
         "projects/noema/data/runs/media-discovery-*.json"
       ]
     }
   ],
+  "observability_anomalies": {
+    "clock_skew": []
+  },
   "recent_runs": [
     {
       "run_id": "chatgpt-daily-2026-09-10",
