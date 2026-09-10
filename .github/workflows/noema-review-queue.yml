@@ -47,7 +47,7 @@ jobs:
       - run: pytest -q tests/test_review_queue.py
       - name: Persist queue if changed
         run: |
-          if git diff --quiet -- site/review-queue.json; then
+          if [ -z "$(git status --porcelain -- site/review-queue.json)" ]; then
             echo 'review queue unchanged'
             exit 0
           fi
