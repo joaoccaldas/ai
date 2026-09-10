@@ -1,0 +1,58 @@
+name: NOEMA Review Queue
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'projects/noema/data/candidates/daily/**'
+      - 'projects/noema/src/noema/review_queue.py'
+      - 'projects/noema/scripts/build_review_queue.py'
+      - '.github/workflows/noema-review-queue.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: noema-review-queue
+  cancel-in-progress: true
+
+jobs:
+  build:
+    if: ${{ !contains(github.event.head_commit.message || '', '[skip noema-review-queue]') }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/noema
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -e '.[dev]'
+      - name: Build deterministic human review queue
+        run: python scripts/build_review_queue.py --output site/review-queue.json
+      - name: Validate non-promotion contract
+        run: |
+          python - <<'PY'
+          import json
+          d=json.load(open('site/review-queue.json'))
+          assert d['status']=='REVIEW_REQUIRED_NO_AUTOMATIC_PROMOTION'
+          assert all(x['candidate_only'] is True for x in d['items'])
+          assert all(x['human_review_required'] is True for x in d['items'])
+          assert all(x['automatic_promotion'] is False for x in d['items'])
+          assert d['summary']['deduplicated_review_items'] <= d['summary']['raw_review_items']
+          PY
+      - run: pytest -q tests/test_review_queue.py
+      - name: Persist queue if changed
+        run: |
+          if git diff --quiet -- site/review-queue.json; then
+            echo 'review queue unchanged'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add site/review-queue.json
+          git commit -m 'ops(noema): refresh human review queue [skip noema-review-queue]'
+          git push
