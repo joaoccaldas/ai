@@ -1,0 +1,52 @@
+name: NOEMA Observatory V6 WebGL Vision
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'projects/noema/site/observatory-v6.html'
+      - 'projects/noema/site/observatory-vision-v6.js'
+      - 'projects/noema/site/observatory-vision-v6.css'
+      - 'projects/noema/site/generated/noema-los-aviones-ai-interpretive.svg'
+      - '.github/workflows/noema-observatory-v6.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: node --check projects/noema/site/observatory-vision-v6.js
+      - name: Validate V6 visual and epistemic contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          html=Path('projects/noema/site/observatory-v6.html').read_text()
+          js=Path('projects/noema/site/observatory-vision-v6.js').read_text()
+          css=Path('projects/noema/site/observatory-vision-v6.css').read_text()
+          svg=Path('projects/noema/site/generated/noema-los-aviones-ai-interpretive.svg').read_text()
+          assert 'CIVILIZATION OBSERVATORY · V6' in html
+          assert 'observatory-vision-v6.css' in html and 'observatory-vision-v6.js' in html
+          assert 'three@0.180.0' in html
+          assert 'AI interpretive vision' in js
+          assert 'NOT a reconstruction' in js and 'NOT evidence' in js
+          assert "mode='context'" in js
+          assert "generatedByClaim={'DT-C004'" in js
+          assert 'Decorative WebGL atmospheric layer. It is not evidence.' in js
+          assert 'THREE.WebGLRenderer' in js and 'THREE.Points' in js
+          assert 'prefers-reduced-motion' in css
+          assert 'not archaeological evidence' in svg.lower()
+          assert 'not a historical reconstruction' in svg.lower()
+          assert 'data:image/jpeg;base64,' in svg
+          assert 'AI interpretive visualization' in svg
+          forbidden=['AI proves','reconstruction proves','religion confirmed by image']
+          text=(html+js+svg).lower()
+          assert all(x.lower() not in text for x in forbidden)
+          print('NOEMA V6 visual contract: PASS')
+          PY
