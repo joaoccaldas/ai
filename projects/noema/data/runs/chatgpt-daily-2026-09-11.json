@@ -1,0 +1,98 @@
+{
+  "run_id": "chatgpt-daily-2026-09-11",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED_CANDIDATES_ONLY",
+  "started_at": "2026-09-11T06:38:09Z",
+  "completed_at": "2026-09-11T06:48:44Z",
+  "input_refs": [
+    "projects/noema/data/runs/github-discovery-34562349122.json",
+    "github-actions-artifact:10184768246:noema-crossref-candidates",
+    "projects/noema/data/candidates/daily/2026-09-10.json",
+    "projects/noema/data/candidates/pubmed-latest.json",
+    "projects/noema/schemas/run-manifest-v1.json"
+  ],
+  "artifact_digests": {
+    "noema-crossref-candidates-raw": "sha256:3ebd430c31020c2e0203645054ab1756d8d27e21bdfa343ac4ed664f9d694eab",
+    "noema-crossref-candidates-github-artifact": "sha256:ea08e64090cac1dd810c462d0660b19f1b03c39bbb315ce258743a3d2bd4ee78",
+    "daily-candidate-pack-content": "git-blob:4f23faff6397d520e21b54588ed505ffb3ec640c"
+  },
+  "sources_examined": 12,
+  "new_candidates": 7,
+  "candidate_updates": 0,
+  "contradictions": 7,
+  "dating_revisions": 1,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 7,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 8,
+  "max_epistemic_stage": null,
+  "errors": [],
+  "summary": "Inspected the latest successful NOEMA Discovery artifact (109 Crossref candidates; 30 priority: 4 recent publications, 2 ahead-of-print, 24 newly indexed legacy items), deduplicated against prior NOEMA daily/weekly candidate records, and staged 7 additional material candidates. One crop-dispersal chronology revision and six additional methodological/interpretive pressures require human review. No candidates were promoted to evidence and no relationships were generated.",
+  "research_note": "Highest-priority review: updated broomcorn-millet AMS/Bayesian chronology; human-bone freshwater reservoir effects; Qin mortuary-object intentionality; MobSr mobility-classifier circularity; observed-vs-imputed provenance in ancient-DNA ancestry inference. Sensitive human remains, genomic, isotope, psychoactive-use, and cultural-heritage records are flagged in the candidate pack.",
+  "code_commit": "f2fb32fe8ab87c33ac63d5d15e8f8d2e4129a49f",
+  "candidate_pack_commit": "c660ed6e04a79e78163672c5fe19dface50e7d4f",
+  "candidate_pack_path": "projects/noema/data/candidates/daily/2026-09-11.json",
+  "sources_examined_detail": [
+    "NOEMA Discovery run github-discovery-34562349122 and artifact 10184768246",
+    "NOEMA 2026-09-10 daily candidate pack",
+    "NOEMA PubMed candidate feed generated 2026-09-11T04:50:07Z",
+    "Consensus scholarly discovery search (used for candidate discovery only)",
+    "npj Heritage Science DOI 10.1038/s40494-026-02987-6",
+    "Scientific Reports DOI 10.1038/s41598-026-70250-w",
+    "npj Heritage Science DOI 10.1038/s40494-026-02958-x",
+    "Journal of Archaeological Method and Theory DOI 10.1007/s10816-026-09827-8",
+    "Nature Communications DOI 10.1038/s41467-026-76204-0",
+    "PubMed PMID 42574736 / DOI 10.1080/02791072.2026.2710057",
+    "ACL Anthology 2026.lrec-1.253 / DOI 10.63317/4pz98ojeeqpw",
+    "GitHub DOI/canonical-ID deduplication searches against existing NOEMA candidate records"
+  ],
+  "new_candidate_ids": [
+    "DAILY-QIN-INTRAORAL-STONE-2026",
+    "DAILY-MILLET-PATHWAYS-EUROPE-2026",
+    "DAILY-MEDIEVAL-BONE-RADIOCARBON-RESERVOIR-2026",
+    "DAILY-MOBSR-STRONTIUM-ML-2026",
+    "DAILY-ARCHAIC-ANCESTRY-IMPUTATION-2026",
+    "DAILY-PSYCHEDELIC-FLEXIBILITY-MYSTICAL-2026",
+    "DAILY-WOLOF-AJAMI-DATASET-2026"
+  ],
+  "contradiction_ids": [
+    "PRESSURE-MORTUARY-OBJECT-INTENTIONALITY",
+    "PRESSURE-MILLET-CHRONOLOGY",
+    "PRESSURE-HUMAN-BONE-RESERVOIR",
+    "PRESSURE-MOBILITY-CLASSIFIER-CIRCULARITY",
+    "PRESSURE-IMPUTED-ADNA-PROVENANCE",
+    "PRESSURE-ALTERED-STATE-CAUSALITY",
+    "PRESSURE-HISTORICAL-OCR-PROVENANCE"
+  ],
+  "dating_revision_ids": [
+    "DATING-MILLET-EUROPE-2026"
+  ],
+  "relationships_generated_detail": [],
+  "hypotheses_revisited_detail": [
+    "MILLET_DISPERSAL_CHRONOLOGY",
+    "MORTUARY_OBJECT_INTENTIONALITY",
+    "RADIOCARBON_RESERVOIR_CORRECTION",
+    "STRONTIUM_MOBILITY_INFERENCE",
+    "ARCHAIC_ANCESTRY_INFERENCE",
+    "ALTERED_STATE_MODERN_ANALOGY",
+    "HISTORICAL_SOURCE_OCR_PROVENANCE"
+  ],
+  "review_items_created_detail": [
+    "MILLET_DISPERSAL_CHRONOLOGY",
+    "MORTUARY_OBJECT_INTENTIONALITY",
+    "RADIOCARBON_RESERVOIR_CORRECTION",
+    "STRONTIUM_MOBILITY_INFERENCE",
+    "ADNA_IMPUTATION_PROVENANCE",
+    "ALTERED_STATE_MODERN_ANALOGY",
+    "WOLOF_AJAMI_ENTITY",
+    "CROSSREF_PRIORITY_LEGACY_QUEUE"
+  ],
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "historical_diagnosis_from_resemblance": false
+  }
+}
