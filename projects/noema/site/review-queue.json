@@ -5,8 +5,8 @@
   "principle": "The queue prioritizes review work only. Rank is not evidential strength and cannot promote a candidate, claim, relationship or hypothesis.",
   "ranking_note": "Priority, recurrence and recency rank workflow attention only; they are not measures of truth, effect size or evidential strength.",
   "summary": {
-    "source_documents": 3,
-    "raw_review_items": 19,
+    "source_documents": 4,
+    "raw_review_items": 27,
     "deduplicated_review_items": 12,
     "by_priority": {
       "CRITICAL": 4,
