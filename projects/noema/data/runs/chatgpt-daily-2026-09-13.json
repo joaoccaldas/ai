@@ -1,0 +1,130 @@
+{
+  "run_id": "chatgpt-daily-2026-09-13",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED_CANDIDATES_ONLY",
+  "started_at": "2026-09-13T06:34:17+00:00",
+  "completed_at": "2026-09-13T06:47:47.349597+00:00",
+  "input_refs": [
+    "projects/noema/data/runs/github-discovery-34737945040.json",
+    "github-actions-artifact:10312155288:noema-crossref-candidates",
+    "projects/noema/data/candidates/daily/2026-09-12.json",
+    "projects/noema/schemas/run-manifest-v1.json",
+    "Consensus:search:archaeology ancient DNA burial symbolic behavior radiocarbon dating 2026",
+    "Consensus:5eeb7221f3a3596e8c04478bd978e24a",
+    "Consensus:3251a4b3b44657a0bd92443948b4ce8e"
+  ],
+  "artifact_digests": {
+    "noema-crossref-candidates-raw": "sha256:1a7143b61554268e93dcff9a0ee953910be65a8e7ffd1046390c2d96e6ec5315",
+    "noema-crossref-candidates-github-artifact": "sha256:32f51f926715566757d1779edb1536d7a2a9e726fa6ae7f2ceae28f6e216663f",
+    "candidate-pack-commit": "9a6314877da1da71155c54ff5eb467f0912127ad"
+  },
+  "sources_examined": 13,
+  "new_candidates": 7,
+  "candidate_updates": 0,
+  "duplicates_deduplicated": 4,
+  "contradictions": 7,
+  "dating_revisions": 2,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 7,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 8,
+  "max_epistemic_stage": null,
+  "errors": [
+    "Consensus monthly search quota was exhausted after one broad discovery query; the run continued with fetched Consensus records and public scholarly/web sources."
+  ],
+  "summary": "Inspected the latest successful NOEMA Discovery artifact (108 Crossref candidates; 30 priority: 5 RECENT_PUBLICATION, 2 UPCOMING_OR_AHEAD_OF_PRINT, 23 NEWLY_INDEXED_LEGACY), compared the priority queue with 2026-09-12, and searched additional scholarly/public sources. After DOI/canonical-ID deduplication, staged 7 additional candidates spanning historical-source AI methods, ancient mtDNA, Palaeolithic material affordance and chronology, sedimentary ancient DNA, Neolithic crop provenance, altered-state cognition, and a refined mortuary radiocarbon chronology. No candidate was promoted to evidence and no historical relationships were generated.",
+  "research_note": "Highest-priority human review: oracle-bone AI output provenance; ancient-mtDNA network/lifestyle inference; Mizyn material-affordance and chronology synthesis; Crawford Lake Indigenous-context/proxy handling; Neolithic cereal isotope provenance; modern drumming/altered-state analogy limits; and Kurgan 8 closure chronology. Sensitive human genomic, mortuary, Indigenous-cultural-heritage, Ukrainian-heritage, historical-script and modern altered-state participant material is flagged in the candidate pack.",
+  "code_commit": "5fa184dee416cf7d72dd09f739489d227620d6c3",
+  "candidate_pack_commit": "9a6314877da1da71155c54ff5eb467f0912127ad",
+  "candidate_pack_path": "projects/noema/data/candidates/daily/2026-09-13.json",
+  "repository_head_before_writeback": "0832def356970e193e5dd3dfdff0cd9cee56177d",
+  "sources_examined_detail": [
+    "NOEMA Discovery run github-discovery-34737945040 and artifact 10312155288",
+    "NOEMA 2026-09-12 daily candidate pack and prior discovery artifact",
+    "NOEMA run-manifest schema v1",
+    "Consensus scholarly search and fetched records 5eeb7221f3a3596e8c04478bd978e24a / 3251a4b3b44657a0bd92443948b4ce8e",
+    "Scientific Reports DOI 10.1038/s41598-026-71440-2",
+    "Journal of Molecular Evolution DOI 10.1007/s00239-026-10347-y",
+    "npj Heritage Science DOI 10.1038/s40494-026-02988-5",
+    "Molecular Ecology DOI 10.1111/mec.70529 and institutional publication records",
+    "Journal of Archaeological Method and Theory DOI 10.1007/s10816-026-09830-z",
+    "Scientific Reports DOI 10.1038/s41598-026-37700-x",
+    "Radiocarbon DOI 10.1017/RDC.2026.10191",
+    "GitHub DOI/canonical-ID deduplication against existing NOEMA candidates and reanalysis records",
+    "Additional public scholarly scans for archaeology, ancient DNA, religion/ritual, symbolic behavior, environmental history and dating revisions"
+  ],
+  "new_candidate_ids": [
+    "DAILY-ORACLE-BONE-MULTIMODAL-KG-2026",
+    "DAILY-ANCIENT-MTDNA-COMUTATION-2026",
+    "DAILY-MIZYN-IVORY-MATERIAL-AFFORDANCE-2026",
+    "DAILY-CRAWFORD-LAKE-SEDADNA-2026",
+    "DAILY-NEOLITHIC-CROP-STRONTIUM-2026",
+    "DAILY-DRUMMING-THETA-ASC-2026",
+    "DAILY-KURGAN8-WIGGLE-MATCH-2026"
+  ],
+  "deduplicated_dois": [
+    "10.1038/s41586-026-10976-9",
+    "10.1016/j.evolhumbehav.2026.106941",
+    "10.1126/sciadv.aeb8588",
+    "10.1007/s11692-026-09677-y"
+  ],
+  "contradiction_ids": [
+    "PRESSURE-ORACLE-AI-PROVENANCE",
+    "PRESSURE-MTDNA-LIFESTYLE-INFERENCE",
+    "PRESSURE-MIZYN-MATERIAL-AFFORDANCE",
+    "PRESSURE-CRAWFORD-PROXY",
+    "PRESSURE-CROP-PROVENANCE-INFERENCE",
+    "PRESSURE-DRUMMING-HISTORICAL-ANALOGY",
+    "PRESSURE-KURGAN-CLOSURE-EVENT"
+  ],
+  "dating_revision_ids": [
+    "DATING-KURGAN8-CLOSURE-2026",
+    "DATING-MIZYN-FIGURINE-CONTEXT-2026"
+  ],
+  "relationships_generated_detail": [],
+  "hypotheses_revisited_detail": [
+    "ORACLE_BONE_SOURCE_PROVENANCE",
+    "ADNA_MTDNA_LIFESTYLE_INFERENCE",
+    "SYMBOLIC_BEHAVIOR_MATERIAL_AFFORDANCE",
+    "HUMAN_ENVIRONMENT_CRAWFORD_LAKE",
+    "NEOLITHIC_CROP_PROVENANCE_EXCHANGE",
+    "ALTERED_STATE_RHYTHM_MODERN_ANALOGY",
+    "KURGAN8_MORTUARY_CHRONOLOGY"
+  ],
+  "review_items_created_detail": [
+    "REVIEW-ORACLE-BONE-AI-PROVENANCE",
+    "REVIEW-ANCIENT-MTDNA-NETWORK-INFERENCE",
+    "REVIEW-MIZYN-MATERIAL-AFFORDANCE-AND-CHRONOLOGY",
+    "REVIEW-CRAWFORD-LAKE-INDIGENOUS-PROXY-CONTEXT",
+    "REVIEW-NEOLITHIC-CROP-STRONTIUM-PROVENANCE",
+    "REVIEW-DRUMMING-MODERN-ANALOGY",
+    "REVIEW-KURGAN8-WIGGLE-MATCH-CHRONOLOGY",
+    "REVIEW-CROSSREF-PRIORITY-LEGACY-QUEUE"
+  ],
+  "priority_queue_distribution": {
+    "RECENT_PUBLICATION": 5,
+    "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+    "NEWLY_INDEXED_LEGACY": 23
+  },
+  "priority_queue_delta": {
+    "added": [
+      "10.1017/cbo9780511557996.005",
+      "10.1080/2153599x.2018.1453532",
+      "10.1177/09610006261481847"
+    ],
+    "removed": [
+      "10.1007/978-3-032-29683-2_2",
+      "10.1016/j.jce.2009.04.004",
+      "10.1017/s1755048324000324"
+    ],
+    "unchanged": 27
+  },
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "historical_diagnosis_from_resemblance": false
+  }
+}
