@@ -1,29 +1,31 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-12T06:35:32.227760+00:00",
+  "generated_at": "2026-09-13T06:48:34.300752+00:00",
   "registry_id": "NOEMA-AUTOMATION-REGISTRY-V2",
   "registry_version": "2.0.0",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 56,
+    "runs": 58,
     "new_candidates": 1276,
-    "contradictions": 37,
-    "dating_revisions": 5,
-    "hypotheses_revisited": 40,
-    "review_items_created": 267,
-    "errors": 1
+    "contradictions": 40,
+    "dating_revisions": 7,
+    "hypotheses_revisited": 43,
+    "review_items_created": 269,
+    "errors": 2
   },
   "latest_by_task": [
     {
       "task_type": "DAILY_INGEST",
-      "run_id": "chatgpt-daily-2026-09-12",
+      "run_id": "chatgpt-daily-2026-09-13",
       "status": "COMPLETED_CANDIDATES_ONLY",
-      "completed_at": "2026-09-12T06:34:59Z",
+      "completed_at": "2026-09-13T06:47:47.349597+00:00",
       "max_epistemic_stage": null,
-      "summary": "Inspected the latest successful NOEMA Discovery artifact (108 Crossref candidates; 30 priority: 4 RECENT_PUBLICATION, 2 UPCOMING_OR_AHEAD_OF_PRINT, 24 NEWLY_INDEXED_LEGACY), compared queue movement with 2026-09-11, and searched additional scholarly/public sources. After DOI/authoritative-ID/canonical-URL deduplication, staged 7 additional candidates: three publications from 2026-09-09 to 2026-09-11 and four older but newly discovered structured/model resources. Two chronology/dataset-revision candidates and seven interpretive or methodological pressure items require human review. No candidate was promoted to evidence and no historical relationships were generated.",
-      "errors": [],
-      "research_note": "Highest-priority human review: C-Turkey v1.0.0 chronometric corrections and provenance; global language-spread model uncertainty and language-not-migration guard; Brattforsheden Sweden aeolian chronology; China archaeological-isotope federation; observational ayahuasca modern-analogy limits. Sensitive human-remains/isotope, genomic-metadata, psychoactive/mental-health, language-community and cultural-heritage material is flagged in the candidate pack."
+      "summary": "Inspected the latest successful NOEMA Discovery artifact (108 Crossref candidates; 30 priority: 5 RECENT_PUBLICATION, 2 UPCOMING_OR_AHEAD_OF_PRINT, 23 NEWLY_INDEXED_LEGACY), compared the priority queue with 2026-09-12, and searched additional scholarly/public sources. After DOI/canonical-ID deduplication, staged 7 additional candidates spanning historical-source AI methods, ancient mtDNA, Palaeolithic material affordance and chronology, sedimentary ancient DNA, Neolithic crop provenance, altered-state cognition, and a refined mortuary radiocarbon chronology. No candidate was promoted to evidence and no historical relationships were generated.",
+      "errors": [
+        "Consensus monthly search quota was exhausted after one broad discovery query; the run continued with fetched Consensus records and public scholarly/web sources."
+      ],
+      "research_note": "Highest-priority human review: oracle-bone AI output provenance; ancient-mtDNA network/lifestyle inference; Mizyn material-affordance and chronology synthesis; Crawford Lake Indigenous-context/proxy handling; Neolithic cereal isotope provenance; modern drumming/altered-state analogy limits; and Kurgan 8 closure chronology. Sensitive human genomic, mortuary, Indigenous-cultural-heritage, Ukrainian-heritage, historical-script and modern altered-state participant material is flagged in the candidate pack."
     },
     {
       "task_type": "WEEKLY_REANALYSIS",
@@ -47,9 +49,9 @@
     },
     {
       "task_type": "GITHUB_DISCOVERY",
-      "run_id": "github-discovery-34673021742",
+      "run_id": "github-discovery-34737945040",
       "status": "COMPLETED",
-      "completed_at": "2026-09-12T04:27:08.523137+00:00",
+      "completed_at": "2026-09-13T04:28:11.130409+00:00",
       "max_epistemic_stage": null,
       "summary": "Crossref discovery produced 108 unreviewed candidates and 30 priority items.",
       "errors": [],
@@ -119,10 +121,10 @@
       "next_stage": "DAILY_INGEST",
       "expected_interval_hours": 26.0,
       "health": "HEALTHY",
-      "last_run_id": "github-discovery-34673021742",
+      "last_run_id": "github-discovery-34737945040",
       "last_status": "COMPLETED",
-      "last_completed_at": "2026-09-12T04:27:08.523137+00:00",
-      "age_hours": 2.14,
+      "last_completed_at": "2026-09-13T04:28:11.130409+00:00",
+      "age_hours": 2.34,
       "clock_skew_detected": false,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
@@ -144,7 +146,7 @@
       "last_run_id": "pubmed-discovery-34563668034",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
       "last_completed_at": "2026-09-11T04:50:07.777827+00:00",
-      "age_hours": 25.76,
+      "age_hours": 49.97,
       "clock_skew_detected": false,
       "writes": [
         "Actions artifact: noema-pubmed-candidates",
@@ -163,10 +165,10 @@
       "run_reported_epistemic_stage": null,
       "next_stage": "HUMAN_REVIEW",
       "expected_interval_hours": 30.0,
-      "health": "HEALTHY",
-      "last_run_id": "chatgpt-daily-2026-09-12",
+      "health": "ERROR",
+      "last_run_id": "chatgpt-daily-2026-09-13",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
-      "last_completed_at": "2026-09-12T06:34:59Z",
+      "last_completed_at": "2026-09-13T06:47:47.349597+00:00",
       "age_hours": 0.01,
       "clock_skew_detected": false,
       "writes": [
@@ -189,7 +191,7 @@
       "last_run_id": "dplace-benchmark-34088171878",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:47:50.813731+00:00",
-      "age_hours": 120.79,
+      "age_hours": 145.01,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/societies.json",
@@ -211,7 +213,7 @@
       "last_run_id": "religion-federation-34086988852",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:29:44.885603+00:00",
-      "age_hours": 121.1,
+      "age_hours": 145.31,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
@@ -240,7 +242,7 @@
       "last_run_id": "chatgpt-weekly-2026-09-06",
       "last_status": "COMPLETED_WITHOUT_PROMOTION",
       "last_completed_at": "2026-09-06T06:55:00+00:00",
-      "age_hours": 143.68,
+      "age_hours": 167.89,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
@@ -262,7 +264,7 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 264.17,
+      "age_hours": 288.39,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
@@ -285,7 +287,7 @@
       "last_run_id": "media-discovery-34321387223",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-09T06:56:47.869242+00:00",
-      "age_hours": 71.65,
+      "age_hours": 95.86,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
@@ -307,7 +309,7 @@
       "last_run_id": "museum-media-34324141149",
       "last_status": "COMPLETED_REFERENCE_ONLY",
       "last_completed_at": "2026-09-09T07:30:20.426104+00:00",
-      "age_hours": 71.09,
+      "age_hours": 95.3,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/museum-reference-media.json",
@@ -319,6 +321,168 @@
     "clock_skew": []
   },
   "recent_runs": [
+    {
+      "run_id": "chatgpt-daily-2026-09-13",
+      "task_type": "DAILY_INGEST",
+      "status": "COMPLETED_CANDIDATES_ONLY",
+      "started_at": "2026-09-13T06:34:17+00:00",
+      "completed_at": "2026-09-13T06:47:47.349597+00:00",
+      "input_refs": [
+        "projects/noema/data/runs/github-discovery-34737945040.json",
+        "github-actions-artifact:10312155288:noema-crossref-candidates",
+        "projects/noema/data/candidates/daily/2026-09-12.json",
+        "projects/noema/schemas/run-manifest-v1.json",
+        "Consensus:search:archaeology ancient DNA burial symbolic behavior radiocarbon dating 2026",
+        "Consensus:5eeb7221f3a3596e8c04478bd978e24a",
+        "Consensus:3251a4b3b44657a0bd92443948b4ce8e"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates-raw": "sha256:1a7143b61554268e93dcff9a0ee953910be65a8e7ffd1046390c2d96e6ec5315",
+        "noema-crossref-candidates-github-artifact": "sha256:32f51f926715566757d1779edb1536d7a2a9e726fa6ae7f2ceae28f6e216663f",
+        "candidate-pack-commit": "9a6314877da1da71155c54ff5eb467f0912127ad"
+      },
+      "sources_examined": 13,
+      "new_candidates": 7,
+      "candidate_updates": 0,
+      "duplicates_deduplicated": 4,
+      "contradictions": 7,
+      "dating_revisions": 2,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 7,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 8,
+      "max_epistemic_stage": null,
+      "errors": [
+        "Consensus monthly search quota was exhausted after one broad discovery query; the run continued with fetched Consensus records and public scholarly/web sources."
+      ],
+      "summary": "Inspected the latest successful NOEMA Discovery artifact (108 Crossref candidates; 30 priority: 5 RECENT_PUBLICATION, 2 UPCOMING_OR_AHEAD_OF_PRINT, 23 NEWLY_INDEXED_LEGACY), compared the priority queue with 2026-09-12, and searched additional scholarly/public sources. After DOI/canonical-ID deduplication, staged 7 additional candidates spanning historical-source AI methods, ancient mtDNA, Palaeolithic material affordance and chronology, sedimentary ancient DNA, Neolithic crop provenance, altered-state cognition, and a refined mortuary radiocarbon chronology. No candidate was promoted to evidence and no historical relationships were generated.",
+      "research_note": "Highest-priority human review: oracle-bone AI output provenance; ancient-mtDNA network/lifestyle inference; Mizyn material-affordance and chronology synthesis; Crawford Lake Indigenous-context/proxy handling; Neolithic cereal isotope provenance; modern drumming/altered-state analogy limits; and Kurgan 8 closure chronology. Sensitive human genomic, mortuary, Indigenous-cultural-heritage, Ukrainian-heritage, historical-script and modern altered-state participant material is flagged in the candidate pack.",
+      "code_commit": "5fa184dee416cf7d72dd09f739489d227620d6c3",
+      "candidate_pack_commit": "9a6314877da1da71155c54ff5eb467f0912127ad",
+      "candidate_pack_path": "projects/noema/data/candidates/daily/2026-09-13.json",
+      "repository_head_before_writeback": "0832def356970e193e5dd3dfdff0cd9cee56177d",
+      "sources_examined_detail": [
+        "NOEMA Discovery run github-discovery-34737945040 and artifact 10312155288",
+        "NOEMA 2026-09-12 daily candidate pack and prior discovery artifact",
+        "NOEMA run-manifest schema v1",
+        "Consensus scholarly search and fetched records 5eeb7221f3a3596e8c04478bd978e24a / 3251a4b3b44657a0bd92443948b4ce8e",
+        "Scientific Reports DOI 10.1038/s41598-026-71440-2",
+        "Journal of Molecular Evolution DOI 10.1007/s00239-026-10347-y",
+        "npj Heritage Science DOI 10.1038/s40494-026-02988-5",
+        "Molecular Ecology DOI 10.1111/mec.70529 and institutional publication records",
+        "Journal of Archaeological Method and Theory DOI 10.1007/s10816-026-09830-z",
+        "Scientific Reports DOI 10.1038/s41598-026-37700-x",
+        "Radiocarbon DOI 10.1017/RDC.2026.10191",
+        "GitHub DOI/canonical-ID deduplication against existing NOEMA candidates and reanalysis records",
+        "Additional public scholarly scans for archaeology, ancient DNA, religion/ritual, symbolic behavior, environmental history and dating revisions"
+      ],
+      "new_candidate_ids": [
+        "DAILY-ORACLE-BONE-MULTIMODAL-KG-2026",
+        "DAILY-ANCIENT-MTDNA-COMUTATION-2026",
+        "DAILY-MIZYN-IVORY-MATERIAL-AFFORDANCE-2026",
+        "DAILY-CRAWFORD-LAKE-SEDADNA-2026",
+        "DAILY-NEOLITHIC-CROP-STRONTIUM-2026",
+        "DAILY-DRUMMING-THETA-ASC-2026",
+        "DAILY-KURGAN8-WIGGLE-MATCH-2026"
+      ],
+      "deduplicated_dois": [
+        "10.1038/s41586-026-10976-9",
+        "10.1016/j.evolhumbehav.2026.106941",
+        "10.1126/sciadv.aeb8588",
+        "10.1007/s11692-026-09677-y"
+      ],
+      "contradiction_ids": [
+        "PRESSURE-ORACLE-AI-PROVENANCE",
+        "PRESSURE-MTDNA-LIFESTYLE-INFERENCE",
+        "PRESSURE-MIZYN-MATERIAL-AFFORDANCE",
+        "PRESSURE-CRAWFORD-PROXY",
+        "PRESSURE-CROP-PROVENANCE-INFERENCE",
+        "PRESSURE-DRUMMING-HISTORICAL-ANALOGY",
+        "PRESSURE-KURGAN-CLOSURE-EVENT"
+      ],
+      "dating_revision_ids": [
+        "DATING-KURGAN8-CLOSURE-2026",
+        "DATING-MIZYN-FIGURINE-CONTEXT-2026"
+      ],
+      "relationships_generated_detail": [],
+      "hypotheses_revisited_detail": [
+        "ORACLE_BONE_SOURCE_PROVENANCE",
+        "ADNA_MTDNA_LIFESTYLE_INFERENCE",
+        "SYMBOLIC_BEHAVIOR_MATERIAL_AFFORDANCE",
+        "HUMAN_ENVIRONMENT_CRAWFORD_LAKE",
+        "NEOLITHIC_CROP_PROVENANCE_EXCHANGE",
+        "ALTERED_STATE_RHYTHM_MODERN_ANALOGY",
+        "KURGAN8_MORTUARY_CHRONOLOGY"
+      ],
+      "review_items_created_detail": [
+        "REVIEW-ORACLE-BONE-AI-PROVENANCE",
+        "REVIEW-ANCIENT-MTDNA-NETWORK-INFERENCE",
+        "REVIEW-MIZYN-MATERIAL-AFFORDANCE-AND-CHRONOLOGY",
+        "REVIEW-CRAWFORD-LAKE-INDIGENOUS-PROXY-CONTEXT",
+        "REVIEW-NEOLITHIC-CROP-STRONTIUM-PROVENANCE",
+        "REVIEW-DRUMMING-MODERN-ANALOGY",
+        "REVIEW-KURGAN8-WIGGLE-MATCH-CHRONOLOGY",
+        "REVIEW-CROSSREF-PRIORITY-LEGACY-QUEUE"
+      ],
+      "priority_queue_distribution": {
+        "RECENT_PUBLICATION": 5,
+        "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+        "NEWLY_INDEXED_LEGACY": 23
+      },
+      "priority_queue_delta": {
+        "added": [
+          "10.1017/cbo9780511557996.005",
+          "10.1080/2153599x.2018.1453532",
+          "10.1177/09610006261481847"
+        ],
+        "removed": [
+          "10.1007/978-3-032-29683-2_2",
+          "10.1016/j.jce.2009.04.004",
+          "10.1017/s1755048324000324"
+        ],
+        "unchanged": 27
+      },
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false,
+        "historical_diagnosis_from_resemblance": false
+      }
+    },
+    {
+      "run_id": "github-discovery-34737945040",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-09-13T04:28:11.130409+00:00",
+      "completed_at": "2026-09-13T04:28:11.130409+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:1a7143b61554268e93dcff9a0ee953910be65a8e7ffd1046390c2d96e6ec5315"
+      },
+      "sources_examined": 0,
+      "new_candidates": 108,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 108 unreviewed candidates and 30 priority items.",
+      "code_commit": "5fa184dee416cf7d72dd09f739489d227620d6c3",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
     {
       "run_id": "chatgpt-daily-2026-09-12",
       "task_type": "DAILY_INGEST",
@@ -1175,82 +1339,6 @@
         "unknown_is_absent": false,
         "similarity_implies_descent": false,
         "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "github-discovery-34083319162",
-      "task_type": "GITHUB_DISCOVERY",
-      "status": "COMPLETED",
-      "started_at": "2026-09-07T04:30:18.682786+00:00",
-      "completed_at": "2026-09-07T04:30:18.682786+00:00",
-      "input_refs": [
-        ".github/workflows/noema-discovery.yml"
-      ],
-      "artifact_digests": {
-        "noema-crossref-candidates": "sha256:332d1d6f24e8dcff2c600c26fb127063264f0acaa77db201ba84d9a6731a9952"
-      },
-      "sources_examined": 0,
-      "new_candidates": 111,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 30,
-      "errors": [],
-      "summary": "Crossref discovery produced 111 unreviewed candidates and 30 priority items.",
-      "code_commit": "abe2a252b56b29621e660a357dfbfdf743b70c34",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "chatgpt-daily-2026-09-06",
-      "task_type": "DAILY_INGEST",
-      "status": "COMPLETED_CANDIDATES_PERSISTED",
-      "started_at": "2026-09-06T06:50:54Z",
-      "completed_at": "2026-09-06T06:55:30Z",
-      "input_refs": [
-        "github-discovery-34011541822",
-        "GitHub Actions artifact 9982609785",
-        "projects/noema/data/candidates/daily/2026-09-05.json",
-        "projects/noema/schemas/run-manifest-v1.json",
-        "Consensus scholarly index",
-        "PubMed / NCBI",
-        "Springer Nature bibliographic metadata",
-        "Science Advances bibliographic metadata",
-        "fresh public web research",
-        "candidate triage commit 9e7841684fe7f47ecaf519a183ae88e2b1f1b401"
-      ],
-      "artifact_digests": {
-        "source_noema_crossref_payload": "sha256:cade8b65ca0497ea6f31e6cdef4b94aa738fa65c91f3355c1e2f46681588df33",
-        "source_github_actions_zip": "sha256:54c5b8a851004bd1509fb4626ce54ca3789d68c1aca2efb2dce1ee1f924e94e5"
-      },
-      "sources_examined": 12,
-      "new_candidates": 4,
-      "candidate_updates": 5,
-      "contradictions": 4,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 4,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 6,
-      "errors": [],
-      "summary": "Verified NOEMA Discovery run 34011541822 and downloaded its artifact: 112 unreviewed candidates with a 30-item priority queue (5 RECENT_PUBLICATION, 1 UPCOMING_OR_AHEAD_OF_PRINT, 24 NEWLY_INDEXED_LEGACY). Added four deduplicated candidate-only records covering reinforcement-learning models of ritual persistence, multidimensional technological complexity, metaplasticity/4E deep-time cognition, and Natufian clay personal ornaments. Reconfirmed current DOI/title and ahead-of-print metadata issues, recorded no dating revisions or historical relationships, and promoted no candidate to evidence.",
-      "research_note": "projects/noema/data/candidates/daily/2026-09-06.json",
-      "code_commit": "5112c2a476cc2d1b2e6354eb2ae8db16e725445a",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false,
-        "historical_diagnosis_from_resemblance": false
       }
     }
   ]
