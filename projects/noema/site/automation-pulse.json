@@ -1,18 +1,18 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-09-13T06:48:34.300752+00:00",
+  "generated_at": "2026-09-13T06:49:15.502973+00:00",
   "registry_id": "NOEMA-AUTOMATION-REGISTRY-V2",
   "registry_version": "2.0.0",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 58,
-    "new_candidates": 1276,
-    "contradictions": 40,
-    "dating_revisions": 7,
-    "hypotheses_revisited": 43,
-    "review_items_created": 269,
-    "errors": 2
+    "runs": 59,
+    "new_candidates": 750,
+    "contradictions": 49,
+    "dating_revisions": 10,
+    "hypotheses_revisited": 53,
+    "review_items_created": 280,
+    "errors": 3
   },
   "latest_by_task": [
     {
@@ -29,13 +29,15 @@
     },
     {
       "task_type": "WEEKLY_REANALYSIS",
-      "run_id": "chatgpt-weekly-2026-09-06",
-      "status": "COMPLETED_WITHOUT_PROMOTION",
-      "completed_at": "2026-09-06T06:55:00+00:00",
-      "max_epistemic_stage": null,
-      "summary": "Four material revision candidates were recorded without promotion: decompose supernatural norm enforcement by agent/reward/punishment/scale; downweight ancestry as the explanation for sampled Cerny hunting-associated funerary practice; downweight co-burial as a default proxy for close biological kinship; and model conceptual coherence as an explicit competitor to minimally-counterintuitive accounts of supernatural-concept memorability. Magic-function and neurotheology findings were retained as ontology/guardrail pressure only. No verified dating revision or species re-attribution materially changed the focal deep-time graph.",
-      "errors": [],
-      "research_note": "projects/noema/research/reanalysis/2026-09-06-weekly-reanalysis.md"
+      "run_id": "chatgpt-weekly-2026-09-13",
+      "status": "COMPLETED_WITH_REVISION_CANDIDATES_NO_PROMOTION",
+      "completed_at": "2026-09-13T06:47:43Z",
+      "max_epistemic_stage": "NOMINATION",
+      "summary": "Weekly reanalysis produced five human-review revision candidates: Les Rois 2 taxonomic attribution strongly favors Homo sapiens; Granada Neolithic cannibalism should be split into dated site/episode observations; Bianfu Cave becomes a source-bounded Denisovan locality while artifact authorship remains constrained; habitual neuroactive-plant use has a direct Late Pleistocene Sulawesi instance without ritual inference; and millet chronology is refined while crop-to-people-to-language proxy edges should be downweighted. Three chronology/date-scope candidates were recorded. No historical relationship or approved claim was promoted.",
+      "errors": [
+        "Consensus connector monthly search quota was exhausted during this run; no result from that connector was treated as evidence. Primary-source web verification and repository-native candidate records were used instead."
+      ],
+      "research_note": "projects/noema/research/reanalysis/2026-09-13-weekly-reanalysis.md"
     },
     {
       "task_type": "MONTHLY_DISCOVERY",
@@ -124,7 +126,7 @@
       "last_run_id": "github-discovery-34737945040",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-13T04:28:11.130409+00:00",
-      "age_hours": 2.34,
+      "age_hours": 2.35,
       "clock_skew_detected": false,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
@@ -146,7 +148,7 @@
       "last_run_id": "pubmed-discovery-34563668034",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
       "last_completed_at": "2026-09-11T04:50:07.777827+00:00",
-      "age_hours": 49.97,
+      "age_hours": 49.99,
       "clock_skew_detected": false,
       "writes": [
         "Actions artifact: noema-pubmed-candidates",
@@ -169,7 +171,7 @@
       "last_run_id": "chatgpt-daily-2026-09-13",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
       "last_completed_at": "2026-09-13T06:47:47.349597+00:00",
-      "age_hours": 0.01,
+      "age_hours": 0.02,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
@@ -191,7 +193,7 @@
       "last_run_id": "dplace-benchmark-34088171878",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:47:50.813731+00:00",
-      "age_hours": 145.01,
+      "age_hours": 145.02,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/societies.json",
@@ -213,7 +215,7 @@
       "last_run_id": "religion-federation-34086988852",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-07T05:29:44.885603+00:00",
-      "age_hours": 145.31,
+      "age_hours": 145.33,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
@@ -235,14 +237,14 @@
       "schedule": "approximately 08:00 Europe/Stockholm",
       "authority": "HYPOTHESIS_REVISION_CANDIDATES_ONLY",
       "authority_epistemic_ceiling": "STRATIFIED",
-      "run_reported_epistemic_stage": null,
+      "run_reported_epistemic_stage": "NOMINATION",
       "next_stage": "HUMAN_REVIEW",
       "expected_interval_hours": 190.0,
-      "health": "HEALTHY",
-      "last_run_id": "chatgpt-weekly-2026-09-06",
-      "last_status": "COMPLETED_WITHOUT_PROMOTION",
-      "last_completed_at": "2026-09-06T06:55:00+00:00",
-      "age_hours": 167.89,
+      "health": "ERROR",
+      "last_run_id": "chatgpt-weekly-2026-09-13",
+      "last_status": "COMPLETED_WITH_REVISION_CANDIDATES_NO_PROMOTION",
+      "last_completed_at": "2026-09-13T06:47:43Z",
+      "age_hours": 0.03,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
@@ -264,7 +266,7 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 288.39,
+      "age_hours": 288.4,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
@@ -287,7 +289,7 @@
       "last_run_id": "media-discovery-34321387223",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-09-09T06:56:47.869242+00:00",
-      "age_hours": 95.86,
+      "age_hours": 95.87,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
@@ -309,7 +311,7 @@
       "last_run_id": "museum-media-34324141149",
       "last_status": "COMPLETED_REFERENCE_ONLY",
       "last_completed_at": "2026-09-09T07:30:20.426104+00:00",
-      "age_hours": 95.3,
+      "age_hours": 95.32,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/museum-reference-media.json",
@@ -449,6 +451,252 @@
         "similarity_implies_descent": false,
         "automatic_claim_promotion": false,
         "historical_diagnosis_from_resemblance": false
+      }
+    },
+    {
+      "run_id": "chatgpt-weekly-2026-09-13",
+      "task_type": "WEEKLY_REANALYSIS",
+      "status": "COMPLETED_WITH_REVISION_CANDIDATES_NO_PROMOTION",
+      "started_at": "2026-09-13T06:35:25Z",
+      "completed_at": "2026-09-13T06:47:43Z",
+      "input_refs": [
+        "github-actions:NOEMA Discovery/run/34737945040/artifact/10312155288",
+        "projects/noema/data/runs/github-discovery-34737945040.json",
+        "github-actions:NOEMA Benchmark/run/34088171878/artifact/10005908691",
+        "projects/noema/data/runs/dplace-benchmark-34088171878.json",
+        "projects/noema/research/reanalysis/2026-09-06-weekly-reanalysis.md",
+        "projects/noema/data/runs/chatgpt-weekly-2026-09-06.json",
+        "projects/noema/data/candidates/daily/2026-09-09.json",
+        "projects/noema/data/candidates/daily/2026-09-10.json",
+        "projects/noema/data/candidates/daily/2026-09-11.json",
+        "projects/noema/data/candidates/daily/2026-09-12.json",
+        "projects/noema/data/candidates/pubmed-latest.json",
+        "projects/noema/data/runs/pubmed-discovery-34563668034.json"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates-34737945040.zip": "sha256:32f51f926715566757d1779edb1536d7a2a9e726fa6ae7f2ceae28f6e216663f",
+        "noema-crossref-candidates.json": "sha256:1a7143b61554268e93dcff9a0ee953910be65a8e7ffd1046390c2d96e6ec5315",
+        "noema-dplace-benchmark-34088171878.zip": "sha256:c3cacb0278258b0f792b420cab1e6c0f18d16b94a76f37deb82f5dea60beb2cb",
+        "noema-benchmark-100.json": "sha256:83ff1ed66402b284d0cf2cd3ff4433ea0e632be0cfb64819143345f803ffeeb2",
+        "pubmed-latest.json": "sha256:8fddff057484f78c2acc9d6dbb5c7a98abcdb7c5711c4e32cfcfb8d41adb1d72"
+      },
+      "sources_examined": 17,
+      "new_candidates": 0,
+      "candidate_updates": 0,
+      "contradictions": 9,
+      "dating_revisions": 3,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 10,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 5,
+      "review_items_created": 11,
+      "max_epistemic_stage": "NOMINATION",
+      "errors": [
+        "Consensus connector monthly search quota was exhausted during this run; no result from that connector was treated as evidence. Primary-source web verification and repository-native candidate records were used instead."
+      ],
+      "summary": "Weekly reanalysis produced five human-review revision candidates: Les Rois 2 taxonomic attribution strongly favors Homo sapiens; Granada Neolithic cannibalism should be split into dated site/episode observations; Bianfu Cave becomes a source-bounded Denisovan locality while artifact authorship remains constrained; habitual neuroactive-plant use has a direct Late Pleistocene Sulawesi instance without ritual inference; and millet chronology is refined while crop-to-people-to-language proxy edges should be downweighted. Three chronology/date-scope candidates were recorded. No historical relationship or approved claim was promoted.",
+      "research_note": "projects/noema/research/reanalysis/2026-09-13-weekly-reanalysis.md",
+      "code_commit": "0832def356970e193e5dd3dfdff0cd9cee56177d",
+      "native_note_commit": "ee7def5208e767155b5e18032ffd9bec88906926",
+      "output_refs": [
+        "https://github.com/joaoccaldas/ai/blob/main/projects/noema/research/reanalysis/2026-09-13-weekly-reanalysis.md",
+        "https://github.com/joaoccaldas/ai/blob/main/projects/noema/data/runs/chatgpt-weekly-2026-09-13.json"
+      ],
+      "discovery_artifact": {
+        "run_id": "github-discovery-34737945040",
+        "action_run_id": 34737945040,
+        "artifact_id": 10312155288,
+        "candidate_count": 108,
+        "priority_candidate_count": 30,
+        "priority_distribution": {
+          "RECENT_PUBLICATION": 5,
+          "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+          "NEWLY_INDEXED_LEGACY": 23
+        }
+      },
+      "benchmark_artifact": {
+        "run_id": "dplace-benchmark-34088171878",
+        "action_run_id": 34088171878,
+        "artifact_id": 10005908691,
+        "society_count": 100,
+        "content_changed_vs_prior": false,
+        "focal_year_policy": "OBSERVATION_METADATA_ONLY_NOT_ORIGIN"
+      },
+      "scholarly_sources": [
+        {
+          "doi": "10.1002/ajpa.70354",
+          "role": "Les Rois 2 taxonomic reassessment"
+        },
+        {
+          "doi": "10.1016/j.jas.2026.106666",
+          "role": "Granada Neolithic cannibalism chronology/taphonomy"
+        },
+        {
+          "doi": "10.1038/s41586-026-10976-9",
+          "role": "Bianfu Denisovan proteomic identification"
+        },
+        {
+          "doi": "10.1038/s41586-026-10997-4",
+          "role": "Bianfu archaeology/subsistence companion; dependent evidence family"
+        },
+        {
+          "doi": "10.1126/sciadv.aei1901",
+          "role": "Late Pleistocene habitual betel-nut use"
+        },
+        {
+          "doi": "10.1038/s41598-026-70250-w",
+          "role": "European millet AMS chronology"
+        },
+        {
+          "doi": "10.1016/j.jasrep.2026.105790",
+          "role": "Semigallia mixed-kin multiple burial"
+        },
+        {
+          "doi": "10.1007/s10816-026-09827-8",
+          "role": "MobSr strontium ML validation boundary"
+        },
+        {
+          "doi": "10.1038/s40494-026-02958-x",
+          "role": "human-bone freshwater reservoir dating risk"
+        },
+        {
+          "doi": "10.1038/s41467-026-76204-0",
+          "role": "archaic ancestry imputation method/bias"
+        },
+        {
+          "doi": "10.1038/s40494-026-02987-6",
+          "role": "Qin intraoral stone intentionality/taphonomy"
+        },
+        {
+          "doi": "10.1016/j.qeh.2026.100107",
+          "role": "modeled language spread ecology/subsistence"
+        },
+        {
+          "doi": "10.3389/fpsyg.2026.1689818",
+          "role": "modern autistic/schizotypal traits and religiosity; historical diagnosis guard"
+        },
+        {
+          "doi": "10.1038/s44184-026-00235-0",
+          "role": "modern ayahuasca observational analogy guard"
+        },
+        {
+          "doi": "10.1038/s41598-026-69086-1",
+          "role": "Brattforsheden environmental chronology"
+        },
+        {
+          "doi": "10.1007/s11692-026-09677-y",
+          "role": "material innovation niche-construction theoretical guard"
+        },
+        {
+          "doi": "10.1002/brb3.71733",
+          "role": "systematic neurotheology review; no historical diagnosis"
+        }
+      ],
+      "source_independence_notes": [
+        "The two Bianfu Nature papers share site context and research program and were not counted as independent confirmation of the same historical relationship.",
+        "Institutional press releases and news summaries were used only to locate or clarify primary publications and were not counted as independent evidence.",
+        "Crossref and PubMed discovery metadata were treated as candidate-routing signals, not evidence."
+      ],
+      "hypotheses_revisited_ids": [
+        "AURIGNACIAN_HOMININ_ATTRIBUTION",
+        "GRANADA_NEOLITHIC_CANNIBALISM",
+        "MORTUARY_PRACTICE_ONTOLOGY",
+        "DENISOVAN_DISTRIBUTION",
+        "HOMININ_ARTIFACT_AUTHORSHIP_INFERENCE",
+        "PSYCHOACTIVE_PLANT_CHRONOLOGY",
+        "ALTERED_STATE_BEHAVIOR_ONTOLOGY",
+        "MILLET_DISPERSAL_CHRONOLOGY",
+        "CROP_LANGUAGE_DEMOGRAPHY_PROXY",
+        "MORTUARY_KINSHIP_ONTOLOGY"
+      ],
+      "revision_candidates": [
+        {
+          "id": "REV-2026-09-13-LES-ROIS-TAXONOMY",
+          "target": "AURIGNACIAN_HOMININ_ATTRIBUTION / LES_ROIS_ENTITY",
+          "recommended_change": "Specimen-level Les Rois 2 attribution to Homo sapiens strongly supported; recheck Neanderthal-dependent downstream statements.",
+          "automatic_promotion": false
+        },
+        {
+          "id": "REV-2026-09-13-GRANADA-EPISODE-SPLIT",
+          "target": "GRANADA_NEOLITHIC_CANNIBALISM / MORTUARY_PRACTICE_ONTOLOGY",
+          "recommended_change": "Split monolithic behavior into dated site/episode observations; keep motive interpretations separate.",
+          "automatic_promotion": false
+        },
+        {
+          "id": "REV-2026-09-13-BIANFU-DENISOVAN-DISTRIBUTION",
+          "target": "DENISOVAN_DISTRIBUTION / BIANFU_CAVE_ENTITY",
+          "recommended_change": "Southwest-China Denisovan locality becomes source-supported; lineage contribution and artifact authorship remain unresolved.",
+          "automatic_promotion": false
+        },
+        {
+          "id": "REV-2026-09-13-PSYCHOACTIVE-PLANT-CHRONOLOGY",
+          "target": "PSYCHOACTIVE_PLANT_CHRONOLOGY",
+          "recommended_change": "Extend source-bounded directly evidenced habitual neuroactive-plant-use chronology to 25-16 ka; no ritual/religion edge.",
+          "automatic_promotion": false
+        },
+        {
+          "id": "REV-2026-09-13-CROP-LANGUAGE-PROXY",
+          "target": "MILLET_DISPERSAL_CHRONOLOGY / CROP_LANGUAGE_DEMOGRAPHY_PROXY",
+          "recommended_change": "Refine millet chronology and downweight crop-to-people-to-language proxy edges absent independent convergence.",
+          "automatic_promotion": false
+        }
+      ],
+      "dating_revision_candidates": [
+        {
+          "id": "DATING-GRANADA-NEOLITHIC-CAVES-2026",
+          "status": "HUMAN_REVIEW_REQUIRED",
+          "note": "Direct radiocarbon dating separates multiple cave episodes; no approved NOEMA date changed."
+        },
+        {
+          "id": "DATING-SULAWESI-BETEL-2026",
+          "status": "HUMAN_REVIEW_REQUIRED",
+          "note": "Directly evidenced habitual whole-betel-nut use extends to approximately 25-16 ka; no ritual interpretation follows."
+        },
+        {
+          "id": "DATING-MILLET-EUROPE-2026",
+          "status": "HUMAN_REVIEW_REQUIRED",
+          "note": "Direct AMS dates and Bayesian modeling refine earliest secure European millet chronology; no population/language origin claim follows."
+        }
+      ],
+      "contradiction_notes": [
+        "Les Rois 2 Neanderthal-leaning taxonomic interpretations are directly challenged by multi-method dental evidence favoring Homo sapiens.",
+        "A single uniform Neolithic-cannibalism model is contradicted by site- and episode-specific Granada chronology/context.",
+        "The former Southwest-China Denisovan distribution gap is contradicted by molecularly identified Bianfu remains.",
+        "A Holocene/agricultural-only framing of habitual neuroactive-plant use is contradicted by Late Pleistocene Sulawesi evidence.",
+        "Co-burial as a proxy for close biological kinship is independently contradicted/reinforced by the mixed-relatedness Semigallia burial.",
+        "Crop dispersal cannot be used as a direct proxy for demic or language dispersal; new millet chronology increases the need for independent convergence.",
+        "MobSr performance is agreement with inherited expert labels, not independently known residential history.",
+        "Human-bone radiocarbon ages can be biased old by freshwater reservoir effects; uncorrected dates require dietary-context review.",
+        "Modern neurodivergent/religiosity correlations do not support retrospective diagnosis of witches, shamans, mystics, or historical religious specialists."
+      ],
+      "review_items": [
+        "REVIEW-LES-ROIS-TAXONOMY",
+        "REVIEW-GRANADA-EPISODE-SPLIT",
+        "REVIEW-BIANFU-DISTRIBUTION",
+        "REVIEW-BIANFU-ARTIFACT-AUTHORSHIP",
+        "REVIEW-SULAWESI-PSYCHOACTIVE-CHRONOLOGY",
+        "REVIEW-MILLET-CHRONOLOGY",
+        "REVIEW-CROP-LANGUAGE-DEMOGRAPHY-GUARD",
+        "REVIEW-SEMIGALLIA-MIXED-KIN",
+        "REVIEW-MOBSR-VALIDATION-LAYER",
+        "REVIEW-HUMAN-BONE-RESERVOIR-RISK",
+        "REVIEW-NEURODIVERSITY-HISTORICAL-DIAGNOSIS-GUARD"
+      ],
+      "no_change_statement": "No approved claim was edited; no candidate was promoted to evidence; no historical relationship was generated; the deterministic D-PLACE benchmark content is unchanged; D-PLACE focal years remain observation metadata; and no verified redating was found for Los Aviones, La Roche-Cotard, La Ferrassie, Shanidar, Blombos, Bizmoune, Qafzeh, or Tinshemet in the review window.",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false,
+        "dplace_focal_year_is_origin_date": false,
+        "relationship_outputs_are_evidence": false,
+        "rescore_is_evidence": false,
+        "approved_claim_auto_edit": false,
+        "dependent_sources_count_as_independent": false,
+        "historical_diagnosis_from_resemblance": false,
+        "crop_spread_equals_demic_migration": false,
+        "language_spread_equals_population_movement": false,
+        "artifact_layer_association_equals_individual_authorship": false
       }
     },
     {
@@ -1303,37 +1551,6 @@
       "errors": [],
       "summary": "Rebuilt deterministic D-PLACE benchmark with 100 societies; focal years remain observation metadata, never origin dates.",
       "code_commit": "997131afdfbee9422c45cc3fba7fa108d9730215",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "religion-federation-34086988852",
-      "task_type": "RELIGION_FEDERATION",
-      "status": "COMPLETED",
-      "started_at": "2026-09-07T05:29:44.885603+00:00",
-      "completed_at": "2026-09-07T05:29:44.885603+00:00",
-      "input_refs": [
-        "Pulotu",
-        "DRH/SCCSR",
-        "D-PLACE audit"
-      ],
-      "sources_examined": 3,
-      "new_candidates": 526,
-      "candidate_updates": 24452,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 62,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 0,
-      "errors": [],
-      "summary": "Federation refreshed 1063 comparable profiles and 24452 accepted assertions; pattern outputs remain descriptive candidates.",
-      "code_commit": "c97ff821f3c33982c90cc872c528e8adb5233416",
       "epistemic_guards": {
         "model_output_is_evidence": false,
         "unknown_is_absent": false,
