@@ -1,1 +1,190 @@
-PLACEHOLDER
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-14",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-14T06:55:47+00:00",
+  "source_discovery_run": {
+    "run_id": "github-discovery-34806341982",
+    "completed_at": "2026-09-14T04:31:24.548948+00:00",
+    "code_commit": "9ebcbe072b656ac3b42b6db52bdd694a0bd11218",
+    "candidate_count": 107,
+    "priority_candidate_count": 30,
+    "raw_payload_sha256": "7896ce94a7b4442b0f6467cc5c31285a581511cc1d85b57a47a901891a5cde5a",
+    "github_artifact_digest": "sha256:2b992a993ce57983aee24d58518b7933f7deec0a6ea53bb70af1b871cc4e605a",
+    "artifact_id": 10332328826,
+    "priority_queue_distribution": {"RECENT_PUBLICATION": 5, "UPCOMING_OR_AHEAD_OF_PRINT": 2, "NEWLY_INDEXED_LEGACY": 23},
+    "overall_distribution": {"RECENT_PUBLICATION": 5, "UPCOMING_OR_AHEAD_OF_PRINT": 2, "NEWLY_INDEXED_LEGACY": 100}
+  },
+  "epistemic_policy": [
+    "Every discovered record remains CANDIDATE_UNREVIEWED until human review.",
+    "Model-generated synthesis, classifications, embeddings, inferred entities and reasoning chains are not evidence.",
+    "Similarity does not imply historical descent, common origin or diffusion.",
+    "Unknown is not absence.",
+    "Publication, version, index, release/update and discovery dates remain distinct.",
+    "Archaeological observations remain distinct from inferred symbolic, ritual, social or cognitive meaning.",
+    "Ancient-DNA affinity, mtDNA haplogroup, culture, language, technology and social identity are not interchangeable variables."
+  ],
+  "priority_queue": {
+    "RECENT_PUBLICATION": [
+      ["10.4324/9781003683551-11","The implications of AI myth for religion, science, and mythology","2026-09-02","2026-09-02"],
+      ["10.4324/9781003683551-2","Religion, mythology, and AI","2026-09-02","2026-09-02"],
+      ["10.1177/09610006261481847","Can ritual behavior influence user identity? A study of library ritual activities effects","2026-09-06","2026-09-08"],
+      ["10.1086/742088","Some New World: Myths of Supernatural Belief in a Secular Age","2026-09-01","2026-09-03"],
+      ["10.1016/j.evolhumbehav.2026.106943","Moralistic supernatural explanations were widespread and attributed to many different supernatural agents in historical societies","2026-09-01","2026-09-04"]
+    ],
+    "UPCOMING_OR_AHEAD_OF_PRINT": [
+      ["10.3366/9781399564618-005","Introduction: Revelation and Divination","2026-12-31","2026-09-03"],
+      ["10.1515/9780691266329-009","5 Beyond Transaction: Maintaining Sacred Relationships in Daily Life","2026-12-31","2026-09-07"]
+    ],
+    "NEWLY_INDEXED_LEGACY": [
+      "10.1016/j.evolhumbehav.2010.07.008","10.1016/j.jhevol.2007.05.016","10.1017/cbo9780511557996.005","10.1371/journal.pone.0163019","10.1006/jaar.2000.0369","10.1093/acprof:oso/9780199644094.003.0018","10.3764/aja.122.1.0033","10.1558/imre.v17i2.211","10.3390/rel12100877","10.3390/land14051011","10.1111/tops.70033","10.1080/13674676.2024.2351997","10.1080/2153599x.2018.1453532","10.1080/25723618.2022.2106663","10.1080/14442213.2026.2697718","10.54254/2753-7064/2025.23062","10.2307/j.ctvdjrr7s.10","10.1901/jeab.1996.65-185","10.1002/ejsp.2331","10.1093/acprof:oso/9780199644094.003.0014","10.1086/588495","10.1126/sciadv.add8186","10.1558/isbn.9781845538408"
+    ]
+  },
+  "priority_queue_delta_vs_2026_09_13": {"added": [], "removed": [], "unchanged_count": 30, "note": "Priority queue unchanged. Overall candidate count fell 108 to 107 because one non-priority legacy-index record left the discovery window; not an evidence change."},
+  "new_candidates": [
+    {
+      "id": "DAILY-RHYTHMICITY-ABSORPTION-NSC-2026",
+      "triage_class": "NEWLY_INDEXED_MODERN_ALTERED_STATE_RESEARCH",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Rhythmicity and Trait Absorption Are Linked to Nonordinary States of Consciousness",
+      "publication_date": "2026-06-09", "index_date": null, "discovered_at": "2026-09-14",
+      "doi": "10.1111/nyas.70316", "canonical_url": "https://doi.org/10.1111/nyas.70316",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["ALTERED_STATES","RITUAL","COGNITION","EEG","RHYTHM","SPIRITUAL_EXPERIENCE"],
+      "review_priority": "HIGH", "sensitive": true, "restricted": false,
+      "sensitivity_flags": ["MODERN_HUMAN_PARTICIPANTS","SUBJECTIVE_SPIRITUAL_EXPERIENCE"],
+      "candidate_relevance": "27 participants completed rhythmic and non-rhythmic drumming conditions with EEG and phenomenology measures; rhythmicity affected some unity/spiritual-experience measures while entrainment strength did not explain NSC phenomenology.",
+      "epistemic_caution": "Small modern sample cannot establish prehistoric trance, shamanism, ritual function, historical continuity or a universal neural mechanism; exploratory absorption moderation requires caution.",
+      "provenance": {"publisher":"Annals of the New York Academy of Sciences / Wiley","peer_reviewed":true,"version_of_record_date":"2026-06-09","web_checked":"2026-09-14","dedup_key":"doi:10.1111/nyas.70316","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+    },
+    {
+      "id": "DAILY-SWIFTERBANT-LIVESTOCK-MOBILITY-2026",
+      "triage_class": "RECENT_PUBLICATION_ARCHAEOLOGICAL_ISOTOPE",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Isotope analysis reveals mobility of the earliest cattle herds in northern Europe",
+      "publication_date": "2026-09-06", "index_date": null, "discovered_at": "2026-09-14",
+      "doi": "10.1038/s41598-026-66057-4", "canonical_url": "https://doi.org/10.1038/s41598-026-66057-4",
+      "source_type": "PEER_REVIEWED_ACCEPTED_EARLY_VERSION",
+      "domains": ["ARCHAEOLOGY","NEOLITHIC","ISOTOPES","LIVESTOCK","MOBILITY","INTERACTION_NETWORKS"],
+      "review_priority": "HIGH", "sensitive": false, "restricted": false,
+      "candidate_relevance": "Strontium, oxygen and carbon isotopes from Swifterbant S3/S4 livestock identify non-local animals and repeated movement, consistent with animal-transfer networks.",
+      "epistemic_caution": "Animal movement is not direct observation of human migration, ancestry, ethnicity, language or cultural transmission.",
+      "provenance": {"publisher":"Scientific Reports / Springer Nature","accepted_date":"2026-08-05","peer_reviewed":true,"open_access":true,"web_checked":"2026-09-14","dedup_key":"doi:10.1038/s41598-026-66057-4","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+    },
+    {
+      "id": "DAILY-EUPPAD-2026",
+      "triage_class": "NEWLY_INDEXED_STRUCTURED_ARCHAEOLOGY_PALEOECOLOGY_DATASET",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "The European Upper Palaeolithic Palaeoecological and Archaeological Dataset for sites north of 50°N",
+      "publication_date": "2026-06-05", "index_date": null, "discovered_at": "2026-09-14",
+      "doi": "10.1038/s41597-026-07586-5", "canonical_url": "https://doi.org/10.1038/s41597-026-07586-5",
+      "source_type": "PEER_REVIEWED_DATA_DESCRIPTOR",
+      "domains": ["ARCHAEOLOGY","PALEOCLIMATE","PALEOECOLOGY","UPPER_PALEOLITHIC","RADIOCARBON","STRUCTURED_DATASET"],
+      "review_priority": "HIGH", "sensitive": false, "restricted": false,
+      "candidate_relevance": "FAIR dataset covering 803 sites north of 50°N, c.47,000-14,000 cal BP, with 636 variables including 538 palaeoecological variables, contexts, artefacts, fauna/flora and radiocarbon metadata.",
+      "epistemic_caution": "Environmental co-occurrence is not causation or adaptation. Source quality and chronology are heterogeneous; NA is intentionally preserved where absence cannot be established.",
+      "provenance": {"publisher":"Scientific Data / Springer Nature","accepted_date":"2026-05-29","peer_reviewed":true,"open_access":true,"dataset_repository":"Zenodo record 19930467","web_checked":"2026-09-14","dedup_key":"doi:10.1038/s41597-026-07586-5","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+    },
+    {
+      "id": "DAILY-PALEOHUMANS-DATABASE-2026",
+      "triage_class": "NEWLY_INDEXED_MORTUARY_HUMAN_REMAINS_DATABASE",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "PaleoHumans — European Upper Palaeolithic Homo sapiens Remains",
+      "publication_date": "2024", "release_or_update_date": "2026-07-10", "index_date": null, "discovered_at": "2026-09-14",
+      "authoritative_external_id": "paleohumans.org:v1.0.0", "canonical_url": "https://paleohumans.org/",
+      "source_type": "PEER_REVIEWED_OPEN_DATABASE",
+      "domains": ["HUMAN_REMAINS","MORTUARY","UPPER_PALEOLITHIC","RADIOCARBON","BIOARCHAEOLOGY","STRUCTURED_DATASET"],
+      "review_priority": "HIGH", "sensitive": true, "restricted": false,
+      "sensitivity_flags": ["HUMAN_REMAINS","MORTUARY_CONTEXT","BIOLOGICAL_SEX_AND_AGE"],
+      "candidate_relevance": "Current v1.0.0 reports 812 individuals, 4,616 bone remains, 106 skeletons and 250 sites with chronology and mortuary fields.",
+      "epistemic_caution": "Mortuary activity is broader than funerary/ritual behavior. Sex, cultural phase, burial status and identity remain distinct. Chronological reclassifications require record-level reconciliation.",
+      "dating_change": {"type":"CHRONOLOGICAL_RECLASSIFICATION_SET","affected_records":["Combe-Chapelle","Hohlenstein-Stadel","Hahnöfersand","Roche Courbon","Weißenthurm","Reilingen 2","Olmo","Starosele","San Bernardino","Combe-Grenal","Swanscombe"],"scope":"Prior Late Pleistocene assignments reported revised to Mesolithic, Roman, Medieval/Modern or Middle Pleistocene/Palaeolithic; candidate reconciliation only."},
+      "provenance": {"database_version":"1.0.0","database_updated":"2026-07-10","license":"CC BY 4.0","source_publication_doi":"10.1016/j.jasrep.2024.104391","web_checked":"2026-09-14","dedup_key":"url:https://paleohumans.org/","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+    },
+    {
+      "id": "DAILY-AMTDB-2026-08-11",
+      "triage_class": "NEWLY_INDEXED_ANCIENT_MTDNA_DATABASE_UPDATE",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "AmtDB — Ancient mtDNA database, 2026-08-11 update",
+      "publication_date": null, "release_or_update_date": "2026-08-11", "index_date": null, "discovered_at": "2026-09-14",
+      "authoritative_external_id": "amtdb.org:update:2026-08-11", "canonical_url": "https://amtdb.org/",
+      "source_type": "STRUCTURED_ANCIENT_DNA_DATABASE",
+      "domains": ["ANCIENT_DNA","MITOCHONDRIAL_DNA","HAPLOGROUPS","GEOLOCATION","CHRONOLOGY","STRUCTURED_DATASET"],
+      "review_priority": "HIGH", "sensitive": true, "restricted": false,
+      "sensitivity_flags": ["ANCIENT_HUMAN_GENOMIC_DATA","ARCHAEOLOGICAL_CULTURE_LABELS"],
+      "candidate_relevance": "2026-08-11 update reports 1,211 new samples, 982 complete mitogenomes, plus a PCA beta and downloadable sequence/metadata records.",
+      "epistemic_caution": "mtDNA haplogroup frequencies/PCA are matrilineal summaries, not whole-genome ancestry, population identity, culture, language, ethnicity or migration truth.",
+      "provenance": {"provider":"AmtDB","web_checked":"2026-09-14","dedup_key":"url:https://amtdb.org/","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+    },
+    {
+      "id": "DAILY-INVISIBLE-EAST-CORPUS-V1-2",
+      "triage_class": "NEWLY_INDEXED_HISTORICAL_SOURCE_DATASET",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Invisible East Digital Corpus: JSON Dataset, Version 1.2",
+      "publication_date": "2026-06-01", "index_date": null, "discovered_at": "2026-09-14",
+      "doi": "10.5281/zenodo.20490171", "canonical_url": "https://doi.org/10.5281/zenodo.20490171",
+      "source_type": "OPEN_HISTORICAL_SOURCE_DATASET",
+      "domains": ["HISTORICAL_SOURCES","LINGUISTICS","MEDIEVAL_AFGHANISTAN","PERSIAN","ARABIC","BACTRIAN","SOGDIAN","DIGITAL_HUMANITIES"],
+      "review_priority": "HIGH", "sensitive": true, "restricted": false,
+      "sensitivity_flags": ["CULTURAL_HERITAGE","RELIGIOUS_AND_LINGUISTIC_COMMUNITIES","HISTORICAL_MANUSCRIPTS"],
+      "candidate_relevance": "Open JSON export of medieval Afghanistan and surrounding-region documents with high-resolution images, expert transcriptions and translations across Persian, Arabic, Bactrian, Sogdian and other languages.",
+      "epistemic_caution": "Surviving texts are not population prevalence measures; transcription, translation, genre and archival survival remain source-specific and text content does not establish private belief.",
+      "provenance": {"provider":"University of Oxford / Zenodo","version":"1.2","latest_export_date":"2026-06-01","web_checked":"2026-09-14","dedup_key":"doi:10.5281/zenodo.20490171","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+    },
+    {
+      "id": "DAILY-LA-MARMOTTA-CHRONOLOGY-2026",
+      "triage_class": "NEWLY_INDEXED_DATING_REVISION",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Reassessing the Early Neolithic Chronology of La Marmotta lakeshore settlement",
+      "publication_date": "2026-06-16", "index_date": null, "discovered_at": "2026-09-14",
+      "doi": "10.1017/RDC.2026.10222", "canonical_url": "https://doi.org/10.1017/RDC.2026.10222",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": ["ARCHAEOLOGY","NEOLITHIC","RADIOCARBON","BAYESIAN_CHRONOLOGY","CERAMICS","SETTLEMENT"],
+      "review_priority": "HIGH", "sensitive": false, "restricted": false,
+      "candidate_relevance": "35 radiocarbon determinations, including 22 new dates, Bayesian modeling and ceramic reassessment revise La Marmotta's internal chronology and pressure the traditional sequential ceramic-phase interpretation.",
+      "epistemic_caution": "The model does not automatically rewrite every object/context date; sample-context integrity and model assumptions remain review requirements.",
+      "dating_change": {"type":"SITE_CHRONOLOGY_REASSESSMENT","scope":"La Marmotta internal occupation sequence; human review required before NOEMA chronology changes."},
+      "provenance": {"publisher":"Radiocarbon / Cambridge University Press","peer_reviewed":true,"open_access":true,"web_checked":"2026-09-14","dedup_key":"doi:10.1017/RDC.2026.10222","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+    },
+    {
+      "id": "DAILY-PREMOVE-2026",
+      "triage_class": "NEWLY_INDEXED_HISTORICAL_LINGUISTIC_DATASET",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "PREMOVE – A diachronic dataset of Ancient Greek and Latin annotated PREverbed MOtion VErbs",
+      "publication_date": "2026-03-23", "index_date": null, "discovered_at": "2026-09-14",
+      "doi": "10.5281/zenodo.19183131", "canonical_url": "https://doi.org/10.5281/zenodo.19183131",
+      "source_type": "MANUALLY_ANNOTATED_LINGUISTIC_DATASET",
+      "domains": ["LINGUISTICS","ANCIENT_GREEK","LATIN","SEMANTICS","GEOGRAPHY","HISTORICAL_TEXTS"],
+      "review_priority": "MEDIUM", "sensitive": false, "restricted": false,
+      "candidate_relevance": "Manually annotated 2,835 Ancient Greek and Latin preverbed motion-verb occurrences with morphology, syntax, semantics, geography, genre, century and language-period metadata.",
+      "epistemic_caution": "Linguistic constructions do not directly encode ancestry, population movement, identity, belief or cultural descent.",
+      "provenance": {"provider":"Oxford Text Archive / Zenodo / King's College London","created_date":"2026-03-23","manual_annotation":true,"web_checked":"2026-09-14","dedup_key":"doi:10.5281/zenodo.19183131","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+    }
+  ],
+  "deduplicated_discoveries": [
+    {"doi":"10.1002/brb3.71733","result":"DEDUP_EXISTING_NOEMA"},
+    {"doi":"10.1038/s41467-026-74234-2","result":"DEDUP_EXISTING_NOEMA"},
+    {"doi":"10.1038/s41597-025-06477-5","result":"DEDUP_EXISTING_NOEMA"},
+    {"doi":"10.1016/j.tics.2026.04.009","result":"DEDUP_EXISTING_NOEMA"},
+    {"doi":"10.1038/s41586-026-10976-9","result":"DEDUP_EXISTING_NOEMA"}
+  ],
+  "contradictions_and_method_pressure": [
+    {"id":"PRESSURE-RHYTHMICITY-ENTRAINMENT","review":"ALTERED_STATE_RHYTHM_MODERN_ANALOGY","finding":"Rhythmicity affected some phenomenology, while entrainment strength did not explain NSC phenomenology."},
+    {"id":"PRESSURE-LIVESTOCK-HUMAN-MOBILITY","review":"NEOLITHIC_LIVESTOCK_MOBILITY","finding":"Livestock mobility does not directly measure human migration or cultural transmission."},
+    {"id":"PRESSURE-EUPPAD-MISSINGNESS-ENVIRONMENT","review":"PALEOCLIMATE_EUPPAD_FEDERATION","finding":"NA/unknown must not become absence; environmental association is not causation."},
+    {"id":"PRESSURE-PALEOHUMANS-CHRONOLOGY","review":"PALEOHUMANS_CHRONOLOGY_AND_MORTUARY","finding":"Several former Late Pleistocene attributions are now chronologically reclassified."},
+    {"id":"PRESSURE-AMTDB-MTDNA-IDENTITY","review":"ADNA_MTDNA_DATABASE_PROVENANCE","finding":"mtDNA haplogroup/PCA structure must not be equated with culture, language or whole-population ancestry."},
+    {"id":"PRESSURE-IEDC-TEXT-PREVALENCE","review":"HISTORICAL_SOURCE_INVISIBLE_EAST","finding":"Historical texts and translations are not direct population-wide prevalence measures."},
+    {"id":"PRESSURE-LA-MARMOTTA-PHASES","review":"LA_MARMOTTA_NEOLITHIC_CHRONOLOGY","finding":"New radiocarbon/Bayesian evidence pressures the traditional ceramic-phase succession."},
+    {"id":"PRESSURE-PREMOVE-LANGUAGE-ANCESTRY","review":"HISTORICAL_LINGUISTIC_PREMOVE_PROVENANCE","finding":"Diachronic linguistic patterns remain distinct from ancestry, migration and identity."}
+  ],
+  "dating_revisions": [
+    {"id":"DATING-PALEOHUMANS-RECLASSIFICATION-2026","status":"CANDIDATE_RECONCILIATION_REQUIRED","candidate_id":"DAILY-PALEOHUMANS-DATABASE-2026"},
+    {"id":"DATING-LA-MARMOTTA-2026","status":"CANDIDATE_RECONCILIATION_REQUIRED","candidate_id":"DAILY-LA-MARMOTTA-CHRONOLOGY-2026"}
+  ],
+  "relationships_generated": [],
+  "hypotheses_revisited": ["ALTERED_STATE_RHYTHM_MODERN_ANALOGY","NEOLITHIC_LIVESTOCK_MOBILITY","PALEOCLIMATE_EUPPAD_FEDERATION","PALEOHUMANS_CHRONOLOGY_AND_MORTUARY","ADNA_MTDNA_DATABASE_PROVENANCE","HISTORICAL_SOURCE_INVISIBLE_EAST","LA_MARMOTTA_NEOLITHIC_CHRONOLOGY","HISTORICAL_LINGUISTIC_PREMOVE_PROVENANCE"],
+  "review_items_created": ["REVIEW-RHYTHMICITY-MODERN-ANALOGY","REVIEW-SWIFTERBANT-LIVESTOCK-MOBILITY","REVIEW-EUPPAD-FEDERATION-MISSINGNESS","REVIEW-PALEOHUMANS-CHRONOLOGY-MORTUARY-SENSITIVITY","REVIEW-AMTDB-MTDNA-PROVENANCE","REVIEW-INVISIBLE-EAST-SOURCE-PROVENANCE","REVIEW-LA-MARMOTTA-CHRONOLOGY","REVIEW-PREMOVE-LINGUISTIC-PROVENANCE","REVIEW-CROSSREF-PRIORITY-LEGACY-QUEUE"],
+  "sensitive_or_restricted_summary": {"restricted_candidates":0,"sensitive_candidates":["DAILY-RHYTHMICITY-ABSORPTION-NSC-2026","DAILY-PALEOHUMANS-DATABASE-2026","DAILY-AMTDB-2026-08-11","DAILY-INVISIBLE-EAST-CORPUS-V1-2"]},
+  "errors": ["Consensus search quota exhausted for September before this run; public scholarly/web and GitHub discovery sources were used instead."],
+  "summary": "Latest NOEMA Discovery returned 107 unreviewed Crossref candidates and 30 priority items (5 recent, 2 upcoming/ahead-of-print, 23 newly indexed legacy), with the priority queue unchanged from 2026-09-13. Eight additional material candidates were staged after DOI/authoritative-ID/canonical-URL deduplication. No candidate was promoted to evidence and no historical relationships were generated."
+}
