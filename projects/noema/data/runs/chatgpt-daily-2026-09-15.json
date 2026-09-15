@@ -3,64 +3,65 @@
   "task_type": "DAILY_INGEST",
   "status": "COMPLETED_CANDIDATES_ONLY",
   "started_at": "2026-09-15T06:43:01+00:00",
-  "completed_at": "2026-09-15T06:56:30+00:00",
+  "completed_at": "2026-09-15T07:24:46+00:00",
   "input_refs": [
     "projects/noema/data/runs/github-discovery-34929011805.json",
     "github-actions-artifact:10380603166:noema-crossref-candidates",
     "projects/noema/data/candidates/daily/2026-09-14.json",
     "projects/noema/schemas/run-manifest-v1.json",
-    "Consensus search attempted: archaeology ancient DNA mortuary ritual symbolic behavior radiocarbon paleoclimate language religion altered states year:2026",
-    "web:doi:10.1098/rsta.2025.0263",
-    "web:doi:10.1126/sciadv.aeh1079",
-    "web:doi:10.1016/j.brs.2026.103208",
-    "web:doi:10.1093/nsr/nwag504",
-    "web:doi:10.1016/j.neubiorev.2026.106951",
-    "web:doi:10.55086/SP2641532",
-    "web:doi:10.1017/laq.2026.10204",
-    "web:https://www.ansa.it/lazio/notizie/2026/09/10/a-villa-adriana-riaffiora-testimonianza-del-rito-dei-luoghi-colpiti-dal_796c5547-a13f-4341-a849-897d2c3ba33f.html"
+    "prior same-day candidate snapshot commit:90dadad8469a741f77e940a728dd35eb3cdcd3ba",
+    "web:doi:10.1073/pnas.2534899123",
+    "web:PMID:42721078",
+    "web:doi:10.5715/jnlp.33.1116",
+    "fresh same-day scholarly/web scan on 2026-09-15"
   ],
   "artifact_digests": {
     "noema-crossref-candidates-raw": "sha256:eabaa530d5cf1561aa98e7ce9c615d0928e5a0e73c23a724a0450d3df78ed3ec",
     "noema-crossref-candidates-github-artifact": "sha256:f73528270a70f6f5756d334d3e99d8ef8c2c1d98452f90c5d5ef0c7b19d0a2a1",
-    "candidate-pack-commit": "90dadad8469a741f77e940a728dd35eb3cdcd3ba"
+    "prior-candidate-pack-commit": "90dadad8469a741f77e940a728dd35eb3cdcd3ba",
+    "candidate-pack-commit": "a2ed3162715ac33f323cd4d859bbaebe66286bcf"
   },
-  "sources_examined": 14,
-  "new_candidates": 8,
+  "sources_examined": 17,
+  "new_candidates": 10,
+  "supplemental_new_candidates": 2,
   "candidate_updates": 0,
   "duplicates_deduplicated": 8,
-  "contradictions": 8,
-  "dating_revisions": 1,
+  "contradictions": 10,
+  "dating_revisions": 2,
   "source_corrections": 1,
   "relationships_generated": 0,
-  "hypotheses_revisited": 8,
+  "hypotheses_revisited": 10,
   "hypotheses_promoted": 0,
   "confidence_or_scope_changes": 0,
-  "review_items_created": 9,
+  "review_items_created": 11,
   "max_epistemic_stage": null,
   "errors": [
-    "Consensus monthly search quota was exhausted before this run (30/30 searches; reset October 1); the run continued with the verified GitHub artifact, PubMed/publisher records, scholarly metadata repositories and public archaeological reporting."
+    "Consensus monthly search quota was exhausted before this run (30/30 searches; reset October 1); the run continued with the verified GitHub artifact, PubMed/publisher records, J-STAGE, scholarly metadata repositories and public web research."
   ],
-  "summary": "Inspected the latest successful NOEMA Discovery artifact (115 Crossref candidates; priority 30: 4 RECENT_PUBLICATION, 2 UPCOMING_OR_AHEAD_OF_PRINT, 24 NEWLY_INDEXED_LEGACY). Five records entered and five left the priority queue versus 2026-09-14, an indexing/ranking change only. Additional scholarly/public discovery and DOI/canonical-ID deduplication staged 8 material candidates spanning Miyake-event radiocarbon dating, Bronze Age millet chronology, modern ecstatic neurophysiology, Wuwangdun funerary grain bundles, psychedelic associative-learning review, Kartal ritual/memorial metadata, an Oaxaca source corrigendum, and the Hadrian's Villa lightning-ritual inscription. No candidate was promoted to evidence and no historical relationship was generated.",
-  "research_note": "Highest-priority human review: the Bronze Age Poland millet chronology revision (1590 ± 50 cal BCE vs 1460 ± 40); Wuwangdun structural similarity versus claimed tradition continuity; Oaxaca corrected figure captions and any downstream visual-source extraction; Hadrian's Villa in-situ lightning inscription versus exact bidental/ritual reconstruction; Kartal full-source access; Miyake dating-method applicability; modern altered-state evidence transfer; and the five newly entered legacy priority items, especially Palaeolithic burial and ancestor-worship literature. Human-remains/isotope, clinical altered-state, psychoactive-substance, mortuary, Indigenous/cultural-heritage and restricted-source material is flagged.",
+  "summary": "Inspected and downloaded the latest successful NOEMA Discovery artifact (115 Crossref candidates; priority 30: 4 RECENT_PUBLICATION, 2 UPCOMING_OR_AHEAD_OF_PRINT, 24 NEWLY_INDEXED_LEGACY). The first same-day pass staged 8 candidates. A later same-day scan found 2 additional non-duplicate candidates: the peer-reviewed PNAS Second Plague phylochronology paper (DOI 10.1073/pnas.2534899123) and the peer-reviewed J-STAGE computational language-acquisition study (DOI 10.5715/jnlp.33.1116). The daily pack now references 10 candidates cumulatively. No candidate was promoted to evidence, no historical relationship was generated, and model-generated behavior was explicitly kept non-evidentiary.",
+  "research_note": "Highest-priority supplemental review: SECOND_PLAGUE_PHYLOCHRONOLOGY, because Phylogenetically Informed Radiocarbon Modeling narrows dating intervals and tentatively maps 75 Yersinia pestis genomes to documented outbreaks, but modeled/documentary association is not direct event identity. LANGUAGE_ACQUISITION_MODEL_VALIDITY is medium priority: child-like U-shaped curves in small language models are computational comparisons, not evidence of human cognitive mechanism. Existing review pressure from millet chronology, Wuwangdun continuity, Oaxaca figure correction, Hadrian lightning ritual, Kartal full-text access, Miyake dating, modern altered-state transfer and legacy burial/ancestor-worship literature remains open.",
   "code_commit": "6f3055f00331829ba501ad63f9653c438abcc903",
-  "candidate_pack_commit": "90dadad8469a741f77e940a728dd35eb3cdcd3ba",
+  "candidate_pack_commit": "a2ed3162715ac33f323cd4d859bbaebe66286bcf",
   "candidate_pack_path": "projects/noema/data/candidates/daily/2026-09-15.json",
-  "repository_head_before_writeback": "7684554e2325f9c3f24dd2b3f33e48135d56b92f",
+  "repository_head_before_supplemental_writeback": "922754592b33b97b6e631b76254b907ca7e2258b",
   "sources_examined_detail": [
-    "NOEMA Discovery run github-discovery-34929011805 and artifact 10380603166",
+    "NOEMA Discovery run github-discovery-34929011805 and downloaded artifact 10380603166",
     "NOEMA 2026-09-14 daily candidate pack",
     "NOEMA run-manifest schema v1",
-    "Consensus scholarly search attempt (quota exhausted)",
+    "Consensus scholarly search state (monthly quota exhausted)",
     "Philosophical Transactions A / PubMed DOI 10.1098/rsta.2025.0263",
     "Science Advances / PubMed DOI 10.1126/sciadv.aeh1079",
     "Brain Stimulation / PubMed DOI 10.1016/j.brs.2026.103208",
     "National Science Review / Oxford Academic / PubMed DOI 10.1093/nsr/nwag504",
     "Neuroscience & Biobehavioral Reviews / PubMed DOI 10.1016/j.neubiorev.2026.106951",
-    "Stratum Plus scholarly metadata via Wikidata/COCI/OpenAlex DOI 10.55086/SP2641532",
+    "Stratum Plus scholarly metadata DOI 10.55086/SP2641532",
     "Latin American Antiquity / Cambridge corrigendum DOI 10.1017/laq.2026.10204",
-    "ANSA report citing Italy's Ministry of Culture on Villa Adriana FVLGVR SVBMANIVM discovery",
+    "ANSA / Italy Ministry of Culture reporting on Villa Adriana FVLGVR SVBMANIVM",
     "GitHub DOI/canonical-ID deduplication against existing NOEMA daily candidates",
-    "Fresh public scholarly/web scans across archaeology, dating, ancient DNA, cognition, ritual/religion, linguistics and paleoclimate"
+    "Fresh public scholarly/web scans across archaeology, ancient DNA, dating, cognition, ritual/religion, linguistics and paleoclimate",
+    "PNAS / PubMed DOI 10.1073/pnas.2534899123, PMID 42721078",
+    "Journal of Natural Language Processing / J-STAGE DOI 10.5715/jnlp.33.1116",
+    "Same-day supplemental web discovery scan completed after the initial daily persistence"
   ],
   "new_candidate_ids": [
     "DAILY-MIYAKE-RADIOCARBON-2026",
@@ -70,17 +71,9 @@
     "DAILY-PSYCHEDELIC-ASSOCIATIVE-LEARNING-REVIEW-2026",
     "DAILY-KARTAL-RITUAL-MEMORIAL-2026",
     "DAILY-OAXACA-RITUAL-CORRIGENDUM-2026",
-    "DAILY-HADRIAN-LIGHTNING-RITUAL-2026"
-  ],
-  "deduplicated_dois": [
-    "10.1016/j.quascirev.2026.110079",
-    "10.1016/j.quascirev.2026.110076",
-    "10.1016/j.jasrep.2026.105812",
-    "10.1038/s41586-026-10976-9",
-    "10.1111/nyas.70316",
-    "10.1038/s41598-026-70250-w",
-    "10.1038/s41598-026-69086-1",
-    "10.1038/s41598-026-37700-x"
+    "DAILY-HADRIAN-LIGHTNING-RITUAL-2026",
+    "DAILY-SECOND-PLAGUE-PHIRM-2026",
+    "DAILY-U-SHAPED-LANGUAGE-MODELS-2026"
   ],
   "contradiction_ids": [
     "PRESSURE-MIYAKE-RADIOCARBON-CALIBRATION",
@@ -90,9 +83,11 @@
     "PRESSURE-PSYCHEDELIC-ANIMAL-HUMAN-HISTORICAL",
     "PRESSURE-KARTAL-METADATA-RITUAL-LABEL",
     "CORRECTION-OAXACA-FIGURE-CAPTIONS",
-    "PRESSURE-HADRIAN-RITUAL-PRIVATE-BELIEF"
+    "PRESSURE-HADRIAN-RITUAL-PRIVATE-BELIEF",
+    "PRESSURE-PLAGUE-PHIRM-OUTBREAK-IDENTITY",
+    "PRESSURE-LM-HUMAN-LANGUAGE-MECHANISM"
   ],
-  "dating_revision_ids": ["DATING-BRONZE-MILLET-POLAND-2026"],
+  "dating_revision_ids": ["DATING-BRONZE-MILLET-POLAND-2026","DATING-SECOND-PLAGUE-PHIRM-2026"],
   "source_correction_ids": ["SOURCE-CORRECTION-OAXACA-FIGURES-2026"],
   "relationships_generated_detail": [],
   "hypotheses_revisited_detail": [
@@ -103,7 +98,9 @@
     "PSYCHEDELIC_LEARNING_CONTEXT",
     "KARTAL_RITUAL_MEMORIAL_CLASSIFICATION",
     "OAXACA_RITUAL_VISUAL_SOURCE_PROVENANCE",
-    "ROMAN_LIGHTNING_RITUAL_HADRIAN"
+    "ROMAN_LIGHTNING_RITUAL_HADRIAN",
+    "SECOND_PLAGUE_PHYLOCHRONOLOGY",
+    "LANGUAGE_ACQUISITION_MODEL_VALIDITY"
   ],
   "review_items_created_detail": [
     "REVIEW-MIYAKE-DATING-METHOD",
@@ -114,18 +111,11 @@
     "REVIEW-KARTAL-FULL-SOURCE",
     "REVIEW-OAXACA-FIGURE-CORRECTION",
     "REVIEW-HADRIAN-LIGHTNING-RITUAL",
-    "REVIEW-CROSSREF-PRIORITY-LEGACY-QUEUE"
+    "REVIEW-CROSSREF-PRIORITY-LEGACY-QUEUE",
+    "REVIEW-PLAGUE-PHIRM-DATING-ASSOCIATIONS",
+    "REVIEW-LM-LANGUAGE-ACQUISITION-ANALOGY"
   ],
-  "priority_queue_distribution": {
-    "RECENT_PUBLICATION": 4,
-    "UPCOMING_OR_AHEAD_OF_PRINT": 2,
-    "NEWLY_INDEXED_LEGACY": 24
-  },
-  "priority_queue_delta": {
-    "added": ["10.1007/bf00975761","10.1016/j.jas.2010.01.037","10.1017/cbo9781316014509.004","10.1163/22134379-90002885","10.2307/3774025"],
-    "removed": ["10.1080/25723618.2022.2106663","10.1126/sciadv.add8186","10.1177/09610006261481847","10.1558/isbn.9781845538408","10.1901/jeab.1996.65-185"],
-    "unchanged": 25
-  },
+  "priority_queue_distribution": {"RECENT_PUBLICATION":4,"UPCOMING_OR_AHEAD_OF_PRINT":2,"NEWLY_INDEXED_LEGACY":24},
   "output_refs": [
     "https://github.com/joaoccaldas/ai/blob/main/projects/noema/data/candidates/daily/2026-09-15.json",
     "https://github.com/joaoccaldas/ai/blob/main/projects/noema/data/runs/chatgpt-daily-2026-09-15.json"
