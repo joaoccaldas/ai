@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-09-11T04:50:07.677004+00:00",
+  "generated_at": "2026-09-15T04:51:29.071841+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
@@ -26,7 +26,7 @@
     },
     "music_trance": {
       "query": "((music[Title/Abstract]) OR (drumming[Title/Abstract]) OR (rhythm[Title/Abstract]) OR (rhythmic[Title/Abstract])) AND ((trance[Title/Abstract]) OR (\"altered state of consciousness\"[Title/Abstract]) OR (\"non-ordinary state\"[Title/Abstract]) OR (ecstatic[Title/Abstract]))",
-      "pmids_returned": 1,
+      "pmids_returned": 0,
       "title_relevant": 0
     },
     "witchcraft_psychiatry_history": {
@@ -36,7 +36,7 @@
     },
     "psychedelic_ritual": {
       "query": "((psychedelic[Title/Abstract]) OR (psilocybin[Title/Abstract]) OR (ayahuasca[Title/Abstract]) OR (entheogen*[Title/Abstract]) OR (hallucinogen*[Title/Abstract])) AND ((ritual[Title/Abstract]) OR (ceremony[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (mystical[Title/Abstract]))",
-      "pmids_returned": 15,
+      "pmids_returned": 14,
       "title_relevant": 1
     }
   },
@@ -106,8 +106,8 @@
   "counts": {
     "unique_candidates": 2,
     "query_count": 7,
-    "retrieved_before_title_gate": 24,
-    "rejected_by_title_gate": 22,
+    "retrieved_before_title_gate": 22,
+    "rejected_by_title_gate": 20,
     "summary_batches": 1
   }
 }
