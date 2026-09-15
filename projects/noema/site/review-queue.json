@@ -6,7 +6,7 @@
   "ranking_note": "Priority, recurrence and recency rank workflow attention only; they are not measures of truth, effect size or evidential strength.",
   "summary": {
     "source_documents": 5,
-    "raw_review_items": 36,
+    "raw_review_items": 38,
     "deduplicated_review_items": 12,
     "by_priority": {
       "CRITICAL": 4,
