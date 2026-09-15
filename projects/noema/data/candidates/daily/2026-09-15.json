@@ -1,7 +1,23 @@
 {
   "triage_id": "NOEMA-DAILY-INGEST-2026-09-15",
   "status": "CANDIDATE_UNREVIEWED",
-  "generated_at": "2026-09-15T06:54:33+00:00",
+  "generated_at": "2026-09-15T07:12:58+00:00",
+  "prior_snapshot": {
+    "commit": "90dadad8469a741f77e940a728dd35eb3cdcd3ba",
+    "generated_at": "2026-09-15T06:54:33+00:00",
+    "candidate_count": 8,
+    "candidate_refs": [
+      {"id":"DAILY-MIYAKE-RADIOCARBON-2026","doi":"10.1098/rsta.2025.0263","authoritative_external_id":null},
+      {"id":"DAILY-BRONZE-MILLET-POLAND-2026","doi":"10.1126/sciadv.aeh1079","authoritative_external_id":null},
+      {"id":"DAILY-ECSTATIC-INSULAR-STIMULATION-2026","doi":"10.1016/j.brs.2026.103208","authoritative_external_id":null},
+      {"id":"DAILY-WUWANGDUN-GRAIN-WRAPPING-2026","doi":"10.1093/nsr/nwag504","authoritative_external_id":null},
+      {"id":"DAILY-PSYCHEDELIC-ASSOCIATIVE-LEARNING-REVIEW-2026","doi":"10.1016/j.neubiorev.2026.106951","authoritative_external_id":null},
+      {"id":"DAILY-KARTAL-RITUAL-MEMORIAL-2026","doi":"10.55086/SP2641532","authoritative_external_id":null},
+      {"id":"DAILY-OAXACA-RITUAL-CORRIGENDUM-2026","doi":"10.1017/laq.2026.10204","authoritative_external_id":null},
+      {"id":"DAILY-HADRIAN-LIGHTNING-RITUAL-2026","doi":null,"authoritative_external_id":"villa-adriana:fulgur-submanium:2026-09-10"}
+    ],
+    "note": "Full metadata for the first same-day triage remains auditable in this immutable Git commit; this update adds later same-day discoveries without promoting earlier candidates."
+  },
   "source_discovery_run": {
     "run_id": "github-discovery-34929011805",
     "completed_at": "2026-09-15T04:29:33.420390+00:00",
@@ -10,18 +26,9 @@
     "priority_candidate_count": 30,
     "raw_payload_sha256": "eabaa530d5cf1561aa98e7ce9c615d0928e5a0e73c23a724a0450d3df78ed3ec",
     "github_artifact_digest": "sha256:f73528270a70f6f5756d334d3e99d8ef8c2c1d98452f90c5d5ef0c7b19d0a2a1",
-    "run_manifest_artifact_digest": "sha256:eabaa530d5cf1561aa98e7ce9c615d0928e5a0e73c23a724a0450d3df78ed3ec",
     "artifact_id": 10380603166,
-    "priority_queue_distribution": {
-      "RECENT_PUBLICATION": 4,
-      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
-      "NEWLY_INDEXED_LEGACY": 24
-    },
-    "overall_distribution": {
-      "RECENT_PUBLICATION": 4,
-      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
-      "NEWLY_INDEXED_LEGACY": 109
-    }
+    "priority_queue_distribution": {"RECENT_PUBLICATION":4,"UPCOMING_OR_AHEAD_OF_PRINT":2,"NEWLY_INDEXED_LEGACY":24},
+    "overall_distribution": {"RECENT_PUBLICATION":4,"UPCOMING_OR_AHEAD_OF_PRINT":2,"NEWLY_INDEXED_LEGACY":109}
   },
   "epistemic_policy": [
     "Every discovered record remains CANDIDATE_UNREVIEWED until human review.",
@@ -33,112 +40,96 @@
     "Ancient-DNA affinity, mtDNA haplogroup, culture, language, technology and social identity are not interchangeable variables."
   ],
   "priority_queue": {
-    "RECENT_PUBLICATION": [
-      {"doi":"10.4324/9781003683551-11","title":"The implications of AI myth for religion, science, and mythology","published_date":"2026-09-02","indexed_date":"2026-09-02","type":"book-chapter","relevance_score":12.75,"status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.4324/9781003683551-2","title":"Religion, mythology, and AI","published_date":"2026-09-02","indexed_date":"2026-09-02","type":"book-chapter","relevance_score":12.75,"status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1086/742088","title":"Some New World: Myths of Supernatural Belief in a Secular Age","published_date":"2026-09-01","indexed_date":"2026-09-03","type":"journal-article","relevance_score":12.25,"status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1016/j.evolhumbehav.2026.106943","title":"Moralistic supernatural explanations were widespread and attributed to many different supernatural agents in historical societies","published_date":"2026-09-01","indexed_date":"2026-09-04","type":"journal-article","relevance_score":11.0,"status":"CANDIDATE_UNREVIEWED"}
-    ],
-    "UPCOMING_OR_AHEAD_OF_PRINT": [
-      {"doi":"10.3366/9781399564618-005","title":"Introduction: Revelation and Divination","published_date":"2026-12-31","indexed_date":"2026-09-03","type":"book-chapter","relevance_score":12.25,"status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1515/9780691266329-009","title":"5 Beyond Transaction: Maintaining Sacred Relationships in Daily Life","published_date":"2026-12-31","indexed_date":"2026-09-07","type":"book-chapter","relevance_score":9.5,"status":"CANDIDATE_UNREVIEWED"}
-    ],
-    "NEWLY_INDEXED_LEGACY": [
-      {"doi":"10.1017/cbo9781316014509.004","title":"Lower and Middle Palaeolithic Mortuary Behaviours and the Origins of Ritual Burial","published_date":"2015-10-30","indexed_date":"2026-09-14","type":"book-chapter","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1016/j.evolhumbehav.2010.07.008","title":"Beliefs about God, the afterlife and morality support the role of supernatural policing in human cooperation","published_date":"2011-01-01","indexed_date":"2026-09-08","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1016/j.jhevol.2007.05.016","title":"The Upper Paleolithic burial area at Předmostí: ritual and taphonomy","published_date":"2008-01-01","indexed_date":"2026-09-12","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1017/cbo9780511557996.005","title":"Ancestor worship in Africa","published_date":"1987-10-15","indexed_date":"2026-09-12","type":"book-chapter","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1371/journal.pone.0163019","title":"A Molecular Approach to the Sexing of the Triple Burial at the Upper Paleolithic Site of Dolní Věstonice","published_date":"2016-10-05","indexed_date":"2026-09-12","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1006/jaar.2000.0369","title":"Personhood, Agency, and Mortuary Ritual: A Case Study from the Ancient Maya","published_date":"2001-03-01","indexed_date":"2026-09-04","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1093/acprof:oso/9780199644094.003.0018","title":"Medusa, Python, and Poine in Argive Religious Ritual","published_date":"2013-05-16","indexed_date":"2026-09-08","type":"book-chapter","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.2307/3774025","title":"The Universality of Ancestor Worship","published_date":"1996-01-01","indexed_date":"2026-09-14","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1007/bf00975761","title":"Intentional human burial: Middle Paleolithic (last glaciation) beginnings","published_date":"1989-06-01","indexed_date":"2026-09-14","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.3764/aja.122.1.0033","title":"Imported Exotica and Mortuary Ritual at Perati in Late Helladic IIIC East Attica","published_date":"2018-01-01","indexed_date":"2026-09-05","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1558/imre.v17i2.211","title":"Measuring Spirituality as Personal Belief in Supernatural Forces","published_date":"2014-08-12","indexed_date":"2026-09-02","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1163/22134379-90002885","title":"A structural approach to Chinese ancestor worship","published_date":"1968-01-01","indexed_date":"2026-09-14","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.3390/rel12100877","title":"Mortuary Landscapes Revisited: Dynamics of Insularity and Connectivity in Mortuary Ritual, Feasting, and Commemoration in Late Bronze Age Cyprus","published_date":"2021-10-14","indexed_date":"2026-09-10","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.3390/land14051011","title":"Sacred Networks and Spiritual Resilience: Sustainable Management of Studenica Monastery’s Cultural Landscape","published_date":"2025-05-07","indexed_date":"2026-09-08","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1111/tops.70033","title":"The Paleolithic in Color: Color and Other Visual Qualities in Archaeological Discussions of Early Symbolic Behavior","published_date":"2025-11-18","indexed_date":"2026-09-10","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1080/13674676.2024.2351997","title":"Grief, religion and ritual","published_date":"2024-09-13","indexed_date":"2026-09-02","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1080/2153599x.2018.1453532","title":"The cultural buck stops somewhere: the origin of supernatural belief and the role of agency detection","published_date":"2018-05-31","indexed_date":"2026-09-12","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1080/14442213.2026.2697718","title":"Is Shamanism Timeless? Archaeological Perspectives on Religious Continuity and Change","published_date":"2026-07-03","indexed_date":"2026-09-10","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.54254/2753-7064/2025.23062","title":"Analysis of the Influencing Society Factors of the Burial Ritual Evolution and Formation in Ancient Egypt","published_date":"2025-05-19","indexed_date":"2026-09-09","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.2307/j.ctvdjrr7s.10","title":"The Archaeology of Ritual, of Cult, and of Religion","published_date":"2007-12-31","indexed_date":"2026-09-04","type":"book-chapter","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1002/ejsp.2331","title":"Connecting the dots: Illusory pattern perception predicts belief in conspiracies and the supernatural","published_date":"2017-09-25","indexed_date":"2026-09-01","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1093/acprof:oso/9780199644094.003.0014","title":"Ritual Murder and Suicide in the Thebaid","published_date":"2013-05-16","indexed_date":"2026-09-08","type":"book-chapter","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1016/j.jas.2010.01.037","title":"Hunting behavior and Neanderthal adaptability in the Late Pleistocene site of Pech-de-l'Azé I","published_date":"2010-08-01","indexed_date":"2026-09-14","type":"journal-article","status":"CANDIDATE_UNREVIEWED"},
-      {"doi":"10.1086/588495","title":"Divination and Power","published_date":"2008-06-01","indexed_date":"2026-09-09","type":"journal-article","status":"CANDIDATE_UNREVIEWED"}
-    ]
+    "distribution": {"RECENT_PUBLICATION":4,"UPCOMING_OR_AHEAD_OF_PRINT":2,"NEWLY_INDEXED_LEGACY":24},
+    "records": {
+      "RECENT_PUBLICATION": ["10.4324/9781003683551-11","10.4324/9781003683551-2","10.1086/742088","10.1016/j.evolhumbehav.2026.106943"],
+      "UPCOMING_OR_AHEAD_OF_PRINT": ["10.3366/9781399564618-005","10.1515/9780691266329-009"],
+      "NEWLY_INDEXED_LEGACY": ["10.1017/cbo9781316014509.004","10.1016/j.evolhumbehav.2010.07.008","10.1016/j.jhevol.2007.05.016","10.1017/cbo9780511557996.005","10.1371/journal.pone.0163019","10.1006/jaar.2000.0369","10.1093/acprof:oso/9780199644094.003.0018","10.2307/3774025","10.1007/bf00975761","10.3764/aja.122.1.0033","10.1558/imre.v17i2.211","10.1163/22134379-90002885","10.3390/rel12100877","10.3390/land14051011","10.1111/tops.70033","10.1080/13674676.2024.2351997","10.1080/2153599x.2018.1453532","10.1080/14442213.2026.2697718","10.54254/2753-7064/2025.23062","10.2307/j.ctvdjrr7s.10","10.1002/ejsp.2331","10.1093/acprof:oso/9780199644094.003.0014","10.1016/j.jas.2010.01.037","10.1086/588495"]
+    }
   },
   "priority_queue_delta_vs_2026_09_14": {
     "added": ["10.1007/bf00975761","10.1016/j.jas.2010.01.037","10.1017/cbo9781316014509.004","10.1163/22134379-90002885","10.2307/3774025"],
     "removed": ["10.1080/25723618.2022.2106663","10.1126/sciadv.add8186","10.1177/09610006261481847","10.1558/isbn.9781845538408","10.1901/jeab.1996.65-185"],
     "unchanged_count": 25,
-    "note": "Five priority records entered and five left relative to 2026-09-14. This is Crossref discovery/indexing/ranking movement only; it is not an evidence-state change. Four of the five entrants are legacy mortuary/ancestor-worship literature newly indexed on 2026-09-14; the fifth is a legacy Neanderthal hunting paper."
+    "note": "Indexing/ranking movement only; not an evidence-state change."
   },
   "new_candidates": [
     {
-      "id":"DAILY-MIYAKE-RADIOCARBON-2026","triage_class":"RECENT_PUBLICATION_DATING_METHOD","status":"CANDIDATE_UNREVIEWED","title":"Radiocarbon dating with cosmic radiation events: problems and unexplored possibilities","publication_date":"2026-09-10","index_date":"2026-09-15","discovered_at":"2026-09-15","doi":"10.1098/rsta.2025.0263","canonical_url":"https://doi.org/10.1098/rsta.2025.0263","source_type":"PEER_REVIEWED_JOURNAL_ARTICLE","domains":["RADIOCARBON","MIYAKE_EVENTS","ARCHAEOLOGICAL_DATING","STRATIGRAPHY"],"review_priority":"HIGH","sensitive":false,"restricted":false,"candidate_relevance":"Methodological review of Miyake-event radiocarbon dating, including potential single-year anchoring of stratigraphic sequences and constraints from seasonality, calibration smoothing and regional variation.","epistemic_caution":"This is a dating-method candidate, not a site-specific chronology revision. Event matching requires sample/context suitability and annual-resolution calibration; it must not automatically overwrite existing archaeological dates.","provenance":{"provider":"Philosophical Transactions A / PubMed","pmid":"42720031","peer_reviewed":true,"web_checked":"2026-09-15","dedup_key":"doi:10.1098/rsta.2025.0263","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+      "id":"DAILY-SECOND-PLAGUE-PHIRM-2026",
+      "triage_class":"RECENT_PUBLICATION_ANCIENT_PATHOGEN_DATING_REFINEMENT",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"A refined phylochronology of the second plague pandemic in Western Eurasia",
+      "publication_date":"2026-09-15",
+      "epub_date":"2026-09-10",
+      "index_date":"2026-09-15",
+      "discovered_at":"2026-09-15",
+      "doi":"10.1073/pnas.2534899123",
+      "canonical_url":"https://doi.org/10.1073/pnas.2534899123",
+      "authoritative_external_id":"PMID:42721078",
+      "source_type":"PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains":["ANCIENT_PATHOGEN_DNA","RADIOCARBON","PHYLOCHRONOLOGY","HISTORICAL_SOURCES","SECOND_PLAGUE_PANDEMIC"],
+      "review_priority":"HIGH",
+      "sensitive":true,
+      "restricted":false,
+      "sensitivity_flags":["HUMAN_REMAINS","ANCIENT_PATHOGEN_GENOMICS","HISTORICAL_BURIAL_CONTEXTS"],
+      "candidate_relevance":"PNAS reports 11 full and 15 lower-coverage Yersinia pestis genomes from 11 European sites and a Phylogenetically Informed Radiocarbon Modeling approach that refines dating intervals and tentatively associates 75 Second Pandemic genomes with documented outbreaks.",
+      "epistemic_caution":"Phylogenetically informed intervals and documentary matches are model-assisted historical associations, not direct observation of event identity. They require source/site-level review before changing NOEMA dates or outbreak relationships.",
+      "dating_change":{"type":"PHYLOCHRONOLOGICAL_INTERVAL_REFINEMENT","scope":"Second Plague Pandemic Y. pestis genomes; exact NOEMA event-date changes require source-level extraction and human review."},
+      "provenance":{"provider":"PNAS / PubMed","pmid":"42721078","peer_reviewed":true,"web_checked":"2026-09-15","dedup_key":"doi:10.1073/pnas.2534899123","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
     },
     {
-      "id":"DAILY-BRONZE-MILLET-POLAND-2026","triage_class":"RECENT_PUBLICATION_BIOARCHAEOLOGY_DATING_REVISION","status":"CANDIDATE_UNREVIEWED","title":"Multiproxy bioarchaeological analyses reveal subsistence shift in Bronze Age Central Europe","publication_date":"2026-09-11","article_date":"2026-09-09","index_date":"2026-09-15","discovered_at":"2026-09-15","doi":"10.1126/sciadv.aeh1079","canonical_url":"https://doi.org/10.1126/sciadv.aeh1079","source_type":"PEER_REVIEWED_JOURNAL_ARTICLE","domains":["BIOARCHAEOLOGY","RADIOCARBON","ISOTOPES","BRONZE_AGE","DIET","AGRICULTURE","MOBILITY"],"review_priority":"HIGH","sensitive":true,"restricted":false,"sensitivity_flags":["HUMAN_REMAINS","HUMAN_ISOTOPE_DATA","PREVIOUSLY_PUBLISHED_GENETIC_DATA"],"candidate_relevance":"Multiproxy study of Bronze Age Poland (2200–1000 BCE) revises earliest European millet consumption to 1590 ± 50 cal BCE from 1460 ± 40 cal BCE, and reports no strong support for a simple demic-diffusion model.","epistemic_caution":"Dietary isotopes and strontium locality do not establish individual birthplace, ethnicity, language or population descent. Proposed environmental mechanisms are interpretations, not direct causal observations.","dating_change":{"type":"EARLIEST_CONSUMPTION_DATE_REVISION","previous":"1460 ± 40 cal BCE","candidate_revision":"1590 ± 50 cal BCE","scope":"Earliest evidence for millet consumption reported by this study; human review required before any NOEMA chronology change."},"provenance":{"provider":"Science Advances / PubMed","pmid":"42715299","peer_reviewed":true,"web_checked":"2026-09-15","dedup_key":"doi:10.1126/sciadv.aeh1079","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
-    },
-    {
-      "id":"DAILY-ECSTATIC-INSULAR-STIMULATION-2026","triage_class":"RECENT_PUBLICATION_MODERN_ALTERED_STATE_NEUROPHYSIOLOGY","status":"CANDIDATE_UNREVIEWED","title":"Altered Heart-Brain Interaction Related to Ecstatic Phenomena Induced by Insular Electrical Stimulation","publication_date":"2026-09-12","index_date":"2026-09-15","discovered_at":"2026-09-15","doi":"10.1016/j.brs.2026.103208","canonical_url":"https://doi.org/10.1016/j.brs.2026.103208","source_type":"PEER_REVIEWED_AHEAD_OF_PRINT_LETTER","domains":["ALTERED_STATES","NEUROPHYSIOLOGY","INTEROCEPTION","ECSTATIC_EXPERIENCE","COGNITION"],"review_priority":"HIGH","sensitive":true,"restricted":false,"sensitivity_flags":["MODERN_CLINICAL_PARTICIPANTS","NEUROLOGICAL_STIMULATION","SUBJECTIVE_ECSTATIC_EXPERIENCE"],"candidate_relevance":"Clinical neurophysiology report on ecstatic phenomena induced by insular electrical stimulation and associated heart-brain interaction.","epistemic_caution":"An electrically induced modern clinical state cannot establish a universal neural basis of spirituality, religious belief, ancient ritual or historical continuity.","provenance":{"provider":"Brain Stimulation / PubMed","pmid":"42731591","peer_reviewed":true,"publication_status":"ahead-of-print","web_checked":"2026-09-15","dedup_key":"doi:10.1016/j.brs.2026.103208","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
-    },
-    {
-      "id":"DAILY-WUWANGDUN-GRAIN-WRAPPING-2026","triage_class":"NEWLY_INDEXED_MORTUARY_RITUAL_ARCHAEOLOGY","status":"CANDIDATE_UNREVIEWED","title":"Tradition of wrapping grains in funerary rituals 2200 years ago","publication_date":"2026-08-18","typeset_correction_date":"2026-09-08","index_date":"2026-09-15","discovered_at":"2026-09-15","doi":"10.1093/nsr/nwag504","canonical_url":"https://doi.org/10.1093/nsr/nwag504","source_type":"PEER_REVIEWED_JOURNAL_ARTICLE","domains":["ARCHAEOLOGY","MORTUARY","RITUAL","PLANT_REMAINS","FOODWAYS","CHU","RADIOCARBON"],"review_priority":"HIGH","sensitive":true,"restricted":false,"sensitivity_flags":["MORTUARY_CONTEXT","CULTURAL_HERITAGE","TRADITION_CONTINUITY_CLAIM"],"candidate_relevance":"Well-dated plant bundles from the Wuwangdun tomb are reported at approximately 2200 cal BP and interpreted as a funerary practice structurally identical to zongzi.","epistemic_caution":"Material similarity and chronological compatibility do not establish direct historical descent, continuity with the Qu Yuan legend, or a unique ritual meaning. Archaeological observations must remain separate from later textual traditions.","provenance":{"provider":"National Science Review / Oxford Academic / PubMed","pmid":"42713400","peer_reviewed":true,"open_access":true,"web_checked":"2026-09-15","dedup_key":"doi:10.1093/nsr/nwag504","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
-    },
-    {
-      "id":"DAILY-PSYCHEDELIC-ASSOCIATIVE-LEARNING-REVIEW-2026","triage_class":"NEWLY_INDEXED_SYSTEMATIC_REVIEW_ALTERED_STATE_COGNITION","status":"CANDIDATE_UNREVIEWED","title":"The Effect of Psychedelics on Associative Learning: a Systematic Review","publication_date":"2026-09-06","index_date":"2026-09-15","discovered_at":"2026-09-15","doi":"10.1016/j.neubiorev.2026.106951","canonical_url":"https://doi.org/10.1016/j.neubiorev.2026.106951","source_type":"PEER_REVIEWED_SYSTEMATIC_REVIEW_AHEAD_OF_PRINT","domains":["ALTERED_STATES","PSYCHEDELICS","ASSOCIATIVE_LEARNING","COGNITION","NEUROSCIENCE"],"review_priority":"HIGH","sensitive":true,"restricted":false,"sensitivity_flags":["PSYCHOACTIVE_SUBSTANCES","MODERN_HUMAN_PARTICIPANTS"],"candidate_relevance":"Systematic review of 62 studies on psychedelics and associative learning; only two included human studies and direct human evidence remains limited.","epistemic_caution":"Predominantly animal and heterogeneous modern evidence cannot be projected onto ancient ritual, religious experience or historical altered-state practices. Mechanistic proposals remain distinct from cultural meaning.","provenance":{"provider":"Neuroscience & Biobehavioral Reviews / PubMed","pmid":"42702287","peer_reviewed":true,"publication_status":"ahead-of-print","web_checked":"2026-09-15","dedup_key":"doi:10.1016/j.neubiorev.2026.106951","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
-    },
-    {
-      "id":"DAILY-KARTAL-RITUAL-MEMORIAL-2026","triage_class":"RECENT_PUBLICATION_ARCHAEOLOGICAL_RITUAL_METADATA","status":"CANDIDATE_UNREVIEWED","title":"A Ritual and Memorial Complex from the Final La Tène Period at the Kartal Site","publication_date":"2026-09-15","index_date":"2026-09-14","discovered_at":"2026-09-15","doi":"10.55086/SP2641532","canonical_url":"https://doi.org/10.55086/SP2641532","authoritative_external_id":"OpenAlex:W7212058796","source_type":"SCHOLARLY_ARTICLE_METADATA_FULL_SOURCE_REVIEW_PENDING","domains":["ARCHAEOLOGY","LA_TENE","RITUAL","MEMORIAL","MORTUARY"],"review_priority":"HIGH","sensitive":true,"restricted":true,"sensitivity_flags":["CULTURAL_HERITAGE","PAYWALLED_OR_RESTRICTED_FULL_TEXT"],"candidate_relevance":"Fresh scholarly metadata identifies a 2026 Stratum Plus article specifically focused on a Final La Tène ritual and memorial complex at Kartal.","epistemic_caution":"Only bibliographic metadata was verified in this run. The title's ritual/memorial classification must not be converted into claims about belief, function or social meaning without full source review.","provenance":{"provider":"Stratum Plus metadata / Wikidata-COCI/OpenAlex","peer_reviewed":null,"openalex_id":"W7212058796","index_or_retrieval_date":"2026-09-14","web_checked":"2026-09-15","dedup_key":"doi:10.55086/SP2641532","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
-    },
-    {
-      "id":"DAILY-OAXACA-RITUAL-CORRIGENDUM-2026","triage_class":"RECENT_SOURCE_CORRECTION","status":"CANDIDATE_UNREVIEWED","title":"Ritual Transformation, Deity Embodiment, and Nagualism in Formative Period Oaxaca – CORRIGENDUM","publication_date":"2026-09-10","index_date":"2026-09-15","discovered_at":"2026-09-15","doi":"10.1017/laq.2026.10204","canonical_url":"https://doi.org/10.1017/laq.2026.10204","source_type":"PEER_REVIEWED_JOURNAL_CORRIGENDUM","domains":["ARCHAEOLOGY","RITUAL","MESOAMERICA","ICONOGRAPHY","SOURCE_CORRECTION"],"review_priority":"HIGH","sensitive":true,"restricted":false,"sensitivity_flags":["INDIGENOUS_CULTURAL_HERITAGE","RELIGIOUS_INTERPRETATION","VISUAL_SOURCE_ATTRIBUTION"],"candidate_relevance":"Cambridge corrigendum states that Figure 5 and Figure 6 captions in the original article were reversed and have now been corrected.","epistemic_caution":"This is a source-provenance/figure-attribution correction, not evidence that the article's broader interpretation is confirmed or refuted. Any NOEMA extraction that used the original figure captions would require reconciliation.","source_correction":{"original_doi":"10.1017/laq.2026.10175","correction":"Figure 5 should be the tableau in the central cache under Structure 35 at San José Mogote; Figure 6 should be the serpentine reclining figure pendant."},"provenance":{"provider":"Latin American Antiquity / Cambridge University Press","peer_reviewed":true,"open_access":true,"web_checked":"2026-09-15","dedup_key":"doi:10.1017/laq.2026.10204","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
-    },
-    {
-      "id":"DAILY-HADRIAN-LIGHTNING-RITUAL-2026","triage_class":"RECENT_ARCHAEOLOGICAL_FINDING_PUBLIC_AUTHORITY_REPORTING","status":"CANDIDATE_UNREVIEWED","title":"FVLGVR SVBMANIVM inscription and lightning-ritual structure at Hadrian's Villa","publication_date":null,"release_or_report_date":"2026-09-10","index_date":"2026-09-15","discovered_at":"2026-09-15","authoritative_external_id":"villa-adriana:fulgur-submanium:2026-09-10","canonical_url":"https://www.ansa.it/lazio/notizie/2026/09/10/a-villa-adriana-riaffiora-testimonianza-del-rito-dei-luoghi-colpiti-dal_796c5547-a13f-4341-a849-897d2c3ba33f.html","source_type":"ARCHAEOLOGICAL_FINDING_PUBLIC_AUTHORITY_REPORTING","domains":["ROMAN_RELIGION","ARCHAEOLOGY","RITUAL","LIGHTNING","SACRED_SPACE","INSCRIPTION"],"review_priority":"HIGH","sensitive":true,"restricted":false,"sensitivity_flags":["ARCHAEOLOGICAL_SITE","CULTURAL_HERITAGE"],"candidate_relevance":"A marble slab bearing FVLGVR SVBMANIVM was reported in situ near the so-called amphitheatre at Hadrian's Villa; Ministry-linked reporting connects the structure with ritual sacralization of a lightning-struck place and a possible bidental.","epistemic_caution":"The in-situ inscription and archaeological context support a lightning-ritual interpretation, but identification of the exact structure and full ritual sequence remains interpretive. The finding does not reveal individual private belief.","provenance":{"provider":"ANSA reporting a statement from Italy's Ministry of Culture and excavation team","peer_reviewed":false,"web_checked":"2026-09-15","dedup_key":"external:villa-adriana:fulgur-submanium:2026-09-10","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
+      "id":"DAILY-U-SHAPED-LANGUAGE-MODELS-2026",
+      "triage_class":"NEWLY_INDEXED_PEER_REVIEWED_COGNITION_LINGUISTICS_MODEL_STUDY",
+      "status":"CANDIDATE_UNREVIEWED",
+      "title":"Modeling U-shaped Learning Curve in Children with Small Language Models",
+      "publication_date":"2026",
+      "release_date":"2026-09-15",
+      "index_date":"2026-09-15",
+      "discovered_at":"2026-09-15",
+      "doi":"10.5715/jnlp.33.1116",
+      "canonical_url":"https://doi.org/10.5715/jnlp.33.1116",
+      "source_type":"PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains":["LANGUAGE_ACQUISITION","COGNITION","COMPUTATIONAL_MODELING","CHILD_DIRECTED_SPEECH"],
+      "review_priority":"MEDIUM",
+      "sensitive":false,
+      "restricted":false,
+      "candidate_relevance":"Peer-reviewed J-STAGE article tests whether small language models trained on child-directed speech reproduce U-shaped acquisition and overregularization patterns; some U-shaped curves emerge but error preferences do not fully match children.",
+      "epistemic_caution":"Behavior of language models is a computational comparison, not evidence of a human cognitive mechanism. Model-generated outputs must not be treated as observations of child language acquisition.",
+      "provenance":{"provider":"Journal of Natural Language Processing / J-STAGE","peer_reviewed":true,"release_date":"2026-09-15","web_checked":"2026-09-15","dedup_key":"doi:10.5715/jnlp.33.1116","github_dedup_result":"NO_EXISTING_NOEMA_MATCH"}
     }
   ],
-  "deduplicated_discoveries": [
-    {"doi":"10.1016/j.quascirev.2026.110079","existing_ref":"projects/noema/data/candidates/daily/2026-09-07.json","reason":"Existing NOEMA candidate; issue date is 2026-09-15 but discovery already occurred on 2026-09-07."},
-    {"doi":"10.1016/j.quascirev.2026.110076","existing_ref":"projects/noema/data/candidates/daily/2026-09-07.json","reason":"Existing NOEMA candidate; issue date is 2026-09-15 but discovery already occurred on 2026-09-07."},
-    {"doi":"10.1016/j.jasrep.2026.105812","existing_ref":"projects/noema/data/candidates/daily/2026-09-01.json","reason":"Existing NOEMA candidate."},
-    {"doi":"10.1038/s41586-026-10976-9","existing_ref":"prior NOEMA daily candidates","reason":"Existing Denisovan candidate."},
-    {"doi":"10.1111/nyas.70316","existing_ref":"projects/noema/data/candidates/daily/2026-09-14.json","reason":"Existing rhythmicity/nonordinary-states candidate."},
-    {"doi":"10.1038/s41598-026-70250-w","existing_ref":"prior NOEMA daily candidates","reason":"Existing millet chronology candidate."},
-    {"doi":"10.1038/s41598-026-69086-1","existing_ref":"prior NOEMA daily candidates","reason":"Existing Sweden loess chronology candidate."},
-    {"doi":"10.1038/s41598-026-37700-x","existing_ref":"prior NOEMA daily candidates","reason":"Existing drumming/theta altered-state candidate."}
+  "cumulative_candidate_refs": [
+    {"id":"DAILY-MIYAKE-RADIOCARBON-2026","doi":"10.1098/rsta.2025.0263"},
+    {"id":"DAILY-BRONZE-MILLET-POLAND-2026","doi":"10.1126/sciadv.aeh1079"},
+    {"id":"DAILY-ECSTATIC-INSULAR-STIMULATION-2026","doi":"10.1016/j.brs.2026.103208"},
+    {"id":"DAILY-WUWANGDUN-GRAIN-WRAPPING-2026","doi":"10.1093/nsr/nwag504"},
+    {"id":"DAILY-PSYCHEDELIC-ASSOCIATIVE-LEARNING-REVIEW-2026","doi":"10.1016/j.neubiorev.2026.106951"},
+    {"id":"DAILY-KARTAL-RITUAL-MEMORIAL-2026","doi":"10.55086/SP2641532"},
+    {"id":"DAILY-OAXACA-RITUAL-CORRIGENDUM-2026","doi":"10.1017/laq.2026.10204"},
+    {"id":"DAILY-HADRIAN-LIGHTNING-RITUAL-2026","authoritative_external_id":"villa-adriana:fulgur-submanium:2026-09-10"},
+    {"id":"DAILY-SECOND-PLAGUE-PHIRM-2026","doi":"10.1073/pnas.2534899123","authoritative_external_id":"PMID:42721078"},
+    {"id":"DAILY-U-SHAPED-LANGUAGE-MODELS-2026","doi":"10.5715/jnlp.33.1116"}
   ],
+  "deduplicated_dois": ["10.1016/j.quascirev.2026.110079","10.1016/j.quascirev.2026.110076","10.1016/j.jasrep.2026.105812","10.1038/s41586-026-10976-9","10.1111/nyas.70316","10.1038/s41598-026-70250-w","10.1038/s41598-026-69086-1","10.1038/s41598-026-37700-x"],
   "contradictions_or_method_pressure": [
-    {"id":"PRESSURE-MIYAKE-RADIOCARBON-CALIBRATION","candidate_id":"DAILY-MIYAKE-RADIOCARBON-2026","type":"METHOD_PRESSURE","summary":"Single-year potential is conditional on annual-resolution calibration, seasonality, regional variation and sample/context suitability."},
-    {"id":"PRESSURE-MILLET-DATE-MIGRATION","candidate_id":"DAILY-BRONZE-MILLET-POLAND-2026","type":"DATING_AND_INTERPRETIVE_PRESSURE","summary":"Earlier millet-consumption chronology plus weak support for simple demic diffusion pressures any migration-first narrative."},
-    {"id":"PRESSURE-ECSTATIC-STIMULATION-ANCIENT-ANALOGY","candidate_id":"DAILY-ECSTATIC-INSULAR-STIMULATION-2026","type":"MODERN_ANALOGY_PRESSURE","summary":"Clinical electrically induced ecstatic phenomena cannot be projected onto ancient ritual or spirituality."},
-    {"id":"PRESSURE-WUWANGDUN-RITUAL-CULTURAL-CONTINUITY","candidate_id":"DAILY-WUWANGDUN-GRAIN-WRAPPING-2026","type":"CONTINUITY_PRESSURE","summary":"Structural similarity between plant bundles and zongzi does not by itself demonstrate direct historical continuity with later legend or custom."},
-    {"id":"PRESSURE-PSYCHEDELIC-ANIMAL-HUMAN-HISTORICAL","candidate_id":"DAILY-PSYCHEDELIC-ASSOCIATIVE-LEARNING-REVIEW-2026","type":"EVIDENCE_TRANSFER_PRESSURE","summary":"Most reviewed studies are animal studies; human direct evidence is limited and neither body transfers automatically to historical ritual."},
-    {"id":"PRESSURE-KARTAL-METADATA-RITUAL-LABEL","candidate_id":"DAILY-KARTAL-RITUAL-MEMORIAL-2026","type":"SOURCE_ACCESS_PRESSURE","summary":"Title/metadata alone cannot substantiate ritual function or belief claims; full source review is required."},
-    {"id":"CORRECTION-OAXACA-FIGURE-CAPTIONS","candidate_id":"DAILY-OAXACA-RITUAL-CORRIGENDUM-2026","type":"SOURCE_CORRECTION","summary":"Original article reversed Figure 5 and Figure 6 captions; any downstream visual-source extraction must use the corrected mapping."},
-    {"id":"PRESSURE-HADRIAN-RITUAL-PRIVATE-BELIEF","candidate_id":"DAILY-HADRIAN-LIGHTNING-RITUAL-2026","type":"INTERPRETIVE_BOUNDARY","summary":"Ritualized space and inscription do not disclose individual private belief or the entire ritual script."}
+    {"id":"PRESSURE-MIYAKE-RADIOCARBON-CALIBRATION","candidate_id":"DAILY-MIYAKE-RADIOCARBON-2026","type":"METHOD_PRESSURE"},
+    {"id":"PRESSURE-MILLET-DATE-MIGRATION","candidate_id":"DAILY-BRONZE-MILLET-POLAND-2026","type":"DATING_AND_INTERPRETIVE_PRESSURE"},
+    {"id":"PRESSURE-ECSTATIC-STIMULATION-ANCIENT-ANALOGY","candidate_id":"DAILY-ECSTATIC-INSULAR-STIMULATION-2026","type":"MODERN_ANALOGY_PRESSURE"},
+    {"id":"PRESSURE-WUWANGDUN-RITUAL-CULTURAL-CONTINUITY","candidate_id":"DAILY-WUWANGDUN-GRAIN-WRAPPING-2026","type":"CONTINUITY_PRESSURE"},
+    {"id":"PRESSURE-PSYCHEDELIC-ANIMAL-HUMAN-HISTORICAL","candidate_id":"DAILY-PSYCHEDELIC-ASSOCIATIVE-LEARNING-REVIEW-2026","type":"EVIDENCE_TRANSFER_PRESSURE"},
+    {"id":"PRESSURE-KARTAL-METADATA-RITUAL-LABEL","candidate_id":"DAILY-KARTAL-RITUAL-MEMORIAL-2026","type":"SOURCE_ACCESS_PRESSURE"},
+    {"id":"CORRECTION-OAXACA-FIGURE-CAPTIONS","candidate_id":"DAILY-OAXACA-RITUAL-CORRIGENDUM-2026","type":"SOURCE_CORRECTION"},
+    {"id":"PRESSURE-HADRIAN-RITUAL-PRIVATE-BELIEF","candidate_id":"DAILY-HADRIAN-LIGHTNING-RITUAL-2026","type":"INTERPRETIVE_BOUNDARY"},
+    {"id":"PRESSURE-PLAGUE-PHIRM-OUTBREAK-IDENTITY","candidate_id":"DAILY-SECOND-PLAGUE-PHIRM-2026","type":"DATING_AND_MODEL_ASSOCIATION_PRESSURE","summary":"Refined phylochronology can narrow intervals and support tentative outbreak associations, but modeled/documentary alignment is not direct event identity."},
+    {"id":"PRESSURE-LM-HUMAN-LANGUAGE-MECHANISM","candidate_id":"DAILY-U-SHAPED-LANGUAGE-MODELS-2026","type":"MODEL_TO_HUMAN_INFERENCE_PRESSURE","summary":"A language model reproducing some child-like learning curves is not evidence that the model implements the human acquisition mechanism."}
   ],
   "dating_revisions": [
-    {"id":"DATING-BRONZE-MILLET-POLAND-2026","candidate_id":"DAILY-BRONZE-MILLET-POLAND-2026","status":"CANDIDATE_RECONCILIATION_REQUIRED","previous":"1460 ± 40 cal BCE","candidate_revision":"1590 ± 50 cal BCE","note":"Do not change approved NOEMA chronology without human source review and scope reconciliation."}
+    {"id":"DATING-BRONZE-MILLET-POLAND-2026","candidate_id":"DAILY-BRONZE-MILLET-POLAND-2026","status":"CANDIDATE_RECONCILIATION_REQUIRED","previous":"1460 ± 40 cal BCE","candidate_revision":"1590 ± 50 cal BCE"},
+    {"id":"DATING-SECOND-PLAGUE-PHIRM-2026","candidate_id":"DAILY-SECOND-PLAGUE-PHIRM-2026","status":"CANDIDATE_RECONCILIATION_REQUIRED","candidate_revision":"Phylogenetically informed radiocarbon intervals and tentative mapping of 75 genomes to documented outbreaks; exact event-level changes require source extraction and human review."}
   ],
-  "source_corrections": [
-    {"id":"SOURCE-CORRECTION-OAXACA-FIGURES-2026","candidate_id":"DAILY-OAXACA-RITUAL-CORRIGENDUM-2026","status":"CANDIDATE_RECONCILIATION_REQUIRED"}
-  ],
+  "source_corrections": [{"id":"SOURCE-CORRECTION-OAXACA-FIGURES-2026","candidate_id":"DAILY-OAXACA-RITUAL-CORRIGENDUM-2026","status":"CANDIDATE_RECONCILIATION_REQUIRED"}],
   "relationships_generated": [],
-  "hypotheses_revisited": [
-    "RADIOCARBON_MIYAKE_EVENT_DATING",
-    "BRONZE_AGE_MILLET_ADOPTION_CHRONOLOGY",
-    "ALTERED_STATE_ECSTATIC_NEUROPHYSIOLOGY",
-    "CHU_FUNERARY_GRAIN_WRAPPING_CONTINUITY",
-    "PSYCHEDELIC_LEARNING_CONTEXT",
-    "KARTAL_RITUAL_MEMORIAL_CLASSIFICATION",
-    "OAXACA_RITUAL_VISUAL_SOURCE_PROVENANCE",
-    "ROMAN_LIGHTNING_RITUAL_HADRIAN"
-  ],
+  "hypotheses_revisited": ["RADIOCARBON_MIYAKE_EVENT_DATING","BRONZE_AGE_MILLET_ADOPTION_CHRONOLOGY","ALTERED_STATE_ECSTATIC_NEUROPHYSIOLOGY","CHU_FUNERARY_GRAIN_WRAPPING_CONTINUITY","PSYCHEDELIC_LEARNING_CONTEXT","KARTAL_RITUAL_MEMORIAL_CLASSIFICATION","OAXACA_RITUAL_VISUAL_SOURCE_PROVENANCE","ROMAN_LIGHTNING_RITUAL_HADRIAN","SECOND_PLAGUE_PHYLOCHRONOLOGY","LANGUAGE_ACQUISITION_MODEL_VALIDITY"],
   "review_items": [
     {"id":"REVIEW-MIYAKE-DATING-METHOD","priority":"HIGH","targets":["RADIOCARBON_MIYAKE_EVENT_DATING"]},
     {"id":"REVIEW-BRONZE-MILLET-CHRONOLOGY","priority":"HIGH","targets":["BRONZE_AGE_MILLET_ADOPTION_CHRONOLOGY"]},
@@ -148,10 +139,13 @@
     {"id":"REVIEW-KARTAL-FULL-SOURCE","priority":"HIGH","targets":["KARTAL_RITUAL_MEMORIAL_CLASSIFICATION"]},
     {"id":"REVIEW-OAXACA-FIGURE-CORRECTION","priority":"HIGH","targets":["OAXACA_RITUAL_VISUAL_SOURCE_PROVENANCE"]},
     {"id":"REVIEW-HADRIAN-LIGHTNING-RITUAL","priority":"HIGH","targets":["ROMAN_LIGHTNING_RITUAL_HADRIAN"]},
-    {"id":"REVIEW-CROSSREF-PRIORITY-LEGACY-QUEUE","priority":"HIGH","targets":["10.1007/bf00975761","10.1016/j.jas.2010.01.037","10.1017/cbo9781316014509.004","10.1163/22134379-90002885","10.2307/3774025"],"note":"New priority legacy entrants require historiographic/source review; priority movement alone is not evidence."}
+    {"id":"REVIEW-CROSSREF-PRIORITY-LEGACY-QUEUE","priority":"HIGH","targets":["10.1007/bf00975761","10.1016/j.jas.2010.01.037","10.1017/cbo9781316014509.004","10.1163/22134379-90002885","10.2307/3774025"]},
+    {"id":"REVIEW-PLAGUE-PHIRM-DATING-ASSOCIATIONS","priority":"HIGH","targets":["SECOND_PLAGUE_PHYLOCHRONOLOGY"]},
+    {"id":"REVIEW-LM-LANGUAGE-ACQUISITION-ANALOGY","priority":"MEDIUM","targets":["LANGUAGE_ACQUISITION_MODEL_VALIDITY"]}
   ],
   "restricted_or_sensitive_summary": {
     "restricted_candidates": ["DAILY-KARTAL-RITUAL-MEMORIAL-2026"],
-    "sensitive_candidates": ["DAILY-BRONZE-MILLET-POLAND-2026","DAILY-ECSTATIC-INSULAR-STIMULATION-2026","DAILY-WUWANGDUN-GRAIN-WRAPPING-2026","DAILY-PSYCHEDELIC-ASSOCIATIVE-LEARNING-REVIEW-2026","DAILY-KARTAL-RITUAL-MEMORIAL-2026","DAILY-OAXACA-RITUAL-CORRIGENDUM-2026","DAILY-HADRIAN-LIGHTNING-RITUAL-2026"]
-  }
+    "sensitive_candidates": ["DAILY-BRONZE-MILLET-POLAND-2026","DAILY-ECSTATIC-INSULAR-STIMULATION-2026","DAILY-WUWANGDUN-GRAIN-WRAPPING-2026","DAILY-PSYCHEDELIC-ASSOCIATIVE-LEARNING-REVIEW-2026","DAILY-KARTAL-RITUAL-MEMORIAL-2026","DAILY-OAXACA-RITUAL-CORRIGENDUM-2026","DAILY-HADRIAN-LIGHTNING-RITUAL-2026","DAILY-SECOND-PLAGUE-PHIRM-2026"]
+  },
+  "supplemental_discovery_note": "A second same-day scan found two additional non-duplicate candidates after the first daily persistence: the PNAS Second Plague phylochronology publication and a peer-reviewed J-STAGE computational language-acquisition study. Both remain candidates only."
 }
