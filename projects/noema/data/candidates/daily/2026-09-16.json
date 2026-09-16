@@ -1,0 +1,475 @@
+{
+  "triage_id": "NOEMA-DAILY-INGEST-2026-09-16",
+  "status": "CANDIDATE_UNREVIEWED",
+  "generated_at": "2026-09-16T06:22:01+00:00",
+  "source_discovery_run": {
+    "run_id": "github-discovery-35055793635",
+    "completed_at": "2026-09-16T04:29:53Z",
+    "code_commit": "3fd633a6d1fca1403432f8dada24a0395ba892f2",
+    "candidate_count": 114,
+    "priority_candidate_count": 30,
+    "raw_payload_sha256": "4a04e36d88f6dfc3c4d78de1f3495020928fb905bd8a77b5d9869bbada086f04",
+    "github_artifact_digest": "sha256:467f003768d51ecf64edc402688fe5299500d38a4ff80b668fa7a4d50d3df97c",
+    "artifact_id": 10430418424,
+    "priority_queue_distribution": {
+      "RECENT_PUBLICATION": 2,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 26
+    },
+    "overall_distribution": {
+      "RECENT_PUBLICATION": 2,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 110
+    }
+  },
+  "epistemic_policy": [
+    "Every discovered record remains CANDIDATE_UNREVIEWED until human review.",
+    "Model-generated synthesis, classifications, embeddings, inferred entities and reasoning chains are not evidence.",
+    "Similarity does not imply historical descent, common origin or diffusion.",
+    "Unknown is not absence.",
+    "Publication, version, index, release/update and discovery dates remain distinct.",
+    "Archaeological observations remain distinct from inferred symbolic, ritual, social or cognitive meaning.",
+    "Ancient-DNA affinity, IBD sharing, culture, language, political identity and social identity are not interchangeable variables."
+  ],
+  "priority_queue": {
+    "distribution": {
+      "RECENT_PUBLICATION": 2,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 26
+    },
+    "records": {
+      "RECENT_PUBLICATION": [
+        "10.4324/9781003683551-11",
+        "10.4324/9781003683551-2"
+      ],
+      "UPCOMING_OR_AHEAD_OF_PRINT": [
+        "10.3366/9781399564618-005",
+        "10.1515/9780691266329-009"
+      ],
+      "NEWLY_INDEXED_LEGACY": [
+        "10.1017/cbo9781316014509.004",
+        "10.1016/j.evolhumbehav.2010.07.008",
+        "10.1016/j.jhevol.2007.05.016",
+        "10.3406/assr.1974.2041",
+        "10.1017/cbo9780511557996.005",
+        "10.1371/journal.pone.0163019",
+        "10.1006/jaar.2000.0369",
+        "10.1093/acprof:oso/9780199644094.003.0018",
+        "10.2307/3774025",
+        "10.1007/bf00975761",
+        "10.3764/aja.122.1.0033",
+        "10.1558/imre.v17i2.211",
+        "10.1163/22134379-90002885",
+        "10.3390/rel12100877",
+        "10.3390/land14051011",
+        "10.1111/tops.70033",
+        "10.1080/13674676.2024.2351997",
+        "10.1080/2153599x.2018.1453532",
+        "10.1080/14442213.2026.2697718",
+        "10.54254/2753-7064/2025.23062",
+        "10.1017/cbo9780511558252.013",
+        "10.2307/j.ctvdjrr7s.10",
+        "10.1093/acprof:oso/9780199644094.003.0014",
+        "10.1086/588495",
+        "10.1525/9780520340329-002",
+        "10.1016/j.jebo.2004.03.009"
+      ]
+    }
+  },
+  "priority_queue_delta_vs_2026_09_15": {
+    "added": [
+      "10.1017/cbo9780511558252.013",
+      "10.3406/assr.1974.2041",
+      "10.1525/9780520340329-002",
+      "10.1016/j.jebo.2004.03.009"
+    ],
+    "removed": [
+      "10.1016/j.jas.2010.01.037",
+      "10.1002/ejsp.2331",
+      "10.1016/j.evolhumbehav.2026.106943",
+      "10.1086/742088"
+    ],
+    "unchanged_count": 26,
+    "note": "Indexing/ranking movement only; not an evidence-state change."
+  },
+  "new_candidates": [
+    {
+      "id": "DAILY-FINLAND-BALTIC-ADNA-2026",
+      "triage_class": "RECENT_PUBLICATION_ANCIENT_DNA_POPULATION_HISTORY",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Population genomics, demography, and circum-Baltic connectivity of Early Medieval southwestern Finland",
+      "publication_date": "2026-09-15",
+      "version_of_record_date": "2026-09-15",
+      "index_date": null,
+      "discovered_at": "2026-09-16",
+      "doi": "10.1186/s13059-026-04277-7",
+      "canonical_url": "https://doi.org/10.1186/s13059-026-04277-7",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": [
+        "ANCIENT_DNA",
+        "POPULATION_HISTORY",
+        "MEDIEVAL_FINLAND",
+        "BALTIC_CONNECTIVITY",
+        "DEMOGRAPHY"
+      ],
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "restricted": false,
+      "sensitivity_flags": [
+        "HUMAN_REMAINS",
+        "POPULATION_IDENTITY",
+        "SAMI_CONTEXT"
+      ],
+      "candidate_relevance": "Genome Biology reports 34 analysed ancient individuals from Late Iron Age/Early Medieval southwestern Finland, circum-Baltic IBD links, inland continuity, and a later coastal ancestry shift interpreted in relation to Swedish immigration.",
+      "epistemic_caution": "Genetic affinity, IBD networks and ancestry shifts do not by themselves establish ethnicity, language, political identity or cultural identity. The timing and cause of migration are model- and source-supported interpretations, not direct observations.",
+      "provenance": {
+        "provider": "Genome Biology / Springer Nature",
+        "peer_reviewed": true,
+        "web_checked": "2026-09-16",
+        "dedup_key": "doi:10.1186/s13059-026-04277-7",
+        "github_dedup_result": "NO_EXISTING_NOEMA_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-AUSTRALIA-INDIGENOUS-DEMOGRAPHY-2026",
+      "triage_class": "RECENT_PUBLICATION_INDIGENOUS_DEMOGRAPHIC_MODEL",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Large estimated size of the Australian Indigenous population before its extensive decline following colonial invasion",
+      "publication_date": "2026-09-15",
+      "version_of_record_date": "2026-09-15",
+      "index_date": null,
+      "discovered_at": "2026-09-16",
+      "doi": "10.1038/s41562-026-02571-9",
+      "canonical_url": "https://doi.org/10.1038/s41562-026-02571-9",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": [
+        "INDIGENOUS_HISTORY",
+        "DEMOGRAPHY",
+        "ARCHAEOLOGY",
+        "GENETICS",
+        "COLONIAL_HISTORY"
+      ],
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "restricted": false,
+      "sensitivity_flags": [
+        "INDIGENOUS_AUSTRALIAN_HISTORY",
+        "COLONIAL_VIOLENCE",
+        "DEMOGRAPHIC_MODELING"
+      ],
+      "candidate_relevance": "Nature Human Behaviour integrates ethnographic observations, archaeological and genetic reconstructions and carrying-capacity models, reporting a bootstrapped median pre-colonial population estimate of 2.22 million and severe post-invasion demographic decline.",
+      "epistemic_caution": "The pre-colonial population is a model-derived continental estimate, not a census. It must not be projected to individual communities or used to overwrite community histories; genetic effective population size and carrying capacity are not direct headcounts.",
+      "provenance": {
+        "provider": "Nature Human Behaviour",
+        "peer_reviewed": true,
+        "web_checked": "2026-09-16",
+        "dedup_key": "doi:10.1038/s41562-026-02571-9",
+        "github_dedup_result": "NO_EXISTING_NOEMA_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-TROPICAL-AUSTRALIA-HYDROCLIMATE-2026",
+      "triage_class": "UPCOMING_OR_AHEAD_OF_PRINT_PALEOCLIMATE_METHOD_PRESSURE",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Hydroclimate complexity across the last glacial cycle in tropical Australia: reassessing the uniqueness of the Holocene",
+      "publication_date": "2026",
+      "public_report_date": "2026-09-15",
+      "index_date": "2026-09-16",
+      "discovered_at": "2026-09-16",
+      "doi": "10.1016/j.quascirev.2026.110253",
+      "canonical_url": "https://doi.org/10.1016/j.quascirev.2026.110253",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE_AHEAD_OF_PRINT_OR_CURRENT_ISSUE_METADATA",
+      "domains": [
+        "PALEOCLIMATE",
+        "HYDROCLIMATE",
+        "TROPICAL_AUSTRALIA",
+        "SAMPLING_BIAS",
+        "ENVIRONMENT"
+      ],
+      "review_priority": "HIGH",
+      "sensitive": false,
+      "restricted": false,
+      "candidate_relevance": "The study synthesizes 69 palaeoenvironmental archives spanning about 130,000 years and argues that declining temporal resolution with age can make Holocene hydroclimate appear uniquely heterogeneous.",
+      "epistemic_caution": "Proxy-resolution and archive-density differences can masquerade as environmental complexity. Climate proxies must not be converted into causal claims about human behaviour without matched chronology, exposure and alternative-model tests.",
+      "provenance": {
+        "provider": "Quaternary Science Reviews metadata / public scholarly reporting",
+        "peer_reviewed": true,
+        "web_checked": "2026-09-16",
+        "dedup_key": "doi:10.1016/j.quascirev.2026.110253",
+        "github_dedup_result": "NO_EXISTING_NOEMA_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-MIDDLE-VOICE-CLDF-2026",
+      "triage_class": "RECENT_STRUCTURED_LINGUISTIC_DATASET",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Middle voice markers in the languages of the world",
+      "publication_date": "2026-09-14",
+      "release_date": "2026-09-14",
+      "index_date": "2026-09-16",
+      "discovered_at": "2026-09-16",
+      "doi": "10.5281/zenodo.22746289",
+      "canonical_url": "https://doi.org/10.5281/zenodo.22746289",
+      "source_type": "OPEN_STRUCTURED_DATASET",
+      "domains": [
+        "LINGUISTICS",
+        "TYPOLOGY",
+        "CLDF",
+        "MIDDLE_VOICE"
+      ],
+      "review_priority": "MEDIUM",
+      "sensitive": false,
+      "restricted": false,
+      "candidate_relevance": "Zenodo v1.0 provides a CLDF StructureDataset of middle-voice markers intended for comparative linguistic analysis.",
+      "epistemic_caution": "Typological resemblance or shared grammatical structure does not establish common ancestry, historical descent, migration or cultural identity. Language-family and contact controls remain necessary.",
+      "provenance": {
+        "provider": "Zenodo",
+        "peer_reviewed": false,
+        "structured_dataset": true,
+        "web_checked": "2026-09-16",
+        "dedup_key": "doi:10.5281/zenodo.22746289",
+        "github_dedup_result": "NO_EXISTING_NOEMA_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-MERETNEITH-SEREKH-DIGITAL-2026",
+      "triage_class": "RECENT_HISTORICAL_SOURCE_DIGITAL_REASSESSMENT",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "New technology illuminating ancient evidence: Re-evaluating Meretneith's serekhs and political position",
+      "publication_date": "2026",
+      "public_report_date": "2026-09-15",
+      "index_date": "2026-09-16",
+      "discovered_at": "2026-09-16",
+      "doi": null,
+      "canonical_url": "https://phys.org/news/2026-09-year-royal-mystery-digital-clues.html",
+      "authoritative_external_id": "prague-egyptological-studies:XXXVI-2026:meretneith-serekhs",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE_REPORTED_WITH_ARCHIVAL_IMAGE_ANALYSIS",
+      "domains": [
+        "EGYPTOLOGY",
+        "EPIGRAPHY",
+        "HISTORICAL_SOURCE",
+        "DIGITAL_IMAGING",
+        "POLITICAL_HISTORY"
+      ],
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "restricted": false,
+      "sensitivity_flags": [
+        "EGYPTIAN_CULTURAL_HERITAGE",
+        "LOST_ARTIFACT",
+        "ARCHIVAL_IMAGE"
+      ],
+      "candidate_relevance": "A Prague Egyptological Studies article digitally re-examines the sole surviving photograph of a lost mud-stopper inscription and argues that two disputed serekhs contain signs consistent with Meretneith's name, supporting a revised political-role hypothesis.",
+      "epistemic_caution": "Digital enhancement of a scan of an archival photograph is derived evidence, not an independent physical observation. The original artifact and glass plate are unavailable; identification and reconstructed career stages require expert source review.",
+      "provenance": {
+        "provider": "Prague Egyptological Studies via author-authored public report",
+        "peer_reviewed_reported": true,
+        "web_checked": "2026-09-16",
+        "dedup_key": "external:prague-egyptological-studies:XXXVI-2026:meretneith-serekhs",
+        "github_dedup_result": "NO_EXISTING_NOEMA_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-CLOGGS-CAVE-PHYTOLITH-2026",
+      "triage_class": "NEWLY_SURFACED_2026_INDIGENOUS_ENVIRONMENTAL_ARCHAEOLOGY",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Phytoliths from Cloggs Cave, GunaiKurnai country (southeastern Australia) reveal the gathering of whole grasses for burning practices inside the cave",
+      "publication_date": "2026-07-22",
+      "index_date": "2026-09-16",
+      "discovered_at": "2026-09-16",
+      "doi": "10.3389/fearc.2026.1871928",
+      "canonical_url": "https://doi.org/10.3389/fearc.2026.1871928",
+      "source_type": "PEER_REVIEWED_JOURNAL_ARTICLE",
+      "domains": [
+        "ARCHAEOLOGY",
+        "PHYTOLITHS",
+        "PLANT_USE",
+        "RITUAL",
+        "INDIGENOUS_KNOWLEDGE",
+        "DEEP_TIME"
+      ],
+      "review_priority": "HIGH",
+      "sensitive": true,
+      "restricted": false,
+      "sensitivity_flags": [
+        "GUNAIKURNAI_CULTURAL_HERITAGE",
+        "INDIGENOUS_KNOWLEDGE",
+        "COMMUNITY_CONTEXT"
+      ],
+      "candidate_relevance": "Burnt phytoliths and whole-grass indicators provide evidence of people transporting and burning plants inside Cloggs Cave over a long stratigraphic sequence; the study was conducted with GunaiKurnai Land and Waters Aboriginal Corporation.",
+      "epistemic_caution": "Burnt phytoliths support human plant-burning activity, not automatic proof of an unchanged ritual meaning across 25,000 years. Unburnt phytoliths can include non-human contributions; Indigenous knowledge and permissions must not be stripped from context.",
+      "provenance": {
+        "provider": "Frontiers in Environmental Archaeology",
+        "peer_reviewed": true,
+        "web_checked": "2026-09-16",
+        "dedup_key": "doi:10.3389/fearc.2026.1871928",
+        "github_dedup_result": "NO_EXISTING_NOEMA_MATCH"
+      }
+    },
+    {
+      "id": "DAILY-SANTELPIDIO-PICENE-BURIAL-2026",
+      "triage_class": "RECENT_ARCHAEOLOGICAL_FINDING_PRELIMINARY_MORTUARY_CONTEXT",
+      "status": "CANDIDATE_UNREVIEWED",
+      "title": "Sant'Elpidio a Mare Picene burial with ceramic grave assemblage",
+      "publication_date": null,
+      "public_report_date": "2026-09-10",
+      "index_date": "2026-09-16",
+      "discovered_at": "2026-09-16",
+      "doi": null,
+      "canonical_url": "https://www.ansa.it/amp/marche/notizie/2026/09/10/scoperta-archeologica-a-santelpidio-a-mare-riaffiora-una-tomba-picena_1c780dc3-ef79-44df-8be0-b1a9927ee871.html",
+      "authoritative_external_id": "soprintendenza-ap-fm-mc:sant-elpidio-picene-burial:2026-09-08",
+      "source_type": "ARCHAEOLOGICAL_FINDING_AUTHORITY_REPORT",
+      "domains": [
+        "ARCHAEOLOGY",
+        "MORTUARY",
+        "PICENE",
+        "ITALY",
+        "CERAMICS"
+      ],
+      "review_priority": "MEDIUM",
+      "sensitive": true,
+      "restricted": false,
+      "sensitivity_flags": [
+        "BURIAL_CONTEXT",
+        "CULTURAL_HERITAGE",
+        "SITE_PROTECTION"
+      ],
+      "candidate_relevance": "Italian heritage-authority reporting identifies part of a composite ceramic grave assemblage near Sant'Elpidio a Mare, provisionally attributed to Picene culture and preliminarily dated to the 6th century BCE; finds were secured for restoration and study.",
+      "epistemic_caution": "Both cultural attribution and date are explicitly preliminary. Grave assemblage does not by itself establish belief, ritual intent beyond deposition, social rank, identity or a broader regional mortuary norm.",
+      "provenance": {
+        "provider": "Italian Soprintendenza reporting via ANSA",
+        "peer_reviewed": false,
+        "authority_report": true,
+        "web_checked": "2026-09-16",
+        "dedup_key": "external:soprintendenza-ap-fm-mc:sant-elpidio-picene-burial:2026-09-08",
+        "github_dedup_result": "NO_EXISTING_NOEMA_MATCH"
+      }
+    }
+  ],
+  "deduplicated_rediscoveries": [
+    {
+      "doi": "10.1126/sciadv.aei1901",
+      "existing_ref": "projects/noema/data/candidates/daily/2026-09-10.json",
+      "reason": "Already staged and subsequently reanalysed; rediscovered in current altered-state/archaeology scan."
+    }
+  ],
+  "direct_approved_claim_contradictions": [],
+  "contradictions_or_method_pressure": [
+    {
+      "id": "PRESSURE-FINLAND-ADNA-IDENTITY",
+      "candidate_id": "DAILY-FINLAND-BALTIC-ADNA-2026",
+      "type": "GENETIC_TO_IDENTITY_INFERENCE_PRESSURE"
+    },
+    {
+      "id": "PRESSURE-AUSTRALIA-DEMOGRAPHY-MODEL",
+      "candidate_id": "DAILY-AUSTRALIA-INDIGENOUS-DEMOGRAPHY-2026",
+      "type": "MODEL_TO_HEADCOUNT_AND_LOCAL_HISTORY_PRESSURE"
+    },
+    {
+      "id": "PRESSURE-HYDROCLIMATE-RESOLUTION",
+      "candidate_id": "DAILY-TROPICAL-AUSTRALIA-HYDROCLIMATE-2026",
+      "type": "PROXY_RESOLUTION_AND_ENVIRONMENT_CAUSATION_PRESSURE"
+    },
+    {
+      "id": "PRESSURE-MIDDLE-VOICE-DESCENT",
+      "candidate_id": "DAILY-MIDDLE-VOICE-CLDF-2026",
+      "type": "TYPOLOGY_TO_DESCENT_PRESSURE"
+    },
+    {
+      "id": "PRESSURE-MERETNEITH-DIGITAL-DERIVATION",
+      "candidate_id": "DAILY-MERETNEITH-SEREKH-DIGITAL-2026",
+      "type": "DERIVED_IMAGE_TO_HISTORICAL_ROLE_PRESSURE"
+    },
+    {
+      "id": "PRESSURE-CLOGGS-CONTINUITY",
+      "candidate_id": "DAILY-CLOGGS-CAVE-PHYTOLITH-2026",
+      "type": "BEHAVIOR_TO_RITUAL_CONTINUITY_PRESSURE"
+    },
+    {
+      "id": "PRESSURE-PICENE-PRELIMINARY",
+      "candidate_id": "DAILY-SANTELPIDIO-PICENE-BURIAL-2026",
+      "type": "PRELIMINARY_CHRONOLOGY_AND_MORTUARY_INTERPRETATION_PRESSURE"
+    }
+  ],
+  "dating_revisions": [],
+  "chronology_review_items": [
+    {
+      "candidate_id": "DAILY-SANTELPIDIO-PICENE-BURIAL-2026",
+      "status": "PRELIMINARY_NEW_CHRONOLOGY_NOT_REVISION",
+      "detail": "Authority reporting gives a provisional 6th-century BCE attribution pending restoration and study."
+    }
+  ],
+  "hypotheses_revisited": [
+    "MEDIEVAL_FINLAND_SWEDISH_MIGRATION_TIMING",
+    "PRECOLONIAL_AUSTRALIA_POPULATION_BASELINE",
+    "PALEOCLIMATE_PROXY_RESOLUTION_BIAS",
+    "LANGUAGE_TYPOLOGY_PHYLOGENY_SEPARATION",
+    "MERETNEITH_POLITICAL_STATUS",
+    "CLOGGS_RITUAL_CONTINUITY",
+    "PICENE_MORTUARY_CONTEXT_SANTELPIDIO"
+  ],
+  "review_items": [
+    {
+      "id": "REVIEW-FINLAND-ADNA",
+      "priority": "HIGH",
+      "target": "MEDIEVAL_FINLAND_SWEDISH_MIGRATION_TIMING"
+    },
+    {
+      "id": "REVIEW-AUSTRALIA-INDIGENOUS-DEMOGRAPHY",
+      "priority": "HIGH",
+      "target": "PRECOLONIAL_AUSTRALIA_POPULATION_BASELINE"
+    },
+    {
+      "id": "REVIEW-HYDROCLIMATE",
+      "priority": "HIGH",
+      "target": "PALEOCLIMATE_PROXY_RESOLUTION_BIAS"
+    },
+    {
+      "id": "REVIEW-MIDDLE-VOICE-DATASET",
+      "priority": "MEDIUM",
+      "target": "LANGUAGE_TYPOLOGY_PHYLOGENY_SEPARATION"
+    },
+    {
+      "id": "REVIEW-MERETNEITH",
+      "priority": "HIGH",
+      "target": "MERETNEITH_POLITICAL_STATUS"
+    },
+    {
+      "id": "REVIEW-CLOGGS",
+      "priority": "HIGH",
+      "target": "CLOGGS_RITUAL_CONTINUITY"
+    },
+    {
+      "id": "REVIEW-PICENE-SANTELPIDIO",
+      "priority": "MEDIUM",
+      "target": "PICENE_MORTUARY_CONTEXT_SANTELPIDIO"
+    },
+    {
+      "id": "REVIEW-LEGACY-PRIORITY-QUEUE",
+      "priority": "MEDIUM",
+      "target": "26 newly indexed legacy records in latest Crossref priority queue"
+    }
+  ],
+  "relationships_generated": [],
+  "hypotheses_promoted": [],
+  "sources_examined": [
+    "GitHub NOEMA Discovery artifact run 35055793635",
+    "2026-09-15 native NOEMA candidate pack",
+    "NOEMA run-manifest-v1 schema",
+    "Consensus scholarly search attempt",
+    "Genome Biology / Springer Nature",
+    "Nature Human Behaviour",
+    "Quaternary Science Reviews metadata/public scholarly reporting",
+    "Zenodo CLDF dataset",
+    "Prague Egyptological Studies author-authored public report",
+    "Frontiers in Environmental Archaeology",
+    "Italian Soprintendenza reporting via ANSA",
+    "GitHub repository DOI/external-ID dedup searches",
+    "Crossref discovery metadata",
+    "cross-domain web scholarly discovery"
+  ],
+  "errors": [
+    "Consensus monthly search quota exhausted; reset is October 1, 2026. Web, publisher, repository and authority sources were used as fallback."
+  ],
+  "summary": "Latest GitHub discovery produced 114 candidates with a 30-record priority queue (2 recent, 2 upcoming/ahead-of-print, 26 newly indexed legacy). Seven additional material candidates were staged after deduplication; no approved-claim contradiction or dating revision was established. One preliminary Picene chronology was queued for review. Zero relationships or hypothesis promotions were generated."
+}
