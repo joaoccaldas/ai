@@ -1,0 +1,58 @@
+{
+  "run_id": "chatgpt-daily-2026-09-16",
+  "task_type": "DAILY_INGEST",
+  "status": "COMPLETED_WITH_LIMITATION",
+  "started_at": "2026-09-16T06:15:19+00:00",
+  "completed_at": "2026-09-16T06:23:06+00:00",
+  "input_refs": [
+    "github-actions:NOEMA Discovery run 35055793635",
+    "github-artifact:10430418424",
+    "projects/noema/data/candidates/daily/2026-09-15.json",
+    "projects/noema/schemas/run-manifest-v1.json"
+  ],
+  "artifact_digests": {
+    "noema_crossref_raw_sha256": "4a04e36d88f6dfc3c4d78de1f3495020928fb905bd8a77b5d9869bbada086f04",
+    "github_artifact_digest": "sha256:467f003768d51ecf64edc402688fe5299500d38a4ff80b668fa7a4d50d3df97c",
+    "candidate_pack_sha256": "1625fe9b68d7d7eceabe8e98761b5c1a309a53814b48e77221443995d1e96cdc"
+  },
+  "sources_examined": 14,
+  "new_candidates": 7,
+  "candidate_updates": 0,
+  "contradictions": 0,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 7,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 8,
+  "max_epistemic_stage": null,
+  "errors": [
+    "Consensus monthly search quota exhausted; reset is October 1, 2026. Web, publisher, repository and authority sources were used as fallback."
+  ],
+  "summary": "Inspected successful NOEMA Discovery run 35055793635: 114 candidates; priority queue 2 RECENT_PUBLICATION, 2 UPCOMING_OR_AHEAD_OF_PRINT, 26 NEWLY_INDEXED_LEGACY. Staged seven additional material candidates after DOI/external-ID/canonical-URL deduplication, one known rediscovery deduplicated, no approved-claim contradiction and no dating revision. One preliminary Picene chronology requires review. No relationships or claims were promoted.",
+  "research_note": "Material candidates cover Early Medieval Finland aDNA, Indigenous Australian demographic modelling, tropical Australian hydroclimate resolution bias, an open CLDF middle-voice dataset, a digital epigraphic reassessment of Meretneith, GunaiKurnai Cloggs Cave phytolith evidence, and a preliminary Picene mortuary discovery. Sensitive Indigenous, human-remains, population-identity and cultural-heritage contexts are flagged in the native candidate pack.",
+  "code_commit": "3fd633a6d1fca1403432f8dada24a0395ba892f2",
+  "output_refs": {
+    "candidate_pack": "projects/noema/data/candidates/daily/2026-09-16.json",
+    "candidate_pack_commit": "7077d2b1450d000a34dbb85e1fc456358f460a54",
+    "candidate_pack_url": "https://github.com/joaoccaldas/ai/blob/main/projects/noema/data/candidates/daily/2026-09-16.json"
+  },
+  "counts_detail": {
+    "priority_queue": {
+      "RECENT_PUBLICATION": 2,
+      "UPCOMING_OR_AHEAD_OF_PRINT": 2,
+      "NEWLY_INDEXED_LEGACY": 26
+    },
+    "method_pressure_items": 7,
+    "deduplicated_rediscoveries": 1,
+    "chronology_review_items": 1,
+    "historical_relationships_generated": 0
+  },
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "historical_diagnosis_from_resemblance": false
+  }
+}
