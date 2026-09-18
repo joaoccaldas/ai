@@ -1,0 +1,36 @@
+{
+  "run_id": "pubmed-discovery-35308502444",
+  "task_type": "PUBMED_DISCOVERY",
+  "status": "COMPLETED_CANDIDATES_ONLY",
+  "started_at": "2026-09-18T04:51:24.306982+00:00",
+  "completed_at": "2026-09-18T04:51:24.306982+00:00",
+  "input_refs": [
+    "NCBI PubMed E-utilities",
+    "projects/noema/scripts/discover_pubmed.py"
+  ],
+  "artifact_digests": {
+    "pubmed-latest.json": "sha256:95e8c2835839f4b52b8c3453a63cfa8a2a06118d1f1a703b2891b198375bd3d4"
+  },
+  "sources_examined": 3,
+  "new_candidates": 3,
+  "candidate_updates": 0,
+  "contradictions": 0,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 0,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 3,
+  "max_epistemic_stage": null,
+  "errors": [],
+  "summary": "PubMed biomedical/cognition discovery produced candidate-only records; no evidence, diagnosis or relationship was promoted.",
+  "research_note": "projects/noema/data/candidates/pubmed-latest.json",
+  "code_commit": "1bf9edba0d56c71534f95fcf65be693caaad01fe",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false,
+    "historical_diagnosis_from_resemblance": false
+  }
+}
