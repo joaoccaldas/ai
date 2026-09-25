@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-09-22T04:51:16.404450+00:00",
+  "generated_at": "2026-09-25T04:52:28.215634+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
@@ -36,7 +36,7 @@
     },
     "psychedelic_ritual": {
       "query": "((psychedelic[Title/Abstract]) OR (psilocybin[Title/Abstract]) OR (ayahuasca[Title/Abstract]) OR (entheogen*[Title/Abstract]) OR (hallucinogen*[Title/Abstract])) AND ((ritual[Title/Abstract]) OR (ceremony[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (mystical[Title/Abstract]))",
-      "pmids_returned": 13,
+      "pmids_returned": 14,
       "title_relevant": 1
     }
   },
@@ -104,7 +104,7 @@
       ]
     },
     {
-      "pmid": "42574736",
+      "pmid": "42775190",
       "queries": [
         "psychedelic_ritual"
       ],
@@ -112,17 +112,24 @@
       "source_family": "PUBMED",
       "candidate_only": true,
       "relevance_gate": "TITLE_TWO_GROUP_MATCH",
-      "title": "Psychedelic Use Covaries with Psychological Flexibility Through Mystical Experiences: Results of a Retrospective Web Survey.",
-      "pubdate": "2026 Aug 10",
-      "source": "J Psychoactive Drugs",
+      "title": "Mystical but not challenging experiences predict symptom improvement after psilocybin for treatment-resistant OCD.",
+      "pubdate": "2026",
+      "source": "Front Psychiatry",
       "authors": [
-        "Spata A",
-        "Sturges JW",
-        "Earleywine M"
+        "Shnayder S",
+        "Agin-Liebes G",
+        "Hubert TJ",
+        "Ching THW",
+        "Hokanson J",
+        "Pittenger C",
+        "Kelmendi B",
+        "Adams T Jr"
       ],
       "articleids": {
-        "pubmed": "42574736",
-        "doi": "10.1080/02791072.2026.2710057"
+        "pubmed": "42775190",
+        "pmc": "PMC13595428",
+        "pmcid": "pmc-id: PMC13595428;",
+        "doi": "10.3389/fpsyt.2026.1799543"
       },
       "pubtypes": [
         "Journal Article"
@@ -132,8 +139,8 @@
   "counts": {
     "unique_candidates": 3,
     "query_count": 7,
-    "retrieved_before_title_gate": 23,
-    "rejected_by_title_gate": 20,
+    "retrieved_before_title_gate": 24,
+    "rejected_by_title_gate": 21,
     "summary_batches": 1
   }
 }
