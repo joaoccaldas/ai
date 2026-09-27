@@ -1,0 +1,4 @@
+node_modules/
+assets/*.blend
+assets/*.blend1
+assets/prev_*.png

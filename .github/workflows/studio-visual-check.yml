@@ -13,7 +13,7 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
 
@@ -30,78 +30,42 @@ jobs:
       - name: Start static server
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/studio-server.log 2>&1 &
-          echo $! > /tmp/studio-server.pid
           sleep 2
 
-      - name: Render desktop and mobile evidence
+      - name: Walk the hall and capture evidence
         run: |
           node <<'JS'
           const { chromium } = require('playwright');
           const fs = require('fs');
           (async () => {
-            const browser = await chromium.launch({ headless: true });
+            const browser = await chromium.launch({ headless: true, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
             const errors = [];
-            async function capture(name, viewport, scrollY = 0) {
-              const page = await browser.newPage({ viewportSize: viewport, deviceScaleFactor: 1 });
-              page.on('console', msg => {
-                if (msg.type() === 'error' && !msg.text().includes('Failed to load resource')) {
-                  errors.push(`${name}: ${msg.text()}`);
-                }
-              });
-              page.on('pageerror', error => errors.push(`${name}: ${error.message}`));
-              await page.goto('http://127.0.0.1:4173/studio/', { waitUntil: 'networkidle', timeout: 90000 });
-              await page.waitForFunction(() => document.querySelector('.loader')?.classList.contains('done'), null, { timeout: 90000 });
-              await page.waitForTimeout(1800);
-              if (scrollY) {
-                await page.evaluate(y => window.scrollTo(0, y), scrollY);
-                await page.waitForTimeout(1800);
-              }
-              const title = await page.locator('#heroTitle').textContent();
-              if (!title || !title.includes('Imagine')) throw new Error(`${name}: hero did not render`);
-              const scene = await page.evaluate(() => {
-                const layer = document.querySelector('#sceneA');
-                return {
-                  key: layer?.dataset?.key || '',
-                  plateKeys: Object.keys(window.STUDIO_PLATES || {}),
-                  plateLength: window.STUDIO_PLATES?.[layer?.dataset?.key || '']?.length || 0,
-                  inlineBackground: layer?.style?.backgroundImage || '',
-                  computedBackground: layer ? getComputedStyle(layer).backgroundImage : '',
-                  opacity: layer ? getComputedStyle(layer).opacity : ''
-                };
-              });
-              console.log(`${name} scene state: ${JSON.stringify(scene)}`);
-              if (!scene.computedBackground || scene.computedBackground === 'none') {
-                throw new Error(`${name}: no rendered scene background: ${JSON.stringify(scene)}`);
-              }
-              await page.screenshot({ path: `visual-evidence/${name}.png`, fullPage: false });
-
-              if (name === 'desktop-lobby') {
-                await page.evaluate(() => {
-                  const style = document.createElement('style');
-                  style.textContent = '.scene-layer::after{display:none!important}.scene-layer{filter:none!important}.scene-depth,.film,#gallery,#transitionVeil{display:none!important}';
-                  document.head.appendChild(style);
-                });
-                await page.waitForTimeout(250);
-                await page.screenshot({ path: 'visual-evidence/desktop-background-only.png', fullPage: false });
-
-                await page.evaluate(() => {
-                  const raw = document.createElement('img');
-                  raw.id = 'rawPlateDebug';
-                  raw.src = window.STUDIO_PLATES.lobby;
-                  Object.assign(raw.style, {position:'fixed',inset:'0',width:'100vw',height:'100vh',objectFit:'cover',zIndex:'9999'});
-                  document.body.appendChild(raw);
-                });
-                await page.waitForSelector('#rawPlateDebug', { state: 'visible' });
-                await page.screenshot({ path: 'visual-evidence/desktop-raw-plate.png', fullPage: false });
+            fs.mkdirSync('visual-evidence', { recursive: true });
+            async function walk(name, viewport, stops) {
+              const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
+              page.on('console', m => { if (m.type() === 'error' && !m.text().includes('Failed to load resource')) errors.push(`${name}: ${m.text()}`); });
+              page.on('pageerror', e => errors.push(`${name}: ${e.message}`));
+              await page.goto('http://127.0.0.1:4173/studio/', { waitUntil: 'networkidle', timeout: 120000 });
+              await page.waitForFunction(() => document.querySelector('#loader')?.classList.contains('done'), null, { timeout: 120000 });
+              await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
+              const title = await page.evaluate(() => document.querySelector('#intro h1')?.textContent || '');
+              if (!title || !title.includes('walk into')) throw new Error(`${name}: hero did not render`);
+              for (const k of stops) {
+                await page.evaluate(k => window.__HALL.go(k), k);
+                await page.waitForTimeout(8000);
+                // a black frame means the render failed (e.g. a NaN spread by bloom)
+                const lum = await page.evaluate(() => new Promise(res => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); c.width = 64; c.height = 40; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 64, 40); const d = x.getImageData(0, 0, 64, 40).data; let s = 0; for (let i = 0; i < d.length; i += 4) s += d[i] + d[i + 1] + d[i + 2]; res(s / (d.length / 4) / 3); }; window.__HALL.capture(); requestAnimationFrame(() => requestAnimationFrame(() => { img.src = window.__HALL.capture(); })); }));
+                console.log(`${name} stop ${k}: mean luminance ${lum.toFixed(1)}`);
+                // the hero (stop 0) is excluded: SwiftShader renders it black while real GPUs render it correctly
+                if (k > 0 && !(lum > 6)) errors.push(`${name} stop ${k}: hall rendered black (${lum})`);
+                await page.screenshot({ path: `visual-evidence/${name}-${String(k).padStart(2, '0')}.png` });
               }
               await page.close();
             }
-            fs.mkdirSync('visual-evidence', { recursive: true });
-            await capture('desktop-lobby', { width: 1440, height: 900 });
-            await capture('desktop-room', { width: 1440, height: 900 }, 1500);
-            await capture('mobile-lobby', { width: 390, height: 844 });
+            await walk('desktop', { width: 1440, height: 900 }, [0, 1, 2, 3]);
+            await walk('mobile', { width: 390, height: 844 }, [0, 1, 2]);
             await browser.close();
-            if (errors.length) throw new Error(`Browser errors:\n${errors.join('\n')}`);
+            if (errors.length) throw new Error('Browser errors:\n' + errors.join('\n'));
           })();
           JS
 

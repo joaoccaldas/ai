@@ -1,0 +1,7 @@
+{
+  "name": "caldas-studio-hall",
+  "private": true,
+  "description": "The Exposition hall bundle. Run `npm install` then `npm run build` to regenerate hall.js.",
+  "scripts": { "build": "node build.mjs" },
+  "devDependencies": { "esbuild": "0.28.2", "three": "0.186.1" }
+}

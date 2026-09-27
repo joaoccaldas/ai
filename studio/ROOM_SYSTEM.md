@@ -1,161 +1,51 @@
-# Caldas Studio cinematic room system
+# Caldas Studio — The Exposition hall
 
-`/studio/` is a hybrid gallery: photorealistic set-extension imagery supplies architectural realism, while Three.js provides atmosphere, depth, particles, a transition portal and subtle interactive motion. This avoids the toy-like result produced by building every room from primitive geometry.
+`/studio/` is a gallery hall modeled in Blender and lit in Cycles. Visitors walk it by scrolling: the camera glides down the nave and stops at each work. Work 01 stands on a dais at the entrance; the others hang in lit niches that alternate left and right; the apse at the far end holds the commission frame.
+
+> Supersedes the earlier set-extension room system (2026-08). `gallery-engine.js`, `gallery-rooms.js` and `gallery-shell.css` are no longer loaded by any page and are kept only for reference.
 
 ## Files
 
 | File | Responsibility |
 | --- | --- |
-| `index.html` | Accessible gallery shell, hero, room information, index and concept-variation drawer. |
-| `gallery-shell.css` | Art direction, cinematic backplates, parallax, overlays, responsive layout and transition treatments. |
-| `gallery-rooms.js` | Portfolio metadata, room order, concept links, palettes and alternative visual studies. |
-| `gallery-engine.js` | Scene selection, crossfades, scroll journey, WebGL atmosphere, portal transitions, sound and interaction. |
-| `gallery/` | Local portfolio artwork used by individual concepts and as reliable fallback media. |
-| `.github/workflows/studio-visual-check.yml` | Launches the real page in Chromium and stores desktop/mobile screenshots as CI evidence. |
+| `index.html` | Page shell: intro, caption, dots, preview modal, menu, tour, sound, process and commission sections. |
+| `rooms.js` | The works, in hall order (`window.STUDIO_ROOMS`). |
+| `hall/hall.js` | Built bundle (Three.js r186 + app). Do not edit; rebuild from `hall/src`. |
+| `hall/src/main.js` | Scene loading, baked-light materials, artworks, floor reflection, camera path, interaction. |
+| `hall/src/tex.js` | Procedural katana finishes shared with SŌKAI. |
+| `hall/assets/` | `hall.glb` (geometry, meshopt), `hall_lightmap.jpg` (4096² Cycles bake), `hall_env.hdr` (reflection panorama from the dais). |
+| `hall/blender/hall.py` | Builds, lights, bakes and exports the hall. Uses `common.py`, `katana.py`, `env.py`, `build_helpers.py`. |
+| `sokai/` | SŌKAI, the Infinite edition katana (self-contained page). |
+| `sokai/making/` | How SŌKAI was made, step by step. |
+| `gallery/<slug>.jpg` | Portfolio artwork, 900 × 1200 (3:4), shown in the niche frames and as previews. |
+
+## Add a work
+
+1. Build the concept under `studio/<slug>/` (or elsewhere in the repo) so it works on its own.
+2. Export a 900 × 1200 JPEG (3:4, under ~300 KB) to `studio/gallery/<slug>.jpg`.
+3. Add one line to `rooms.js`:
+
+```js
+{slug:'new-concept', n:'New Concept', room:'Short category', tag:'One memorable line.', url:'new-concept/', img:'gallery/new-concept.jpg', accent:'#c9a86a', note:'One sentence for the guided tour.'},
+```
+
+Order in `rooms.js` is the walking order. An optional `extra:{label, url}` adds a secondary link under the caption (SŌKAI uses it for the making-of).
+
+The hall has **18 places**: the dais plus 17 niches. Unused niches show a "Reserved" card. To hang more than 18 works, raise `NICHES` in `hall/blender/hall.py` and re-bake (see below).
+
+## Rebuild
+
+```bash
+# 1) geometry + light (Blender 5.2, Apple GPU ~2.5 min)
+cd studio/hall/blender && STAGE=bake OUT=../assets blender -b --factory-startup -P hall.py
+# 2) the web bundle
+cd studio/hall && npm install && npm run build
+```
+
+`STAGE=preview` renders three quick Cycles previews instead of baking.
 
 ## Rendering model
 
-Each room has two visual layers:
-
-1. **Set extension:** a high-resolution architectural or concept image displayed full-screen. It carries realism, materials, lighting and spatial composition.
-2. **WebGL atmosphere:** dust, bloom, a subtle sculptural orb and a portal that appears while crossing into the next room.
-
-The set extension is deliberately dominant. Three.js supports the illusion rather than attempting to model every chair, plant, wall and light from simple geometry.
-
-## Add a new room
-
-### 1. Build the independent concept
-
-Create the experience under:
-
-```text
-studio/<slug>/
-```
-
-The linked page must work independently before being added to the exhibition.
-
-### 2. Add portfolio artwork
-
-Add a representative image to:
-
-```text
-studio/gallery/<slug>.jpg
-```
-
-Recommended export:
-
-- 1600–2400 px on the longest edge
-- JPEG or WebP
-- 75–85% quality
-- preferably below 500 KB
-
-This image remains the dependable local portfolio asset even when the cinematic room uses a separate set extension.
-
-### 3. Register the concept
-
-Add one object to the `rooms` array in `gallery-rooms.js`:
-
-```js
-{
-  slug: 'new-concept',
-  name: 'New Concept',
-  type: 'Short category',
-  url: 'new-concept/',
-  image: 'gallery/new-concept.jpg',
-  line: 'One memorable sentence.',
-  description: 'How the concept should feel as a physical environment.',
-  palette: ['#background', '#mid', '#accent', '#light'],
-  wall: '#wall',
-  floor: '#floor',
-  ceiling: '#ceiling',
-  accent: '#accent',
-  fog: '#fog',
-  centerpiece: 'optional-future-3d-type',
-  transition: 'transition-name',
-  studies: [
-    { title: 'Direction one', note: 'What makes it different.', src: 'https://…', position: 'center' },
-    { title: 'Direction two', note: 'What makes it different.', src: 'https://…', position: 'center' },
-    { title: 'Direction three', note: 'What makes it different.', src: 'https://…', position: 'center' }
-  ]
-}
-```
-
-The array order defines the physical journey, the room rail and the full index.
-
-### 4. Assign the cinematic backplate
-
-Add the room to `ROOM_BACKPLATES` in `gallery-engine.js`:
-
-```js
-const ROOM_BACKPLATES = {
-  // existing rooms
-  'new-concept': 'https://images.example.com/new-concept-room.webp'
-};
-```
-
-Use an image that already feels like a complete room, not a product cut-out. The strongest backplates have:
-
-- clear foreground, middle ground and background
-- a visible path or architectural opening
-- restrained lighting with one focal zone
-- enough negative space for the interface
-- no embedded text or decorative browser chrome
-
-A room without an explicit entry falls back to its first visual study and then to its local portfolio image.
-
-### 5. Tune the composition
-
-Use the room's `accent` for interface highlights and WebGL transition color. If the important subject is being cropped, set a room-specific background position in `gallery-shell.css` or extend the room schema with a positioning token.
-
-Adjacent rooms should differ in at least three of these dimensions:
-
-- dominant material
-- color temperature
-- spatial proportion
-- focal object
-- lighting direction
-- density versus emptiness
-
-### 6. Validate the actual render
-
-A source-code check is not visual validation. Before merging:
-
-1. Run the Studio Visual Render workflow.
-2. Download the `studio-visual-evidence` artifact.
-3. Inspect desktop lobby, desktop room and mobile lobby screenshots.
-4. Compare them against the approved art-direction target.
-5. Test the public GitHub Pages URL after deployment, not only the branch source.
-6. Confirm that every room link, index card and concept-variation drawer works.
-7. Verify reduced-motion and non-WebGL fallback behavior.
-
-## Performance guardrails
-
-- Keep essential room imagery at 1600–2400 px, compressed for web delivery.
-- Preload only the lobby and room backplates, not every optional study image.
-- Keep WebGL decorative: low particle counts, one portal and one subtle sculptural object.
-- Reduce pixel ratio and particle count on mobile.
-- Avoid video textures in the main walk. Load video only after explicit interaction.
-- External images are acceptable for experiments, but flagship rooms should eventually use locally controlled optimized assets.
-
-## Design principles
-
-1. **The approved image is an acceptance target, not loose inspiration.**
-2. **Realism comes from composition, materials and light before effects.**
-3. **WebGL should deepen the room, not advertise itself.**
-4. **Transitions must feel architectural, not like a slide carousel.**
-5. **Every concept needs its own spatial identity.**
-6. **The portfolio remains accessible through normal links and the room index.**
-7. **Never call the gallery complete without screenshots of the deployed experience.**
-
-## Current room order
-
-1. Inner Group
-2. Aurelia
-3. Maison Lumen
-4. PULSE
-5. Vinöra
-6. Wild Stem
-7. Éden
-8. Dunhaven
-9. Ember & Oak
-10. Belong Festival
+- **Baked light.** All static architecture is merged, unwrapped into one atlas and path-traced in Cycles (640 samples). The browser shows that light directly, adding fine wood and stone detail only at close range.
+- **Live layers.** Artworks, brass, the katana, the ring and the lamps stay out of the bake so they can change: artworks load from `gallery/`, brass and steel reflect the HDR panorama, emissives pulse and bloom.
+- **Atmosphere.** Floor reflection, accent-coloured light spill under the active work, light cones, dust, bloom, lens edge softening and fog.
