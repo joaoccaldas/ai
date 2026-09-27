@@ -1,0 +1,81 @@
+name: Atoll Ascent Check
+
+on:
+  pull_request:
+    paths:
+      - 'studio/atoll-ascent/**'
+      - 'studio/index.html'
+      - 'sitemap.xml'
+      - '.github/workflows/atoll-ascent-check.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.54.1 --silent
+          npx playwright install --with-deps chromium
+      - name: Start static server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/atoll-server.log 2>&1 &
+          sleep 2
+      - name: Test desktop and mobile
+        run: |
+          node <<'JS'
+          const { chromium } = require('playwright');
+          const fs = require('fs');
+          (async () => {
+            const browser = await chromium.launch({ headless: true, args: ['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader'] });
+            fs.mkdirSync('atoll-evidence', { recursive: true });
+            for (const [name, viewport] of [['desktop',{width:1440,height:1000}],['mobile',{width:390,height:844}]]) {
+              const page = await browser.newPage({ viewport });
+              const errors = [];
+              page.on('pageerror', e => errors.push(e.message));
+              page.on('console', m => { if (m.type()==='error' && !m.text().includes('Failed to load resource')) errors.push(m.text()); });
+              await page.goto('http://127.0.0.1:4173/studio/atoll-ascent/', { waitUntil:'domcontentloaded' });
+              await page.waitForTimeout(2500);
+              const state = await page.evaluate(() => ({
+                title: document.title,
+                hero: document.querySelector('h1')?.innerText || '',
+                canvasVisible: getComputedStyle(document.querySelector('#ocean3d')).display !== 'none',
+                priceCount: document.querySelectorAll('.money').length,
+                surf: document.querySelector('#surf')?.innerText || '',
+                hasWaitlist: !!document.querySelector('#waitForm')
+              }));
+              if (!state.title.includes('Atoll Ascent')) throw new Error(name+': title missing');
+              if (!state.hero.includes('Race paradise')) throw new Error(name+': hero missing');
+              if (!state.canvasVisible) throw new Error(name+': WebGL hero hidden');
+              if (state.priceCount < 5) throw new Error(name+': prices missing');
+              if (!state.surf.includes('Lohis') || !state.surf.includes('Swell Chaser')) throw new Error(name+': surf extension missing');
+              if (!state.hasWaitlist) throw new Error(name+': waitlist missing');
+              await page.click('#lang');
+              if (!(await page.locator('h1').innerText()).includes('Corra no paraíso')) throw new Error(name+': Portuguese toggle failed');
+              const before = await page.locator('#currency').innerText();
+              await page.click('#currency');
+              const after = await page.locator('#currency').innerText();
+              if (before === after) throw new Error(name+': currency toggle failed');
+              await page.screenshot({ path:'atoll-evidence/'+name+'.png', fullPage:true });
+              if (errors.length) throw new Error(name+': browser errors\n'+errors.join('\n'));
+              await page.close();
+            }
+            await browser.close();
+          })();
+          JS
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atoll-ascent-evidence
+          path: atoll-evidence
+          if-no-files-found: error
