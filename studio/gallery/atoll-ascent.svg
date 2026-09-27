@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1200">
+<defs>
+  <linearGradient id="o" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#052735"/><stop offset=".55" stop-color="#0e7281"/><stop offset="1" stop-color="#8ad7d3"/></linearGradient>
+  <radialGradient id="s"><stop stop-color="#f5d99d" stop-opacity=".95"/><stop offset="1" stop-color="#f5d99d" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="900" height="1200" fill="url(#o)"/>
+<circle cx="700" cy="205" r="250" fill="url(#s)"/>
+<path d="M85 782C197 644 310 610 431 647c114 35 164-75 276-107 68-19 118-9 166 18v317H76Z" fill="#ead7aa"/>
+<path d="M115 776c104-96 210-97 321-66 95 27 161-61 265-94 57-18 103-14 152 9v187H108Z" fill="#236a5d"/>
+<path d="M128 784c142-14 245-41 354-58 121-19 220-58 344-110" fill="none" stroke="#f0c77f" stroke-width="13" stroke-linecap="round" stroke-dasharray="12 18"/>
+<path d="M116 634c114-103 234-99 333-55 98 43 161-49 240-82" fill="none" stroke="#b9ffff" stroke-width="8" stroke-linecap="round" stroke-dasharray="3 18"/>
+<g fill="none" stroke="#e6c27d" stroke-width="5"><path d="M68 116c55-3 88-59 151-59s96 56 151 59"/><path d="M113 130c39-6 63-42 106-42s69 36 109 42"/></g>
+<text x="68" y="195" fill="#fff" font-family="Georgia,serif" font-size="72">ATOLL</text>
+<text x="68" y="270" fill="#fff" font-family="Georgia,serif" font-size="72">ASCENT</text>
+<text x="72" y="314" fill="#bde9e8" font-family="Arial,sans-serif" font-size="19" letter-spacing="9">MALDIVES</text>
+<text x="68" y="1020" fill="#fff" font-family="Georgia,serif" font-size="45">Race paradise.</text>
+<text x="68" y="1075" fill="#fff" font-family="Georgia,serif" font-size="45" font-style="italic">Recover in luxury.</text>
+<text x="70" y="1130" fill="#d5ece9" font-family="Arial,sans-serif" font-size="15" letter-spacing="4">4 RACE DAYS · 3 RECOVERY DAYS</text>
+</svg>
