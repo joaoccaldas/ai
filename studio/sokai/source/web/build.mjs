@@ -1,0 +1,15 @@
+import { build } from 'esbuild';
+import fs from 'fs';
+import path from 'path';
+const here = path.dirname(new URL(import.meta.url).pathname);
+const outDir = process.env.ASSET_DIR || path.join(here, '..', 'out_hq');
+const res = await build({ entryPoints: [path.join(here, 'src/main.js')], bundle: true, format: 'iife', minify: true, write: false, target: 'es2020', nodePaths: [path.join(here, '..', 'build', 'node_modules')], legalComments: 'none' });
+const app = res.outputFiles[0].text.replace(/<\/script/gi, '<\\/script');
+const b = f => fs.readFileSync(path.join(outDir, f)).toString('base64');
+const assets = { glb: b('sokai.glb'), lm_atelier: b('lightmap_atelier.jpg'), lm_atelier_dawn: b('lightmap_atelier_dawn.jpg'), lm_vault: b('lightmap_vault.jpg'), hdr_atelier: b('env_atelier.hdr'), hdr_atelier_dawn: b('env_atelier_dawn.hdr'), hdr_vault: b('env_vault.hdr') };
+const tpl = fs.readFileSync(path.join(here, 'index.template.html'), 'utf8');
+const html = tpl.replace('__ASSETS__', () => JSON.stringify(assets)).replace('__APP__', () => '/* SŌKAI Infinite · Three.js r186 (MIT) bundled */\n' + app);
+const out = process.env.OUT_HTML || path.join(here, 'dist', 'index.html');
+fs.mkdirSync(path.dirname(out), { recursive: true });
+fs.writeFileSync(out, html);
+console.log('wrote', out, (html.length / 1e6).toFixed(2), 'MB · app', (app.length / 1e3).toFixed(0), 'kB');

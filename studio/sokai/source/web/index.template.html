@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#020408">
+<meta name="description" content="SŌKAI · Infinite Edition — a katana modeled in Blender, lit in Cycles and alive in your browser. Draw it, take it apart, forge your own, and cross the ring into the vault of past lives.">
+<title>SŌKAI Infinite</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2305080c'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%2366e6ff' stroke-width='3'/%3E%3Cpath d='M14 50L50 14' stroke='%23e8eef0' stroke-width='3'/%3E%3C/svg%3E">
+<style>
+:root{color-scheme:dark;--bg:#020408;--ink:#e9eef0;--mute:#8595a0;--dim:#4a5760;--cyan:#7fe8ff;--amber:#ffb06a;--glass:rgba(8,13,19,.62);--line:rgba(190,220,235,.12);--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:"Helvetica Neue",Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+button,select,input{font:inherit;color:inherit}button{background:none;border:0;cursor:pointer;padding:0}
+:focus-visible{outline:1px solid var(--cyan);outline-offset:4px}
+#canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+#canvas.pulling{cursor:grabbing!important}
+.eyebrow{font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--mute);display:flex;align-items:center;gap:12px}
+.eyebrow:before{content:"";width:22px;height:1px;background:var(--cyan)}
+
+/* loader */
+#loader{position:fixed;inset:0;z-index:50;background:radial-gradient(ellipse at 50% 60%,#0a1620,#020408 70%);display:grid;place-items:center;transition:opacity 1.4s ease}
+body.ready #loader{opacity:0;pointer-events:none}
+.load{width:min(420px,80vw);text-align:center}
+.load .kanji{font-family:var(--serif);font-size:54px;color:var(--cyan);text-shadow:0 0 40px #3fd8ff66;animation:breathe 3s ease-in-out infinite}
+.load h2{font-family:var(--serif);font-weight:400;letter-spacing:.42em;font-size:18px;margin:18px 0 6px}
+.load p{color:var(--mute);font-size:11px;letter-spacing:.18em;text-transform:uppercase;margin:0 0 26px}
+#loadbar{height:1px;background:#18252d;overflow:hidden}#loadbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,transparent,var(--cyan));transition:width .5s}
+#loadlabel{margin-top:14px;font-size:10px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase}
+.load blockquote{margin:34px 0 0;font-family:var(--serif);font-style:italic;color:#9fb1ba;font-size:15px}
+@keyframes breathe{50%{opacity:.55;transform:scale(.97)}}
+
+/* header */
+header{position:fixed;top:0;left:0;right:0;height:84px;padding:0 max(28px,env(safe-area-inset-left));display:flex;align-items:center;justify-content:space-between;z-index:10;background:linear-gradient(#020408cc,transparent);pointer-events:none}
+header>*{pointer-events:auto}
+.brand{display:flex;align-items:center;gap:16px;letter-spacing:.34em;font-size:15px}
+.brand b{font-family:var(--serif);font-weight:400;color:var(--cyan);font-size:26px;letter-spacing:0;text-shadow:0 0 18px #3fd8ff55}
+.brand small{font-size:9px;letter-spacing:.26em;color:var(--mute);border-left:1px solid var(--line);padding-left:16px}
+nav{display:flex;gap:6px}
+nav button,.chipbtn{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#b9c7cd;padding:9px 14px;border:1px solid transparent;border-radius:999px;transition:.25s}
+nav button:hover,nav button.active{border-color:var(--line);color:var(--ink);background:#ffffff08}
+nav button.active{border-color:#7fe8ff55;color:var(--cyan)}
+.hr{display:flex;gap:10px;align-items:center}
+.icon{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;color:#aebdc4;transition:.25s}
+.icon:hover,.icon.active{border-color:#7fe8ff88;color:var(--cyan);background:#7fe8ff0d}
+.icon svg{width:16px;height:16px}
+
+/* intro */
+.intro{position:fixed;left:max(44px,env(safe-area-inset-left));top:124px;z-index:4;pointer-events:none;transition:opacity 1.2s,transform 1.2s;max-width:520px}
+body.engaged .intro{opacity:0;transform:translateY(-10px)}
+.intro h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.2vw,68px);line-height:1.02;letter-spacing:-.02em;margin:22px 0 18px;text-shadow:0 2px 30px #000}
+.intro h1 em{color:#9fc4d2}
+.intro p{color:#9fb0b8;font-size:13px;line-height:1.7;margin:0;max-width:380px;text-shadow:0 1px 12px #000}
+.intro .tags{margin-top:18px;font-size:9.5px;letter-spacing:.24em;color:#6f8791}
+
+/* dock */
+.dock{position:fixed;left:50%;bottom:max(22px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:10;display:flex;flex-direction:column;gap:10px;align-items:stretch;width:min(760px,calc(100vw - 24px))}
+.bar{display:flex;align-items:center;gap:10px;padding:8px;border:1px solid var(--line);border-radius:18px;background:var(--glass);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);box-shadow:0 20px 60px #0008}
+.seg{display:flex;gap:4px;background:#ffffff06;border-radius:12px;padding:3px}
+.seg button{padding:9px 14px;border-radius:9px;font-size:11.5px;letter-spacing:.06em;color:#9eb0b8;transition:.25s;white-space:nowrap}
+.seg button span{color:var(--dim);margin-right:6px;font-size:9px}
+.seg button.active{background:linear-gradient(#ffffff14,#ffffff06);color:var(--ink);box-shadow:inset 0 0 0 1px #7fe8ff33}
+.seg button.active span{color:var(--cyan)}
+.draw{flex:1;display:flex;align-items:center;gap:10px;min-width:120px;padding:0 6px}
+.draw label{font-size:9px;letter-spacing:.2em;color:var(--mute)}
+.draw output{font-size:10px;color:var(--cyan);width:34px;text-align:right;font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:22px;background:transparent;--p:0%}
+input[type=range]::-webkit-slider-runnable-track{height:2px;border-radius:2px;background:linear-gradient(90deg,var(--cyan) var(--p,50%),#27343b var(--p,50%))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;margin-top:-6px;background:#e9f7fb;box-shadow:0 0 0 4px #7fe8ff22,0 0 14px #7fe8ff88}
+input[type=range]::-moz-range-track{height:2px;background:#27343b}input[type=range]::-moz-range-progress{height:2px;background:var(--cyan)}input[type=range]::-moz-range-thumb{width:14px;height:14px;border:0;border-radius:50%;background:#e9f7fb}
+.tools{display:flex;gap:6px}
+.lower{justify-content:space-between;padding:6px 8px}
+.lower select{background:transparent;border:0;font-size:11px;letter-spacing:.08em;color:#b8c6cc;max-width:220px;cursor:pointer}
+.lower select option{background:#0b1117}
+.lower .l{display:flex;align-items:center;gap:10px;font-size:9px;letter-spacing:.2em;color:var(--mute)}
+.portal{display:flex;align-items:center;gap:10px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);padding:8px 14px;border-radius:999px;border:1px solid #7fe8ff44;background:#7fe8ff0a;transition:.3s}
+.portal i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--cyan);box-shadow:0 0 12px #7fe8ff,inset 0 0 6px #7fe8ff;animation:breathe 2.6s infinite}
+.portal:hover{background:#7fe8ff1c;box-shadow:0 0 30px #7fe8ff33}
+
+/* caption, zoom */
+.caption{position:fixed;left:max(44px,env(safe-area-inset-left));bottom:40px;z-index:5;display:flex;align-items:center;gap:16px;pointer-events:none}
+.caption #capIdx{font-family:var(--serif);font-size:28px;color:var(--cyan)}
+.caption .r{width:40px;height:1px;background:var(--line)}
+.caption #capTitle{display:block;font-family:var(--serif);font-size:17px}
+.caption #capSub{display:block;font-size:9px;letter-spacing:.24em;color:var(--mute);margin-top:4px}
+.caption #envName{display:block;font-size:9px;letter-spacing:.24em;color:#6c8a95;margin-top:10px;text-transform:uppercase}
+.zoom{position:fixed;right:max(30px,env(safe-area-inset-right));bottom:40px;z-index:10;display:flex;flex-direction:column;gap:8px}
+
+/* drawers */
+.drawer{position:fixed;top:92px;right:18px;bottom:18px;width:min(380px,calc(100vw - 24px));z-index:20;border:1px solid var(--line);border-radius:22px;background:rgba(6,10,15,.74);backdrop-filter:blur(26px) saturate(1.4);-webkit-backdrop-filter:blur(26px) saturate(1.4);transform:translateX(calc(100% + 30px));transition:transform .6s cubic-bezier(.2,.8,.2,1);overflow:auto;padding:26px 24px 30px;box-shadow:0 30px 80px #000a}
+.drawer.open{transform:none}
+.drawer h2{font-family:var(--serif);font-weight:400;font-size:30px;margin:14px 0 4px}
+.drawer .lead{color:var(--mute);font-size:12px;line-height:1.6;margin:0 0 18px}
+.drawer .x,dialog .x{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);color:#9fb0b8}
+.drawer h3{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:#7d929b;font-weight:500;margin:22px 0 10px;display:flex;justify-content:space-between}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{display:flex;align-items:center;gap:7px;font-size:11.5px;padding:7px 11px;border-radius:999px;border:1px solid var(--line);color:#b6c4ca;transition:.2s}
+.chips button i{width:13px;height:13px;border-radius:50%;box-shadow:inset 0 0 0 1px #ffffff30}
+.chips button:hover{border-color:#ffffff30;color:var(--ink)}
+.chips button.active{border-color:#7fe8ff88;color:var(--ink);background:#7fe8ff12}
+.row{display:flex;align-items:center;gap:12px;font-size:11px;color:#a9b8be;margin:8px 0}
+.row span{width:96px;flex:none}
+.presets{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.presets button{text-align:left;padding:12px;border-radius:14px;border:1px solid var(--line);transition:.2s;background:#ffffff04}
+.presets button strong{display:block;font-family:var(--serif);font-weight:400;font-size:16px}
+.presets button span{display:block;font-size:10.5px;color:var(--mute);line-height:1.45;margin-top:4px}
+.presets button:hover{border-color:#ffffff30}.presets button.active{border-color:#7fe8ff88;background:#7fe8ff0e}
+.actions{display:flex;gap:8px;margin-top:22px}
+.actions button{flex:1;padding:11px;border-radius:12px;border:1px solid var(--line);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#bfd0d6}
+.actions button:hover{border-color:#7fe8ff66;color:var(--cyan)}
+.colrow{display:flex;gap:8px}.colrow input{flex:1;background:#0b1117;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:12px;color:var(--ink)}.colrow button{padding:0 16px;border-radius:12px;border:1px solid #7fe8ff66;color:var(--cyan);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+#colList{display:flex;flex-direction:column;gap:6px;margin-top:10px}.col-item{display:flex;gap:6px}.col-item [data-load]{flex:1;display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);text-align:left}.col-item [data-load]:hover{border-color:#7fe8ff66}.col-item i{width:26px;height:8px;border-radius:4px}.col-item strong{flex:1;font-weight:400;font-family:var(--serif);font-size:15px}.col-item span{font-size:10px;color:var(--mute)}.col-item .del{width:36px;border-radius:12px;border:1px solid var(--line);color:var(--mute)}.empty{font-size:11px;color:var(--dim);line-height:1.6}
+.drawer h3 span{text-transform:none;letter-spacing:.02em;color:var(--dim)}
+.envs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.envs button{padding:12px 10px;border-radius:14px;border:1px solid var(--line);text-align:left;font-size:11px;color:#a8b8be}
+.envs button b{display:block;font-family:var(--serif);font-weight:400;font-size:15px;color:var(--ink);margin-bottom:3px}
+.envs button.active{border-color:#7fe8ff88;background:#7fe8ff0e}
+.check{display:flex;align-items:center;gap:10px;font-size:11px;color:#a9b8be;margin:10px 0;cursor:pointer}
+.check input{accent-color:#7fe8ff}
+select.sel{background:#0b1117;border:1px solid var(--line);border-radius:10px;padding:6px 8px;font-size:11px;color:#c8d4d9}
+
+/* inspector */
+#inspector{position:fixed;left:max(44px,env(safe-area-inset-left));top:130px;width:330px;z-index:9;padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);animation:rise .6s cubic-bezier(.2,.8,.2,1)}
+#inspector h2{font-family:var(--serif);font-weight:400;font-size:34px;margin:12px 0 2px}
+#inspector .jp{color:var(--cyan);font-size:13px;letter-spacing:.08em}
+#inspector p{color:#a2b2b9;font-size:12.5px;line-height:1.7}
+#inspector .back{font-size:10px;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase}
+#inspector .x{position:absolute;top:16px;right:16px;width:28px;height:28px;border-radius:50%;border:1px solid var(--line);color:#9fb0b8}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}}
+
+/* tooltip, toast */
+#tip{position:fixed;left:0;top:0;z-index:30;pointer-events:none;opacity:0;transition:opacity .2s;padding:10px 13px;border-radius:12px;background:rgba(6,10,15,.8);border:1px solid #7fe8ff33;backdrop-filter:blur(10px);font-size:11px;white-space:nowrap}
+#tip b{font-family:var(--serif);font-weight:400;font-size:16px;margin-right:8px}#tip span{color:var(--cyan)}#tip em{display:block;font-style:normal;color:var(--mute);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;margin-top:5px}
+#toast{position:fixed;left:50%;top:104px;transform:translate(-50%,-8px);z-index:40;padding:11px 18px;border-radius:999px;background:rgba(6,10,15,.8);border:1px solid var(--line);font-family:var(--serif);font-style:italic;font-size:14px;color:#d6e3e7;opacity:0;transition:.5s;pointer-events:none;backdrop-filter:blur(12px)}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* dialogs */
+dialog{border:1px solid var(--line);border-radius:24px;background:rgba(6,10,15,.92);color:var(--ink);width:min(760px,calc(100vw - 24px));max-height:86vh;padding:34px;backdrop-filter:blur(24px)}
+dialog::backdrop{background:#000a;backdrop-filter:blur(4px)}
+dialog h2{font-family:var(--serif);font-weight:400;font-size:36px;margin:14px 0 8px}
+dialog p,dialog li,dialog dd{color:#a4b4bb;font-size:13px;line-height:1.75}
+dialog a{color:var(--cyan)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:16px}
+.grid button{text-align:left;padding:14px;border-radius:14px;border:1px solid var(--line)}
+.grid button:hover{border-color:#7fe8ff66}
+.grid span{font-size:9px;color:var(--cyan);letter-spacing:.2em}.grid strong{display:block;font-family:var(--serif);font-weight:400;font-size:17px;margin:4px 0}.grid em{font-style:normal;font-size:10.5px;color:var(--mute)}
+dl{display:grid;grid-template-columns:120px 1fr;gap:6px 18px}dt{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan);padding-top:4px}dd{margin:0}
+kbd{font-size:10px;border:1px solid var(--line);border-radius:6px;padding:2px 6px;color:#cfe}
+.timeline{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:16px}
+.timeline article{border:1px solid var(--line);border-radius:14px;padding:14px}.timeline h3{font-family:var(--serif);font-weight:400;margin:6px 0}.timeline span{font-size:9px;color:var(--cyan);letter-spacing:.2em}.timeline p{font-size:12px;margin:0}
+.fine{font-size:11px!important;color:#6c7c84!important}
+
+body.inspecting .intro{opacity:0}
+body[data-env=vault] .caption #capIdx{color:var(--amber)}
+
+@media (max-width:760px){
+  header{height:64px;padding:0 14px}.brand small,nav{display:none}.brand{font-size:12px}.brand b{font-size:22px}
+  .intro{left:18px;top:84px;right:18px}.intro h1{font-size:36px}.intro p{font-size:12px}
+  .caption{display:none}.zoom{right:12px;bottom:260px;flex-direction:row}
+  .seg button{padding:8px 9px;font-size:10.5px}.seg button span{display:none}
+  .upper{flex-wrap:wrap}.draw{order:3;flex-basis:100%}
+  .lower .l:first-child span{display:none}
+  #inspector{left:12px;right:12px;width:auto;top:auto;bottom:190px;padding:18px}#inspector h2{font-size:26px}#inspector p{font-size:12px;max-height:22vh;overflow:auto}
+  .drawer{top:auto;height:72vh;bottom:0;right:0;left:0;width:auto;border-radius:22px 22px 0 0;transform:translateY(105%)}
+  .mnav{display:flex!important}
+}
+.mnav{display:none;gap:6px}
+</style>
+</head>
+<body data-env="atelier">
+<canvas id="canvas" tabindex="0" aria-label="Interactive 3D katana in a Japanese atelier. Drag to orbit, scroll or pinch to zoom, double-click a part to inspect it, drag the handle to draw the blade."></canvas>
+
+<div id="loader"><div class="load"><div class="kanji">蒼</div><h2>SŌKAI</h2><p>Infinite Edition</p><div id="loadbar"><i></i></div><div id="loadlabel">Waking the forge</div><blockquote>“Every life remembers the blade.”</blockquote></div></div>
+
+<header>
+  <div class="brand"><b>蒼</b>SŌKAI<small>INFINITE EDITION · 004</small></div>
+  <nav aria-label="Explore">
+    <button data-drawer="forgeDrawer">Forge</button>
+    <button data-drawer="worldDrawer">World</button>
+    <button data-dialog="partsDlg">Anatomy <sup>18</sup></button>
+    <button data-dialog="craftDlg">Craft</button>
+    <button data-dialog="aboutDlg">About</button>
+  </nav>
+  <div class="hr">
+    <span class="mnav"><button class="icon" data-drawer="forgeDrawer" aria-label="Forge">⚒</button><button class="icon" data-drawer="worldDrawer" aria-label="World">☾</button></span>
+    <button class="icon" id="soundBtn" aria-pressed="false" aria-label="Toggle generated ambient sound" title="Sound"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9c1.5 1.5 1.5 4.5 0 6M18.5 6.5c3 3 3 8 0 11"/></svg></button>
+    <button class="icon" data-dialog="helpDlg" aria-label="How to explore" title="How to explore (?)">?</button>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="eyebrow">An interactive object · inspired by <i>Infinite</i></div>
+  <h1>Every life<br><em>remembers the blade.</em></h1>
+  <p>A katana modeled in Blender, lit in Cycles, alive in your browser. Drag the handle to draw it. Double-click any part. Forge your own. Then cross the ring.</p>
+  <div class="tags">URUSHI · SILK · TAMAHAGANE · MOONLIGHT</div>
+</section>
+
+<section id="inspector" hidden aria-live="polite">
+  <button class="x" id="closeIns" aria-label="Close detail">×</button>
+  <div class="eyebrow" id="insSub"></div>
+  <h2 id="insTitle"></h2><div class="jp" id="insJp"></div>
+  <p id="insText"></p>
+  <button class="back" id="backWhole">Return to the whole ↗</button>
+</section>
+
+<div class="caption"><span id="capIdx">01</span><span class="r"></span><div><span id="capTitle">Quiet, complete.</span><span id="capSub">THE SHEATHED FORM</span><span id="envName">The Atelier</span></div></div>
+
+<div class="zoom">
+  <button class="icon" id="zoomIn" aria-label="Zoom in">+</button>
+  <button class="icon" id="zoomOut" aria-label="Zoom out">−</button>
+</div>
+
+<section class="dock" aria-label="Katana controls">
+  <div class="bar upper">
+    <div class="seg" role="group" aria-label="Assembly">
+      <button data-mode="sheathed" class="active"><span>01</span>Sheathed</button>
+      <button data-mode="drawn"><span>02</span>Draw</button>
+      <button data-mode="exploded"><span>03</span>Exploded</button>
+    </div>
+    <div class="draw"><label for="drawRange">REVEAL</label><input id="drawRange" type="range" min="0" max="100" step=".1" value="0" aria-label="Draw the blade"><output id="drawVal">0%</output></div>
+    <div class="tools">
+      <button class="icon" id="iaiBtn" title="Iai — draw and cut (I)" aria-label="Iai: draw and cut"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20L19 5M15 4l5 5M3 14c4 1 7 4 8 7" stroke-linecap="round"/></svg></button>
+      <button class="icon" id="cineBtn" title="Cinematic camera (C)" aria-label="Cinematic camera"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/></svg></button>
+      <button class="icon" id="spinBtn" title="Orbit (S)" aria-label="Auto orbit"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 8a8 8 0 1 0 0 8M20 3v5h-5"/></svg></button>
+      <button class="icon" id="resetBtn" title="Reset (R)" aria-label="Reset"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v5h5"/></svg></button>
+      <button class="icon" id="captureBtn" title="Capture frame" aria-label="Capture frame"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button>
+      <button class="icon" id="fsBtn" title="Fullscreen (F)" aria-label="Fullscreen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 4H4v4m12-4h4v4M4 16v4h4m12-4v4h-4"/></svg></button>
+    </div>
+  </div>
+  <div class="bar lower">
+    <label class="l"><span>INSPECT</span><select id="focusSelect" aria-label="Inspect a part"></select></label>
+    <button class="portal" id="portalBtn"><i></i>Enter the ring</button>
+  </div>
+</section>
+
+<aside class="drawer" id="forgeDrawer" aria-label="Forge your katana">
+  <button class="x" aria-label="Close">×</button>
+  <div class="eyebrow">The Forge</div>
+  <h2>Make it yours.</h2>
+  <p class="lead">Every finish is generated live — hamon, lacquer, silk, metal. Your forging is saved and can be shared as a link.</p>
+  <h3>Signatures</h3><div class="presets" id="fPresets"></div>
+  <h3>Hamon · temper line</h3><div class="chips" id="fHamon"></div>
+  <div class="row"><span>Polish</span><input type="range" id="fPolish" min="0" max="1" step=".01"></div>
+  <h3>Horimono · engraving</h3><div class="chips" id="fEngr"></div>
+  <h3>Saya · lacquer</h3><div class="chips" id="fLacq"></div>
+  <h3>Maki-e · pattern</h3><div class="chips" id="fPattern"></div>
+  <div class="row"><span>Luminous</span><input type="range" id="fLum" min="0" max="1" step=".01"></div>
+  <div class="row"><span>Raden flecks</span><input type="range" id="fRaden" min="0" max="1" step=".01"></div>
+  <h3>Tsuka-ito · silk</h3><div class="chips" id="fIto"></div>
+  <h3>Samegawa</h3><div class="chips" id="fSame"></div>
+  <h3>Fittings · fuchi, kashira, habaki, saya</h3><div class="chips" id="fFit"></div>
+  <h3>Tsuba · design</h3><div class="chips" id="fTsubaD"></div>
+  <h3>Tsuba · metal</h3><div class="chips" id="fTsuba"></div>
+  <h3>Menuki</h3><div class="chips" id="fMenuki"></div>
+  <h3>Sageo · cord</h3><div class="chips" id="fSageo"></div>
+  <div class="actions"><button id="fRandom">Random life</button><button id="fShare">Share link</button></div>
+  <h3>Your collection <span>saved in this browser</span></h3>
+  <div class="colrow"><input id="colName" maxlength="40" placeholder="Name this forging" aria-label="Name this forging"><button id="colSave">Keep</button></div>
+  <div id="colList"></div>
+</aside>
+
+<aside class="drawer" id="worldDrawer" aria-label="World, season, weather and light">
+  <button class="x" aria-label="Close">×</button>
+  <div class="eyebrow">The World</div>
+  <h2>Night, alive.</h2>
+  <p class="lead">Three places for one object. Seasons change the garden; weather changes the light, the floor and the air.</p>
+  <h3>Place</h3>
+  <div class="envs"><button data-env="atelier"><b>Atelier</b>Forge, garden, moon</button><button data-env="vault"><b>Vault</b>Past lives, the ring</button><button data-env="studio"><b>Obsidian</b>Pure study</button></div>
+  <h3>Time</h3><div class="chips"><button data-time="night">Night · 夜</button><button data-time="dawn">Dawn · 暁</button></div>
+  <h3>Season</h3><div class="chips"><button data-season="spring">Spring · 春</button><button data-season="summer">Summer · 夏</button><button data-season="autumn">Autumn · 秋</button><button data-season="winter">Winter · 冬</button></div>
+  <h3>Weather</h3><div class="chips"><button data-weather="clear">Clear moon</button><button data-weather="mist">Mist</button><button data-weather="rain">Rain</button><button data-weather="storm">Storm</button><button data-weather="snow">Snow</button></div>
+  <h3>Light</h3>
+  <div class="row"><span>Exposure</span><input type="range" id="expo" min=".4" max="2" step=".01"></div>
+  <div class="row"><span>Lanterns</span><input type="range" id="lanternR" min="0" max="2" step=".01"></div>
+  <div class="row"><span>Moonlight</span><input type="range" id="moonR" min="0" max="2" step=".01"></div>
+  <div class="row"><span>Bloom</span><input type="range" id="bloomR" min="0" max="1.6" step=".01"></div>
+  <div class="row"><span>Film grain</span><input type="range" id="grainR" min="0" max="1.5" step=".01"></div>
+  <label class="check"><input type="checkbox" id="dofT"> Depth of field when close</label>
+  <label class="check"><input type="checkbox" id="ambT"> Living atmosphere (motion)</label>
+  <div class="row"><span>Film look</span><select class="sel" id="lookSel"><option value="agx">AgX · Blender</option><option value="aces">ACES filmic</option><option value="neutral">Neutral</option></select></div>
+  <div class="row"><span>Quality</span><select class="sel" id="qualSel"><option value="balanced">Balanced</option><option value="high">High</option><option value="ultra">Ultra</option></select></div>
+  <div class="actions"><button id="resetWorld">Restore first night</button></div>
+</aside>
+
+<div id="tip"></div><div id="toast" role="status" aria-live="polite"></div>
+
+<dialog id="helpDlg"><button class="x" aria-label="Close">×</button><div class="eyebrow">How to explore</div><h2>Take your time.</h2>
+<dl><dt>Orbit</dt><dd>Drag with one finger or the left mouse button.</dd><dt>Zoom</dt><dd>Scroll or pinch — zoom follows your cursor, down to the grain of the steel.</dd><dt>Pan</dt><dd>Right-drag, or two fingers.</dd><dt>Draw</dt><dd>Grab the handle and pull, or use Reveal.</dd><dt>Inspect</dt><dd>Hover to identify; double-click (or tap) any part.</dd><dt>Forge</dt><dd>Open the Forge to change hamon, lacquer, silk and metals.</dd><dt>World</dt><dd>Change place, time of day, season, weather and light. The ring leads to the Vault.</dd><dt>Iai</dt><dd>Press the cut button (or <kbd>I</kbd>) — the blade is drawn, cuts, flicks and returns to the saya.</dd><dt>Memory</dt><dd>Your world, your view and your collection of forgings are remembered in this browser.</dd></dl>
+<p><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> modes · <kbd>C</kbd> cinematic · <kbd>S</kbd> orbit · <kbd>P</kbd> portal · <kbd>E</kbd> forge · <kbd>W</kbd> world · <kbd>R</kbd> reset · <kbd>F</kbd> fullscreen · <kbd>I</kbd> iai · <kbd>N</kbd> night/dawn</p></dialog>
+
+<dialog id="partsDlg"><button class="x" aria-label="Close">×</button><div class="eyebrow">Anatomy · 18 parts</div><h2>One form. Many hands.</h2><p>Choose a part to fly to it. Each is an independent Blender object.</p><div class="grid" id="componentGrid"></div></dialog>
+
+<dialog id="craftDlg"><button class="x" aria-label="Close">×</button><div class="eyebrow">Craft history · museum view</div><h2>From steel to mounted sword.</h2>
+<p>A non-procedural overview of traditional Japanese swordmaking. Methods varied by period, school and smith.</p>
+<div class="timeline">
+<article><span>01</span><h3>Material</h3><p>Sword steel is associated with tatara-smelted material, including tamahagane, selected by the smith for its qualities.</p></article>
+<article><span>02</span><h3>Refinement</h3><p>Repeated heating, forge-welding and folding consolidated the steel and managed its carbon. Practice was not universal.</p></article>
+<article><span>03</span><h3>Construction</h3><p>Blades could combine steels in different internal constructions. The tang (nakago) is integral to the blade.</p></article>
+<article><span>04</span><h3>Hardening</h3><p>A clay coating before quenching let edge and body harden differently. The hamon is a trace of that transformation, not paint.</p></article>
+<article><span>05</span><h3>Polishing</h3><p>Specialist polishers reveal the geometry, the hada grain and the activity of the hamon.</p></article>
+<article><span>06</span><h3>Mountings</h3><p>Other masters made the koshirae: guard, fittings, lacquered saya, ray-skin grip and silk wrap — works of art in themselves.</p></article>
+</div>
+<p><a href="https://www.touken.or.jp/museum/sword/step.html" target="_blank" rel="noopener noreferrer">Japanese Sword Museum / NBTHK ↗</a> · <a href="https://www.metmuseum.org/toah/hd/japb/hd_japb.htm" target="_blank" rel="noopener noreferrer">The Met: The Japanese Blade ↗</a></p>
+<p class="fine">Museum-level explanation only — no measurements, temperatures, recipes or fabrication instructions.</p></dialog>
+
+<dialog id="aboutDlg"><button class="x" aria-label="Close">×</button><div class="eyebrow">Provenance · how it was made</div><h2>A contemporary study.</h2>
+<p><b>Blender master.</b> The katana, stand, atelier, garden and vault were modeled procedurally in Blender 5.2: real blade cross-sections along an 18 mm sori, woven ito ribbons crossing over and under, Boolean-cut sukashi in the tsuba. Lighting was path-traced in Cycles and baked into 4K lightmaps; the reflections on the steel come from HDR panoramas rendered in Cycles from the sword’s own position.</p>
+<p><b>Realtime.</b> Three.js r186, WebGL 2, physically based materials with clearcoat, sheen, anisotropy and iridescence; wet-floor reflections, bloom, depth of field and a film grade. Hamon, lacquer, silk and metal maps are generated in your browser, so every choice in the Forge is live.</p>
+<p><b>Infinite.</b> The theme — lives that remember, and an object that carries memory across them — is an original homage inspired by the film <i>Infinite</i> (2021). No footage, logos, characters or designs from the film are used.</p>
+<p class="fine">An artistic reconstruction, not a scan, historical certification or fabrication guide. No accounts, analytics, remote fonts or network requests. Engine: Three.js (MIT).</p></dialog>
+
+<script>window.__SOKAI_ASSETS=__ASSETS__;</script>
+<script>__APP__</script>
+</body>
+</html>
