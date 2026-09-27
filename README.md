@@ -1,5 +1,7 @@
 # AI
 
+See [PORTFOLIO.md](PORTFOLIO.md) for the working map of my public projects, repository lineages, and cross-project reuse opportunities.
+
 GitHub Pages site with several experiences:
 
 - **`/`** — AI-native finance presentation (Joao Caldas · FP&A Director, Nordics)
