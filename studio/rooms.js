@@ -29,4 +29,5 @@ window.STUDIO_ROOMS = [
   {slug:'flowstate', wing:'culture', piece:'A flowing glass ribbon', n:'Flowstate',   room:'SaaS product',       tag:'Ship calm.',                 url:'flowstate/',  img:'gallery/flowstate.jpg', accent:'#7aa8ff', note:'Ship calm.'},
   {slug:'wander', wing:'nature', piece:'A globe on a brass meridian', n:'Wander',      room:'Adventure travel',   tag:'Where the map ends.',        url:'wander/',     img:'gallery/wander.jpg', accent:'#e0975a', note:'Where the map ends, the story begins.'},
   {slug:'belong', wing:'culture', piece:'A mirror ball turning over the floor', n:'Belong',      room:'Flagship festival',  tag:'Be yourself. Together.',     url:'../belong/',  img:'gallery/belong.jpg', accent:'#ff76bf', note:'Imagine freely. Be yourself. Belong.'},
+  {slug:'atoll-ascent', wing:'nature', piece:'A luminous atoll crossed by race lines and a white yacht', n:'Atoll Ascent Maldives', room:'South of the Equator', tag:'Race paradise. Recover in luxury.', url:'atoll-ascent/', img:'gallery/atoll-ascent.svg', accent:'#72ccd1', note:'Four race days. Three recovery days. One rare week south of the equator.'},
 ];
