@@ -29,4 +29,5 @@ window.STUDIO_ROOMS = [
   {slug:'flowstate', wing:'culture', piece:'A flowing glass ribbon', n:'Flowstate',   room:'SaaS product',       tag:'Ship calm.',                 url:'flowstate/',  img:'gallery/flowstate.jpg', accent:'#7aa8ff', note:'Ship calm.'},
   {slug:'wander', wing:'nature', piece:'A globe on a brass meridian', n:'Wander',      room:'Adventure travel',   tag:'Where the map ends.',        url:'wander/',     img:'gallery/wander.jpg', accent:'#e0975a', note:'Where the map ends, the story begins.'},
   {slug:'belong', wing:'culture', piece:'A mirror ball turning over the floor', n:'Belong',      room:'Flagship festival',  tag:'Be yourself. Together.',     url:'../belong/',  img:'gallery/belong.jpg', accent:'#ff76bf', note:'Imagine freely. Be yourself. Belong.'},
+  {slug:'kona', wing:'nature', piece:'A wind-tunnel sculpted carbon superbike on basalt', n:'Kona Odyssey', room:'Living 3D World & Museum', tag:'Where legends are forged in lava.', url:'https://joaoccaldas.github.io/studio-kona/', img:'gallery/kona.jpg', accent:'#00f5d4', note:'The spiritual home of Ironman, living Hawaiian history, and Canyon Speedmax CFR.'},
 ];
