@@ -73,6 +73,25 @@ Cross-pollination candidates:
 
 The portfolio audit replaced a hard-coded personal player identity with a synthetic default and introduced real regression tests.
 
+### CaldasGO
+
+**Flagship candidate / geospatial game lab**
+
+React + TypeScript + MapLibre creature-collecting experiment focused on map UX, location-aware gameplay, PWA behavior and browser-local persistence.
+
+Current audit priorities:
+- geolocation mounts only after explicit safety acceptance;
+- precise location should remain transient and not be persisted by default;
+- fan-game terminology and third-party asset provenance require explicit review before flagship/commercial positioning;
+- use original CaldasGO/fakemon assets and naming where practical.
+
+Cross-pollination candidates:
+- permission-gated sensor capabilities;
+- geospatial game-state separation;
+- mock-location fallbacks for testing;
+- local-only collection/inventory persistence;
+- mobile/PWA installation patterns.
+
 ### Adeline
 
 **Playable multiplayer lab**
@@ -146,6 +165,7 @@ This repository is a useful portfolio lesson in privacy-by-design, not a cleanup
 | Experimental 3D camera/rendering | Rawdogging 3D modules | future 3D experiments | First prove one supported 3D entry path and remove internal duplication |
 | Achievements/progression | BlocksCreate, Bloxy, Wordbound | most games | Share event/schema concepts; keep reward tuning game-specific |
 | Learning progression | Wordbound, kids-python, Nova | educational games | Define learner-event and challenge contracts |
+| Geospatial/sensor permission gating | CaldasGO | future location/sensor games | Require explicit user stage/permission before mounting the capability |
 | Multiplayer rooms/networking | Adeline, Roblox | future multiplayer titles | Reuse network-state lessons, not direct browser/server coupling |
 | Performance instrumentation | BlocksCreate, Tucano, Rawdogging | all real-time games | Create a tiny optional local performance probe |
 | Asset generation/manifests | BlocksCreate | Bloxy, Rawdogging, Tucano | Standardize provenance/manifest metadata before sharing tooling |
@@ -190,3 +210,4 @@ Until then, cross-pollinate ideas and tests rather than dependencies.
 6. create a tiny performance instrumentation pattern from BlocksCreate/Tucano/Rawdogging;
 7. keep synthetic identity/privacy checks in all public games;
 8. preserve historical iterations rather than deleting their learning history.
+9. audit CaldasGO asset provenance and keep geolocation opt-in/non-persistent by default.
