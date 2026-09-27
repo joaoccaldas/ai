@@ -2,16 +2,260 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Conservation Filmmaker Portfolio</title>
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0a0b0a;color:#f0efe9;font-family:system-ui,sans-serif}.card{max-width:680px;padding:40px;border:1px solid #343733;border-radius:20px;background:#111410}h1{font:400 clamp(2rem,7vw,4.5rem) Georgia,serif;margin:0 0 16px}p{color:#b9bcb4;line-height:1.7}a{color:#d7c69e;margin-right:18px}</style>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Laurie Hedges — Conservation Filmmaker</title>
+<meta name="description" content="Laurie Hedges makes conservation films — stories from parks, forests and rivers, told for the people working to protect them.">
+<meta name="theme-color" content="#0b0d0b">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Laurie Hedges — Conservation Filmmaker">
+<meta property="og:description" content="Stories for the wild. Conservation films from parks, forests and rivers.">
+<meta property="og:url" content="https://joaoccaldas.github.io/ai/laurie/">
+<meta property="og:image" content="https://joaoccaldas.github.io/ai/studio/gallery/laurie.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://joaoccaldas.github.io/ai/laurie/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d0b'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%237fb98a' stroke-width='2'/%3E%3Ctext x='32' y='42' font-family='Georgia,serif' font-size='28' text-anchor='middle' fill='%237fb98a'%3EL%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0b0d0b;--bg2:#111511;--ink:#eef0ea;--mut:#a9b0a4;--dim:#6d7569;--line:rgba(238,240,234,.12);--accent:#7fb98a;--warm:#d9c49a;
+ --serif:'Instrument Serif',Georgia,serif;--sans:'Manrope',system-ui,-apple-system,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{width:min(1240px,100%);margin:0 auto;padding-inline:clamp(16px,4vw,48px)}
+.k{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:.8rem}
+.k:before{content:'';width:28px;height:1px;background:currentColor;opacity:.6}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.grain{position:fixed;inset:-50%;z-index:50;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 1s steps(4) infinite}
+@keyframes gr{0%{transform:translate(0,0)}25%{transform:translate(-3%,2%)}50%{transform:translate(2%,-3%)}75%{transform:translate(-2%,-1%)}}
+
+/* header */
+header{position:fixed;inset:0 0 auto;z-index:40;padding-top:env(safe-area-inset-top,0px);transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
+header.s{background:rgba(11,13,11,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-color:var(--line)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:1rem}
+.brand{font-family:var(--serif);font-size:22px;text-decoration:none;letter-spacing:.01em}
+.brand i{font-style:normal;color:var(--accent)}
+nav{display:flex;gap:clamp(.9rem,2.6vw,2.2rem);font-size:12px;letter-spacing:.18em;text-transform:uppercase}
+nav a{text-decoration:none;color:var(--mut);transition:color .2s}
+nav a:hover,nav a:focus-visible{color:var(--ink)}
+@media(max-width:620px){nav a.hide{display:none}}
+
+/* hero: a letterboxed frame */
+.hero{position:relative;min-height:min(100svh,980px);display:flex;align-items:flex-end;overflow:hidden;isolation:isolate}
+.hero .plate{position:absolute;inset:0;z-index:-2;background:url('img/bts1.jpg') center 30%/cover;transform:scale(1.08);animation:push 24s ease-out forwards}
+@keyframes push{to{transform:scale(1)}}
+.hero:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,13,11,.55) 0%,rgba(11,13,11,0) 30%,rgba(11,13,11,.2) 55%,rgba(11,13,11,.95) 100%)}
+.bars:before,.bars:after{content:'';position:absolute;left:0;right:0;height:clamp(22px,6vh,64px);background:#000;z-index:2}
+.bars:before{top:0}.bars:after{bottom:0}
+.hud{position:absolute;inset:clamp(34px,8vh,84px) clamp(16px,4vw,48px) auto;z-index:3;display:flex;justify-content:space-between;font:500 11px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:rgba(238,240,234,.75)}
+.hud .rec:before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:#e24b3b;margin-right:.6rem;animation:blink 1.4s infinite}
+@keyframes blink{50%{opacity:.2}}
+.hero .wrap{padding-bottom:clamp(90px,16vh,170px);position:relative;z-index:3}
+.hero h1{font-size:clamp(3.2rem,11vw,9.5rem);line-height:.9}
+.hero h1 em{color:var(--warm)}
+.hero p{max-width:34rem;color:var(--mut);font-size:clamp(1rem,1.6vw,1.15rem);margin:1.4rem 0 0}
+.row{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}
+.btn{display:inline-flex;align-items:center;gap:.6rem;padding:.95rem 1.5rem;border-radius:40px;font:600 12px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:1px solid var(--line);transition:.25s;cursor:pointer;background:none;color:var(--ink)}
+.btn.solid{background:var(--accent);color:#0b0d0b;border-color:var(--accent)}
+.btn:hover,.btn:focus-visible{transform:translateY(-2px);border-color:var(--accent);outline:none}
+.btn .play{width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent}
+
+/* reel */
+section{padding-block:clamp(72px,12vw,150px)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:2rem;flex-wrap:wrap;margin-bottom:clamp(32px,5vw,56px)}
+.head h2{font-size:clamp(2.4rem,6vw,4.6rem);line-height:1;margin-top:1rem}
+.head p{max-width:26rem;color:var(--mut);margin:0}
+.reel{display:grid;grid-template-columns:repeat(12,1fr);gap:clamp(10px,1.4vw,18px)}
+.film{grid-column:span 4;position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/9;cursor:zoom-in;background:var(--bg2);border:1px solid var(--line);padding:0;color:inherit;font:inherit;text-align:left;max-width:100%}
+.film.wide{grid-column:span 12;aspect-ratio:1152/491}
+.film img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1),filter .6s;filter:saturate(.9)}
+.film:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.78))}
+.film .cap{position:absolute;left:16px;right:16px;bottom:14px;z-index:1;display:flex;justify-content:space-between;align-items:flex-end;gap:1rem}
+.film h3{font-size:clamp(1.25rem,2vw,1.7rem);line-height:1.05}
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.film small{display:block;font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--warm);margin-bottom:.35rem}
+.film .tc{font:500 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.1em;color:rgba(238,240,234,.7);white-space:nowrap}
+.film:hover img,.film:focus-visible img{transform:scale(1.05);filter:saturate(1.1)}
+.film:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+@media(max-width:900px){.film{grid-column:span 6}.film.wide{grid-column:span 12}}
+@media(max-width:560px){.film{grid-column:span 12}}
+
+/* approach */
+.approach{background:var(--bg2);border-block:1px solid var(--line)}
+.split{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,6vw,90px);align-items:center}
+@media(max-width:860px){.split{grid-template-columns:1fr}}
+.portrait{border-radius:18px;overflow:hidden;aspect-ratio:4/5;position:relative;max-width:100%}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.portrait span{position:absolute;left:14px;bottom:12px;font:500 10.5px/1 ui-monospace,Menlo,monospace;letter-spacing:.14em;color:rgba(238,240,234,.8)}
+.steps{display:flex;flex-direction:column;margin-top:2rem;border-top:1px solid var(--line)}
+.step{display:grid;grid-template-columns:3.2rem 1fr;gap:1rem;padding-block:1.4rem;border-bottom:1px solid var(--line)}
+.step b{font:400 1.6rem/1 var(--serif);color:var(--accent)}
+.step h3{font-size:1.6rem;line-height:1.1}
+.step p{margin:.35rem 0 0;color:var(--mut);font-size:15px}
+.lead{font-family:var(--serif);font-size:clamp(1.9rem,3.8vw,3.2rem);line-height:1.08;margin-top:1rem}
+.lead em{color:var(--warm)}
+
+/* field strip */
+.strip{display:grid;grid-template-columns:2fr 1fr;gap:clamp(10px,1.4vw,18px)}
+.strip figure{margin:0;border-radius:16px;overflow:hidden;position:relative;aspect-ratio:16/10;max-width:100%}
+.strip figure:last-child{aspect-ratio:auto}
+.strip img{width:100%;height:100%;object-fit:cover}
+.strip figcaption{position:absolute;left:14px;bottom:12px;font-size:12px;color:rgba(238,240,234,.85);letter-spacing:.04em}
+@media(max-width:700px){.strip{grid-template-columns:1fr}.strip figure:last-child{aspect-ratio:16/10}}
+
+/* for whom */
+.who{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,1.4vw,18px)}
+.who div{border:1px solid var(--line);border-radius:16px;padding:clamp(20px,2.4vw,30px)}
+.who h3{font-size:1.7rem;line-height:1.1;margin-top:.8rem}
+.who p{color:var(--mut);margin:.6rem 0 0;font-size:15px}
+.who .n{font:500 11px/1 ui-monospace,Menlo,monospace;color:var(--accent);letter-spacing:.14em}
+@media(max-width:800px){.who{grid-template-columns:1fr}}
+
+/* contact */
+.end{text-align:center}
+.end h2{font-size:clamp(3rem,10vw,8rem);line-height:.92}
+.end h2 em{color:var(--accent)}
+.end p{color:var(--mut);max-width:32rem;margin:1.4rem auto 0}
+.end .row{justify-content:center}
+footer{border-top:1px solid var(--line);padding-block:28px calc(28px + env(safe-area-inset-bottom,0px));color:var(--dim);font-size:13px}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+footer a{color:var(--mut);text-decoration:none}
+footer a:hover{color:var(--ink)}
+
+/* viewer */
+.viewer{position:fixed;inset:0;z-index:60;background:rgba(5,6,5,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:clamp(16px,4vw,48px);opacity:0;visibility:hidden;transition:.35s}
+.viewer.on{opacity:1;visibility:visible}
+.viewer figure{margin:0;width:min(1200px,100%);max-width:100%}
+.viewer img{width:100%;max-height:72vh;object-fit:contain;border-radius:10px}
+.viewer figcaption{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:14px}
+.viewer h3{font-size:clamp(1.5rem,3vw,2.4rem)}
+.viewer .ctl{display:flex;gap:.6rem}
+.viewer .ctl button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:none;color:var(--ink);font-size:18px;cursor:pointer}
+.viewer .ctl button:hover,.viewer .ctl button:focus-visible{border-color:var(--accent);outline:none}
+.viewer .count{font:500 11px/1 ui-monospace,Menlo,monospace;color:var(--dim);letter-spacing:.14em}
+
+.rv{opacity:1;transform:none;transition:opacity .9s,transform .9s cubic-bezier(.2,.8,.2,1)}
+.js .rv:not(.in){opacity:.001;transform:translateY(28px)}
+@media (prefers-reduced-motion:reduce){.hero .plate,.grain,.hud .rec:before{animation:none}.js .rv:not(.in){opacity:1;transform:none}}
+</style>
 </head>
 <body>
-<main class="card">
-  <p>Conservation filmmaking</p>
-  <h1>Stories for the wild.</h1>
-  <p>This public portfolio page intentionally omits private contact information. Use the creator's public social profiles for contact.</p>
-  <p><a href="https://www.instagram.com/hedgeslaurie/" rel="noopener noreferrer">Instagram</a><a href="https://vimeo.com/user50700387" rel="noopener noreferrer">Vimeo</a></p>
+<script>document.documentElement.classList.add('js')</script>
+<div class="grain" aria-hidden="true"></div>
+
+<header id="hd"><div class="wrap">
+  <a class="brand" href="#top">Laurie <i>Hedges</i></a>
+  <nav><a href="#films">Films</a><a class="hide" href="#approach">Approach</a><a href="#contact">Contact</a></nav>
+</div></header>
+
+<main id="top">
+  <section class="hero bars" aria-label="Introduction" style="padding:0">
+    <div class="plate" role="img" aria-label="Laurie Hedges with a cinema camera on a mountain ridge above the sea"></div>
+    <div class="hud" aria-hidden="true"><span class="rec">REC</span><span id="tc">00:00:00:00</span></div>
+    <div class="wrap">
+      <div class="k">Conservation filmmaker</div>
+      <h1 style="margin-top:1.2rem">Stories for<br><em>the wild.</em></h1>
+      <p>Films from parks, forests and rivers — made slowly, in the field, for the people working to protect them.</p>
+      <div class="row">
+        <a class="btn solid" href="#films"><span class="play"></span>See the films</a>
+        <a class="btn" href="https://vimeo.com/user50700387" target="_blank" rel="noopener noreferrer">Vimeo ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="films" class="wrap">
+    <div class="head rv">
+      <div><div class="k">Selected films</div><h2>The work.</h2></div>
+      <p>Open any frame to see it larger — on a keyboard, ← → moves through the reel and Esc closes it.</p>
+    </div>
+    <div class="reel" id="reel">
+      <button class="film wide rv" data-i="0"><img src="img/c_akagera.jpg" alt="Sunset over the savanna in Akagera National Park, with the film title The Return of the Lion and Rhino" loading="lazy" width="1152" height="491"><div class="cap"><div><small>Akagera National Park</small><h3 class="vh">The Return of the Lion and Rhino</h3></div><span class="tc">01</span></div></button>
+      <button class="film rv" data-i="1"><img src="img/c_embaka.jpg" alt="Close-up of an African golden cat, with the Embaka logo" loading="lazy" width="1280" height="720"><div class="cap"><div><small>Embaka</small><h3>Saving the African golden cat</h3></div><span class="tc">02</span></div></button>
+      <button class="film rv" data-i="2"><img src="img/c_tapir.jpg" alt="Close-up of a tapir's muzzle, with the title Amazonian Tapirs" loading="lazy" width="1280" height="720"><div class="cap"><div><small>Amazon</small><h3>Amazonian Tapirs</h3></div><span class="tc">03</span></div></button>
+      <button class="film rv" data-i="3"><img src="img/c_gibbon.jpg" alt="A gibbon sitting on a branch in dense forest canopy" loading="lazy" width="1280" height="720"><div class="cap"><div><small>Forest canopy</small><h3>Gibbon</h3></div><span class="tc">04</span></div></button>
+      <button class="film rv" data-i="4"><img src="img/c_floods.jpg" alt="Cloud rolling over forested mountain ridges at dawn" loading="lazy" width="1280" height="720"><div class="cap"><div><small>Cloud forest</small><h3>Floods</h3></div><span class="tc">05</span></div></button>
+      <button class="film rv" data-i="5"><img src="img/c_islands.jpg" alt="Karst peaks and a winding river under a dusk sky" loading="lazy" width="1280" height="720"><div class="cap"><div><small>River country</small><h3>Islands</h3></div><span class="tc">06</span></div></button>
+      <button class="film rv" data-i="6"><img src="img/c_rio.jpg" alt="A clear forest river running between green banks" loading="lazy" width="1280" height="720"><div class="cap"><div><small>Rainforest</small><h3>Rio</h3></div><span class="tc">07</span></div></button>
+    </div>
+  </section>
+
+  <section id="approach" class="approach">
+    <div class="wrap split">
+      <div class="portrait rv"><img src="img/laurie.jpg" alt="Portrait of Laurie Hedges leaning against a pine tree in warm forest light" loading="lazy" width="1400" height="900"><span>LAURIE HEDGES · FIELD</span></div>
+      <div class="rv">
+        <div class="k">Approach</div>
+        <p class="lead">A film is only useful if it makes someone <em>care</em> — and then act.</p>
+        <div class="steps">
+          <div class="step"><b>01</b><div><h3>Time in the field</h3><p>Patience first. The shots that matter come after days of waiting, not minutes.</p></div></div>
+          <div class="step"><b>02</b><div><h3>The people behind it</h3><p>Rangers, researchers and communities carry the story — the wildlife is why it matters.</p></div></div>
+          <div class="step"><b>03</b><div><h3>Made to be used</h3><p>Cut for screenings, donors and social — so the film keeps working long after release.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <div class="strip">
+      <figure class="rv"><img src="img/bts2.jpg" alt="Laurie Hedges hiking with a tripod and camera pack beneath granite peaks" loading="lazy" width="1400" height="900"><figcaption>Carrying the kit to the shot</figcaption></figure>
+      <figure class="rv"><img src="img/bts1.jpg" alt="Laurie Hedges filming from a ridge above a turquoise bay" loading="lazy" width="1400" height="900" style="object-position:40% center"><figcaption>On the ridge</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-top:0">
+    <div class="head rv"><div><div class="k">Who it's for</div><h2>Films that work for the wild.</h2></div></div>
+    <div class="who">
+      <div class="rv"><span class="n">01</span><h3>Parks &amp; reserves</h3><p>Show what protection looks like on the ground — and what it brings back.</p></div>
+      <div class="rv"><span class="n">02</span><h3>Conservation projects</h3><p>Give a species programme a face, a voice and a reason to fund it.</p></div>
+      <div class="rv"><span class="n">03</span><h3>Purpose-led brands</h3><p>Stories about nature that are honest about it — and good to watch.</p></div>
+    </div>
+  </section>
+
+  <section id="contact" class="wrap end">
+    <div class="k rv" style="justify-content:center">Contact</div>
+    <h2 class="rv" style="margin-top:1rem">Have a story<br>worth <em>protecting?</em></h2>
+    <p class="rv">This public page carries no private contact details. Reach out through Laurie's public profiles.</p>
+    <div class="row rv">
+      <a class="btn solid" href="https://www.instagram.com/hedgeslaurie/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+      <a class="btn" href="https://vimeo.com/user50700387" target="_blank" rel="noopener noreferrer">Vimeo ↗</a>
+    </div>
+  </section>
 </main>
+
+<footer><div class="wrap"><span>© Laurie Hedges · Conservation filmmaking</span><a href="../studio/">Site by Caldas Studio</a></div></footer>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Film viewer" hidden>
+  <figure><img id="vImg" alt=""><figcaption><div><small class="k" id="vSmall"></small><h3 id="vTitle" style="margin-top:.6rem"></h3></div>
+    <div class="ctl"><span class="count" id="vCount" style="align-self:center;margin-right:.4rem"></span><button id="vPrev" aria-label="Previous film">←</button><button id="vNext" aria-label="Next film">→</button><button id="vClose" aria-label="Close viewer">×</button></div></figcaption></figure>
+  <a class="btn" href="https://vimeo.com/user50700387" target="_blank" rel="noopener noreferrer">Watch on Vimeo ↗</a>
+</div>
+
+<script>
+(function(){
+  const hd=document.getElementById('hd');
+  addEventListener('scroll',()=>hd.classList.toggle('s',scrollY>40),{passive:true});
+  // running timecode, 25 fps
+  const tc=document.getElementById('tc'),t0=performance.now(),p=n=>String(n).padStart(2,'0');
+  (function tick(){const f=Math.floor((performance.now()-t0)/40);tc.textContent=`${p(Math.floor(f/90000)%24)}:${p(Math.floor(f/1500)%60)}:${p(Math.floor(f/25)%60)}:${p(f%25)}`;setTimeout(tick,40)})();
+  // reveal
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+  // viewer
+  const films=[...document.querySelectorAll('.film')],v=document.getElementById('viewer'),vi=document.getElementById('vImg');
+  let cur=0,last=null;
+  function show(i){cur=(i+films.length)%films.length;const f=films[cur],im=f.querySelector('img');
+    vi.src=im.src;vi.alt=im.alt;document.getElementById('vSmall').textContent=f.querySelector('small').textContent;
+    document.getElementById('vTitle').textContent=f.querySelector('h3').textContent;document.getElementById('vCount').textContent=`${p(cur+1)} / ${p(films.length)}`;}
+  function open(i){last=document.activeElement;show(i);v.hidden=false;requestAnimationFrame(()=>v.classList.add('on'));document.documentElement.style.overflow='hidden';document.getElementById('vClose').focus()}
+  function close(){v.classList.remove('on');document.documentElement.style.overflow='';setTimeout(()=>{if(!v.classList.contains('on'))v.hidden=true},350);last&&last.focus()}
+  films.forEach((f,i)=>f.addEventListener('click',()=>open(i)));
+  document.getElementById('vPrev').onclick=()=>show(cur-1);document.getElementById('vNext').onclick=()=>show(cur+1);document.getElementById('vClose').onclick=close;
+  v.addEventListener('click',e=>{if(e.target===v)close()});
+  addEventListener('keydown',e=>{if(v.hidden)return;if(e.key==='Escape')close();if(e.key==='ArrowRight')show(cur+1);if(e.key==='ArrowLeft')show(cur-1)});
+})();
+</script>
+<script src="../studio/concept.js" defer></script>
 </body>
 </html>

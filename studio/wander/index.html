@@ -60,6 +60,14 @@
   footer .r{text-align:right;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut)}
   @media(max-width:820px){header nav{display:none}.trips{grid-template-columns:1fr}.trip{height:52vh}.day{grid-template-columns:1fr;gap:.4rem}}
 </style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2716%27%20fill%3D%27%230e1210%27/%3E%3Ccircle%20cx%3D%2732%27%20cy%3D%2732%27%20r%3D%2722%27%20fill%3D%27none%27%20stroke%3D%27%23f07a3c%27%20stroke-width%3D%272%27/%3E%3Ctext%20x%3D%2732%27%20y%3D%2742%27%20font-family%3D%27Georgia%2Cserif%27%20font-size%3D%2728%27%20text-anchor%3D%27middle%27%20fill%3D%27%23f07a3c%27%3EW%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wander — Go Where the Map Ends">
+<meta property="og:description" content="Wander — small-group adventures to the edges of the map. Guided trips, honest itineraries. A travel concept by Caldas Studio.">
+<meta property="og:url" content="https://joaoccaldas.github.io/ai/studio/wander/">
+<meta property="og:image" content="https://joaoccaldas.github.io/ai/studio/gallery/wander.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://joaoccaldas.github.io/ai/studio/wander/">
 </head>
 <body>
 <header><a class="brand" href="../">WANDER</a><nav><a href="#trips">Trips</a><a href="#itinerary">How it works</a><a href="#contact">Contact</a></nav><a class="book" href="#contact">Book a trip</a></header>
@@ -112,5 +120,6 @@
   function upd(){const y=scrollY;par.forEach(el=>{const r=el.getBoundingClientRect();const mid=r.top+r.height/2-innerHeight/2;el.style.transform='translateY('+(mid*-(+el.dataset.par))+'px)';});}
   addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
 </script>
+<script src="../concept.js" defer></script>
 </body>
 </html>

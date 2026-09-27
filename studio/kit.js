@@ -86,8 +86,10 @@
   function reveal(){ const io=new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }),{threshold:.16});
     document.querySelectorAll('.reveal,[data-reveal]').forEach(el=>{ el.classList.add('reveal'); io.observe(el); }); }
 
-  function kinetic(){ document.querySelectorAll('[data-kin]').forEach(el=>{ const txt=el.textContent; el.textContent=''; el.classList.add('kin');
-    [...txt].forEach((ch,i)=>{ const s=document.createElement('span'); s.textContent=ch===' '?' ':ch; s.style.animationDelay=(0.12+i*0.045)+'s'; el.appendChild(s); }); }); }
+  function kinetic(){ document.querySelectorAll('[data-kin]').forEach(el=>{ const txt=el.textContent.trim(); el.textContent=''; el.classList.add('kin'); el.setAttribute('aria-label',txt);
+    let i=0; txt.split(/\s+/).forEach((word,wi,all)=>{ const w=document.createElement('span'); w.className='kw'; w.setAttribute('aria-hidden','true');
+      [...word].forEach(ch=>{ const s=document.createElement('span'); s.textContent=ch; s.style.animationDelay=(0.12+(i++)*0.045)+'s'; w.appendChild(s); });
+      el.appendChild(w); if(wi<all.length-1){ el.appendChild(document.createTextNode(' ')); i++; } }); }); }
 
   function parallax(){ if(reduce) return; const els=[...document.querySelectorAll('[data-parallax]')];
     const tiles=[...document.querySelectorAll('.tile .layer')];

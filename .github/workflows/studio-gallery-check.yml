@@ -30,6 +30,18 @@ jobs:
         run: |
           node --check studio/rooms.js
           node --check studio/museum/museum.js
+          node --check studio/concept.js
+          node --check studio/kit.js
+
+      - name: Validate the concept layer
+        run: |
+          fail=0
+          for f in laurie belong studio/innergroup studio/jewelry studio/eclat studio/restaurant studio/gym studio/wine studio/florist studio/salon studio/hotel studio/cafe studio/studionord studio/volt studio/lume studio/flowstate studio/wander; do
+            grep -q 'concept.js' "$f/index.html" || { echo "::error::$f does not load concept.js"; fail=1; }
+            grep -q 'og:image' "$f/index.html" || { echo "::error::$f has no og:image"; fail=1; }
+            grep -q 'rel="icon"' "$f/index.html" || { echo "::error::$f has no favicon"; fail=1; }
+          done
+          exit $fail
 
       - name: Validate the Museum contract
         shell: python
