@@ -43,10 +43,10 @@ Do not extract these into a shared library until the canonical Bloxy version is 
 ### Rawdog family
 
 - `rawdog` — preserved 2D survival-game predecessor
-- `rawdogging` — active 3D survival game, flagship candidate
-- `rawdog3d` — archived predecessor that already points to `rawdogging`
+- `rawdogging` — active survival-game lineage, currently using the Canvas 2D/isometric entry path; experimental Three.js modules remain under evaluation
+- `rawdog3d` — archived historical 3D iteration that points to `rawdogging`, although the current canonical `rawdogging` entry path is not presently Three.js-based
 
-Useful 3D patterns in `rawdogging` include:
+Useful patterns in `rawdogging` include:
 - camera/input separation
 - world and renderer layers
 - save/persistence
@@ -143,7 +143,7 @@ This repository is a useful portfolio lesson in privacy-by-design, not a cleanup
 | --- | --- | --- | --- |
 | Save/versioned local state | BlocksCreate, Rawdogging | Bloxy, learning games, Tucano | Define a small save-envelope convention, not a framework |
 | Keyboard/touch/TV input | Tucano, BlocksCreate | Rawdogging, learning games | Compare adapters and extract only repeated device-normalization logic |
-| 3D camera/rendering | Rawdogging | future 3D experiments | Consolidate Rawdogging internally first |
+| Experimental 3D camera/rendering | Rawdogging 3D modules | future 3D experiments | First prove one supported 3D entry path and remove internal duplication |
 | Achievements/progression | BlocksCreate, Bloxy, Wordbound | most games | Share event/schema concepts; keep reward tuning game-specific |
 | Learning progression | Wordbound, kids-python, Nova | educational games | Define learner-event and challenge contracts |
 | Multiplayer rooms/networking | Adeline, Roblox | future multiplayer titles | Reuse network-state lessons, not direct browser/server coupling |
