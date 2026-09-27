@@ -29,51 +29,54 @@ jobs:
       - name: Validate JavaScript syntax
         run: |
           node --check studio/rooms.js
-          node --check studio/hall/hall.js
+          node --check studio/museum/museum.js
 
-      - name: Validate the Exposition hall contract
+      - name: Validate the Museum contract
         shell: python
         run: |
           from pathlib import Path
-          import re
+          import json, re
 
           root = Path('studio')
-          required = [
-              root / 'index.html', root / 'rooms.js', root / 'ROOM_SYSTEM.md',
-              root / 'hall' / 'hall.js', root / 'hall' / 'assets' / 'hall.glb',
-              root / 'hall' / 'assets' / 'hall_lightmap.jpg', root / 'hall' / 'assets' / 'hall_env.hdr',
-              root / 'hall' / 'blender' / 'hall.py', root / 'sokai' / 'index.html', root / 'sokai' / 'making' / 'index.html',
-          ]
+          required = [root / 'index.html', root / 'rooms.js', root / 'ROOM_SYSTEM.md', root / 'museum' / 'museum.js',
+                      root / 'museum' / 'assets' / 'museum.glb', root / 'museum' / 'assets' / 'museum_lightmap.jpg',
+                      root / 'museum' / 'assets' / 'museum_layout.json', root / 'museum' / 'blender' / 'museum.py',
+                      root / 'sokai' / 'index.html', root / 'sokai' / 'making' / 'index.html']
           missing = [str(p) for p in required if not p.is_file()]
           if missing:
               raise SystemExit('Missing required files: ' + ', '.join(missing))
-
           html = (root / 'index.html').read_text(encoding='utf-8')
-          for ref in ('rooms.js', 'hall/hall.js', 'id="hall"', 'id="loader"', 'id="modal"'):
+          for ref in ('rooms.js', 'museum/museum.js', 'id="museum"', 'id="loader"', 'id="modal"'):
               if ref not in html:
                   raise SystemExit(f'index.html is missing {ref}')
-
           source = (root / 'rooms.js').read_text(encoding='utf-8')
-          slugs = re.findall(r"slug:'([^']+)'", source)
+          works = re.findall(r"slug:'([^']+)', wing:'([^']+)'", source)
           urls = re.findall(r"url:'([^']+)',\s*img:", source)
           imgs = re.findall(r"img:'([^']+)'", source)
+          slugs = [s for s, _ in works]
           if not slugs or slugs[0] != 'sokai':
-              raise SystemExit(f'SŌKAI must be the first work, found {slugs[:1]}')
+              raise SystemExit('SŌKAI must be the first work')
           if len(slugs) != len(set(slugs)) or not (len(slugs) == len(urls) == len(imgs)):
-              raise SystemExit('Every work needs a unique slug, a url and an img')
-          if len(slugs) > 18:
-              raise SystemExit(f'The hall has 18 niches (1 dais + 17); {len(slugs)} works need a re-bake with more niches')
+              raise SystemExit('Every work needs a unique slug, a wing, a url and an img')
+          layout = json.loads((root / 'museum' / 'assets' / 'museum_layout.json').read_text())
+          placed = {e['slug'] for e in layout['exhibits']} | {'sokai'}
+          unplaced = [s for s in slugs if s not in placed]
+          if unplaced:
+              raise SystemExit(f'Works without a sculpture in the museum (re-bake museum.py): {unplaced}')
+          for env in ['atrium'] + [w['key'] for w in layout['wings']]:
+              if not (root / 'museum' / 'assets' / f'env_{env}.hdr').is_file():
+                  raise SystemExit(f'Missing reflection map env_{env}.hdr')
           missing_pages = [u for u in urls if not (root / u / 'index.html').resolve().is_file()]
           missing_imgs = [i for i in imgs if not (root / i).is_file()]
           if missing_pages or missing_imgs:
               raise SystemExit(f'Missing pages {missing_pages} or artwork {missing_imgs}')
-          print(f'Validated {len(slugs)} works; SŌKAI first; all pages and artwork present.')
+          print(f'Validated {len(slugs)} works in {len(layout["wings"])} rooms; every work has a sculpture.')
 
       - name: Check file sizes
         run: |
           check() { size=$(wc -c < "$1"); if [ "$size" -gt "$2" ]; then echo "$1 is $size bytes (limit $2)"; exit 1; fi; }
           check studio/index.html 200000
-          check studio/hall/hall.js 1500000
-          check studio/hall/assets/hall.glb 8000000
-          check studio/hall/assets/hall_lightmap.jpg 3000000
+          check studio/museum/museum.js 1500000
+          check studio/museum/assets/museum.glb 6000000
+          check studio/museum/assets/museum_lightmap.jpg 2500000
           check studio/sokai/index.html 20000000

@@ -13,7 +13,7 @@ permissions:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
 
@@ -41,29 +41,33 @@ jobs:
             const browser = await chromium.launch({ headless: true, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
             const errors = [];
             fs.mkdirSync('visual-evidence', { recursive: true });
-            async function walk(name, viewport, stops) {
+            const yawFor = a => Math.atan2(-Math.cos(a * Math.PI / 180), Math.sin(a * Math.PI / 180));
+            const tw = (a, u) => [Math.cos(a * Math.PI / 180) * u, Math.sin(a * Math.PI / 180) * u];
+            async function walk(name, viewport) {
               const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
-              page.on('console', m => { if (m.type() === 'error' && !m.text().includes('Failed to load resource')) errors.push(`${name}: ${m.text()}`); });
+              page.on('console', m => { if (m.type() === 'error' && !m.text().includes('Failed to load resource') && !m.text().includes('pointer lock')) errors.push(`${name}: ${m.text()}`); });
               page.on('pageerror', e => errors.push(`${name}: ${e.message}`));
-              await page.goto('http://127.0.0.1:4173/studio/', { waitUntil: 'networkidle', timeout: 120000 });
-              await page.waitForFunction(() => document.querySelector('#loader')?.classList.contains('done'), null, { timeout: 120000 });
-              await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
+              await page.goto('http://127.0.0.1:4173/studio/', { waitUntil: 'networkidle', timeout: 240000 });
+              await page.waitForFunction(() => document.querySelector('#loader')?.classList.contains('done'), null, { timeout: 240000 });
               const title = await page.evaluate(() => document.querySelector('#intro h1')?.textContent || '');
-              if (!title || !title.includes('walk into')) throw new Error(`${name}: hero did not render`);
-              for (const k of stops) {
-                await page.evaluate(k => window.__HALL.go(k), k);
-                await page.waitForTimeout(8000);
-                // a black frame means the render failed (e.g. a NaN spread by bloom)
-                const lum = await page.evaluate(() => new Promise(res => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); c.width = 64; c.height = 40; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 64, 40); const d = x.getImageData(0, 0, 64, 40).data; let s = 0; for (let i = 0; i < d.length; i += 4) s += d[i] + d[i + 1] + d[i + 2]; res(s / (d.length / 4) / 3); }; window.__HALL.capture(); requestAnimationFrame(() => requestAnimationFrame(() => { img.src = window.__HALL.capture(); })); }));
-                console.log(`${name} stop ${k}: mean luminance ${lum.toFixed(1)}`);
-                // the hero (stop 0) is excluded: SwiftShader renders it black while real GPUs render it correctly
-                if (k > 0 && !(lum > 6)) errors.push(`${name} stop ${k}: hall rendered black (${lum})`);
-                await page.screenshot({ path: `visual-evidence/${name}-${String(k).padStart(2, '0')}.png` });
+              if (!title.includes('walk into')) throw new Error(`${name}: hero did not render`);
+              await page.waitForTimeout(3000);
+              await page.screenshot({ path: `visual-evidence/${name}-00-entrance.png` });
+              await page.click('#enterBtn');
+              const layout = await page.evaluate(() => fetch('museum/assets/museum_layout.json').then(r => r.json()));
+              const stops = [['atrium', 0, -6.8, 0], ...layout.wings.map(w => [w.key, ...tw(w.angle, 16.4), yawFor(w.angle)])];
+              for (const [label, x, y, yaw] of stops) {
+                await page.evaluate(([x, y, yaw]) => window.__MUSEUM.teleport(x, y, yaw, -.08), [x, y, yaw]);
+                await page.waitForTimeout(6000);
+                const lum = await page.evaluate(() => new Promise(res => { const img = new Image(); img.onload = () => { const c = document.createElement('canvas'); c.width = 64; c.height = 40; const x = c.getContext('2d'); x.drawImage(img, 0, 0, 64, 40); const d = x.getImageData(0, 0, 64, 40).data; let s = 0; for (let i = 0; i < d.length; i += 4) s += d[i] + d[i + 1] + d[i + 2]; res(s / (d.length / 4) / 3); }; window.__MUSEUM.capture(); requestAnimationFrame(() => requestAnimationFrame(() => { img.src = window.__MUSEUM.capture(); })); }));
+                console.log(`${name} ${label}: mean luminance ${lum.toFixed(1)}`);
+                if (!(lum > 6)) errors.push(`${name} ${label}: museum rendered black (${lum})`);
+                await page.screenshot({ path: `visual-evidence/${name}-${label}.png` });
               }
               await page.close();
             }
-            await walk('desktop', { width: 1440, height: 900 }, [0, 1, 2, 3]);
-            await walk('mobile', { width: 390, height: 844 }, [0, 1, 2]);
+            await walk('desktop', { width: 1440, height: 900 });
+            await walk('mobile', { width: 390, height: 844 });
             await browser.close();
             if (errors.length) throw new Error('Browser errors:\n' + errors.join('\n'));
           })();

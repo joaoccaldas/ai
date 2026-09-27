@@ -3,205 +3,183 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>Caldas Studio — The Exposition</title>
-<meta name="description" content="A website you can walk into. Caldas Studio's gallery hall is modeled in Blender, lit by path tracing and rendered live in your browser, hung with concept websites built for real kinds of business." />
-<meta name="theme-color" content="#0c0b0a" />
-<meta property="og:title" content="Caldas Studio — The Exposition" />
-<meta property="og:description" content="A website you can walk into: a Blender-built gallery hall of immersive concept websites." />
+<title>Caldas Studio — The Museum</title>
+<meta name="description" content="Walk into Caldas Studio: a museum built in Blender and rendered live in your browser. Every sculpture is a website concept for a real kind of business — click one to enter it." />
+<meta name="theme-color" content="#07070a" />
+<meta property="og:title" content="Caldas Studio — The Museum" />
+<meta property="og:description" content="A website you can walk into. Every sculpture opens a site." />
 <meta property="og:image" content="https://joaoccaldas.github.io/ai/studio/gallery/sokai.jpg" />
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
-  :root{--bg:#0c0b0a;--ink:#f2ede3;--muted:rgba(242,237,227,.6);--faint:rgba(242,237,227,.34);--gold:#c9a86a;--line:rgba(242,237,227,.14);--glass:rgba(14,12,10,.55)}
+  :root{--bg:#07070a;--ink:#f2ede3;--muted:rgba(242,237,227,.62);--faint:rgba(242,237,227,.36);--gold:#c9a86a;--line:rgba(242,237,227,.15);--glass:rgba(12,11,10,.6)}
   html,body{background:var(--bg)}
   body{font-family:'Jost',system-ui,sans-serif;color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  body.walking{overflow:hidden}
   a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   :focus-visible{outline:1px solid var(--gold);outline-offset:4px}
-  .serif{font-family:'Cormorant Garamond',serif}
-  #hall{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;display:block}
-  #vign{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(120% 110% at 50% 45%,transparent 50%,rgba(0,0,0,.62) 100%)}
-  #grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 6s steps(6) infinite}
+  #museum{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0;touch-action:none}
+  #grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.045;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 6s steps(6) infinite}
   @keyframes gr{50%{transform:translate(4%,-4%)}}
-  #introdim{position:fixed;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,rgba(8,7,6,.82) 0%,rgba(8,7,6,.45) 45%,rgba(8,7,6,0) 75%);transition:opacity .9s}
-  /* header */
-  header{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:calc(1.3rem + env(safe-area-inset-top,0px)) 4.5vw 1.3rem;transition:background .4s,border-color .4s;border-bottom:1px solid transparent}
-  header.solid{background:rgba(12,11,10,.78);backdrop-filter:blur(14px);border-color:var(--line)}
-  .brand{font-size:.95rem;letter-spacing:.3em;font-weight:500}.brand b{color:var(--muted);font-weight:300}
-  header nav{display:flex;gap:.6rem;align-items:center}
-  header nav button,header nav a{font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;padding:.6rem 1rem;border-radius:40px;border:1px solid transparent;color:var(--muted);transition:.3s}
-  header nav button:hover,header nav a:hover{color:var(--ink)}
+  header{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:calc(1.2rem + env(safe-area-inset-top,0px)) 4vw 1.2rem;pointer-events:none}
+  header>*{pointer-events:auto}
+  .brand{font-size:.92rem;letter-spacing:.3em;font-weight:500;white-space:nowrap}.brand b{color:var(--muted);font-weight:300}
+  header nav{display:flex;gap:.4rem;align-items:center}
+  header nav button,header nav a{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:.6rem .95rem;border-radius:40px;border:1px solid transparent;color:var(--muted);transition:.3s;white-space:nowrap;background:rgba(12,11,10,.35);backdrop-filter:blur(8px)}
+  header nav button:hover,header nav a:hover{color:var(--ink);border-color:var(--line)}
   header nav .pill{border-color:var(--line);color:var(--ink)}header nav .pill:hover{border-color:var(--gold);color:var(--gold)}
-  #sound .eq{display:inline-flex;gap:2px;align-items:flex-end;height:10px;margin-right:.45rem;vertical-align:-1px}
-  #sound .eq i{width:2px;height:3px;background:currentColor}
-  #sound.on{color:var(--gold)}#sound.on .eq i{animation:eq .9s ease-in-out infinite}#sound.on .eq i:nth-child(2){animation-delay:.2s}#sound.on .eq i:nth-child(3){animation-delay:.4s}
-  @keyframes eq{50%{height:10px}}
-  /* hero */
-  #intro{position:fixed;left:0;top:0;bottom:0;z-index:12;display:flex;flex-direction:column;justify-content:center;padding:0 4.5vw;max-width:min(760px,92vw);transition:opacity .8s,transform .8s}
-  #intro.off{opacity:0;transform:translateX(-24px);pointer-events:none}
-  #intro .kick{font-size:.64rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.9rem}
+  header nav kbd{font-family:inherit;font-size:.55rem;border:1px solid var(--line);border-radius:4px;padding:.05rem .3rem;margin-left:.4rem;color:var(--faint)}
+  #sound.on{color:var(--gold)}
+  /* entrance */
+  #intro{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;background:linear-gradient(90deg,rgba(7,7,10,.86),rgba(7,7,10,.5) 48%,rgba(7,7,10,.05) 80%);transition:opacity .9s}
+  #intro.off{opacity:0;pointer-events:none}
+  #intro .kick{font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.9rem}
   #intro .kick:before{content:"";width:34px;height:1px;background:var(--gold)}
-  #intro h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3rem,8.4vw,7.2rem);line-height:.92;letter-spacing:-.015em;margin:1.4rem 0 1.5rem;text-wrap:balance}
+  #intro h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3rem,8vw,7rem);line-height:.92;letter-spacing:-.015em;margin:1.3rem 0 1.4rem;max-width:12ch}
   #intro h1 em{font-style:italic;color:#e9dcc0}
-  #intro p{max-width:44ch;color:var(--muted);font-weight:300;font-size:clamp(.98rem,1.4vw,1.12rem);line-height:1.7}
-  #intro .ctas{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2.2rem}
+  #intro p{max-width:46ch;color:var(--muted);font-weight:300;font-size:clamp(.98rem,1.35vw,1.12rem);line-height:1.7}
+  #intro .ctas{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2.1rem}
   .btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 1.7rem;border-radius:50px;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:.35s}
   .btn.gold{background:var(--gold);color:#0c0b0a}.btn.gold:hover{background:#dcbd81;transform:translateY(-2px)}
   .btn.ghost{border:1px solid var(--line)}.btn.ghost:hover{border-color:#7fe8ff;color:#7fe8ff}
-  #intro .specs{margin-top:2.4rem;display:flex;gap:1.4rem;flex-wrap:wrap;font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;color:var(--faint)}
-  #intro .specs b{color:var(--muted);font-weight:400}
-  /* caption of the current work */
-  #cap{position:fixed;left:4.5vw;bottom:calc(7.4rem + env(safe-area-inset-bottom,0px));z-index:14;max-width:min(560px,90vw);opacity:0;transform:translateY(10px);transition:opacity .6s,transform .6s;pointer-events:none}
-  #cap.on{opacity:1;transform:none}
-  #cap .idx{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--gold)}
-  #cap h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,5vw,4rem);line-height:1;margin:.15rem 0 .5rem}
-  #cap .tag{font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
-  #cap .note{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--muted);margin-top:.6rem}
-  #cap .extra{pointer-events:auto;display:inline-block;margin-top:.9rem;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:.2rem}
-  #cap .extra[hidden]{display:none}#cap .extra:hover{color:var(--gold);border-color:var(--gold)}
-  /* the navigator: one control for moving through the hall */
-  #navbar{position:fixed;left:50%;bottom:calc(1.6rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:.35rem;padding:.4rem;border-radius:60px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);box-shadow:0 20px 60px rgba(0,0,0,.45);opacity:0;transition:opacity .6s}
-  #navbar.on{opacity:1}
-  #navbar .arrow{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:1.15rem;border:1px solid transparent;transition:.25s}
-  #navbar .arrow:hover{border-color:var(--gold);color:var(--gold)}#navbar .arrow:disabled{opacity:.25;cursor:default;border-color:transparent;color:inherit}
-  #navbar .now{min-width:6.4rem;text-align:center;font-size:.66rem;letter-spacing:.2em;color:var(--muted);font-variant-numeric:tabular-nums}
-  #navbar .now b{color:var(--ink);font-weight:500}
-  #navbar .go{background:var(--ink);color:#0c0b0a;padding:.85rem 1.4rem;border-radius:40px;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:.3s;white-space:nowrap}
-  #navbar .go:hover{background:var(--gold)}
-  #navbar .sep{width:1px;height:26px;background:var(--line);margin:0 .25rem}
-  #navbar .small{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);padding:.8rem .9rem;border-radius:40px;white-space:nowrap}
-  #navbar .small:hover,#navbar .small.on{color:var(--gold)}
-  /* progress line: every work is a point on it */
-  #rail{position:fixed;left:4.5vw;right:4.5vw;bottom:calc(.55rem + env(safe-area-inset-bottom,0px));z-index:19;height:14px;opacity:0;transition:opacity .6s}
-  #rail.on{opacity:1}
-  #rail:before{content:"";position:absolute;left:0;right:0;top:6px;height:1px;background:var(--line)}
-  #rail .fill{position:absolute;left:0;top:6px;height:1px;background:var(--gold);width:0;transition:width .3s}
-  #rail button{position:absolute;top:0;width:14px;height:14px;transform:translateX(-50%);display:grid;place-items:center}
-  #rail button:after{content:"";width:5px;height:5px;border-radius:50%;background:rgba(242,237,227,.35);transition:.3s}
-  #rail button.on:after{background:var(--c,#c9a86a);transform:scale(1.8);box-shadow:0 0 10px var(--c,#c9a86a)}
-  #rail button span{position:absolute;bottom:18px;white-space:nowrap;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);background:var(--glass);border:1px solid var(--line);padding:.35rem .6rem;border-radius:20px;opacity:0;pointer-events:none;transition:.2s}
-  #rail button:hover span{opacity:1}
-  /* commission at the end of the hall */
-  #cta-cap{position:fixed;left:0;right:0;bottom:calc(8rem + env(safe-area-inset-bottom,0px));z-index:14;text-align:center;opacity:0;pointer-events:none;transition:opacity .6s;padding:0 6vw}
-  #cta-cap.on{opacity:1}#cta-cap.on a{pointer-events:auto}
-  #cta-cap .idx{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)}
-  #cta-cap h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;margin:.3rem 0 .6rem}
-  #cta-cap p{max-width:42ch;margin:0 auto;color:var(--muted);font-weight:300;line-height:1.6}
-  #cta-cap .btn{margin-top:1.3rem}
-  /* all works */
-  #works{position:fixed;inset:0;z-index:70;background:rgba(10,9,8,.94);backdrop-filter:blur(10px);overflow:auto;padding:calc(6rem + env(safe-area-inset-top,0px)) 4.5vw 4rem;opacity:0;visibility:hidden;transition:.45s}
-  #works.on{opacity:1;visibility:visible}
-  #works h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3rem);margin-bottom:1.6rem}
-  #works .x{position:fixed;top:calc(1.4rem + env(safe-area-inset-top,0px));right:4.5vw;font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);border:1px solid var(--line);border-radius:40px;padding:.6rem 1rem}
-  #works .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:1rem}
-  #works .card{text-align:left;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#12100e;transition:.3s}
+  .keys{margin-top:2.4rem;display:grid;grid-template-columns:repeat(4,auto);gap:1.2rem 2rem;width:max-content;max-width:100%;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .keys div{display:flex;flex-direction:column;gap:.5rem}.keys b{color:var(--ink);font-weight:400;letter-spacing:.1em;font-size:.72rem}
+  .keys kbd{display:inline-block;min-width:1.7rem;text-align:center;border:1px solid var(--line);border-radius:6px;padding:.25rem .4rem;margin-right:.2rem;color:var(--ink);font-family:inherit;font-size:.66rem}
+  #loader{position:fixed;inset:0;z-index:90;background:var(--bg);display:grid;place-items:center;transition:opacity 1.2s,visibility 1.2s}
+  #loader.done{opacity:0;visibility:hidden}
+  #loader div{width:min(320px,70vw);text-align:center}
+  #loader h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2rem;margin-bottom:1.2rem}
+  #loader .bar{height:1px;background:var(--line)}#loader .bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .4s}
+  #loader p{margin-top:1rem;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--faint)}
+  /* walking chrome */
+  #crosshair{position:fixed;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(242,237,227,.8);box-shadow:0 0 0 1px rgba(0,0,0,.4);z-index:15;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none}
+  body.locked #crosshair{opacity:1}
+  body.locked #aim.on ~ #crosshair{transform:scale(2.2);background:var(--gold)}
+  #aim{position:fixed;z-index:16;transform:translateX(-50%);text-align:center;pointer-events:none;opacity:0;transition:opacity .25s;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);padding:.6rem .95rem;border-radius:12px;white-space:nowrap}
+  #aim.on{opacity:1}
+  #aim b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.25rem}
+  #aim span{display:block;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.15rem}
+  #aim em{display:block;font-style:normal;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-top:.35rem}
+  #roomName{position:fixed;left:4vw;bottom:calc(1.4rem + env(safe-area-inset-bottom,0px));z-index:14;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--muted);opacity:0;transition:.5s}
+  body.walking #roomName{opacity:1}
+  #hint{position:fixed;left:50%;bottom:calc(1.4rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:14;display:flex;gap:1.2rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);opacity:0;transition:.5s;white-space:nowrap}
+  body.walking #hint{opacity:1}#hint kbd{font-family:inherit;border:1px solid var(--line);border-radius:4px;padding:.1rem .35rem;color:var(--muted);margin-right:.3rem}
+  #miniMap{position:fixed;right:4vw;bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));width:210px;z-index:14;opacity:0;transition:.5s;background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:.4rem;backdrop-filter:blur(10px)}
+  body.walking #miniMap{opacity:1}
+  #miniMap svg,#bigMap svg{display:block;width:100%;height:auto}
+  #banner{position:fixed;left:50%;top:18vh;transform:translate(-50%,-8px);z-index:14;text-align:center;opacity:0;transition:opacity .9s,transform .9s;pointer-events:none;text-shadow:0 2px 24px rgba(0,0,0,.8)}
+  #banner.on{opacity:1;transform:translate(-50%,0)}
+  #banner .k{font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold)}
+  #banner h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,5vw,3.8rem);margin:.3rem 0}
+  #banner p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.1rem}
+  /* panels */
+  .panel{position:fixed;inset:0;z-index:60;background:rgba(7,7,10,.86);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 4vw 3rem;opacity:0;visibility:hidden;transition:.4s;overflow:auto}
+  .panel.on{opacity:1;visibility:visible}
+  .panel .x{position:fixed;top:calc(1.2rem + env(safe-area-inset-top,0px));right:4vw;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--line);border-radius:40px;padding:.6rem 1rem;color:var(--muted)}
+  .panel h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3rem);margin-bottom:1.4rem;align-self:flex-start}
+  #mapPanel .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:2rem;width:min(1100px,100%)}
+  #bigMap{background:rgba(242,237,227,.03);border:1px solid var(--line);border-radius:16px;padding:1rem}
+  #bigMap .wing:hover,#miniMap .wing:hover{fill:rgba(201,168,106,.2)}
+  #mapWings{display:flex;flex-direction:column;gap:.5rem}
+  #mapWings button{display:grid;grid-template-columns:2rem 1fr auto;align-items:center;gap:.2rem .6rem;text-align:left;padding:.8rem 1rem;border:1px solid var(--line);border-radius:12px;transition:.25s}
+  #mapWings button:hover{border-color:var(--gold)}
+  #mapWings i{font-style:normal;font-family:'Cormorant Garamond',serif;color:var(--gold);grid-row:span 2}
+  #mapWings b{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.2rem}
+  #mapWings span{grid-column:2;font-size:.62rem;letter-spacing:.08em;color:var(--muted)}
+  #mapWings kbd{grid-row:1/3;grid-column:3;font-family:inherit;font-size:.62rem;border:1px solid var(--line);border-radius:5px;padding:.2rem .45rem;color:var(--muted)}
+  #works .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;width:min(1200px,100%)}
+  #works .card{text-align:left;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#100f0d;transition:.3s}
   #works .card:hover{border-color:var(--gold);transform:translateY(-3px)}
   #works .card img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
-  #works .card div{padding:.7rem .8rem}#works .card b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.15rem}
-  #works .card span{font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-  #works .card i{font-style:normal;font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:.9rem;margin-right:.3rem}
-  /* page below the hall */
-  #track{position:relative;z-index:2;pointer-events:none;height:100vh}
-  section.block{position:relative;z-index:3;background:var(--bg)}
+  #works .card div{padding:.7rem .8rem}#works .card b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.2rem}
+  #works .card span{display:block;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:.2rem 0}
+  #works .card em{font-size:.72rem;color:var(--muted);font-style:italic;font-family:'Cormorant Garamond',serif}
+  #pause{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%);z-index:40;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);border-radius:18px;padding:1.6rem 1.8rem;text-align:center;opacity:0;visibility:hidden;transition:.35s;width:min(420px,90vw)}
+  #pause.on{opacity:1;visibility:visible;transform:translate(-50%,-50%)}
+  #pause h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.8rem;margin-bottom:.4rem}
+  #pause p{font-size:.8rem;color:var(--muted);margin-bottom:1.2rem}
+  #pause .row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+  /* preview */
+  #modal{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;background:rgba(7,7,10,.92);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:.4s}
+  #modal.on{opacity:1;visibility:visible}
+  #modal .bar{display:flex;justify-content:space-between;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) 3vw 1rem}
+  #modal .t{font-family:'Cormorant Garamond',serif;font-size:1.3rem}#modal .t small{font-family:'Jost';font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-left:.8rem}
+  #modal .a{display:flex;gap:.6rem}
+  #modal .a a,#modal .a button{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--line);border-radius:40px;padding:.55rem 1.1rem}
+  #modal .a a:hover,#modal .a button:hover{border-color:var(--gold);color:var(--gold)}
+  #modal .frameWrap{flex:1;margin:0 3vw 3vh;border:1px solid var(--line);border-radius:10px;overflow:hidden;position:relative;background:#0c0b0a}
+  #modal iframe{width:100%;height:100%;border:0;display:block}
+  #modal .ld{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;transition:opacity .4s;pointer-events:none}
+  #webglFail{position:fixed;inset:0;z-index:25;display:grid;place-items:center;text-align:center;padding:2rem;background:radial-gradient(60% 60% at 50% 40%,#1a1712,#07070a 72%)}
+  #webglFail[hidden]{display:none}
+  /* the page below the museum (reachable before entering) */
+  section.block{position:relative;z-index:3;background:#0c0b0a}
+  #spacer{height:100vh}
   #studio{padding:14vh 6vw;border-top:1px solid var(--line)}
   .k{font-size:.64rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.3rem}
   #studio h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,4vw,3rem);max-width:20ch;line-height:1.06}
   .steps{margin-top:4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2.4rem}
-  .steps .s{border-top:1px solid var(--line);padding-top:1.4rem}
-  .steps .s .n{font-family:'Cormorant Garamond',serif;color:var(--gold);font-size:1.1rem}
-  .steps .s h4{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.4rem;margin:.3rem 0 .6rem}
-  .steps .s p{font-size:.92rem;color:var(--muted);line-height:1.65;font-weight:300}
+  .steps .s{border-top:1px solid var(--line);padding-top:1.4rem}.steps .n{font-family:'Cormorant Garamond',serif;color:var(--gold)}
+  .steps h4{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.4rem;margin:.3rem 0 .6rem}.steps p{font-size:.92rem;color:var(--muted);line-height:1.65;font-weight:300}
   #cta{padding:16vh 6vw;text-align:center;border-top:1px solid var(--line)}
   #cta h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.02}
   #cta p{margin:1.4rem auto 0;max-width:46ch;color:var(--muted);font-weight:300;line-height:1.7}
   #cta .btns{margin-top:2.6rem;display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
-  footer{position:relative;z-index:3;background:var(--bg);padding:6vh 5vw 4vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.1rem}
-  footer .b{font-size:.9rem;letter-spacing:.24em}footer .c{font-size:.66rem;color:var(--faint)}
-  footer .s{display:flex;gap:1.4rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}footer .s a:hover{color:var(--gold)}
-  /* preview modal */
-  #modal{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;background:rgba(8,7,6,.9);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s}
-  #modal.on{opacity:1;visibility:visible}
-  #modal .bar{display:flex;justify-content:space-between;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) 3vw 1rem}
-  #modal .bar .t{font-family:'Cormorant Garamond',serif;font-size:1.3rem}#modal .bar .t small{font-family:'Jost';font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-left:.8rem}
-  #modal .bar .a{display:flex;gap:.7rem}
-  #modal .bar a,#modal .bar button{font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--line);border-radius:40px;padding:.55rem 1.1rem;transition:.3s}
-  #modal .bar a:hover,#modal .bar button:hover{border-color:var(--gold);color:var(--gold)}
-  #modal .frameWrap{flex:1;margin:0 3vw 3vh;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#0c0b0a;position:relative}
-  #modal iframe{width:100%;height:100%;border:0;display:block}
-  #modal .ld{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:.64rem;letter-spacing:.3em;text-transform:uppercase;transition:opacity .4s}
-  #loader{position:fixed;inset:0;z-index:90;background:var(--bg);display:grid;place-items:center;transition:opacity 1.2s,visibility 1.2s}
-  #loader.done{opacity:0;visibility:hidden}
-  #loader .ring{width:54px;height:54px;border-radius:50%;border:1px solid var(--line);border-top-color:var(--gold);animation:spin 1.1s linear infinite}
-  #loader p{position:absolute;margin-top:110px;font-size:.6rem;letter-spacing:.34em;text-transform:uppercase;color:var(--faint)}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  #cursor{position:fixed;top:0;left:0;z-index:60;width:28px;height:28px;border:1px solid rgba(242,237,227,.55);border-radius:50%;pointer-events:none;transition:width .3s,height .3s,background .3s,border-color .3s;display:grid;place-items:center;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;mix-blend-mode:difference}
-  #cursor.enter{width:86px;height:86px;background:rgba(242,237,227,.12);border-color:var(--gold)}
-  #cursor b{opacity:0;transition:.3s;color:#fff;font-weight:400}#cursor.enter b{opacity:1}
-  @media(pointer:coarse){#cursor{display:none}}
+  footer{position:relative;z-index:3;background:#0c0b0a;padding:6vh 5vw 4vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+  footer .c{font-size:.66rem;color:var(--faint)}footer .s{display:flex;gap:1.4rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
   @media(max-width:760px){
-    header nav .hide-m{display:none}
-    .brand{font-size:.8rem;letter-spacing:.2em;white-space:nowrap}
-    header nav{gap:.3rem}header nav button,header nav a{white-space:nowrap;padding:.55rem .75rem;font-size:.58rem;letter-spacing:.16em}
-    #intro{justify-content:flex-end;padding-bottom:calc(8.5rem + env(safe-area-inset-bottom,0px))}
-    #introdim{background:linear-gradient(0deg,rgba(8,7,6,.9) 0%,rgba(8,7,6,.5) 55%,rgba(8,7,6,.1) 100%)}
-    #intro .specs{display:none}
-    #cap{left:5vw;bottom:calc(6.8rem + env(safe-area-inset-bottom,0px))}#cap .note{display:none}
-    #navbar{left:3vw;right:3vw;transform:none;justify-content:space-between}
-    #navbar .small.hide-m,#navbar .sep{display:none}
-    #rail{display:none}
-    .steps{grid-template-columns:1fr;gap:1.6rem}
+    header nav .hide-m{display:none}.brand{font-size:.78rem;letter-spacing:.2em}
+    #intro{justify-content:flex-end;padding-bottom:calc(3rem + env(safe-area-inset-bottom,0px));background:linear-gradient(0deg,rgba(7,7,10,.92),rgba(7,7,10,.55) 60%,rgba(7,7,10,.1))}
+    .keys{display:none}#hint{display:none}#miniMap{width:150px}
+    #mapPanel .wrap{grid-template-columns:1fr}.steps{grid-template-columns:1fr}
   }
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
 </style>
 </head>
 <body>
-<div id="loader"><div class="ring"></div><p>Lighting the hall</p></div>
-<canvas id="hall" aria-label="A gallery hall rendered in 3D. Use the navigator or arrow keys to move between works."></canvas>
-<div id="vign"></div><div id="grain"></div><div id="introdim"></div>
+<div id="loader"><div><h2>The Caldas Museum</h2><div class="bar"><i id="loadbar"></i></div><p id="loadtxt">Opening the doors</p></div></div>
+<canvas id="museum" aria-label="A museum rendered in 3D. Walk with W A S D or the arrow keys, look with the mouse, click a sculpture to open its website."></canvas>
+<div id="grain"></div>
 
-<header id="hd">
-  <a class="brand" href="#" id="home">CALDAS <b>STUDIO</b></a>
-  <nav aria-label="Site">
-    <button id="allBtn" class="pill">All works</button>
-    <a class="hide-m" href="#studio">Process</a>
-    <button id="sound" class="hide-m" aria-pressed="false"><span class="eq"><i></i><i></i><i></i></span>Sound</button>
+<header>
+  <a class="brand" href="#" onclick="location.reload();return false">CALDAS <b>STUDIO</b></a>
+  <nav aria-label="Museum">
+    <button id="mapBtn">Map<kbd>M</kbd></button>
+    <button id="worksBtn" class="hide-m">All works</button>
+    <button id="sound" class="hide-m" aria-pressed="false">Sound</button>
     <a class="pill" href="#cta">Commission</a>
   </nav>
 </header>
-<div id="cursor"><b>Enter</b></div>
 
 <section id="intro" aria-labelledby="heroTitle">
-  <div class="kick">Caldas Studio · The Exposition</div>
+  <div class="kick">Caldas Studio · The Museum</div>
   <h1 id="heroTitle">A website you can <em>walk into.</em></h1>
-  <p>This page is a gallery hall modeled in Blender, lit by path tracing and rendered live in your browser. Inside hang the concept sites we build for real kinds of business, starting with a katana you can draw from its scabbard.</p>
-  <div class="ctas"><button class="btn gold" id="walk">Walk the hall →</button><a class="btn ghost" href="sokai/">Enter SŌKAI ↗</a></div>
-  <div class="specs"><span><b>Blender 5.2</b> modeling</span><span><b>Cycles</b> 4K light bake</span><span><b>Three.js</b> live render</span><span><b id="specCount">18</b> works</span></div>
+  <p>A museum modeled in Blender and rendered live in your browser. Every sculpture stands for a website we built for a real kind of business: walk up to the diamond, the wine glass or the lighthouse, and click to step inside.</p>
+  <div class="ctas"><button class="btn gold" id="enterBtn">Enter the museum →</button><a class="btn ghost" href="sokai/">See SŌKAI ↗</a></div>
+  <div class="keys" aria-label="Controls">
+    <div><b><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></b>Walk</div>
+    <div><b>Mouse</b>Look around</div>
+    <div><b>Click · <kbd>E</kbd></b>Open a work</div>
+    <div><b><kbd>M</kbd> · <kbd>1</kbd>–<kbd>5</kbd></b>Map · rooms</div>
+  </div>
 </section>
 
-<div id="cap" aria-live="polite">
-  <div class="idx" id="cap-idx">I</div>
-  <h2 id="cap-name">—</h2>
-  <div class="tag" id="cap-tag">—</div>
-  <div class="note" id="cap-note"></div>
-  <a class="extra" id="cap-extra" hidden target="_blank" rel="noopener"></a>
-</div>
+<div id="aim" aria-live="polite"><b id="aimName"></b><span id="aimType"></span><em id="aimHint"></em></div>
+<div id="crosshair"></div>
+<div id="roomName">The Atrium</div>
+<div id="hint"><span><kbd>WASD</kbd>walk</span><span><kbd>Shift</kbd>stroll faster</span><span><kbd>E</kbd>open</span><span><kbd>M</kbd>map</span><span><kbd>Esc</kbd>free the mouse</span></div>
+<div id="miniMap" aria-label="Floor plan"></div>
 
-<div id="cta-cap"><div class="idx">The last niche</div><h2>Your business, <em>hung here.</em></h2><p>Every work in this hall was built before anyone asked. Tell us yours and we build the first draft free.</p><a class="btn gold" href="mailto:hello@caldas.studio?subject=Commission%20my%20site">Request my concept ↗</a></div>
+<div id="pause"><h3>Paused</h3><p>Your mouse is free. Click the scene or resume to keep walking.</p><div class="row"><button class="btn gold" id="resume">Resume walking</button><button class="btn ghost" id="pauseMap">Map</button></div></div>
 
-<nav id="navbar" aria-label="Move through the hall">
-  <button class="arrow" id="prev" aria-label="Previous work">‹</button>
-  <div class="now" aria-live="polite"><b id="nIdx">01</b> / <span id="nTot">18</span></div>
-  <button class="arrow" id="next" aria-label="Next work">›</button>
-  <span class="sep"></span>
-  <button class="go" id="cap-go">Enter work ↗</button>
-  <button class="small hide-m" id="tour" aria-pressed="false" title="Walk the hall automatically">▶ Tour</button>
-</nav>
-<div id="rail" aria-hidden="true"><div class="fill" id="railFill"></div></div>
+<div class="panel" id="mapPanel" role="dialog" aria-label="Map"><button class="x" id="mapClose">Close ✕</button><div class="wrap"><div><h3>The floor plan</h3><div id="bigMap"></div></div><div><h3>Rooms</h3><div id="mapWings"></div></div></div></div>
+<div class="panel" id="works" role="dialog" aria-label="All works"><button class="x" id="worksClose">Close ✕</button><h3>All works</h3><div class="grid" id="worksGrid"></div></div>
 
-<div id="works" role="dialog" aria-label="All works"><button class="x" id="works-x">Close ✕</button><h3>All works</h3><div class="grid" id="worksGrid"></div></div>
+<div id="modal"><div class="bar"><div class="t"><span id="m-name">—</span><small id="m-room"></small></div><div class="a"><a id="m-open" href="#" target="_blank" rel="noopener">Open full ↗</a><button id="m-close">Back to the museum ✕</button></div></div><div class="frameWrap"><div class="ld">Opening the work…</div><iframe id="m-frame" title="Website preview"></iframe></div></div>
+<div id="webglFail" hidden><div><h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.4rem">The museum needs WebGL.</h2><p style="color:var(--muted);margin:1rem 0 1.6rem">Your browser could not start 3D rendering. The works are all here:</p><a class="btn gold" href="index-classic.html">Open the gallery</a></div></div>
 
-<div id="track"></div>
-
+<div id="spacer"></div>
 <main>
   <section class="block" id="studio">
     <div class="k">The studio</div>
@@ -214,24 +192,15 @@
   </section>
   <section class="block" id="cta">
     <div class="k">Commission a piece</div>
-    <h2>Your business, hung in this hall.</h2>
-    <p>Every work here was built for a real kind of business, before anyone asked. Tell us yours — we build the first draft free and add it to the gallery on a private link.</p>
+    <h2>Your business, in this museum.</h2>
+    <p>Every work here was built for a real kind of business, before anyone asked. Tell us yours — we build the first draft free and give it a place in the museum.</p>
     <div class="btns"><a class="btn gold" href="mailto:hello@caldas.studio?subject=Commission%20my%20site">Request my concept</a><a class="btn ghost" href="sokai/">See SŌKAI</a><a class="btn ghost" href="index-classic.html">Classic gallery</a></div>
   </section>
-  <footer>
-    <span class="b">CALDAS STUDIO</span>
-    <span class="c">© 2026 João Caldas · The Exposition · Concept works for demonstration · Hall modeled in Blender, rendered with Three.js</span>
-    <span class="s"><a href="#">Instagram</a><a href="#">LinkedIn</a><a href="mailto:hello@caldas.studio">Email</a></span>
-  </footer>
+  <footer><span style="letter-spacing:.24em">CALDAS STUDIO</span><span class="c">© 2026 João Caldas · The Museum · Concept works for demonstration · Modeled in Blender, rendered with Three.js</span><span class="s"><a href="mailto:hello@caldas.studio">Email</a></span></footer>
 </main>
 
-<div id="modal">
-  <div class="bar"><div class="t"><span id="m-name">—</span><small id="m-room"></small></div><div class="a"><a id="m-open" href="#" target="_blank" rel="noopener">Open full ↗</a><button id="m-close">Close ✕</button></div></div>
-  <div class="frameWrap"><div class="ld">Opening the work…</div><iframe id="m-frame" title="Concept preview"></iframe></div>
-</div>
-
 <script src="rooms.js"></script>
-<script src="hall/hall.js" defer></script>
+<script src="museum/museum.js" defer></script>
 <script>
 /* ---- generative ambient soundscape (ethereal gallery) ---- */
 (function(){
