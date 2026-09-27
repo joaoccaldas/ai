@@ -15,6 +15,9 @@ GitHub Pages site with several experiences:
   learning differentiator. See [`wepartner/README.md`](wepartner/README.md).
   → https://joaoccaldas.github.io/ai/wepartner/
 
+- **/studio/atoll-ascent/** — *Atoll Ascent Maldives*, a bilingual luxury endurance concept: a four-stage Addu Atoll race, three recovery days, live 3D route, multi-currency pricing and optional Lohis / surf-liveaboard extension.
+  → https://joaoccaldas.github.io/ai/studio/atoll-ascent/
+
 A golden portal in the corner of the home page links into the Belong experience.
 
 ## Belong — a luxury immersive music experience
