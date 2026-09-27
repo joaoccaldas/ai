@@ -25,11 +25,13 @@ Rule: preserve the iterations for history; new reusable work should normally ori
 
 ### Bloxy family
 
-- `bloxy1`
-- `bloxyrivals`
-- `bloxyrivals2`
+**Canonical candidate:** `bloxyrivals`
 
-All three now have staged syntax verification. The codebases share substantial ancestry, especially `bloxyrivals` and `bloxyrivals2`, so this family should converge around one canonical lineage rather than receive parallel feature work indefinitely.
+Historical/iteration repositories:
+- `bloxy1` — earlier refactor/prototype branch with migration and validation experiments
+- `bloxyrivals2` — flatter predecessor whose files were later reorganized into the structured `bloxyrivals` layout
+
+The 2026-09-27 comparison found 72 byte-identical files moved from `bloxyrivals2` into structured `src/`, `managers/`, `public/`, and `config/` paths in `bloxyrivals`. The canonical candidate also contains later systems absent from `bloxy1`, including ranking, power-ups, game modes, profiles, boss systems, abilities, rewards and shop features.
 
 Potential reusable patterns:
 - entity/state managers
@@ -56,6 +58,22 @@ Useful patterns in `rawdogging` include:
 - world events and environmental systems
 
 The 2D and 3D games should remain separate as learning artifacts.
+
+### Whisker Dash
+
+**Nested flagship candidate / 3D parkour lab**
+
+Lives inside `blockscreate/whisker-dash` and is deployed as its own static game surface.
+
+Useful patterns:
+- Three.js static deployment without a project-specific backend;
+- desktop + mobile controls;
+- optional PeerJS room-link multiplayer;
+- procedural Web Audio;
+- PWA/offline behavior;
+- explicit no-camera/no-microphone/no-geolocation privacy boundary.
+
+It is now included in the parent repository's automated syntax/reference/privacy checks.
 
 ### Tucano Flap
 
@@ -202,7 +220,7 @@ Until then, cross-pollinate ideas and tests rather than dependencies.
 
 ## Current convergence priorities
 
-1. choose one canonical Bloxy lineage after behavior/file comparison;
+1. converge future Bloxy work on `bloxyrivals` after final review of unique assets/inbound links;
 2. consolidate duplicate renderer/input variants inside Rawdogging;
 3. define a small versioned save-envelope convention;
 4. define educational-game progress/challenge events;
@@ -210,4 +228,5 @@ Until then, cross-pollinate ideas and tests rather than dependencies.
 6. create a tiny performance instrumentation pattern from BlocksCreate/Tucano/Rawdogging;
 7. keep synthetic identity/privacy checks in all public games;
 8. preserve historical iterations rather than deleting their learning history.
+9. keep nested games such as Whisker Dash inside parent-repo CI and portfolio documentation.
 9. audit CaldasGO asset provenance and keep geolocation opt-in/non-persistent by default.
