@@ -20,7 +20,7 @@ jobs:
           sudo apt-get install -y blender python3-numpy
           blender --version
       - name: Build WYLD Blender GLBs
-        run: blender -b --python-expr "import sys; sys.path.append('/usr/lib/python3/dist-packages'); exec(compile(open('studio/wyld-store/blender/build_assets.py').read(), 'build_assets.py', 'exec'))"
+        run: blender -b --python-expr "import sys,runpy; sys.path.append('/usr/lib/python3/dist-packages'); runpy.run_path('studio/wyld-store/blender/build_assets.py',run_name='__main__')"
       - name: Validate Blender outputs
         run: |
           echo "Generated Blender assets:"
