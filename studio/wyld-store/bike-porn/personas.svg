@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- Persona riders for the Bike Porn films. Original sticker-style artwork. -->
+
+  <!-- The Alien: glam alien with star shades, lipstick and a pearl earring -->
+  <symbol id="alien" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#12061f"/>
+    <path d="M50 12C29 12 16 26 16 43c0 18 17 37 34 43 17-6 34-25 34-43 0-17-13-31-34-31z" fill="#8be04e" stroke="#241a33" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M22 40l6-6 6 5 7-7 3 9-5 8-9 1-7-4z" fill="#ff5fa2" stroke="#241a33" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M78 40l-6-6-6 5-7-7-3 9 5 8 9 1 7-4z" fill="#ff5fa2" stroke="#241a33" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M44 43h12" stroke="#241a33" stroke-width="3"/>
+    <path d="M30 40l5-3M64 40l5-3" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    <path d="M40 64c5 5 15 5 20 0-5-2-6 1-10 1s-5-3-10-1z" fill="#e0115f" stroke="#241a33" stroke-width="2.5" stroke-linejoin="round"/>
+    <circle cx="18" cy="56" r="3.5" fill="#fff6d8" stroke="#241a33" stroke-width="2"/>
+    <path d="M36 12l-6-8M64 12l6-8" stroke="#241a33" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="30" cy="4" r="3.5" fill="#39ff88" stroke="#241a33" stroke-width="2"/><circle cx="70" cy="4" r="3.5" fill="#39ff88" stroke="#241a33" stroke-width="2"/>
+  </symbol>
+
+  <!-- The Supermodel: long blonde waves, oversized shades, red lips -->
+  <symbol id="model" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#ffe3ee"/>
+    <path d="M18 92c-6-22-4-52 8-66 10-12 38-12 48 0 12 14 14 44 8 66-6-4-8-12-8-20l-4-26H30l-4 26c0 8-2 16-8 20z" fill="#ffd86b" stroke="#241a33" stroke-width="3.5" stroke-linejoin="round"/>
+    <ellipse cx="50" cy="52" rx="20" ry="24" fill="#ffd9c2" stroke="#241a33" stroke-width="3.5"/>
+    <path d="M30 40c6-12 26-16 38-4-10-2-22 0-38 4z" fill="#ffd86b" stroke="#241a33" stroke-width="3" stroke-linejoin="round"/>
+    <rect x="31" y="45" width="16" height="11" rx="5" fill="#241a33"/><rect x="53" y="45" width="16" height="11" rx="5" fill="#241a33"/>
+    <path d="M47 49h6" stroke="#241a33" stroke-width="3"/>
+    <path d="M35 48l4-2M57 48l4-2" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+    <path d="M43 66c4 3 10 3 14 0-4-3-5-1-7-1s-3-2-7 1z" fill="#d61f3c" stroke="#241a33" stroke-width="2.2" stroke-linejoin="round"/>
+    <circle cx="61" cy="62" r="1.4" fill="#241a33"/>
+  </symbol>
+
+  <!-- The Surfer: salty aqua hair, zinc stripe, shades pushed up -->
+  <symbol id="surfer" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#bff4ee"/>
+    <ellipse cx="50" cy="56" rx="23" ry="25" fill="#e9b184" stroke="#241a33" stroke-width="3.5"/>
+    <path d="M24 46c-4-18 10-30 26-30s32 10 26 30c-4-6-8-9-10-14-4 6-10 8-16 8 2-4 2-6 1-8-6 6-14 10-27 14z" fill="#55d8d3" stroke="#241a33" stroke-width="3.5" stroke-linejoin="round"/>
+    <rect x="32" y="30" width="15" height="8" rx="4" fill="#2f4fd6" stroke="#241a33" stroke-width="2.5"/><rect x="53" y="30" width="15" height="8" rx="4" fill="#2f4fd6" stroke="#241a33" stroke-width="2.5"/>
+    <circle cx="41" cy="55" r="3.2" fill="#241a33"/><circle cx="59" cy="55" r="3.2" fill="#241a33"/>
+    <path d="M44 60h12" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+    <path d="M39 68c6 7 16 7 22 0" fill="#fff" stroke="#241a33" stroke-width="3" stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- The Witch: pointy hat with a star, pink hair, green lips -->
+  <symbol id="witch" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#241a33"/>
+    <path d="M22 60c-4 14 3 26 12 30l2-26zM78 60c4 14-3 26-12 30l-2-26z" fill="#ff8cc0" stroke="#11091a" stroke-width="3" stroke-linejoin="round"/>
+    <circle cx="50" cy="62" r="23" fill="#d7f5c8" stroke="#11091a" stroke-width="3.5"/>
+    <path d="M52 4c6 12 10 22 12 36H34C40 24 46 14 52 4z" fill="#7b4fd6" stroke="#11091a" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M47 24l1.8 3.7 4 .5-3 2.8.8 4-3.6-2-3.6 2 .8-4-3-2.8 4-.5z" fill="#ffd84a" stroke="#11091a" stroke-width="1.4" stroke-linejoin="round"/>
+    <ellipse cx="50" cy="41" rx="34" ry="7" fill="#7b4fd6" stroke="#11091a" stroke-width="3.5"/>
+    <path d="M30 41h40" stroke="#b6ff5a" stroke-width="4"/>
+    <path d="M36 60c3-3 7-3 9 0M55 60c3-3 7-3 9 0" fill="none" stroke="#11091a" stroke-width="3" stroke-linecap="round"/>
+    <path d="M43 71c4 3 10 3 14 0" fill="#3a8f2a" stroke="#11091a" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="66" cy="68" r="1.6" fill="#11091a"/>
+  </symbol>
+
+  <!-- The Weirdo: lilac face, mismatched eyes, tongue out -->
+  <symbol id="weirdo" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#f8ebae"/>
+    <circle cx="50" cy="52" r="32" fill="#c9b6f4" stroke="#241a33" stroke-width="3.5"/>
+    <circle cx="38" cy="46" r="9" fill="#fff" stroke="#241a33" stroke-width="3"/><circle cx="40" cy="47" r="4" fill="#241a33"/>
+    <circle cx="63" cy="44" r="5" fill="#fff" stroke="#241a33" stroke-width="3"/><circle cx="62" cy="45" r="2" fill="#241a33"/>
+    <path d="M36 64c8 6 20 6 28-2" fill="none" stroke="#241a33" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M50 66c0 8 10 10 10 2" fill="#ff5fa2" stroke="#241a33" stroke-width="2.8" stroke-linejoin="round"/>
+    <path d="M22 26l6 6M78 22l-5 7M50 12v8" stroke="#ff5fa2" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+
+  <!-- The Babysitter: blonde braid crown, flower crown, a smile that is a little too wide -->
+  <symbol id="sitter" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#dff3ff"/>
+    <path d="M24 76c-6 8-4 16 2 18M76 76c6 8 4 16-2 18" fill="none" stroke="#e8c45a" stroke-width="9" stroke-linecap="round"/>
+    <ellipse cx="50" cy="56" rx="24" ry="27" fill="#fbe3d6" stroke="#241a33" stroke-width="3.5"/>
+    <path d="M26 50c-2-18 10-28 24-28s26 10 24 28c-6-10-14-14-24-14s-18 4-24 14z" fill="#f4d774" stroke="#241a33" stroke-width="3.5" stroke-linejoin="round"/>
+    <g stroke="#241a33" stroke-width="2"><circle cx="30" cy="30" r="5" fill="#ff8fbf"/><circle cx="41" cy="23" r="5" fill="#fff"/><circle cx="52" cy="21" r="5" fill="#8fe7dc"/><circle cx="63" cy="24" r="5" fill="#ffd84a"/><circle cx="72" cy="31" r="5" fill="#ff8fbf"/></g>
+    <circle cx="40" cy="54" r="6" fill="#fff" stroke="#241a33" stroke-width="2.5"/><circle cx="60" cy="54" r="6" fill="#fff" stroke="#241a33" stroke-width="2.5"/>
+    <circle cx="40" cy="54" r="2" fill="#3fa9e0"/><circle cx="60" cy="54" r="2" fill="#3fa9e0"/>
+    <path d="M34 67c8 9 24 9 32 0" fill="#fff" stroke="#241a33" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M40 67.5v4M46 69v5M52 69v5M58 67.5v4" stroke="#241a33" stroke-width="1.6"/>
+    <ellipse cx="31" cy="63" rx="4" ry="2.5" fill="#ff8fbf" opacity=".7"/><ellipse cx="69" cy="63" rx="4" ry="2.5" fill="#ff8fbf" opacity=".7"/>
+  </symbol>
+
+  <!-- The Final Girl: dark ponytail, plaster on the cheek, determined brows, torch in hand -->
+  <symbol id="final" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#0f2a33"/>
+    <path d="M72 30c14 4 18 22 10 40-2-10-6-16-12-20z" fill="#3a2418" stroke="#0a1418" stroke-width="3" stroke-linejoin="round"/>
+    <ellipse cx="50" cy="55" rx="22" ry="26" fill="#f2c9a8" stroke="#0a1418" stroke-width="3.5"/>
+    <path d="M28 50c-2-18 8-28 22-28s24 8 22 26c-8-4-14-10-18-16-6 8-14 14-26 18z" fill="#3a2418" stroke="#0a1418" stroke-width="3.5" stroke-linejoin="round"/>
+    <path d="M36 48l9 2M64 48l-9 2" stroke="#0a1418" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="41" cy="55" r="3" fill="#0a1418"/><circle cx="59" cy="55" r="3" fill="#0a1418"/>
+    <path d="M43 68c4-2 10-2 14 0" fill="none" stroke="#0a1418" stroke-width="3" stroke-linecap="round"/>
+    <rect x="59" y="60" width="10" height="6" rx="2" fill="#fff6d8" stroke="#0a1418" stroke-width="2" transform="rotate(-20 64 63)"/>
+    <path d="M10 84l18-8 4 8-18 8z" fill="#c9ccd1" stroke="#0a1418" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M28 76l22-14M32 84l24-10" stroke="#ffe7a8" stroke-width="3" stroke-linecap="round" opacity=".8"/>
+  </symbol>
+
+  <!-- The Doll: ginger tufts, big glassy eyes, stitched grin, lace collar -->
+  <symbol id="doll" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="48" fill="#2a0f14"/>
+    <path d="M26 84c8-8 40-8 48 0" fill="#fff" stroke="#140608" stroke-width="3"/>
+    <path d="M20 42c-6-10 2-24 12-22 2-8 14-11 18-4 5-7 18-4 18 5 11-1 17 12 10 21" fill="#ff7a3d" stroke="#140608" stroke-width="3.5" stroke-linejoin="round"/>
+    <circle cx="50" cy="54" r="27" fill="#ffd9c2" stroke="#140608" stroke-width="3.5"/>
+    <circle cx="40" cy="52" r="7" fill="#fff" stroke="#140608" stroke-width="3"/><circle cx="60" cy="52" r="7" fill="#fff" stroke="#140608" stroke-width="3"/>
+    <circle cx="41" cy="53" r="3.8" fill="#3fa9e0"/><circle cx="61" cy="53" r="3.8" fill="#3fa9e0"/>
+    <circle cx="41" cy="53" r="1.8" fill="#140608"/><circle cx="61" cy="53" r="1.8" fill="#140608"/>
+    <path d="M40 66c6 5 14 5 20 0" fill="none" stroke="#140608" stroke-width="3" stroke-linecap="round"/>
+    <path d="M43 64l-1 5M50 65v5M57 64l1 5" stroke="#140608" stroke-width="2" stroke-linecap="round"/>
+    <path d="M66 58l7 9M67 64l4-4" stroke="#c43b4f" stroke-width="2.4" stroke-linecap="round"/>
+  </symbol>
+</svg>

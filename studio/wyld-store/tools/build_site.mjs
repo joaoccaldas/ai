@@ -388,7 +388,7 @@ ${colourPages.map(c => `- [${c.name}](${abs(`colour/${c.slug}/`) || `colour/${c.
 - [Shipping policy](${site.policies.shipping})
 - [Returns policy](${site.policies.returns})
 - [Upcoming releases](${abs('upcoming/') || 'upcoming/'}): sign up to hear about new drops first
-- [Bike Porn](${abs('bike-porn/') || 'bike-porn/'}): 3D studio with six custom WYLD liveries, each on its own themed movie set, on a Speedmax CFR AXS design study
+- [Bike Porn](${abs('bike-porn/') || 'bike-porn/'}): eight WYLD bike movies in 3D: custom Speedmax CFR AXS liveries with persona riders (the Alien, the Supermodel, the Witch, the Babysitter and more), movie sets and cinematic trailers
 - [Custom team kit](${site.contact.customKit})
 - [Contact](${site.contact.form})
 

@@ -17,7 +17,29 @@ A minimal, editorial retail storefront and mobile app for [ridewyld.com](https:/
 - **WYLD Studio:** the Blender GLBs in `assets/blender/`, shown in `<model-viewer>`, with live colourways that recolour the `FABRIC_PRIMARY` material.
 - **Also on the page:** custom kit, brand story, FAQ, journal, newsletter and footer.
 - **Upcoming releases (`upcoming/`):** a playful sign-up page for new drops, linked from the menu.
-- **Bike Porn (`bike-porn/`):** a Three.js 3D studio with a fully equipped Speedmax CFR AXS design study, taken from the open Canyon Museum project, in six custom WYLD liveries (Raspberry Riot, Tiffany Tide, Grape Nebula, Olive Acid, Stay Weird and WYLD Dye). Each livery has a persona and its own procedural movie set: stage, beach, moon base, jungle rave, sticker dream and cotton-candy sky. Light and Dark studio modes are also available. Orbit, camera views, spin, Ride (the wheels, cranks and chain animate), Random, and a shareable `#livery` link are included. The source is in `bike-porn/src/`: `main.js` holds the renderer, `dye.js` the livery shader, `sets.js` the movie sets and `liveries.js` the colourways. Rebuild with `cd bike-porn/src && npm ci && npm run build`, which writes `bike-porn/app.js`. It's an unofficial design study, not affiliated with Canyon.
+- **Bike Porn (`bike-porn/`):** eight WYLD "bike movies" in a Three.js 3D studio, using the fully equipped Speedmax CFR AXS design study from the open Canyon Museum project. Each film pairs a custom livery with a persona rider and its own movie set:
+
+  | Film | Persona | Livery | Set |
+  |---|---|---|---|
+  | Aero Glam | The Alien | Alien Glam, with neon wheel rings and a full rear disc | Crop circle, UFO |
+  | Couture | The Supermodel | Blush Couture | Runway with paparazzi |
+  | Offshore | The Surfer | Tiffany Tide | Golden-hour beach |
+  | Hex | The Witch | Witching Hour | Moonlit woods with a cauldron |
+  | Stay Weird | The Weirdo | Stay Weird | Sticker dream |
+  | Sunny Side | The Babysitter | WYLD Dye | Midsummer meadow |
+  | The Lake House | The Final Girl | Lake Fog | Haunted cabin by a lake |
+  | Sanctuary | The Doll | Stained Glass | Haunted chapel |
+
+  Each film has a 20-second cinematic trailer: letterbox, grain, hard cuts, title cards, the set's own climax (lightning, flashes, the UFO beam and so on) and an end card. The sets use bloom; the Light and Dark studios use ambient occlusion. Orbit, camera views, Spin, Ride and Random controls are included, plus shareable `#film` links.
+
+  The source is in `bike-porn/src/`:
+  - `main.js`: renderer, camera and trailer director
+  - `sets.js`: the movie sets (`kit.js` holds their building blocks)
+  - `dye.js`: the livery shader (dye, checker, spots and stained-glass mosaic)
+  - `wheels.js`: the disc and neon rings
+  - `liveries.js`: the films
+
+  The persona art is in `bike-porn/personas.svg`. Rebuild with `cd bike-porn/src && npm ci && npm run build`, which writes `bike-porn/app.js`. It's an unofficial design study, not affiliated with Canyon.
 - **Free-shipping progress:** the bag shows how far the customer is from the store's free-shipping threshold.
 - **App entry points:** a dismissible "Get the app" banner on phones, plus links in the menu and footer.
 

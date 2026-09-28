@@ -6,18 +6,18 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://ridewyld.com; connect-src 'self' blob: data:; worker-src 'self' blob:; base-uri 'self'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#111820">
-<title>Bike Porn — WYLD custom Speedmax liveries in 3D</title>
-<meta name="description" content="Bike Porn by WYLD: an immersive 3D studio with a fully equipped Canyon Speedmax CFR AXS study painted in six custom WYLD liveries. Orbit, zoom, switch light and dark studios.">
+<title>Bike Porn — eight WYLD bike movies in 3D</title>
+<meta name="description" content="Bike Porn by WYLD: eight bike movies in 3D. A fully equipped Speedmax CFR AXS study in custom WYLD liveries, each with a persona rider, its own movie set and a cinematic trailer.">
 <meta name="robots" content="index,follow">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="WYLD">
 <meta property="og:title" content="Bike Porn — WYLD × Speedmax in 3D">
-<meta property="og:description" content="Six custom WYLD liveries on a fully equipped Speedmax CFR AXS. Light and dark 3D studios.">
+<meta property="og:description" content="The Alien, The Supermodel, The Witch, The Babysitter and more: eight WYLD bike movies with custom Speedmax liveries, movie sets and trailers.">
 <link rel="stylesheet" href="../fonts/fonts.css">
 <link rel="stylesheet" href="../fonts/fun.css">
 <link rel="icon" href="../app/icons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="../app/icons/apple-touch-icon.png">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Bike Porn","description":"An immersive 3D studio with a fully equipped Canyon Speedmax CFR AXS study painted in six custom WYLD liveries.","isPartOf":{"@type":"WebSite","name":"WYLD"},"about":{"@type":"Thing","name":"Custom time-trial bike liveries"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Bike Porn","description":"Eight WYLD bike movies in 3D: a fully equipped Speedmax CFR AXS study in custom liveries, each with a persona rider, a movie set and a cinematic trailer.","isPartOf":{"@type":"WebSite","name":"WYLD"},"about":{"@type":"Thing","name":"Custom time-trial bike liveries"}}</script>
 <style>
 :root{--ink:#eef1f5;--dim:rgba(238,241,245,.62);--line:rgba(238,241,245,.14);--glass:rgba(15,21,28,.58);--accent:#ff2f92;--pink:#ff5fa2;--lilac:#c9b6f4;--butter:#f8ebae;
   --serif:'Inknut Antiqua',Georgia,serif;--sans:'Instrument Sans',system-ui,sans-serif;--fun:Chewy,'Arial Rounded MT Bold',system-ui,sans-serif;--hand:Caveat,'Bradley Hand',cursive}
@@ -50,14 +50,13 @@ h1 .star{display:inline-block;color:var(--butter);font-size:.55em;vertical-align
 .lede{margin:12px 0 0;color:var(--dim);font-size:14px;max-width:300px}
 
 /* livery panel */
-.panel{position:fixed;z-index:4;left:clamp(16px,3vw,36px);bottom:calc(24px + env(safe-area-inset-bottom));width:320px;padding:18px;border-radius:22px;background:var(--glass);border:1px solid var(--line);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.panel{position:fixed;z-index:4;left:clamp(16px,3vw,36px);bottom:calc(24px + env(safe-area-inset-bottom));width:340px;padding:18px;border-radius:22px;background:var(--glass);border:1px solid var(--line);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
 .lv-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
-#lvTitle{margin:0;font:400 26px/1.05 var(--serif)}
 #lvTitle.pop{animation:pop .5s cubic-bezier(.2,.8,.2,1)}
 @keyframes pop{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
 #lvNum{font:600 11px/1 var(--sans);letter-spacing:.16em;color:var(--dim);white-space:nowrap}
-#lvSub{margin:6px 0 14px;color:var(--dim);font-size:13px;min-height:2.8em}
-#liveries{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+#lvSub{margin:10px 0 12px;color:var(--dim);font-size:12.5px;min-height:2.6em}
+#liveries{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .lv{display:flex;flex-direction:column;gap:6px;padding:0;border:0;background:none;text-align:left}
 .lv .sw{display:block;aspect-ratio:1.4;border-radius:12px;border:1px solid var(--line);box-shadow:inset 0 0 0 2px transparent;transition:transform .25s,box-shadow .25s}
 .lv:hover .sw{transform:translateY(-2px)}
@@ -92,6 +91,49 @@ h1 .star{display:inline-block;color:var(--butter);font-size:.55em;vertical-align
 .cut .slate i{transform:none}
 .cut .slate div{opacity:1;transition-delay:.18s}
 
+/* film header in the panel */
+.film{display:flex;gap:12px;align-items:center}
+.avatar{width:62px;height:62px;flex:0 0 62px;border-radius:50%;box-shadow:0 0 0 2px var(--accent),0 10px 24px -10px var(--accent)}
+.film-t{min-width:0}
+#lvTitle{margin:2px 0 2px;font:400 30px/1 var(--fun);letter-spacing:.01em}
+#lvTitle[data-font="serif"]{font:400 25px/1.1 var(--serif)}
+.lvname{font-size:12px;color:var(--dim)}
+.lvname #lvNum{margin-left:6px;letter-spacing:.14em;font-size:10.5px}
+.play{margin:0 0 12px;width:100%;border:0;border-radius:999px;padding:11px 14px;background:var(--accent);color:#120c16;font:700 13px/1 var(--sans);letter-spacing:.06em;text-transform:uppercase;box-shadow:0 10px 26px -12px var(--accent);display:flex;align-items:center;justify-content:center;gap:8px}
+.play:hover{filter:brightness(1.08)}
+.play span{font-size:11px}
+
+/* cinema mode: letterbox, grain, vignette, title cards */
+.cine{position:fixed;inset:0;z-index:7;pointer-events:none;color:#f4f1ea}
+.cine .bar{position:absolute;left:0;right:0;height:clamp(6vh,calc((100vh - 100vw / 2.39) / 2),13vh);background:#000;transform:scaleY(0);transition:transform .7s cubic-bezier(.7,0,.2,1)}
+.cine .top{top:0;transform-origin:top}.cine .bot{bottom:0;transform-origin:bottom}
+.cine:not([hidden]) .bar{transform:none}
+.cine .vig{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,transparent 55%,rgba(0,0,0,.55))}
+.cine .grain{position:absolute;inset:-50%;opacity:.13;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");animation:grain .5s steps(4) infinite}
+@keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-4%,3%)}50%{transform:translate(3%,-5%)}75%{transform:translate(-2%,-2%)}100%{transform:translate(4%,2%)}}
+.cine .cut-flash{position:absolute;inset:0;background:#000;opacity:0}
+.cine .cut-flash.go{animation:cutf .32s ease-out}
+@keyframes cutf{0%{opacity:1}100%{opacity:0}}
+.cine .card{position:absolute;left:0;right:0;bottom:calc(clamp(6vh,calc((100vh - 100vw / 2.39) / 2),13vh) + 5vh);text-align:center;padding:0 24px;opacity:0;transform:translateY(10px);transition:opacity .6s,transform .8s}
+.cine .card.on{opacity:1;transform:none}
+.cine .card b{display:block;font:400 clamp(26px,4.2vw,54px)/1.08 var(--fun);text-shadow:0 2px 24px rgba(0,0,0,.8)}
+.cine .card[data-font="serif"] b{font:400 clamp(22px,3.4vw,44px)/1.15 var(--serif);letter-spacing:.02em}
+.cine .card small{display:block;margin-top:10px;font:600 11px/1.3 var(--sans);letter-spacing:.3em;text-transform:uppercase;opacity:.8}
+.cine .end{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;text-align:center;padding:24px;opacity:0;transition:opacity 1.2s .2s;background:radial-gradient(ellipse at 50% 55%,rgba(0,0,0,.25),rgba(0,0,0,.72))}
+.cine.finale .card,.cine.done .card{opacity:0!important}
+.cine.done .end{opacity:1;pointer-events:auto}
+.cine .end .avatar{width:84px;height:84px;flex-basis:84px;margin-bottom:14px}
+.end-film{font:400 clamp(48px,9vw,120px)/.95 var(--fun);color:var(--accent);-webkit-text-stroke:3px #120c16;paint-order:stroke fill;text-shadow:0 0 40px var(--accent)}
+.end-film[data-font="serif"]{font:400 clamp(38px,7vw,96px)/1.05 var(--serif);-webkit-text-stroke:0;color:#f4f1ea;letter-spacing:.04em}
+.end-sub{margin-top:12px;font:700 24px/1 var(--hand);color:var(--accent)}
+.end-soon{margin-top:14px;font:600 10.5px/1.4 var(--sans);letter-spacing:.3em;text-transform:uppercase;opacity:.75}
+.end-btns{display:flex;gap:10px;margin-top:22px}
+.end-btns button{border:1px solid rgba(244,241,234,.5);background:rgba(0,0,0,.35);border-radius:999px;padding:11px 18px;font:600 12px/1 var(--sans);letter-spacing:.08em;color:#f4f1ea}
+.end-btns button:first-child{background:var(--accent);border-color:var(--accent);color:#120c16}
+.cine .skip{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;z-index:2;pointer-events:auto;width:40px;height:40px;border-radius:50%;border:1px solid rgba(244,241,234,.4);background:rgba(0,0,0,.4);color:#f4f1ea;font-size:16px}
+body.cine .top>*:not(.brand),body.cine .intro,body.cine .panel,body.cine .views,body.cine .legal,body.cine .note{opacity:0;pointer-events:none;transition:opacity .5s}
+body.cine .brand{opacity:.0}
+
 /* loader */
 .loader{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:inherit;transition:opacity .6s,visibility .6s}
 :root[data-theme="dark"] .loader{background:#111820}
@@ -113,17 +155,21 @@ h1 .star{display:inline-block;color:var(--butter);font-size:.55em;vertical-align
   h1{font-size:44px;-webkit-text-stroke:2.5px #1e1826;text-shadow:0 3px 0 #1e1826}
   .lede,.note{display:none}
   .panel{left:10px;right:10px;width:auto;bottom:calc(10px + env(safe-area-inset-bottom));padding:12px 12px 12px;border-radius:20px}
-  #lvTitle{font-size:19px}
+  .avatar{width:44px;height:44px;flex-basis:44px}
+  #lvTitle{font-size:24px}
+  #lvTitle[data-font="serif"]{font-size:19px}
   #lvSub{display:none}
-  .lv-head{margin-bottom:10px}
+  .play{margin:10px 0 10px;padding:9px 12px;font-size:12px}
+  .chip{padding:7px 8px;font-size:11.5px}
   #liveries{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;margin:0 -12px;padding:0 12px 2px;scrollbar-width:none}
   #liveries::-webkit-scrollbar{display:none}
   .lv{flex:0 0 84px;scroll-snap-align:center}
-  .row{margin-top:10px}
+  .row{margin-top:8px}
+  .lv .sw{aspect-ratio:1.6}
   .views{left:10px;right:10px;bottom:auto;top:calc(128px + env(safe-area-inset-top));display:flex;justify-content:center}
   .views .seg{overflow-x:auto;scrollbar-width:none;max-width:100%}
   .views .seg button{padding:7px 10px;font-size:11px;white-space:nowrap}
-  .legal{left:14px;right:14px;max-width:none;text-align:center;bottom:calc(222px + env(safe-area-inset-bottom));font-size:9.5px;text-shadow:0 0 6px var(--glass)}
+  .legal{left:14px;right:14px;max-width:none;text-align:center;bottom:calc(252px + env(safe-area-inset-bottom));font-size:9.5px;text-shadow:0 0 6px var(--glass)}
 }
 @media (max-width:380px){.tools .seg button{padding:8px 10px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -146,15 +192,22 @@ h1 .star{display:inline-block;color:var(--butter);font-size:.55em;vertical-align
 <div class="intro">
   <div class="eyebrow">WYLD × Speedmax CFR AXS</div>
   <h1>Bike Porn<span class="star" aria-hidden="true">★</span></h1>
-  <p class="lede">Six custom WYLD liveries on a fully equipped time-trial machine. Drag to orbit, scroll to get closer.</p>
+  <p class="lede">Eight bike movies. Eight persona riders. One fully equipped time-trial machine. Pick a film, press play.</p>
 </div>
 <p class="note" aria-hidden="true">stay weird ♡<br>go fast</p>
 
-<section class="panel" aria-label="Custom liveries">
-  <div class="persona" id="lvPersona"></div>
-  <div class="lv-head"><h2 id="lvTitle"><span id="lvName">Raspberry Riot</span></h2><span id="lvNum">01 / 06</span></div>
+<section class="panel" aria-label="Bike movies">
+  <div class="film">
+    <svg class="avatar" viewBox="0 0 100 100" aria-hidden="true"><use id="avUse" href="personas.svg#alien"/></svg>
+    <div class="film-t">
+      <div class="persona" id="lvPersona"></div>
+      <h2 id="lvTitle"><span id="lvFilm">Aero Glam</span></h2>
+      <div class="lvname"><span id="lvName"></span> <span id="lvNum"></span></div>
+    </div>
+  </div>
   <p id="lvSub"></p>
-  <div id="liveries" role="group" aria-label="Choose a livery"></div>
+  <button type="button" class="play" id="trailer"><span aria-hidden="true">▶</span> Play the trailer</button>
+  <div id="liveries" role="group" aria-label="Choose a film"></div>
   <div class="row">
     <button type="button" class="chip" id="spin" aria-pressed="true">Spin</button>
     <button type="button" class="chip" id="ride" aria-pressed="false">Ride</button>
@@ -175,6 +228,19 @@ h1 .star{display:inline-block;color:var(--butter);font-size:.55em;vertical-align
 </nav>
 
 <p class="legal">Unofficial design study. 3D model from the open Canyon Museum project. Not affiliated with or endorsed by Canyon Bicycles GmbH. Liveries are WYLD concepts. <a href="../">Shop WYLD kit →</a></p>
+
+<div class="cine" id="cine" hidden>
+  <i class="bar top"></i><i class="bar bot"></i><i class="grain"></i><i class="vig"></i><i class="cut-flash" id="cineCut"></i>
+  <div class="card" id="cineCard"><b></b><small></small></div>
+  <div class="end">
+    <svg class="avatar" viewBox="0 0 100 100" aria-hidden="true"><use id="cineAv" href="personas.svg#alien"/></svg>
+    <div class="end-film" id="cineFilm"></div>
+    <div class="end-sub" id="cineSub"></div>
+    <div class="end-soon">A WYLD Pictures bike movie · Coming soon to a road near you</div>
+    <div class="end-btns"><button type="button" id="cineReplay">▶ Replay</button><button type="button" id="cineClose">Back to the set</button></div>
+  </div>
+  <button type="button" class="skip" id="cineSkip" aria-label="Close trailer">✕</button>
+</div>
 
 <div class="slate" id="slate" aria-hidden="true"><i></i><i></i><div><b></b><small></small></div></div>
 
