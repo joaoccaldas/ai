@@ -200,7 +200,7 @@ new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('speedmax.glb', gltf => 
   wheelKit = makeWheelKit(wheelF, wheelR, parts);
   setLivery(S.livery, false);
   progress(1, 'Ready');
-  setTimeout(() => document.body.classList.add('ready'), 250);
+  setTimeout(() => { document.body.classList.add('ready'); queueTrailer(1200); }, 250);
   flyTo('hero', 0);
 }, e => { if (e.total) progress(.05 + .85 * e.loaded / e.total, 'Unpacking carbon…'); },
 err => { $('#loadlabel').textContent = 'Could not load the bike. Please refresh.'; console.error(err); });
@@ -274,7 +274,7 @@ function setLivery(l, announce = true) {
   if (S.env === 'set') showSet(l, announce);
   const n = LIVERIES.indexOf(l) + 1; $('#lvNum').textContent = String(n).padStart(2, '0') + ' / ' + String(LIVERIES.length).padStart(2, '0');
   try { history.replaceState(null, '', '#' + l.id); } catch (_) { }
-  if (announce) { const t = $('#lvTitle'); t.classList.remove('pop'); void t.offsetWidth; t.classList.add('pop'); }
+  if (announce) { const t = $('#lvTitle'); t.classList.remove('pop'); void t.offsetWidth; t.classList.add('pop'); queueTrailer(); }
 }
 
 // ------------------------------------------------------------------ camera
@@ -368,7 +368,7 @@ function buildUI() {
     b.querySelector('.sw').style.background = swatch(l);
     b.querySelector('b').textContent = l.film;
     b.title = `${l.film}: ${l.persona}, ${l.name}`;
-    b.onclick = () => { if (!TR) setLivery(l); };
+    b.onclick = () => { if (TR) endTrailer(false); setLivery(l); };
     rail.appendChild(b);
   });
   $$('[data-view]').forEach(b => b.onclick = () => { stopSpin(); flyTo(b.dataset.view); });
@@ -385,7 +385,7 @@ function buildUI() {
   };
   addEventListener('keydown', e => {
     if (e.target.closest('input,textarea')) return;
-    if (TR) { if (e.key === 'Escape') endTrailer(); return; }
+    if (TR) { if (e.key === 'Escape') { endTrailer(); return; } if (!/^Arrow(Left|Right)$/.test(e.key)) return; endTrailer(false); }
     const i = LIVERIES.indexOf(S.livery);
     if (e.key === 'ArrowRight') setLivery(LIVERIES[(i + 1) % LIVERIES.length]);
     else if (e.key === 'ArrowLeft') setLivery(LIVERIES[(i + LIVERIES.length - 1) % LIVERIES.length]);
@@ -415,7 +415,18 @@ const SHOTS = [
 let TR = null;
 const V3 = (a, b = new THREE.Vector3()) => b.set(a[0], a[1], a[2]);
 const tmpP = new THREE.Vector3(), tmpT = new THREE.Vector3(), tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3();
+// The trailer plays by default: when the page opens and whenever a film is picked (after its set has loaded).
+let queued = 0;
+function queueTrailer(delay = 950) {
+  clearTimeout(queued);
+  if (reduced || S.env !== 'set') return;
+  queued = setTimeout(() => {
+    const set = activeSet;
+    Promise.resolve(set?.ready).then(() => { if (S.env === 'set' && activeSet === set && !TR) playTrailer(); }, () => { });
+  }, delay);
+}
 function playTrailer() {
+  clearTimeout(TR?.auto);
   if (reduced) return;
   if (S.env !== 'set') setEnv('set');
   const cine = $('#cine');
@@ -430,7 +441,7 @@ function playTrailer() {
 function nextShot() {
   TR.i++; TR.t = 0;
   const sh = SHOTS[TR.i];
-  if (!sh) { $('#cine').classList.add('done'); TR.hold = true; return; }
+  if (!sh) { $('#cine').classList.add('done'); TR.hold = true; TR.auto = setTimeout(() => endTrailer(), 7000); return; }
   const cut = $('#cineCut'); cut.classList.remove('go'); void cut.offsetWidth; cut.classList.add('go');
   const card = $('#cineCard'), c = sh.card ? sh.card(TR.l) : null;
   card.classList.remove('on'); card.dataset.font = TR.i === 0 ? 'serif' : TR.l.font;
@@ -457,12 +468,13 @@ function directTrailer(dt) {
   shotCam(sh, sh.end ? ease(clamp(TR.t)) : clamp(TR.t));
   if (TR.t >= 1) nextShot();
 }
-function endTrailer() {
+function endTrailer(fly = true) {
   if (!TR) return;
+  clearTimeout(TR.auto);
   S.spin = TR.spin; S.ride = TR.ride; TR = null;
   controls.enabled = true; syncToggles();
   document.body.classList.remove('cine'); $('#cine').hidden = true; $('#cine').classList.remove('done', 'finale'); $('#cineCard').classList.remove('on');
-  resize(); flyTo('hero');
+  resize(); flyTo('hero', fly ? 1.4 : 0);
 }
 
 // ------------------------------------------------------------------ loop
