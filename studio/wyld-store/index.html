@@ -6,10 +6,11 @@
 <meta name="theme-color" content="#f6f4ef">
 <meta name="description" content="WYLD — performance cycling, triathlon and run apparel. Size-inclusive race kit and custom team kit.">
 <title>WYLD — Cycling, Triathlon &amp; Run Apparel</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://ajax.googleapis.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://ridewyld.com https://cdn.shopify.com; connect-src 'self' blob: data:; worker-src 'self' blob:; manifest-src 'self'; form-action https://ridewyld.com; base-uri 'self'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="preconnect" href="https://ridewyld.com">
-<link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" href="./fonts/inknut-antiqua-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./fonts/fonts.css">
 <link rel="stylesheet" href="./src/store.css">
 <link rel="icon" href="./app/icons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="./app/icons/apple-touch-icon.png">
@@ -17,11 +18,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="WYLD">
-<script>
-  // Launched from the home screen? Open the app, not the website.
-  if (matchMedia('(display-mode: standalone)').matches || navigator.standalone === true) location.replace('./app/' + location.hash);
-</script>
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+<script src="./src/launch.js"></script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -60,7 +57,7 @@
     <a class="logo" href="#top" aria-label="WYLD home"><img src="https://ridewyld.com/cdn/shop/files/WYLD-Black1080.png?width=240" alt="WYLD" width="84" height="30"></a>
     <div class="tools">
       <nav class="nav desk-only" aria-label="Secondary" style="margin-right:18px">
-        <a href="#studio">Studio</a>
+        <a href="#kit">Kit builder</a>
         <a href="#custom">Custom</a>
       </nav>
       <button class="icon-btn" data-open="search" aria-label="Search"><svg><use href="#i-search"/></svg></button>
@@ -126,6 +123,17 @@
     </div>
   </section>
 
+  <!-- Colour index -->
+  <section class="section colours" id="colours">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">The colour index</span><h2 class="h2">Shop by colour</h2></div>
+        <p class="lede desk-only">Every WYLD kit starts with a colour. Pick one to see everything we make in it.</p>
+      </div>
+      <div class="colour-row reveal" id="colourRow" role="list"></div>
+    </div>
+  </section>
+
   <!-- Feature: Race Fit -->
   <section class="feature">
     <div class="feature-media reveal">
@@ -140,6 +148,41 @@
       <div class="rail reveal" id="featureRail"></div>
       <a class="link reveal" href="#shop" data-go="cycling" data-sub="Race Fit Jersey" style="align-self:flex-start">Shop race fit</a>
     </div>
+  </section>
+
+  <!-- Kit builder -->
+  <section class="kit section" id="kit" aria-labelledby="kitTitle">
+    <div class="wrap kit-grid">
+      <div class="kit-copy reveal">
+        <span class="eyebrow">Kit builder</span>
+        <h2 class="h2" id="kitTitle">Build your kit.</h2>
+        <p class="lede">Pair a jersey with bib shorts and see the whole look before you ride. Swipe or use the arrows to mix and match.</p>
+        <dl class="kit-lines">
+          <div><dt>Jersey</dt><dd id="kitTopName"></dd></div>
+          <div><dt>Bib shorts</dt><dd id="kitBottomName"></dd></div>
+          <div class="kit-sum"><dt>Kit total</dt><dd id="kitTotal"></dd></div>
+        </dl>
+        <button class="btn" id="kitChoose">Choose sizes</button>
+      </div>
+      <div class="kit-stage reveal">
+        <div class="kit-row">
+          <button class="kit-arrow" data-kit-step="top" data-dir="-1" aria-label="Previous jersey"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button>
+          <div class="kit-track" id="kitTop" aria-label="Jerseys"></div>
+          <button class="kit-arrow" data-kit-step="top" data-dir="1" aria-label="Next jersey"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
+        </div>
+        <div class="kit-row">
+          <button class="kit-arrow" data-kit-step="bottom" data-dir="-1" aria-label="Previous bib shorts"><svg viewBox="0 0 24 24"><path d="M15 5 8 12l7 7"/></svg></button>
+          <div class="kit-track" id="kitBottom" aria-label="Bib shorts"></div>
+          <button class="kit-arrow" data-kit-step="bottom" data-dir="1" aria-label="Next bib shorts"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Size band -->
+  <section class="sizeband" aria-label="Race kit in sizes XXS to 4XL">
+    <div class="band" aria-hidden="true"><div class="band-track" id="bandTrack"></div></div>
+    <p class="wrap band-note">Race kit from XXS to 4XL — made for more riders.</p>
   </section>
 
   <!-- Shop -->
@@ -339,6 +382,8 @@
       <li><a href="#shop" data-go="run">Run WYLD <small data-count="run"></small></a></li>
       <li><a href="#shop" data-go="accessories">Accessories <small data-count="accessories"></small></a></li>
       <li><a href="#shop" data-go="sale">Sale <small data-count="sale"></small></a></li>
+      <li><a href="#colours">Shop by colour</a></li>
+      <li><a href="#kit">Kit builder</a></li>
       <li><a href="#studio">Studio</a></li>
       <li><a href="#custom">Custom kit</a></li>
       <li><a href="./app/?install=1">Get the app</a></li>
@@ -351,6 +396,18 @@
       <a href="https://www.instagram.com/ridewyld" target="_blank" rel="noopener">Instagram</a>
       <a href="https://ridewyld.com/pages/contact" target="_blank" rel="noopener">Contact</a>
     </div>
+  </div>
+</aside>
+
+<aside class="drawer" id="kitSheet" aria-label="Choose kit sizes" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Your kit</h2>
+    <button class="icon-btn" data-close aria-label="Close"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer-body" id="kitBody"></div>
+  <div class="drawer-foot">
+    <div class="subtotal"><span>Kit total</span><strong id="kitSheetTotal"></strong></div>
+    <button class="btn block" id="kitAdd" disabled>Add kit to bag</button>
   </div>
 </aside>
 

@@ -2,6 +2,7 @@
 // ../app/*  -> www/          (the app itself; service workers are skipped)
 // ../src/catalog.js -> www/src/catalog.js  (app.js imports '../src/catalog.js',
 //                                           which resolves to /src/ at the root)
+// ../fonts          -> www/fonts           (index.html links ../fonts/fonts.css)
 import { cpSync, mkdirSync, rmSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,4 +15,5 @@ rmSync(www, { recursive: true, force: true });
 mkdirSync(join(www, 'src'), { recursive: true });
 cpSync(join(store, 'app'), www, { recursive: true, filter: src => !src.endsWith('sw.js') });
 cpSync(join(store, 'src', 'catalog.js'), join(www, 'src', 'catalog.js'));
+cpSync(join(store, 'fonts'), join(www, 'fonts'), { recursive: true });
 console.log('www ready');

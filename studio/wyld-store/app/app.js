@@ -390,7 +390,8 @@ function addToBag(id) {
 let lastTab = '#/home', renderedTab = '';
 function parse(hash) {
   const [, name = 'home', ...rest] = (hash || '#/home').split('/');
-  return { name, rest: rest.map(decodeURIComponent) };
+  const decode = x => { try { return decodeURIComponent(x); } catch { return ''; } };
+  return { name, rest: rest.map(decode) };
 }
 function renderTab(hash, force = false) {
   const { name, rest } = parse(hash);

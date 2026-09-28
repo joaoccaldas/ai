@@ -18,6 +18,12 @@ FEED = "https://ridewyld.com/products.json?limit=250"
 OUT = Path(__file__).resolve().parent.parent / "src" / "catalog.js"
 EXCLUDE_TAGS = {"SSC"}
 
+# The storefront trusts this file, so everything taken from the feed is
+# validated to a strict shape; anything unexpected is dropped.
+HANDLE_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+IMAGE_RE = re.compile(r"^/cdn/shop/(?:files|products)/[A-Za-z0-9._-]+\.(?:jpe?g|png|webp)$")
+TEXT_MAX = 120
+
 
 def load(argv):
     if len(argv) > 1:
@@ -56,8 +62,13 @@ def paragraphs(body):
     for p in re.findall(r"<p[^>]*>(.*?)</p>", body, flags=re.S):
         text = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", p))).strip()
         if len(text) > 40:
-            out.append(text)
+            out.append(text[:900])
     return out[:3]
+
+
+def clean_text(value, limit=TEXT_MAX):
+    text = re.sub(r"[\x00-\x1f<>]", "", html.unescape(str(value or ""))).strip()
+    return text[:limit]
 
 
 def img(src):
@@ -72,36 +83,44 @@ def main(argv):
     for p in load(argv)["products"]:
         if EXCLUDE_TAGS & set(p["tags"]):
             continue
+        if not HANDLE_RE.match(p.get("handle", "")):
+            print(f"skip: unexpected handle {p.get('handle')!r}")
+            continue
         cat, kind = category(p)
-        opts = [{"name": o["name"], "values": o["values"]} for o in p["options"]]
+        opts = [{"name": clean_text(o["name"], 30), "values": [clean_text(v, 40) for v in o["values"]]} for o in p["options"]]
         if opts and opts[0]["name"] == "Valörer":
             opts[0]["name"] = "Amount"
         variants = [
             {
                 "id": v["id"],
-                "o": [x for x in (v["option1"], v["option2"], v["option3"]) if x],
+                "o": [clean_text(x, 40) for x in (v["option1"], v["option2"], v["option3"]) if x],
                 "price": float(v["price"]),
                 "was": float(v["compare_at_price"]) if v["compare_at_price"] else None,
                 "ok": v["available"],
             }
             for v in p["variants"]
+            if isinstance(v.get("id"), int) and v["id"] > 0
         ]
+        images = [i for i in (img(x["src"]) for x in p["images"]) if IMAGE_RE.match(i)][:6]
+        if not variants or not images:
+            print(f"skip: {p['handle']} has no valid variants or images")
+            continue
         prices = [v["price"] for v in variants]
         was = [v["was"] for v in variants if v["was"] and v["was"] > v["price"]]
         styles = next((o["values"] for o in opts if o["name"] == "Style"), [])
         products.append(
             {
                 "handle": p["handle"],
-                "title": clean_title(p["title"]),
+                "title": clean_text(clean_title(p["title"])),
                 "category": cat,
-                "kind": kind,
+                "kind": clean_text(kind, 40),
                 "price": min(prices),
                 "was": max(was) if was else None,
                 "from": len(set(prices)) > 1,
                 "available": any(v["ok"] for v in variants),
                 "women": "Female" in styles or "women" in {t.lower() for t in p["tags"]},
                 "men": "Male" in styles or "men" in {t.lower() for t in p["tags"]},
-                "images": [img(i["src"]) for i in p["images"]][:6],
+                "images": images,
                 "options": opts,
                 "variants": variants,
                 "copy": paragraphs(p["body_html"]),
