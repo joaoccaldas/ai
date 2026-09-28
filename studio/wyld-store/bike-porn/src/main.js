@@ -1,5 +1,6 @@
 // Bike Porn: an immersive 3D studio for the Canyon Speedmax CFR AXS study model
-// (from the open Canyon Museum project), painted in six WYLD liveries.
+// (from the open Canyon Museum project). Eight WYLD bike movies: each film pairs a custom
+// livery with a persona rider, its own movie set and a cinematic trailer.
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
@@ -9,10 +10,12 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/examples/jsm/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import * as TX from './tex.js';
 import { applyDye } from './dye.js';
 import { LIVERIES, swatch } from './liveries.js';
 import { getSet } from './sets.js';
+import { makeWheelKit } from './wheels.js';
 
 const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
@@ -82,6 +85,16 @@ const gallery = (() => {
 })();
 scene.add(gallery);
 
+// Bloom for the movie sets: neon, candles, windows and flashes glow.
+let bloomC = null, bloomPass = null, bloomOn = true;
+function setupBloom() {
+  bloomC = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: coarse ? 0 : 4 }));
+  bloomC.addPass(new RenderPass(scene, camera));
+  bloomPass = new UnrealBloomPass(new THREE.Vector2(256, 256), .8, .55, .9);
+  bloomC.addPass(bloomPass);
+  bloomC.addPass(new OutputPass());
+}
+
 let composer = null;
 function setupComposer() {
   composer?.dispose?.(); composer = null;
@@ -131,7 +144,7 @@ function mapMaterial(m, mesh) {
 // ------------------------------------------------------------------ load
 const bike = new THREE.Group(); scene.add(bike);
 const parts = {};
-let wheelF, wheelR, crankset, chain = null, dye = null;
+let wheelF, wheelR, crankset, chain = null, dye = null, wheelKit = null;
 const progress = (p, label) => { $('#loadbar').value = p; if (label) $('#loadlabel').textContent = label; };
 
 new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('speedmax.glb', gltf => {
@@ -152,6 +165,7 @@ new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).load('speedmax.glb', gltf => 
   vis('bottles_rear', false); vis('bottle_cages_rear', false);
   bike.updateMatrixWorld(true);
   dye = applyDye(M.paint, bike);
+  wheelKit = makeWheelKit(wheelF, wheelR, parts);
   setLivery(S.livery, false);
   progress(1, 'Ready');
   setTimeout(() => document.body.classList.add('ready'), 250);
@@ -201,6 +215,7 @@ function buildChain(node) {
 function setLivery(l, announce = true) {
   S.livery = l;
   dye?.set(l);
+  wheelKit?.set(l);
   const fin = { gloss: [.26, 1, .03], satin: [.5, .45, .3], matte: [.72, 0, .6] }[l.finish] || [.3, 1, .04];
   [M.paint.roughness, M.paint.clearcoat, M.paint.clearcoatRoughness] = fin;
   M.paint.iridescence = l.irid || 0;
@@ -220,10 +235,12 @@ function setLivery(l, announce = true) {
   $$('[data-livery]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.livery === l.id)));
   const card = $(`[data-livery="${l.id}"]`), rail = $('#liveries');
   if (card && rail.scrollWidth > rail.clientWidth) rail.scrollTo({ left: card.offsetLeft - (rail.clientWidth - card.offsetWidth) / 2, behavior: announce && !reduced ? 'smooth' : 'auto' });
-  $('#lvName').textContent = l.name; $('#lvSub').textContent = l.sub;
+  $('#lvName').textContent = l.name; $('#lvSub').textContent = l.sub; $('#lvFilm').textContent = l.film;
   $('#lvPersona').textContent = `${l.persona} · ${l.place}`;
+  $('#lvTitle').dataset.font = l.font;
+  $('#avUse').setAttribute('href', 'personas.svg#' + l.avatar);
   if (S.env === 'set') showSet(l, announce);
-  const n = LIVERIES.indexOf(l) + 1; $('#lvNum').textContent = String(n).padStart(2, '0') + ' / 06';
+  const n = LIVERIES.indexOf(l) + 1; $('#lvNum').textContent = String(n).padStart(2, '0') + ' / ' + String(LIVERIES.length).padStart(2, '0');
   try { history.replaceState(null, '', '#' + l.id); } catch (_) { }
   if (announce) { const t = $('#lvTitle'); t.classList.remove('pop'); void t.offsetWidth; t.classList.add('pop'); }
 }
@@ -267,7 +284,8 @@ function showSet(l, cut) {
     rimL.color.set(L.rim[0]); rimL.intensity = L.rim[1];
     hemi.color.set(L.hemi[0]); hemi.groundColor.set(L.hemi[1]); hemi.intensity = L.hemi[2];
     renderer.toneMappingExposure = L.exp;
-    document.documentElement.dataset.theme = ['stickers', 'clouds', 'beach'].includes(l.set) ? 'light' : 'dark';
+    if (bloomPass) { bloomPass.strength = L.bloom ?? .5; bloomPass.threshold = L.thr ?? 1.1; }
+    document.documentElement.dataset.theme = ['stickers', 'meadow', 'beach'].includes(l.set) ? 'light' : 'dark';
     $('meta[name="theme-color"]').content = '#' + scene.background.getHexString();
   };
   clearTimeout(cutTimer);
@@ -275,7 +293,7 @@ function showSet(l, cut) {
   // Clapperboard cut: bars close, the set changes behind them, bars open.
   const slate = $('#slate');
   slate.querySelector('b').textContent = l.persona;
-  slate.querySelector('small').textContent = `Scene ${String(LIVERIES.indexOf(l) + 1).padStart(2, '0')} · Take 1 · ${l.name}`;
+  slate.querySelector('small').textContent = `Scene ${String(LIVERIES.indexOf(l) + 1).padStart(2, '0')} · Take 1 · ${l.film}`;
   document.body.classList.add('cut');
   cutTimer = setTimeout(() => { apply(); cutTimer = setTimeout(() => document.body.classList.remove('cut'), 520); }, 380);
 }
@@ -309,20 +327,26 @@ function buildUI() {
     b.type = 'button'; b.className = 'lv'; b.dataset.livery = l.id;
     b.innerHTML = `<span class="sw"></span><span class="lv-t"><b></b></span>`;
     b.querySelector('.sw').style.background = swatch(l);
-    b.querySelector('b').textContent = l.name;
-    b.onclick = () => setLivery(l);
+    b.querySelector('b').textContent = l.film;
+    b.title = `${l.film}: ${l.persona}, ${l.name}`;
+    b.onclick = () => { if (!TR) setLivery(l); };
     rail.appendChild(b);
   });
   $$('[data-view]').forEach(b => b.onclick = () => { stopSpin(); flyTo(b.dataset.view); });
   $$('[data-env]').forEach(b => b.onclick = () => setEnv(b.dataset.env));
   $('#spin').onclick = () => { S.spin = !S.spin; syncToggles(); };
   $('#ride').onclick = () => { S.ride = !S.ride; syncToggles(); };
+  $('#trailer').onclick = () => playTrailer();
+  $('#cineClose').onclick = () => endTrailer();
+  $('#cineSkip').onclick = () => endTrailer();
+  $('#cineReplay').onclick = () => playTrailer();
   $('#shuffle').onclick = () => {
     const rest = LIVERIES.filter(l => l !== S.livery);
     setLivery(rest[Math.floor(Math.random() * rest.length)]);
   };
   addEventListener('keydown', e => {
     if (e.target.closest('input,textarea')) return;
+    if (TR) { if (e.key === 'Escape') endTrailer(); return; }
     const i = LIVERIES.indexOf(S.livery);
     if (e.key === 'ArrowRight') setLivery(LIVERIES[(i + 1) % LIVERIES.length]);
     else if (e.key === 'ArrowLeft') setLivery(LIVERIES[(i + LIVERIES.length - 1) % LIVERIES.length]);
@@ -338,6 +362,70 @@ function syncToggles() {
   $('#ride').setAttribute('aria-pressed', String(S.ride));
 }
 
+// ------------------------------------------------------------------ trailer
+// A 20-second teaser per film: six shots with hard cuts, title cards, letterbox and grain,
+// the wheels turning, and the set's own climax (lightning, flashes, the beam...) on shot five.
+const SHOTS = [
+  { p0: [-1.8, .2, 2.3], t0: [.1, .45, 0], p1: [-.8, .28, 2.75], t1: [.12, .5, 0], d: 3.4, card: l => ['WYLD Pictures', 'presents'] },
+  { p0: [1.1, .38, .78], t0: [.62, .34, 0], p1: [.86, .44, 1.08], t1: [.56, .36, 0], d: 2.8, card: l => [l.persona, l.place] },
+  { p0: [-.5, .5, 1.02], t0: [-.12, .36, 0], p1: [.12, .52, 1.08], t1: [-.05, .4, 0], d: 2.8, card: l => [l.tagline, ''] },
+  { p0: [1.3, 1.36, .6], t0: [.45, .92, 0], p1: [1.02, 1.3, -.6], t1: [.45, .9, 0], d: 2.8, card: l => [`Starring the ${l.name} Speedmax`, 'CFR AXS · fully equipped'] },
+  { orbit: true, r: 3.2, y: .95, a0: .5, a1: -.6, t: [.08, .55, 0], d: 3.8, cue: true },
+  { p0: [1.3, .75, 2.1], t0: [.08, .55, 0], p1: [2.5, 1.35, 4.1], t1: [.08, .62, 0], d: 4.4, end: true },
+];
+let TR = null;
+const V3 = (a, b = new THREE.Vector3()) => b.set(a[0], a[1], a[2]);
+const tmpP = new THREE.Vector3(), tmpT = new THREE.Vector3(), tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3();
+function playTrailer() {
+  if (reduced) return;
+  if (S.env !== 'set') setEnv('set');
+  const cine = $('#cine');
+  TR = { i: -1, t: 0, l: S.livery, ride: S.ride, spin: S.spin, boost: 0 };
+  S.spin = false; syncToggles(); controls.enabled = false; tw = null;
+  document.body.classList.add('cine'); cine.classList.remove('done'); cine.hidden = false;
+  $('#cineFilm').textContent = TR.l.film; $('#cineFilm').dataset.font = TR.l.font;
+  $('#cineSub').textContent = `${TR.l.persona} · ${TR.l.name}`;
+  $('#cineAv').setAttribute('href', 'personas.svg#' + TR.l.avatar);
+  resize(); nextShot();
+}
+function nextShot() {
+  TR.i++; TR.t = 0;
+  const sh = SHOTS[TR.i];
+  if (!sh) { $('#cine').classList.add('done'); TR.hold = true; return; }
+  const cut = $('#cineCut'); cut.classList.remove('go'); void cut.offsetWidth; cut.classList.add('go');
+  const card = $('#cineCard'), c = sh.card ? sh.card(TR.l) : null;
+  card.classList.remove('on'); card.dataset.font = TR.i === 0 ? 'serif' : TR.l.font;
+  if (c) { card.querySelector('b').textContent = c[0]; card.querySelector('small').textContent = c[1]; setTimeout(() => card.classList.add('on'), 250); }
+  $('#cine').classList.toggle('finale', !!sh.end);
+  if (sh.cue) setTimeout(() => { if (TR && activeSet) { activeSet.cue(); TR.boost = 1; } }, 900);
+}
+function shotCam(sh, k) {
+  if (sh.orbit) {
+    const a = sh.a0 + (sh.a1 - sh.a0) * k;
+    V3(sh.t, tmpT); tmpP.set(tmpT.x + Math.sin(a) * sh.r, sh.y + Math.sin(k * Math.PI) * .25, Math.cos(a) * sh.r);
+  } else {
+    tmpP.lerpVectors(V3(sh.p0, tmpA), V3(sh.p1, tmpB), k);
+    tmpT.lerpVectors(V3(sh.t0, tmpA), V3(sh.t1, tmpB), k);
+  }
+  if (innerWidth < innerHeight) tmpP.sub(tmpT).multiplyScalar(1.45).add(tmpT);
+  camera.position.copy(tmpP); controls.target.copy(tmpT); camera.lookAt(tmpT);
+}
+function directTrailer(dt) {
+  TR.boost = Math.max(0, TR.boost - dt * .6);
+  if (TR.hold) return;
+  const sh = SHOTS[TR.i];
+  TR.t += dt / sh.d;
+  shotCam(sh, sh.end ? ease(clamp(TR.t)) : clamp(TR.t));
+  if (TR.t >= 1) nextShot();
+}
+function endTrailer() {
+  if (!TR) return;
+  S.spin = TR.spin; S.ride = TR.ride; TR = null;
+  controls.enabled = true; syncToggles();
+  document.body.classList.remove('cine'); $('#cine').hidden = true; $('#cine').classList.remove('done', 'finale'); $('#cineCard').classList.remove('on');
+  resize(); flyTo('hero');
+}
+
 // ------------------------------------------------------------------ loop
 function resize() {
   const w = innerWidth, h = innerHeight;
@@ -345,10 +433,11 @@ function resize() {
   camera.aspect = w / h;
   camera.fov = w < h ? 42 : 32;
   // Keep the bike clear of the UI: right of the side panel on desktop, above the rail on phones.
-  if (w >= 900) camera.setViewOffset(w, h, -w * .1, 0, w, h);
+  if (w >= 900 && !TR) camera.setViewOffset(w, h, -w * .1, 0, w, h);
   else camera.clearViewOffset();
   camera.updateProjectionMatrix();
   composer?.setSize(w, h);
+  bloomC?.setSize(w, h); bloomPass?.resolution.set(w / (coarse ? 3 : 2), h / (coarse ? 3 : 2));
 }
 addEventListener('resize', resize);
 
@@ -356,7 +445,8 @@ let last = performance.now(), fpsAcc = 0, fpsN = 0, tuned = false;
 const t0 = performance.now();
 function tick(now) {
   const dt = Math.min(.05, (now - last) / 1000); last = now;
-  if (S.ride && !reduced) {
+  if (TR) directTrailer(dt);
+  if ((S.ride || TR) && !reduced) {
     const wc = S.cadence / 60 * Math.PI * 2, vChain = wc * R_RING, wRear = vChain / R_COG;
     crankset && (crankset.rotation.z -= wc * dt);
     wheelR && (wheelR.rotation.z -= wRear * dt);
@@ -369,19 +459,22 @@ function tick(now) {
     if (tw.t >= 1) tw = null;
   }
   if (activeSet && !reduced) activeSet.update(now / 1000, dt);
+  wheelKit?.update(now / 1000, TR?.boost || 0);
   controls.update(dt);
   // Ambient occlusion only in the plain studios: the movie sets use sprites and glow that GTAO would shade.
-  if (composer && !activeSet) composer.render(); else renderer.render(scene, camera);
+  if (activeSet) { if (bloomC && bloomOn) bloomC.render(); else renderer.render(scene, camera); }
+  else if (composer) composer.render(); else renderer.render(scene, camera);
   // Adaptive quality: drop ambient occlusion if the first seconds run slow.
   if (!tuned && now - t0 > 1500 && document.body.classList.contains('ready')) {
     fpsAcc += dt; fpsN++;
-    if (fpsN > 90) { tuned = true; if (fpsN / fpsAcc < 38 && composer) { S.quality = 'balanced'; setupComposer(); } }
+    if (fpsN > 90) { tuned = true; if (fpsN / fpsAcc < 38) { if (composer) { S.quality = 'balanced'; setupComposer(); } if (activeSet && fpsN / fpsAcc < 28) bloomOn = false; } }
   }
   requestAnimationFrame(tick);
 }
 document.addEventListener('visibilitychange', () => { last = performance.now(); });
 
 buildUI();
+setupBloom();
 setEnv(S.env);
 setupComposer();
 resize();
