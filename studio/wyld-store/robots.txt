@@ -3,3 +3,5 @@ User-agent: *
 Allow: /
 Disallow: /native/
 Disallow: /tools/
+
+Sitemap: https://joaoccaldas.github.io/ai/studio/wyld-store/sitemap.xml

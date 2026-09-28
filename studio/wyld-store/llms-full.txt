@@ -21,7 +21,7 @@
 - Availability: in stock
 - Fit: Men
 - Sizes in stock: XS, S, M, XL, 2XL, 3XL, 4XL
-- Page: p/skye-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/skye-jersey/
 - Buy: https://ridewyld.com/products/skye-jersey
 
 Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.
@@ -33,7 +33,7 @@ Race Fit is our close, aerodynamic cut — made to sit snug against the body for
 - Availability: in stock
 - Fit: Women
 - Sizes in stock: XXS, XS, L, 2XL, 3XL
-- Page: p/blush-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/blush-jersey/
 - Buy: https://ridewyld.com/products/blush-jersey
 
 Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.
@@ -45,7 +45,7 @@ Race Fit is our close, aerodynamic cut — made to sit snug against the body for
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: S, M, L
-- Page: p/tiffany-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/tiffany-jersey/
 - Buy: https://ridewyld.com/products/tiffany-jersey
 
 Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.
@@ -57,7 +57,7 @@ Race Fit is our close, aerodynamic cut — made to sit snug against the body for
 - Availability: in stock
 - Fit: Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/jungle-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/jungle-jersey/
 - Buy: https://ridewyld.com/products/jungle-jersey
 
 Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.
@@ -69,7 +69,7 @@ Race Fit is our close, aerodynamic cut — made to sit snug against the body for
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/grape-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/grape-jersey/
 - Buy: https://ridewyld.com/products/grape-jersey
 
 Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.
@@ -81,7 +81,7 @@ Race Fit is our close, aerodynamic cut — made to sit snug against the body for
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, L, XL
-- Page: p/raspberry-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/raspberry-jersey/
 - Buy: https://ridewyld.com/products/raspberry-jersey
 
 Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.
@@ -93,7 +93,7 @@ Race Fit is our close, aerodynamic cut — made to sit snug against the body for
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/blueberry/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/blueberry/
 - Buy: https://ridewyld.com/products/blueberry
 
 Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.
@@ -105,7 +105,7 @@ Race Fit is our close, aerodynamic cut — made to sit snug against the body for
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/olive/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/olive/
 - Buy: https://ridewyld.com/products/olive
 
 Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.
@@ -117,7 +117,7 @@ Race Fit is our close, aerodynamic cut — made to sit snug against the body for
 - Availability: in stock
 - Fit: Women
 - Sizes in stock: XXS, XS, M, L, XL
-- Page: p/blush-trisuit/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/blush-trisuit/
 - Buy: https://ridewyld.com/products/blush-trisuit
 
 A close-fitting one-piece designed to be worn from swim to run.
@@ -129,7 +129,7 @@ A close-fitting one-piece designed to be worn from swim to run.
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: S, M, L
-- Page: p/pink-bib-shorts/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/pink-bib-shorts/
 - Buy: https://ridewyld.com/products/pink-bib-shorts
 
 The WYLD Pink Bib Shorts were created to solve a real challenge: finding premium-quality men's and women's cycling bibs shorts that offer exceptional comfort and high performance. Designed by a cyclist who recognized the needs of real riders, these bib shorts combine thoughtful design with rider-tested features.
@@ -145,7 +145,7 @@ At the heart of the WYLD Pink Bib Shorts is ultra-comfortable, dual-density padd
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/black-bib-shorts/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/black-bib-shorts/
 - Buy: https://ridewyld.com/products/black-bib-shorts
 
 The WYLD Black Bib Shorts were created to solve a real challenge: finding premium-quality men's and women's cycling bibs shorts that offer exceptional comfort and high performance. Designed by a cyclist who recognized the needs of real riders, these bib shorts combine thoughtful design with rider-tested features.
@@ -161,7 +161,7 @@ At the heart of the WYLD Black Bib Shorts is ultra-comfortable, dual-density pad
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/navy-bib-shorts/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/navy-bib-shorts/
 - Buy: https://ridewyld.com/products/navy-bib-shorts
 
 The WYLD Navy Bib Shorts were created to solve a real challenge: finding premium-quality men's and women's cycling bibs shorts that offer exceptional comfort and high performance. Designed by a cyclist who recognized the needs of real riders, these bib shorts combine thoughtful design with rider-tested features.
@@ -177,7 +177,7 @@ At the heart of the WYLD Navy Bib Shorts is ultra-comfortable, dual-density padd
 - Availability: in stock
 - Fit: Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/team-wyld-singlet/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/team-wyld-singlet/
 - Buy: https://ridewyld.com/products/team-wyld-singlet
 
 The Team WYLD Singlet — designed by WYLD for riders, triathletes and runners who want colour, comfort and a great fit.
@@ -189,7 +189,7 @@ The Team WYLD Singlet — designed by WYLD for riders, triathletes and runners w
 - Availability: in stock
 - Fit: Women
 - Sizes in stock: XS, S, M, L
-- Page: p/team-wyld-t-shirt/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/team-wyld-t-shirt/
 - Buy: https://ridewyld.com/products/team-wyld-t-shirt
 
 The Team WYLD T-Shirt — designed by WYLD for riders, triathletes and runners who want colour, comfort and a great fit.
@@ -201,7 +201,7 @@ The Team WYLD T-Shirt — designed by WYLD for riders, triathletes and runners w
 - Availability: in stock
 - Fit: Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/team-wyld-long-sleeved-shirt/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/team-wyld-long-sleeved-shirt/
 - Buy: https://ridewyld.com/products/team-wyld-long-sleeved-shirt
 
 The Team WYLD Long Sleeved Shirt — designed by WYLD for riders, triathletes and runners who want colour, comfort and a great fit.
@@ -213,7 +213,7 @@ The Team WYLD Long Sleeved Shirt — designed by WYLD for riders, triathletes an
 - Availability: in stock
 - Fit: Men
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/black-gilet/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/black-gilet/
 - Buy: https://ridewyld.com/products/black-gilet
 
 The Black Gilet — designed by WYLD for riders, triathletes and runners who want colour, comfort and a great fit.
@@ -225,7 +225,7 @@ The Black Gilet — designed by WYLD for riders, triathletes and runners who wan
 - Availability: in stock
 - Fit: Women
 - Sizes in stock: XS, S, M, L
-- Page: p/navy-gilet/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/navy-gilet/
 - Buy: https://ridewyld.com/products/navy-gilet
 
 The Navy Gilet — designed by WYLD for riders, triathletes and runners who want colour, comfort and a great fit.
@@ -237,7 +237,7 @@ The Navy Gilet — designed by WYLD for riders, triathletes and runners who want
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/astro/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/astro/
 - Buy: https://ridewyld.com/products/astro
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -249,7 +249,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/mauritz-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/mauritz-jersey/
 - Buy: https://ridewyld.com/products/mauritz-jersey
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -261,7 +261,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/diogo-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/diogo-jersey/
 - Buy: https://ridewyld.com/products/diogo-jersey
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -273,7 +273,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/stockholm-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/stockholm-jersey/
 - Buy: https://ridewyld.com/products/stockholm-jersey
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -285,7 +285,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, L, XL
-- Page: p/berry-blast-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/berry-blast-jersey/
 - Buy: https://ridewyld.com/products/berry-blast-jersey
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -296,7 +296,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Price: AED 180 (was AED 400)
 - Availability: in stock
 - Sizes in stock: XS, S, M, L
-- Page: p/tsava-blue-long-sleeved-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/tsava-blue-long-sleeved-jersey/
 - Buy: https://ridewyld.com/products/tsava-blue-long-sleeved-jersey
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -307,7 +307,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Price: AED 180 (was AED 400)
 - Availability: in stock
 - Sizes in stock: XS, S, M, L
-- Page: p/india-skye-long-sleeved-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/india-skye-long-sleeved-jersey/
 - Buy: https://ridewyld.com/products/india-skye-long-sleeved-jersey
 
 All sales on discounted items are final and cannot be returned or exchanged.
@@ -319,7 +319,7 @@ All sales on discounted items are final and cannot be returned or exchanged.
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: S, XL
-- Page: p/50-shades-of-blue-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/50-shades-of-blue-jersey/
 - Buy: https://ridewyld.com/products/50-shades-of-blue-jersey
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -331,7 +331,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S
-- Page: p/midnight-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/midnight-jersey/
 - Buy: https://ridewyld.com/products/midnight-jersey
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -343,7 +343,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: S, L, XL
-- Page: p/tsava-blue-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/tsava-blue-jersey/
 - Buy: https://ridewyld.com/products/tsava-blue-jersey
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -355,7 +355,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Availability: in stock
 - Fit: Men, Women
 - Sizes in stock: XS, S, M, XXL
-- Page: p/india-skye-jersey/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/india-skye-jersey/
 - Buy: https://ridewyld.com/products/india-skye-jersey
 
 Club Fit is a more relaxed cut for comfortable long days and social rides.
@@ -365,7 +365,7 @@ Club Fit is a more relaxed cut for comfortable long days and social rides.
 - Type: Cap (Accessories)
 - Price: AED 70 (was AED 100)
 - Availability: in stock
-- Page: p/caps/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/caps/
 - Buy: https://ridewyld.com/products/caps
 
 The WYLD Trucker Cap combines effortless style with practical performance. Featuring a classic mesh-back design for ventilation and a structured front panel, this cap is perfect for post-ride hangouts, off-bike adventures, or adding a touch of WYLD attitude to your everyday look. Adjustable for a perfect fit and crafted with premium materials, it’s the ideal accessory for cyclists who want to carry their passion beyond the saddle.
@@ -377,7 +377,7 @@ The WYLD Trucker Cap combines effortless style with practical performance. Featu
 - Availability: in stock
 - Fit: Unisex
 - Sizes in stock: One Size
-- Page: p/swimears/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/swimears/
 - Buy: https://ridewyld.com/products/swimears
 
 SwimEars earplugs let sound in and keep water out.
@@ -387,7 +387,7 @@ SwimEars earplugs let sound in and keep water out.
 - Type: Gift Cards (Accessories)
 - Price: from AED 50
 - Availability: in stock
-- Page: p/wyld-gift-card/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/wyld-gift-card/
 - Buy: https://ridewyld.com/products/wyld-gift-card
 
 Want to get your loved one a gift but not sure what they want? Get them a WYLD gift card so they can pick out their own favorites!
@@ -400,7 +400,7 @@ All gift cards are valid for 1 year from the date of purchase.
 - Price: AED 585
 - Availability: sold out
 - Fit: Men, Women
-- Page: p/green-bib-shorts/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/green-bib-shorts/
 - Buy: https://ridewyld.com/products/green-bib-shorts
 
 The WYLD Green Bib Shorts were created to solve a real challenge: finding premium-quality men's and women's cycling bibs shorts that offer exceptional comfort and high performance. Designed by a cyclist who recognized the needs of real riders, these bib shorts combine thoughtful design with rider-tested features.
@@ -415,7 +415,7 @@ At the heart of the WYLD Green Bib Shorts is ultra-comfortable, dual-density pad
 - Price: AED 585
 - Availability: sold out
 - Fit: Men, Women
-- Page: p/tiffany-bib-shorts/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/tiffany-bib-shorts/
 - Buy: https://ridewyld.com/products/tiffany-bib-shorts
 
 The WYLD Tiffany Bib Shorts were created to solve a real challenge: finding premium-quality men's and women's cycling bibs shorts that offer exceptional comfort and high performance. Designed by a cyclist who recognized the needs of real riders, these bib shorts combine thoughtful design with rider-tested features.
@@ -430,7 +430,7 @@ At the heart of the WYLD Tiffany Bib Shorts is ultra-comfortable, dual-density p
 - Price: AED 425
 - Availability: sold out
 - Fit: Women
-- Page: p/blueberry-bib-short/
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/blueberry-bib-short/
 - Buy: https://ridewyld.com/products/blueberry-bib-short
 
 The WYLD Blueberry Bib Shorts were created to solve a real challenge: finding premium-quality men's and women's cycling bibs shorts that offer exceptional comfort and high performance. Designed by a cyclist who recognized the needs of real riders, these bib shorts combine thoughtful design with rider-tested features.
