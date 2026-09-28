@@ -1,0 +1,72 @@
+name: WYLD Site Sync
+
+# Keeps the WYLD store current and crawlable:
+#   1. syncs prices, sale prices and stock from the official store feed
+#   2. rebuilds the pre-rendered SEO pages, sitemap and llms.txt
+#   3. commits any changes and republishes GitHub Pages
+#
+# Runs daily, on changes to the store's source, and on demand.
+# Set the repository variable WYLD_SITE_URL to use a custom domain in canonical
+# URLs; otherwise the GitHub Pages address is used.
+
+on:
+  schedule:
+    - cron: '17 3 * * *'   # daily, early morning in the Gulf
+  push:
+    branches: [main]
+    paths:
+      - 'studio/wyld-store/config/**'
+      - 'studio/wyld-store/src/**'
+      - 'studio/wyld-store/tools/**'
+      - 'studio/wyld-store/index.html'
+      - '.github/workflows/wyld-site.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: wyld-site
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Resolve public site URL
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OVERRIDE: ${{ vars.WYLD_SITE_URL }}
+        run: |
+          if [ -n "$OVERRIDE" ]; then url="$OVERRIDE"
+          else base=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq .html_url); url="${base%/}/studio/wyld-store/"; fi
+          echo "SITE_URL=$url" >> "$GITHUB_ENV"
+          echo "Site URL: $url"
+
+      - name: Sync catalog from the official store
+        working-directory: studio/wyld-store
+        run: python3 tools/sync_catalog.py
+
+      - name: Build SEO pages, sitemap and llms.txt
+        working-directory: studio/wyld-store
+        run: node tools/build_site.mjs
+
+      - name: Commit and republish
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          cd studio/wyld-store
+          git add -A data p c colour index.html sitemap.xml robots.txt llms.txt llms-full.txt
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "build(wyld): sync catalog and SEO pages [skip ci]"
+          for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done
+          gh api -X POST "repos/${GITHUB_REPOSITORY}/pages/builds" > /dev/null || echo "::notice::Pages rebuild request failed; it will publish on the next push."

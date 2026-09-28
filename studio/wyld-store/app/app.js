@@ -1,4 +1,15 @@
-import { catalog } from '../src/catalog.js';
+import { site } from '../config/site.js';
+import { img as imgAt, money, esc, priceHTML } from '../src/core/format.js';
+import {
+  db, CATS, CATEGORY_LABEL, RANK, rank, KIND_LABEL, STYLE_LABEL, FIT, describe,
+  variantForP, valueOKP, defaultSelection, applyOption, variantLabel, search, relatedFor,
+} from '../src/core/model.js';
+import {
+  store, BAG_KEY, readBag, writeBag, addLine, bagCount as countBag, bagTotal, checkoutURL as checkoutFor,
+  freeShipping, readSaved, writeSaved,
+} from '../src/core/storage.js';
+import { runtime } from '../src/core/runtime.js';
+import { restoreCachedCatalog, refreshCatalog, checkAppUpdate } from '../src/core/live.js';
 
 /* Some phone browsers (e.g. "Desktop view") report a ~980px viewport on a
    ~400px screen. Scale the app back to the real phone width so it fills the
@@ -15,68 +26,36 @@ import { catalog } from '../src/catalog.js';
 /* ---------- helpers ---------- */
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const SHOP = 'https://ridewyld.com';
-const img = (path, w) => `${SHOP}${path}?width=${w}`;
+const SHOP = site.shopUrl;
+const img = imgAt;
 const srcset = (path, ws = [360, 540, 720, 1080]) => ws.map(w => `${img(path, w)} ${w}w`).join(',');
-const money = n => `AED ${n.toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0 })}`;
-const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const EXT = 'target="_blank" rel="noopener noreferrer"';
-const byHandle = new Map(catalog.map(p => [p.handle, p]));
-const variants = new Map(catalog.flatMap(p => p.variants.map(v => [v.id, { p, v }])));
+const catLabel = CATEGORY_LABEL;
 const haptic = () => { try { navigator.vibrate?.(10); } catch { /* unsupported */ } };
 
-// localStorage wrapper: never throws, always validates what it reads back.
-const store = {
-  get(key, fallback) { try { const v = JSON.parse(localStorage.getItem(key)); return v ?? fallback; } catch { return fallback; } },
-  set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* private mode or quota */ } },
-};
+/* ---------- catalog (live in the Android app) ---------- */
+restoreCachedCatalog();
+// Views read the current catalog through these getters, so a refresh applies everywhere.
+const products = () => db.products;
+const byHandle = { get: h => db.byHandle.get(h), has: h => db.byHandle.has(h) };
+const variants = { get: id => db.variants.get(id), has: id => db.variants.has(id) };
 
-/* ---------- catalog vocabulary ---------- */
-const CATS = {
-  all: { title: 'All', test: () => true },
-  cycling: { title: 'Cycling', test: p => p.category === 'cycling' },
-  triathlon: { title: 'Triathlon', test: p => p.category === 'triathlon' },
-  run: { title: 'Run', test: p => p.category === 'run' },
-  accessories: { title: 'Accessories', test: p => p.category === 'accessories' },
-  sale: { title: 'Sale', test: p => p.was && p.available },
-};
-const RANK = ['Race Fit Jersey', 'Trisuit', 'Bib Shorts', 'Singlet', 'T-Shirt', 'Long Sleeve Shirt', 'Gilet', 'Club Fit Jersey', 'Cap', 'Ear Plugs', 'Gift Cards'];
-const rank = p => (p.available ? 0 : 100) + (RANK.indexOf(p.kind) + 1 || 50);
-const KIND_LABEL = { 'Race Fit Jersey': 'Race Fit', 'Club Fit Jersey': 'Club Fit', 'Bib Shorts': 'Bib shorts', Gilet: 'Gilets', 'Gift Cards': 'Gift cards', 'Ear Plugs': 'Ear plugs' };
-const STYLE_LABEL = { Female: 'Women', Male: 'Men', Unisex: 'Unisex' };
-const FIT = {
-  'Race Fit Jersey': 'Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.',
-  'Club Fit Jersey': 'Club Fit is a more relaxed cut for comfortable long days and social rides.',
-  'Bib Shorts': 'Bib shorts are designed to fit snugly; the straps and leg grippers keep everything in place while you ride.',
-  Trisuit: 'A close-fitting one-piece designed to be worn from swim to run.',
-};
-const catLabel = { cycling: 'Cycling', triathlon: 'Triathlon', run: 'Run WYLD', accessories: 'Accessories' };
-
-/* ---------- persistent state (shared bag key with the website) ---------- */
-const BAG_KEY = 'wyld-bag-v1', SAVED_KEY = 'wyld-saved-v1', RECENT_KEY = 'wyld-recent-v1', INSTALL_KEY = 'wyld-install-dismissed-v1';
-let bag = store.get(BAG_KEY, []);
-bag = Array.isArray(bag) ? bag.filter(l => l && Number.isSafeInteger(l.id) && variants.has(l.id) && Number.isInteger(l.qty) && l.qty > 0)
-  .map(l => ({ id: l.id, qty: Math.min(l.qty, 10) })) : [];
-let saved = store.get(SAVED_KEY, []);
-saved = Array.isArray(saved) ? saved.filter(h => typeof h === 'string' && byHandle.has(h)) : [];
+/* ---------- persistent state (bag shared with the website) ---------- */
+const RECENT_KEY = 'wyld-recent-v1', INSTALL_KEY = 'wyld-install-dismissed-v1';
+let bag = readBag();
+let saved = readSaved();
 let recent = store.get(RECENT_KEY, []);
 recent = Array.isArray(recent) ? recent.filter(s => typeof s === 'string' && s.length <= 40).slice(0, 6) : [];
 
-const saveBag = () => { store.set(BAG_KEY, bag); updateBadge(); };
-const saveSaved = () => store.set(SAVED_KEY, saved);
-const bagCount = () => bag.reduce((n, l) => n + l.qty, 0);
+const saveBag = () => { writeBag(bag); updateBadge(); };
+const saveSaved = () => writeSaved(saved);
+const bagCount = () => countBag(bag);
 function updateBadge() {
   const n = bagCount(), b = $('#bagBadge');
   b.hidden = !n; b.textContent = n > 9 ? '9+' : n;
 }
 
 /* ---------- shared components ---------- */
-function priceHTML(p, from = p.from) {
-  const pre = from ? 'From ' : '';
-  return p.was
-    ? `<span class="price"><span class="now">${pre}${money(p.price)}</span><s>${money(p.was)}</s></span>`
-    : `<span class="price">${pre}${money(p.price)}</span>`;
-}
 function saveBtn(p, cls = 'save') {
   const on = saved.includes(p.handle);
   return `<button class="${cls}${on ? ' on' : ''}" data-save="${p.handle}" aria-pressed="${on}" aria-label="${on ? 'Remove from saved' : 'Save'} ${esc(p.title)}"><svg><use href="#i-heart"/></svg></button>`;
@@ -131,7 +110,7 @@ function rail(title, items, to) {
 }
 
 function homeView() {
-  const avail = catalog.filter(p => p.available);
+  const avail = products().filter(p => p.available);
   const raceFit = avail.filter(p => p.kind === 'Race Fit Jersey').sort((a, b) => rank(a) - rank(b));
   const bibs = avail.filter(p => p.kind === 'Bib Shorts');
   const sale = avail.filter(p => p.was).sort((a, b) => (b.was - b.price) / b.was - (a.was - a.price) / a.was);
@@ -145,7 +124,7 @@ function homeView() {
 
   <section class="block"><div class="block-head"><h2 class="h3">Shop by sport</h2><a class="text-link" href="#/shop">View all</a></div>
     <div class="sports">${SPORTS.map(([k, t, src]) => {
-      const n = catalog.filter(CATS[k].test).length;
+      const n = products().filter(CATS[k].test).length;
       return `<a class="sport" href="#/shop/${k}"><figure><img src="${img(src, 540)}" alt="" loading="lazy"></figure><div><h3>${t}</h3><small>${n} ${n === 1 ? 'style' : 'styles'}</small></div></a>`;
     }).join('')}</div>
   </section>
@@ -168,23 +147,32 @@ function homeView() {
   ${footer()}`;
 }
 
+function contactLinks() {
+  const c = site.contact;
+  return [
+    c.email && `<a href="mailto:${esc(c.email)}">Email</a>`,
+    c.whatsapp && `<a href="https://wa.me/${esc(c.whatsapp.replace(/\D/g, ''))}" ${EXT}>WhatsApp</a>`,
+    c.phone && `<a href="tel:${esc(c.phone.replace(/[^\d+]/g, ''))}">Call</a>`,
+    `<a href="${c.form}" ${EXT}>Contact</a>`,
+  ].filter(Boolean).join('');
+}
 function footer() {
   return `<footer class="foot">
-    <nav><a href="${SHOP}/pages/contact" ${EXT}>Contact</a><a href="${SHOP}/policies/shipping-policy" ${EXT}>Shipping</a><a href="${SHOP}/policies/refund-policy" ${EXT}>Returns</a><a href="${SHOP}/policies/privacy-policy" ${EXT}>Privacy</a><a href="https://www.instagram.com/ridewyld" ${EXT}>Instagram</a></nav>
-    <span>Prices in AED · Checkout on ridewyld.com</span>
+    <nav>${contactLinks()}<a href="${site.policies.shipping}" ${EXT}>Shipping</a><a href="${site.policies.returns}" ${EXT}>Returns</a><a href="${site.policies.privacy}" ${EXT}>Privacy</a><a href="${site.social.instagram}" ${EXT}>Instagram</a></nav>
+    <span>Prices in ${site.currency} · Free shipping over ${money(site.freeShippingThreshold)} · Checkout on ridewyld.com</span>
     <img src="${img('/cdn/shop/files/WYLD-Black1080.png', 120)}" alt="WYLD" width="40" height="14">
   </footer>`;
 }
 
 function shopList() {
-  let items = catalog.filter(CATS[shopState.cat].test);
+  let items = products().filter(CATS[shopState.cat].test);
   if (shopState.sub) items = items.filter(p => p.kind === shopState.sub);
   if (shopState.gender) items = items.filter(p => p[shopState.gender]);
   const sorts = { featured: (a, b) => rank(a) - rank(b), low: (a, b) => a.price - b.price, high: (a, b) => b.price - a.price, az: (a, b) => a.title.localeCompare(b.title) };
   return items.sort(sorts[shopState.sort]);
 }
 function shopChips() {
-  const base = catalog.filter(CATS[shopState.cat].test);
+  const base = products().filter(CATS[shopState.cat].test);
   const kinds = [...new Set(base.map(p => p.kind))].sort((a, b) => RANK.indexOf(a) - RANK.indexOf(b));
   let html = '';
   if (kinds.length > 1 && shopState.cat !== 'all') {
@@ -204,7 +192,7 @@ function shopResults() {
 function shopView() {
   return `${appbar('Shop')}
   <div class="shopbar">
-    <div class="tabs" role="tablist">${Object.entries(CATS).map(([k, c]) => `<button role="tab" aria-selected="${shopState.cat === k}" class="${shopState.cat === k ? 'on' : ''}" data-cat="${k}">${c.title}</button>`).join('')}</div>
+    <div class="tabs" role="tablist">${Object.entries(CATS).map(([k, c]) => `<button role="tab" aria-selected="${shopState.cat === k}" class="${shopState.cat === k ? 'on' : ''}" data-cat="${k}">${c.short}</button>`).join('')}</div>
   </div>
   <div class="filters"><div class="chips" id="chips">${shopChips()}</div>
     <label class="sort"><svg><use href="#i-sort"/></svg><span class="sr">Sort</span>
@@ -218,13 +206,7 @@ function refreshShop() {
   $('#shopResults').innerHTML = shopResults();
 }
 
-function searchHits(q) {
-  const terms = q.toLowerCase().replace('bib shorts', 'bib').split(/\s+/).filter(Boolean);
-  return catalog.filter(p => {
-    const hay = `${p.title} ${p.kind} ${p.category} ${p.was ? 'sale' : ''} ${p.women ? 'women' : ''} ${p.men ? 'men' : ''}`.toLowerCase();
-    return terms.every(t => hay.includes(t));
-  }).sort((a, b) => rank(a) - rank(b));
-}
+const searchHits = q => search(q);
 function searchResults() {
   if (!query.trim()) {
     return `<div class="suggest">
@@ -257,10 +239,12 @@ function savedView() {
       : empty('i-heart', 'Tap the heart on any product to save it here.', '<a class="btn ghost" href="#/shop">Browse the collection</a>')}`;
 }
 
-function variantLabel(p, v) {
-  return p.options.map((o, i) => o.name === 'Style' ? STYLE_LABEL[v.o[i]] || v.o[i] : o.name === 'Size' ? `Size ${v.o[i]}` : String(v.o[i]).replace(/\s*AED$/, ' AED')).join(' · ');
+const checkoutURL = () => checkoutFor(bag);
+function shipBar(total) {
+  const f = freeShipping(total); if (!f) return '';
+  const text = f.remaining ? `Add ${money(f.remaining)} for free shipping` : 'You’ve unlocked free shipping';
+  return `<div class="ship"><span>${text}</span><progress max="1" value="${f.progress.toFixed(3)}" aria-label="Progress to free shipping"></progress></div>`;
 }
-function checkoutURL() { return `${SHOP}/cart/${bag.map(l => `${l.id}:${l.qty}`).join(',')}`; }
 function bagView() {
   if (!bag.length) {
     return `${appbar('Bag')}${empty('i-bag', 'Your bag is empty.', '<a class="btn" href="#/shop">Start shopping</a>')}
@@ -279,7 +263,8 @@ function bagView() {
     <div class="lines">${lines}</div>
     <div class="summary">
       <div class="summary-row"><span>Subtotal</span><span>${money(total)}</span></div>
-      <div class="summary-row"><span>Shipping</span><span class="muted">At checkout</span></div>
+      ${shipBar(total)}
+      <div class="summary-row"><span>Shipping</span><span class="muted">${freeShipping(total)?.remaining === 0 ? 'Free' : 'At checkout'}</span></div>
       <div class="summary-row total"><span>Estimated total</span><span>${money(total)}</span></div>
       <a class="btn" href="${checkoutURL()}" ${EXT}><svg><use href="#i-lock"/></svg>Secure checkout</a>
       <p class="fine">You’ll complete payment on ridewyld.com. This app never sees your card details.</p>
@@ -289,18 +274,9 @@ function bagView() {
 /* ---------- product ---------- */
 const product = $('#product');
 let current = null, sel = {};
-const matches = (v, s) => current.options.every((o, i) => !s[o.name] || v.o[i] === s[o.name]);
-const variantFor = s => current.options.every(o => s[o.name]) ? current.variants.find(v => matches(v, s)) : null;
-const valueOK = (name, value) => current.variants.some(v => v.ok && matches(v, { ...sel, [name]: value }));
+const variantFor = s => variantForP(current, s);
+const valueOK = (name, value) => valueOKP(current, sel, name, value);
 
-function defaultSelection(p) {
-  const s = {};
-  p.options.forEach((o, i) => {
-    const firstOK = o.values.find(val => p.variants.some(v => v.ok && v.o[i] === val));
-    if (o.values.length === 1 || o.name !== 'Size') s[o.name] = firstOK || o.values[0];
-  });
-  return s;
-}
 function optionsHTML() {
   return current.options.map(o => {
     const isSize = o.name === 'Size';
@@ -330,9 +306,8 @@ function refreshProduct() {
   if (v) $('#pPrice').innerHTML = priceHTML({ price: v.price, was: v.was && v.was > v.price ? v.was : null }, false);
 }
 function productHTML(p) {
-  const copy = p.copy.length ? p.copy : [FIT[p.kind] || `The ${p.title} — designed by WYLD for riders, triathletes and runners who want colour, comfort and a great fit.`];
-  const related = catalog.filter(x => x.handle !== p.handle && x.available && (x.kind === p.kind || x.category === p.category))
-    .sort((a, b) => (b.kind === p.kind) - (a.kind === p.kind) || rank(a) - rank(b)).slice(0, 6);
+  const copy = describe(p);
+  const related = relatedFor(p, 6);
   return `
     <div class="pbar"><button class="icon" data-back aria-label="Back"><svg><use href="#i-back"/></svg></button>
       <div class="right"><button class="icon" data-share aria-label="Share"><svg><use href="#i-share"/></svg></button>${saveBtn(p, 'icon')}</div></div>
@@ -379,8 +354,7 @@ function closeProduct() {
   document.title = 'WYLD';
 }
 function addToBag(id) {
-  const line = bag.find(l => l.id === id);
-  if (line) line.qty = Math.min(line.qty + 1, 10); else bag.push({ id, qty: 1 });
+  addLine(bag, id);
   saveBag(); haptic();
   const { p, v } = variants.get(id);
   toast(`Added · ${p.title}${v.o.length ? ` · ${variantLabel(p, v)}` : ''}`);
@@ -399,7 +373,7 @@ function renderTab(hash, force = false) {
   if (tab === 'shop') {
     const [cat, sub] = rest;
     const nextCat = CATS[cat] ? cat : 'all';
-    const nextSub = sub && catalog.some(p => p.kind === sub) ? sub : null;
+    const nextSub = sub && products().some(p => p.kind === sub) ? sub : null;
     if (nextCat !== shopState.cat || nextSub !== shopState.sub) Object.assign(shopState, { cat: nextCat, sub: nextSub, gender: null });
   }
   lastTab = hash;
@@ -455,9 +429,7 @@ document.addEventListener('click', e => {
 
   const opt = t.closest('[data-opt]');
   if (opt) {
-    sel[opt.dataset.opt] = opt.dataset.val;
-    const v = variantFor(sel);
-    if (opt.dataset.opt !== 'Size' && sel.Size && v && !v.ok) delete sel.Size;
+    applyOption(current, sel, opt.dataset.opt, opt.dataset.val);
     refreshProduct(); return;
   }
   if (t.closest('#addBtn')) {
@@ -507,7 +479,7 @@ document.addEventListener('keydown', e => {
 });
 // Keep bag and saved items in sync with other tabs (including the website).
 window.addEventListener('storage', e => {
-  if (e.key === BAG_KEY) { const v = store.get(BAG_KEY, []); bag = Array.isArray(v) ? v.filter(l => variants.has(l?.id) && Number.isInteger(l.qty) && l.qty > 0) : []; updateBadge(); if (renderedTab.startsWith('#/bag')) renderTab(renderedTab, true); }
+  if (e.key === BAG_KEY) { bag = readBag(); updateBadge(); if (renderedTab.startsWith('#/bag')) renderTab(renderedTab, true); }
 });
 
 function bindHero() {
@@ -592,6 +564,26 @@ if ('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform?.()) {
 
 updateBadge();
 route();
+
+/* ---------- live data and updates (Android app) ---------- */
+let lastRefresh = 0;
+async function refreshLive() {
+  if (Date.now() - lastRefresh < 15 * 60 * 1000) return;
+  lastRefresh = Date.now();
+  if (await refreshCatalog()) {
+    bag = readBag(); saved = readSaved(); updateBadge();
+    if (!product.classList.contains('on')) renderTab(renderedTab, true);
+  }
+  const update = await checkAppUpdate();
+  if (update && !sheet.classList.contains('on')) showUpdate(update);
+}
+function showUpdate({ versionName, url }) {
+  openSheet(`<div class="app-id"><img src="./icons/icon-192.png" alt=""><div><strong>WYLD ${esc(versionName)}</strong><span>A new version is ready</span></div></div>
+    <h2>Update WYLD</h2><p>Download the latest version, open it and tap <b>Update</b>. Your bag and saved items stay on your phone.</p>
+    <div class="actions"><a class="btn" href="${esc(url)}" ${EXT}>Download update</a><button class="btn ghost" data-close-sheet>Later</button></div>`);
+}
+refreshLive();
+document.addEventListener('visibilitychange', () => { if (!document.hidden) refreshLive(); });
 
 const params = new URLSearchParams(location.search);
 if (!isStandalone()) {

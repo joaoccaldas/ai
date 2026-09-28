@@ -2,7 +2,11 @@ name: WYLD Android App
 
 # Builds the WYLD Android app (Capacitor shell around studio/wyld-store/app),
 # boots it on an emulator as a smoke test, then publishes the APK to the
-# website at studio/wyld-store/downloads/WYLD.apk.
+# website at studio/wyld-store/downloads/WYLD.apk together with
+# data/app-version.json, which installed apps check to offer the update.
+#
+# Prices and stock are not baked in: installed apps refresh them from the
+# published data/catalog.json, so catalog changes need no new APK.
 #
 # Optional repository secrets for a stable release signature (recommended, so
 # updates install over previous versions):
@@ -14,7 +18,9 @@ on:
     branches: [main]
     paths:
       - 'studio/wyld-store/app/**'
-      - 'studio/wyld-store/src/catalog.js'
+      - 'studio/wyld-store/src/core/**'
+      - 'studio/wyld-store/config/**'
+      - 'studio/wyld-store/fonts/**'
       - 'studio/wyld-store/native/**'
       - '.github/workflows/wyld-android.yml'
   workflow_dispatch:
@@ -30,6 +36,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     defaults:
       run:
         working-directory: studio/wyld-store/native
@@ -54,6 +63,15 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Resolve public site URL
+        env:
+          GH_TOKEN: ${{ github.token }}
+          OVERRIDE: ${{ vars.WYLD_SITE_URL }}
+        run: |
+          if [ -n "$OVERRIDE" ]; then url="$OVERRIDE"
+          else base=$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq .html_url); url="${base%/}/studio/wyld-store/"; fi
+          echo "SITE_URL=$url" >> "$GITHUB_ENV"
+
       - name: Prepare signing key
         env:
           KEYSTORE_B64: ${{ secrets.WYLD_KEYSTORE_BASE64 }}
@@ -74,6 +92,7 @@ jobs:
         run: |
           export WYLD_VERSION_CODE=$(( ${{ github.run_number }} + 10 ))
           export WYLD_VERSION_NAME="1.${{ github.run_number }}"
+          printf '{"versionCode":%s,"versionName":"%s","apk":"downloads/WYLD.apk"}\n' "$WYLD_VERSION_CODE" "$WYLD_VERSION_NAME" > "$GITHUB_WORKSPACE/app-version.json"
           npm run sync
           cd android && ./gradlew assembleRelease --no-daemon
           cp app/build/outputs/apk/release/app-release.apk "$GITHUB_WORKSPACE/WYLD.apk"
@@ -83,7 +102,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: WYLD-apk
-          path: WYLD.apk
+          path: |
+            WYLD.apk
+            app-version.json
           if-no-files-found: error
 
   smoke-test:
@@ -136,7 +157,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: WYLD-apk
-          path: studio/wyld-store/downloads
+          path: ${{ runner.temp }}/apk
 
       - name: Commit APK to the website
         env:
@@ -144,7 +165,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f studio/wyld-store/downloads/WYLD.apk
+          mkdir -p studio/wyld-store/downloads studio/wyld-store/data
+          cp "$RUNNER_TEMP/apk/WYLD.apk" studio/wyld-store/downloads/WYLD.apk
+          cp "$RUNNER_TEMP/apk/app-version.json" studio/wyld-store/data/app-version.json
+          git add -f studio/wyld-store/downloads/WYLD.apk studio/wyld-store/data/app-version.json
           if git diff --cached --quiet; then echo "APK unchanged"; exit 0; fi
           git commit -m "build(wyld): publish Android app [skip ci]"
           for i in 1 2 3; do git pull --rebase origin main && git push origin HEAD:main && break; sleep 5; done

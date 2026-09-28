@@ -1,0 +1,5 @@
+# Crawlers and AI assistants are welcome.
+User-agent: *
+Allow: /
+Disallow: /native/
+Disallow: /tools/
