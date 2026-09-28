@@ -5,7 +5,7 @@
     python3 tools/sync_catalog.py products.json   # use a saved feed
 
 Keeps real handles, prices, variant ids (for cart permalinks) and CDN images.
-Private team kits (Synergy Sport Collective) are left out of the retail shop.
+Private team kits (tagged SSC) are left out of the retail shop.
 """
 import html
 import json

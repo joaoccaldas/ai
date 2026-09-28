@@ -11,7 +11,8 @@
 <link rel="preconnect" href="https://ridewyld.com">
 <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./src/store.css">
-<link rel="icon" href="https://ridewyld.com/cdn/shop/files/w-logo.jpg?width=64">
+<link rel="icon" href="./app/icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="./app/icons/apple-touch-icon.png">
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 </head>
 <body>
@@ -33,6 +34,7 @@
     <li class="on">Race fit · Club fit · Sizes XXS – 4XL</li>
     <li>Custom team kit for cycling, triathlon &amp; run</li>
     <li>Prices in AED · Secure checkout on ridewyld.com</li>
+    <li>New: the WYLD app — add it to your home screen</li>
   </ul>
 </div>
 
@@ -225,7 +227,7 @@
       </div>
     </div>
     <div class="marquee" aria-hidden="true" id="marquee">
-      <img src="https://ridewyld.com/cdn/shop/files/nickglover_banner.jpg?width=1400" alt="" loading="lazy">
+      <img src="https://ridewyld.com/cdn/shop/files/IMG_0204.jpg?width=1400" alt="" loading="lazy">
       <img src="https://ridewyld.com/cdn/shop/files/G6BANNER.jpg?width=1400" alt="" loading="lazy">
       <img src="https://ridewyld.com/cdn/shop/files/hellobikebanner_de41bc37-9301-4004-af44-6db33eccfad7.jpg?width=1400" alt="" loading="lazy">
       <img src="https://ridewyld.com/cdn/shop/files/dd_banner.jpg?width=1400" alt="" loading="lazy">
@@ -234,11 +236,11 @@
 
   <!-- Founder -->
   <section class="founder">
-    <figure class="reveal"><img src="https://ridewyld.com/cdn/shop/files/Screenshot_2024-09-24_at_10.51.06.png?width=1400" alt="Michelle, founder of WYLD, at a coffee stop" loading="lazy"></figure>
+    <figure class="reveal"><img src="https://ridewyld.com/cdn/shop/files/Screenshot_2024-09-24_at_10.51.06.png?width=1400" alt="The founder of WYLD at a coffee stop" loading="lazy"></figure>
     <div class="founder-body reveal">
-      <span class="eyebrow" style="color:var(--muted)">Hi, I’m Michelle</span>
+      <span class="eyebrow" style="color:var(--muted)">Our story</span>
       <blockquote>“I started this brand as I noticed a gap in the market for cycling and triathlon gear — specifically when it comes to size inclusivity and affordability.”</blockquote>
-      <cite>Michelle, founder of WYLD</cite>
+      <cite>Founder, WYLD</cite>
     </div>
   </section>
 
@@ -291,6 +293,7 @@
       <div><h4>WYLD</h4><ul>
         <li><a href="#custom">Custom kit</a></li>
         <li><a href="#studio">Studio</a></li>
+        <li><a href="./app/?install=1">Get the app</a></li>
         <li><a href="https://ridewyld.com/blogs/blog" target="_blank" rel="noopener">Journal</a></li>
         <li><a href="https://ridewyld.com/pages/about-us" target="_blank" rel="noopener">About</a></li>
       </ul></div>
@@ -330,6 +333,7 @@
       <li><a href="#shop" data-go="sale">Sale <small data-count="sale"></small></a></li>
       <li><a href="#studio">Studio</a></li>
       <li><a href="#custom">Custom kit</a></li>
+      <li><a href="./app/?install=1">Get the app</a></li>
     </ul>
     <div class="menu-feature">
       <a href="#shop" data-go="cycling" data-sub="Race Fit Jersey"><figure><img src="https://ridewyld.com/cdn/shop/products/grapepocket.jpg?width=500" alt="" loading="lazy"></figure><span>Race Fit jerseys</span></a>
@@ -368,6 +372,13 @@
   <button class="pdp-close" data-close aria-label="Close product"><svg><use href="#i-close"/></svg></button>
   <div id="pdpContent"></div>
 </div>
+
+<aside class="app-banner" id="appBanner" aria-label="WYLD app" hidden>
+  <img src="./app/icons/icon-192.png" alt="" width="44" height="44">
+  <div><strong>WYLD app</strong><span>Faster shopping, saved favourites, works offline</span></div>
+  <a class="btn" href="./app/?install=1">Get</a>
+  <button class="icon-btn" data-dismiss-app aria-label="Dismiss"><svg><use href="#i-close"/></svg></button>
+</aside>
 
 <div class="toast" id="toast" role="status"><span id="toastText">Added to bag</span><button data-open="bag">View bag</button></div>
 

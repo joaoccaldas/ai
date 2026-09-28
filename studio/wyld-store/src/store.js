@@ -441,6 +441,20 @@ const marquee = $('#marquee'); marquee.innerHTML += marquee.innerHTML;
 $('#year').textContent = new Date().getFullYear();
 $('#newsForm').addEventListener('submit', () => { $('#newsNote').textContent = 'Thanks — finish signing up on ridewyld.com.'; });
 
+/* ---------- app banner (phones, once per visitor until dismissed) ---------- */
+const APP_KEY = 'wyld-app-banner-dismissed-v1';
+const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+let bannerDismissed = false;
+try { bannerDismissed = localStorage.getItem(APP_KEY) === '1'; } catch { /* storage blocked */ }
+if (!standalone && !bannerDismissed && matchMedia('(max-width: 719px)').matches) {
+  setTimeout(() => { if (!document.body.classList.contains('locked')) $('#appBanner').hidden = false; }, 5000);
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('[data-dismiss-app], #appBanner .btn')) return;
+  $('#appBanner').hidden = true;
+  try { localStorage.setItem(APP_KEY, '1'); } catch { /* storage blocked */ }
+});
+
 renderGrid();
 updateBadge();
 const deep = location.hash.match(/^#\/p\/(.+)$/);
