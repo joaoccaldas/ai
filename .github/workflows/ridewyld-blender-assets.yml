@@ -23,12 +23,11 @@ jobs:
         run: blender -b --python-expr "import sys; sys.path.append('/usr/lib/python3/dist-packages'); exec(compile(open('studio/wyld-store/blender/build_assets.py').read(), 'build_assets.py', 'exec'))"
       - name: Validate Blender outputs
         run: |
-          test -s studio/wyld-store/assets/blender/jersey-women.glb
-          test -s studio/wyld-store/assets/blender/jersey-men.glb
-          test -s studio/wyld-store/assets/blender/bib-tiffany.glb
-          test -s studio/wyld-store/assets/blender/cap.glb
-          test -s studio/wyld-store/assets/blender/athlete-aero.glb
-          test -s studio/wyld-store/assets/blender/wyld-garment-studio.blend
+          echo "Generated Blender assets:"
+          find studio/wyld-store/assets/blender -maxdepth 1 -type f -printf '%f %s bytes\n' | sort
+          glb_count=$(find studio/wyld-store/assets/blender -maxdepth 1 -type f -name '*.glb' | wc -l)
+          test "$glb_count" -ge 9
+          test -s studio/wyld-store/assets/blender/manifest.json
       - name: Commit Blender assets
         run: |
           git config user.name 'github-actions[bot]'
