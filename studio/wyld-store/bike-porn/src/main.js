@@ -11,6 +11,8 @@ import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/examples/jsm/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { BokehPass } from 'three/examples/jsm/postprocessing/BokehPass.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import * as TX from './tex.js';
 import { applyDye } from './dye.js';
 import { LIVERIES, swatch } from './liveries.js';
@@ -54,7 +56,8 @@ controls.rotateSpeed = coarse ? .8 : .6;
 controls.autoRotateSpeed = .55;
 
 const pmrem = new THREE.PMREMGenerator(renderer);
-scene.environment = pmrem.fromScene(new RoomEnvironment(), .035).texture;
+const roomEnv = pmrem.fromScene(new RoomEnvironment(), .035).texture;
+scene.environment = roomEnv;
 
 const key = new THREE.DirectionalLight(0xffffff, 1.6);
 key.position.set(1.4, 3.2, 2.2);
@@ -86,13 +89,42 @@ const gallery = (() => {
 scene.add(gallery);
 
 // Bloom for the movie sets: neon, candles, windows and flashes glow.
-let bloomC = null, bloomPass = null, bloomOn = true;
+let bloomC = null, bloomPass = null, bloomOn = true, bokeh = null, grade = null;
+const KEY_POS = [1.4, 3.2, 2.2], FOCUS = new THREE.Vector3(.1, .55, 0);
+const setCtx = { renderer, key, onProgress: p => { const el = $('#setload'); el.hidden = false; el.querySelector('i').style.width = Math.round(p * 100) + '%'; } };
+function aimKey(pos, box) {
+  key.position.fromArray(pos);
+  Object.assign(key.shadow.camera, { left: -box, right: box, top: box, bottom: -box, near: .5, far: box > 2 ? 40 : 8 });
+  key.shadow.camera.updateProjectionMatrix();
+}
 function setupBloom() {
   bloomC = new EffectComposer(renderer, new THREE.WebGLRenderTarget(1, 1, { type: THREE.HalfFloatType, samples: coarse ? 0 : 4 }));
   bloomC.addPass(new RenderPass(scene, camera));
   bloomPass = new UnrealBloomPass(new THREE.Vector2(256, 256), .8, .55, .9);
   bloomC.addPass(bloomPass);
+  // Horror films: shallow depth of field on the bike, then a film grade (desaturated, teal shadows, vignette, grain).
+  bokeh = new BokehPass(scene, camera, { focus: 3.4, aperture: .0035, maxblur: .007 }); bokeh.enabled = false;
+  bloomC.addPass(bokeh);
   bloomC.addPass(new OutputPass());
+  grade = new ShaderPass({
+    uniforms: { tDiffuse: { value: null }, uTime: { value: 0 } },
+    vertexShader: 'varying vec2 vUv; void main(){ vUv = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: `uniform sampler2D tDiffuse; uniform float uTime; varying vec2 vUv;
+      float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+      void main(){
+        vec3 c = texture2D(tDiffuse, vUv).rgb;
+        float l = dot(c, vec3(.299, .587, .114));
+        vec3 g = mix(vec3(l), c, .68);
+        g = mix(g, g * vec3(.88, 1.0, 1.1) + vec3(0., .012, .025) * (1. - l), .9);
+        g = pow(g, vec3(1.12));
+        float v = 1. - smoothstep(.35, .95, length((vUv - .5) * vec2(1.15, 1.)) * 1.2);
+        g *= mix(1., v, .75);
+        g += (h(vUv * 900. + fract(uTime) * 91.) - .5) * .045;
+        gl_FragColor = vec4(g, 1.);
+      }`,
+  });
+  grade.enabled = false;
+  bloomC.addPass(grade);
 }
 
 let composer = null;
@@ -274,9 +306,15 @@ const ENVS = {
 let activeSet = null, cutTimer = 0;
 function showSet(l, cut) {
   const apply = () => {
-    const set = getSet(l.set);
+    const set = getSet(l.set, setCtx);
     if (activeSet !== set) { if (activeSet) scene.remove(activeSet.group); scene.add(set.group); activeSet = set; set.update(0, 0); }
     const L = set.look;
+    scene.environment = set.envTex || roomEnv;
+    aimKey(L.keyPos || KEY_POS, L.shadowBox || 1.4);
+    if (bokeh) bokeh.enabled = !!L.horror && !coarse;
+    if (grade) grade.enabled = !!L.horror;
+    if (set.ready) { $('#setload').hidden = false; set.ready.then(() => { if (activeSet === set) scene.environment = set.envTex || roomEnv; $('#setload').hidden = true; }, () => { $('#setload').hidden = true; }); }
+    else $('#setload').hidden = true;
     scene.background = new THREE.Color(L.fog[0]);
     scene.fog = new THREE.Fog(...L.fog);
     scene.environmentIntensity = L.env;
@@ -304,6 +342,7 @@ function setEnv(name) {
   floor.visible = shadowCatcher.visible = !isSet;
   if (isSet) { gallery.visible = false; showSet(S.livery, false); $$('[data-env]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.env === name))); return; }
   if (activeSet) { scene.remove(activeSet.group); activeSet = null; }
+  scene.environment = roomEnv; aimKey(KEY_POS, 1.4); $('#setload').hidden = true;
   key.color.set(0xffffff); rimL.color.set(0xcfe3ff); hemi.color.set(0xffffff); hemi.groundColor.set(0x404048); renderer.toneMappingExposure = 1;
   const E = ENVS[name];
   gallery.visible = name === 'dark';
@@ -440,6 +479,8 @@ function resize() {
   bloomC?.setSize(w, h); bloomPass?.resolution.set(w / (coarse ? 3 : 2), h / (coarse ? 3 : 2));
 }
 addEventListener('resize', resize);
+// Test hook for screenshots: only with ?debug in the URL.
+if (new URLSearchParams(location.search).has('debug')) window.__bp = { camera, controls, scene };
 
 let last = performance.now(), fpsAcc = 0, fpsN = 0, tuned = false;
 const t0 = performance.now();
@@ -459,6 +500,8 @@ function tick(now) {
     if (tw.t >= 1) tw = null;
   }
   if (activeSet && !reduced) activeSet.update(now / 1000, dt);
+  if (bokeh?.enabled) bokeh.uniforms.focus.value = camera.position.distanceTo(FOCUS);
+  if (grade?.enabled) grade.uniforms.uTime.value = now / 1000;
   wheelKit?.update(now / 1000, TR?.boost || 0);
   controls.update(dt);
   // Ambient occlusion only in the plain studios: the movie sets use sprites and glow that GTAO would shade.

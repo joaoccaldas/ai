@@ -109,6 +109,9 @@ function rail(title, items, to) {
     <div class="rail">${items.map(p => card(p, '44vw')).join('')}</div></section>`;
 }
 
+// Pages that live on the website (the app opens them in the browser when it runs natively).
+const sitePage = path => runtime.remoteBase ? new URL(path, runtime.remoteBase).href : `../${path}`;
+
 function homeView() {
   const avail = products().filter(p => p.available);
   const raceFit = avail.filter(p => p.kind === 'Race Fit Jersey').sort((a, b) => rank(a) - rank(b));
@@ -138,6 +141,9 @@ function homeView() {
   </a>
 
   ${rail('On sale', sale, '#/shop/sale')}
+
+  <a class="promo dark" href="${sitePage('bike-porn/')}" ${EXT}><div><span class="eyebrow">Bike Porn · 3D</span><h2 class="h3">Eight bike movies. Eight persona riders.</h2><p>Custom WYLD Speedmax liveries on their own movie sets, from a UFO crop circle to a haunted chapel. Press play on the trailers.</p><span class="text-link">Enter the studio</span></div></a>
+  <a class="promo dark" href="${sitePage('upcoming/')}" ${EXT}><div><span class="eyebrow">Upcoming ★</span><h2 class="h3">Random drops, weird and cute.</h2><p>New kit is on the way. Be the first to know.</p><span class="text-link">Keep me posted ♥</span></div></a>
 
   ${isStandalone() ? '' : `<button class="promo dark" data-install><div><span class="eyebrow">WYLD app</span><h2 class="h3">Add WYLD to your home screen.</h2><p>Full-screen shopping, saved favourites and your bag — one tap away, even offline.</p><span class="text-link">Get the app</span></div></button>`}
 

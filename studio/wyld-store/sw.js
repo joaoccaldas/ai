@@ -2,7 +2,7 @@
    small files so updates show immediately; cached copies are the offline
    fallback. Product images use a bounded cache-first store. Nothing else
    (other origins, large downloads, non-GET requests) is intercepted. */
-const VERSION = 'wyld-v6';
+const VERSION = 'wyld-v7';
 const SHELL = `${VERSION}-shell`;
 const IMAGES = `${VERSION}-images`;
 const MAX_IMAGES = 120;
