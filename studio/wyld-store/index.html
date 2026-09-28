@@ -11,6 +11,7 @@
 <link rel="preload" href="./fonts/inknut-antiqua-400-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./fonts/fonts.css">
 <link rel="stylesheet" href="./src/store.css">
+<link rel="stylesheet" href="./fonts/fun.css">
 <link rel="icon" href="./app/icons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="./app/icons/apple-touch-icon.png">
 <link rel="manifest" href="./app/manifest.webmanifest">
@@ -200,6 +201,25 @@
   <section class="sizeband" aria-label="Race kit in sizes XXS to 4XL">
     <div class="band" aria-hidden="true"><div class="band-track" id="bandTrack"></div></div>
     <p class="wrap band-note">Race kit from XXS to 4XL — made for more riders.</p>
+  </section>
+
+  <!-- Upcoming releases teaser -->
+  <section class="upnext" id="upcoming" aria-labelledby="upTitle">
+    <div class="upnext-bg" aria-hidden="true"></div>
+    <svg class="up-s" style="top:10%;left:6%;width:64px;height:64px" aria-hidden="true"><use href="upcoming/stickers.svg#star"/></svg>
+    <svg class="up-s float" style="top:14%;right:10%;width:86px;height:86px" aria-hidden="true"><use href="upcoming/stickers.svg#alien"/></svg>
+    <svg class="up-s float b up-low" style="bottom:12%;left:8%;width:92px;height:102px" aria-hidden="true"><use href="upcoming/stickers.svg#ghost"/></svg>
+    <svg class="up-s float up-low" style="bottom:14%;right:9%;width:84px;height:84px" aria-hidden="true"><use href="upcoming/stickers.svg#doll"/></svg>
+    <svg class="up-s up-hide" style="top:44%;left:18%;width:38px;height:38px" aria-hidden="true"><use href="upcoming/stickers.svg#sparkle"/></svg>
+    <svg class="up-s up-hide" style="top:40%;right:22%;width:46px;height:46px" aria-hidden="true"><use href="upcoming/stickers.svg#heart"/></svg>
+    <span class="up-note up-hide" style="top:30%;left:4%" aria-hidden="true">same weird,<br>different day ♡</span>
+    <span class="up-note up-hide" style="bottom:36%;right:3%;transform:rotate(7deg)" aria-hidden="true">more cute<br>things ahead ♡</span>
+    <div class="wrap upnext-inner reveal">
+      <span class="up-tag">★ random drops</span>
+      <h2 id="upTitle" class="up-title">Upcoming<br>Releases</h2>
+      <p class="up-lede">Cute things are on the way ♡ Stay weird — let's be crazy.</p>
+      <a class="up-btn" href="upcoming/">Keep me posted ♥</a>
+    </div>
   </section>
 
   <!-- Shop -->

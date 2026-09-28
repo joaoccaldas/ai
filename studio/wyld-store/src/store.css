@@ -160,6 +160,20 @@ img{display:block;max-width:100%}
 .band-track span:nth-child(9n+5){color:var(--berry);-webkit-text-stroke:0}
 .band-note{margin-top:22px;font-size:14px;color:var(--muted)}
 
+/* upcoming releases teaser */
+.upnext{position:relative;overflow:hidden;padding:clamp(80px,12vw,140px) 0;text-align:center;color:#241a33;isolation:isolate}
+.upnext-bg{position:absolute;inset:-10% -2%;z-index:-1;background:conic-gradient(#cbb8f5 25%,#f8ecb0 0 50%,#cbb8f5 0 75%,#f8ecb0 0) 0 0/clamp(96px,14vw,160px) clamp(96px,14vw,160px);transform:skewY(-3deg) scale(1.1)}
+.up-s{position:absolute;filter:drop-shadow(0 3px 0 rgba(36,26,51,.18));pointer-events:none}
+.up-note{position:absolute;font:700 clamp(18px,2vw,26px)/1.05 Caveat,cursive;transform:rotate(-8deg);pointer-events:none}
+.up-tag{display:inline-block;padding:7px 14px;background:#fff;border:2.5px solid #241a33;border-radius:999px;font:700 20px/1 Caveat,cursive;box-shadow:0 3px 0 #241a33}
+.up-title{margin:18px 0 12px;font:400 clamp(58px,11vw,140px)/.92 Chewy,system-ui,sans-serif;color:#ff5fa2;-webkit-text-stroke:clamp(3px,.5vw,5px) #241a33;paint-order:stroke fill;text-shadow:0 .06em 0 #241a33}
+.up-lede{margin:0 auto 26px;max-width:26ch;font:700 clamp(24px,3.2vw,34px)/1.2 Caveat,cursive}
+.up-btn{display:inline-block;padding:16px 26px;border-radius:999px;background:#ff5fa2;color:#fff;border:2.5px solid #241a33;box-shadow:0 5px 0 #241a33;font:700 13px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;transition:transform .2s}
+.up-btn:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion:no-preference){.up-s.float{animation:bob 5s ease-in-out infinite}.up-s.float.b{animation-duration:6.5s;animation-delay:-2s}}
+@keyframes bob{50%{translate:0 -10px}}
+@media (max-width:719px){.up-hide{display:none}.upnext{padding-bottom:170px}.upnext .up-s{transform:scale(.8)}.upnext .up-low{bottom:24px!important;top:auto!important}}
+
 /* shop toolbar */
 .shop{padding-top:72px}
 .toolbar{position:sticky;top:var(--header);z-index:30;background:rgba(246,244,239,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);margin-top:24px}
