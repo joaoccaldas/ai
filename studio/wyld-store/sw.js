@@ -1,9 +1,9 @@
 /* WYLD service worker (scope: the store + app). Network-first for our own
-   files so updates show immediately; cached copies are the offline fallback.
-   Product images use a bounded cache-first store. */
-const VERSION = 'wyld-v2';
+   small files so updates show immediately; cached copies are the offline
+   fallback. Product images use a bounded cache-first store. Nothing else
+   (other origins, large downloads, non-GET requests) is intercepted. */
+const VERSION = 'wyld-v3';
 const SHELL = `${VERSION}-shell`;
-const RUNTIME = `${VERSION}-runtime`;
 const IMAGES = `${VERSION}-images`;
 const MAX_IMAGES = 120;
 
@@ -18,10 +18,16 @@ const SHELL_FILES = [
   './app/icons/apple-touch-icon.png',
   './app/icons/favicon-32.png',
   './src/catalog.js',
+  './fonts/fonts.css',
+  './fonts/inknut-antiqua-400-latin.woff2',
+  './fonts/instrument-sans-latin.woff2',
 ];
 const SCOPE = new URL('./', self.location).href;
 const IMAGE_HOSTS = new Set(['ridewyld.com', 'cdn.shopify.com']);
-const FONT_HOSTS = new Set(['fonts.googleapis.com', 'fonts.gstatic.com']);
+// Only small static files are cached; large downloads (APK, 3D models) always
+// come straight from the network and never fill the cache.
+const CACHEABLE = /\.(html|js|css|json|webmanifest|png|svg|woff2)$|\/$/;
+const NEVER_CACHE = /\/downloads\/|\.(apk|glb|blend)$/;
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL).then(c => c.addAll(SHELL_FILES)).then(() => self.skipWaiting()));
@@ -45,22 +51,14 @@ async function networkFirst(request, fallbackURL) {
   const cache = await caches.open(SHELL);
   try {
     const res = await fetch(request);
-    if (res.ok) cache.put(request, res.clone());
+    const path = new URL(request.url).pathname;
+    if (res.ok && CACHEABLE.test(path) && !NEVER_CACHE.test(path)) cache.put(request, res.clone());
     return res;
   } catch {
     return (await cache.match(request, { ignoreSearch: true }))
       || (fallbackURL && await cache.match(fallbackURL))
       || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } });
   }
-}
-
-async function staleWhileRevalidate(request, cacheName) {
-  const cache = await caches.open(cacheName);
-  const cached = await cache.match(request);
-  const network = fetch(request)
-    .then(res => { if (res && (res.ok || res.type === 'opaque')) cache.put(request, res.clone()); return res; })
-    .catch(() => cached);
-  return cached || network;
 }
 
 async function cacheFirstImage(request) {
@@ -82,15 +80,12 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
 
   if (url.href.startsWith(SCOPE)) {
+    if (NEVER_CACHE.test(url.pathname)) return; // plain network, no cache
     const appPage = url.pathname.includes('/app/');
     event.respondWith(networkFirst(request, request.mode === 'navigate' ? (appPage ? './app/index.html' : './app/') : null));
     return;
   }
   if (IMAGE_HOSTS.has(url.hostname) && request.destination === 'image') {
     event.respondWith(cacheFirstImage(request));
-    return;
-  }
-  if (FONT_HOSTS.has(url.hostname)) {
-    event.respondWith(staleWhileRevalidate(request, RUNTIME));
   }
 });
