@@ -36,3 +36,10 @@
 .wyld-init__unlock{animation:unlockFlash .8s both}@keyframes unlockFlash{50%{filter:brightness(2.5)}}
 @media (max-width:700px){.wyld-init__door{width:58vw;height:56%;top:22%}.wyld-init__arch{width:95vw}.wyld-init__koala{left:3%;bottom:16%}.wyld-init__alien{right:4%;bottom:16%}.wyld-init__caption{bottom:4vh}.wyld-init__line{font-size:19px}.wyld-init__vanilla{bottom:27%}}
 @media (prefers-reduced-motion:reduce){.wyld-init *{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+
+/* Web-delivery GLB performers, authored from the Blender/Higgsfield character pack. */
+.wyld-init__character{pointer-events:none;overflow:visible}
+.wyld-init__character model-viewer{display:block;width:100%;height:100%;background:transparent;--poster-color:transparent;pointer-events:none}
+.wyld-init__koala{height:clamp(170px,25vw,320px)}
+.wyld-init__alien{height:clamp(210px,29vw,390px)}
+.wyld-init__ghost{height:clamp(165px,23vw,300px)}

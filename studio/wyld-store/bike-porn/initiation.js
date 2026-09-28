@@ -20,27 +20,17 @@ root.innerHTML = `
     <div class="wyld-init__title"><b>BIKE PORN</b><small>ceremonial access division</small></div>
     <div class="wyld-init__door" id="wiDoor"></div>
     <div class="wyld-init__vanilla">VANILLA PROTOCOL · LEVEL 5 · DO NOT FLAVOUR</div>
+    <div class="wyld-init__character wyld-init__koala" aria-label="Klaus, the koala master of ceremonies">
+      <model-viewer src="assets/initiation/klaus.glb" interaction-prompt="none" environment-image="neutral" shadow-intensity="1" shadow-softness=".8" exposure="1.1" camera-orbit="0deg 78deg 3.1m" field-of-view="28deg" alt="Klaus, a tiny koala master of ceremonies in formalwear"></model-viewer>
+    </div>
 
-    <svg class="wyld-init__character wyld-init__koala" viewBox="0 0 220 260" aria-label="Klaus, the koala master of ceremonies">
-      <ellipse class="ear" cx="55" cy="65" rx="39" ry="42"/><ellipse class="ear" cx="165" cy="65" rx="39" ry="42"/>
-      <ellipse class="inner" cx="55" cy="66" rx="21" ry="24"/><ellipse class="inner" cx="165" cy="66" rx="21" ry="24"/>
-      <ellipse class="head" cx="110" cy="90" rx="69" ry="64"/><ellipse class="body" cx="110" cy="187" rx="62" ry="68"/>
-      <circle class="eye" cx="86" cy="82" r="7"/><circle class="eye" cx="136" cy="82" r="7"/><ellipse class="nose" cx="110" cy="103" rx="17" ry="13"/>
-      <path class="shirt" d="M87 144h46l-6 63H92z"/><path class="tux" d="M47 144h43l10 76H59zM130 144h43l-12 76h-41z"/>
-      <path class="bow" d="M93 149l17 10-17 10-15-10zM127 149l-17 10 17 10 15-10z"/>
-      <path class="glass" d="M174 157h28l-5 28c-2 9-16 9-18 0zM188 186v29M177 215h23"/>
-    </svg>
+    <div class="wyld-init__character wyld-init__alien" aria-label="Valentino, the ceremonial alien supermodel">
+      <model-viewer src="assets/initiation/valentino.glb" interaction-prompt="none" environment-image="neutral" shadow-intensity="1" shadow-softness=".85" exposure="1.15" camera-orbit="0deg 80deg 3.3m" field-of-view="25deg" alt="Valentino, a tall ceremonial alien supermodel presenting the sacred ring"></model-viewer>
+    </div>
 
-    <svg class="wyld-init__character wyld-init__alien" viewBox="0 0 170 310" aria-label="Valentino, the ceremonial alien supermodel">
-      <ellipse class="skin" cx="85" cy="52" rx="34" ry="46"/><ellipse class="eye" cx="72" cy="50" rx="9" ry="4"/><ellipse class="eye" cx="99" cy="50" rx="9" ry="4"/>
-      <path class="coat" d="M61 91h48l23 128-33 6-14-72-14 72-33-6z"/><path class="skin" d="M60 100l-25 112 12 4 34-102zM110 100l25 112-12 4-34-102z"/>
-      <path class="coat" d="M72 217h20l5 90H77zM98 217h20l-3 90H95z"/><circle class="ring" cx="85" cy="155" r="27"/>
-    </svg>
-
-    <svg class="wyld-init__character wyld-init__ghost" viewBox="0 0 170 220" aria-label="Boo, the compliance ghost">
-      <path class="sheet" d="M84 12c-39 0-63 28-63 64v114l18-17 18 19 18-18 18 20 18-20 18 18 20-19V76c0-36-25-64-65-64z"/>
-      <ellipse class="eye" cx="63" cy="75" rx="10" ry="15"/><ellipse class="eye" cx="106" cy="75" rx="10" ry="15"/><rect class="clip" x="112" y="119" width="38" height="54" rx="4"/>
-    </svg>
+    <div class="wyld-init__character wyld-init__ghost" aria-label="Boo, the compliance ghost">
+      <model-viewer src="assets/initiation/boo.glb" interaction-prompt="none" environment-image="neutral" shadow-intensity=".6" shadow-softness="1" exposure="1.2" camera-orbit="0deg 78deg 3.0m" field-of-view="28deg" alt="Boo, the ghostly compliance officer with a clipboard"></model-viewer>
+    </div>
 
     <div class="wyld-init__caption" aria-live="polite">
       <div class="wyld-init__speaker" id="wiSpeaker"></div>
@@ -276,52 +266,51 @@ function renderTrial() {
   }
 
   if (step === 2) {
-    let sequence = [];
-    let repeat = [];
-    let phase = 'create';
-    const glyphs = ['◌','△','✦','∞'];
+    state.rhythm = [];
+    state.rhythmMisses = 0;
 
     trialBox.innerHTML = shell(
       3,
-      'Invent the password.',
-      'Choose any three symbols. The symbols do not matter. Remember the pattern you create.',
+      'The Vanilla Protocol',
+      'Vanilla is the highest known state of 5D encryption. Two tastes. Let it breathe. One final taste.',
       '<div class="wyld-init__choices">' +
-        glyphs.map((g, i) => '<button data-symbol="' + i + '">' + g + '</button>').join('') +
-      '</div>'
+        '<button data-flavour>Vanilla</button>' +
+        '<button data-flavour>Chain lube</button>' +
+        '<button data-flavour>Fear</button>' +
+        '<button data-flavour>Tuesday</button>' +
+      '</div>',
+      'wyld-init__vanilla-card'
     );
 
-    trialBox.querySelectorAll('[data-symbol]').forEach(button => {
+    trialBox.querySelectorAll('[data-flavour]').forEach(button => {
       button.onclick = () => {
-        const symbol = button.dataset.symbol;
+        const now = performance.now();
+        state.rhythm.push(now);
+        if (state.rhythm.length > 3) state.rhythm.shift();
 
-        if (phase === 'create') {
-          sequence.push(symbol);
-          feedback('Your sequence: ' + sequence.map(i => glyphs[i]).join(' · '));
-
-          if (sequence.length === 3) {
-            phase = 'repeat';
-            feedback('Good. Now repeat exactly what you just invented.');
-          }
+        if (state.rhythm.length === 1) {
+          feedback('Taste registered. Again.');
+          return;
+        }
+        if (state.rhythm.length === 2) {
+          feedback('Now let the vanilla breathe.');
           return;
         }
 
-        repeat.push(symbol);
-        const index = repeat.length - 1;
-
-        if (repeat[index] !== sequence[index]) {
-          repeat = [];
-          feedback('Wrong. It was your own password. Start the repeat again.');
-          beep(115, .08, 'square', .018);
-          return;
-        }
-
-        feedback('Repeat: ' + repeat.map(i => glyphs[i]).join(' · '));
-
-        if (repeat.length === 3) {
-          feedback('Pattern memory verified. Mildly suspicious.');
+        const quickPair = state.rhythm[1] - state.rhythm[0] < 900;
+        const deliberatePause = state.rhythm[2] - state.rhythm[1] > 950;
+        if (quickPair && deliberatePause) {
+          feedback('VANILLA STATE ACHIEVED. Nobody knows what this means.');
           beep(740, .2, 'triangle', .03);
           setTimeout(nextTrial, reduced ? 100 : 800);
+          return;
         }
+
+        state.rhythmMisses += 1;
+        feedback(state.rhythmMisses < 2
+          ? 'Too eager. Vanilla requires emotional spacing.'
+          : 'Hint from Valentino: two close together, then a dignified pause.');
+        state.rhythm = [];
       };
     });
     return;
