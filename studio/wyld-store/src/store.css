@@ -172,7 +172,7 @@ img{display:block;max-width:100%}
 .up-btn:hover{transform:translateY(-2px)}
 @media (prefers-reduced-motion:no-preference){.up-s.float{animation:bob 5s ease-in-out infinite}.up-s.float.b{animation-duration:6.5s;animation-delay:-2s}}
 @keyframes bob{50%{translate:0 -10px}}
-@media (max-width:719px){.up-hide{display:none}.upnext{padding-bottom:170px}.upnext .up-s{transform:scale(.8)}.upnext .up-low{bottom:24px!important;top:auto!important}}
+@media (max-width:719px){.up-hide{display:none}.upnext{padding-bottom:170px}.upnext .up-s{transform:scale(.8)}.upnext .up-low{bottom:24px!important;top:auto!important}.upnext .up-warn{bottom:112px!important;right:12px!important;font-size:19px}}
 
 /* shop toolbar */
 .shop{padding-top:72px}
