@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://ridewyld.com; connect-src 'self' blob: data:; worker-src 'self' blob:; base-uri 'self'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="theme-color" content="#111820">
+<title>Bike Porn — WYLD custom Speedmax liveries in 3D</title>
+<meta name="description" content="Bike Porn by WYLD: an immersive 3D studio with a fully equipped Canyon Speedmax CFR AXS study painted in six custom WYLD liveries. Orbit, zoom, switch light and dark studios.">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="WYLD">
+<meta property="og:title" content="Bike Porn — WYLD × Speedmax in 3D">
+<meta property="og:description" content="Six custom WYLD liveries on a fully equipped Speedmax CFR AXS. Light and dark 3D studios.">
+<link rel="stylesheet" href="../fonts/fonts.css">
+<link rel="stylesheet" href="../fonts/fun.css">
+<link rel="icon" href="../app/icons/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../app/icons/apple-touch-icon.png">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Bike Porn","description":"An immersive 3D studio with a fully equipped Canyon Speedmax CFR AXS study painted in six custom WYLD liveries.","isPartOf":{"@type":"WebSite","name":"WYLD"},"about":{"@type":"Thing","name":"Custom time-trial bike liveries"}}</script>
+<style>
+:root{--ink:#eef1f5;--dim:rgba(238,241,245,.62);--line:rgba(238,241,245,.14);--glass:rgba(15,21,28,.58);--accent:#ff2f92;--pink:#ff5fa2;--lilac:#c9b6f4;--butter:#f8ebae;
+  --serif:'Inknut Antiqua',Georgia,serif;--sans:'Instrument Sans',system-ui,sans-serif;--fun:Chewy,'Arial Rounded MT Bold',system-ui,sans-serif;--hand:Caveat,'Bradley Hand',cursive}
+:root[data-theme="light"]{--ink:#15181d;--dim:rgba(21,24,29,.6);--line:rgba(21,24,29,.12);--glass:rgba(240,241,243,.66)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#111820;color:var(--ink);font:500 14px/1.4 var(--sans);-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+:root[data-theme="light"] body{background:#dcdde0}
+#stage{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+button{font:inherit;color:inherit;cursor:pointer}
+a{color:inherit}
+
+/* top bar */
+.top{position:fixed;left:0;right:0;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(16px + env(safe-area-inset-top)) clamp(16px,3vw,36px) 0;pointer-events:none}
+.top>*{pointer-events:auto}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand img{height:22px;width:auto;display:block}
+:root[data-theme="dark"] .brand img{filter:invert(1)}
+.brand span{font:600 11px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.seg{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--glass);border:1px solid var(--line);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.seg button{border:0;background:none;padding:8px 14px;border-radius:999px;font:600 12px/1 var(--sans);letter-spacing:.06em}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--glass-solid,#111820)}
+:root[data-theme="light"] .seg button[aria-pressed="true"]{color:#f0f1f3}
+.tools{display:flex;gap:8px;align-items:center}
+
+/* title block */
+.intro{position:fixed;z-index:4;left:clamp(16px,3vw,36px);top:calc(74px + env(safe-area-inset-top));max-width:340px;pointer-events:none}
+.eyebrow{font:600 11px/1 var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--dim)}
+h1{margin:10px 0 0;font:400 clamp(48px,6vw,78px)/.9 var(--fun);color:var(--pink);-webkit-text-stroke:3px #1e1826;paint-order:stroke fill;text-shadow:0 4px 0 #1e1826;letter-spacing:.01em}
+h1 .star{display:inline-block;color:var(--butter);font-size:.55em;vertical-align:.6em;margin-left:6px;transform:rotate(12deg)}
+.lede{margin:12px 0 0;color:var(--dim);font-size:14px;max-width:300px}
+
+/* livery panel */
+.panel{position:fixed;z-index:4;left:clamp(16px,3vw,36px);bottom:calc(24px + env(safe-area-inset-bottom));width:320px;padding:18px;border-radius:22px;background:var(--glass);border:1px solid var(--line);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.lv-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+#lvTitle{margin:0;font:400 26px/1.05 var(--serif)}
+#lvTitle.pop{animation:pop .5s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{0%{opacity:0;transform:translateY(8px)}100%{opacity:1;transform:none}}
+#lvNum{font:600 11px/1 var(--sans);letter-spacing:.16em;color:var(--dim);white-space:nowrap}
+#lvSub{margin:6px 0 14px;color:var(--dim);font-size:13px;min-height:2.8em}
+#liveries{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lv{display:flex;flex-direction:column;gap:6px;padding:0;border:0;background:none;text-align:left}
+.lv .sw{display:block;aspect-ratio:1.4;border-radius:12px;border:1px solid var(--line);box-shadow:inset 0 0 0 2px transparent;transition:transform .25s,box-shadow .25s}
+.lv:hover .sw{transform:translateY(-2px)}
+.lv[aria-pressed="true"] .sw{box-shadow:0 0 0 2px var(--ink),0 8px 22px -8px var(--accent)}
+.lv-t{display:flex;justify-content:space-between;gap:4px;font-size:11px;line-height:1.2}
+.lv-t b{font-weight:600}
+.lv-t small{color:var(--dim)}
+.row{display:flex;gap:8px;margin-top:14px}
+.chip{flex:1;border:1px solid var(--line);background:none;border-radius:999px;padding:9px 10px;font:600 12px/1 var(--sans);letter-spacing:.04em;display:flex;align-items:center;justify-content:center;gap:6px}
+.chip[aria-pressed="true"]{background:var(--ink);color:#111820;border-color:var(--ink)}
+:root[data-theme="light"] .chip[aria-pressed="true"]{color:#f0f1f3}
+.chip:focus-visible,.seg button:focus-visible,.lv:focus-visible .sw{outline:2px solid var(--accent);outline-offset:2px}
+
+/* views */
+.views{position:fixed;z-index:4;right:clamp(16px,3vw,36px);bottom:calc(24px + env(safe-area-inset-bottom))}
+.views .seg button{padding:8px 12px}
+.note{position:fixed;z-index:3;right:clamp(16px,3vw,36px);top:calc(76px + env(safe-area-inset-top));font:700 22px/1.05 var(--hand);color:var(--pink);transform:rotate(4deg);text-align:right;pointer-events:none}
+:root[data-env="set"] .note{display:none}
+.legal{position:fixed;z-index:3;right:clamp(16px,3vw,36px);bottom:calc(72px + env(safe-area-inset-bottom));max-width:360px;text-align:right;font-size:10.5px;line-height:1.35;color:var(--dim)}
+.legal a{color:inherit}
+
+/* persona line + clapperboard cut between sets */
+.persona{font:700 19px/1 var(--hand);color:var(--accent);margin:-2px 0 6px;filter:brightness(1.15)}
+:root[data-theme="light"] .persona{filter:brightness(.8) saturate(1.3)}
+.slate{position:fixed;inset:0;z-index:8;pointer-events:none;display:grid;place-items:center}
+.slate i{position:absolute;left:0;right:0;height:50.5%;background:#0b0a0f;transform:scaleY(0);transition:transform .36s cubic-bezier(.7,0,.3,1)}
+.slate i:first-child{top:0;transform-origin:top;background:repeating-linear-gradient(135deg,#0b0a0f 0 38px,#f4f1ea 38px 76px) top/100% 34px no-repeat,#0b0a0f}
+.slate i:nth-child(2){bottom:0;transform-origin:bottom}
+.slate div{position:relative;text-align:center;opacity:0;transition:opacity .2s;color:#f4f1ea}
+.slate b{display:block;font:400 clamp(40px,7vw,76px)/1 var(--fun);color:var(--accent);-webkit-text-stroke:2px #1e1826;paint-order:stroke fill}
+.slate small{display:block;margin-top:10px;font:600 11px/1 var(--sans);letter-spacing:.24em;text-transform:uppercase}
+.cut .slate i{transform:none}
+.cut .slate div{opacity:1;transition-delay:.18s}
+
+/* loader */
+.loader{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:inherit;transition:opacity .6s,visibility .6s}
+:root[data-theme="dark"] .loader{background:#111820}
+:root[data-theme="light"] .loader{background:#dcdde0}
+.ready .loader{opacity:0;visibility:hidden}
+.loader div{text-align:center}
+.loader b{display:block;font:400 44px/1 var(--fun);color:var(--pink);-webkit-text-stroke:2px #1e1826;paint-order:stroke fill}
+.loader progress{appearance:none;-webkit-appearance:none;width:180px;height:3px;margin:18px auto 10px;display:block;border:0;border-radius:3px;background:var(--line);overflow:hidden}
+.loader progress::-webkit-progress-bar{background:var(--line)}
+.loader progress::-webkit-progress-value{background:var(--pink)}
+.loader progress::-moz-progress-bar{background:var(--pink)}
+#loadlabel{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* phones */
+@media (max-width:899px){
+  .brand span{display:none}
+  .intro{top:calc(62px + env(safe-area-inset-top));max-width:none;right:16px}
+  h1{font-size:44px;-webkit-text-stroke:2.5px #1e1826;text-shadow:0 3px 0 #1e1826}
+  .lede,.note{display:none}
+  .panel{left:10px;right:10px;width:auto;bottom:calc(10px + env(safe-area-inset-bottom));padding:12px 12px 12px;border-radius:20px}
+  #lvTitle{font-size:19px}
+  #lvSub{display:none}
+  .lv-head{margin-bottom:10px}
+  #liveries{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;margin:0 -12px;padding:0 12px 2px;scrollbar-width:none}
+  #liveries::-webkit-scrollbar{display:none}
+  .lv{flex:0 0 84px;scroll-snap-align:center}
+  .row{margin-top:10px}
+  .views{left:10px;right:10px;bottom:auto;top:calc(128px + env(safe-area-inset-top));display:flex;justify-content:center}
+  .views .seg{overflow-x:auto;scrollbar-width:none;max-width:100%}
+  .views .seg button{padding:7px 10px;font-size:11px;white-space:nowrap}
+  .legal{left:14px;right:14px;max-width:none;text-align:center;bottom:calc(222px + env(safe-area-inset-bottom));font-size:9.5px;text-shadow:0 0 6px var(--glass)}
+}
+@media (max-width:380px){.tools .seg button{padding:8px 10px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="stage" tabindex="0" aria-label="3D view of a Speedmax time-trial bike. Drag to orbit, pinch or scroll to zoom."></canvas>
+
+<header class="top">
+  <a class="brand" href="../" aria-label="Back to the WYLD store"><img src="https://ridewyld.com/cdn/shop/files/WYLD-Black1080.png?width=240" alt="WYLD" width="62" height="22"><span>Bike Porn</span></a>
+  <div class="tools">
+    <div class="seg" role="group" aria-label="Studio lighting">
+      <button type="button" data-env="set" aria-pressed="true">Set ★</button>
+      <button type="button" data-env="light" aria-pressed="false">Light</button>
+      <button type="button" data-env="dark" aria-pressed="false">Dark</button>
+    </div>
+  </div>
+</header>
+
+<div class="intro">
+  <div class="eyebrow">WYLD × Speedmax CFR AXS</div>
+  <h1>Bike Porn<span class="star" aria-hidden="true">★</span></h1>
+  <p class="lede">Six custom WYLD liveries on a fully equipped time-trial machine. Drag to orbit, scroll to get closer.</p>
+</div>
+<p class="note" aria-hidden="true">stay weird ♡<br>go fast</p>
+
+<section class="panel" aria-label="Custom liveries">
+  <div class="persona" id="lvPersona"></div>
+  <div class="lv-head"><h2 id="lvTitle"><span id="lvName">Raspberry Riot</span></h2><span id="lvNum">01 / 06</span></div>
+  <p id="lvSub"></p>
+  <div id="liveries" role="group" aria-label="Choose a livery"></div>
+  <div class="row">
+    <button type="button" class="chip" id="spin" aria-pressed="true">Spin</button>
+    <button type="button" class="chip" id="ride" aria-pressed="false">Ride</button>
+    <button type="button" class="chip" id="shuffle">Random ★</button>
+  </div>
+</section>
+
+<nav class="views" aria-label="Camera views">
+  <div class="seg" role="group">
+    <button type="button" data-view="hero" aria-pressed="true">Hero</button>
+    <button type="button" data-view="side" aria-pressed="false">Side</button>
+    <button type="button" data-view="front" aria-pressed="false">Front</button>
+    <button type="button" data-view="cockpit" aria-pressed="false">Cockpit</button>
+    <button type="button" data-view="drivetrain" aria-pressed="false">Drivetrain</button>
+    <button type="button" data-view="nds" aria-pressed="false">Other side</button>
+    <button type="button" data-view="top" aria-pressed="false">Top</button>
+  </div>
+</nav>
+
+<p class="legal">Unofficial design study. 3D model from the open Canyon Museum project. Not affiliated with or endorsed by Canyon Bicycles GmbH. Liveries are WYLD concepts. <a href="../">Shop WYLD kit →</a></p>
+
+<div class="slate" id="slate" aria-hidden="true"><i></i><i></i><div><b></b><small></small></div></div>
+
+<div class="loader" role="status" aria-live="polite"><div><b>Bike Porn</b><progress id="loadbar" max="1" value="0"></progress><span id="loadlabel">Warming up the studio…</span></div></div>
+
+<noscript><p class="sr">This 3D studio needs JavaScript and WebGL.</p></noscript>
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -171,7 +171,7 @@ ${jsonld.map(ld).join('\n')}
 <header class="header">
   <div class="wrap header-inner">
     <nav class="nav static-nav" aria-label="Primary">
-      <a href="${up}c/cycling/">Cycling</a><a href="${up}c/triathlon/">Triathlon</a><a href="${up}c/run/">Run</a><a href="${up}c/accessories/">Accessories</a><a href="${up}upcoming/">Upcoming</a>
+      <a href="${up}c/cycling/">Cycling</a><a href="${up}c/triathlon/">Triathlon</a><a href="${up}c/run/">Run</a><a href="${up}c/accessories/">Accessories</a><a href="${up}upcoming/">Upcoming</a><a href="${up}bike-porn/">Bike Porn</a>
     </nav>
     <a class="logo" href="${up}" aria-label="WYLD home"><img src="${img('/cdn/shop/files/WYLD-Black1080.png', 240)}" alt="WYLD" width="84" height="30"></a>
     <div class="tools"><a class="icon-btn" href="${up}#bag" aria-label="Bag"><svg><use href="#i-bag"/></svg></a></div>
@@ -201,6 +201,7 @@ function footerHTML(up) {
         <li><a href="${site.policies.returns}" target="_blank" rel="noopener">Returns</a></li>
         <li><a href="${site.policies.privacy}" target="_blank" rel="noopener">Privacy</a></li>
         <li><a href="${up}upcoming/">Upcoming releases</a></li>
+        <li><a href="${up}bike-porn/">Bike Porn</a></li>
         <li><a href="${up}app/?install=1">Get the app</a></li>
       </ul></div>
       <div><h4>Contact</h4><ul>
@@ -351,6 +352,7 @@ if (BASE) {
     ...colourPages.map(c => [`colour/${c.slug}/`, '0.6']),
     ...products.map(p => [productPath(p), p.available ? '0.9' : '0.4']),
     ['upcoming/', '0.5'],
+    ['bike-porn/', '0.5'],
     ['app/', '0.3'],
   ];
   write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
@@ -386,6 +388,7 @@ ${colourPages.map(c => `- [${c.name}](${abs(`colour/${c.slug}/`) || `colour/${c.
 - [Shipping policy](${site.policies.shipping})
 - [Returns policy](${site.policies.returns})
 - [Upcoming releases](${abs('upcoming/') || 'upcoming/'}): sign up to hear about new drops first
+- [Bike Porn](${abs('bike-porn/') || 'bike-porn/'}): 3D studio with six custom WYLD liveries, each on its own themed movie set, on a Speedmax CFR AXS design study
 - [Custom team kit](${site.contact.customKit})
 - [Contact](${site.contact.form})
 
