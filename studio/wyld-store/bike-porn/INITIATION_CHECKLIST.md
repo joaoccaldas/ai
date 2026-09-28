@@ -11,7 +11,7 @@ Target: a replayable ~30-second horror-comedy initiation in front of the existin
 - [x] Boo: compliance ghost / jump-scare
 - [x] Medieval archive door + ceremonial stage language
 - [x] Skip ceremony control, without skipping the trials
-- [x] Session unlock so normal revisits do not replay automatically
+- [x] Initiation intentionally replays on every visit during live testing
 - [x] `?init` replay hook
 - [x] `?trials` puzzle-only debug hook
 - [x] Reduced-motion handling
@@ -48,7 +48,7 @@ Target: a replayable ~30-second horror-comedy initiation in front of the existin
 
 ## Release verification
 - [x] Branch diff reviewed against current main
-- [ ] Pull request opened
+- [x] Pull request opened
 - [ ] Pull request merged
 - [ ] GitHub Pages serves the new files
 - [ ] Browser smoke test: landing
