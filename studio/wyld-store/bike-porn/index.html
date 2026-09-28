@@ -134,6 +134,9 @@ h1 .star{display:inline-block;color:var(--butter);font-size:.55em;vertical-align
 body.cine .top>*:not(.brand),body.cine .intro,body.cine .panel,body.cine .views,body.cine .legal,body.cine .note{opacity:0;pointer-events:none;transition:opacity .5s}
 body.cine .brand{opacity:.0}
 
+.setload{position:fixed;z-index:6;left:50%;top:calc(18px + env(safe-area-inset-top));transform:translateX(-50%);padding:8px 14px 10px;border-radius:999px;background:var(--glass);border:1px solid var(--line);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--dim);min-width:190px;text-align:center}
+.setload i{display:block;height:2px;margin-top:7px;width:0;background:var(--accent);border-radius:2px;transition:width .2s}
+@media (max-width:899px){.setload{top:calc(58px + env(safe-area-inset-top))}}
 /* loader */
 .loader{position:fixed;inset:0;z-index:10;display:grid;place-items:center;background:inherit;transition:opacity .6s,visibility .6s}
 :root[data-theme="dark"] .loader{background:#111820}
@@ -241,6 +244,8 @@ body.cine .brand{opacity:.0}
   </div>
   <button type="button" class="skip" id="cineSkip" aria-label="Close trailer">✕</button>
 </div>
+
+<div class="setload" id="setload" hidden><span>Building the set…</span><i></i></div>
 
 <div class="slate" id="slate" aria-hidden="true"><i></i><i></i><div><b></b><small></small></div></div>
 

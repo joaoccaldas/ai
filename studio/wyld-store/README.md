@@ -39,6 +39,20 @@ A minimal, editorial retail storefront and mobile app for [ridewyld.com](https:/
   - `wheels.js`: the disc and neon rings
   - `liveries.js`: the films
 
+  **The two horror films are built in Blender.** The Lake House and Sanctuary sets are modelled by `blender/build_horror_sets.py` (bpy 4.2):
+  - a log cabin, a dock, dead trees and a pine shoreline for The Lake House
+  - a gothic nave with an arcade, pews, an altar and stained-glass window openings for Sanctuary
+
+  They use CC0 textures, props and HDRIs from [Poly Haven](https://polyhaven.com), which the script downloads. Its output is `bike-porn/sets/*.glb` plus a `*.fx.json` file of effect hooks. Optimise the exports with:
+
+  `npx @gltf-transform/cli optimize raw.glb out.glb --compress meshopt --texture-compress webp --texture-size 1024`
+
+  Normal maps and small props are then resized to 512 px. `src/horror.js` adds the live layer on top:
+  - reflective water, rain and forked lightning
+  - the Final Girl's torch sweeping the bike, and a moonlight shaft through the stained glass with real shadows
+  - flickering candles and lanterns, a rocking chair and dust
+  - depth of field on the bike and a horror film grade
+
   The persona art is in `bike-porn/personas.svg`. Rebuild with `cd bike-porn/src && npm ci && npm run build`, which writes `bike-porn/app.js`. It's an unofficial design study, not affiliated with Canyon.
 - **Free-shipping progress:** the bag shows how far the customer is from the store's free-shipping threshold.
 - **App entry points:** a dismissible "Get the app" banner on phones, plus links in the menu and footer.
