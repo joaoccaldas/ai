@@ -1,0 +1,16 @@
+{
+  "pipeline": "Blender",
+  "version": 1,
+  "assets": {
+    "jersey-women.glb": 291348,
+    "jersey-men.glb": 291816,
+    "singlet.glb": 184796,
+    "bib-tiffany.glb": 187036,
+    "bib-black.glb": 187052,
+    "cap.glb": 68328,
+    "athlete-stand.glb": 490956,
+    "athlete-aero.glb": 744924,
+    "athlete-run.glb": 512964,
+    "wyld-garment-studio.blend": 1187612
+  }
+}
