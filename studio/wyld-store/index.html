@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0712">
+<meta name="description" content="WYLD Studio Store — immersive 3D triathlon apparel in motion.">
+<title>WYLD Studio Store</title>
+<link rel="stylesheet" href="./src/styles.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"}}</script>
+</head>
+<body>
+<header class="topbar">
+  <a class="mark" href="#">WYLD<span>STUDIO</span></a>
+  <nav id="nav"><a href="#collection">Shop</a><a href="#motion">Motion</a><a href="#world">World</a><button id="open-tryon" class="nav-try">Try it on</button></nav>
+  <div class="top-actions"><button id="menu-toggle" class="menu">Menu</button><button class="bag">Bag <span id="bag-count">0</span></button></div>
+</header>
+<main>
+<section class="hero" id="shop">
+  <div class="hero-copy">
+    <span class="eyebrow" id="product-kicker">Triathlon / Women</span>
+    <h1 id="product-name">WYLD Aero Trisuit / Women</h1>
+    <p id="product-copy"></p><div class="price" id="product-price"></div><p class="source-note" id="source-note"></p>
+    <div class="hero-cta"><button id="add-bag" class="primary">Add to bag</button><button id="open-tryon-2" class="secondary">Try it on</button></div>
+  </div>
+  <div class="viewer">
+    <canvas id="viewer-canvas"></canvas>
+    <div class="viewer-top"><span>Interactive product studio</span><b><i></i><span id="asset-state">loading 3D</span></b></div>
+    <div class="viewer-bottom"><span>drag to rotate</span><span>pinch / wheel to zoom</span></div>
+  </div>
+  <aside class="config" id="config-panel">
+    <section><span class="label">Camera rail</span><div class="shot-grid"><button class="shot is-active" data-shot="hero">Hero</button><button class="shot" data-shot="fabric">Fabric</button><button class="shot" data-shot="aero">Side</button><button class="shot" data-shot="silhouette">Silhouette</button></div><button id="cinema" class="cinema">Play studio film</button></section>
+    <section><span class="label">Colorway</span><div id="colorways" class="swatches"></div></section>
+    <section id="motion"><span class="label">Motion studio</span><div class="pose-grid"><button class="pose is-active" data-pose="stand">Stand</button><button class="pose" data-pose="aero">Aero</button><button class="pose" data-pose="run">Run</button></div></section>
+    <section><span class="label">Size</span><div id="sizes" class="sizes"></div></section>
+  </aside>
+  <button id="mobile-config" class="mobile-config">Configure <span>+</span></button>
+</section>
+<section class="signal-band"><div>RACE FAST / LOOK WYLD / MOVE FREE / RACE FAST / LOOK WYLD / MOVE FREE / RACE FAST / LOOK WYLD / MOVE FREE /</div></section>
+<section id="collection" class="collection"><div class="section-head"><span class="eyebrow">Shop the studio</span><h2>Race. Recover. Repeat.</h2><p>Every card opens directly in the 3D studio. Product, color, pose and purchase state stay in one experience.</p></div><div id="product-grid" class="product-grid"></div></section>
+<section id="world" class="world"><div class="world-copy"><span class="eyebrow">WYLD visual world</span><h2>Berry. Blueberry. Tiffany. Olive. Black.</h2><p>The palette comes from indexed WYLD collection families plus a private reference motion study. Personal source photos stay private; the public layer carries derived color and movement signals.</p></div><div class="world-art art-one"></div><div class="world-art art-two"></div><div class="world-art art-three"></div></section>
+<section class="live-reference"><div class="section-head"><span class="eyebrow">Current WYLD references</span><h2>Grounded in the real collection.</h2><p>Public collection references keep the studio connected to RideWYLD while the 3D racewear line evolves.</p></div><div id="reference-rail" class="reference-rail"></div></section>
+<section class="manifesto"><span class="eyebrow">Designed in motion</span><h2>Apparel should be judged where it lives: on the body, under effort.</h2><div><p>Stand for proportion. Aero for shoulder and torso behavior. Run for hem, gripper and graphic rhythm.</p><p>The V1 semantic geometry is intentionally replaceable by Blender-authored production garments without changing the shopping experience.</p></div></section>
+</main>
+<div class="tryon-sheet" id="tryon-sheet"><button id="close-tryon" class="close">×</button><div><span class="eyebrow">WYLD Fit Studio</span><h2>Stage your photo.</h2><p id="tryon-copy">This V1 keeps the photo local to your browser. It does not pretend to perform AI garment transfer before a real inference adapter is connected.</p><label class="upload">Choose photo<input id="tryon-file" type="file" accept="image/*"></label></div><img id="tryon-preview" hidden alt="Local try-on preview"></div>
+<footer><span>WYLD Studio / Caldas Studio prototype</span><a href="https://ridewyld.com/" target="_blank" rel="noreferrer">ridewyld.com ↗</a></footer>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
