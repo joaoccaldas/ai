@@ -1,0 +1,39 @@
+name: Build WYLD Blender assets
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'studio/wyld-store/blender/build_assets.py'
+      - '.github/workflows/ridewyld-blender-assets.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  blender:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Blender
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender
+          blender --version
+      - name: Build WYLD Blender GLBs
+        run: blender -b --python studio/wyld-store/blender/build_assets.py
+      - name: Validate Blender outputs
+        run: |
+          test -s studio/wyld-store/assets/blender/jersey-women.glb
+          test -s studio/wyld-store/assets/blender/jersey-men.glb
+          test -s studio/wyld-store/assets/blender/bib-tiffany.glb
+          test -s studio/wyld-store/assets/blender/cap.glb
+          test -s studio/wyld-store/assets/blender/athlete-aero.glb
+          test -s studio/wyld-store/assets/blender/wyld-garment-studio.blend
+      - name: Commit Blender assets
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -f studio/wyld-store/assets/blender
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'build(wyld): refresh Blender-authored 3d assets [skip ci]'
+          git push
