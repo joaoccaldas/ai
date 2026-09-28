@@ -17,17 +17,35 @@ A minimal, editorial retail storefront for [ridewyld.com](https://ridewyld.com/)
 
 The typography matches ridewyld.com: Inknut Antiqua for headings and Instrument Sans for body text. The logo, product photos and campaign images load from the store's CDN.
 
-## Mobile app (`app/`)
+## Mobile app
 
-An installable Progressive Web App with its own mobile layout, published next to the website at `app/`. Visitors install it straight from the browser, with no app store:
+The same app ships in two forms:
 
-- **Android / Chrome / Edge:** the in-app sheet shows an **Install app** button that triggers the browser's install prompt.
-- **iPhone / iPad (Safari):** the sheet explains **Share → Add to Home Screen**.
-- `app/?install=1` opens the install sheet directly (the website banner links here).
+1. **Android app (`.apk`)**: a native app built with Capacitor from `native/`. The app's files are bundled inside it, so it runs from the phone rather than a browser tab. It has the WYLD "W" launcher icon and a splash screen, and it requests only internet access. It runs on Android 7 and newer. The `WYLD Android App` workflow builds it, installs it on an emulator as a smoke test, and publishes it to `downloads/WYLD.apk` on the site.
+2. **Web app (`app/`)**: an installable Progressive Web App for iPhone (Safari → Share → Add to Home Screen) and any other browser. Installing from the website also opens the app, because the site links the app manifest and redirects home-screen launches to `app/`.
 
-What's in it: a tab bar (Home, Shop, Search, Saved, Bag), a campaign carousel, sport tiles and product rails, filters and sorting, a product page with gallery, fit and size, share and a sticky add-to-bag bar, saved items, recent searches and a bag. Checkout opens ridewyld.com with the bag pre-filled. The bag is shared with the website, since both use the same browser storage.
+The website's "Get the app" banner opens `app/?install=1`. That sheet offers the APK download on Android and the Add to Home Screen steps on iPhone.
 
-Offline: a service worker (`app/sw.js`) keeps the app shell and catalog, plus the most recent 120 product images, so the app opens and browses without a connection.
+The layout fills any screen: phones, foldables and tablets. On phones whose browser reports a desktop-width page (such as "Desktop view"), the app scales itself back to the phone's real width.
+
+The app has a tab bar (Home, Shop, Search, Saved, Bag), a campaign carousel, sport tiles and product rails, filters and sorting, and a product page with gallery, fit and size, share and a sticky add-to-bag bar. It also has saved items, recent searches and a bag. Checkout opens ridewyld.com with the bag pre-filled.
+
+Offline: the service worker (`sw.js`, which covers both the site and the app) serves our own files network-first with a cached fallback, and keeps the most recent 120 product images.
+
+### Building the Android app locally
+
+Requires Node 22, JDK 21 and the Android SDK (platform 36).
+
+```bash
+cd native
+npm ci
+npm run icons   # regenerate launcher icons and splash from native/assets
+npm run apk     # android/app/build/outputs/apk/release/app-release.apk
+```
+
+**Signing:** set `WYLD_KEYSTORE_FILE`, `WYLD_KEYSTORE_PASSWORD`, `WYLD_KEY_ALIAS` and `WYLD_KEY_PASSWORD` to sign with a release key. In CI, add them as the repository secrets `WYLD_KEYSTORE_BASE64` (the keystore, base64-encoded), `WYLD_KEYSTORE_PASSWORD`, `WYLD_KEY_ALIAS` and `WYLD_KEY_PASSWORD`. Without them the build uses a debug key, which installs fine, but each CI build gets a different key. A new build then only installs after removing the old one, so a release key is recommended. Keystores are git-ignored and must never be committed.
+
+**iPhone:** to publish a native iOS app, run `npx cap add ios` on a Mac and build it in Xcode. Distribution then needs an Apple Developer account and the App Store or TestFlight.
 
 ### Safety and privacy
 
@@ -36,8 +54,9 @@ Offline: a service worker (`app/sw.js`) keeps the app shell and catalog, plus th
 - The only things stored on the device, in `localStorage`, are bag variant ids with quantities, saved product handles and up to six recent search terms. Everything read back from storage is validated against the catalog.
 - All catalog text is HTML-escaped before rendering, and external links use `rel="noopener noreferrer"`.
 - The service worker only caches `GET` requests from its own scope, the store's image CDN and Google Fonts, and it deletes old caches on update.
+- Android app: only the `INTERNET` permission, no cleartext traffic, no app-data backup, and WebView debugging disabled. External links open in the phone's browser.
 
-To ship an update, bump `VERSION` in `app/sw.js` so installed apps refresh their cache.
+To ship an update, bump `VERSION` in `sw.js` so installed web apps refresh their cache.
 
 ## Files
 
@@ -46,7 +65,10 @@ To ship an update, bump `VERSION` in `app/sw.js` so installed apps refresh their
 - `src/store.js`: grid, filters, product view, bag, search, hero and 3D studio
 - `src/catalog.js`: generated catalog (prices, variant ids, stock, images)
 - `tools/sync_catalog.py`: rebuilds the catalog from the public feed
-- `app/`: the mobile app (`index.html`, `app.css`, `app.js`, `sw.js`, `manifest.webmanifest`, `icons/`); it reuses `src/catalog.js`
+- `app/`: the mobile app (`index.html`, `app.css`, `app.js`, `manifest.webmanifest`, `icons/`); it reuses `src/catalog.js`
+- `sw.js`: service worker for the site and the app
+- `native/`: the Capacitor Android project, with icons and splash sources in `native/assets/`
+- `downloads/WYLD.apk`: the latest Android build, published by CI
 
 ## Refresh the catalog
 

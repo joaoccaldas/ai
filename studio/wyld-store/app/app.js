@@ -1,5 +1,17 @@
 import { catalog } from '../src/catalog.js';
 
+/* Some phone browsers (e.g. "Desktop view") report a ~980px viewport on a
+   ~400px screen. Scale the app back to the real phone width so it fills the
+   screen at a readable size. */
+(function fitPhone() {
+  const touch = matchMedia('(pointer: coarse)').matches;
+  const ratio = window.innerWidth / Math.min(screen.width, screen.height);
+  if (touch && Math.min(screen.width, screen.height) < 600 && ratio > 1.3) {
+    document.documentElement.style.zoom = String(ratio);
+    document.documentElement.classList.add('phone-fit');
+  }
+})();
+
 /* ---------- helpers ---------- */
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -324,7 +336,7 @@ function productHTML(p) {
   return `
     <div class="pbar"><button class="icon" data-back aria-label="Back"><svg><use href="#i-back"/></svg></button>
       <div class="right"><button class="icon" data-share aria-label="Share"><svg><use href="#i-share"/></svg></button>${saveBtn(p, 'icon')}</div></div>
-    <div class="gallery">
+    <div class="pmain"><div class="gallery">
       <div class="gtrack" id="gTrack">${p.images.map((src, i) => `<figure><img src="${img(src, 1080)}" srcset="${srcset(src, [540, 800, 1080, 1440])}" sizes="(min-width:480px) 480px, 100vw" alt="${esc(p.title)}, image ${i + 1} of ${p.images.length}" ${i ? 'loading="lazy"' : ''} decoding="async"></figure>`).join('')}</div>
       ${p.images.length > 1 ? `<span class="gcount" id="gCount">1 / ${p.images.length}</span>` : ''}
     </div>
@@ -340,7 +352,7 @@ function productHTML(p) {
       <details open><summary>Details</summary><div class="body">${copy.map(t => `<p>${esc(t)}</p>`).join('')}</div></details>
       ${FIT[p.kind] && p.copy.length ? `<details><summary>Fit</summary><div class="body"><p>${FIT[p.kind]}</p></div></details>` : ''}
       <details><summary>Delivery &amp; returns</summary><div class="body"><p>Orders are fulfilled by WYLD via ridewyld.com. See the <a href="${SHOP}/policies/shipping-policy" ${EXT}>shipping</a> and <a href="${SHOP}/policies/refund-policy" ${EXT}>returns</a> policies.</p></div></details>
-    </div>
+    </div></div>
     ${related.length ? `<div class="related">${rail('You may also like', related)}</div>` : ''}
     <div class="buybar"><button class="btn" id="addBtn"></button></div>`;
 }
@@ -529,31 +541,36 @@ function closeSheet() {
 scrim.addEventListener('click', () => { closeSheet(); store.set(INSTALL_KEY, true); });
 
 let installEvent = null;
-function isStandalone() { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; }
+function isStandalone() { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true || !!window.Capacitor?.isNativePlatform?.(); }
 const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvent = e; });
 window.addEventListener('appinstalled', () => { installEvent = null; closeSheet(); toast('WYLD app installed'); if (renderedTab.startsWith('#/home')) renderTab(renderedTab, true); });
 
+const APK_URL = '../downloads/WYLD.apk';
+const isAndroid = /android/i.test(navigator.userAgent);
+
 function showInstall() {
   const head = `<div class="app-id"><img src="./icons/icon-192.png" alt=""><div><strong>WYLD</strong><span>Cycling, triathlon &amp; run apparel</span></div></div>`;
   if (isStandalone()) { toast('You’re already using the app'); return; }
-  if (installEvent) {
-    openSheet(`${head}<h2>Get the WYLD app</h2><p>Install WYLD on your home screen for full-screen shopping, saved favourites and your bag — even offline. No app store needed, and it takes no extra permissions.</p>
-      <div class="actions"><button class="btn" id="doInstall">Install app</button><button class="btn ghost" data-close-sheet>Not now</button></div>`);
-    $('#doInstall').addEventListener('click', async () => {
-      const ev = installEvent; installEvent = null;
-      ev.prompt();
-      const { outcome } = await ev.userChoice.catch(() => ({ outcome: 'dismissed' }));
-      closeSheet(); if (outcome !== 'accepted') store.set(INSTALL_KEY, true);
-    });
+  if (isAndroid) {
+    openSheet(`${head}<h2>Get the WYLD app</h2><p>Download the Android app (3.5 MB). When it finishes, open the file and tap <b>Install</b>. If asked, allow your browser to install apps.</p>
+      <div class="actions"><a class="btn" href="${APK_URL}" rel="noopener noreferrer" download><svg><use href="#i-arrow"/></svg>Download for Android</a>
+      ${installEvent ? '<button class="btn ghost" id="doInstall">Or add to home screen</button>' : ''}
+      <button class="btn ghost" data-close-sheet>Not now</button></div>`);
   } else if (isIOS) {
-    openSheet(`${head}<h2>Add WYLD to your Home Screen</h2><p>Install in two taps — no app store needed.</p>
+    openSheet(`${head}<h2>Add WYLD to your Home Screen</h2><p>On iPhone the WYLD app installs from Safari in two taps. It opens full-screen with its own icon, like any other app.</p>
       <ol class="steps"><li><span>Tap <svg><use href="#i-ios-share"/></svg> <b>Share</b> in Safari’s toolbar</span></li><li><span>Choose <b>Add to Home Screen</b>, then <b>Add</b></span></li></ol>
       <div class="actions"><button class="btn ghost" data-close-sheet>Got it</button></div>`);
   } else {
-    openSheet(`${head}<h2>Install the WYLD app</h2><p>Open your browser menu and choose <b>Install app</b> or <b>Add to Home screen</b>. On a phone this puts WYLD next to your other apps.</p>
-      <div class="actions"><button class="btn ghost" data-close-sheet>Got it</button></div>`);
+    openSheet(`${head}<h2>Get the WYLD app</h2><p>Open this page on your phone to install WYLD. On a computer, use your browser’s <b>Install app</b> option.</p>
+      <div class="actions">${installEvent ? '<button class="btn" id="doInstall">Install app</button>' : ''}<a class="btn ghost" href="${APK_URL}" rel="noopener noreferrer" download>Download Android app (.apk)</a><button class="btn ghost" data-close-sheet>Not now</button></div>`);
   }
+  $('#doInstall')?.addEventListener('click', async () => {
+    const ev = installEvent; installEvent = null;
+    ev.prompt();
+    const { outcome } = await ev.userChoice.catch(() => ({ outcome: 'dismissed' }));
+    closeSheet(); if (outcome !== 'accepted') store.set(INSTALL_KEY, true);
+  });
 }
 
 /* ---------- offline, service worker, boot ---------- */
@@ -562,8 +579,14 @@ window.addEventListener('online', onlineState);
 window.addEventListener('offline', onlineState);
 onlineState();
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => { /* app still works online */ }));
+if ('serviceWorker' in navigator && !window.Capacitor?.isNativePlatform?.()) {
+  window.addEventListener('load', async () => {
+    try {
+      // Retire the first release's narrower worker, if this device still has it.
+      for (const r of await navigator.serviceWorker.getRegistrations()) if (r.scope.endsWith('/app/')) await r.update().catch(() => r.unregister());
+      await navigator.serviceWorker.register('../sw.js', { scope: '../' });
+    } catch { /* the app still works online */ }
+  });
 }
 
 updateBadge();
