@@ -11,7 +11,7 @@ function renderCollection(){
   const grid=$("#product-grid");
   grid.innerHTML=PRODUCTS.map((p,i)=>`
     <button class="product-card ${p.id===state.product.id?"is-active":""}" data-product="${p.id}">
-      <div class="product-art" style="--pattern:url('${p.pattern}')">
+      <div class="product-art" style="--pattern:${p.pattern}">
         <span>${String(i+1).padStart(2,"0")}</span><b>WYLD</b><div class="mini-orbit"><i></i><i></i></div>
       </div>
       <div class="product-copy"><div><small>${p.category} / ${p.gender}</small><h3>${p.name}</h3></div><strong>${money(p.price,p.currency)}</strong></div>
@@ -60,14 +60,12 @@ $$('[data-pose]').forEach(b=>b.addEventListener('click',()=>{
   viewer.setPose(state.pose);
 }));
 $("#cinema").addEventListener('click',()=>viewer.playCinema());
-
 $("#add-bag").addEventListener('click',()=>{
   state.bag.push({product:state.product.id,color:state.color,size:state.size});
   $("#bag-count").textContent=state.bag.length;
   $("#add-bag").textContent="Added";
   setTimeout(()=>$("#add-bag").textContent="Add to bag",900);
 });
-
 $("#tryon-file").addEventListener('change',(e)=>{
   const f=e.target.files?.[0]; if(!f)return;
   const url=URL.createObjectURL(f);
