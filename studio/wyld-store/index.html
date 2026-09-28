@@ -3,179 +3,286 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0a0810">
-<meta name="description" content="WYLD — immersive cycling and endurance apparel store.">
-<title>WYLD — Ride in Colour</title>
+<meta name="theme-color" content="#f7f5f0">
+<meta name="description" content="WYLD — cycling, triathlon and run apparel.">
+<title>WYLD — Shop by sport</title>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 <style>
 :root{
-  --ink:#0a0810;--paper:#f3eee7;--white:#fffdf8;--pink:#d62b82;--pink2:#ff74b8;
-  --cyan:#31d9d8;--acid:#dfff3f;--purple:#6941d8;--olive:#7d882d;--line:rgba(255,255,255,.14);
+  --bg:#f7f5f0;--paper:#fff;--ink:#111113;--muted:#77736f;--line:#dedbd4;
+  --pink:#d42b7f;--cyan:#55d8d3;--grape:#6f4cd9;--olive:#7f8b2f;--soft:#eeeae3;
 }
-*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--ink)}
-body{margin:0;background:var(--ink);color:var(--white);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
 a,button{font:inherit;color:inherit}button{cursor:pointer}
-header{position:fixed;top:0;left:0;right:0;z-index:80;height:68px;padding:0 16px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,rgba(10,8,16,.94),rgba(10,8,16,.66));backdrop-filter:blur(14px);border-bottom:1px solid #ffffff12}
-.logo{font-size:24px;font-weight:950;font-style:italic;letter-spacing:-.08em;text-decoration:none}.logo b{font-size:8px;color:var(--acid);letter-spacing:.18em;margin-left:7px}
-nav{display:none;gap:24px;align-items:center}nav a{text-decoration:none;text-transform:uppercase;font-size:10px;font-weight:800;letter-spacing:.12em;color:#eee7f0}
-.head-actions{display:flex;gap:8px}.ghostbtn,.bagbtn{border:1px solid #ffffff36;background:#ffffff08;border-radius:999px;padding:10px 13px;text-transform:uppercase;font-size:9px;font-weight:800;letter-spacing:.11em}.bagbtn span{margin-left:5px;background:var(--acid);color:#111;border-radius:50%;padding:2px 6px}
+img{display:block;width:100%}
+.wrap{max-width:1320px;margin:0 auto;padding:0 18px}
+header{height:68px;border-bottom:1px solid var(--line);background:rgba(247,245,240,.96);backdrop-filter:blur(12px);position:sticky;top:0;z-index:50}
+.header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-size:25px;font-weight:950;font-style:italic;letter-spacing:-.075em;text-decoration:none}
+.logo small{font:700 8px monospace;letter-spacing:.15em;margin-left:7px;color:var(--pink)}
+nav{display:none;gap:24px}nav a{text-decoration:none;font:700 10px monospace;text-transform:uppercase;letter-spacing:.12em}
+.header-cta{font:700 9px monospace;text-transform:uppercase;letter-spacing:.11em;text-decoration:none;border:1px solid var(--ink);padding:10px 13px;border-radius:999px}
 
-.hero{position:relative;min-height:100svh;padding:88px 16px 32px;display:flex;align-items:flex-end;overflow:hidden}
-.hero-photo{position:absolute;inset:0;background:
-linear-gradient(180deg,rgba(10,8,16,.08) 0%,rgba(10,8,16,.1) 38%,rgba(10,8,16,.88) 90%),
-linear-gradient(90deg,rgba(10,8,16,.76) 0%,rgba(10,8,16,.12) 58%,rgba(10,8,16,.12) 100%),
-url('https://ridewyld.com/cdn/shop/products/F42ECCBF-8818-4B43-BD01-8FFAF344F02B.jpg?v=1616926600&width=1800') center/cover no-repeat}
-.hero-photo:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 28%,rgba(49,217,216,.20),transparent 22%),radial-gradient(circle at 60% 62%,rgba(214,43,130,.20),transparent 30%)}
-.hero-content{position:relative;z-index:2;width:min(100%,720px);padding-bottom:6vh}
-.eyebrow{font:800 10px/1 monospace;text-transform:uppercase;letter-spacing:.19em;color:var(--acid)}
-.hero h1{font-size:clamp(64px,22vw,170px);line-height:.72;letter-spacing:-.095em;font-weight:950;font-style:italic;margin:16px 0 24px;text-transform:uppercase}
-.hero h1 span{display:block}.hero h1 span:last-child{color:transparent;-webkit-text-stroke:1.5px #fff}
-.hero p{max-width:36ch;font-size:14px;line-height:1.6;color:#eee7f0}
-.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
-.btn{border:1px solid #fff;padding:14px 16px;min-height:48px;text-decoration:none;text-transform:uppercase;font:900 10px monospace;letter-spacing:.11em;display:inline-flex;align-items:center;justify-content:center}
-.btn.primary{background:var(--acid);border-color:var(--acid);color:#111}.btn.dark{background:#0a0810cc}
-.hero-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}.hero-chips span{border:1px solid #ffffff33;padding:7px 9px;border-radius:999px;font:800 8px monospace;text-transform:uppercase;letter-spacing:.1em;background:#0a081055}
+.hero{padding:18px 0 26px}
+.hero-card{display:grid;background:var(--paper);border:1px solid var(--line);overflow:hidden}
+.hero-copy{padding:34px 24px;display:flex;flex-direction:column;justify-content:center;min-height:390px}
+.kicker{font:700 9px monospace;text-transform:uppercase;letter-spacing:.15em;color:var(--pink)}
+.hero h1{font-size:clamp(50px,13vw,110px);line-height:.82;letter-spacing:-.075em;margin:16px 0 20px;max-width:7ch}
+.hero p{font-size:14px;line-height:1.65;color:var(--muted);max-width:36ch;margin:0}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 16px;border:1px solid var(--ink);text-decoration:none;font:800 9px monospace;text-transform:uppercase;letter-spacing:.1em;background:transparent}
+.btn.primary{background:var(--ink);color:#fff}
+.hero-media{min-height:460px;background:url('https://ridewyld.com/cdn/shop/products/F42ECCBF-8818-4B43-BD01-8FFAF344F02B.jpg?v=1616926600&width=1800') center/cover no-repeat}
 
-.marquee{overflow:hidden;background:var(--acid);color:#111;border-block:2px solid #111;transform:rotate(-.8deg) scale(1.01)}
-.marquee div{white-space:nowrap;width:max-content;padding:10px 0;font-size:22px;font-weight:950;font-style:italic;animation:scroll 26s linear infinite}@keyframes scroll{to{transform:translateX(-50%)}}
+.category-nav{padding:18px 0 10px;position:sticky;top:68px;z-index:40;background:rgba(247,245,240,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.category-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}.category-tabs::-webkit-scrollbar{display:none}
+.category-tabs button{white-space:nowrap;border:1px solid var(--line);background:transparent;padding:10px 13px;border-radius:999px;font:700 9px monospace;text-transform:uppercase;letter-spacing:.1em}
+.category-tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-.section{padding:78px 16px}.section.dark{background:#0a0810}.section.paper{background:var(--paper);color:#111}
-.section-head{display:grid;gap:12px;margin-bottom:28px}.section-head h2{font-size:clamp(44px,12vw,92px);line-height:.86;letter-spacing:-.065em;margin:0;max-width:12ch}.section-head p{margin:0;line-height:1.7;color:#bbb1c0;max-width:48ch}.paper .section-head p{color:#655f5b}
+.section{padding:48px 0}
+.section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:22px}
+.section-head h2{font-size:clamp(32px,8vw,64px);line-height:.9;letter-spacing:-.055em;margin:0}
+.section-head p{max-width:36ch;color:var(--muted);line-height:1.55;font-size:12px;margin:0;display:none}
 
-.products{display:grid;gap:14px}.product-card{background:#15121a;border:1px solid #ffffff13;overflow:hidden;position:relative}
-.product-media{height:430px;position:relative;background:#1a1620;overflow:hidden}
-.product-media img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}.product-card:hover img{transform:scale(1.02)}
-.product-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 48%,rgba(7,7,10,.76))}
-.product-badge{position:absolute;top:14px;left:14px;z-index:2;background:#0a0810c8;border:1px solid #ffffff2b;padding:7px 9px;font:800 8px monospace;text-transform:uppercase;letter-spacing:.11em}
-.product-copy{padding:16px}.product-copy small{font:800 9px monospace;text-transform:uppercase;letter-spacing:.12em;color:#aba1b0}.product-copy h3{font-size:25px;margin:7px 0 6px;letter-spacing:-.035em}.product-copy p{color:#bdb3c3;line-height:1.55;font-size:13px;margin:0 0 12px}.price{font-weight:900;font-size:18px}.product-actions{display:flex;gap:8px;margin-top:14px}.product-actions button,.product-actions a{flex:1;border:1px solid #ffffff2b;background:#fff;color:#111;padding:12px;text-decoration:none;text-transform:uppercase;font:900 9px monospace;letter-spacing:.1em;text-align:center}.product-actions .secondary{background:transparent;color:#fff}
+.category-grid{display:grid;gap:12px}
+.category-card{position:relative;min-height:360px;overflow:hidden;background:#ddd;text-decoration:none}
+.category-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.category-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.66))}
+.category-card-copy{position:absolute;z-index:2;left:16px;right:16px;bottom:16px;color:#fff;display:flex;justify-content:space-between;gap:16px;align-items:end}
+.category-card h3{font-size:30px;line-height:.95;margin:5px 0 0}
+.category-card small{font:700 8px monospace;text-transform:uppercase;letter-spacing:.12em}
+.category-card span{font:700 9px monospace;text-transform:uppercase;letter-spacing:.11em}
 
-.lookbook{display:grid;gap:10px}.lookbook figure{margin:0;position:relative;overflow:hidden;min-height:360px}.lookbook img{width:100%;height:100%;object-fit:cover;display:block}
-.lookbook figure:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.72))}
-.lookbook figcaption{position:absolute;z-index:2;left:16px;right:16px;bottom:16px;display:flex;justify-content:space-between;align-items:end;gap:12px}.lookbook h3{font-size:28px;margin:4px 0}.lookbook p{font-size:12px;color:#ddd3df;margin:0;max-width:28ch;line-height:1.5}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 10px}
+.product-card{display:none}.product-card.visible{display:block}
+.product-image{aspect-ratio:4/5;background:var(--soft);overflow:hidden;position:relative}
+.product-image img{width:100%;height:100%;object-fit:cover}
+.product-meta{padding-top:10px}
+.product-meta small{font:700 8px monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.product-meta h3{font-size:15px;margin:5px 0 5px;line-height:1.2}
+.product-row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.product-row strong{font-size:13px}
+.product-row a{font:700 8px monospace;text-transform:uppercase;letter-spacing:.1em;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
+.sale{color:var(--pink)}
 
-.studio-wrap{background:linear-gradient(180deg,#efeae2,#d9d2c8);color:#111;border-radius:28px;overflow:hidden;box-shadow:0 28px 100px rgba(0,0,0,.34)}
-.studio-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#f3eee8;border-bottom:1px solid rgba(0,0,0,.1);font:800 9px monospace;text-transform:uppercase;letter-spacing:.12em}
-.live-dot{display:flex;align-items:center;gap:7px}.live-dot i{width:7px;height:7px;background:#6ccf4d;border-radius:50%}
-model-viewer{width:100%;height:58svh;min-height:470px;background:radial-gradient(circle at 50% 36%,#fff 0,#ece7df 35%,#d9d2c8 100%)}
-.studio-controls{padding:14px;background:#f3eee8;display:grid;gap:12px}
-.control-label{font:800 9px monospace;text-transform:uppercase;letter-spacing:.13em;color:#6a645f}
-.button-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.button-row.four{grid-template-columns:repeat(4,1fr)}
-.button-row button{border:1px solid #1112;background:#fff;padding:11px 8px;font:800 9px monospace;text-transform:uppercase;letter-spacing:.08em}.button-row button.active{background:#111;color:#fff}
-.studio-note{font-size:10px;line-height:1.5;color:#6e6762;margin:0}
+.threed{background:#111113;color:#fff;padding:54px 0}
+.threed-grid{display:grid;gap:22px}
+.threed-copy h2{font-size:clamp(38px,10vw,72px);line-height:.9;letter-spacing:-.06em;margin:10px 0 16px}
+.threed-copy p{color:#b8b4b8;font-size:13px;line-height:1.6;max-width:36ch;margin:0}
+.viewer-shell{background:#ece7df;border-radius:20px;overflow:hidden}
+model-viewer{width:100%;height:54svh;min-height:430px;background:radial-gradient(circle at 50% 35%,#fff 0,#eee9e1 40%,#dad4cb 100%)}
+.viewer-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:10px;background:#f2eee7}
+.viewer-controls button{border:1px solid #d3cfc8;background:#fff;color:#111;padding:11px 6px;font:700 9px monospace;text-transform:uppercase;letter-spacing:.08em}
+.viewer-controls button.active{background:#111;color:#fff}
 
-.founder{background:linear-gradient(135deg,#d62b82,#6a43d5 70%,#31d9d8);padding:80px 16px}.founder blockquote{font-size:clamp(28px,8vw,60px);line-height:1.02;letter-spacing:-.04em;font-weight:800;margin:20px 0 30px;max-width:18ch}.founder p{font:800 10px monospace;text-transform:uppercase;letter-spacing:.14em}
+.custom{padding:62px 0;background:#ece8e1}
+.custom-card{display:grid;gap:18px}
+.custom h2{font-size:clamp(40px,10vw,76px);line-height:.9;letter-spacing:-.06em;margin:8px 0 12px}
+.custom p{color:var(--muted);line-height:1.6;font-size:13px;max-width:42ch}
+.founder-line{padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:42px;display:grid;gap:12px}
+.founder-line blockquote{margin:0;font-size:clamp(22px,5vw,36px);line-height:1.15;max-width:28ch}.founder-line span{font:700 9px monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
 
-.motion-grid{display:grid;gap:12px}.motion-card{background:#14111a;border:1px solid #ffffff13}.motion-card img{width:100%;aspect-ratio:4/5;object-fit:contain;background:radial-gradient(circle at 50% 35%,#7b2e5c55,transparent 34%),#0c0a10;display:block}.motion-copy{padding:14px}.motion-copy h3{font-size:24px;margin:6px 0}.motion-copy p{margin:0;color:#bdb3c3;line-height:1.55;font-size:13px}
+footer{padding:30px 0 46px;color:var(--muted);font-size:11px}
+footer .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer a{text-decoration:none}
 
-footer{padding:28px 16px 50px;text-align:center;color:#9e94a4;border-top:1px solid #ffffff12;font-size:11px}
-
-.drawer{position:fixed;z-index:120;right:0;top:0;bottom:0;width:min(100%,430px);background:#0d0b12;color:#fff;padding:20px;transform:translateX(105%);transition:.4s cubic-bezier(.16,1,.3,1);display:flex;flex-direction:column;box-shadow:-30px 0 80px rgba(0,0,0,.45)}.drawer.open{transform:none}
-.drawer-head{display:flex;justify-content:space-between;gap:12px;align-items:start;border-bottom:1px solid #ffffff1f;padding-bottom:16px}.drawer-head h2{font-size:34px;margin:7px 0 0}.drawer-head button{border:0;background:transparent;font-size:30px}.bag-items{flex:1;overflow:auto}.bag-row{display:flex;justify-content:space-between;gap:12px;padding:16px 0;border-bottom:1px solid #ffffff18}.bag-row h3{margin:3px 0;font-size:16px}.bag-row small{font:800 8px monospace;text-transform:uppercase;letter-spacing:.12em;color:#aaa1af}.bag-row button{border:0;background:transparent;color:#aaa1af;font-size:11px}.drawer-foot{border-top:1px solid #ffffff1f;padding-top:16px;display:grid;gap:10px}.drawer-foot>div{display:flex;justify-content:space-between;font-size:18px}
-
-@media(min-width:800px){
- header{height:76px;padding:0 28px}nav{display:flex}
- .hero{padding:110px 4vw 55px}.hero-content{padding-bottom:3vh}.section{padding:110px 4vw}.products{grid-template-columns:repeat(2,1fr)}.lookbook{grid-template-columns:1.15fr .85fr .85fr;grid-template-rows:1fr 1fr;min-height:900px}.lookbook figure:first-child{grid-row:1/-1}.lookbook figure{min-height:0}.studio-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:start}.motion-grid{grid-template-columns:repeat(3,1fr)}.founder{padding:120px 5vw}.founder blockquote{max-width:20ch}
+@media(min-width:760px){
+  nav{display:flex}
+  .hero-card{grid-template-columns:.9fr 1.1fr}
+  .hero-copy{padding:58px 48px;min-height:640px}.hero-media{min-height:640px}
+  .section{padding:74px 0}.section-head p{display:block}
+  .category-grid{grid-template-columns:repeat(4,1fr)}.category-card{min-height:470px}
+  .products{grid-template-columns:repeat(4,1fr);gap:28px 14px}
+  .product-meta h3{font-size:17px}
+  .threed{padding:82px 0}.threed-grid{grid-template-columns:.8fr 1.2fr;align-items:center}
+  .custom-card{grid-template-columns:1fr auto;align-items:end}.founder-line{grid-template-columns:2fr 1fr;align-items:end}
 }
-@media(min-width:1180px){.products{grid-template-columns:repeat(4,1fr)}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.marquee div{animation:none}}
+@media(min-width:1100px){
+  .wrap{padding:0 28px}.products{grid-template-columns:repeat(4,1fr)}.category-card h3{font-size:38px}
+}
 </style>
 </head>
 <body>
 <header>
-  <a class="logo" href="#top">WYLD<b>STUDIO</b></a>
-  <nav><a href="#shop">Shop</a><a href="#lookbook">Lookbook</a><a href="#studio">3D Studio</a><a href="#motion">Motion</a></nav>
-  <div class="head-actions"><a class="ghostbtn" href="https://ridewyld.com/" target="_blank" rel="noreferrer">Official ↗</a><button class="bagbtn" id="bagOpen">Bag <span id="bagCount">0</span></button></div>
+  <div class="wrap header-inner">
+    <a class="logo" href="#top">WYLD<small>STUDIO</small></a>
+    <nav>
+      <a href="#shop">Shop</a>
+      <a href="#categories">Categories</a>
+      <a href="#studio">3D</a>
+      <a href="#custom">Custom</a>
+    </nav>
+    <a class="header-cta" href="https://ridewyld.com/" target="_blank" rel="noreferrer">Official store ↗</a>
+  </div>
 </header>
 
 <main id="top">
-<section class="hero">
-  <div class="hero-photo"></div>
-  <div class="hero-content">
-    <div class="eyebrow">Dubai / Cycling / Triathlon / Run</div>
-    <h1><span>Ride</span><span>WYLD.</span></h1>
-    <p>Performance apparel with colour, confidence and race-week energy. Shop the real collection, explore the brand world, then inspect selected pieces and motion studies in 3D.</p>
-    <div class="hero-actions"><a class="btn primary" href="#shop">Shop the drop ↓</a><a class="btn dark" href="#studio">Enter 3D studio</a></div>
-    <div class="hero-chips"><span>Race fit</span><span>Size inclusive</span><span>Hot-weather focus</span><span>Mobile first</span></div>
-  </div>
-</section>
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-card">
+        <div class="hero-copy">
+          <span class="kicker">Cycling / Triathlon / Run</span>
+          <h1>Ride WYLD.</h1>
+          <p>Performance kit with colour, comfort and room for more riders. Shop by sport, then go deeper only when you want to.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#shop">Shop collection</a>
+            <a class="btn" href="https://ridewyld.com/pages/about-us" target="_blank" rel="noreferrer">Custom kit ↗</a>
+          </div>
+        </div>
+        <div class="hero-media" aria-label="WYLD cycling lifestyle"></div>
+      </div>
+    </div>
+  </section>
 
-<div class="marquee"><div>RIDE WYLD · RUN WYLD · RACE WYLD · RIDE IN COLOUR · MOVE FREE · RIDE WYLD · RUN WYLD · RACE WYLD · RIDE IN COLOUR · MOVE FREE · </div></div>
+  <section class="wrap section" id="categories">
+    <div class="section-head">
+      <h2>Shop by sport.</h2>
+      <p>Four clear paths, based on the actual WYLD catalog: triathlon, cycling, Run WYLD and accessories. citeturn577961search2turn637113search2</p>
+    </div>
+    <div class="category-grid">
+      <a class="category-card" href="#shop" data-category-link="triathlon">
+        <img src="https://ridewyld.com/cdn/shop/files/blush_wyld_trisuit.jpg?v=1747067150&width=1000" alt="Blush WYLD trisuit">
+        <div class="category-card-copy"><div><small>01</small><h3>Triathlon</h3></div><span>Shop ↓</span></div>
+      </a>
+      <a class="category-card" href="#shop" data-category-link="cycling">
+        <img src="https://ridewyld.com/cdn/shop/products/grapepocket.jpg?v=1659262824&width=1000" alt="Grape WYLD jersey">
+        <div class="category-card-copy"><div><small>02</small><h3>Cycling</h3></div><span>Shop ↓</span></div>
+      </a>
+      <a class="category-card" href="#shop" data-category-link="run">
+        <img src="https://ridewyld.com/cdn/shop/files/runwyld_tshirt_women_product_photo.jpg?v=1737136172&width=1000" alt="Team WYLD T-Shirt">
+        <div class="category-card-copy"><div><small>03</small><h3>Run WYLD</h3></div><span>Shop ↓</span></div>
+      </a>
+      <a class="category-card" href="#shop" data-category-link="accessories">
+        <img src="https://ridewyld.com/cdn/shop/products/cappastel.jpg?v=1610992994&width=1000" alt="WYLD Trucker Cap">
+        <div class="category-card-copy"><div><small>04</small><h3>Accessories</h3></div><span>Shop ↓</span></div>
+      </a>
+    </div>
+  </section>
 
-<section class="section dark" id="shop">
-  <div class="section-head"><div class="eyebrow">Shop WYLD</div><h2>Colour you can race in.</h2><p>The store now leads with real WYLD products and imagery. The 3D studio is there to deepen the experience, not replace the brand.</p></div>
-  <div class="products" id="products"></div>
-</section>
-
-<section class="section dark" id="lookbook">
-  <div class="section-head"><div class="eyebrow">Lookbook</div><h2>Real light. Real colour. Real WYLD.</h2><p>Public RideWYLD photography gives the experience the lifestyle energy the previous technical layout was missing.</p></div>
-  <div class="lookbook">
-    <figure><img src="https://ridewyld.com/cdn/shop/products/F42ECCBF-8818-4B43-BD01-8FFAF344F02B.jpg?v=1616926600&width=1800" alt="WYLD cycling lifestyle"><figcaption><div><div class="eyebrow">01 / Race week</div><h3>Built to move.</h3><p>Hero-level lifestyle imagery now carries the emotional load.</p></div></figcaption></figure>
-    <figure><img src="https://ridewyld.com/cdn/shop/files/tiffany_jersey_and_bib_short_1.jpg?v=1737726088&width=1400" alt="WYLD Tiffany jersey and bib shorts"><figcaption><div><div class="eyebrow">02 / Tiffany</div><h3>The full system.</h3><p>Jersey and bib as one visual identity.</p></div></figcaption></figure>
-    <figure><img src="https://ridewyld.com/cdn/shop/files/tiffany_blue_bibs_close_up.jpg?v=1737451009&width=1200" alt="WYLD bib short close-up"><figcaption><div><div class="eyebrow">03 / Detail</div><h3>Material matters.</h3><p>Construction and texture belong in the foreground.</p></div></figcaption></figure>
-  </div>
-</section>
-
-<section class="section paper" id="studio">
-  <div class="section-head"><div class="eyebrow" style="color:#6a43d5">Interactive studio</div><h2>3D, properly framed.</h2><p>Instead of opening on an oversized torso, 3D now lives in a dedicated studio with useful product and motion controls.</p></div>
-  <div class="studio-wrap">
-    <div class="studio-head"><span>WYLD product studio</span><span class="live-dot"><i></i> interactive</span></div>
-    <model-viewer id="viewer" src="./assets/blender/jersey-women.glb" camera-controls touch-action="pan-y" shadow-intensity="1.1" exposure="1.08" environment-image="neutral" camera-orbit="0deg 74deg 115%" field-of-view="28deg" min-camera-orbit="auto auto 75%" max-camera-orbit="auto auto 180%" alt="Interactive WYLD 3D product"></model-viewer>
-    <div class="studio-controls">
-      <div><div class="control-label">Product</div><div class="button-row" id="productButtons"><button class="active" data-model="./assets/blender/jersey-women.glb">Jersey</button><button data-model="./assets/blender/bib-tiffany.glb">Tiffany bib</button><button data-model="./assets/blender/cap.glb">Cap</button></div></div>
-      <div><div class="control-label">Motion context</div><div class="button-row four" id="poseButtons"><button class="active" data-model="./assets/blender/jersey-women.glb">Product</button><button data-model="./assets/blender/athlete-stand.glb">Stand</button><button data-model="./assets/blender/athlete-aero.glb">Aero</button><button data-model="./assets/blender/athlete-run.glb">Run</button></div></div>
-      <p class="studio-note">3D models are interactive visualizations. Fit and final product availability are confirmed on the official WYLD store.</p>
+  <div class="category-nav" id="shop">
+    <div class="wrap">
+      <div class="category-tabs" id="tabs">
+        <button class="active" data-filter="triathlon">Triathlon</button>
+        <button data-filter="cycling">Cycling</button>
+        <button data-filter="run">Run WYLD</button>
+        <button data-filter="accessories">Accessories</button>
+      </div>
     </div>
   </div>
-</section>
 
-<section class="founder">
-  <div class="eyebrow">Why WYLD exists</div>
-  <blockquote>“I started this brand as I noticed a gap in the market for cycling and triathlon gear, specifically when it comes to size inclusivity and affordability.”</blockquote>
-  <p>Michelle / Founder of WYLD</p>
-</section>
+  <section class="wrap section">
+    <div class="section-head">
+      <h2 id="shopTitle">Triathlon.</h2>
+      <p id="shopIntro">Start with the real catalog, not a wall of concepts.</p>
+    </div>
+    <div class="products" id="productGrid">
+      <article class="product-card visible" data-category="triathlon">
+        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/blush_wyld_trisuit.jpg?v=1747067150&width=1000" alt="Blush Trisuit"></div>
+        <div class="product-meta"><small>Triathlon</small><h3>Blush Trisuit</h3><div class="product-row"><strong>AED 835</strong><a href="https://ridewyld.com/products/blush-trisuit" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
+      </article>
 
-<section class="section dark" id="motion">
-  <div class="section-head"><div class="eyebrow">Motion study</div><h2>Stand. Aero. Run.</h2><p>Motion studies remain part of the experience, but they support the product story instead of becoming the whole storefront.</p></div>
-  <div class="motion-grid">
-    <article class="motion-card"><img src="https://raw.githubusercontent.com/joaoccaldas/ai/main/studio/wyld-store/assets/athlete-stand.glb" style="display:none"><div style="display:grid;place-items:center;min-height:360px;background:radial-gradient(circle at 50% 40%,#d62b8240,transparent 34%),#0c0a10"><button class="btn dark" data-motion="./assets/blender/athlete-stand.glb">Open Stand in 3D</button></div><div class="motion-copy"><div class="eyebrow">01 / Fit truth</div><h3>Stand</h3><p>Proportion, sleeve line, torso balance and product silhouette.</p></div></article>
-    <article class="motion-card"><div style="display:grid;place-items:center;min-height:360px;background:radial-gradient(circle at 50% 40%,#31d9d840,transparent 34%),#0c0a10"><button class="btn dark" data-motion="./assets/blender/athlete-aero.glb">Open Aero in 3D</button></div><div class="motion-copy"><div class="eyebrow">02 / Aero truth</div><h3>Aero</h3><p>Shoulders, sleeves and torso posture under race-position compression.</p></div></article>
-    <article class="motion-card"><div style="display:grid;place-items:center;min-height:360px;background:radial-gradient(circle at 50% 40%,#dfff4640,transparent 34%),#0c0a10"><button class="btn dark" data-motion="./assets/blender/athlete-run.glb">Open Run in 3D</button></div><div class="motion-copy"><div class="eyebrow">03 / Motion truth</div><h3>Run</h3><p>Leg opening, graphic rhythm and movement after the bike.</p></div></article>
-  </div>
-</section>
+      <article class="product-card" data-category="cycling">
+        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/products/grapepocket.jpg?v=1659262824&width=1000" alt="Grape Jersey"></div>
+        <div class="product-meta"><small>Race Fit</small><h3>Grape Jersey</h3><div class="product-row"><strong>AED 395</strong><a href="https://ridewyld.com/products/grape-jersey" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
+      </article>
+      <article class="product-card" data-category="cycling">
+        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/tourqoise_tiffany_bib_shorts_product_photo.jpg?v=1737450485&width=1000" alt="Tiffany Bib Shorts"></div>
+        <div class="product-meta"><small>Bib Shorts</small><h3>Tiffany Bib Shorts</h3><div class="product-row"><strong>AED 585</strong><a href="https://ridewyld.com/products/tiffany-bib-shorts" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
+      </article>
+      <article class="product-card" data-category="cycling">
+        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/whitetiffanyjerseyproductphoto.jpg?v=1737447750&width=1000" alt="Tiffany Jersey"></div>
+        <div class="product-meta"><small>Race Fit</small><h3>Tiffany Jersey</h3><div class="product-row"><strong>AED 395</strong><a href="https://ridewyld.com/collections/jersey-women" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
+      </article>
+
+      <article class="product-card" data-category="run">
+        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/runwyld_tshirt_women_product_photo.jpg?v=1737136172&width=1000" alt="Team WYLD T-Shirt"></div>
+        <div class="product-meta"><small>Run WYLD</small><h3>Team WYLD T-Shirt</h3><div class="product-row"><strong>AED 165</strong><a href="https://ridewyld.com/products/team-wyld-t-shirt" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
+      </article>
+      <article class="product-card" data-category="run">
+        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/runwyld_singlet_women_product_photo_copy_9292c507-0713-4c6f-b072-130669fefb28.jpg?v=1737136311&width=1000" alt="Team WYLD Singlet"></div>
+        <div class="product-meta"><small>Run WYLD</small><h3>Team WYLD Singlet</h3><div class="product-row"><strong>AED 155</strong><a href="https://ridewyld.com/products/team-wyld-singlet" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
+      </article>
+      <article class="product-card" data-category="run">
+        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/runwyldlongsleevewomenproductphoto.jpg?v=1737207231&width=1000" alt="Team WYLD Long Sleeved Shirt"></div>
+        <div class="product-meta"><small>Run WYLD</small><h3>Long Sleeved Shirt</h3><div class="product-row"><strong>AED 175</strong><a href="https://ridewyld.com/products/team-wyld-long-sleeved-shirt" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
+      </article>
+
+      <article class="product-card" data-category="accessories">
+        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/products/cappastel.jpg?v=1610992994&width=1000" alt="WYLD Trucker Cap"></div>
+        <div class="product-meta"><small>Accessories</small><h3>WYLD Trucker Cap</h3><div class="product-row"><strong class="sale">AED 70</strong><a href="https://ridewyld.com/products/caps" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
+      </article>
+      <article class="product-card" data-category="accessories">
+        <div class="product-image" style="background:linear-gradient(135deg,#55d8d3,#d42b7f);display:grid;place-items:center"><div style="font-size:46px;font-weight:900;letter-spacing:-.06em;color:white">WYLD</div></div>
+        <div class="product-meta"><small>Accessories</small><h3>Gift Card</h3><div class="product-row"><strong>From AED 50</strong><a href="https://ridewyld.com/products/wyld-gift-card" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
+      </article>
+    </div>
+  </section>
+
+  <section class="threed" id="studio">
+    <div class="wrap threed-grid">
+      <div class="threed-copy">
+        <span class="kicker" style="color:#55d8d3">Optional depth</span>
+        <h2>Explore in 3D.</h2>
+        <p>Keep 3D as a premium product tool, not the whole website. Rotate selected garments, inspect silhouette and switch between product, stand, aero and run context.</p>
+      </div>
+      <div class="viewer-shell">
+        <model-viewer id="viewer" src="./assets/blender/jersey-women.glb" camera-controls touch-action="pan-y" shadow-intensity="1" exposure="1.05" environment-image="neutral" camera-orbit="0deg 74deg 120%" field-of-view="28deg" alt="Interactive WYLD 3D product"></model-viewer>
+        <div class="viewer-controls">
+          <button class="active" data-model="./assets/blender/jersey-women.glb">Jersey</button>
+          <button data-model="./assets/blender/bib-tiffany.glb">Bibs</button>
+          <button data-model="./assets/blender/cap.glb">Cap</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="custom" id="custom">
+    <div class="wrap">
+      <div class="custom-card">
+        <div>
+          <span class="kicker">Custom kit</span>
+          <h2>Your team. Your colours.</h2>
+          <p>WYLD also builds custom jerseys, bib shorts, trisuits, T-shirts, run tops and other team kit. Keep this path separate from the retail shop so each buyer knows where to go. citeturn859894search3</p>
+        </div>
+        <a class="btn primary" href="https://ridewyld.com/pages/about-us" target="_blank" rel="noreferrer">Explore custom ↗</a>
+      </div>
+      <div class="founder-line">
+        <blockquote>“I started this brand as I noticed a gap in the market for cycling and triathlon gear, specifically when it comes to size inclusivity and affordability.”</blockquote>
+        <span>Michelle / Founder of WYLD citeturn252325search0</span>
+      </div>
+    </div>
+  </section>
 </main>
 
-<aside class="drawer" id="drawer">
-  <div class="drawer-head"><div><div class="eyebrow">Your WYLD bag</div><h2>Race week.</h2></div><button id="bagClose" aria-label="Close bag">×</button></div>
-  <div class="bag-items" id="bagItems"></div>
-  <div class="drawer-foot"><div><span>Total</span><strong id="bagTotal">AED 0</strong></div><a class="btn primary" href="https://ridewyld.com/" target="_blank" rel="noreferrer">Continue at RideWYLD ↗</a><small>Final stock, size availability and checkout happen on ridewyld.com.</small></div>
-</aside>
-
-<footer>WYLD immersive commerce concept · product availability and checkout remain with the official store.</footer>
+<footer>
+  <div class="wrap footer-inner">
+    <span>WYLD immersive store concept</span>
+    <a href="https://ridewyld.com/" target="_blank" rel="noreferrer">ridewyld.com ↗</a>
+  </div>
+</footer>
 
 <script>
-const products=[
- {id:"grape",name:"Grape Jersey | Race Fit",kind:"Cycling / Race Fit",price:395,image:"https://ridewyld.com/cdn/shop/products/grapepocket.jpg?v=1659262824&width=1200",link:"https://ridewyld.com/products/grape-jersey",badge:"Official product",model:"./assets/blender/jersey-women.glb",copy:"A saturated race-fit jersey that carries WYLD colour without losing a clean performance silhouette."},
- {id:"tiffany",name:"WYLD Tiffany Bib Shorts",kind:"Bib Shorts",price:585,image:"https://ridewyld.com/cdn/shop/files/tourqoise_tiffany_bib_shorts_product_photo.jpg?v=1737450485&width=1200",link:"https://ridewyld.com/products/tiffany-bib-shorts",badge:"Official product",model:"./assets/blender/bib-tiffany.glb",copy:"Tiffany is one of the strongest visual anchors in the collection, now treated as a hero product rather than a tiny UI option."},
- {id:"olive",name:"Olive Jersey | Race Fit",kind:"Cycling / Race Fit",price:395,image:"https://ridewyld.com/cdn/shop/files/olive_jersey_website.png?v=1739273753&width=1200",link:"https://ridewyld.com/products/olive",badge:"Official product",model:"./assets/blender/jersey-men.glb",copy:"A quieter WYLD frequency with the same race-fit attitude, pairing naturally with black, white and acid."},
- {id:"cap",name:"WYLD Trucker Cap",kind:"Accessories",price:70,image:"https://ridewyld.com/cdn/shop/files/tiffany_jersey_and_bib_short_1.jpg?v=1737726088&width=1200",link:"https://ridewyld.com/",badge:"Race week",model:"./assets/blender/cap.glb",copy:"A simple off-course signal piece for coffee, check-in, transition and everything after the finish line."}
-];
-const rail=document.getElementById("products");
-rail.innerHTML=products.map(p=>`<article class="product-card">
- <div class="product-media"><img loading="lazy" src="${p.image}" alt="${p.name}"><span class="product-badge">${p.badge}</span></div>
- <div class="product-copy"><small>${p.kind}</small><h3>${p.name}</h3><p>${p.copy}</p><div class="price">AED ${p.price}</div>
- <div class="product-actions"><button data-add="${p.id}">Add to bag</button><button class="secondary" data-preview="${p.model}">View in 3D</button></div></div>
- </article>`).join("");
-
-const viewer=document.getElementById("viewer");
-function load3D(src){viewer.src=src;document.getElementById("studio").scrollIntoView({behavior:"smooth",block:"start"});}
-document.querySelectorAll("[data-model]").forEach(b=>b.addEventListener("click",()=>{b.parentElement.querySelectorAll("button").forEach(x=>x.classList.remove("active"));b.classList.add("active");load3D(b.dataset.model)}));
-document.querySelectorAll("[data-preview]").forEach(b=>b.addEventListener("click",()=>load3D(b.dataset.preview)));
-document.querySelectorAll("[data-motion]").forEach(b=>b.addEventListener("click",()=>load3D(b.dataset.motion)));
-
-const bag=[],drawer=document.getElementById("drawer");
-function renderBag(){document.getElementById("bagCount").textContent=bag.length;document.getElementById("bagItems").innerHTML=bag.length?bag.map((p,i)=>`<div class="bag-row"><div><small>${p.kind}</small><h3>${p.name}</h3></div><div><strong>AED ${p.price}</strong><br><button data-remove="${i}">Remove</button></div></div>`).join(""):"<p style='color:#aaa1af;padding:18px 0'>Your bag is empty.</p>";document.getElementById("bagTotal").textContent="AED "+bag.reduce((a,b)=>a+b.price,0).toLocaleString();document.querySelectorAll("[data-remove]").forEach(b=>b.addEventListener("click",()=>{bag.splice(Number(b.dataset.remove),1);renderBag()}));}
-document.querySelectorAll("[data-add]").forEach(b=>b.addEventListener("click",()=>{const p=products.find(x=>x.id===b.dataset.add);bag.push(p);renderBag();drawer.classList.add("open")}));
-document.getElementById("bagOpen").onclick=()=>drawer.classList.add("open");document.getElementById("bagClose").onclick=()=>drawer.classList.remove("open");renderBag();
+const labels={
+  triathlon:["Triathlon.","Race-day focus. One clear hero product from the current catalog."],
+  cycling:["Cycling.","Race-fit jerseys, bib shorts and core cycling pieces."],
+  run:["Run WYLD.","Simple run layers: T-shirt, singlet and long sleeve."],
+  accessories:["Accessories.","Caps, gift cards and the small things around race week."]
+};
+function setCategory(cat){
+  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.filter===cat));
+  document.querySelectorAll('.product-card').forEach(card=>card.classList.toggle('visible',card.dataset.category===cat));
+  document.getElementById('shopTitle').textContent=labels[cat][0];
+  document.getElementById('shopIntro').textContent=labels[cat][1];
+}
+document.querySelectorAll('#tabs button').forEach(b=>b.addEventListener('click',()=>setCategory(b.dataset.filter)));
+document.querySelectorAll('[data-category-link]').forEach(a=>a.addEventListener('click',()=>setCategory(a.dataset.categoryLink)));
+const viewer=document.getElementById('viewer');
+document.querySelectorAll('[data-model]').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('[data-model]').forEach(x=>x.classList.remove('active'));
+  btn.classList.add('active');viewer.src=btn.dataset.model;
+}));
+setCategory('triathlon');
 </script>
 </body>
 </html>
