@@ -2,10 +2,8 @@
 'use strict';
 
 const params = new URLSearchParams(location.search);
-const forceReplay = params.has('init');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const passedKey = 'wyld.bikeporn.initiated.v3';
-if (!forceReplay && sessionStorage.getItem(passedKey) === '1') return;
+const passedKey = 'wyld.bikeporn.initiated.v4';
 
 const root = document.createElement('div');
 root.className = 'wyld-init';
@@ -408,7 +406,6 @@ async function unlock() {
   say('BOO · COMPLIANCE', 'Access granted by questionable decision-making.');
   await wait(1400);
 
-  sessionStorage.setItem(passedKey, '1');
   root.style.transition = 'opacity .8s';
   root.style.opacity = '0';
   await wait(800);
