@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "assets": {
+    "jersey-women.glb": {
+      "bytes": 42940,
+      "semantic_parts": 5
+    },
+    "jersey-men.glb": {
+      "bytes": 42936,
+      "semantic_parts": 5
+    },
+    "singlet.glb": {
+      "bytes": 14092,
+      "semantic_parts": 3
+    },
+    "bib-tiffany.glb": {
+      "bytes": 55568,
+      "semantic_parts": 6
+    },
+    "bib-black.glb": {
+      "bytes": 53244,
+      "semantic_parts": 6
+    },
+    "cap.glb": {
+      "bytes": 28428,
+      "semantic_parts": 3
+    },
+    "athlete-stand.glb": {
+      "bytes": 150232,
+      "semantic_parts": 17
+    },
+    "athlete-aero.glb": {
+      "bytes": 208072,
+      "semantic_parts": 23
+    },
+    "athlete-run.glb": {
+      "bytes": 150216,
+      "semantic_parts": 17
+    }
+  }
+}
