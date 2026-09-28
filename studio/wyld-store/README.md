@@ -1,56 +1,40 @@
-# WYLD Store 3D
+# WYLD Store
 
-Immersive, mobile-first Three.js commerce studio for WYLD.
+A minimal, editorial retail storefront for [ridewyld.com](https://ridewyld.com/), designed mobile-first and built without a build step.
 
-## Product idea
+## What's in it
 
-This translates the strongest interaction language from Canyon Museum into a store rather than a museum: a real-time 3D product stage, cinematic camera rail, material/color controls, motion states, product switching, sizing, bag state and a privacy-safe try-on boundary.
+- **Hero:** a full-bleed campaign slideshow using WYLD's own photography. Swipe it on mobile.
+- **Shop by sport:** Cycling, Triathlon, Run WYLD and Accessories. The tiles scroll horizontally on mobile and sit in a grid on desktop.
+- **Race Fit edit:** an editorial split with a product rail.
+- **Collection:** a sticky category bar (All, Cycling, Triathlon, Run, Accessories, Sale). Each category has sub-type and Women/Men filters, plus sorting.
+- **Product view:** a swipeable gallery on mobile and a two-column gallery on desktop. It has fit and size pickers with sold-out sizes crossed out, a sticky add-to-bag bar on mobile, and "You may also like". Each product has a deep link at `#/p/{handle}`.
+- **Bag drawer:** stored in localStorage. Checkout hands the bag to ridewyld.com through a Shopify cart permalink (`/cart/{variant}:{qty},…`), so the order completes on the real store.
+- **Search overlay, menu drawer and toast.**
+- **WYLD Studio:** the Blender GLBs in `assets/blender/`, shown in `<model-viewer>`, with live colourways that recolour the `FABRIC_PRIMARY` material.
+- **Also on the page:** custom kit, founder story, journal, newsletter and footer.
 
-## Current functionality
+The typography matches ridewyld.com: Inknut Antiqua for headings and Instrument Sans for body text. The logo, product photos and campaign images load from the store's CDN.
 
-- interactive Three.js product viewer
-- orbit / zoom controls
-- Hero / Fabric / Side / Silhouette camera presets
-- 12-second cinematic camera orbit
-- Berry, Blueberry, Grape, Olive, Tiffany, Black/White color systems
-- Stand / Aero / Run mannequin states
-- women’s and men’s trisuit concepts
-- women’s and men’s recovery hoodies
-- studio tee and race-week cap
-- size selection and local bag state
-- local-only photo staging for the future try-on adapter
-- mobile-specific 3D-first layout
-- public RideWYLD collection reference rail
+## Files
+
+- `index.html`: page markup
+- `src/store.css`: design system and responsive layout (breakpoints at 720px and 1080px)
+- `src/store.js`: grid, filters, product view, bag, search, hero and 3D studio
+- `src/catalog.js`: generated catalog (prices, variant ids, stock, images)
+- `tools/sync_catalog.py`: rebuilds the catalog from the public feed
+
+## Refresh the catalog
+
+```bash
+python3 tools/sync_catalog.py            # fetches https://ridewyld.com/products.json
+```
+
+Private team kits (the Synergy Sport Collective, tagged `SSC`) are excluded from the retail shop.
 
 ## Run
 
-Serve this folder over HTTP. The direct prototype uses an import map for Three.js, so a build is not required.
-
 ```bash
 python3 -m http.server 8788
-# open /studio/wyld-store/
+# open http://localhost:8788/
 ```
-
-Optional Vite workflow:
-
-```bash
-npm install
-npm run dev
-```
-
-## Asset truth
-
-The current product meshes are semantic Three.js V1 geometry, not finished manufacturing-grade garments. Their node/material roles are deliberately stable so Blender-authored GLBs can replace them without rewriting the commerce UI.
-
-Public WYLD collection names and color families ground the visual catalog. Private Michelle reference photos are not committed. They inform only derived palette, motion and silhouette decisions.
-
-## Mobile
-
-The mobile experience is authored separately rather than simply shrinking desktop:
-
-- 58svh touch-first 3D stage
-- horizontal shop carousel
-- collapsible configuration panel
-- sticky purchase actions
-- swipeable visual-world section
-- local-photo fit sheet

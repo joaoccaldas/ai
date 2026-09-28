@@ -3,286 +3,374 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f7f5f0">
-<meta name="description" content="WYLD — cycling, triathlon and run apparel.">
-<title>WYLD — Shop by sport</title>
+<meta name="theme-color" content="#f6f4ef">
+<meta name="description" content="WYLD — performance cycling, triathlon and run apparel. Size-inclusive race kit and custom team kit.">
+<title>WYLD — Cycling, Triathlon &amp; Run Apparel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://ridewyld.com">
+<link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./src/store.css">
+<link rel="icon" href="https://ridewyld.com/cdn/shop/files/w-logo.jpg?width=64">
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
-<style>
-:root{
-  --bg:#f7f5f0;--paper:#fff;--ink:#111113;--muted:#77736f;--line:#dedbd4;
-  --pink:#d42b7f;--cyan:#55d8d3;--grape:#6f4cd9;--olive:#7f8b2f;--soft:#eeeae3;
-}
-*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif}
-a,button{font:inherit;color:inherit}button{cursor:pointer}
-img{display:block;width:100%}
-.wrap{max-width:1320px;margin:0 auto;padding:0 18px}
-header{height:68px;border-bottom:1px solid var(--line);background:rgba(247,245,240,.96);backdrop-filter:blur(12px);position:sticky;top:0;z-index:50}
-.header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.logo{font-size:25px;font-weight:950;font-style:italic;letter-spacing:-.075em;text-decoration:none}
-.logo small{font:700 8px monospace;letter-spacing:.15em;margin-left:7px;color:var(--pink)}
-nav{display:none;gap:24px}nav a{text-decoration:none;font:700 10px monospace;text-transform:uppercase;letter-spacing:.12em}
-.header-cta{font:700 9px monospace;text-transform:uppercase;letter-spacing:.11em;text-decoration:none;border:1px solid var(--ink);padding:10px 13px;border-radius:999px}
-
-.hero{padding:18px 0 26px}
-.hero-card{display:grid;background:var(--paper);border:1px solid var(--line);overflow:hidden}
-.hero-copy{padding:34px 24px;display:flex;flex-direction:column;justify-content:center;min-height:390px}
-.kicker{font:700 9px monospace;text-transform:uppercase;letter-spacing:.15em;color:var(--pink)}
-.hero h1{font-size:clamp(50px,13vw,110px);line-height:.82;letter-spacing:-.075em;margin:16px 0 20px;max-width:7ch}
-.hero p{font-size:14px;line-height:1.65;color:var(--muted);max-width:36ch;margin:0}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:0 16px;border:1px solid var(--ink);text-decoration:none;font:800 9px monospace;text-transform:uppercase;letter-spacing:.1em;background:transparent}
-.btn.primary{background:var(--ink);color:#fff}
-.hero-media{min-height:460px;background:url('https://ridewyld.com/cdn/shop/products/F42ECCBF-8818-4B43-BD01-8FFAF344F02B.jpg?v=1616926600&width=1800') center/cover no-repeat}
-
-.category-nav{padding:18px 0 10px;position:sticky;top:68px;z-index:40;background:rgba(247,245,240,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.category-tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}.category-tabs::-webkit-scrollbar{display:none}
-.category-tabs button{white-space:nowrap;border:1px solid var(--line);background:transparent;padding:10px 13px;border-radius:999px;font:700 9px monospace;text-transform:uppercase;letter-spacing:.1em}
-.category-tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
-
-.section{padding:48px 0}
-.section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:22px}
-.section-head h2{font-size:clamp(32px,8vw,64px);line-height:.9;letter-spacing:-.055em;margin:0}
-.section-head p{max-width:36ch;color:var(--muted);line-height:1.55;font-size:12px;margin:0;display:none}
-
-.category-grid{display:grid;gap:12px}
-.category-card{position:relative;min-height:360px;overflow:hidden;background:#ddd;text-decoration:none}
-.category-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.category-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(0,0,0,.66))}
-.category-card-copy{position:absolute;z-index:2;left:16px;right:16px;bottom:16px;color:#fff;display:flex;justify-content:space-between;gap:16px;align-items:end}
-.category-card h3{font-size:30px;line-height:.95;margin:5px 0 0}
-.category-card small{font:700 8px monospace;text-transform:uppercase;letter-spacing:.12em}
-.category-card span{font:700 9px monospace;text-transform:uppercase;letter-spacing:.11em}
-
-.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 10px}
-.product-card{display:none}.product-card.visible{display:block}
-.product-image{aspect-ratio:4/5;background:var(--soft);overflow:hidden;position:relative}
-.product-image img{width:100%;height:100%;object-fit:cover}
-.product-meta{padding-top:10px}
-.product-meta small{font:700 8px monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
-.product-meta h3{font-size:15px;margin:5px 0 5px;line-height:1.2}
-.product-row{display:flex;justify-content:space-between;gap:8px;align-items:center}
-.product-row strong{font-size:13px}
-.product-row a{font:700 8px monospace;text-transform:uppercase;letter-spacing:.1em;text-decoration:none;border-bottom:1px solid var(--ink);padding-bottom:2px}
-.sale{color:var(--pink)}
-
-.threed{background:#111113;color:#fff;padding:54px 0}
-.threed-grid{display:grid;gap:22px}
-.threed-copy h2{font-size:clamp(38px,10vw,72px);line-height:.9;letter-spacing:-.06em;margin:10px 0 16px}
-.threed-copy p{color:#b8b4b8;font-size:13px;line-height:1.6;max-width:36ch;margin:0}
-.viewer-shell{background:#ece7df;border-radius:20px;overflow:hidden}
-model-viewer{width:100%;height:54svh;min-height:430px;background:radial-gradient(circle at 50% 35%,#fff 0,#eee9e1 40%,#dad4cb 100%)}
-.viewer-controls{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:10px;background:#f2eee7}
-.viewer-controls button{border:1px solid #d3cfc8;background:#fff;color:#111;padding:11px 6px;font:700 9px monospace;text-transform:uppercase;letter-spacing:.08em}
-.viewer-controls button.active{background:#111;color:#fff}
-
-.custom{padding:62px 0;background:#ece8e1}
-.custom-card{display:grid;gap:18px}
-.custom h2{font-size:clamp(40px,10vw,76px);line-height:.9;letter-spacing:-.06em;margin:8px 0 12px}
-.custom p{color:var(--muted);line-height:1.6;font-size:13px;max-width:42ch}
-.founder-line{padding:40px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:42px;display:grid;gap:12px}
-.founder-line blockquote{margin:0;font-size:clamp(22px,5vw,36px);line-height:1.15;max-width:28ch}.founder-line span{font:700 9px monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
-
-footer{padding:30px 0 46px;color:var(--muted);font-size:11px}
-footer .footer-inner{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
-footer a{text-decoration:none}
-
-@media(min-width:760px){
-  nav{display:flex}
-  .hero-card{grid-template-columns:.9fr 1.1fr}
-  .hero-copy{padding:58px 48px;min-height:640px}.hero-media{min-height:640px}
-  .section{padding:74px 0}.section-head p{display:block}
-  .category-grid{grid-template-columns:repeat(4,1fr)}.category-card{min-height:470px}
-  .products{grid-template-columns:repeat(4,1fr);gap:28px 14px}
-  .product-meta h3{font-size:17px}
-  .threed{padding:82px 0}.threed-grid{grid-template-columns:.8fr 1.2fr;align-items:center}
-  .custom-card{grid-template-columns:1fr auto;align-items:end}.founder-line{grid-template-columns:2fr 1fr;align-items:end}
-}
-@media(min-width:1100px){
-  .wrap{padding:0 28px}.products{grid-template-columns:repeat(4,1fr)}.category-card h3{font-size:38px}
-}
-</style>
 </head>
 <body>
-<header>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1 13H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 8h18M3 16h18"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 7h10m4 0h2M4 17h2m4 0h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></symbol>
+  <symbol id="i-ruler" viewBox="0 0 24 24"><path d="M3 15 15 3l6 6L9 21z"/><path d="m7 11 2 2m1-5 2 2m1-5 2 2"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+</svg>
+
+<div class="announce" aria-live="polite">
+  <ul id="announce">
+    <li class="on">Race fit · Club fit · Sizes XXS – 4XL</li>
+    <li>Custom team kit for cycling, triathlon &amp; run</li>
+    <li>Prices in AED · Secure checkout on ridewyld.com</li>
+  </ul>
+</div>
+
+<header class="header over" id="header">
   <div class="wrap header-inner">
-    <a class="logo" href="#top">WYLD<small>STUDIO</small></a>
-    <nav>
-      <a href="#shop">Shop</a>
-      <a href="#categories">Categories</a>
-      <a href="#studio">3D</a>
-      <a href="#custom">Custom</a>
-    </nav>
-    <a class="header-cta" href="https://ridewyld.com/" target="_blank" rel="noreferrer">Official store ↗</a>
+    <div style="display:flex;align-items:center;gap:30px">
+      <button class="icon-btn menu-btn" data-open="menu" aria-label="Open menu"><svg><use href="#i-menu"/></svg></button>
+      <nav class="nav" aria-label="Primary">
+        <a href="#shop" data-go="all">Shop</a>
+        <a href="#shop" data-go="cycling">Cycling</a>
+        <a href="#shop" data-go="triathlon">Triathlon</a>
+        <a href="#shop" data-go="run">Run</a>
+      </nav>
+    </div>
+    <a class="logo" href="#top" aria-label="WYLD home"><img src="https://ridewyld.com/cdn/shop/files/WYLD-Black1080.png?width=240" alt="WYLD" width="84" height="30"></a>
+    <div class="tools">
+      <nav class="nav desk-only" aria-label="Secondary" style="margin-right:18px">
+        <a href="#studio">Studio</a>
+        <a href="#custom">Custom</a>
+      </nav>
+      <button class="icon-btn" data-open="search" aria-label="Search"><svg><use href="#i-search"/></svg></button>
+      <button class="icon-btn" data-open="bag" aria-label="Bag"><svg><use href="#i-bag"/></svg><span class="bag-count" id="bagCount">0</span></button>
+    </div>
   </div>
 </header>
 
 <main id="top">
-  <section class="hero">
+  <!-- Hero -->
+  <section class="hero" id="hero" aria-roledescription="carousel" aria-label="Featured">
+    <div class="slide on" data-eyebrow="Cycling — Race Fit" data-title="Join the peloton in style." data-go="cycling">
+      <img src="https://ridewyld.com/cdn/shop/files/Screenshot_2024-09-24_at_10.46.16.png?width=2400" srcset="https://ridewyld.com/cdn/shop/files/Screenshot_2024-09-24_at_10.46.16.png?width=900 900w,https://ridewyld.com/cdn/shop/files/Screenshot_2024-09-24_at_10.46.16.png?width=1600 1600w,https://ridewyld.com/cdn/shop/files/Screenshot_2024-09-24_at_10.46.16.png?width=2400 2400w" sizes="100vw" alt="Rider in a blue WYLD race-fit jersey" style="object-position:50% 45%" fetchpriority="high">
+    </div>
+    <div class="slide" data-eyebrow="Kit for every rider" data-title="Made for more riders." data-go="cycling">
+      <img src="https://ridewyld.com/cdn/shop/files/raspberry_jersey_female_cyclists.jpg?width=2400" srcset="https://ridewyld.com/cdn/shop/files/raspberry_jersey_female_cyclists.jpg?width=900 900w,https://ridewyld.com/cdn/shop/files/raspberry_jersey_female_cyclists.jpg?width=1600 1600w,https://ridewyld.com/cdn/shop/files/raspberry_jersey_female_cyclists.jpg?width=2400 2400w" sizes="100vw" alt="Five riders in Raspberry jerseys and pink bib shorts" style="object-position:50% 38%" loading="lazy">
+    </div>
+    <div class="slide" data-eyebrow="Run WYLD" data-title="Colour for the long run." data-go="run">
+      <img src="https://ridewyld.com/cdn/shop/files/wyld_singlet_front.jpg?width=2400" srcset="https://ridewyld.com/cdn/shop/files/wyld_singlet_front.jpg?width=900 900w,https://ridewyld.com/cdn/shop/files/wyld_singlet_front.jpg?width=1600 1600w,https://ridewyld.com/cdn/shop/files/wyld_singlet_front.jpg?width=2400 2400w" sizes="100vw" alt="Runner in the Team WYLD singlet" style="object-position:50% 25%" loading="lazy">
+    </div>
+    <div class="hero-copy">
+      <div class="wrap">
+        <span class="eyebrow" id="heroEyebrow">Cycling — Race Fit</span>
+        <h1 class="display" id="heroTitle">Join the peloton in style.</h1>
+        <div class="hero-actions">
+          <a class="btn light" href="#shop" id="heroCta" data-go="cycling">Shop now</a>
+          <a class="btn ghost" href="#custom" style="color:#fff;border-color:rgba(255,255,255,.7)">Custom kit</a>
+        </div>
+        <div class="hero-dots" id="heroDots" role="tablist">
+          <button class="on" aria-label="Slide 1"><i></i></button>
+          <button aria-label="Slide 2"><i></i></button>
+          <button aria-label="Slide 3"><i></i></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Shop by sport -->
+  <section class="section">
     <div class="wrap">
-      <div class="hero-card">
-        <div class="hero-copy">
-          <span class="kicker">Cycling / Triathlon / Run</span>
-          <h1>Ride WYLD.</h1>
-          <p>Performance kit with colour, comfort and room for more riders. Shop by sport, then go deeper only when you want to.</p>
-          <div class="hero-actions">
-            <a class="btn primary" href="#shop">Shop collection</a>
-            <a class="btn" href="https://ridewyld.com/pages/about-us" target="_blank" rel="noreferrer">Custom kit ↗</a>
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Collections</span><h2 class="h2">Shop by sport</h2></div>
+        <a class="link desk-only" href="#shop" data-go="all">View all</a>
+      </div>
+      <div class="sports reveal">
+        <a class="sport" href="#shop" data-go="cycling">
+          <figure><img src="https://ridewyld.com/cdn/shop/products/pinkpocket.jpg?width=900" alt="Raspberry jersey pocket detail" loading="lazy"></figure>
+          <div class="sport-cap"><h3>Cycling</h3><span data-count="cycling"></span></div>
+        </a>
+        <a class="sport" href="#shop" data-go="triathlon">
+          <figure><img src="https://ridewyld.com/cdn/shop/files/blush_wyld_trisuit.jpg?width=900" alt="Blush trisuit" loading="lazy"></figure>
+          <div class="sport-cap"><h3>Triathlon</h3><span data-count="triathlon"></span></div>
+        </a>
+        <a class="sport" href="#shop" data-go="run">
+          <figure><img src="https://ridewyld.com/cdn/shop/files/runwyld_singlet_women_product_photo_copy_9292c507-0713-4c6f-b072-130669fefb28.jpg?width=900" alt="Team WYLD singlet" loading="lazy"></figure>
+          <div class="sport-cap"><h3>Run WYLD</h3><span data-count="run"></span></div>
+        </a>
+        <a class="sport" href="#shop" data-go="accessories">
+          <figure><img src="https://ridewyld.com/cdn/shop/products/caps.jpg?width=900" alt="WYLD trucker caps" loading="lazy"></figure>
+          <div class="sport-cap"><h3>Accessories</h3><span data-count="accessories"></span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature: Race Fit -->
+  <section class="feature">
+    <div class="feature-media reveal">
+      <img src="https://ridewyld.com/cdn/shop/files/DA605C67-ACA6-4282-B5BB-37C82DC4E618.png?width=1600" alt="Smiling rider in a WYLD custom jersey" loading="lazy">
+    </div>
+    <div class="feature-body">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--muted)">The Race Fit edit</span>
+        <h2 class="h2" style="margin:14px 0 16px">Close cut. Bold colour.</h2>
+        <p class="lede">Our race-fit jerseys in Raspberry, Grape, Blueberry and Olive — made for fast group rides and long days in the heat.</p>
+      </div>
+      <div class="rail reveal" id="featureRail"></div>
+      <a class="link reveal" href="#shop" data-go="cycling" data-sub="Race Fit Jersey" style="align-self:flex-start">Shop race fit</a>
+    </div>
+  </section>
+
+  <!-- Shop -->
+  <section class="shop" id="shop">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">The collection</span><h2 class="h2" id="shopTitle">All products</h2></div>
+        <span class="count" id="count"></span>
+      </div>
+    </div>
+    <div class="toolbar">
+      <div class="wrap toolbar-inner">
+        <div class="tabs" id="tabs" role="tablist">
+          <button class="on" data-cat="all">All</button>
+          <button data-cat="cycling">Cycling</button>
+          <button data-cat="triathlon">Triathlon</button>
+          <button data-cat="run">Run</button>
+          <button data-cat="accessories">Accessories</button>
+          <button data-cat="sale">Sale</button>
+        </div>
+        <label class="filter-btn"><svg><use href="#i-filter"/></svg><span class="sr">Sort</span>
+          <select id="sort">
+            <option value="featured">Featured</option>
+            <option value="low">Price: low</option>
+            <option value="high">Price: high</option>
+            <option value="az">A – Z</option>
+          </select>
+        </label>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="subbar">
+        <div class="chips" id="chips"></div>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <!-- 3D studio -->
+  <section class="studio" id="studio">
+    <div class="wrap studio-grid">
+      <div class="stage reveal">
+        <model-viewer id="viewer" src="./assets/blender/jersey-women.glb" camera-controls auto-rotate auto-rotate-delay="1500" rotation-per-second="18deg" interaction-prompt="none" touch-action="pan-y" shadow-intensity="1" shadow-softness=".9" exposure="1.05" environment-image="neutral" camera-orbit="20deg 78deg 105%" field-of-view="26deg" loading="lazy" alt="Rotatable 3D WYLD garment"></model-viewer>
+        <span class="stage-hint">Drag to rotate · Pinch to zoom</span>
+      </div>
+      <div class="studio-panel reveal">
+        <div>
+          <span class="eyebrow" style="color:var(--tiffany)">WYLD Studio</span>
+          <h2 class="h2" style="margin:14px 0 16px">See it from every angle.</h2>
+          <p class="lede">Turn the garment, pick a colourway and check the cut before you choose your size.</p>
+        </div>
+        <div>
+          <div class="opt-label">Garment <b id="garmentName">Women’s jersey</b></div>
+          <div class="seg" id="garments">
+            <button class="on" data-model="jersey-women" data-name="Women’s jersey">Women’s jersey</button>
+            <button data-model="jersey-men" data-name="Men’s jersey">Men’s jersey</button>
+            <button data-model="singlet" data-name="Run singlet">Singlet</button>
+            <button data-model="bib-black" data-name="Bib shorts">Bib shorts</button>
+            <button data-model="cap" data-name="Cap">Cap</button>
           </div>
         </div>
-        <div class="hero-media" aria-label="WYLD cycling lifestyle"></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="wrap section" id="categories">
-    <div class="section-head">
-      <h2>Shop by sport.</h2>
-      <p>Four clear paths, based on the actual WYLD catalog: triathlon, cycling, Run WYLD and accessories.</p>
-    </div>
-    <div class="category-grid">
-      <a class="category-card" href="#shop" data-category-link="triathlon">
-        <img src="https://ridewyld.com/cdn/shop/files/blush_wyld_trisuit.jpg?v=1747067150&width=1000" alt="Blush WYLD trisuit">
-        <div class="category-card-copy"><div><small>01</small><h3>Triathlon</h3></div><span>Shop ↓</span></div>
-      </a>
-      <a class="category-card" href="#shop" data-category-link="cycling">
-        <img src="https://ridewyld.com/cdn/shop/products/grapepocket.jpg?v=1659262824&width=1000" alt="Grape WYLD jersey">
-        <div class="category-card-copy"><div><small>02</small><h3>Cycling</h3></div><span>Shop ↓</span></div>
-      </a>
-      <a class="category-card" href="#shop" data-category-link="run">
-        <img src="https://ridewyld.com/cdn/shop/files/runwyld_tshirt_women_product_photo.jpg?v=1737136172&width=1000" alt="Team WYLD T-Shirt">
-        <div class="category-card-copy"><div><small>03</small><h3>Run WYLD</h3></div><span>Shop ↓</span></div>
-      </a>
-      <a class="category-card" href="#shop" data-category-link="accessories">
-        <img src="https://ridewyld.com/cdn/shop/products/cappastel.jpg?v=1610992994&width=1000" alt="WYLD Trucker Cap">
-        <div class="category-card-copy"><div><small>04</small><h3>Accessories</h3></div><span>Shop ↓</span></div>
-      </a>
-    </div>
-  </section>
-
-  <div class="category-nav" id="shop">
-    <div class="wrap">
-      <div class="category-tabs" id="tabs">
-        <button class="active" data-filter="triathlon">Triathlon</button>
-        <button data-filter="cycling">Cycling</button>
-        <button data-filter="run">Run WYLD</button>
-        <button data-filter="accessories">Accessories</button>
-      </div>
-    </div>
-  </div>
-
-  <section class="wrap section">
-    <div class="section-head">
-      <h2 id="shopTitle">Triathlon.</h2>
-      <p id="shopIntro">Start with the real catalog, not a wall of concepts.</p>
-    </div>
-    <div class="products" id="productGrid">
-      <article class="product-card visible" data-category="triathlon">
-        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/blush_wyld_trisuit.jpg?v=1747067150&width=1000" alt="Blush Trisuit"></div>
-        <div class="product-meta"><small>Triathlon</small><h3>Blush Trisuit</h3><div class="product-row"><strong>AED 835</strong><a href="https://ridewyld.com/products/blush-trisuit" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
-      </article>
-
-      <article class="product-card" data-category="cycling">
-        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/products/grapepocket.jpg?v=1659262824&width=1000" alt="Grape Jersey"></div>
-        <div class="product-meta"><small>Race Fit</small><h3>Grape Jersey</h3><div class="product-row"><strong>AED 395</strong><a href="https://ridewyld.com/products/grape-jersey" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
-      </article>
-      <article class="product-card" data-category="cycling">
-        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/tourqoise_tiffany_bib_shorts_product_photo.jpg?v=1737450485&width=1000" alt="Tiffany Bib Shorts"></div>
-        <div class="product-meta"><small>Bib Shorts</small><h3>Tiffany Bib Shorts</h3><div class="product-row"><strong>AED 585</strong><a href="https://ridewyld.com/products/tiffany-bib-shorts" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
-      </article>
-      <article class="product-card" data-category="cycling">
-        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/whitetiffanyjerseyproductphoto.jpg?v=1737447750&width=1000" alt="Tiffany Jersey"></div>
-        <div class="product-meta"><small>Race Fit</small><h3>Tiffany Jersey</h3><div class="product-row"><strong>AED 395</strong><a href="https://ridewyld.com/collections/jersey-women" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
-      </article>
-
-      <article class="product-card" data-category="run">
-        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/runwyld_tshirt_women_product_photo.jpg?v=1737136172&width=1000" alt="Team WYLD T-Shirt"></div>
-        <div class="product-meta"><small>Run WYLD</small><h3>Team WYLD T-Shirt</h3><div class="product-row"><strong>AED 165</strong><a href="https://ridewyld.com/products/team-wyld-t-shirt" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
-      </article>
-      <article class="product-card" data-category="run">
-        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/runwyld_singlet_women_product_photo_copy_9292c507-0713-4c6f-b072-130669fefb28.jpg?v=1737136311&width=1000" alt="Team WYLD Singlet"></div>
-        <div class="product-meta"><small>Run WYLD</small><h3>Team WYLD Singlet</h3><div class="product-row"><strong>AED 155</strong><a href="https://ridewyld.com/products/team-wyld-singlet" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
-      </article>
-      <article class="product-card" data-category="run">
-        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/files/runwyldlongsleevewomenproductphoto.jpg?v=1737207231&width=1000" alt="Team WYLD Long Sleeved Shirt"></div>
-        <div class="product-meta"><small>Run WYLD</small><h3>Long Sleeved Shirt</h3><div class="product-row"><strong>AED 175</strong><a href="https://ridewyld.com/products/team-wyld-long-sleeved-shirt" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
-      </article>
-
-      <article class="product-card" data-category="accessories">
-        <div class="product-image"><img src="https://ridewyld.com/cdn/shop/products/cappastel.jpg?v=1610992994&width=1000" alt="WYLD Trucker Cap"></div>
-        <div class="product-meta"><small>Accessories</small><h3>WYLD Trucker Cap</h3><div class="product-row"><strong class="sale">AED 70</strong><a href="https://ridewyld.com/products/caps" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
-      </article>
-      <article class="product-card" data-category="accessories">
-        <div class="product-image" style="background:linear-gradient(135deg,#55d8d3,#d42b7f);display:grid;place-items:center"><div style="font-size:46px;font-weight:900;letter-spacing:-.06em;color:white">WYLD</div></div>
-        <div class="product-meta"><small>Accessories</small><h3>Gift Card</h3><div class="product-row"><strong>From AED 50</strong><a href="https://ridewyld.com/products/wyld-gift-card" target="_blank" rel="noreferrer">Shop ↗</a></div></div>
-      </article>
-    </div>
-  </section>
-
-  <section class="threed" id="studio">
-    <div class="wrap threed-grid">
-      <div class="threed-copy">
-        <span class="kicker" style="color:#55d8d3">Optional depth</span>
-        <h2>Explore in 3D.</h2>
-        <p>Keep 3D as a premium product tool, not the whole website. Rotate selected garments, inspect silhouette and switch between product, stand, aero and run context.</p>
-      </div>
-      <div class="viewer-shell">
-        <model-viewer id="viewer" src="./assets/blender/jersey-women.glb" camera-controls touch-action="pan-y" shadow-intensity="1" exposure="1.05" environment-image="neutral" camera-orbit="0deg 74deg 120%" field-of-view="28deg" alt="Interactive WYLD 3D product"></model-viewer>
-        <div class="viewer-controls">
-          <button class="active" data-model="./assets/blender/jersey-women.glb">Jersey</button>
-          <button data-model="./assets/blender/bib-tiffany.glb">Bibs</button>
-          <button data-model="./assets/blender/cap.glb">Cap</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="custom" id="custom">
-    <div class="wrap">
-      <div class="custom-card">
         <div>
-          <span class="kicker">Custom kit</span>
-          <h2>Your team. Your colours.</h2>
-          <p>WYLD also builds custom jerseys, bib shorts, trisuits, T-shirts, run tops and other team kit. Keep this path separate from the retail shop so each buyer knows where to go.</p>
+          <div class="opt-label">Colourway <b id="colourName">Raspberry</b></div>
+          <div class="swatches" id="swatches">
+            <button class="swatch on" style="--c:#c21b6b" data-rgb="0.63,0.012,0.145" data-name="Raspberry" aria-label="Raspberry"></button>
+            <button class="swatch" style="--c:#6f4cd9" data-rgb="0.16,0.07,0.69" data-name="Grape" aria-label="Grape"></button>
+            <button class="swatch" style="--c:#2f55e4" data-rgb="0.03,0.09,0.78" data-name="Blueberry" aria-label="Blueberry"></button>
+            <button class="swatch" style="--c:#7f8b2f" data-rgb="0.21,0.26,0.03" data-name="Olive" aria-label="Olive"></button>
+            <button class="swatch" style="--c:#55d8d3" data-rgb="0.023,0.66,0.64" data-name="Tiffany" aria-label="Tiffany"></button>
+            <button class="swatch" style="--c:#161618" data-rgb="0.006,0.006,0.008" data-name="Black" aria-label="Black"></button>
+          </div>
         </div>
-        <a class="btn primary" href="https://ridewyld.com/pages/about-us" target="_blank" rel="noreferrer">Explore custom ↗</a>
+        <a class="btn light" href="#shop" data-go="cycling" style="justify-self:start">Shop the collection</a>
       </div>
-      <div class="founder-line">
-        <blockquote>“I started this brand as I noticed a gap in the market for cycling and triathlon gear, specifically when it comes to size inclusivity and affordability.”</blockquote>
-        <span>Michelle / Founder of WYLD</span>
+    </div>
+  </section>
+
+  <!-- Custom -->
+  <section class="custom" id="custom">
+    <div class="wrap custom-top">
+      <div class="reveal">
+        <span class="eyebrow" style="color:var(--muted)">Custom kit</span>
+        <h2 class="display" style="margin:14px 0 18px;font-size:clamp(34px,6.4vw,64px)">Your team. Your colours.</h2>
+        <p class="lede" style="color:var(--ink-2)">Custom clothing for cycling, triathlon and running — for an individual athlete or a whole club. Tell us the products, quantity, design and timing, and we’ll bring your vision to life.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:28px">
+          <a class="btn" href="https://ridewyld.com/pages/custom-kit" target="_blank" rel="noopener">Start your kit</a>
+        </div>
+      </div>
+      <div class="pillars reveal">
+        <div class="pillar"><span>01</span><h3>High-quality materials</h3><p>Premium fabrics for comfort and durability across every discipline.</p></div>
+        <div class="pillar"><span>02</span><h3>Flexible orders</h3><p>A single piece or a full team order — we accommodate both.</p></div>
+        <div class="pillar"><span>03</span><h3>Personalised designs</h3><p>Bring a design, or collaborate with us on one that reflects your team.</p></div>
+      </div>
+    </div>
+    <div class="marquee" aria-hidden="true" id="marquee">
+      <img src="https://ridewyld.com/cdn/shop/files/nickglover_banner.jpg?width=1400" alt="" loading="lazy">
+      <img src="https://ridewyld.com/cdn/shop/files/G6BANNER.jpg?width=1400" alt="" loading="lazy">
+      <img src="https://ridewyld.com/cdn/shop/files/hellobikebanner_de41bc37-9301-4004-af44-6db33eccfad7.jpg?width=1400" alt="" loading="lazy">
+      <img src="https://ridewyld.com/cdn/shop/files/dd_banner.jpg?width=1400" alt="" loading="lazy">
+    </div>
+  </section>
+
+  <!-- Founder -->
+  <section class="founder">
+    <figure class="reveal"><img src="https://ridewyld.com/cdn/shop/files/Screenshot_2024-09-24_at_10.51.06.png?width=1400" alt="Michelle, founder of WYLD, at a coffee stop" loading="lazy"></figure>
+    <div class="founder-body reveal">
+      <span class="eyebrow" style="color:var(--muted)">Hi, I’m Michelle</span>
+      <blockquote>“I started this brand as I noticed a gap in the market for cycling and triathlon gear — specifically when it comes to size inclusivity and affordability.”</blockquote>
+      <cite>Michelle, founder of WYLD</cite>
+    </div>
+  </section>
+
+  <!-- Journal -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Journal</span><h2 class="h2">From the road</h2></div>
+        <a class="link desk-only" href="https://ridewyld.com/blogs/blog" target="_blank" rel="noopener">All stories</a>
+      </div>
+      <div class="journal-list reveal">
+        <a class="post" href="https://ridewyld.com/blogs/blog/join-the-hello-bike-thursday-group-ride-dubai-s-most-fun-midweek-coffee-spin" target="_blank" rel="noopener"><time datetime="2025-11-10">10 November 2025</time><h3>Join the Hello Bike Thursday Group Ride — Dubai’s most fun midweek coffee spin</h3><svg><use href="#i-arrow"/></svg></a>
+        <a class="post" href="https://ridewyld.com/blogs/blog/swissman-xtreme-triathlon-2025-recap-the-bike" target="_blank" rel="noopener"><time datetime="2025-09-15">15 September 2025</time><h3>Swissman Xtreme Triathlon 2025 recap: the bike</h3><svg><use href="#i-arrow"/></svg></a>
+        <a class="post" href="https://ridewyld.com/blogs/blog/swissman-bike-setup-cervelo-s5-enve-ses-3-4" target="_blank" rel="noopener"><time datetime="2025-07-14">14 July 2025</time><h3>Swissman bike set-up: Cervélo S5 + ENVE SES 3.4s</h3><svg><use href="#i-arrow"/></svg></a>
+        <a class="post" href="https://ridewyld.com/blogs/blog/why-you-should-wear-bib-shorts-when-cycling-yes-your-butt-will-thank-you" target="_blank" rel="noopener"><time datetime="2025-05-26">26 May 2025</time><h3>Why you should wear bib shorts when cycling</h3><svg><use href="#i-arrow"/></svg></a>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="wrap footer-inner">
-    <span>WYLD immersive store concept</span>
-    <a href="https://ridewyld.com/" target="_blank" rel="noreferrer">ridewyld.com ↗</a>
+<section class="newsletter">
+  <div class="wrap news-grid">
+    <div>
+      <span class="eyebrow" style="color:#a9a5a0">Newsletter</span>
+      <h2 class="h2" style="margin:14px 0 12px">New drops, group rides, race stories.</h2>
+    </div>
+    <form class="news-form-wrap" id="newsForm" action="https://ridewyld.com/contact#contact_form" method="post" target="_blank">
+      <input type="hidden" name="form_type" value="customer">
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="news-form">
+        <label class="sr" for="newsEmail">Email</label>
+        <input id="newsEmail" type="email" name="contact[email]" placeholder="Email address" required autocomplete="email">
+        <button type="submit">Subscribe</button>
+      </div>
+      <p class="news-note" id="newsNote"></p>
+    </form>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div><h4>Shop</h4><ul>
+        <li><a href="#shop" data-go="cycling">Cycling</a></li>
+        <li><a href="#shop" data-go="triathlon">Triathlon</a></li>
+        <li><a href="#shop" data-go="run">Run WYLD</a></li>
+        <li><a href="#shop" data-go="accessories">Accessories</a></li>
+        <li><a href="#shop" data-go="sale">Sale</a></li>
+      </ul></div>
+      <div><h4>WYLD</h4><ul>
+        <li><a href="#custom">Custom kit</a></li>
+        <li><a href="#studio">Studio</a></li>
+        <li><a href="https://ridewyld.com/blogs/blog" target="_blank" rel="noopener">Journal</a></li>
+        <li><a href="https://ridewyld.com/pages/about-us" target="_blank" rel="noopener">About</a></li>
+      </ul></div>
+      <div><h4>Help</h4><ul>
+        <li><a href="https://ridewyld.com/pages/contact" target="_blank" rel="noopener">Contact</a></li>
+        <li><a href="https://ridewyld.com/policies/shipping-policy" target="_blank" rel="noopener">Shipping</a></li>
+        <li><a href="https://ridewyld.com/policies/refund-policy" target="_blank" rel="noopener">Returns</a></li>
+        <li><a href="https://ridewyld.com/products/wyld-gift-card" target="_blank" rel="noopener">Gift cards</a></li>
+      </ul></div>
+      <div><h4>Follow</h4><ul>
+        <li><a href="https://www.instagram.com/ridewyld" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="https://tiktok.com/wearewyld" target="_blank" rel="noopener">TikTok</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-base">
+      <img class="footer-logo" src="https://ridewyld.com/cdn/shop/files/WYLD-Black1080.png?width=200" alt="WYLD" width="50" height="18">
+      <span>© <span id="year">2026</span> WYLD · Prices in AED</span>
+    </div>
   </div>
 </footer>
 
-<script>
-const labels={
-  triathlon:["Triathlon.","Race-day focus. One clear hero product from the current catalog."],
-  cycling:["Cycling.","Race-fit jerseys, bib shorts and core cycling pieces."],
-  run:["Run WYLD.","Simple run layers: T-shirt, singlet and long sleeve."],
-  accessories:["Accessories.","Caps, gift cards and the small things around race week."]
-};
-function setCategory(cat){
-  document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active',b.dataset.filter===cat));
-  document.querySelectorAll('.product-card').forEach(card=>card.classList.toggle('visible',card.dataset.category===cat));
-  document.getElementById('shopTitle').textContent=labels[cat][0];
-  document.getElementById('shopIntro').textContent=labels[cat][1];
-}
-document.querySelectorAll('#tabs button').forEach(b=>b.addEventListener('click',()=>setCategory(b.dataset.filter)));
-document.querySelectorAll('[data-category-link]').forEach(a=>a.addEventListener('click',()=>setCategory(a.dataset.categoryLink)));
-const viewer=document.getElementById('viewer');
-document.querySelectorAll('[data-model]').forEach(btn=>btn.addEventListener('click',()=>{
-  document.querySelectorAll('[data-model]').forEach(x=>x.classList.remove('active'));
-  btn.classList.add('active');viewer.src=btn.dataset.model;
-}));
-setCategory('triathlon');
-</script>
+<!-- Overlays -->
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer left" id="menu" aria-label="Menu" aria-hidden="true">
+  <div class="drawer-head">
+    <img src="https://ridewyld.com/cdn/shop/files/WYLD-Black1080.png?width=200" alt="WYLD" style="height:18px;width:auto">
+    <button class="icon-btn" data-close aria-label="Close menu"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer-body">
+    <ul class="menu-links">
+      <li><a href="#shop" data-go="all">Shop all <small data-count="all"></small></a></li>
+      <li><a href="#shop" data-go="cycling">Cycling <small data-count="cycling"></small></a></li>
+      <li><a href="#shop" data-go="triathlon">Triathlon <small data-count="triathlon"></small></a></li>
+      <li><a href="#shop" data-go="run">Run WYLD <small data-count="run"></small></a></li>
+      <li><a href="#shop" data-go="accessories">Accessories <small data-count="accessories"></small></a></li>
+      <li><a href="#shop" data-go="sale">Sale <small data-count="sale"></small></a></li>
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="#custom">Custom kit</a></li>
+    </ul>
+    <div class="menu-feature">
+      <a href="#shop" data-go="cycling" data-sub="Race Fit Jersey"><figure><img src="https://ridewyld.com/cdn/shop/products/grapepocket.jpg?width=500" alt="" loading="lazy"></figure><span>Race Fit jerseys</span></a>
+      <a href="#shop" data-go="cycling" data-sub="Bib Shorts"><figure><img src="https://ridewyld.com/cdn/shop/products/blackbibs6.jpg?width=500" alt="" loading="lazy"></figure><span>Bib shorts</span></a>
+    </div>
+    <div class="menu-meta">
+      <a href="https://www.instagram.com/ridewyld" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://ridewyld.com/pages/contact" target="_blank" rel="noopener">Contact</a>
+    </div>
+  </div>
+</aside>
+
+<aside class="drawer" id="bag" aria-label="Bag" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Your bag <span id="bagHeadCount"></span></h2>
+    <button class="icon-btn" data-close aria-label="Close bag"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="drawer-body" id="bagBody"></div>
+  <div class="drawer-foot" id="bagFoot">
+    <div class="subtotal"><span>Subtotal</span><strong id="subtotal">AED 0</strong></div>
+    <a class="btn block" id="checkout" href="https://ridewyld.com/cart" target="_blank" rel="noopener"><svg width="16" height="16" style="stroke:currentColor;fill:none;stroke-width:1.5"><use href="#i-lock"/></svg>Checkout</a>
+    <p class="fine">Shipping and taxes calculated at checkout on ridewyld.com</p>
+  </div>
+</aside>
+
+<div class="search" id="search" aria-label="Search" aria-hidden="true">
+  <div class="wrap search-bar">
+    <svg><use href="#i-search"/></svg>
+    <input id="q" type="search" placeholder="Search jerseys, bibs, trisuits…" autocomplete="off" aria-label="Search products">
+    <button class="icon-btn" data-close aria-label="Close search"><svg><use href="#i-close"/></svg></button>
+  </div>
+  <div class="wrap search-results" id="searchResults"></div>
+</div>
+
+<div class="pdp" id="pdp" role="dialog" aria-modal="true" aria-label="Product" aria-hidden="true">
+  <button class="pdp-close" data-close aria-label="Close product"><svg><use href="#i-close"/></svg></button>
+  <div id="pdpContent"></div>
+</div>
+
+<div class="toast" id="toast" role="status"><span id="toastText">Added to bag</span><button data-open="bag">View bag</button></div>
+
+<script type="module" src="./src/store.js"></script>
 </body>
 </html>
