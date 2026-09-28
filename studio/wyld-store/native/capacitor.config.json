@@ -1,0 +1,17 @@
+{
+  "appId": "com.ridewyld.app",
+  "appName": "WYLD",
+  "webDir": "www",
+  "backgroundColor": "#f6f4ef",
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": false,
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "SystemBars": {
+      "style": "LIGHT",
+      "insetsHandling": "css"
+    }
+  }
+}

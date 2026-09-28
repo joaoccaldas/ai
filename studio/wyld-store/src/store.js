@@ -455,6 +455,10 @@ document.addEventListener('click', e => {
   try { localStorage.setItem(APP_KEY, '1'); } catch { /* storage blocked */ }
 });
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => { /* site works without it */ }));
+}
+
 renderGrid();
 updateBadge();
 const deep = location.hash.match(/^#\/p\/(.+)$/);

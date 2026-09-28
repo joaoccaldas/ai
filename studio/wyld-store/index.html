@@ -13,6 +13,14 @@
 <link rel="stylesheet" href="./src/store.css">
 <link rel="icon" href="./app/icons/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="./app/icons/apple-touch-icon.png">
+<link rel="manifest" href="./app/manifest.webmanifest">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="WYLD">
+<script>
+  // Launched from the home screen? Open the app, not the website.
+  if (matchMedia('(display-mode: standalone)').matches || navigator.standalone === true) location.replace('./app/' + location.hash);
+</script>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 </head>
 <body>

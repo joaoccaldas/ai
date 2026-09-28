@@ -1,0 +1,21 @@
+{
+  "name": "wyld-native",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Native Android/iOS shell for the WYLD app (Capacitor). Bundles ../app so the app runs from the phone, not a website.",
+  "type": "module",
+  "scripts": {
+    "build:web": "node scripts/build-www.mjs",
+    "sync": "npm run build:web && cap sync android",
+    "icons": "capacitor-assets generate --android --iconBackgroundColor '#111113' --iconBackgroundColorDark '#111113' --splashBackgroundColor '#111113' --splashBackgroundColorDark '#111113'",
+    "apk": "npm run sync && cd android && ./gradlew assembleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.5.2",
+    "@capacitor/core": "8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "8.5.2"
+  }
+}
