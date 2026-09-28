@@ -8,12 +8,13 @@
 <title>WYLD Studio Store</title>
 <link rel="stylesheet" href="./src/styles.css">
 <link rel="stylesheet" href="./src/art.css">
+<link rel="stylesheet" href="./src/real-assets.css">
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"}}</script>
 </head>
 <body>
 <header class="topbar">
   <a class="mark" href="#">WYLD<span>STUDIO</span></a>
-  <nav id="nav"><a href="#collection">Shop</a><a href="#motion">Motion</a><a href="#world">World</a><button id="open-tryon" class="nav-try">Try it on</button></nav>
+  <nav id="nav"><a href="#collection">Shop</a><a href="#motion">Motion</a><a href="#real-wyld">Lookbook</a><a href="#world">World</a><button id="open-tryon" class="nav-try">Try it on</button></nav>
   <div class="top-actions"><button id="menu-toggle" class="menu">Menu</button><button class="bag">Bag <span id="bag-count">0</span></button></div>
 </header>
 <main>
@@ -40,6 +41,16 @@
 <section class="signal-band"><div>RACE FAST / LOOK WYLD / MOVE FREE / RACE FAST / LOOK WYLD / MOVE FREE / RACE FAST / LOOK WYLD / MOVE FREE /</div></section>
 <section id="collection" class="collection"><div class="section-head"><span class="eyebrow">Shop the studio</span><h2>Race. Recover. Repeat.</h2><p>Every card opens directly in the 3D studio. Product, color, pose and purchase state stay in one experience.</p></div><div id="product-grid" class="product-grid"></div></section>
 <section id="world" class="world"><div class="world-copy"><span class="eyebrow">WYLD visual world</span><h2>Berry. Blueberry. Tiffany. Olive. Black.</h2><p>The palette comes from indexed WYLD collection families plus a private reference motion study. Personal source photos stay private; the public layer carries derived color and movement signals.</p></div><div class="world-art art-one"></div><div class="world-art art-two"></div><div class="world-art art-three"></div></section>
+<section id="real-wyld" class="real-assets">
+  <div class="section-head"><span class="eyebrow">Real WYLD / public archive</span><h2>Colour under real light.</h2><p>Existing RideWYLD photography from your legacy studio concept is reused here as the editorial truth layer beside the interactive 3D products.</p></div>
+  <div class="real-assets-grid">
+    <figure class="real-shot"><img loading="lazy" src="https://ridewyld.com/cdn/shop/products/F42ECCBF-8818-4B43-BD01-8FFAF344F02B.jpg?v=1616926600&width=1600" alt="WYLD cycling lifestyle photograph"><figcaption><div><small>RideWYLD archive</small><h3>Built to move.</h3></div><span>01</span></figcaption></figure>
+    <figure class="real-shot"><img loading="lazy" src="https://ridewyld.com/cdn/shop/files/tiffany_jersey_and_bib_short_1.jpg?v=1737726088&width=1600" alt="WYLD Tiffany jersey and bib shorts"><figcaption><div><small>Tiffany system</small><h3>Jersey + bib.</h3></div><span>02</span></figcaption></figure>
+    <figure class="real-shot"><img loading="lazy" src="https://ridewyld.com/cdn/shop/files/tiffany_blue_bibs_close_up.jpg?v=1737451009&width=1200" alt="Close-up of WYLD Tiffany bib shorts"><figcaption><div><small>Material detail</small><h3>Compression close-up.</h3></div><span>03</span></figcaption></figure>
+    <figure class="real-shot"><img loading="lazy" src="https://ridewyld.com/cdn/shop/files/tourqoise_tiffany_bib_shorts_product_photo.jpg?v=1737450485&width=1200" alt="WYLD Tiffany bib shorts product photograph"><figcaption><div><small>Product truth</small><h3>Tiffany bib.</h3></div><span>04</span></figcaption></figure>
+  </div>
+  <p class="real-assets-note">These images are referenced from RideWYLD’s public CDN and were already present in the legacy RideWYLD studio page. Private Michelle reference photos remain outside the public repository.</p>
+</section>
 <section class="live-reference"><div class="section-head"><span class="eyebrow">Current WYLD references</span><h2>Grounded in the real collection.</h2><p>Public collection references keep the studio connected to RideWYLD while the 3D racewear line evolves.</p></div><div id="reference-rail" class="reference-rail"></div></section>
 <section class="manifesto"><span class="eyebrow">Designed in motion</span><h2>Apparel should be judged where it lives: on the body, under effort.</h2><div><p>Stand for proportion. Aero for shoulder and torso behavior. Run for hem, gripper and graphic rhythm.</p><p>The V1 semantic geometry is intentionally replaceable by Blender-authored production garments without changing the shopping experience.</p></div></section>
 </main>
