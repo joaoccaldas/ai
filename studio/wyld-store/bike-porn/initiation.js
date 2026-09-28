@@ -278,52 +278,52 @@ function renderTrial() {
   }
 
   if (step === 2) {
-    state.rhythm = [];
-    state.rhythmMisses = 0;
+    let sequence = [];
+    let repeat = [];
+    let phase = 'create';
+    const glyphs = ['◌','△','✦','∞'];
 
     trialBox.innerHTML = shell(
       3,
-      'The Vanilla Protocol',
-      'Vanilla is the highest known state of 5D encryption. Two tastes. Let it breathe. One final taste.',
+      'Invent the password.',
+      'Choose any three symbols. The symbols do not matter. Remember the pattern you create.',
       '<div class="wyld-init__choices">' +
-        '<button data-flavour>Vanilla</button>' +
-        '<button data-flavour>Chain lube</button>' +
-        '<button data-flavour>Fear</button>' +
-        '<button data-flavour>Tuesday</button>' +
-      '</div>',
-      'wyld-init__vanilla-card'
+        glyphs.map((g, i) => '<button data-symbol="' + i + '">' + g + '</button>').join('') +
+      '</div>'
     );
 
-    trialBox.querySelectorAll('[data-flavour]').forEach(button => {
+    trialBox.querySelectorAll('[data-symbol]').forEach(button => {
       button.onclick = () => {
-        const now = performance.now();
-        state.rhythm.push(now);
-        if (state.rhythm.length > 3) state.rhythm.shift();
+        const symbol = button.dataset.symbol;
 
-        if (state.rhythm.length === 1) {
-          feedback('Taste registered. Again.');
+        if (phase === 'create') {
+          sequence.push(symbol);
+          feedback('Your sequence: ' + sequence.map(i => glyphs[i]).join(' · '));
+
+          if (sequence.length === 3) {
+            phase = 'repeat';
+            feedback('Good. Now repeat exactly what you just invented.');
+          }
           return;
         }
 
-        if (state.rhythm.length === 2) {
-          feedback('Now let the vanilla breathe.');
+        repeat.push(symbol);
+        const index = repeat.length - 1;
+
+        if (repeat[index] !== sequence[index]) {
+          repeat = [];
+          feedback('Wrong. It was your own password. Start the repeat again.');
+          beep(115, .08, 'square', .018);
           return;
         }
 
-        const quickPair = state.rhythm[1] - state.rhythm[0] < 900;
-        const deliberatePause = state.rhythm[2] - state.rhythm[1] > 950;
+        feedback('Repeat: ' + repeat.map(i => glyphs[i]).join(' · '));
 
-        if (quickPair && deliberatePause) {
-          feedback('VANILLA STATE ACHIEVED. Nobody knows what this means.');
+        if (repeat.length === 3) {
+          feedback('Pattern memory verified. Mildly suspicious.');
           beep(740, .2, 'triangle', .03);
           setTimeout(nextTrial, reduced ? 100 : 800);
-          return;
         }
-
-        state.rhythmMisses += 1;
-        if (state.rhythmMisses < 2) feedback('Too eager. Vanilla requires emotional spacing.');
-        else feedback('Hint from Valentino: two close together, then a dignified pause.');
-        state.rhythm = [];
       };
     });
     return;
@@ -333,17 +333,17 @@ function renderTrial() {
     trialBox.innerHTML = shell(
       4,
       'Do absolutely nothing.',
-      'Eight seconds. No clicking. No typing. No heroic intervention.',
-      '<div class="wyld-init__dont" id="wiCountdown">8</div>'
+      'Five seconds. No clicking. No typing. No heroic intervention.',
+      '<div class="wyld-init__dont" id="wiCountdown">5</div>'
     );
 
-    let left = 8;
+    let left = 5;
     const countdown = $('#wiCountdown');
     let armed = false;
 
     const reset = () => {
       if (!armed) return;
-      left = 8;
+      left = 5;
       countdown.textContent = left;
       feedback('You did something. Admirable. Incorrect.');
       beep(105, .08, 'square', .018);
