@@ -7,7 +7,7 @@
   "scripts": {
     "build:web": "node scripts/build-www.mjs",
     "sync": "npm run build:web && cap sync android",
-    "icons": "capacitor-assets generate --android --iconBackgroundColor '#cbb8f5' --iconBackgroundColorDark '#cbb8f5' --splashBackgroundColor '#cbb8f5' --splashBackgroundColorDark '#cbb8f5'",
+    "icons": "capacitor-assets generate --android --iconBackgroundColor '#c9b6f4' --iconBackgroundColorDark '#c9b6f4' --splashBackgroundColor '#c9b6f4' --splashBackgroundColorDark '#c9b6f4'",
     "apk": "npm run sync && cd android && ./gradlew assembleRelease"
   },
   "dependencies": {
