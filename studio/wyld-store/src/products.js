@@ -23,7 +23,7 @@ export const PRODUCTS = [
     price:395, currency:"AED", kind:"jersey", asset:"jersey-women.glb", defaultColor:"raspberry",
     colorways:["raspberry","black","white"], sizes:["XS","S","M","L","XL"], pattern:PATTERN.raspberry,
     copy:"Close race fit, unmistakable WYLD color and a clean aerodynamic silhouette for warm-weather riding.",
-    source:"Current RideWYLD catalog. 3D studio visualization is a semantic product analogue, not manufacturing CAD.",
+    source:"Official WYLD catalog · interactive 3D visualization.",
     shopUrl:"https://ridewyld.com/", availability:"Current catalog"
   },
   {
@@ -31,7 +31,7 @@ export const PRODUCTS = [
     price:295, compareAt:395, currency:"AED", kind:"jersey", asset:"jersey-men.glb", defaultColor:"blueberry",
     colorways:["blueberry","black","white"], sizes:["XS","S","M","L","XL"], pattern:PATTERN.blueberry,
     copy:"Race-cut jersey in WYLD Blueberry, built for the same high-energy palette with a cooler blue frequency.",
-    source:"Current RideWYLD catalog sale price. 3D studio visualization is a semantic product analogue.",
+    source:"Official WYLD catalog · sale price · interactive 3D visualization.",
     shopUrl:"https://ridewyld.com/", availability:"Sale"
   },
   {
@@ -40,7 +40,7 @@ export const PRODUCTS = [
     colorways:["grape","black","white"], sizes:["XS","S","M","L","XL"], pattern:PATTERN.grape,
     image:"https://ridewyld.com/cdn/shop/products/grapepocket.jpg?v=1659262824&width=1200",
     copy:"A saturated grape race-fit jersey with the sharp, compact silhouette that defines the WYLD collection.",
-    source:"Current RideWYLD product page. 3D studio visualization is a semantic product analogue.",
+    source:"Official WYLD product · interactive 3D visualization.",
     shopUrl:"https://ridewyld.com/products/grape-jersey", availability:"Live product page"
   },
   {
@@ -48,7 +48,7 @@ export const PRODUCTS = [
     price:395, currency:"AED", kind:"jersey", asset:"jersey-men.glb", defaultColor:"olive",
     colorways:["olive","black","white"], sizes:["XS","S","M","L","XL"], pattern:PATTERN.olive,
     copy:"WYLD Olive shifts the visual energy without losing the race-fit attitude, pairing naturally with acid and white.",
-    source:"Current RideWYLD product page. 3D studio visualization is a semantic product analogue.",
+    source:"Official WYLD product · interactive 3D visualization.",
     shopUrl:"https://ridewyld.com/products/olive", availability:"Live product page"
   },
   {
@@ -57,7 +57,7 @@ export const PRODUCTS = [
     colorways:["tiffany","black","raspberry"], sizes:["XS","S","M","L","XL"], pattern:PATTERN.tiffany,
     image:"https://ridewyld.com/cdn/shop/files/tourqoise_tiffany_bib_shorts_product_photo.jpg?v=1737450485&width=1200",
     copy:"High-quality Lycra, hot-weather construction, dual-density padding and a mid-profile leg gripper in WYLD Tiffany.",
-    source:"Current RideWYLD product page; currently indexed as sold out.",
+    source:"Official WYLD product · currently sold out.",
     shopUrl:"https://ridewyld.com/products/tiffany-bib-shorts", availability:"Sold out", soldOut:true
   },
   {
@@ -65,7 +65,7 @@ export const PRODUCTS = [
     price:450, currency:"AED", kind:"bib", asset:"bib-black.glb", defaultColor:"black",
     colorways:["black","white","raspberry"], sizes:["XS","S","M","L","XL"], pattern:PATTERN.black,
     copy:"The quiet anchor of the collection: black bibs that let the jersey color do the shouting.",
-    source:"Current RideWYLD catalog. 3D studio visualization is a semantic product analogue.",
+    source:"Official WYLD catalog · interactive 3D visualization.",
     shopUrl:"https://ridewyld.com/collections/bib-shorts", availability:"Current catalog"
   },
   {
@@ -73,7 +73,7 @@ export const PRODUCTS = [
     price:155, currency:"AED", kind:"singlet", asset:"singlet.glb", defaultColor:"raspberry",
     colorways:["raspberry","tiffany","black","white"], sizes:["XS","S","M","L","XL"], pattern:PATTERN.raspberry,
     copy:"A lightweight Run WYLD layer that carries the same palette from bike to run.",
-    source:"Current RideWYLD Run WYLD catalog. 3D studio visualization is a semantic product analogue.",
+    source:"Official Run WYLD catalog · interactive 3D visualization.",
     shopUrl:"https://ridewyld.com/", availability:"Current catalog"
   },
   {
@@ -81,7 +81,7 @@ export const PRODUCTS = [
     price:70, compareAt:100, currency:"AED", kind:"cap", asset:"cap.glb", defaultColor:"black",
     colorways:["black","raspberry","tiffany","olive"], sizes:["One size"], pattern:PATTERN.black,
     copy:"A compact WYLD signal piece for race week, coffee stops and everything after the finish line.",
-    source:"Current RideWYLD catalog sale price. 3D studio visualization is a semantic product analogue.",
+    source:"Official WYLD catalog · sale price · interactive 3D visualization.",
     shopUrl:"https://ridewyld.com/", availability:"Sale"
   }
 ];
