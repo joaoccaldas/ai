@@ -1,0 +1,8 @@
+{
+  "name": "wyld-bike-porn",
+  "private": true,
+  "description": "Bike Porn studio: Canyon Speedmax CFR AXS 3D study (from the Canyon Museum project) in six WYLD liveries.",
+  "type": "module",
+  "scripts": { "build": "esbuild main.js --bundle --minify --format=esm --target=es2020 --outfile=../app.js --legal-comments=none" },
+  "devDependencies": { "esbuild": "0.28.2", "three": "0.186.1" }
+}

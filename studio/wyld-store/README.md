@@ -17,6 +17,7 @@ A minimal, editorial retail storefront and mobile app for [ridewyld.com](https:/
 - **WYLD Studio:** the Blender GLBs in `assets/blender/`, shown in `<model-viewer>`, with live colourways that recolour the `FABRIC_PRIMARY` material.
 - **Also on the page:** custom kit, brand story, FAQ, journal, newsletter and footer.
 - **Upcoming releases (`upcoming/`):** a playful sign-up page for new drops, linked from the menu.
+- **Bike Porn (`bike-porn/`):** a Three.js 3D studio with a fully equipped Speedmax CFR AXS design study, taken from the open Canyon Museum project, in six custom WYLD liveries (Raspberry Riot, Tiffany Tide, Grape Nebula, Olive Acid, Stay Weird and WYLD Dye). Each livery has a persona and its own procedural movie set: stage, beach, moon base, jungle rave, sticker dream and cotton-candy sky. Light and Dark studio modes are also available. Orbit, camera views, spin, Ride (the wheels, cranks and chain animate), Random, and a shareable `#livery` link are included. The source is in `bike-porn/src/`: `main.js` holds the renderer, `dye.js` the livery shader, `sets.js` the movie sets and `liveries.js` the colourways. Rebuild with `cd bike-porn/src && npm ci && npm run build`, which writes `bike-porn/app.js`. It's an unofficial design study, not affiliated with Canyon.
 - **Free-shipping progress:** the bag shows how far the customer is from the store's free-shipping threshold.
 - **App entry points:** a dismissible "Get the app" banner on phones, plus links in the menu and footer.
 
