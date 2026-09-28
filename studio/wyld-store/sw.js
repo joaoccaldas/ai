@@ -2,7 +2,7 @@
    small files so updates show immediately; cached copies are the offline
    fallback. Product images use a bounded cache-first store. Nothing else
    (other origins, large downloads, non-GET requests) is intercepted. */
-const VERSION = 'wyld-v3';
+const VERSION = 'wyld-v4';
 const SHELL = `${VERSION}-shell`;
 const IMAGES = `${VERSION}-images`;
 const MAX_IMAGES = 120;
@@ -17,7 +17,13 @@ const SHELL_FILES = [
   './app/icons/icon-512.png',
   './app/icons/apple-touch-icon.png',
   './app/icons/favicon-32.png',
-  './src/catalog.js',
+  './data/catalog.js',
+  './config/site.js',
+  './src/core/format.js',
+  './src/core/model.js',
+  './src/core/storage.js',
+  './src/core/runtime.js',
+  './src/core/live.js',
   './fonts/fonts.css',
   './fonts/inknut-antiqua-400-latin.woff2',
   './fonts/instrument-sans-latin.woff2',

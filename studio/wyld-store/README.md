@@ -1,6 +1,6 @@
 # WYLD Store
 
-A minimal, editorial retail storefront for [ridewyld.com](https://ridewyld.com/), designed mobile-first and built without a build step.
+A minimal, editorial retail storefront and mobile app for [ridewyld.com](https://ridewyld.com/). It's static, needs no server, and is built to be found by search engines and AI assistants.
 
 ## What's in it
 
@@ -15,42 +15,87 @@ A minimal, editorial retail storefront for [ridewyld.com](https://ridewyld.com/)
 - **Bag drawer:** stored in localStorage. Checkout hands the bag to ridewyld.com through a Shopify cart permalink (`/cart/{variant}:{qty},…`), so the order completes on the real store.
 - **Search overlay, menu drawer and toast.**
 - **WYLD Studio:** the Blender GLBs in `assets/blender/`, shown in `<model-viewer>`, with live colourways that recolour the `FABRIC_PRIMARY` material.
-- **Also on the page:** custom kit, brand story, journal, newsletter and footer.
+- **Also on the page:** custom kit, brand story, FAQ, journal, newsletter and footer.
+- **Upcoming releases (`upcoming/`):** a playful sign-up page for new drops, linked from the menu.
+- **Free-shipping progress:** the bag shows how far the customer is from the store's free-shipping threshold.
 - **App entry points:** a dismissible "Get the app" banner on phones, plus links in the menu and footer.
 
 The typography matches ridewyld.com: Inknut Antiqua for headings and Instrument Sans for body text. Both are self-hosted from `fonts/` under the SIL Open Font License (see `fonts/OFL-*.txt`), so no font requests go to third parties. The logo, product photos and campaign images load from the store's CDN.
+
+## Structure
+
+```
+config/site.js        brand, contact channels, policies, currency, free-shipping threshold (edit here)
+data/                 generated: catalog.json + catalog.js (daily sync), app-version.json (Android CI)
+src/core/             shared by website, app and builds
+  format.js           prices, images, escaping
+  model.js            catalog validation, categories, colours, sizes, variant logic, search, related
+  storage.js          bag and saved items, checkout link, free-shipping progress
+  live.js             live catalog refresh and app update check (Android app)
+  runtime.js          build-time settings (overwritten by the Android build)
+src/card.js           product card shared by the store and the pre-rendered pages
+src/store.js, store.css   website
+app/                  mobile web app (PWA), also bundled into the Android app
+native/               Capacitor Android project
+tools/sync_catalog.py pulls live prices and stock from the official store feed
+tools/build_site.mjs  pre-renders SEO pages, sitemap and llms.txt
+p/, c/, colour/       generated product, category and colour pages
+upcoming/             upcoming releases page
+fonts/                self-hosted fonts and licences
+sw.js                 service worker for site and app
+```
+
+New categories, colours or copy go in `src/core/model.js`; brand and contact details go in `config/site.js`. The website, the app and the SEO build all read these files.
+
+## Real prices and stock
+
+`.github/workflows/wyld-site.yml` runs daily, on changes to the store, and on demand. It:
+1. Runs `tools/sync_catalog.py`, which fetches the official Shopify feed (retrying if rate-limited). It writes `data/` only when prices or stock actually change, and keeps the last good catalog if the store can't be reached.
+2. Runs `tools/build_site.mjs` to regenerate the SEO pages.
+3. Commits the results and republishes GitHub Pages.
+
+Checkout always happens on ridewyld.com through a Shopify cart permalink, so the store's own prices are final.
+
+## SEO and AI search
+
+`tools/build_site.mjs` generates HTML that crawlers and AI assistants can read without running JavaScript:
+- **Product pages:** a static page for every product at `p/<handle>/`, with `Product` structured data (price, currency, availability, brand, colour, sizes) and breadcrumbs.
+- **Collection pages:** `c/<category>/` and `colour/<colour>/`, with `ItemList` structured data.
+- **Homepage:** the full product grid pre-rendered, plus `Organization`, `WebSite`, `ItemList` and `FAQPage` structured data, and a visible FAQ written from store facts.
+- **Metadata:** canonical URLs, Open Graph and Twitter cards, descriptive titles and meta descriptions.
+- **Crawler files:** `sitemap.xml`, `robots.txt`, `llms.txt` and `llms-full.txt` (for AI assistants).
+
+Absolute URLs come from `SITE_URL`. CI uses the GitHub Pages address, or the repository variable `WYLD_SITE_URL` when a custom domain is set. `robots.txt` and `llms.txt` only take effect at the root of a domain, so serve the store from its own domain for the full benefit, and submit `sitemap.xml` in Google Search Console.
+
+## Contact details
+
+Set `contact.email`, `contact.phone` and `contact.whatsapp` in `config/site.js`. They then appear in the site footer, the app, the structured data and `llms.txt`. Leave them empty to show only the contact form and social channels. Use business channels only, never personal ones.
 
 ## Mobile app
 
 The same app ships in two forms:
 
-1. **Android app (`.apk`)**: a native app built with Capacitor from `native/`. The app's files are bundled inside it, so it runs from the phone rather than a browser tab. It has the WYLD "W" launcher icon and a splash screen, and it requests only internet access. It runs on Android 7 and newer. The `WYLD Android App` workflow builds it, installs it on an emulator as a smoke test, and publishes it to `downloads/WYLD.apk` on the site.
-2. **Web app (`app/`)**: an installable Progressive Web App for iPhone (Safari → Share → Add to Home Screen) and any other browser. Installing from the website also opens the app, because the site links the app manifest and redirects home-screen launches to `app/`.
+1. **Android app:** `native/` wraps `app/` with Capacitor. The `WYLD Android App` workflow builds it, smoke-tests it on an emulator, and publishes `downloads/WYLD.apk` plus `data/app-version.json`.
+2. **Web app:** `app/` is an installable PWA for iPhone (Safari → Share → Add to Home Screen) and other browsers.
 
-The website's "Get the app" banner opens `app/?install=1`. That sheet offers the APK download on Android and the Add to Home Screen steps on iPhone.
+**Updating the app as it evolves:**
+- **Prices and stock** reach installed apps without a new build. The Android app refreshes from the published `data/catalog.json` at launch and when it returns to the foreground. It caches the result for offline use.
+- **Design and features** ship by changing `app/`, `src/core/` or `config/`. CI then builds a new APK with a higher version number, and installed apps show an "Update WYLD" prompt that downloads it.
+- **Web app:** loads the latest files network-first, so it updates on the next visit. When `sw.js` changes, bump its `VERSION`.
+- **Signing:** set the repository secrets `WYLD_KEYSTORE_BASE64`, `WYLD_KEYSTORE_PASSWORD`, `WYLD_KEY_ALIAS` and `WYLD_KEY_PASSWORD` so every build is signed with the same key. Updates then install over the old version. Without them, CI signs with a new debug key each time, so users must uninstall before updating.
 
-The layout fills any screen: phones, foldables and tablets. On phones whose browser reports a desktop-width page (such as "Desktop view"), the app scales itself back to the phone's real width.
-
-The app has a tab bar (Home, Shop, Search, Saved, Bag), a campaign carousel, sport tiles and product rails, filters and sorting, and a product page with gallery, fit and size, share and a sticky add-to-bag bar. It also has saved items, recent searches and a bag. Checkout opens ridewyld.com with the bag pre-filled.
-
-Offline: the service worker (`sw.js`, which covers both the site and the app) serves our own files network-first with a cached fallback, and keeps the most recent 120 product images.
-
-### Building the Android app locally
-
-Requires Node 22, JDK 21 and the Android SDK (platform 36).
+**Building locally:** requires Node 22, JDK 21 and the Android SDK (platform 36).
 
 ```bash
 cd native
 npm ci
-npm run icons   # regenerate launcher icons and splash from native/assets
-npm run apk     # android/app/build/outputs/apk/release/app-release.apk
+npm run icons    # regenerate launcher icons and splash from native/assets
+SITE_URL=https://your-site/ WYLD_VERSION_CODE=100 npm run apk
 ```
 
-**Signing:** set `WYLD_KEYSTORE_FILE`, `WYLD_KEYSTORE_PASSWORD`, `WYLD_KEY_ALIAS` and `WYLD_KEY_PASSWORD` to sign with a release key. In CI, add them as the repository secrets `WYLD_KEYSTORE_BASE64` (the keystore, base64-encoded), `WYLD_KEYSTORE_PASSWORD`, `WYLD_KEY_ALIAS` and `WYLD_KEY_PASSWORD`. Without them the build uses a debug key, which installs fine, but each CI build gets a different key. A new build then only installs after removing the old one, so a release key is recommended. Keystores are git-ignored and must never be committed.
+**iPhone:** to publish a native iOS app, run `npx cap add ios` on a Mac. Distribution then needs an Apple Developer account and the App Store or TestFlight.
 
-**iPhone:** to publish a native iOS app, run `npx cap add ios` on a Mac and build it in Xcode. Distribution then needs an Apple Developer account and the App Store or TestFlight.
-
-### Safety and privacy
+## Safety and privacy
 
 Website:
 - A Content-Security-Policy allows scripts only from this site, plus the 3D viewer from Google's library CDN. There are no inline scripts, and the newsletter form may post only to ridewyld.com.
@@ -67,33 +112,11 @@ App:
 - The service worker only caches small `GET` files from its own scope plus product images (at most 120). Downloads such as the APK and 3D models are never cached. It deletes old caches on update.
 - Android app: only the `INTERNET` permission, no cleartext traffic, no app-data backup, and WebView debugging disabled. External links open in the phone's browser.
 
-To ship an update, bump `VERSION` in `sw.js` so installed web apps refresh their cache.
 
-## Files
-
-- `index.html`: page markup
-- `src/store.css`: design system and responsive layout (breakpoints at 720px and 1080px)
-- `src/store.js`: grid, filters, colour index, kit builder, product view, bag, search, hero and 3D studio
-- `src/launch.js`: opens the app when the site is launched from the home screen
-- `fonts/`: self-hosted web fonts and their licences
-- `src/catalog.js`: generated catalog (prices, variant ids, stock, images)
-- `tools/sync_catalog.py`: rebuilds the catalog from the public feed
-- `app/`: the mobile app (`index.html`, `app.css`, `app.js`, `manifest.webmanifest`, `icons/`); it reuses `src/catalog.js`
-- `sw.js`: service worker for the site and the app
-- `native/`: the Capacitor Android project, with icons and splash sources in `native/assets/`
-- `downloads/WYLD.apk`: the latest Android build, published by CI
-
-## Refresh the catalog
+## Run locally
 
 ```bash
-python3 tools/sync_catalog.py            # fetches https://ridewyld.com/products.json
-```
-
-Private team kits (tagged `SSC`) are excluded from the retail shop.
-
-## Run
-
-```bash
-python3 -m http.server 8788
-# open http://localhost:8788/
+python3 tools/sync_catalog.py   # refresh prices (optional)
+node tools/build_site.mjs       # regenerate SEO pages (relative links without SITE_URL)
+python3 -m http.server 8788     # open http://localhost:8788/
 ```

@@ -1,82 +1,16 @@
-import { catalog } from './catalog.js';
+import { site } from '../config/site.js';
+import { img, srcset, money, esc, EXT, priceHTML } from './core/format.js';
+import {
+  db, CATS, CATEGORY_LABEL, RANK, rank, KIND_LABEL, STYLE_LABEL, FIT, describe, COLOURS, colourOf,
+  variantForP, valueOKP, defaultSelection, applyOption, variantLabel, search, relatedFor,
+} from './core/model.js';
+import { store, BAG_KEY, readBag, writeBag, addLine, bagCount, bagTotal, checkoutURL, freeShipping } from './core/storage.js';
+import { card, productPath } from './card.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
-const SHOP = 'https://ridewyld.com';
-const img = (path, w) => `${SHOP}${path}?width=${w}`;
-const srcset = (path, ws = [400, 700, 1000, 1400]) => ws.map(w => `${img(path, w)} ${w}w`).join(',');
-const money = n => `AED ${n.toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0 })}`;
-const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
-const EXT = 'target="_blank" rel="noopener"';
-// Map, not a plain object: hash input like "#/p/constructor" must not hit Object.prototype.
-const byHandle = new Map(catalog.map(p => [p.handle, p]));
-const variants = new Map(catalog.flatMap(p => p.variants.map(v => [v.id, { p, v }])));
-const store = {
-  get(key, fallback) { try { const v = JSON.parse(localStorage.getItem(key)); return v ?? fallback; } catch { return fallback; } },
-  set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* private mode or quota */ } },
-};
-
-const CATS = {
-  all: { title: 'All products', test: () => true },
-  cycling: { title: 'Cycling', test: p => p.category === 'cycling' },
-  triathlon: { title: 'Triathlon', test: p => p.category === 'triathlon' },
-  run: { title: 'Run WYLD', test: p => p.category === 'run' },
-  accessories: { title: 'Accessories', test: p => p.category === 'accessories' },
-  sale: { title: 'Sale', test: p => p.was && p.available },
-};
-const RANK = ['Race Fit Jersey', 'Trisuit', 'Bib Shorts', 'Singlet', 'T-Shirt', 'Long Sleeve Shirt', 'Gilet', 'Club Fit Jersey', 'Cap', 'Ear Plugs', 'Gift Cards'];
-const rank = p => (p.available ? 0 : 100) + (RANK.indexOf(p.kind) + 1 || 50);
-const KIND_LABEL = { 'Race Fit Jersey': 'Race Fit', 'Club Fit Jersey': 'Club Fit', 'Bib Shorts': 'Bib shorts', Gilet: 'Gilets' };
-const FIT = {
-  'Race Fit Jersey': 'Race Fit is our close, aerodynamic cut — made to sit snug against the body for fast riding.',
-  'Club Fit Jersey': 'Club Fit is a more relaxed cut for comfortable long days and social rides.',
-  'Bib Shorts': 'Bib shorts are designed to fit snugly; the straps and leg grippers keep everything in place while you ride.',
-  Trisuit: 'A close-fitting one-piece designed to be worn from swim to run.',
-};
-const STYLE_LABEL = { Female: 'Women', Male: 'Men', Unisex: 'Unisex' };
-// The colour index: WYLD colourways as they appear in product names.
-const COLOURS = [
-  ['raspberry', 'Raspberry', '#a3134a'],
-  ['grape', 'Grape', '#6f4cd9'],
-  ['blueberry', 'Blueberry', '#2f4fd6'],
-  ['olive', 'Olive', '#7f8b2f'],
-  ['tiffany', 'Tiffany', '#55d8d3'],
-  ['blush', 'Blush', 'linear-gradient(150deg,#ff5fa2,#c9b8ff)'],
-  ['skye', 'Skye', 'linear-gradient(150deg,#1f7cff,#55e0d8)'],
-  ['jungle', 'Jungle', '#1e5d78'],
-  ['berry blast', 'Berry Blast', 'linear-gradient(150deg,#d42b7f,#6f4cd9)'],
-  ['pink', 'Pink', '#ff2f92'],
-  ['blue', 'Blue', '#3a78c9'],
-  ['navy', 'Navy', '#1f2b55'],
-  ['midnight', 'Midnight', '#1a1d33'],
-  ['green', 'Green', '#8fa596'],
-  ['black', 'Black', '#111113'],
-].map(([key, name, c]) => ({ key, name, c, re: new RegExp(`\\b${key}\\b`, 'i') }));
-const colourOf = key => COLOURS.find(c => c.key === key);
-
-/* ---------- product card ---------- */
-function priceHTML(p, from = p.from) {
-  const pre = from ? 'From ' : '';
-  return p.was
-    ? `<span class="price"><span class="now">${pre}${money(p.price)}</span><s>${money(p.was)}</s></span>`
-    : `<span class="price">${pre}${money(p.price)}</span>`;
-}
-function card(p, sizes = '(min-width:1080px) 24vw, (min-width:720px) 32vw, 48vw') {
-  const [a, b] = p.images;
-  const badge = !p.available ? '<span class="badge out">Sold out</span>'
-    : p.was ? `<span class="badge sale">−${Math.round((1 - p.price / p.was) * 100)}%</span>` : '';
-  return `<article class="card${p.available ? '' : ' soldout'}">
-    <a href="#/p/${p.handle}" data-product="${p.handle}">
-      <div class="card-media">
-        ${badge}
-        <img src="${img(a, 700)}" srcset="${srcset(a)}" sizes="${sizes}" alt="${esc(p.title)}" loading="lazy">
-        ${b ? `<img class="alt" src="${img(b, 700)}" srcset="${srcset(b)}" sizes="${sizes}" alt="" loading="lazy">` : ''}
-      </div>
-      <div class="card-info"><h3>${esc(p.title)}</h3><span class="card-kind">${esc(p.kind)}</span>${priceHTML(p)}</div>
-    </a>
-    ${p.available ? `<button class="quick" data-quick="${p.handle}" aria-label="Quick add ${esc(p.title)}"><svg viewBox="0 0 24 24"><use href="#i-plus"/></svg></button>` : ''}
-  </article>`;
-}
+const catalog = db.products;
+const byHandle = db.byHandle;
 
 /* ---------- shop grid ---------- */
 const state = { cat: 'all', sub: null, gender: null, colour: null, sort: 'featured' };
@@ -230,7 +164,7 @@ $('#kitBody').addEventListener('click', e => {
 $('#kitAdd').addEventListener('click', () => {
   const vs = kitItems().map((p, i) => variantForP(p, kit.sel[i]));
   if (!vs.every(v => v?.ok)) return;
-  vs.forEach(v => { const line = bag.find(l => l.id === v.id); if (line) line.qty = Math.min(line.qty + 1, 10); else bag.push({ id: v.id, qty: 1 }); });
+  vs.forEach(v => addLine(bag, v.id));
   saveBag(); closeAll(); showToast('Kit added to your bag');
 });
 
@@ -281,20 +215,6 @@ pdp.addEventListener('scroll', () => {
   $('#pdpSticky').classList.toggle('on', actions.getBoundingClientRect().bottom < 0);
 }, { passive: true });
 
-/* Option logic shared by the product view and the kit builder. */
-const matchesP = (p, v, s) => p.options.every((o, i) => !s[o.name] || v.o[i] === s[o.name]);
-const variantForP = (p, s) => p.options.every(o => s[o.name]) ? p.variants.find(v => matchesP(p, v, s)) : null;
-const valueOKP = (p, s, name, value) => p.variants.some(v => v.ok && matchesP(p, v, { ...s, [name]: value }));
-
-function defaultSelection(p) {
-  const s = {};
-  p.options.forEach((o, i) => {
-    const firstOK = o.values.find(val => p.variants.some(v => v.ok && v.o[i] === val));
-    if (o.values.length === 1 || o.name !== 'Size') s[o.name] = firstOK || o.values[0];
-  });
-  return s;
-}
-
 // attr: data attribute prefix, so several pickers can live on one page.
 function optionGroupsHTML(p, s, attr = 'opt', item = '') {
   return p.options.map(o => {
@@ -306,17 +226,10 @@ function optionGroupsHTML(p, s, attr = 'opt', item = '') {
       return `<button class="${on ? 'on' : ''}${ok ? '' : ' na'}" data-${attr}="${esc(o.name)}" data-val="${esc(val)}"${item !== '' ? ` data-item="${item}"` : ''} aria-pressed="${on}" aria-label="${esc(txt)}${ok ? '' : ', sold out'}">${esc(txt)}</button>`;
     }).join('');
     const shown = s[o.name] ? (o.name === 'Style' ? STYLE_LABEL[s[o.name]] || s[o.name] : s[o.name]) : (isSize ? 'Select a size' : '');
-    return `<div class="opt"><div class="opt-head"><span>${label}: <b>${esc(shown)}</b></span>${isSize ? `<a class="remove guide" href="${SHOP}/products/${p.handle}" ${EXT}>Size guide</a>` : ''}</div>
+    return `<div class="opt"><div class="opt-head"><span>${label}: <b>${esc(shown)}</b></span>${isSize ? `<a class="remove guide" href="${site.shopUrl}/products/${p.handle}" ${EXT}>Size guide</a>` : ''}</div>
       <div class="${isSize ? 'sizes' : 'styles'}">${btns}</div></div>`;
   }).join('');
 }
-// When a fit changes, drop a size that no longer exists in stock for it.
-function applyOption(p, s, name, val) {
-  s[name] = val;
-  const v = variantForP(p, s);
-  if (name !== 'Size' && s.Size && v && !v.ok) delete s.Size;
-}
-
 function actionState() {
   const v = variantForP(current, sel);
   if (!current.available) return { text: 'Sold out', disabled: true, v };
@@ -335,10 +248,9 @@ function renderPdpDynamic() {
 function openPdp(handle, push = true) {
   const p = byHandle.get(handle); if (!p) return;
   current = p; sel = defaultSelection(p);
-  const cat = { cycling: 'Cycling', triathlon: 'Triathlon', run: 'Run WYLD', accessories: 'Accessories' }[p.category];
-  const copy = p.copy.length ? p.copy : [FIT[p.kind] || `The ${p.title} — designed by WYLD for riders, triathletes and runners who want colour, comfort and a great fit.`];
-  const related = catalog.filter(x => x.handle !== p.handle && x.available && (x.kind === p.kind || x.category === p.category))
-    .sort((a, b) => (b.kind === p.kind) - (a.kind === p.kind) || rank(a) - rank(b)).slice(0, 4);
+  const cat = CATEGORY_LABEL[p.category];
+  const copy = describe(p);
+  const related = relatedFor(p);
   $('#pdpContent').innerHTML = `
     <div class="pdp-grid">
       <div class="gallery">
@@ -354,7 +266,7 @@ function openPdp(handle, push = true) {
         <div id="pdpOptions"></div>
         <div class="pdp-actions" id="pdpActions">
           <button class="btn block" data-add></button>
-          <a class="btn ghost block" href="${SHOP}/products/${p.handle}" ${EXT}>View on ridewyld.com</a>
+          <a class="btn ghost block" href="${site.shopUrl}/products/${p.handle}" ${EXT}>View on ridewyld.com</a>
         </div>
         <ul class="perks">
           <li><svg><use href="#i-lock"/></svg>Secure checkout on ridewyld.com</li>
@@ -363,7 +275,7 @@ function openPdp(handle, push = true) {
         </ul>
         <details open><summary>Details</summary><div class="body">${copy.map(t => `<p>${esc(t)}</p>`).join('')}</div></details>
         ${FIT[p.kind] && p.copy.length ? `<details><summary>Fit</summary><div class="body"><p>${FIT[p.kind]}</p></div></details>` : ''}
-        <details><summary>Delivery &amp; returns</summary><div class="body"><p>Orders are fulfilled by WYLD via ridewyld.com. See the <a class="u" href="${SHOP}/policies/shipping-policy" ${EXT}>shipping</a> and <a class="u" href="${SHOP}/policies/refund-policy" ${EXT}>returns</a> policies for details.</p></div></details>
+        <details><summary>Delivery &amp; returns</summary><div class="body"><p>Orders are fulfilled by WYLD via ridewyld.com. See the <a class="u" href="${site.policies.shipping}" ${EXT}>shipping</a> and <a class="u" href="${site.policies.returns}" ${EXT}>returns</a> policies for details.</p></div></details>
       </div>
     </div>
     ${related.length ? `<div class="related"><h2 class="h2">You may also like</h2><div class="grid">${related.map(x => card(x)).join('')}</div></div>` : ''}
@@ -430,28 +342,17 @@ document.addEventListener('click', e => {
 });
 
 /* ---------- bag ---------- */
-const BAG_KEY = 'wyld-bag-v1';
-// Shared with the app. Everything read back is validated against the catalog.
-const readBag = () => {
-  const raw = store.get(BAG_KEY, []);
-  return Array.isArray(raw) ? raw.filter(l => l && Number.isSafeInteger(l.id) && variants.has(l.id) && Number.isInteger(l.qty) && l.qty > 0)
-    .map(l => ({ id: l.id, qty: Math.min(l.qty, 10) })) : [];
-};
 let bag = readBag();
-const findVariant = id => variants.get(id) || null;
+const findVariant = id => db.variants.get(id) || null;
 window.addEventListener('storage', e => { if (e.key === BAG_KEY) { bag = readBag(); updateBadge(); if ($('#bag').classList.contains('on')) renderBag(); } });
-function saveBag() { store.set(BAG_KEY, bag); updateBadge(); }
+function saveBag() { writeBag(bag); updateBadge(); }
 function updateBadge() {
-  const n = bag.reduce((s, l) => s + l.qty, 0);
+  const n = bagCount(bag);
   const el = $('#bagCount'); el.textContent = n; el.classList.toggle('on', n > 0);
   $('#bagHeadCount').textContent = n ? `(${n})` : '';
 }
-function variantLabel(p, v) {
-  return p.options.map((o, i) => o.name === 'Style' ? STYLE_LABEL[v.o[i]] || v.o[i] : o.name === 'Size' ? `Size ${v.o[i]}` : v.o[i]).join(' · ');
-}
 function addToBag(id, handle) {
-  const line = bag.find(l => l.id === id);
-  if (line) line.qty = Math.min(line.qty + 1, 10); else bag.push({ id, qty: 1 });
+  addLine(bag, id);
   saveBag();
   const { p, v } = findVariant(id);
   showToast(`${p.title}${p.options.length && v.o.length ? ' · ' + variantLabel(p, v) : ''} added`);
@@ -475,7 +376,9 @@ function renderBag() {
       <div class="line-price">${money(v.price * l.qty)}</div></div>`;
   }).join('');
   $('#subtotal').textContent = money(total);
-  $('#checkout').href = `${SHOP}/cart/${bag.map(l => `${l.id}:${l.qty}`).join(',')}`;
+  $('#checkout').href = checkoutURL(bag);
+  const f = freeShipping(total);
+  $('#shipBar').innerHTML = f ? `<span>${f.remaining ? `Add ${money(f.remaining)} for free shipping` : 'You’ve unlocked free shipping'}</span><progress max="1" value="${f.progress.toFixed(3)}" aria-label="Progress to free shipping"></progress>` : '';
 }
 $('#bagBody').addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b) return;
@@ -504,11 +407,7 @@ function renderSearch() {
     out.innerHTML = `<span class="eyebrow muted">Popular searches</span><div class="search-suggest">${SUGGEST.map(s => `<button class="chip" data-q="${s}">${s}</button>`).join('')}</div>`;
     return;
   }
-  const terms = q.replace('bib shorts', 'bib').split(/\s+/);
-  const hits = catalog.filter(p => {
-    const hay = `${p.title} ${p.kind} ${p.category} ${p.was ? 'sale' : ''} ${p.women ? 'women' : ''} ${p.men ? 'men' : ''}`.toLowerCase();
-    return terms.every(t => hay.includes(t));
-  }).sort((a, b) => rank(a) - rank(b));
+  const hits = search(q);
   out.innerHTML = `<span class="count">${hits.length} result${hits.length === 1 ? '' : 's'}</span>` +
     (hits.length ? `<div class="grid">${hits.slice(0, 12).map(p => card(p)).join('')}</div>` : '<p class="empty">No matches. Try “jersey” or “bib”.</p>');
 }
@@ -610,5 +509,7 @@ if ('serviceWorker' in navigator) {
 renderColours();
 renderGrid();
 updateBadge();
+if (location.hash === '#bag') open('bag');
+window.addEventListener('hashchange', () => { if (location.hash === '#bag') open('bag'); });
 const deep = location.hash.match(/^#\/p\/([a-z0-9-]+)$/);
 if (deep) openPdp(deep[1], false);

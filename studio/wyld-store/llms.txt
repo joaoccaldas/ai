@@ -1,0 +1,76 @@
+# WYLD
+
+> Size-inclusive cycling, triathlon and run apparel from WYLD: race-fit and club-fit jerseys, bib shorts, trisuits, run tops and custom team kit, from XXS to 4XL. Official store and checkout: https://ridewyld.com. Prices in AED, synced daily (last sync 2026-09-28). Free shipping over AED 1,000.
+
+WYLD is a cycling, triathlon and running apparel brand focused on size inclusivity, colour and comfort, with a custom team kit service for clubs and teams.
+
+## Collections
+- [Cycling](c/cycling/): Race-fit and club-fit cycling jerseys, bib shorts and gilets in bold WYLD colourways.
+- [Triathlon](c/triathlon/): Trisuits made to be worn from swim to run.
+- [Run WYLD](c/run/): Run WYLD tops: T-shirts, singlets and long sleeves in signature gradients.
+- [Accessories](c/accessories/): Caps, swim ear plugs and gift cards for race week and beyond.
+- [Sale](c/sale/): Current WYLD offers, synced daily from the official store.
+
+## Products
+- [Skye Jersey](p/skye-jersey/): Race Fit Jersey, AED 295 (was AED 395); in stock, sizes XS/S/M/XL/2XL/3XL/4XL
+- [Blush Jersey](p/blush-jersey/): Race Fit Jersey, AED 295 (was AED 395); in stock, sizes XXS/XS/L/2XL/3XL
+- [Tiffany Jersey](p/tiffany-jersey/): Race Fit Jersey, AED 295 (was AED 395); in stock, sizes S/M/L
+- [Jungle Jersey](p/jungle-jersey/): Race Fit Jersey, AED 395; in stock, sizes XS/S/M/L/XL
+- [Grape Jersey](p/grape-jersey/): Race Fit Jersey, AED 395; in stock, sizes XS/S/M/L/XL
+- [Raspberry Jersey](p/raspberry-jersey/): Race Fit Jersey, AED 395; in stock, sizes XS/S/L/XL
+- [Blueberry Jersey](p/blueberry/): Race Fit Jersey, AED 295 (was AED 395); in stock, sizes XS/S/M/L/XL
+- [Olive Jersey](p/olive/): Race Fit Jersey, AED 395; in stock, sizes XS/S/M/L/XL
+- [Blush Trisuit](p/blush-trisuit/): Trisuit, AED 835; in stock, sizes XXS/XS/M/L/XL
+- [Pink Bib Shorts](p/pink-bib-shorts/): Bib Shorts, AED 585; in stock, sizes S/M/L
+- [Black Bib Shorts](p/black-bib-shorts/): Bib Shorts, AED 450; in stock, sizes XS/S/M/L/XL
+- [Navy Bib Shorts](p/navy-bib-shorts/): Bib Shorts, AED 450; in stock, sizes XS/S/M/L/XL
+- [Team WYLD Singlet](p/team-wyld-singlet/): Singlet, AED 155; in stock, sizes XS/S/M/L/XL
+- [Team WYLD T-Shirt](p/team-wyld-t-shirt/): T-Shirt, AED 165; in stock, sizes XS/S/M/L
+- [Team WYLD Long Sleeved Shirt](p/team-wyld-long-sleeved-shirt/): Long Sleeve Shirt, AED 175; in stock, sizes XS/S/M/L/XL
+- [Black Gilet](p/black-gilet/): Gilet, AED 395; in stock, sizes XS/S/M/L/XL
+- [Navy Gilet](p/navy-gilet/): Gilet, AED 395; in stock, sizes XS/S/M/L
+- [Astro Jersey](p/astro/): Club Fit Jersey, AED 125 (was AED 380); in stock, sizes XS/S/M/L/XL
+- [Mauritz Jersey](p/mauritz-jersey/): Club Fit Jersey, AED 125 (was AED 380); in stock, sizes XS/S/M/L/XL
+- [Diogo Jersey](p/diogo-jersey/): Club Fit Jersey, AED 125 (was AED 380); in stock, sizes XS/S/M/L/XL
+- [Stockholm Jersey](p/stockholm-jersey/): Club Fit Jersey, AED 125 (was AED 380); in stock, sizes XS/S/M/L/XL
+- [Berry Blast Jersey](p/berry-blast-jersey/): Club Fit Jersey, AED 125 (was AED 380); in stock, sizes XS/S/M/L/XL
+- [Tsava Blue Long Sleeve Jersey](p/tsava-blue-long-sleeved-jersey/): Club Fit Jersey, AED 180 (was AED 400); in stock, sizes XS/S/M/L
+- [India Skye Long Sleeve Jersey](p/india-skye-long-sleeved-jersey/): Club Fit Jersey, AED 180 (was AED 400); in stock, sizes XS/S/M/L
+- [50 Shades of Blue Jersey](p/50-shades-of-blue-jersey/): Club Fit Jersey, AED 125 (was AED 380); in stock, sizes S/XL
+- [Midnight Jersey](p/midnight-jersey/): Club Fit Jersey, AED 125 (was AED 380); in stock, sizes XS/S
+- [Tsava Blue Jersey](p/tsava-blue-jersey/): Club Fit Jersey, AED 125; in stock, sizes S/L/XL
+- [India Skye Jersey](p/india-skye-jersey/): Club Fit Jersey, AED 125; in stock, sizes XS/S/M/XXL
+- [Trucker Caps](p/caps/): Cap, AED 70 (was AED 100); in stock
+- [SwimEars](p/swimears/): Ear Plugs, AED 95 (was AED 150); in stock, sizes One Size
+- [Gift Card](p/wyld-gift-card/): Gift Cards, from AED 50; in stock
+- [Green Bib Shorts](p/green-bib-shorts/): Bib Shorts, AED 585; sold out
+- [Tiffany Bib Shorts](p/tiffany-bib-shorts/): Bib Shorts, AED 585; sold out
+- [Blueberry Bib Shorts](p/blueberry-bib-short/): Bib Shorts, AED 425; sold out
+
+## Colours
+- [Raspberry](colour/raspberry/)
+- [Grape](colour/grape/)
+- [Blueberry](colour/blueberry/)
+- [Olive](colour/olive/)
+- [Tiffany](colour/tiffany/)
+- [Blush](colour/blush/)
+- [Skye](colour/skye/)
+- [Jungle](colour/jungle/)
+- [Berry Blast](colour/berry-blast/)
+- [Pink](colour/pink/)
+- [Blue](colour/blue/)
+- [Navy](colour/navy/)
+- [Midnight](colour/midnight/)
+- [Green](colour/green/)
+- [Black](colour/black/)
+
+## Help
+- [Shipping policy](https://ridewyld.com/policies/shipping-policy)
+- [Returns policy](https://ridewyld.com/policies/refund-policy)
+- [Upcoming releases](upcoming/): sign up to hear about new drops first
+- [Custom team kit](https://ridewyld.com/pages/custom-kit)
+- [Contact](https://ridewyld.com/pages/contact)
+
+## Optional
+- [Full product details](llms-full.txt)
+- [WYLD app](app/)
