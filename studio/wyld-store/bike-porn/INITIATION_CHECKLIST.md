@@ -49,8 +49,8 @@ Target: a replayable ~30-second horror-comedy initiation in front of the existin
 ## Release verification
 - [x] Branch diff reviewed against current main
 - [x] Pull request opened
-- [ ] Pull request merged
-- [ ] GitHub Pages serves the new files
+- [x] Pull request merged (3D performer work merged in PR #75)
+- [ ] GitHub Pages serves the new files — source is merged; live asset-level fetch still needs browser verification
 - [ ] Browser smoke test: landing
 - [ ] Browser smoke test: 30-second ceremony
 - [ ] Browser smoke test: all five patterns
