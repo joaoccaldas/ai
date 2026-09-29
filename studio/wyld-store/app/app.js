@@ -118,7 +118,7 @@ function homeView() {
   const bibs = avail.filter(p => p.kind === 'Bib Shorts');
   const sale = avail.filter(p => p.was).sort((a, b) => (b.was - b.price) / b.was - (a.was - a.price) / a.was);
   return `
-  <header class="appbar center"><img class="logo" src="${img('/cdn/shop/files/WYLD-Black1080.png', 240)}" alt="WYLD" width="56" height="20"><a class="bp-chip" href="${sitePage('bike-porn/')}" ${EXT}>3D ▶</a></header>
+  <header class="appbar center"><img class="logo" src="${img('/cdn/shop/files/WYLD-Black1080.png', 240)}" alt="WYLD" width="56" height="20"><a class="bp-chip" href="${sitePage('bike-porn/')}" ${EXT}>Bike Porn <span>DON’T CLICK →</span></a></header>
   <div class="hero" id="hero">${HERO.map((h, i) => `
     <a href="${h.to}"><img class="${h.pos}" src="${img(h.src, 1080)}" srcset="${srcset(h.src, [540, 800, 1080, 1400])}" sizes="(min-width:480px) 420px, 88vw" alt="${esc(h.alt)}" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}>
       <div class="hero-copy"><span class="eyebrow">${h.eyebrow}</span><h2>${h.title}</h2><span>Shop now</span></div></a>`).join('')}
@@ -126,9 +126,8 @@ function homeView() {
   <div class="dots" id="heroDots">${HERO.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>
 
   <a class="bp-card" href="${sitePage('bike-porn/')}" ${EXT}>
-    <span class="bp-play" aria-hidden="true">▶</span>
-    <span class="bp-t"><span class="eyebrow">New · Bike Porn 3D</span><b>Eight bike movies</b><small>WYLD Speedmax liveries, persona riders and trailers</small></span>
-    <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+    <span class="bp-t"><span class="eyebrow">Restricted-ish</span><b>Bike Porn</b><small>Hyper-secret ceremony. Five impossible trials. Definitely don’t click.</small></span>
+    <span class="bp-lure">DON’T CLICK →</span>
   </a>
 
   <section class="block"><div class="block-head"><h2 class="h3">Shop by sport</h2><a class="text-link" href="#/shop">View all</a></div>
@@ -555,6 +554,11 @@ function showInstall() {
     const { outcome } = await ev.userChoice.catch(() => ({ outcome: 'dismissed' }));
     closeSheet(); if (outcome !== 'accepted') store.set(INSTALL_KEY, true);
   });
+}
+
+// Direct install link used by QR codes, messages and the website footer.
+if (new URLSearchParams(location.search).get('install') === '1') {
+  setTimeout(() => showInstall(), 250);
 }
 
 /* ---------- offline, service worker, boot ---------- */
