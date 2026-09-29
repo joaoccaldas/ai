@@ -421,6 +421,13 @@ const tmpP = new THREE.Vector3(), tmpT = new THREE.Vector3(), tmpA = new THREE.V
 let queued = 0;
 function queueTrailer(delay = 950) {
   clearTimeout(queued);
+  // The initiation ceremony (initiation.js) sits in front of the studio: start the trailer once it has gone.
+  const gate = document.querySelector('.wyld-init');
+  if (gate) {
+    const mo = new MutationObserver(() => { if (!gate.isConnected) { mo.disconnect(); queueTrailer(600); } });
+    mo.observe(gate.parentNode || document.body, { childList: true });
+    return;
+  }
   queued = setTimeout(() => {
     if (TR) return;
     const was = { env: S.env, pos: camera.position.clone(), target: controls.target.clone() };
@@ -506,7 +513,8 @@ function resize() {
   camera.aspect = w / h;
   camera.fov = w < h ? 42 : 32;
   // Keep the bike clear of the UI: right of the side panel on desktop, above the rail on phones.
-  if (w >= 900 && !TR) camera.setViewOffset(w, h, -w * .1, 0, w, h);
+  const phoneFit = document.documentElement.classList.contains('phone-fit');
+  if (w >= 900 && !TR && !phoneFit) camera.setViewOffset(w, h, -w * .1, 0, w, h);
   else camera.clearViewOffset();
   camera.updateProjectionMatrix();
   composer?.setSize(w, h);

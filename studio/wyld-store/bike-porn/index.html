@@ -13,6 +13,7 @@
 <meta property="og:site_name" content="WYLD">
 <meta property="og:title" content="Bike Porn — WYLD × Speedmax in 3D">
 <meta property="og:description" content="The Alien, The Supermodel, The Witch, The Babysitter and more: eight WYLD bike movies with custom Speedmax liveries, movie sets and trailers.">
+<script src="fit.js"></script>
 <link rel="stylesheet" href="../fonts/fonts.css">
 <link rel="stylesheet" href="../fonts/fun.css">
 <link rel="stylesheet" href="initiation.css?v=20260929-final">
@@ -182,6 +183,30 @@ body.cine .brand{opacity:.0}
   .views .seg button{padding:7px 10px;font-size:11px;white-space:nowrap}
   .legal{left:14px;right:14px;max-width:none;text-align:center;bottom:calc(252px + env(safe-area-inset-bottom));font-size:9.5px;text-shadow:0 0 6px var(--glass)}
 }
+
+/* phones in "Desktop view": phone layout, UI scaled back up (fit.js sets --fit) */
+html.phone-fit .brand span{display:none}
+html.phone-fit .intro{top:calc(62px + env(safe-area-inset-top));max-width:none;right:16px}
+html.phone-fit h1{font-size:44px;-webkit-text-stroke:2.5px #1e1826;text-shadow:0 3px 0 #1e1826}
+html.phone-fit .lede,html.phone-fit .note{display:none}
+html.phone-fit .panel{left:10px;right:10px;width:auto;bottom:calc(10px + env(safe-area-inset-bottom));padding:12px 12px 12px;border-radius:20px}
+html.phone-fit .avatar{width:44px;height:44px;flex-basis:44px}
+html.phone-fit #lvTitle{font-size:24px}
+html.phone-fit #lvTitle[data-font="serif"]{font-size:19px}
+html.phone-fit #lvSub{display:none}
+html.phone-fit .play{margin:10px 0 10px;padding:9px 12px;font-size:12px}
+html.phone-fit .chip{padding:7px 8px;font-size:11.5px}
+html.phone-fit #liveries{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;margin:0 -12px;padding:0 12px 2px;scrollbar-width:none}
+html.phone-fit #liveries::-webkit-scrollbar{display:none}
+html.phone-fit .lv{flex:0 0 84px;scroll-snap-align:center}
+html.phone-fit .row{margin-top:8px}
+html.phone-fit .lv .sw{aspect-ratio:1.6}
+html.phone-fit .views{left:10px;right:10px;bottom:auto;top:calc(128px + env(safe-area-inset-top));display:flex;justify-content:center}
+html.phone-fit .views .seg{overflow-x:auto;scrollbar-width:none;max-width:100%}
+html.phone-fit .views .seg button{padding:7px 10px;font-size:11px;white-space:nowrap}
+html.phone-fit .legal{left:14px;right:14px;max-width:none;text-align:center;bottom:calc(252px + env(safe-area-inset-bottom));font-size:9.5px;text-shadow:0 0 6px var(--glass)}
+html.phone-fit :is(.top,.intro,.panel,.views,.legal,.setload,.slate,.cine,.loader > div){zoom:var(--fit)}
+html.phone-fit .setload{top:calc(58px + env(safe-area-inset-top))}
 @media (max-width:380px){.tools .seg button{padding:8px 10px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -264,6 +289,6 @@ body.cine .brand{opacity:.0}
 <noscript><p class="sr">This 3D studio needs JavaScript and WebGL.</p></noscript>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js" integrity="sha384-sr9b4Ux0WhAUGclJ0ym0FSY2zSOMmNSn0bP/SA0e6bNCrpn/5W3QL8mm+LdlQMKw" crossorigin="anonymous"></script>
 <script src="initiation.js?v=20260929-final" defer></script>
-<script type="module" src="app.js?v=20260929"></script>
+<script type="module" src="app.js?v=20260929c"></script>
 </body>
 </html>

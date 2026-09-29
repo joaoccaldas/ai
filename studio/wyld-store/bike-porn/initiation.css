@@ -73,3 +73,10 @@ radial-gradient(circle at 50% 46%,rgba(0,0,0,.02),rgba(0,0,0,.34) 72%)}
 .wyld-init__start{z-index:30;background:linear-gradient(180deg,rgba(2,3,5,.28),rgba(2,3,5,.08) 45%,rgba(2,3,5,.72))}
 .wyld-init__stage{z-index:1}
 @media (min-width:900px){.wyld-init__preroll video{object-fit:contain}}
+
+/* phones in "Desktop view" (see fit.js) get the phone layout too */
+html.phone-fit .wyld-init__door{width:58vw;height:56%;top:22%}html.phone-fit .wyld-init__arch{width:95vw}html.phone-fit .wyld-init__koala{left:3%;bottom:16%}html.phone-fit .wyld-init__alien{right:4%;bottom:16%}html.phone-fit .wyld-init__caption{bottom:4vh}html.phone-fit .wyld-init__line{font-size:19px}html.phone-fit .wyld-init__vanilla{bottom:27%}
+html.phone-fit :is(.wyld-init__startbox,.wyld-init__controls,.wyld-init__caption,.wyld-init__trial,.wyld-init__preroll-skip,.wyld-init__title,.wyld-init__vanilla){zoom:var(--fit)}
+html.phone-fit .wyld-init__caption{width:calc(92vw / var(--fit))}
+html.phone-fit .wyld-init__startbox{width:min(calc(90vw / var(--fit)),620px);padding:22px}
+html.phone-fit .wyld-init__startbox h2{font-size:44px}
