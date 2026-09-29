@@ -37,6 +37,18 @@
   ],
   "shortcuts": [
     {
+      "name": "Bike Porn",
+      "short_name": "Don’t click",
+      "description": "The hyper-secret WYLD bike archive.",
+      "url": "../bike-porn/",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
       "name": "Shop cycling",
       "url": "./#/shop/cycling",
       "icons": [
