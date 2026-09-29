@@ -11,7 +11,6 @@ root.setAttribute('role', 'dialog');
 root.setAttribute('aria-modal', 'true');
 root.setAttribute('aria-label', 'Bike Porn initiation ceremony');
 root.innerHTML = `
-  <img class="wyld-init__hero" src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/dd175437-b211-4241-8aa3-adf61065b5aa.jpg" alt="" aria-hidden="true">
   <div class="wyld-init__stage" id="wiStage">
     <div class="wyld-init__curtain wyld-init__curtain--l"></div>
     <div class="wyld-init__curtain wyld-init__curtain--r"></div>
@@ -49,8 +48,8 @@ root.innerHTML = `
     </div>
   </div>
 
-  <div class="wyld-init__preroll" id="wiPreroll" hidden>
-    <video id="wiCeremonyVideo" playsinline preload="auto" src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/429b1612-0d70-4ab8-a128-e0a82f8fcf07.mp4"></video>
+  <div class="wyld-init__preroll is-on" id="wiPreroll">
+    <video id="wiCeremonyVideo" playsinline preload="auto" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/dd175437-b211-4241-8aa3-adf61065b5aa.jpg" src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/ff4063f2-8e03-4783-8a63-14aee7d59a53.mp4"></video>
     <button type="button" class="wyld-init__preroll-play" id="wiVideoPlay" hidden>Tap to play ceremony</button>
     <button type="button" class="wyld-init__preroll-skip" id="wiVideoSkip">Skip intro</button>
   </div>
@@ -104,21 +103,18 @@ function say(who, html) {
 }
 
 async function ceremony() {
-  $('#wiStart').classList.add('is-gone');
-
+  const startOverlay = $('#wiStart');
   const preroll = $('#wiPreroll');
   const video = $('#wiCeremonyVideo');
   const playFallback = $('#wiVideoPlay');
 
-  preroll.hidden = false;
-  preroll.classList.add('is-on');
+  startOverlay.classList.add('is-gone');
   playFallback.hidden = true;
 
   const handoff = () => {
     if (ceremonyFinished) return;
     try { video.pause(); } catch (_) {}
-    preroll.classList.remove('is-on');
-    preroll.hidden = true;
+    preroll.classList.add('is-off');
     beginTrials();
   };
 
@@ -133,16 +129,13 @@ async function ceremony() {
       await video.play();
       playFallback.hidden = true;
     } catch (_) {
-      // Some mobile browsers can still refuse the first unmute/play transition.
-      // Never fail silently: present a large explicit user-action fallback.
+      // iOS/Samsung fallback: require a second explicit tap rather than failing silently.
       playFallback.hidden = false;
     }
   };
 
   video.onended = handoff;
-  video.onerror = () => {
-    playFallback.hidden = false;
-  };
+  video.onerror = () => { playFallback.hidden = false; };
   playFallback.onclick = startFilm;
 
   await startFilm();
@@ -395,8 +388,8 @@ $('#wiBegin').addEventListener('click', ceremony);
 $('#wiVideoSkip').addEventListener('click', () => {
   const video = $('#wiCeremonyVideo');
   try { video.pause(); } catch (_) {}
-  $('#wiPreroll').classList.remove('is-on');
-  $('#wiPreroll').hidden = true;
+  $('#wiPreroll').classList.add('is-off');
+  $('#wiStart').classList.add('is-gone');
   beginTrials();
 });
 $('#wiSkip').addEventListener('click', () => {
