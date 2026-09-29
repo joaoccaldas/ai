@@ -41,7 +41,7 @@ Target: a replayable ~30-second horror-comedy initiation in front of the existin
 - [x] Existing `app.js` / Three.js Bike Porn runtime not refactored
 - [x] Existing horror movie sets retained
 - [x] CSP explicitly allows only the pinned model-viewer host in addition to self
-- [x] No Michelle source photos, likeness, private chats, or biometrics added to public assets
+- [x] No private source photos, likeness data, private chats, or biometrics added to public assets
 - [x] Accessible labels and live feedback text
 - [x] Mobile responsive rules
 - [x] Gate degrades independently from the Bike Porn studio
