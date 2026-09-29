@@ -11,6 +11,7 @@ root.setAttribute('role', 'dialog');
 root.setAttribute('aria-modal', 'true');
 root.setAttribute('aria-label', 'Bike Porn initiation ceremony');
 root.innerHTML = `
+  <img class="wyld-init__hero" src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/dd175437-b211-4241-8aa3-adf61065b5aa.jpg" alt="" aria-hidden="true">
   <div class="wyld-init__stage" id="wiStage">
     <div class="wyld-init__curtain wyld-init__curtain--l"></div>
     <div class="wyld-init__curtain wyld-init__curtain--r"></div>
@@ -49,7 +50,8 @@ root.innerHTML = `
   </div>
 
   <div class="wyld-init__preroll" id="wiPreroll" hidden>
-    <video id="wiCeremonyVideo" playsinline preload="metadata" src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/429b1612-0d70-4ab8-a128-e0a82f8fcf07.mp4"></video>
+    <video id="wiCeremonyVideo" playsinline preload="auto" src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/429b1612-0d70-4ab8-a128-e0a82f8fcf07.mp4"></video>
+    <button type="button" class="wyld-init__preroll-play" id="wiVideoPlay" hidden>Tap to play ceremony</button>
     <button type="button" class="wyld-init__preroll-skip" id="wiVideoSkip">Skip intro</button>
   </div>
 
@@ -106,8 +108,11 @@ async function ceremony() {
 
   const preroll = $('#wiPreroll');
   const video = $('#wiCeremonyVideo');
+  const playFallback = $('#wiVideoPlay');
+
   preroll.hidden = false;
   preroll.classList.add('is-on');
+  playFallback.hidden = true;
 
   const handoff = () => {
     if (ceremonyFinished) return;
@@ -117,21 +122,30 @@ async function ceremony() {
     beginTrials();
   };
 
-  video.onended = handoff;
-  video.onerror = handoff;
-
-  try {
-    video.currentTime = 0;
-    video.muted = false;
-    await video.play();
-  } catch (_) {
-    // If the browser blocks autoplay-with-sound, the initial button gesture
-    // has already exposed the film. One tap on the film resumes it.
-    video.controls = true;
-    video.addEventListener('play', () => {
+  const startFilm = async () => {
+    try {
+      video.pause();
+      video.loop = false;
       video.controls = false;
-    }, { once: true });
-  }
+      video.currentTime = 0;
+      video.muted = false;
+      video.volume = 1;
+      await video.play();
+      playFallback.hidden = true;
+    } catch (_) {
+      // Some mobile browsers can still refuse the first unmute/play transition.
+      // Never fail silently: present a large explicit user-action fallback.
+      playFallback.hidden = false;
+    }
+  };
+
+  video.onended = handoff;
+  video.onerror = () => {
+    playFallback.hidden = false;
+  };
+  playFallback.onclick = startFilm;
+
+  await startFilm();
 }
 
 function beginTrials() {
