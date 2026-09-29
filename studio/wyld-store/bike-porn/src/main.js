@@ -375,17 +375,19 @@ function buildUI() {
   $$('[data-env]').forEach(b => b.onclick = () => setEnv(b.dataset.env));
   $('#spin').onclick = () => { S.spin = !S.spin; syncToggles(); };
   $('#ride').onclick = () => { S.ride = !S.ride; syncToggles(); };
-  $('#trailer').onclick = () => playTrailer();
+  $('#trailer').onclick = () => { clearTimeout(queued); playTrailer(); };
   $('#cineClose').onclick = () => endTrailer();
   $('#cineSkip').onclick = () => endTrailer();
-  $('#cineReplay').onclick = () => playTrailer();
+  $('#cinePause').onclick = () => pauseTrailer();
+  canvas.addEventListener('click', () => { if (TR) pauseTrailer(); });
+  $('#cineReplay').onclick = () => { clearTimeout(queued); playTrailer(); };
   $('#shuffle').onclick = () => {
     const rest = LIVERIES.filter(l => l !== S.livery);
     setLivery(rest[Math.floor(Math.random() * rest.length)]);
   };
   addEventListener('keydown', e => {
     if (e.target.closest('input,textarea')) return;
-    if (TR) { if (e.key === 'Escape') { endTrailer(); return; } if (!/^Arrow(Left|Right)$/.test(e.key)) return; endTrailer(false); }
+    if (TR) { if (e.key === ' ' || e.key === 'k') { e.preventDefault(); pauseTrailer(); return; } if (e.key === 'Escape') { endTrailer(); return; } if (!/^Arrow(Left|Right)$/.test(e.key)) return; endTrailer(false); }
     const i = LIVERIES.indexOf(S.livery);
     if (e.key === 'ArrowRight') setLivery(LIVERIES[(i + 1) % LIVERIES.length]);
     else if (e.key === 'ArrowLeft') setLivery(LIVERIES[(i + LIVERIES.length - 1) % LIVERIES.length]);
@@ -412,25 +414,29 @@ const SHOTS = [
   { orbit: true, r: 3.2, y: .95, a0: .5, a1: -.6, t: [.08, .55, 0], d: 3.8, cue: true },
   { p0: [1.3, .75, 2.1], t0: [.08, .55, 0], p1: [2.5, 1.35, 4.1], t1: [.08, .62, 0], d: 4.4, end: true },
 ];
-let TR = null;
+let TR = null, setClock = 0;
 const V3 = (a, b = new THREE.Vector3()) => b.set(a[0], a[1], a[2]);
 const tmpP = new THREE.Vector3(), tmpT = new THREE.Vector3(), tmpA = new THREE.Vector3(), tmpB = new THREE.Vector3();
 // The trailer plays by default: when the page opens and whenever a film is picked (after its set has loaded).
 let queued = 0;
 function queueTrailer(delay = 950) {
   clearTimeout(queued);
-  if (reduced || S.env !== 'set') return;
   queued = setTimeout(() => {
+    if (TR) return;
+    const was = { env: S.env, pos: camera.position.clone(), target: controls.target.clone() };
+    if (S.env !== 'set') setEnv('set');             // the movie set is where trailers live
     const set = activeSet;
-    Promise.resolve(set?.ready).then(() => { if (S.env === 'set' && activeSet === set && !TR) playTrailer(); }, () => { });
+    Promise.resolve(set?.ready).then(() => { if (activeSet === set && !TR) playTrailer(was); }, () => { });
   }, delay);
 }
-function playTrailer() {
+function playTrailer(was) {
+  // Remember exactly where we were, so Esc / ✕ puts everything back.
+  const prev = TR ? TR.prev : (was?.pos ? was : { env: S.env, pos: camera.position.clone(), target: controls.target.clone() });
   clearTimeout(TR?.auto);
-  if (reduced) return;
   if (S.env !== 'set') setEnv('set');
   const cine = $('#cine');
-  TR = { i: -1, t: 0, l: S.livery, ride: S.ride, spin: S.spin, boost: 0 };
+  TR = { i: -1, t: 0, l: S.livery, ride: TR ? TR.ride : S.ride, spin: TR ? TR.spin : S.spin, boost: 0, prev, paused: false, total: SHOTS.reduce((a, s) => a + s.d, 0), elapsed: 0 };
+  syncPause();
   S.spin = false; syncToggles(); controls.enabled = false; tw = null;
   document.body.classList.add('cine'); cine.classList.remove('done'); cine.hidden = false;
   $('#cineFilm').textContent = TR.l.film; $('#cineFilm').dataset.font = TR.l.font;
@@ -462,19 +468,35 @@ function shotCam(sh, k) {
 }
 function directTrailer(dt) {
   TR.boost = Math.max(0, TR.boost - dt * .6);
-  if (TR.hold) return;
+  if (TR.hold || TR.paused) return;
   const sh = SHOTS[TR.i];
-  TR.t += dt / sh.d;
+  TR.t += dt / sh.d; TR.elapsed += dt;
+  $('#cineBar').style.transform = `scaleX(${Math.min(1, TR.elapsed / TR.total)})`;
   shotCam(sh, sh.end ? ease(clamp(TR.t)) : clamp(TR.t));
   if (TR.t >= 1) nextShot();
+}
+function pauseTrailer(p = !TR?.paused) {
+  if (!TR || TR.hold) return;
+  TR.paused = p; syncPause();
+}
+function syncPause() {
+  const on = !!TR?.paused;
+  $('#cine').classList.toggle('paused', on);
+  $('#cinePause').setAttribute('aria-label', on ? 'Play trailer' : 'Pause trailer');
+  $('#cinePause').textContent = on ? '▶' : '❚❚';
 }
 function endTrailer(fly = true) {
   if (!TR) return;
   clearTimeout(TR.auto);
+  const prev = TR.prev;
   S.spin = TR.spin; S.ride = TR.ride; TR = null;
+  $('#cine').classList.remove('paused');
   controls.enabled = true; syncToggles();
   document.body.classList.remove('cine'); $('#cine').hidden = true; $('#cine').classList.remove('done', 'finale'); $('#cineCard').classList.remove('on');
-  resize(); flyTo('hero', fly ? 1.4 : 0);
+  resize();
+  if (prev && prev.env !== S.env) setEnv(prev.env);
+  if (prev && fly) { tw = { p0: camera.position.clone(), t0: controls.target.clone(), p1: prev.pos, t1: prev.target, t: 0, dur: reduced ? .01 : 1.2 }; }
+  else flyTo('hero', 0);
 }
 
 // ------------------------------------------------------------------ loop
@@ -499,7 +521,7 @@ const t0 = performance.now();
 function tick(now) {
   const dt = Math.min(.05, (now - last) / 1000); last = now;
   if (TR) directTrailer(dt);
-  if ((S.ride || TR) && !reduced) {
+  if ((S.ride && !reduced) || (TR && !TR.paused)) {
     const wc = S.cadence / 60 * Math.PI * 2, vChain = wc * R_RING, wRear = vChain / R_COG;
     crankset && (crankset.rotation.z -= wc * dt);
     wheelR && (wheelR.rotation.z -= wRear * dt);
@@ -511,7 +533,7 @@ function tick(now) {
     camera.position.lerpVectors(tw.p0, tw.p1, k); controls.target.lerpVectors(tw.t0, tw.t1, k);
     if (tw.t >= 1) tw = null;
   }
-  if (activeSet && !reduced) activeSet.update(now / 1000, dt);
+  if (activeSet && (!reduced || TR) && !TR?.paused) { setClock += dt; activeSet.update(setClock, dt); }
   if (bokeh?.enabled) bokeh.uniforms.focus.value = camera.position.distanceTo(FOCUS);
   if (grade?.enabled) grade.uniforms.uTime.value = now / 1000;
   wheelKit?.update(now / 1000, TR?.boost || 0);
