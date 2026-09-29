@@ -43,3 +43,12 @@
 .wyld-init__koala{height:clamp(170px,25vw,320px)}
 .wyld-init__alien{height:clamp(210px,29vw,390px)}
 .wyld-init__ghost{height:clamp(165px,23vw,300px)}
+
+
+/* Higgsfield ceremony pre-roll */
+.wyld-init__preroll{position:absolute;inset:0;z-index:35;display:none;place-items:center;background:#000;overflow:hidden}
+.wyld-init__preroll.is-on{display:grid}
+.wyld-init__preroll video{width:100%;height:100%;object-fit:contain;background:#000}
+.wyld-init__preroll-skip{position:absolute;z-index:2;right:14px;top:calc(14px + env(safe-area-inset-top));border:1px solid rgba(255,255,255,.38);background:rgba(5,6,9,.62);color:#fff;border-radius:999px;padding:9px 13px;font:700 10px/1 'Instrument Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;backdrop-filter:blur(10px)}
+.wyld-init__preroll-skip:focus-visible{outline:2px solid #f2dcb6;outline-offset:3px}
+@media (min-width:800px){.wyld-init__preroll video{max-width:720px}}
