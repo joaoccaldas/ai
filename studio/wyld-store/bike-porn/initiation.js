@@ -48,6 +48,11 @@ root.innerHTML = `
     </div>
   </div>
 
+  <div class="wyld-init__preroll" id="wiPreroll" hidden>
+    <video id="wiCeremonyVideo" playsinline preload="metadata" src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/429b1612-0d70-4ab8-a128-e0a82f8fcf07.mp4"></video>
+    <button type="button" class="wyld-init__preroll-skip" id="wiVideoSkip">Skip intro</button>
+  </div>
+
   <div class="wyld-init__trials" id="wiTrials">
     <div class="wyld-init__trial" id="wiTrial"></div>
   </div>
@@ -98,64 +103,35 @@ function say(who, html) {
 
 async function ceremony() {
   $('#wiStart').classList.add('is-gone');
-  root.classList.add('is-open');
-  await wait(900);
 
-  beep(160, .12, 'triangle', .035);
-  root.classList.add('is-lit');
-  say('THE BUILDING', 'You were <em>not supposed to find this.</em>');
-  await wait(2200);
-  if (skipped) return beginTrials();
+  const preroll = $('#wiPreroll');
+  const video = $('#wiCeremonyVideo');
+  preroll.hidden = false;
+  preroll.classList.add('is-on');
 
-  root.classList.add('show-koala');
-  beep(90, .18, 'sawtooth', .03);
-  say('KLAUS · MASTER OF CEREMONIES', 'WELCOME. I am Klaus. This is a very serious initiation.');
-  await wait(3500);
-  if (skipped) return beginTrials();
+  const handoff = () => {
+    if (ceremonyFinished) return;
+    try { video.pause(); } catch (_) {}
+    preroll.classList.remove('is-on');
+    preroll.hidden = true;
+    beginTrials();
+  };
 
-  say('KLAUS', 'Please ignore the champagne. It is <em>ceremonial hydration.</em>');
-  await wait(2500);
-  if (skipped) return beginTrials();
+  video.onended = handoff;
+  video.onerror = handoff;
 
-  root.classList.add('show-alien');
-  say('KLAUS', 'Valentino will now present the Sacred Ring.');
-  await wait(2300);
-  if (skipped) return beginTrials();
-
-  say('VALENTINO', '…');
-  await wait(1100);
-  say('KLAUS', 'Exactly.');
-  await wait(900);
-  if (skipped) return beginTrials();
-
-  stage.classList.add('wyld-init__jolt');
-  beep(52, .34, 'square', .05);
-  root.classList.add('show-ghost');
-  say('BOO', 'AAAAAAAH.');
-  await wait(750);
-  root.classList.add('settle-ghost');
-  say('BOO · COMPLIANCE', 'Sorry. Mandatory jump-scare acknowledgement.');
-  await wait(2300);
-  if (skipped) return beginTrials();
-
-  say('KLAUS', 'Five impossible tasks stand between you and the archive.');
-  await wait(2200);
-  say('BOO', 'For legal purposes, the system absolutely cares about your answers.');
-  await wait(2000);
-  say('KLAUS', 'It does not.');
-  await wait(800);
-  if (skipped) return beginTrials();
-
-  door.classList.add('is-armed');
-  beep(420, .12, 'sine', .035);
-  await wait(240);
-  beep(520, .12, 'sine', .035);
-  await wait(240);
-  beep(640, .2, 'sine', .04);
-
-  say('KLAUS', 'First question. <em>What’s your name?</em>');
-  await wait(1900);
-  beginTrials();
+  try {
+    video.currentTime = 0;
+    video.muted = false;
+    await video.play();
+  } catch (_) {
+    // If the browser blocks autoplay-with-sound, the initial button gesture
+    // has already exposed the film. One tap on the film resumes it.
+    video.controls = true;
+    video.addEventListener('play', () => {
+      video.controls = false;
+    }, { once: true });
+  }
 }
 
 function beginTrials() {
@@ -402,6 +378,13 @@ async function unlock() {
 }
 
 $('#wiBegin').addEventListener('click', ceremony);
+$('#wiVideoSkip').addEventListener('click', () => {
+  const video = $('#wiCeremonyVideo');
+  try { video.pause(); } catch (_) {}
+  $('#wiPreroll').classList.remove('is-on');
+  $('#wiPreroll').hidden = true;
+  beginTrials();
+});
 $('#wiSkip').addEventListener('click', () => {
   skipped = true;
   beginTrials();
