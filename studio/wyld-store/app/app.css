@@ -266,3 +266,13 @@ details .body a{text-decoration:underline;text-underline-offset:3px}
   html:not(.phone-fit) .pmain .pinfo{padding-top:84px}
   html:not(.phone-fit) .tabbar{padding-left:calc(50% - 320px);padding-right:calc(50% - 320px)}
 }
+
+/* Bike Porn entry points */
+.bp-chip{position:absolute;right:var(--pad);top:50%;transform:translateY(-50%);padding:6px 10px;border-radius:999px;background:var(--ink);color:#fff;font:600 11px/1 var(--sans, system-ui);letter-spacing:.08em;text-decoration:none}
+.bp-card{margin:18px var(--pad) 0;display:flex;align-items:center;gap:14px;padding:16px;border-radius:16px;background:linear-gradient(120deg,#1e1826,#3a1f6b 55%,#ff3d8e);color:#fff;text-decoration:none}
+.bp-play{flex:0 0 46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#ff5fa2;color:#1e1826;font-size:16px;box-shadow:0 8px 20px -8px #ff5fa2}
+.bp-t{display:grid;gap:3px;min-width:0;flex:1}
+.bp-t .eyebrow{color:#ffd1e6}
+.bp-t b{font-size:18px;line-height:1.15}
+.bp-t small{color:rgba(255,255,255,.75);font-size:12.5px}
+.bp-card svg{width:18px;height:18px;flex:0 0 18px;stroke:currentColor;fill:none}
