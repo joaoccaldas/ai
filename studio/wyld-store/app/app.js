@@ -118,12 +118,18 @@ function homeView() {
   const bibs = avail.filter(p => p.kind === 'Bib Shorts');
   const sale = avail.filter(p => p.was).sort((a, b) => (b.was - b.price) / b.was - (a.was - a.price) / a.was);
   return `
-  <header class="appbar center"><img class="logo" src="${img('/cdn/shop/files/WYLD-Black1080.png', 240)}" alt="WYLD" width="56" height="20"></header>
+  <header class="appbar center"><img class="logo" src="${img('/cdn/shop/files/WYLD-Black1080.png', 240)}" alt="WYLD" width="56" height="20"><a class="bp-chip" href="${sitePage('bike-porn/')}" ${EXT}>3D ▶</a></header>
   <div class="hero" id="hero">${HERO.map((h, i) => `
     <a href="${h.to}"><img class="${h.pos}" src="${img(h.src, 1080)}" srcset="${srcset(h.src, [540, 800, 1080, 1400])}" sizes="(min-width:480px) 420px, 88vw" alt="${esc(h.alt)}" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}>
       <div class="hero-copy"><span class="eyebrow">${h.eyebrow}</span><h2>${h.title}</h2><span>Shop now</span></div></a>`).join('')}
   </div>
   <div class="dots" id="heroDots">${HERO.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>
+
+  <a class="bp-card" href="${sitePage('bike-porn/')}" ${EXT}>
+    <span class="bp-play" aria-hidden="true">▶</span>
+    <span class="bp-t"><span class="eyebrow">New · Bike Porn 3D</span><b>Eight bike movies</b><small>WYLD Speedmax liveries, persona riders and trailers</small></span>
+    <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+  </a>
 
   <section class="block"><div class="block-head"><h2 class="h3">Shop by sport</h2><a class="text-link" href="#/shop">View all</a></div>
     <div class="sports">${SPORTS.map(([k, t, src]) => {
@@ -142,7 +148,6 @@ function homeView() {
 
   ${rail('On sale', sale, '#/shop/sale')}
 
-  <a class="promo dark" href="${sitePage('bike-porn/')}" ${EXT}><div><span class="eyebrow">Bike Porn · 3D</span><h2 class="h3">Eight bike movies. Eight persona riders.</h2><p>Custom WYLD Speedmax liveries on their own movie sets, from a UFO crop circle to a haunted chapel. Press play on the trailers.</p><span class="text-link">Enter the studio</span></div></a>
   <a class="promo dark" href="${sitePage('upcoming/')}" ${EXT}><div><span class="eyebrow">Upcoming ★</span><h2 class="h3">Random drops, weird and cute.</h2><p>New kit is on the way. Be the first to know.</p><span class="text-link">Keep me posted ♥</span></div></a>
 
   ${isStandalone() ? '' : `<button class="promo dark" data-install><div><span class="eyebrow">WYLD app</span><h2 class="h3">Add WYLD to your home screen.</h2><p>Full-screen shopping, saved favourites and your bag — one tap away, even offline.</p><span class="text-link">Get the app</span></div></button>`}
