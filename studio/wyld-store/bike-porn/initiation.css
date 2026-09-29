@@ -52,3 +52,16 @@
 .wyld-init__preroll-skip{position:absolute;z-index:2;right:14px;top:calc(14px + env(safe-area-inset-top));border:1px solid rgba(255,255,255,.38);background:rgba(5,6,9,.62);color:#fff;border-radius:999px;padding:9px 13px;font:700 10px/1 'Instrument Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;backdrop-filter:blur(10px)}
 .wyld-init__preroll-skip:focus-visible{outline:2px solid #f2dcb6;outline-offset:3px}
 @media (min-width:800px){.wyld-init__preroll video{max-width:720px}}
+
+
+/* Higgsfield hero: the landing is the real ceremony world, not a placeholder set. */
+.wyld-init__hero{position:absolute;inset:0;z-index:25;width:100%;height:100%;object-fit:cover;object-position:center 54%;filter:brightness(.58) saturate(.88) contrast(1.08);transform:scale(1.015)}
+.wyld-init__start{z-index:30;background:
+linear-gradient(180deg,rgba(2,3,5,.30) 0%,rgba(2,3,5,.10) 42%,rgba(2,3,5,.72) 100%),
+radial-gradient(circle at 50% 46%,rgba(0,0,0,.02),rgba(0,0,0,.34) 72%)}
+.wyld-init__startbox{padding:34px 24px 42px;text-shadow:0 3px 28px #000}
+.wyld-init__startbox small{color:#d6c7bd}
+.wyld-init__startbox p{color:#e2d8d2}
+.wyld-init__startbox button{background:rgba(7,7,9,.74);border-color:rgba(239,216,177,.66);backdrop-filter:blur(12px);box-shadow:0 10px 40px rgba(0,0,0,.42)}
+.wyld-init__preroll-play{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.65);background:rgba(4,5,7,.78);color:white;border-radius:999px;padding:15px 20px;font:800 12px/1 'Instrument Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;backdrop-filter:blur(12px);box-shadow:0 18px 50px #000}
+.wyld-init__preroll-play[hidden]{display:none}
