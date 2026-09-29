@@ -131,7 +131,14 @@ h1 .star{display:inline-block;color:var(--butter);font-size:.55em;vertical-align
 .end-btns{display:flex;gap:10px;margin-top:22px}
 .end-btns button{border:1px solid rgba(244,241,234,.5);background:rgba(0,0,0,.35);border-radius:999px;padding:11px 18px;font:600 12px/1 var(--sans);letter-spacing:.08em;color:#f4f1ea}
 .end-btns button:first-child{background:var(--accent);border-color:var(--accent);color:#120c16}
-.cine .skip{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;z-index:2;pointer-events:auto;width:40px;height:40px;border-radius:50%;border:1px solid rgba(244,241,234,.4);background:rgba(0,0,0,.4);color:#f4f1ea;font-size:16px}
+.cine-ctl{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;z-index:2;display:flex;gap:8px;pointer-events:auto}
+.cine-ctl button{width:42px;height:42px;border-radius:50%;border:1px solid rgba(244,241,234,.45);background:rgba(0,0,0,.45);color:#f4f1ea;font:600 14px/1 var(--sans);letter-spacing:-.1em;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.cine-prog{position:absolute;left:0;right:0;bottom:clamp(6vh,calc((100vh - 100vw / 2.39) / 2),13vh);height:2px;background:rgba(244,241,234,.12)}
+.cine-prog i{display:block;height:100%;background:var(--accent);transform-origin:left;transform:scaleX(0)}
+.cine-paused{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.8);width:84px;height:84px;border-radius:50%;background:rgba(0,0,0,.5);display:grid;place-items:center;font:600 26px/1 var(--sans);letter-spacing:-.1em;opacity:0;transition:opacity .25s,transform .25s}
+.cine.paused .cine-paused{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.cine.paused .grain{animation-play-state:paused}
+.cine.done .cine-prog,.cine.done #cinePause{display:none}
 body.cine .top>*:not(.brand),body.cine .intro,body.cine .panel,body.cine .views,body.cine .legal,body.cine .note{opacity:0;pointer-events:none;transition:opacity .5s}
 body.cine .brand{opacity:.0}
 
@@ -243,7 +250,9 @@ body.cine .brand{opacity:.0}
     <div class="end-soon">A WYLD Pictures bike movie · Coming soon to a road near you</div>
     <div class="end-btns"><button type="button" id="cineReplay">▶ Replay</button><button type="button" id="cineClose">Back to the set</button></div>
   </div>
-  <button type="button" class="skip" id="cineSkip" aria-label="Close trailer">✕</button>
+  <div class="cine-ctl"><button type="button" id="cinePause" aria-label="Pause trailer">❚❚</button><button type="button" id="cineSkip" aria-label="Close trailer (Esc)">✕</button></div>
+  <div class="cine-prog"><i id="cineBar"></i></div>
+  <div class="cine-paused" aria-hidden="true">❚❚</div>
 </div>
 
 <div class="setload" id="setload" hidden><span>Building the set…</span><i></i></div>
@@ -255,6 +264,6 @@ body.cine .brand{opacity:.0}
 <noscript><p class="sr">This 3D studio needs JavaScript and WebGL.</p></noscript>
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js" integrity="sha384-sr9b4Ux0WhAUGclJ0ym0FSY2zSOMmNSn0bP/SA0e6bNCrpn/5W3QL8mm+LdlQMKw" crossorigin="anonymous"></script>
 <script src="initiation.js" defer></script>
-<script type="module" src="app.js"></script>
+<script type="module" src="app.js?v=20260929"></script>
 </body>
 </html>
