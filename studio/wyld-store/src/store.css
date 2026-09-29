@@ -498,3 +498,8 @@ details .body p{margin:0}
   .related .grid{grid-template-columns:repeat(4,1fr)}
   .pdp-close{top:22px;right:26px}
 }
+
+/* Bike Porn lure: conspicuous by pretending not to want attention. */
+.bp-nav{color:#ff2f92!important;font-weight:700!important}
+.bp-nav span,.bp-nav small{display:inline-block;margin-left:5px;color:#b81454!important;font:800 8px/1 var(--sans);letter-spacing:.08em;white-space:nowrap}
+.bp-nav:hover{color:#d50064!important}

@@ -171,7 +171,7 @@ ${jsonld.map(ld).join('\n')}
 <header class="header">
   <div class="wrap header-inner">
     <nav class="nav static-nav" aria-label="Primary">
-      <a href="${up}c/cycling/">Cycling</a><a href="${up}c/triathlon/">Triathlon</a><a href="${up}c/run/">Run</a><a href="${up}c/accessories/">Accessories</a><a href="${up}upcoming/">Upcoming</a><a href="${up}bike-porn/">Bike Porn</a>
+      <a href="${up}c/cycling/">Cycling</a><a href="${up}c/triathlon/">Triathlon</a><a href="${up}c/run/">Run</a><a href="${up}c/accessories/">Accessories</a><a href="${up}upcoming/">Upcoming</a><a class="bp-nav" href="${up}bike-porn/">Bike Porn <span>DON’T CLICK →</span></a>
     </nav>
     <a class="logo" href="${up}" aria-label="WYLD home"><img src="${img('/cdn/shop/files/WYLD-Black1080.png', 240)}" alt="WYLD" width="84" height="30"></a>
     <div class="tools"><a class="icon-btn" href="${up}#bag" aria-label="Bag"><svg><use href="#i-bag"/></svg></a></div>
@@ -201,7 +201,7 @@ function footerHTML(up) {
         <li><a href="${site.policies.returns}" target="_blank" rel="noopener">Returns</a></li>
         <li><a href="${site.policies.privacy}" target="_blank" rel="noopener">Privacy</a></li>
         <li><a href="${up}upcoming/">Upcoming releases</a></li>
-        <li><a href="${up}bike-porn/">Bike Porn</a></li>
+        <li><a class="bp-nav" href="${up}bike-porn/">Bike Porn <span>DON’T CLICK →</span></a></li>
         <li><a href="${up}app/?install=1">Get the app</a></li>
       </ul></div>
       <div><h4>Contact</h4><ul>
