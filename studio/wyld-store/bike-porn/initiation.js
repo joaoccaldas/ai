@@ -51,7 +51,7 @@ const trials = $('#wiTrials');
 const trialBox = $('#wiTrial');
 const wait = ms => new Promise(resolve => setTimeout(resolve, reduced ? Math.min(ms, 120) : ms));
 
-let ceremonyFinished = false;
+let trialsStarted = false;
 let audioCtx = null;
 let step = 0;
 const state = {
@@ -84,8 +84,8 @@ function say(who, html) {
 }
 
 function beginTrials() {
-  if (ceremonyFinished) return;
-  ceremonyFinished = true;
+  if (trialsStarted) return;
+  trialsStarted = true;
   trials.classList.add('is-on');
   renderTrial();
 }
@@ -306,10 +306,10 @@ function renderTrial() {
 async function unlock() {
   if (state.restraintCleanup) state.restraintCleanup();
   trials.classList.remove('is-on');
-  root.classList.add('wyld-init__unlock', 'show-koala', 'show-alien', 'show-ghost', 'settle-ghost', 'is-lit', 'is-open');
+  root.classList.add('wyld-init__unlock', 'is-lit', 'is-open');
   door.classList.add('is-armed');
 
-  say('KLAUS', 'Against every mathematical prediction… <em>you passed.</em>');
+  say('ARCHIVE', 'Against every mathematical prediction… <em>you passed.</em>');
   await wait(900);
   door.classList.add('is-open');
   beep(330, .15, 'triangle', .03);
@@ -317,7 +317,7 @@ async function unlock() {
   beep(440, .15, 'triangle', .03);
   await wait(450);
   beep(660, .22, 'triangle', .035);
-  say('BOO · COMPLIANCE', 'Access granted by questionable decision-making.');
+  say('ARCHIVE', 'Access granted by questionable decision-making.');
   await wait(1400);
 
   root.style.transition = 'opacity .8s';
