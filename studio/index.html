@@ -129,9 +129,9 @@
   footer{position:relative;z-index:3;background:#0c0b0a;padding:6vh 5vw 4vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
   footer .c{font-size:.66rem;color:var(--faint)}footer .s{display:flex;gap:1.4rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
   /* data-driven digital acquisitions */
-  .acquisition{position:absolute;right:5vw;bottom:7vh;width:min(285px,26vw);z-index:2;border:1px solid rgba(201,168,106,.38);border-radius:14px;overflow:hidden;background:rgba(8,9,9,.72);backdrop-filter:blur(10px);box-shadow:0 24px 80px rgba(0,0,0,.34);transition:transform .35s,border-color .35s}
+  .acquisition{position:absolute;right:4vw;bottom:5vh;width:min(445px,35vw);z-index:2;border:1px solid rgba(201,168,106,.38);border-radius:14px;overflow:hidden;background:rgba(8,9,9,.72);backdrop-filter:blur(10px);box-shadow:0 24px 80px rgba(0,0,0,.34);transition:transform .35s,border-color .35s}
   .acquisition:hover{transform:translateY(-5px);border-color:var(--gold)}
-  .acquisition img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;filter:saturate(.88) contrast(1.03)}
+  .acquisition img{display:block;width:100%;aspect-ratio:1.16/1;object-fit:cover;object-position:top center;filter:saturate(.88) contrast(1.03)}
   .acquisition .plaque{padding:.75rem .85rem .9rem}
   .acquisition .plaque small{display:block;font-size:.52rem;letter-spacing:.23em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
   .acquisition .plaque b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.25rem}
@@ -140,13 +140,47 @@
   #works .card.digital-acquisition{border-color:color-mix(in srgb,var(--piece-accent,#c9a86a) 55%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--piece-accent,#c9a86a) 10%,transparent)}
   #works .card.digital-acquisition:hover{border-color:var(--piece-accent,#c9a86a)}
   #acquisitionMount:empty{display:none}
+  #mobilePortfolio{display:none}
+  .mobile-only{display:none}
+  @media(max-width:760px){
+    html,body{background:#08090a}
+    body{overflow:auto!important}
+    #loader,#museum,#grain,#intro,#crosshair,#aim,#roomName,#hint,#miniMap,#pause,#mapPanel,#works,#modal,#webglFail,#spacer{display:none!important}
+    header{position:fixed;background:linear-gradient(180deg,rgba(7,7,10,.94),rgba(7,7,10,.58),transparent);padding:calc(.95rem + env(safe-area-inset-top,0px)) 18px 1rem}
+    header nav button,header nav .hide-m{display:none!important}
+    header nav .mobile-only{display:inline-flex}
+    header nav .pill{font-size:.56rem;padding:.55rem .8rem}
+    .brand{font-size:.72rem;letter-spacing:.2em}
+    #mobilePortfolio{display:block;position:relative;z-index:3;padding:calc(6.5rem + env(safe-area-inset-top,0px)) 18px 72px;background:linear-gradient(180deg,#08090a,#0c0b0a 65%,#090909);min-height:100svh}
+    .mobile-portfolio-head small{font-size:.56rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+    .mobile-portfolio-head h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.9rem,15vw,5rem);line-height:.88;letter-spacing:-.025em;margin:1rem 0}
+    .mobile-portfolio-head p{color:var(--muted);font-size:.88rem;line-height:1.6;max-width:38ch}
+    .mobile-feature{display:block;margin:2.7rem 0 2.9rem;text-decoration:none;border-top:1px solid var(--line);padding-top:1rem}
+    .mobile-feature-art{position:relative;background:#100e0b;padding:9px;border:1px solid rgba(201,168,106,.35);box-shadow:0 18px 60px rgba(0,0,0,.45)}
+    .mobile-feature-art:after{content:"";position:absolute;inset:7px;border:1px solid rgba(201,168,106,.32);pointer-events:none}
+    .mobile-feature-art img{width:100%;aspect-ratio:1.16/1;object-fit:cover}
+    .mobile-feature-copy{padding:1.15rem .15rem 0}
+    .mobile-feature-copy small{font-size:.54rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+    .mobile-feature-copy h2{font-family:'Cormorant Garamond',serif;font-size:2.65rem;font-weight:300;margin:.35rem 0 .25rem}
+    .mobile-feature-copy p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.05rem;line-height:1.35}
+    .mobile-feature-copy span{display:inline-block;margin-top:.9rem;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+    .mobile-work-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .mobile-work{display:block;text-decoration:none;background:#11100e;border:1px solid var(--line);border-radius:8px;overflow:hidden;min-width:0}
+    .mobile-work img{width:100%;aspect-ratio:3/4;object-fit:cover;background:#151515}
+    .mobile-work div{padding:.72rem .72rem .85rem}
+    .mobile-work small{display:block;color:var(--accent,var(--gold));font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;min-height:1.8em}
+    .mobile-work b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.16rem;margin:.28rem 0 .2rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .mobile-work em{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-family:'Cormorant Garamond',serif;font-size:.8rem;line-height:1.25;color:var(--muted)}
+    main{position:relative;z-index:3}
+    #studio{padding:10vh 20px}#cta{padding:11vh 20px}
+    footer{padding-left:20px;padding-right:20px}
+  }
   @media(max-width:760px){
     header nav .hide-m{display:none}.brand{font-size:.78rem;letter-spacing:.2em}
     #intro{justify-content:flex-end;padding-bottom:calc(3rem + env(safe-area-inset-bottom,0px));background:linear-gradient(0deg,rgba(7,7,10,.92),rgba(7,7,10,.55) 60%,rgba(7,7,10,.1))}
     .keys{display:none}#hint{display:none}#miniMap{width:150px}
     #mapPanel .wrap{grid-template-columns:1fr}.steps{grid-template-columns:1fr}
-    .acquisition{width:132px;right:16px;top:calc(5.2rem + env(safe-area-inset-top,0px));bottom:auto}
-    .acquisition .plaque{padding:.5rem .55rem}.acquisition .plaque b{font-size:.92rem}.acquisition .plaque em,.acquisition .plaque span{display:none}
+    .acquisition{display:none}
     }
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
 </style>
@@ -162,7 +196,7 @@
     <button id="mapBtn">Map<kbd>M</kbd></button>
     <button id="worksBtn" class="hide-m">All works</button>
     <button id="sound" class="hide-m" aria-pressed="false">Sound</button>
-    <a class="pill" href="#cta">Commission</a>
+    <a class="mobile-only" href="#mobilePortfolio">Works</a><a class="pill" href="#cta">Commission</a>
   </nav>
 </header>
 
@@ -194,6 +228,7 @@
 <div id="modal"><div class="bar"><div class="t"><span id="m-name">—</span><small id="m-room"></small></div><div class="a"><a id="m-open" href="#" target="_blank" rel="noopener">Open full ↗</a><button id="m-close">Back to the museum ✕</button></div></div><div class="frameWrap"><div class="ld">Opening the work…</div><iframe id="m-frame" title="Website preview"></iframe></div></div>
 <div id="webglFail" hidden><div><h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.4rem">The museum needs WebGL.</h2><p style="color:var(--muted);margin:1rem 0 1.6rem">Your browser could not start 3D rendering. The works are all here:</p><a class="btn gold" href="index-classic.html">Open the gallery</a></div></div>
 
+<section id="mobilePortfolio" aria-label="Caldas Studio portfolio"></section>
 <div id="spacer"></div>
 <main>
   <section class="block" id="studio">
@@ -216,7 +251,17 @@
 
 <script src="digital-works.js"></script>
 <script src="rooms.js"></script>
-<script src="museum/museum.js" defer></script>
+<script>
+(function(){
+  if (matchMedia('(min-width:761px)').matches) {
+    const script=document.createElement('script');
+    script.src='museum/museum.js'; script.defer=true; document.head.appendChild(script);
+  } else {
+    const loader=document.getElementById('loader');
+    if(loader) loader.classList.add('done');
+  }
+})();
+</script>
 <script src="catalog.js" defer></script>
 
 <script>
