@@ -12,6 +12,7 @@ The Bike Porn page keeps only the five playful access trials in front of the exi
 - [x] CSP remains self-hosted for scripts and media
 - [x] Reduced-motion handling
 - [x] `?trials` puzzle debug hook
+- [x] Default page, including `#tiffany-tide` and the other film hashes, opens the studio with no gate
 
 ## Five-pattern puzzle
 - [x] Trial 1 — Persistence
