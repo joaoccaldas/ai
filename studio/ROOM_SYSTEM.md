@@ -9,7 +9,9 @@
 | File | Responsibility |
 | --- | --- |
 | `index.html` | Page shell: intro, caption, dots, preview modal, menu, tour, sound, process and commission sections. |
-| `rooms.js` | The works, in hall order (`window.STUDIO_ROOMS`). |
+| `rooms.js` | Physical works baked into the 3D museum (`window.STUDIO_ROOMS`). |
+| `digital-works.js` | Digital acquisitions that can be added instantly without a Blender rebake (`window.STUDIO_DIGITAL_WORKS`). |
+| `catalog.js` | Renders digital acquisitions into the museum entrance and All Works catalogue. |
 | `hall/hall.js` | Built bundle (Three.js r186 + app). Do not edit; rebuild from `hall/src`. |
 | `hall/src/main.js` | Scene loading, baked-light materials, artworks, floor reflection, camera path, interaction. |
 | `hall/src/tex.js` | Procedural katana finishes shared with SŌKAI. |
@@ -21,6 +23,39 @@
 
 ## Add a work
 
+There are now two supported paths.
+
+### A. Digital acquisition — no Blender rebuild
+
+Use this for new websites, experiments, interactive pieces, temporary shows, and works that should appear in the portal immediately.
+
+1. Build the concept under `studio/<slug>/` (or elsewhere in the repo).
+2. Add one object to `studio/digital-works.js`:
+
+```js
+{
+  slug: 'new-piece',
+  n: 'New Piece',
+  room: 'Nature & Journeys',
+  tag: 'One memorable line.',
+  url: 'new-piece/',
+  img: 'gallery/new-piece.jpg',
+  accent: '#c9a86a',
+  note: 'One sentence about the work.',
+  acquired: '2026',
+  featured: false,
+  physical: false
+}
+```
+
+Set `featured: true` when it should become the entrance acquisition. The catalogue and entrance card are rendered automatically by `catalog.js`. No edits to `index.html` are required.
+
+Atoll Ascent is the first work using this path.
+
+### B. Physical museum work — Blender rebuild required
+
+Use this only when the piece needs its own sculpture/plaque inside the walkable 3D museum.
+
 1. Build the concept under `studio/<slug>/` (or elsewhere in the repo) so it works on its own.
 2. Export a 900 × 1200 JPEG (3:4, under ~300 KB) to `studio/gallery/<slug>.jpg`.
 3. Add one line to `rooms.js`:
@@ -31,7 +66,9 @@
 
 Order in `rooms.js` is the walking order. An optional `extra:{label, url}` adds a secondary link under the caption (SŌKAI uses it for the making-of).
 
-The hall has **18 places**: the dais plus 17 niches. Unused niches show a "Reserved" card. To hang more than 18 works, raise `NICHES` in `hall/blender/hall.py` and re-bake (see below).
+Physical works remain constrained by the baked architecture. Digital acquisitions are not constrained by hall slots.
+
+The hall has **18 physical places**: the dais plus 17 niches. Unused niches show a "Reserved" card. To hang more than 18 works, raise `NICHES` in `hall/blender/hall.py` and re-bake (see below).
 
 ## Rebuild
 
