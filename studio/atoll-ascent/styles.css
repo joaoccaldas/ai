@@ -2,3 +2,11 @@
 .hero-random{margin:18px 0 0;font:italic 400 clamp(20px,5.5vw,30px)/1.15 Georgia,serif;color:#f0c37c;max-width:26ch;min-height:2.5em;text-wrap:balance;transition:opacity .28s ease,transform .28s ease}
 .hero-random.swap{opacity:.12;transform:translateY(4px)}
 @media(min-width:780px){.hero-random{font-size:clamp(23px,2.2vw,34px);max-width:30ch}}
+
+/* mobile containment */
+html,body{max-width:100%;overflow-x:hidden}
+.race,.pricing{overflow:hidden}
+@media(max-width:779px){
+  .section-head>p{display:none}
+  .race-track,.price-track{max-width:100vw}
+}
