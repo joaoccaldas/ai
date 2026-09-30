@@ -128,12 +128,25 @@
   #cta .btns{margin-top:2.6rem;display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
   footer{position:relative;z-index:3;background:#0c0b0a;padding:6vh 5vw 4vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
   footer .c{font-size:.66rem;color:var(--faint)}footer .s{display:flex;gap:1.4rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  /* new acquisition — Atoll Ascent */
+  .acquisition{position:absolute;right:5vw;bottom:7vh;width:min(285px,26vw);z-index:2;border:1px solid rgba(201,168,106,.38);border-radius:14px;overflow:hidden;background:rgba(8,9,9,.72);backdrop-filter:blur(10px);box-shadow:0 24px 80px rgba(0,0,0,.34);transition:transform .35s,border-color .35s}
+  .acquisition:hover{transform:translateY(-5px);border-color:var(--gold)}
+  .acquisition img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:top center;filter:saturate(.88) contrast(1.03)}
+  .acquisition .plaque{padding:.75rem .85rem .9rem}
+  .acquisition .plaque small{display:block;font-size:.52rem;letter-spacing:.23em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+  .acquisition .plaque b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.25rem}
+  .acquisition .plaque em{display:block;margin-top:.12rem;font-family:'Cormorant Garamond',serif;font-size:.88rem;color:var(--muted)}
+  .acquisition .plaque span{display:block;margin-top:.55rem;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+  #works .card.atoll-featured{border-color:rgba(201,168,106,.52);box-shadow:0 0 0 1px rgba(201,168,106,.08)}
+  #works .card.atoll-featured span:after{content:' · New acquisition';color:var(--ink)}
   @media(max-width:760px){
     header nav .hide-m{display:none}.brand{font-size:.78rem;letter-spacing:.2em}
     #intro{justify-content:flex-end;padding-bottom:calc(3rem + env(safe-area-inset-bottom,0px));background:linear-gradient(0deg,rgba(7,7,10,.92),rgba(7,7,10,.55) 60%,rgba(7,7,10,.1))}
     .keys{display:none}#hint{display:none}#miniMap{width:150px}
     #mapPanel .wrap{grid-template-columns:1fr}.steps{grid-template-columns:1fr}
-  }
+    .acquisition{width:132px;right:16px;top:calc(5.2rem + env(safe-area-inset-top,0px));bottom:auto}
+    .acquisition .plaque{padding:.5rem .55rem}.acquisition .plaque b{font-size:.92rem}.acquisition .plaque em,.acquisition .plaque span{display:none}
+    }
   @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
 </style>
 </head>
@@ -157,6 +170,10 @@
   <h1 id="heroTitle">A website you can <em>walk into.</em></h1>
   <p>A museum modeled in Blender and rendered live in your browser. Every sculpture stands for a website we built for a real kind of business: walk up to the diamond, the wine glass or the lighthouse, and click to step inside.</p>
   <div class="ctas"><button class="btn gold" id="enterBtn">Enter the museum →</button><a class="btn ghost" href="sokai/">See SŌKAI ↗</a></div>
+  <a class="acquisition" href="atoll-ascent/" aria-label="Open Atoll Ascent, new acquisition">
+    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/aca92bb6-f36e-42fc-ab28-465f7a5f9b59.png" alt="Atoll Ascent mobile-first triathlon adventure website artwork" loading="eager">
+    <div class="plaque"><small>New acquisition · 2026</small><b>Atoll Ascent</b><em>Triathlon adventure · Maldives</em><span>Enter the work ↗</span></div>
+  </a>
   <div class="keys" aria-label="Controls">
     <div><b><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></b>Walk</div>
     <div><b>Mouse</b>Look around</div>
@@ -201,6 +218,20 @@
 
 <script src="rooms.js"></script>
 <script src="museum/museum.js" defer></script>
+<script>
+/* Atoll Ascent is a digital acquisition, presented in the catalogue without altering the baked museum hall. */
+(function(){
+  const grid=document.getElementById('worksGrid'); if(!grid) return;
+  let added=false;
+  const add=()=>{if(added||!grid.children.length)return;added=true;
+    const a=document.createElement('a');a.className='card atoll-featured';a.href='atoll-ascent/';
+    a.innerHTML='<img loading="lazy" src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/aca92bb6-f36e-42fc-ab28-465f7a5f9b59.png" alt=""><div><b>Atoll Ascent</b><span>Nature & Journeys</span><em>Exclusive triathlon adventure in paradise.</em></div>';
+    grid.appendChild(a);
+  };
+  new MutationObserver(add).observe(grid,{childList:true}); setTimeout(add,1200);
+})();
+</script>
+
 <script>
 /* ---- generative ambient soundscape (ethereal gallery) ---- */
 (function(){
