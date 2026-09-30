@@ -9,7 +9,7 @@ const root = document.createElement('div');
 root.className = 'wyld-init';
 root.setAttribute('role', 'dialog');
 root.setAttribute('aria-modal', 'true');
-root.setAttribute('aria-label', 'Bike Porn initiation ceremony');
+root.setAttribute('aria-label', 'Bike Porn access trials');
 root.innerHTML = `
   <div class="wyld-init__stage" id="wiStage">
     <div class="wyld-init__curtain wyld-init__curtain--l"></div>
@@ -17,26 +17,14 @@ root.innerHTML = `
     <div class="wyld-init__arch"></div>
     <div class="wyld-init__light"></div>
     <div class="wyld-init__fog"></div>
-    <div class="wyld-init__title"><b>BIKE PORN</b><small>ceremonial access division</small></div>
+    <div class="wyld-init__title"><b>BIKE PORN</b><small>archive access division</small></div>
     <div class="wyld-init__door" id="wiDoor"></div>
     <div class="wyld-init__vanilla">VANILLA PROTOCOL · LEVEL 5 · DO NOT FLAVOUR</div>
-    <div class="wyld-init__character wyld-init__koala" aria-label="Klaus, the koala master of ceremonies">
-      <model-viewer src="assets/initiation/klaus.glb" interaction-prompt="none" environment-image="neutral" shadow-intensity="1" shadow-softness=".8" exposure="1.1" camera-orbit="0deg 78deg 3.1m" field-of-view="28deg" alt="Klaus, a tiny koala master of ceremonies in formalwear"></model-viewer>
-    </div>
-
-    <div class="wyld-init__character wyld-init__alien" aria-label="Valentino, the ceremonial alien supermodel">
-      <model-viewer src="assets/initiation/valentino.glb" interaction-prompt="none" environment-image="neutral" shadow-intensity="1" shadow-softness=".85" exposure="1.15" camera-orbit="0deg 80deg 3.3m" field-of-view="25deg" alt="Valentino, a tall ceremonial alien supermodel presenting the sacred ring"></model-viewer>
-    </div>
-
-    <div class="wyld-init__character wyld-init__ghost" aria-label="Boo, the compliance ghost">
-      <model-viewer src="assets/initiation/boo.glb" interaction-prompt="none" environment-image="neutral" shadow-intensity=".6" shadow-softness="1" exposure="1.2" camera-orbit="0deg 78deg 3.0m" field-of-view="28deg" alt="Boo, the ghostly compliance officer with a clipboard"></model-viewer>
-    </div>
 
     <div class="wyld-init__caption" aria-live="polite">
       <div class="wyld-init__speaker" id="wiSpeaker"></div>
       <div class="wyld-init__line" id="wiLine"></div>
     </div>
-    <div class="wyld-init__controls"><button type="button" id="wiSkip">Skip ceremony</button></div>
   </div>
 
   <div class="wyld-init__start" id="wiStart">
@@ -44,14 +32,8 @@ root.innerHTML = `
       <small>Hyper-secret archive</small>
       <h2>Bike Porn</h2>
       <p>First-generation 5D quantum encryption. Patent pending. Good judgement not required.</p>
-      <button type="button" id="wiBegin">Begin initiation</button>
+      <button type="button" id="wiBegin">Begin trials</button>
     </div>
-  </div>
-
-  <div class="wyld-init__preroll is-on" id="wiPreroll">
-    <video id="wiCeremonyVideo" playsinline preload="auto" poster="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/dd175437-b211-4241-8aa3-adf61065b5aa.jpg" src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/ff4063f2-8e03-4783-8a63-14aee7d59a53.mp4"></video>
-    <button type="button" class="wyld-init__preroll-play" id="wiVideoPlay" hidden>Tap to play ceremony</button>
-    <button type="button" class="wyld-init__preroll-skip" id="wiVideoSkip">Skip intro</button>
   </div>
 
   <div class="wyld-init__trials" id="wiTrials">
@@ -69,7 +51,6 @@ const trials = $('#wiTrials');
 const trialBox = $('#wiTrial');
 const wait = ms => new Promise(resolve => setTimeout(resolve, reduced ? Math.min(ms, 120) : ms));
 
-let skipped = false;
 let ceremonyFinished = false;
 let audioCtx = null;
 let step = 0;
@@ -100,45 +81,6 @@ function beep(freq = 220, duration = .08, type = 'sine', gain = .025) {
 function say(who, html) {
   speaker.textContent = who;
   line.innerHTML = html;
-}
-
-async function ceremony() {
-  const startOverlay = $('#wiStart');
-  const preroll = $('#wiPreroll');
-  const video = $('#wiCeremonyVideo');
-  const playFallback = $('#wiVideoPlay');
-
-  startOverlay.classList.add('is-gone');
-  playFallback.hidden = true;
-
-  const handoff = () => {
-    if (ceremonyFinished) return;
-    try { video.pause(); } catch (_) {}
-    preroll.classList.add('is-off');
-    beginTrials();
-  };
-
-  const startFilm = async () => {
-    try {
-      video.pause();
-      video.loop = false;
-      video.controls = false;
-      video.currentTime = 0;
-      video.muted = false;
-      video.volume = 1;
-      await video.play();
-      playFallback.hidden = true;
-    } catch (_) {
-      // iOS/Samsung fallback: require a second explicit tap rather than failing silently.
-      playFallback.hidden = false;
-    }
-  };
-
-  video.onended = handoff;
-  video.onerror = () => { playFallback.hidden = false; };
-  playFallback.onclick = startFilm;
-
-  await startFilm();
 }
 
 function beginTrials() {
@@ -384,16 +326,8 @@ async function unlock() {
   root.remove();
 }
 
-$('#wiBegin').addEventListener('click', ceremony);
-$('#wiVideoSkip').addEventListener('click', () => {
-  const video = $('#wiCeremonyVideo');
-  try { video.pause(); } catch (_) {}
-  $('#wiPreroll').classList.add('is-off');
+$('#wiBegin').addEventListener('click', () => {
   $('#wiStart').classList.add('is-gone');
-  beginTrials();
-});
-$('#wiSkip').addEventListener('click', () => {
-  skipped = true;
   beginTrials();
 });
 
