@@ -75,14 +75,28 @@
         <img loading="lazy" src="${esc(work.img)}" alt="">
         <div><small>${String(i + 2).padStart(2, '0')} · ${esc(work.room || 'Work')}</small><b>${esc(work.n)}</b><em>${esc(work.tag || work.note || '')}</em></div>
       </a>`).join('');
+    const rooms=[...new Set(others.map(w=>w.room).filter(Boolean))];
+    const filters=['All',...rooms].map((room,i)=>`<button type="button" data-filter="${esc(room)}" class="${i===0?'on':''}">${esc(room)}</button>`).join('');
     root.innerHTML = `
       <div class="mobile-portfolio-head">
-        <small>Caldas Studio · Selected works</small>
+        <small>Caldas Studio · Portfolio</small>
         <h1>Art, technology, places and ideas.</h1>
-        <p>On mobile, the museum becomes a portfolio you can browse immediately. The full 3D exhibition remains available on desktop.</p>
+        <p>A mobile-first view of the studio: immersive websites, digital worlds, brands and experiments. Tap any work to enter it.</p>
       </div>
       ${hero}
-      <div class="mobile-work-grid">${cards}</div>`;
+      <div class="mobile-index"><h3>Selected works</h3><span>${all.length} pieces</span></div>
+      <div class="mobile-filters" aria-label="Filter works">${filters}</div>
+      <div class="mobile-work-grid">${cards}</div>
+      <div class="mobile-footer"><span>Caldas Studio · 2026</span><a href="mailto:hello@caldas.studio">Commission a piece ↗</a></div>`;
+
+    const buttons=[...root.querySelectorAll('.mobile-filters button')];
+    const cardsEls=[...root.querySelectorAll('.mobile-work')];
+    cardsEls.forEach((card,i)=>{card.dataset.room=others[i]?.room||''});
+    buttons.forEach(button=>button.addEventListener('click',()=>{
+      buttons.forEach(b=>b.classList.toggle('on',b===button));
+      const filter=button.dataset.filter;
+      cardsEls.forEach(card=>{card.hidden=filter!=='All'&&card.dataset.room!==filter});
+    }));
   }
 
   renderFeatured();
