@@ -1,261 +1,130 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07110f">
-<meta name="description" content="Atoll Ascent Maldives — a 24-person luxury endurance expedition concept in Addu Atoll.">
-<title>Atoll Ascent Maldives — Race Paradise</title>
-<link rel="preconnect" href="https://visitmaldives.s3.amazonaws.com">
-<link rel="preconnect" href="https://adaaran.eme-devops.com">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#04100f">
+<meta name="description" content="Atoll Ascent: a fictional premium triathlon adventure concept in the Maldives. Race, recover, surf and go slightly off-script.">
+<title>Atoll Ascent Maldives — Paradise Is a Starting Line</title>
 <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-<header class="topbar">
-  <a class="brand" href="#top" aria-label="Atoll Ascent home"><span>ATOLL</span><strong>ASCENT</strong></a>
-  <nav aria-label="Primary">
-    <a href="#race">Race</a><a href="#journey">Journey</a><a href="#recover">Recover</a><a href="#surf">Surf</a><a href="./expeditions/">Other bad ideas</a><a href="#pricing">Pricing</a>
-  </nav>
-  <button id="lang" class="ghost">PT</button>
+<header class="nav">
+  <a class="wordmark" href="#top"><span class="mark">⌁</span><span>ATOLL ASCENT<small>MALDIVES</small></span></a>
+  <nav><a href="#race">Race</a><a href="#week">The week</a><a href="#camp">Camp Miasma</a><a href="./after-dark/">After dark</a><a href="./expeditions/">Other bad ideas</a></nav>
+  <button class="menu" aria-label="Open menu">☰</button>
 </header>
 
 <main id="top">
-<section class="hero panel">
-  <div class="hero-media" aria-hidden="true">
-    <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/5725a6b7-3e94-47cb-baff-961db60f6cb1.png" alt="Triathlete finishing Atoll Ascent at sunset on a Maldivian beach" fetchpriority="high">
-    <div class="veil"></div><div class="grain"></div>
-  </div>
+<section class="hero">
+  <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/5725a6b7-3e94-47cb-baff-961db60f6cb1.png" alt="Triathlete crossing a tropical beach finish at sunset" fetchpriority="high">
+  <div class="hero-shade"></div>
   <div class="hero-copy">
-    <p class="eyebrow">ADDU ATOLL · MALDIVES · FOUNDING CONCEPT</p>
-    <h1 data-en="A beautiful mistake in the Indian Ocean." data-pt="Um belo erro no Oceano Índico.">A beautiful mistake in the Indian Ocean.</h1>
-    <p class="lede" data-en="A triathlon adventure in paradise: swim reefs, ride exposed island roads, run into sunset, recover on a yacht, and occasionally question the itinerary." data-pt="Quatro etapas. Um atol equatorial. Vinte e quatro atletas. Sete noites de prova, recuperação e oceano.">Four stages. One equatorial atoll. Twenty-four athletes. Seven nights of racing, recovery and ocean.</p>
-    <div class="mode-switch" aria-label="Tone switch"><button id="luxuryMode" class="active">LUXURY</button><button id="delusionMode">DELUSION</button></div>
+    <p class="kicker">SWIM / BIKE / RUN / BELONG</p>
+    <h1>Paradise,<br><em>misused.</em></h1>
+    <p class="hero-sub">A premium triathlon adventure through the Maldives. Crystal water, exposed island roads, sunset finishes and a week that occasionally ignores good judgement.</p>
     <div class="hero-actions">
-      <a class="cta" href="#journey" data-en="Explore the journey" data-pt="Explore a jornada">Explore the journey</a>
-      <button class="cta alt js-interest" data-en="Request the private brief" data-pt="Solicitar acesso fundador">Request founding access</button>
+      <a class="btn primary" href="#race">Discover the experience</a>
+      <button class="btn secondary js-interest">Request the private brief</button>
     </div>
-    <div class="hero-meta"><span>20–27 MAR 2027 <b>TBC</b></span><span>24 ATHLETES</span><span>FROM US$14.8K <b>PLANNING</b></span></div>
+    <div class="hero-meta"><span>FOUNDING CONCEPT</span><span>24 ATHLETES</span><span>2027 · TBC</span></div>
   </div>
-  <div class="scrollcue">SCROLL TO DESCEND <i></i></div>
+  <a class="scroll" href="#race">↓</a>
 </section>
 
-<section class="race-reel" id="raceReel" aria-label="Atoll Ascent race gallery">
-  <button class="reel-arrow prev" type="button" aria-label="Previous image">‹</button>
-  <div class="reel-track">
-    <figure class="reel-card active"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/f84521b3-e952-4dfb-b5c1-38c36cf532c8.png" alt="Drone view of swimmers racing through a Maldivian lagoon at golden hour"><figcaption><b>01 / SWIM UNTAMED</b><span>Lagoon lines. Kayaks. Reef below.</span></figcaption></figure>
-    <figure class="reel-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/a74bcf4a-bffc-4674-a543-ae949d5992be.png" alt="Triathletes swimming underwater over coral reef with a distant reef shark"><figcaption><b>02 / GO DEEPER</b><span>Coral below. Bubbles everywhere. Shark, very much real.</span></figcaption></figure>
-    <figure class="reel-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/0231feb7-752b-4f87-88aa-aef86b62f22d.png" alt="Mud-covered triathlete riding a gravel bike on a narrow tropical causeway"><figcaption><b>03 / RIDE FURTHER</b><span>Ocean on both sides. Road quality: optimistic.</span></figcaption></figure>
-    <figure class="reel-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/72bbc92f-b8cd-47b2-8ec3-ca7549ec47ae.png" alt="Athletes training on the Camp Miasma yacht deck"><figcaption><b>04 / TRAIN DIFFERENT</b><span>Threshold work. Tropical weather. Questionable life choices.</span></figcaption></figure>
-    <figure class="reel-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/5725a6b7-3e94-47cb-baff-961db60f6cb1.png" alt="Triathlete celebrating at a sunset beach finish line"><figcaption><b>05 / FINISH SOMEWHERE BETTER</b><span>Sunset. Sand. The part you remember.</span></figcaption></figure>
-  </div>
-  <button class="reel-arrow next" type="button" aria-label="Next image">›</button>
-  <div class="reel-dots" aria-label="Gallery position"></div>
+<section class="pulse"><span>FIELD NOTE 01 · THE OCEAN DOES NOT CARE ABOUT YOUR FTP.</span><span>FIELD NOTE 02 · SLEEP IS AVAILABLE. TECHNICALLY.</span><span>FIELD NOTE 03 · PARADISE IS A TERRIBLE PLACE FOR GOOD DECISIONS.</span></section>
+
+<section class="intro section">
+  <p class="eyebrow">THE PREMISE</p>
+  <h2>Race hard enough to earn the view.</h2>
+  <div class="intro-copy"><p>Atoll Ascent is a deliberately small endurance expedition built around racing first and everything else second. The luxury exists to remove friction, not effort.</p><p class="fine">This is a concept experience. Dates, routes, permits, vessels, operators, accommodation inventory and final pricing remain TBC.</p></div>
 </section>
 
-<section class="fieldnotes" aria-label="Field notes">
-  <div class="ticker">
-    <span>FIELD NOTE 01 · THE OCEAN DOES NOT CARE ABOUT YOUR FTP.</span>
-    <span>FIELD NOTE 02 · SHOES OPTIONAL IN SOME PLACES. GOOD JUDGEMENT LESS SO.</span>
-    <span>FIELD NOTE 03 · YOU WILL PROBABLY BE FINE.</span>
-    <span>FIELD NOTE 04 · RECOVERY MAY INVOLVE MANTAS, MASSAGE OR POOR DECISIONS.</span>
+<section id="race" class="race-gallery dark">
+  <div class="section-head"><div><p class="eyebrow">THE RACE</p><h2>Four ways to question your holiday choices.</h2></div><p class="aside">Tap. Swipe. Keep going.</p></div>
+  <div class="cards" id="raceCards">
+    <article class="photo-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/f84521b3-e952-4dfb-b5c1-38c36cf532c8.png" alt="Drone view of swimmers and safety kayaks in a Maldivian lagoon" loading="lazy"><div><span>01 · SWIM</span><h3>Lagoon lines</h3><p>Warm water. Reef below. Kayaks nearby. Confidence optional.</p></div></article>
+    <article class="photo-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/a74bcf4a-bffc-4674-a543-ae949d5992be.png" alt="Triathletes swimming underwater over coral reef" loading="lazy"><div><span>02 · UNDER</span><h3>Go deeper</h3><p>Bubbles, coral and the occasional distant reef shark minding its business.</p></div></article>
+    <article class="photo-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/0231feb7-752b-4f87-88aa-aef86b62f22d.png" alt="Mud-covered cyclist riding a narrow tropical causeway" loading="lazy"><div><span>03 · BIKE</span><h3>Road quality: optimistic</h3><p>Ocean on both sides. Spray in your face. A lot of tropical dignity lost.</p></div></article>
+    <article class="photo-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/5725a6b7-3e94-47cb-baff-961db60f6cb1.png" alt="Athlete finishing at sunset" loading="lazy"><div><span>04 · RUN</span><h3>Finish somewhere better</h3><p>Sand, sunset and a finish line that feels slightly cinematic because it is.</p></div></article>
   </div>
 </section>
 
-<section class="manifesto section">
-  <p class="eyebrow">THE IDEA</p>
-  <div class="split">
-    <h2 data-en="The race is the reason. The week is the product." data-pt="A prova é o motivo. A semana é o produto.">The race is the reason. The week is the product.</h2>
-    <div class="copy">
-      <p data-en="Atoll Ascent is a deliberately small luxury endurance expedition: hard enough to earn the memory, supported enough to remove the friction." data-pt="Atoll Ascent é uma expedição de endurance de luxo, deliberadamente pequena: dura o suficiente para merecer a memória, apoiada o suficiente para remover o atrito.">Atoll Ascent is a deliberately small luxury endurance expedition: hard enough to earn the memory, supported enough to remove the friction.</p>
-      <p class="fine">Concept only. Routes, dates, partners, accommodation inventory and final prices remain subject to local survey, permits and supplier contracts.</p>
-    </div>
+<section id="week" class="week section">
+  <div class="section-head"><div><p class="eyebrow">THE WEEK</p><h2>A schedule designed by people who dislike empty calendars.</h2></div></div>
+  <div class="day-strip">
+    <article><b>D1</b><h3>Arrive / Tequila</h3><p>Bike concierge, lagoon shakeout, then a first-night tasting that should probably have been scheduled after the race.</p></article>
+    <article><b>D2</b><h3>Lagoon Prologue</h3><p>750 m swim · 20 km bike · 5 km run. Short enough to underestimate.</p></article>
+    <article><b>D3</b><h3>Island SwimRun</h3><p>Water, shoreline, heat. Dinner under palms. Sensible bedtime unlikely.</p></article>
+    <article><b>D4</b><h3>Causeway Chase</h3><p>40 km bike · 10 km run. Followed by Camp Miasma cinema and regrettable dessert.</p></article>
+    <article><b>D5</b><h3>Atoll Enduro</h3><p>1.9 km swim · 60 km bike · 15 km run. The queen stage. Nothing saved.</p></article>
+    <article><b>D6</b><h3>Reset</h3><p>Massage, reef, nature, sleep, espresso. In whichever order your body negotiates.</p></article>
+    <article><b>D7</b><h3>Ocean Day</h3><p>Yacht, diving, reef drift or doing absolutely nothing with conviction.</p></article>
+    <article><b>D8</b><h3>Leave / Don’t</h3><p>Closing brunch. Fly home or continue north for the surf extension.</p></article>
   </div>
 </section>
 
-<section class="risk section dark">
-  <div class="risk-grid">
-    <div>
-      <p class="eyebrow">AT YOUR OWN RISK*</p>
-      <h2>Not reckless.<br>Not normal either.</h2>
-    </div>
-    <div class="risk-copy">
-      <p class="delusion-copy">Risk of salt. Risk of sun. Risk of deciding shoes are overrated. Risk of signing up for the surf extension while dehydrated. Risk of returning home intolerably alive.</p>
-      <p class="luxury-copy">A professionally operated endurance expedition with deliberately raw edges, small-field access and a large amount of ocean.</p>
-      <div class="wink-list">
-        <span>Swimming with sharks? <b>There are sharks. We are not scheduling a feeding frenzy.</b></span>
-        <span>Running barefoot? <b>Only if the route, surface and your feet make that a sensible choice.</b></span>
-        <span>Hunting for dinner? <b>No. The chef has unionised.</b></span>
-      </div>
-      <p class="fine">*The site jokes. Operations do not. Any real event requires qualified water safety, medical support, permits, course inspection, weather protocols and local operators.</p>
-    </div>
+<section class="night feature-split dark">
+  <figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/b9b765a2-240e-475f-bee7-b3002028910d.png" alt="Athletes and guests at a candlelit tequila tasting on the beach" loading="lazy"></figure>
+  <div class="feature-copy">
+    <p class="eyebrow">AFTER DARK</p>
+    <h2>Good food. Bad timing.</h2>
+    <p>The nights are intentionally part of the experience: candlelit dinners, curated tequila, moonlit water, cinema under the stars and a few ideas that remain firmly labelled TBC.</p>
+    <div class="mini-grid"><span>TEQUILA TASTING</span><span>MOONLIT LAGOON DIP</span><span>SCUBA RAVE · TBC</span><span>CAMP MIASMA CINEMA</span></div>
+    <a class="text-link" href="./after-dark/">Explore the night program →</a>
   </div>
 </section>
 
-<section class="raw-media section dark">
-  <div class="section-head"><p class="eyebrow">ABOVE / UNDER / AFTER</p><h2>Less postcard. More evidence.</h2></div>
-  <div class="raw-grid">
-    <figure class="raw-shot raw-drone">
-      <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/f84521b3-e952-4dfb-b5c1-38c36cf532c8.png" alt="Drone view of the race crossing the atoll" loading="lazy">
-      <figcaption><b>ABOVE</b><span>Distance reveals the problem.</span></figcaption>
-    </figure>
-    <figure class="raw-shot raw-under">
-      <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/a74bcf4a-bffc-4674-a543-ae949d5992be.png" alt="Underwater race view over coral reef" loading="lazy">
-      <figcaption><b>UNDER</b><span>Mantas. Reef. Wreck. Sharks. Breathe normally.</span></figcaption>
-    </figure>
-    <figure class="raw-shot raw-edge">
-      <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/0231feb7-752b-4f87-88aa-aef86b62f22d.png" alt="Triathlete riding the exposed island causeway" loading="lazy">
-      <figcaption><b>AFTER</b><span>Quiet enough to hear your decisions.</span></figcaption>
-    </figure>
-  </div>
-  <div class="shark-note">
-    <span class="eyebrow">REAL, NOT MARKETING FICTION</span>
-    <p>Addu has manta cleaning stations, grey reef sharks at Shark Point, turtles, rays and the British Loyalty wreck. The adventure is already there. We do not need to manufacture fake danger.</p>
-  </div>
-</section>
-
-<section id="race" class="race section dark">
-  <div class="section-head"><p class="eyebrow">04 STAGES</p><h2>The equator becomes the course.</h2></div>
-  <div class="stage-grid">
-    <article class="stage"><span>01</span><h3>Equator Prologue</h3><p>750 m swim · 20 km bike · 5 km run</p><small>Fast, hot, immediate. Meet the atoll at race pace.</small></article>
-    <article class="stage"><span>02</span><h3>Island SwimRun</h3><p>~3 km swim · ~12 km run</p><small>Water, causeways and inhabited-island texture.</small></article>
-    <article class="stage"><span>03</span><h3>Causeway Chase</h3><p>40 km bike · 10 km run</p><small>Controlled repeats, then a sunset pursuit.</small></article>
-    <article class="stage queen"><span>04</span><h3>Atoll Enduro</h3><p>1.9 km swim · 60 km bike · 15 km run</p><small>The queen stage. Finish with nothing saved.</small></article>
-  </div>
-  <p class="source-note">Course distances are illustrative until surveyed and approved locally. Addu is unusually suitable because its western islands are connected by road.</p>
-</section>
-
-<section id="journey" class="journey section">
-  <div class="section-head"><p class="eyebrow">08 DAYS</p><h2>Arrive an athlete. Leave with a story.</h2></div>
-  <div class="timeline">
-    <article><b>D1</b><h3>Land / Assemble</h3><p>Gan arrival, bike concierge, mobility screen, lagoon shakeout, sunset briefing.</p></article>
-    <article><b>D2</b><h3>Race / Prologue</h3><p>Short, sharp opener. Chef-led recovery lunch. Optional reef float.</p></article>
-    <article><b>D3</b><h3>Race / SwimRun</h3><p>Island-to-island racing. Long recovery window. Sunset dhoni cruise TBC.</p></article>
-    <article><b>D4</b><h3>Race / Chase</h3><p>Morning free. Afternoon time trial into a sunset run.</p></article>
-    <article><b>D5</b><h3>Race / Enduro</h3><p>Queen stage, finish ritual, private dinner and awards.</p></article>
-    <article><b>D6</b><h3>Reset / Body</h3><p>Sleep late. Massage, mobility, chef breakfast, optional nature park.</p></article>
-    <article><b>D7</b><h3>Ocean / Choice</h3><p>Yacht, reef, diving or quiet horizon. Private closing dinner.</p></article>
-    <article><b>D8</b><h3>Release / Continue</h3><p>Closing brunch. Fly home or continue north for three nights of surf.</p></article>
-  </div>
-</section>
-
-<section id="recover" class="recover section dark">
-  <div class="section-head"><p class="eyebrow">RECOVERY, CURATED</p><h2>Above the sea. Below the sea. Or absolutely nothing.</h2></div>
-  <div class="recover-visual">
-    <figure class="photo big"><img src="https://visitmaldives.s3.amazonaws.com/brY41kqB/c/ct4unydk-gallery-carousel.jpg" alt="Maldives lagoon and islands" loading="lazy"><figcaption>Real Maldives destination imagery · Visit Maldives</figcaption></figure>
-    <div class="choice-list">
-      <article><span>ABOVE</span><h3>Addu Nature Park</h3><p>Mangroves, lakeside cycling, birdlife and a slower look at the southern atoll. <b>TBC guided recovery outing.</b></p></article>
-      <article><span>ABOVE</span><h3>Island history & local table</h3><p>Guided history, local food and community-led experiences rather than resort-only isolation. <b>TBC partner.</b></p></article>
-      <article><span>BELOW</span><h3>House reef snorkel</h3><p>Low-intensity water time after racing with safety support and conditions check.</p></article>
-      <article><span>BELOW</span><h3>Scuba / reef immersion</h3><p>Optional certified diving on recovery days, subject to individual suitability and operator protocols.</p></article>
-      <article><span>OCEAN</span><h3>Dolphin sunset</h3><p>Small-boat sunset cruise with no timetable beyond getting back for dinner.</p></article>
-      <article><span>OFF</span><h3>Do less</h3><p>Private beach, massage, pool, sleep. Recovery is not another competition.</p></article>
-    </div>
-  </div>
-</section>
-
-
-<section class="camp section dark" id="camp-miasma">
-  <div class="camp-copy">
-    <p class="eyebrow">FLOATING HEADQUARTERS · FICTIONAL CONCEPT</p>
+<section id="camp" class="camp feature-split">
+  <div class="feature-copy">
+    <p class="eyebrow">FLOATING HQ · FICTIONAL CONCEPT</p>
     <h2>Camp Miasma.</h2>
-    <p>Half yacht. Half training camp. Half terrible arithmetic. Wake up somewhere else, ride the trainer on deck, jump in the lagoon, repeat.</p>
-    <ul><li>Bike-trainer deck with horizon views</li><li>Chef-led athlete nutrition</li><li>Scuba / swim launch platform</li><li>Recovery deck, massage and absolutely unnecessary espresso</li></ul>
-    <p class="fine">Camp Miasma is part of the concept fiction. Vessel, crew and operations are TBC.</p>
+    <p>A luxury expedition yacht used as training base, recovery platform and moving bad-idea headquarters. Ride the trainer on deck. Swim off the stern. Wake up somewhere else.</p>
+    <ul><li>Bike trainer deck</li><li>Chef-led athlete nutrition</li><li>Scuba / swim launch platform</li><li>Massage and recovery spaces</li></ul>
+    <p class="fine">Vessel, crew, operating partner and logistics remain TBC.</p>
   </div>
-  <figure class="camp-image"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/72bbc92f-b8cd-47b2-8ec3-ca7549ec47ae.png" alt="Camp Miasma yacht with athlete on a bike trainer and athlete stretching on deck" loading="lazy"><figcaption>TRAINER SESSION · SOMEWHERE BETWEEN SERIOUS AND RIDICULOUS</figcaption></figure>
+  <figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/72bbc92f-b8cd-47b2-8ec3-ca7549ec47ae.png" alt="Athletes training aboard the fictional Camp Miasma yacht" loading="lazy"></figure>
 </section>
 
-<section class="hospitality section">
-  <div class="section-head"><p class="eyebrow">SLEEP DEEPLY</p><h2>Race production outside. Resort calm inside.</h2></div>
-  <div class="image-strip">
-    <figure><img src="https://adaaran.eme-devops.com/sites/4/2025/08/DELUXE-BEACH-VILLA_.jpg" alt="Maldives beach villa" loading="lazy"><figcaption>Illustrative luxury-room benchmark · supplier TBC</figcaption></figure>
-    <figure><img src="https://adaaran.eme-devops.com/sites/7/2025/08/discover-the-ultimate-surfing-haven-03-1.jpg" alt="Maldives surf resort view" loading="lazy"><figcaption>Surf-extension benchmark · Hudhuran Fushi</figcaption></figure>
+<section class="escape dark">
+  <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/d2c55642-ae5d-482e-8b33-7efbfcc251e0.png" alt="Two athletes building a raft on a tropical island" loading="lazy">
+  <div class="escape-shade"></div>
+  <div class="escape-copy"><p class="eyebrow">OPTIONAL SIDE QUEST · FICTIONAL</p><h2>Escape Challenge.</h2><p>You and the person you bonded with least are “stranded” for a day. Build shelter. Build a raft. Get back before dinner.</p><p class="fine">A real version would be a supervised simulation with safety boat, communications, water, food and evacuation support. Nobody is actually abandoned.</p></div>
+</section>
+
+<section class="packages section">
+  <div class="section-head"><div><p class="eyebrow">FOUNDING ACCESS · PLANNING PRICES</p><h2>Small field. High touch. No mass-event economics.</h2></div></div>
+  <div class="package-grid">
+    <article><span>ASCENT</span><h3>US$14.8K</h3><p>Race week · 7 nights</p><ul><li>4-stage race production</li><li>Airport + bike handling</li><li>Recovery programme</li><li>Private closing dinner</li></ul><button class="js-interest">Request brief</button></article>
+    <article class="featured"><span>ASCENT OVERWATER</span><h3>US$18.9K</h3><p>Premium stay · planning</p><ul><li>Everything in Ascent</li><li>Premium accommodation category TBC</li><li>Priority recovery scheduling</li><li>Enhanced private dining</li></ul><button class="js-interest">Request brief</button></article>
+    <article><span>FOUNDERS' RESIDENCE</span><h3>US$24.9K</h3><p>Top category · planning</p><ul><li>Everything in Overwater</li><li>Private arrival handling</li><li>Founding-edition experiences</li><li>Smallest inventory</li></ul><button class="js-interest">Request brief</button></article>
   </div>
-  <p class="fine centered">Core Addu accommodation partner is not yet contracted. Images shown are destination / supplier references, not promises of the final room product.</p>
+  <p class="fine truth">Planning price ≠ supplier quote. No deposits are being accepted.</p>
 </section>
 
-
-<section class="night-program section dark" id="night-program">
-  <div class="night-grid">
-    <figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/16f037d5-1d54-4250-bb99-c8192d0645c2.png" alt="Atoll Ascent guests at a candlelit beach dinner and tequila tasting" loading="lazy"></figure>
-    <div class="night-copy">
-      <p class="eyebrow">THE WEEK AFTER DARK · FICTIONAL / TBC</p>
-      <h2>Sleep is technically available.</h2>
-      <div class="night-list">
-        <article><b>Night 01 · Welcome / Bad Influence</b><span>All-inclusive tequila tasting, tiny pours, huge confidence. Film theme: tropical conspiracy.</span></article>
-        <article><b>Night 02 · Reef After Dark</b><span>Certified-diver underwater light-and-sound art session, nicknamed the “scuba rave.” Real version would be fully operator-controlled.</span></article>
-        <article><b>Night 03 · Midnight Water</b><span>Optional supervised lagoon dip. Clothing policy: the website is more adventurous than the operations manual.</span></article>
-        <article><b>Night 04 · Camp Miasma</b><span>Movie-night-on-deck, absurdly late dessert, then a painfully early Causeway Chase.</span></article>
-        <article><b>Night 05 · The Very Bad Pairing</b><span>Chef’s table and a deliberately terrible bedtime before the queen stage. Fictional schedule. Do not copy this at home.</span></article>
-        <article><b>Night 06 · Fire / Finish / Stories</b><span>Sunset finish, barefoot dinner, questionable awards and the stories getting 12% less accurate every hour.</span></article>
-      </div>
-    </div>
-  </div>
+<section class="surf dark section">
+  <div><p class="eyebrow">OPTIONAL +3 NIGHTS</p><h2>Don’t go home yet.</h2><p>Lohis surf extension or private swell-chaser charter. Premium, deliberately unnecessary and currently TBC.</p></div>
+  <div class="surf-prices"><article><b>LOHIS</b><span>+US$3.2K pp · planning</span></article><article><b>SWELL CHASER</b><span>+US$4.8K pp · planning</span></article></div>
 </section>
 
-<section class="escape section" id="escape">
-  <figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/d2c55642-ae5d-482e-8b33-7efbfcc251e0.png" alt="Two athletes building a driftwood raft on an empty tropical island" loading="lazy"></figure>
-  <div class="escape-copy"><p class="eyebrow">OPTIONAL SIDE QUEST · DEFINITELY FICTIONAL</p><h2>Escape Challenge.</h2><p>You and the person you like least on the trip are “dropped” on an empty island for 24 hours. Build shelter. Build a raft. Negotiate. Escape before you become friends.</p><p class="fine">In reality this would only ever be a guided, supervised simulation with communications, safety boat, food/water and evacuation support. Nobody is actually abandoned.</p></div>
+<section class="other">
+  <a href="./expeditions/"><span class="eyebrow">THE UNAUTHORIZED CATALOGUE</span><h2>Other bad ideas.</h2><p>Svalbard. Patagonia. Atacama. Mongolia. Places where the logistics team would like a word.</p><b>Explore fictional expeditions →</b></a>
 </section>
 
-<section id="surf" class="surf section">
-  <div class="surf-bg"><img src="https://adaaran.eme-devops.com/sites/4/2025/08/LOHIS-WAVE-SURF-AREA-3.jpg?auto=format&crop=center&fit=crop&h=1000&w=1800" alt="Lohis surf break in Maldives" loading="lazy"></div>
-  <div class="surf-card">
-    <p class="eyebrow">OPTIONAL +3 NIGHTS</p>
-    <h2>Don’t go home yet.</h2>
-    <p>Move north after the race and change disciplines. Lohis is a real, capacity-controlled surf product, not an invented add-on.</p>
-    <div class="surf-options">
-      <div><strong>LOHIS EXTENSION</strong><span>+ US$3.2K pp · planning</span><small>3 nights premium all-inclusive, surf package, transfers and board handling TBC. Resort limits registered surfers to 45/day.</small></div>
-      <div><strong>SWELL CHASER</strong><span>+ US$4.8K pp · planning</span><small>3-night private surf vessel concept for 8–12 guests. Vessel and route TBC.</small></div>
-    </div>
-  </div>
-</section>
-
-<section id="pricing" class="pricing section dark">
-  <div class="section-head"><p class="eyebrow">FOUNDING 24 · PREMIUM PLANNING PRICES</p><h2>Small field. High touch. No mass-event economics.</h2></div>
-  <div class="price-grid">
-    <article><p>ASCENT</p><h3>US$14,800</h3><span>per athlete · planning</span><ul><li>7 nights</li><li>4-stage race production</li><li>airport + bike concierge</li><li>recovery programme</li><li>private closing dinner</li></ul><button class="js-interest">Request the private brief</button></article>
-    <article class="featured"><p>ASCENT OVERWATER</p><h3>US$18,900</h3><span>per athlete · planning</span><ul><li>Everything in Ascent</li><li>premium / overwater category TBC</li><li>priority recovery scheduling</li><li>enhanced private dining</li></ul><button class="js-interest">Request interest</button></article>
-    <article><p>FOUNDERS' RESIDENCE</p><h3>US$24,900</h3><span>per athlete · planning</span><ul><li>Everything in Overwater</li><li>top accommodation category TBC</li><li>private arrival handling</li><li>founding-edition experiences</li></ul><button class="js-interest">Request interest</button></article>
-  </div>
-  <div class="truthbar"><span>PLANNING PRICE ≠ QUOTE</span><span>Taxes, permits, inventory and final supplier contracts TBC</span><span>No deposits are being taken</span></div>
-</section>
-
-<section class="proof section">
-  <div class="section-head"><p class="eyebrow">REALITY CHECK</p><h2>Beautiful, but explicit about what is real.</h2></div>
-  <div class="proof-grid">
-    <article><b>REAL</b><h3>Addu geography</h3><p>Southern Maldives, connected western island road system, mangroves, reefs and inhabited-island context.</p></article>
-    <article><b>REAL</b><h3>Lohis surf access rules</h3><p>45 registered surfers/day maximum; access sold with accommodation via approved surf agents.</p></article>
-    <article><b>MARKET BENCHMARK</b><h3>2027 resort pricing</h3><p>Current accommodation searches support the premium positioning, but our package prices include race operations and are not hotel quotes.</p></article>
-    <article><b>TBC</b><h3>Event operation</h3><p>Race permits, medical plan, course survey, traffic controls, marine safety, insurer and suppliers are not yet contracted.</p></article>
-  </div>
-</section>
-
-<section class="closing panel">
-  <div class="closing-media"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/5725a6b7-3e94-47cb-baff-961db60f6cb1.png" alt="Sunset finish at Atoll Ascent" loading="lazy"><div class="veil"></div></div>
-  <div class="closing-copy"><p class="eyebrow">FOUNDING INTEREST</p><h2>Twenty-four places. Zero deposits today.</h2><p>Tell us which version you would consider. This opens a pre-filled email mockup so no personal data is silently stored.</p><button class="cta js-interest">Ask for the dossier</button></div>
+<section class="signup dark">
+  <p class="eyebrow">FOUNDING INTEREST</p><h2>Twenty-four places. Zero deposits today.</h2><p>Tell us which version you would consider. The mock flow opens a pre-filled email draft and stores nothing.</p><button class="btn primary js-interest">Request the private brief</button>
 </section>
 </main>
 
-<footer>
-  <div><strong>ATOLL ASCENT</strong><span>A Caldas Studio concept · Maldives · 2026</span></div>
-  <div class="sources"><a href="https://atolls.visitmaldives.com/islands/addu/" target="_blank" rel="noopener">Visit Maldives / Addu</a><a href="https://atolls.visitmaldives.com/islands/addu/activity/" target="_blank" rel="noopener">Addu activities</a><a href="https://www.adaaran.com/selecthudhuranfushi/experiences/surf-package/" target="_blank" rel="noopener">Lohis surf rules</a></div>
-</footer><a href="./expeditions/" style="position:fixed;z-index:45;right:18px;bottom:18px;background:#d8ff3e;color:#07110f;text-decoration:none;border-radius:999px;padding:12px 16px;font:800 10px/1 system-ui;letter-spacing:.12em;box-shadow:0 10px 30px rgba(0,0,0,.28)">OTHER BAD IDEAS ↗</a>
+<footer><span>ATOLL ASCENT · MALDIVES CONCEPT</span><span>PARADISE IS A STARTING LINE</span></footer>
 
 <div class="modal" id="interestModal" aria-hidden="true">
-  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="interestTitle">
-    <button class="close" id="closeModal" aria-label="Close">×</button>
-    <p class="eyebrow">FOUNDING INTEREST · MOCK FLOW</p>
-    <h2 id="interestTitle">Which journey would you consider?</h2>
-    <div class="option-row"><button data-package="Ascent">Ascent · US$14.8K</button><button data-package="Ascent Overwater">Overwater · US$18.9K</button><button data-package="Founders' Residence">Founders · US$24.9K</button></div>
-    <label>Surf extension <select id="surfSelect"><option>No surf extension</option><option>Lohis +3 nights · planning +US$3.2K</option><option>Swell Chaser +3 nights · planning +US$4.8K</option></select></label>
-    <label>Your name <input id="interestName" placeholder="Name"></label>
-    <label>Email <input id="interestEmail" type="email" placeholder="you@example.com"></label>
-    <button class="cta" id="composeMail">Preview interest email</button>
-    <p class="fine">Demo only. Nothing is submitted or stored. The button opens your email app with a draft.</p>
-  </div>
-</div>
-
+<div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="interestTitle">
+<button class="close" id="closeModal" aria-label="Close">×</button>
+<p class="eyebrow">FOUNDING INTEREST · MOCK FLOW</p><h2 id="interestTitle">Which journey would you consider?</h2>
+<div class="choices"><button data-package="Ascent">Ascent</button><button data-package="Ascent Overwater">Overwater</button><button data-package="Founders' Residence">Founders</button></div>
+<label>Surf extension<select id="surfSelect"><option>No surf extension</option><option>Lohis +3 nights</option><option>Swell Chaser +3 nights</option></select></label>
+<label>Name<input id="interestName" placeholder="Name"></label><label>Email<input id="interestEmail" type="email" placeholder="you@example.com"></label>
+<button class="btn primary" id="composeMail">Preview interest email</button><p class="fine">Demo only. Nothing is submitted or stored.</p>
+</div></div>
 <script src="./app.js"></script>
-</body>
-</html>
+</body></html>
