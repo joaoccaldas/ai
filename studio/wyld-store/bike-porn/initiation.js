@@ -2,6 +2,8 @@
 'use strict';
 
 const params = new URLSearchParams(location.search);
+// Hash links such as #tiffany-tide open the studio. The trials stay behind ?trials.
+if (!params.has('trials')) return;
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const passedKey = 'wyld.bikeporn.initiated.v4';
 
