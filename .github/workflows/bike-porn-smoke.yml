@@ -1,0 +1,38 @@
+name: Bike Porn smoke
+
+on:
+  push:
+    branches:
+      - fix/bike-porn-remove-ceremony-20260930
+    paths:
+      - studio/wyld-store/bike-porn/**
+      - .github/workflows/bike-porn-smoke.yml
+  pull_request:
+    paths:
+      - studio/wyld-store/bike-porn/**
+      - .github/workflows/bike-porn-smoke.yml
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: JavaScript syntax
+        run: node --check studio/wyld-store/bike-porn/initiation.js
+      - name: Single-renderer boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          PAGE=studio/wyld-store/bike-porn/index.html
+          INIT=studio/wyld-store/bike-porn/initiation.js
+          ! grep -R -n "<model-viewer\|model-viewer.min.js\|wiCeremonyVideo\|ajax.googleapis.com\|d2ol7oe51mr4n9.cloudfront.net" "$PAGE" "$INIT"
+          grep -q 'app.js?v=' "$PAGE"
+          grep -q 'Begin trials' "$INIT"
+          grep -q "script-src 'self' 'wasm-unsafe-eval'" "$PAGE"
+          echo "Bike Porn single-renderer/no-ceremony boundary PASS"
