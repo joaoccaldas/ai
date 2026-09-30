@@ -75,7 +75,8 @@
         <img loading="lazy" src="${esc(work.img)}" alt="">
         <div><small>${String(i + 2).padStart(2, '0')} · ${esc(work.room || 'Work')}</small><b>${esc(work.n)}</b><em>${esc(work.tag || work.note || '')}</em></div>
       </a>`).join('');
-    const rooms=[...new Set(others.map(w=>w.room).filter(Boolean))];
+    const wingTitle=w=>(window.STUDIO_WINGS?.[w.wing]?.title||w.room||'Other');
+    const rooms=[...new Set(others.map(wingTitle).filter(Boolean))];
     const filters=['All',...rooms].map((room,i)=>`<button type="button" data-filter="${esc(room)}" class="${i===0?'on':''}">${esc(room)}</button>`).join('');
     root.innerHTML = `
       <div class="mobile-portfolio-head">
@@ -91,7 +92,7 @@
 
     const buttons=[...root.querySelectorAll('.mobile-filters button')];
     const cardsEls=[...root.querySelectorAll('.mobile-work')];
-    cardsEls.forEach((card,i)=>{card.dataset.room=others[i]?.room||''});
+    cardsEls.forEach((card,i)=>{card.dataset.room=wingTitle(others[i]||{})});
     buttons.forEach(button=>button.addEventListener('click',()=>{
       buttons.forEach(b=>b.classList.toggle('on',b===button));
       const filter=button.dataset.filter;
