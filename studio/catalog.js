@@ -63,11 +63,12 @@
     const hero = featured ? `
       <a class="mobile-feature" href="${esc(featured.url)}">
         <div class="mobile-feature-art"><img src="${esc(featured.img)}" alt="${esc(featured.n)} artwork"></div>
+        <div class="mobile-feature-overlay"></div>
         <div class="mobile-feature-copy">
           <small>Featured acquisition · ${esc(featured.acquired || '2026')}</small>
-          <h2>${esc(featured.n)}</h2>
+          <h1>${esc(featured.n)}</h1>
           <p>${esc(featured.tag || featured.note || '')}</p>
-          <span>Open the work ↗</span>
+          <span>Enter the work ↗</span>
         </div>
       </a>` : '';
     const cards = others.map((work, i) => `
@@ -79,12 +80,12 @@
     const rooms=[...new Set(others.map(wingTitle).filter(Boolean))];
     const filters=['All',...rooms].map((room,i)=>`<button type="button" data-filter="${esc(room)}" class="${i===0?'on':''}">${esc(room)}</button>`).join('');
     root.innerHTML = `
+      ${hero}
       <div class="mobile-portfolio-head">
         <small>Caldas Studio · Portfolio</small>
-        <h1>Art, technology, places and ideas.</h1>
-        <p>A mobile-first view of the studio: immersive websites, digital worlds, brands and experiments. Tap any work to enter it.</p>
+        <h2>Art, technology, places and ideas.</h2>
+        <p>Immersive websites, digital worlds, brands and experiments. Tap any work to enter it.</p>
       </div>
-      ${hero}
       <div class="mobile-index"><h3>Selected works</h3><span>${all.length} pieces</span></div>
       <div class="mobile-filters" aria-label="Filter works">${filters}</div>
       <div class="mobile-work-grid">${cards}</div>
