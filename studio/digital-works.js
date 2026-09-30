@@ -18,5 +18,18 @@ window.STUDIO_DIGITAL_WORKS = [
     acquired: '2026',
     featured: true,
     physical: false
+  },
+  {
+    slug: 'kona',
+    n: 'Kona Odyssey',
+    room: 'Nature & Journeys',
+    tag: 'Where legends are forged in lava.',
+    url: 'https://joaoccaldas.github.io/studio-kona/',
+    img: 'gallery/kona.jpg',
+    accent: '#00f5d4',
+    note: 'A living 3D world and museum built around Kona, Ironman history and endurance culture.',
+    acquired: '2026',
+    featured: false,
+    physical: false
   }
 ];
