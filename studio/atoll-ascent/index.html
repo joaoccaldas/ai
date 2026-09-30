@@ -2,116 +2,118 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#04100f">
-<meta name="description" content="Atoll Ascent: a fictional premium triathlon adventure concept in the Maldives. Race, recover, surf and go slightly off-script.">
-<title>Atoll Ascent Maldives — Paradise Is a Starting Line</title>
+<meta name="theme-color" content="#03100e">
+<meta name="description" content="Atoll Ascent: a fictional premium triathlon adventure concept in the Maldives.">
+<title>Atoll Ascent — Paradise, Misused.</title>
 <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
 <header class="nav">
-  <a class="wordmark" href="#top"><span class="mark">⌁</span><span>ATOLL ASCENT<small>MALDIVES</small></span></a>
-  <nav><a href="#race">Race</a><a href="#week">The week</a><a href="#camp">Camp Miasma</a><a href="./after-dark/">After dark</a><a href="./expeditions/">Other bad ideas</a></nav>
-  <button class="menu" aria-label="Open menu">☰</button>
+  <a class="wordmark" href="#top" aria-label="Atoll Ascent home"><span class="mark">⌁</span><span>ATOLL ASCENT<small>MALDIVES</small></span></a>
+  <nav class="desktop-nav"><a href="#race">Race</a><a href="#worlds">Explore</a><a href="#week">Week</a><a href="#pricing">Pricing</a></nav>
+  <button class="menu" id="menuButton" aria-label="Open menu" aria-expanded="false">☰</button>
 </header>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <button class="menu-close" id="menuClose" aria-label="Close menu">×</button>
+  <nav>
+    <a href="#race">The race</a>
+    <a href="#worlds">Explore the worlds</a>
+    <a href="./after-dark/">After Dark</a>
+    <a href="./expeditions/">Other Bad Ideas</a>
+    <a href="#pricing">Founding access</a>
+  </nav>
+</div>
 
 <main id="top">
 <section class="hero">
   <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/5725a6b7-3e94-47cb-baff-961db60f6cb1.png" alt="Triathlete crossing a tropical beach finish at sunset" fetchpriority="high">
   <div class="hero-shade"></div>
-  <div class="hero-copy">
+  <div class="hero-copy reveal">
     <p class="kicker">SWIM / BIKE / RUN / BELONG</p>
     <h1>Paradise,<br><em>misused.</em></h1>
-    <p class="hero-sub">A premium triathlon adventure through the Maldives. Crystal water, exposed island roads, sunset finishes and a week that occasionally ignores good judgement.</p>
+    <p class="hero-sub">A small-field triathlon expedition across the Maldives. Race hard. Recover beautifully. Occasionally make a questionable decision.</p>
     <div class="hero-actions">
-      <a class="btn primary" href="#race">Discover the experience</a>
-      <button class="btn secondary js-interest">Request the private brief</button>
+      <a class="btn primary" href="#race">Enter the race</a>
+      <a class="btn secondary" href="#worlds">Explore the weird part</a>
     </div>
-    <div class="hero-meta"><span>FOUNDING CONCEPT</span><span>24 ATHLETES</span><span>2027 · TBC</span></div>
+    <div class="hero-meta"><span>24 ATHLETES</span><span>2027 · TBC</span><span>FOUNDING CONCEPT</span></div>
   </div>
-  <a class="scroll" href="#race">↓</a>
+  <button class="surprise" id="surprise" type="button">SURPRISE ME ↗</button>
 </section>
 
-<section class="pulse"><span>FIELD NOTE 01 · THE OCEAN DOES NOT CARE ABOUT YOUR FTP.</span><span>FIELD NOTE 02 · SLEEP IS AVAILABLE. TECHNICALLY.</span><span>FIELD NOTE 03 · PARADISE IS A TERRIBLE PLACE FOR GOOD DECISIONS.</span></section>
+<section class="fieldnote" aria-live="polite"><span id="fieldNote">THE OCEAN DOES NOT CARE ABOUT YOUR FTP.</span></section>
 
-<section class="intro section">
-  <p class="eyebrow">THE PREMISE</p>
-  <h2>Race hard enough to earn the view.</h2>
-  <div class="intro-copy"><p>Atoll Ascent is a deliberately small endurance expedition built around racing first and everything else second. The luxury exists to remove friction, not effort.</p><p class="fine">This is a concept experience. Dates, routes, permits, vessels, operators, accommodation inventory and final pricing remain TBC.</p></div>
+<section id="race" class="race dark">
+  <div class="section-head reveal">
+    <div><p class="eyebrow">THE RACE</p><h2>Four disciplines of poor vacation planning.</h2></div>
+    <p>Swipe →</p>
+  </div>
+  <div class="race-track" id="raceTrack">
+    <article class="race-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/f84521b3-e952-4dfb-b5c1-38c36cf532c8.png" alt="Drone view of swimmers and kayaks in a tropical lagoon"><div><span>01 / SWIM</span><h3>Lagoon lines.</h3></div></article>
+    <article class="race-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/a74bcf4a-bffc-4674-a543-ae949d5992be.png" alt="Triathletes swimming underwater over coral reef"><div><span>02 / UNDER</span><h3>Reef below. Breathe anyway.</h3></div></article>
+    <article class="race-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/0231feb7-752b-4f87-88aa-aef86b62f22d.png" alt="Cyclist riding a narrow island causeway"><div><span>03 / BIKE</span><h3>Road quality: optimistic.</h3></div></article>
+    <article class="race-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/5725a6b7-3e94-47cb-baff-961db60f6cb1.png" alt="Triathlete finishing at sunset"><div><span>04 / RUN</span><h3>Finish somewhere better.</h3></div></article>
+  </div>
+  <div class="race-progress"><i id="raceProgress"></i></div>
 </section>
 
-<section id="race" class="race-gallery dark">
-  <div class="section-head"><div><p class="eyebrow">THE RACE</p><h2>Four ways to question your holiday choices.</h2></div><p class="aside">Tap. Swipe. Keep going.</p></div>
-  <div class="cards" id="raceCards">
-    <article class="photo-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/f84521b3-e952-4dfb-b5c1-38c36cf532c8.png" alt="Drone view of swimmers and safety kayaks in a Maldivian lagoon" loading="lazy"><div><span>01 · SWIM</span><h3>Lagoon lines</h3><p>Warm water. Reef below. Kayaks nearby. Confidence optional.</p></div></article>
-    <article class="photo-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/a74bcf4a-bffc-4674-a543-ae949d5992be.png" alt="Triathletes swimming underwater over coral reef" loading="lazy"><div><span>02 · UNDER</span><h3>Go deeper</h3><p>Bubbles, coral and the occasional distant reef shark minding its business.</p></div></article>
-    <article class="photo-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/0231feb7-752b-4f87-88aa-aef86b62f22d.png" alt="Mud-covered cyclist riding a narrow tropical causeway" loading="lazy"><div><span>03 · BIKE</span><h3>Road quality: optimistic</h3><p>Ocean on both sides. Spray in your face. A lot of tropical dignity lost.</p></div></article>
-    <article class="photo-card"><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/5725a6b7-3e94-47cb-baff-961db60f6cb1.png" alt="Athlete finishing at sunset" loading="lazy"><div><span>04 · RUN</span><h3>Finish somewhere better</h3><p>Sand, sunset and a finish line that feels slightly cinematic because it is.</p></div></article>
+<section id="worlds" class="worlds">
+  <div class="worlds-head reveal"><p class="eyebrow">CHOOSE YOUR VERSION OF THE WEEK</p><h2>The race is only half the story.</h2></div>
+  <div class="portal-grid">
+    <a class="portal portal-night reveal" href="./after-dark/">
+      <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/b9b765a2-240e-475f-bee7-b3002028910d.png" alt="Candlelit tequila tasting on a tropical beach">
+      <div class="portal-shade"></div><div class="portal-copy"><span>AFTER DARK</span><h3>Good food.<br>Bad timing.</h3><p>Tequila, moonlit water, cinema and several reasons to question tomorrow's alarm.</p><b>Enter After Dark ↗</b></div>
+    </a>
+    <a class="portal portal-bad reveal" href="./expeditions/">
+      <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/a74bcf4a-bffc-4674-a543-ae949d5992be.png" alt="Underwater triathlon swim">
+      <div class="portal-shade"></div><div class="portal-copy"><span>OTHER BAD IDEAS</span><h3>Go somewhere less sensible.</h3><p>Fictional expeditions from Svalbard to Patagonia, sorted by level of poor judgement.</p><b>Open the catalogue ↗</b></div>
+    </a>
+    <a class="portal portal-camp reveal" href="#camp">
+      <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/72bbc92f-b8cd-47b2-8ec3-ca7549ec47ae.png" alt="Athletes training aboard Camp Miasma">
+      <div class="portal-shade"></div><div class="portal-copy"><span>CAMP MIASMA</span><h3>Train on a yacht because apparently hotels are boring.</h3><b>Meet the floating HQ ↓</b></div>
+    </a>
+    <a class="portal portal-escape reveal" href="#escape">
+      <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/d2c55642-ae5d-482e-8b33-7efbfcc251e0.png" alt="Two athletes building a raft on a tropical island">
+      <div class="portal-shade"></div><div class="portal-copy"><span>ESCAPE CHALLENGE</span><h3>Build the raft. Save the friendship.</h3><b>See the side quest ↓</b></div>
+    </a>
   </div>
 </section>
 
 <section id="week" class="week section">
-  <div class="section-head"><div><p class="eyebrow">THE WEEK</p><h2>A schedule designed by people who dislike empty calendars.</h2></div></div>
-  <div class="day-strip">
-    <article><b>D1</b><h3>Arrive / Tequila</h3><p>Bike concierge, lagoon shakeout, then a first-night tasting that should probably have been scheduled after the race.</p></article>
-    <article><b>D2</b><h3>Lagoon Prologue</h3><p>750 m swim · 20 km bike · 5 km run. Short enough to underestimate.</p></article>
-    <article><b>D3</b><h3>Island SwimRun</h3><p>Water, shoreline, heat. Dinner under palms. Sensible bedtime unlikely.</p></article>
-    <article><b>D4</b><h3>Causeway Chase</h3><p>40 km bike · 10 km run. Followed by Camp Miasma cinema and regrettable dessert.</p></article>
-    <article><b>D5</b><h3>Atoll Enduro</h3><p>1.9 km swim · 60 km bike · 15 km run. The queen stage. Nothing saved.</p></article>
-    <article><b>D6</b><h3>Reset</h3><p>Massage, reef, nature, sleep, espresso. In whichever order your body negotiates.</p></article>
-    <article><b>D7</b><h3>Ocean Day</h3><p>Yacht, diving, reef drift or doing absolutely nothing with conviction.</p></article>
-    <article><b>D8</b><h3>Leave / Don’t</h3><p>Closing brunch. Fly home or continue north for the surf extension.</p></article>
+  <div class="section-head reveal"><div><p class="eyebrow">ONE WEEK</p><h2>Serious racing. Questionable scheduling.</h2></div></div>
+  <div class="week-line">
+    <article class="reveal"><b>D1</b><h3>Land + tequila</h3><p>Bike setup, lagoon shakeout, candlelit first-night tasting.</p></article>
+    <article class="reveal"><b>D2–4</b><h3>Race the atoll</h3><p>Swim, causeway bike, SwimRun, sunset pursuit.</p></article>
+    <article class="reveal"><b>D5</b><h3>Queen stage</h3><p>1.9 km swim · 60 km bike · 15 km run.</p></article>
+    <article class="reveal"><b>D6–8</b><h3>Recover / stay</h3><p>Reef, yacht, massage, sleep. Or continue north to surf.</p></article>
   </div>
 </section>
 
-<section class="night feature-split dark">
-  <figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/b9b765a2-240e-475f-bee7-b3002028910d.png" alt="Athletes and guests at a candlelit tequila tasting on the beach" loading="lazy"></figure>
-  <div class="feature-copy">
-    <p class="eyebrow">AFTER DARK</p>
-    <h2>Good food. Bad timing.</h2>
-    <p>The nights are intentionally part of the experience: candlelit dinners, curated tequila, moonlit water, cinema under the stars and a few ideas that remain firmly labelled TBC.</p>
-    <div class="mini-grid"><span>TEQUILA TASTING</span><span>MOONLIT LAGOON DIP</span><span>SCUBA RAVE · TBC</span><span>CAMP MIASMA CINEMA</span></div>
-    <a class="text-link" href="./after-dark/">Explore the night program →</a>
-  </div>
+<section id="camp" class="camp immersive">
+  <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/72bbc92f-b8cd-47b2-8ec3-ca7549ec47ae.png" alt="Camp Miasma yacht training deck" loading="lazy">
+  <div class="immersive-shade"></div>
+  <div class="immersive-copy reveal"><p class="eyebrow">FLOATING HQ · FICTIONAL CONCEPT</p><h2>Camp Miasma.</h2><p>Trainer deck. Swim platform. Recovery rooms. Chef-led food. Wake up somewhere else.</p><p class="fine">Vessel, crew and operating partner remain TBC.</p></div>
 </section>
 
-<section id="camp" class="camp feature-split">
-  <div class="feature-copy">
-    <p class="eyebrow">FLOATING HQ · FICTIONAL CONCEPT</p>
-    <h2>Camp Miasma.</h2>
-    <p>A luxury expedition yacht used as training base, recovery platform and moving bad-idea headquarters. Ride the trainer on deck. Swim off the stern. Wake up somewhere else.</p>
-    <ul><li>Bike trainer deck</li><li>Chef-led athlete nutrition</li><li>Scuba / swim launch platform</li><li>Massage and recovery spaces</li></ul>
-    <p class="fine">Vessel, crew, operating partner and logistics remain TBC.</p>
-  </div>
-  <figure><img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/72bbc92f-b8cd-47b2-8ec3-ca7549ec47ae.png" alt="Athletes training aboard the fictional Camp Miasma yacht" loading="lazy"></figure>
+<section id="escape" class="escape immersive">
+  <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/d2c55642-ae5d-482e-8b33-7efbfcc251e0.png" alt="Participants building a driftwood raft on a tiny island" loading="lazy">
+  <div class="immersive-shade"></div>
+  <div class="immersive-copy reveal"><p class="eyebrow">OPTIONAL SIDE QUEST · FICTIONAL</p><h2>Escape Challenge.</h2><p>Twenty-four hours on an empty island with the person you bonded with least. Build shelter. Build a raft. Get back before dinner.</p><p class="fine">A real version would be fully supervised with safety support. Nobody is actually abandoned.</p></div>
 </section>
 
-<section class="escape dark">
-  <img src="https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/d2c55642-ae5d-482e-8b33-7efbfcc251e0.png" alt="Two athletes building a raft on a tropical island" loading="lazy">
-  <div class="escape-shade"></div>
-  <div class="escape-copy"><p class="eyebrow">OPTIONAL SIDE QUEST · FICTIONAL</p><h2>Escape Challenge.</h2><p>You and the person you bonded with least are “stranded” for a day. Build shelter. Build a raft. Get back before dinner.</p><p class="fine">A real version would be a supervised simulation with safety boat, communications, water, food and evacuation support. Nobody is actually abandoned.</p></div>
-</section>
-
-<section class="packages section">
-  <div class="section-head"><div><p class="eyebrow">FOUNDING ACCESS · PLANNING PRICES</p><h2>Small field. High touch. No mass-event economics.</h2></div></div>
-  <div class="package-grid">
-    <article><span>ASCENT</span><h3>US$14.8K</h3><p>Race week · 7 nights</p><ul><li>4-stage race production</li><li>Airport + bike handling</li><li>Recovery programme</li><li>Private closing dinner</li></ul><button class="js-interest">Request brief</button></article>
-    <article class="featured"><span>ASCENT OVERWATER</span><h3>US$18.9K</h3><p>Premium stay · planning</p><ul><li>Everything in Ascent</li><li>Premium accommodation category TBC</li><li>Priority recovery scheduling</li><li>Enhanced private dining</li></ul><button class="js-interest">Request brief</button></article>
-    <article><span>FOUNDERS' RESIDENCE</span><h3>US$24.9K</h3><p>Top category · planning</p><ul><li>Everything in Overwater</li><li>Private arrival handling</li><li>Founding-edition experiences</li><li>Smallest inventory</li></ul><button class="js-interest">Request brief</button></article>
+<section id="pricing" class="pricing section dark">
+  <div class="section-head reveal"><div><p class="eyebrow">FOUNDING ACCESS · PLANNING PRICES</p><h2>Small field. High touch.</h2></div></div>
+  <div class="price-track">
+    <article class="price-card reveal"><span>ASCENT</span><h3>$14.8K</h3><p>7 nights · race week</p><button class="js-interest">Request brief</button></article>
+    <article class="price-card featured reveal"><span>ASCENT OVERWATER</span><h3>$18.9K</h3><p>Premium stay · planning</p><button class="js-interest">Request brief</button></article>
+    <article class="price-card reveal"><span>FOUNDERS' RESIDENCE</span><h3>$24.9K</h3><p>Top category · planning</p><button class="js-interest">Request brief</button></article>
   </div>
   <p class="fine truth">Planning price ≠ supplier quote. No deposits are being accepted.</p>
 </section>
 
-<section class="surf dark section">
-  <div><p class="eyebrow">OPTIONAL +3 NIGHTS</p><h2>Don’t go home yet.</h2><p>Lohis surf extension or private swell-chaser charter. Premium, deliberately unnecessary and currently TBC.</p></div>
-  <div class="surf-prices"><article><b>LOHIS</b><span>+US$3.2K pp · planning</span></article><article><b>SWELL CHASER</b><span>+US$4.8K pp · planning</span></article></div>
-</section>
-
-<section class="other">
-  <a href="./expeditions/"><span class="eyebrow">THE UNAUTHORIZED CATALOGUE</span><h2>Other bad ideas.</h2><p>Svalbard. Patagonia. Atacama. Mongolia. Places where the logistics team would like a word.</p><b>Explore fictional expeditions →</b></a>
-</section>
-
-<section class="signup dark">
-  <p class="eyebrow">FOUNDING INTEREST</p><h2>Twenty-four places. Zero deposits today.</h2><p>Tell us which version you would consider. The mock flow opens a pre-filled email draft and stores nothing.</p><button class="btn primary js-interest">Request the private brief</button>
+<section class="signup">
+  <div class="signup-inner reveal"><p class="eyebrow">FOUNDING INTEREST</p><h2>Twenty-four places.<br>Zero deposits today.</h2><p>Request the private concept brief. The demo flow opens a pre-filled email and stores nothing.</p><button class="btn primary js-interest">Request the private brief</button></div>
 </section>
 </main>
 
