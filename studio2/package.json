@@ -1,0 +1,9 @@
+{
+  "name": "caldas-studio2",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/validate.mjs",
+    "serve": "python3 -m http.server 8802 -d .."
+  }
+}

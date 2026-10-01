@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#07080a" />
+  <meta name="description" content="Caldas Studio 2 — a cinematic interactive portfolio about ideas, experiments, failures, systems and future work." />
+  <title>Caldas Studio 2 · The Build</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <a class="skip" href="#scene-copy">Skip to story</a>
+  <canvas id="world" aria-label="Interactive 3D portfolio world"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <button class="brand" id="homeBtn" aria-label="Return to beginning"><span class="brand-dot"></span><span>CALDAS <b>STUDIO 2</b></span></button>
+    <div class="top-actions">
+      <button class="ghost" id="mapBtn">Map</button>
+      <button class="ghost" id="qualityBtn" aria-pressed="false">Quality · Auto</button>
+      <a class="ghost" href="../studio/">Studio 1</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="opening" id="opening">
+      <div class="opening-copy">
+        <p class="eyebrow">A portfolio about building, not polishing history</p>
+        <h1>Everything<br><em>leaves a trace.</em></h1>
+        <p class="lede">Projects live, fail, mutate, get buried and sometimes crawl back out. Walk through the evidence.</p>
+        <div class="opening-actions">
+          <button class="primary" id="enterBtn">Enter the world</button>
+          <button class="secondary" id="quickBtn">Open project index</button>
+        </div>
+        <p class="tiny">Seven acts · one canonical project registry · source and live links where verified</p>
+      </div>
+    </section>
+
+    <aside class="act-rail" id="actRail" aria-label="Story acts"></aside>
+
+    <section class="scene-copy" id="scene-copy" aria-live="polite">
+      <div class="scene-heading">
+        <span class="scene-number" id="sceneNumber">01</span>
+        <div>
+          <p class="eyebrow" id="sceneTone">Origins</p>
+          <h2 id="sceneTitle">The Cave</h2>
+        </div>
+      </div>
+      <p class="scene-line" id="sceneLine">Before the systems, there were sparks.</p>
+      <p class="scene-body" id="sceneBody"></p>
+      <div class="scene-actions">
+        <button class="primary small" id="projectsBtn">Inspect projects</button>
+        <button class="secondary small" id="nextBtn">Next act</button>
+      </div>
+    </section>
+
+    <section class="project-drawer" id="projectDrawer" aria-hidden="true">
+      <div class="drawer-head">
+        <div><p class="eyebrow">Evidence room</p><h2 id="drawerTitle">Projects</h2></div>
+        <button class="close" id="drawerClose" aria-label="Close projects">×</button>
+      </div>
+      <div class="drawer-tools">
+        <input id="search" type="search" placeholder="Search projects, skills or lessons…" autocomplete="off" />
+        <div class="filters" id="filters"></div>
+      </div>
+      <div class="projects" id="projects"></div>
+    </section>
+
+    <section class="map-panel" id="mapPanel" aria-hidden="true">
+      <div class="drawer-head"><div><p class="eyebrow">World map</p><h2>Seven acts</h2></div><button class="close" id="mapClose">×</button></div>
+      <div class="map-grid" id="mapGrid"></div>
+    </section>
+
+    <dialog id="projectModal" class="project-modal">
+      <button class="close modal-close" id="modalClose">×</button>
+      <div id="modalContent"></div>
+    </dialog>
+  </main>
+
+  <div class="hint" id="hint">drag to look · scroll to move between acts</div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
