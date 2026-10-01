@@ -1,5 +1,5 @@
-import fs from 'node:fs';import path from 'node:path';
-const root=path.resolve(import.meta.dirname,'..');
+import fs from 'node:fs';import path from 'node:path';import { fileURLToPath } from 'node:url';
+const here=path.dirname(fileURLToPath(import.meta.url));const root=path.resolve(here,'..');
 const required=['index.html','styles.css','app.js','world.js','projects.js','README.md','docs/ARCHITECTURE.md','docs/ART_DIRECTION.md','blender/build_world.py'];
 for(const f of required)if(!fs.existsSync(path.join(root,f)))throw new Error('missing '+f);
 
