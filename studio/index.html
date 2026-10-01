@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<script>
+  if (matchMedia('(max-width: 760px)').matches && !location.pathname.includes('/studio/mobile/')) {
+    location.replace('./mobile/' + location.search + location.hash);
+  }
+</script>
 <title>Caldas Studio — The Museum</title>
 <meta name="description" content="Walk into Caldas Studio: a museum built in Blender and rendered live in your browser. Every sculpture is a website concept for a real kind of business — click one to enter it." />
 <meta name="theme-color" content="#07070a" />
