@@ -22,6 +22,7 @@
       <a class="ghost" href="../studio/">Studio 1</a>
     </div>
   </header>
+  <div class="runtime-pill" id="runtimeStatus" role="status" aria-live="polite">Loading 3D…</div>
 
   <main>
     <section class="opening" id="opening">
@@ -73,7 +74,7 @@
     </section>
 
     <dialog id="projectModal" class="project-modal">
-      <button class="close modal-close" id="modalClose">×</button>
+      <button class="close modal-close" id="modalClose" aria-label="Close project details">×</button>
       <div id="modalContent"></div>
     </dialog>
   </main>
