@@ -72,9 +72,9 @@
         </div>
       </a>` : '';
     const cards = others.map((work, i) => `
-      <a class="mobile-work" href="${esc(work.url)}" style="--accent:${esc(work.accent || '#c9a86a')}">
-        <img loading="lazy" src="${esc(work.img)}" alt="">
-        <div><small>${String(i + 2).padStart(2, '0')} · ${esc(work.room || 'Work')}</small><b>${esc(work.n)}</b><em>${esc(work.tag || work.note || '')}</em></div>
+      <a class="mobile-work" href="${esc(work.url)}" style="--accent:${esc(work.accent || '#c9a86a')}" data-title="${esc(work.n)}">
+        <img loading="lazy" src="${esc(work.img)}" alt="${esc(work.n)} portfolio artwork">
+        <div><small>${String(i + 2).padStart(2, '0')} · ${esc(wingTitle(work))}</small><b>${esc(work.n)}</b><em>${esc(work.tag || work.note || '')}</em></div>
       </a>`).join('');
     const wingTitle=w=>(window.STUDIO_WINGS?.[w.wing]?.title||w.room||'Other');
     const rooms=[...new Set(others.map(wingTitle).filter(Boolean))];
@@ -86,7 +86,7 @@
         <h2>Art, technology, places and ideas.</h2>
         <p>Immersive websites, digital worlds, brands and experiments. Tap any work to enter it.</p>
       </div>
-      <div class="mobile-index"><h3>Selected works</h3><span>${all.length} pieces</span></div>
+      <div class="mobile-index"><div><h3>Selected works</h3><span id="mobileWorkCount">${others.length} works</span></div><button type="button" class="mobile-surprise" id="mobileSurprise">Surprise me ↗</button></div>
       <div class="mobile-filters" aria-label="Filter works">${filters}</div>
       <div class="mobile-work-grid">${cards}</div>
       <div class="mobile-footer"><span>Caldas Studio · 2026</span><a href="mailto:hello@caldas.studio">Commission a piece ↗</a></div>`;
@@ -94,11 +94,24 @@
     const buttons=[...root.querySelectorAll('.mobile-filters button')];
     const cardsEls=[...root.querySelectorAll('.mobile-work')];
     cardsEls.forEach((card,i)=>{card.dataset.room=wingTitle(others[i]||{})});
+    const updateCount=()=>{const count=cardsEls.filter(c=>!c.hidden).length;const el=root.querySelector('#mobileWorkCount');if(el)el.textContent=count+' work'+(count===1?'':'s')};
     buttons.forEach(button=>button.addEventListener('click',()=>{
-      buttons.forEach(b=>b.classList.toggle('on',b===button));
+      buttons.forEach(b=>{const active=b===button;b.classList.toggle('on',active);b.setAttribute('aria-pressed',String(active))});
       const filter=button.dataset.filter;
       cardsEls.forEach(card=>{card.hidden=filter!=='All'&&card.dataset.room!==filter});
+      updateCount();
     }));
+    buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===0)));
+    const surprise=root.querySelector('#mobileSurprise');
+    if(surprise) surprise.addEventListener('click',()=>{
+      const visible=cardsEls.filter(c=>!c.hidden);
+      if(!visible.length)return;
+      const pick=visible[Math.floor(Math.random()*visible.length)];
+      pick.scrollIntoView({behavior:'smooth',block:'center'});
+      pick.classList.add('surprised');
+      setTimeout(()=>pick.classList.remove('surprised'),900);
+    });
+    updateCount();
   }
 
   renderFeatured();
