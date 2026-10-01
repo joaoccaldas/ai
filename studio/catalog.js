@@ -60,6 +60,7 @@
     if (!root || !all.length) return;
     const featured = digital.find(w => w.featured) || digital[0] || physical[0];
     const others = all.filter(w => !featured || w.slug !== featured.slug);
+    const wingTitle=w=>(window.STUDIO_WINGS?.[w.wing]?.title||w.room||'Other');
     const hero = featured ? `
       <a class="mobile-feature" href="${esc(featured.url)}">
         <div class="mobile-feature-art"><img src="${esc(featured.img)}" alt="${esc(featured.n)} artwork"></div>
@@ -76,7 +77,6 @@
         <img loading="lazy" src="${esc(work.img)}" alt="${esc(work.n)} portfolio artwork">
         <div><small>${String(i + 2).padStart(2, '0')} · ${esc(wingTitle(work))}</small><b>${esc(work.n)}</b><em>${esc(work.tag || work.note || '')}</em></div>
       </a>`).join('');
-    const wingTitle=w=>(window.STUDIO_WINGS?.[w.wing]?.title||w.room||'Other');
     const rooms=[...new Set(others.map(wingTitle).filter(Boolean))];
     const filters=['All',...rooms].map((room,i)=>`<button type="button" data-filter="${esc(room)}" class="${i===0?'on':''}">${esc(room)}</button>`).join('');
     root.innerHTML = `
