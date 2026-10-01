@@ -13,7 +13,7 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="./icon.svg">
-<link rel="stylesheet" href="./app.css">
+<link rel="stylesheet" href="./app.css?v=20261001-3">
 </head>
 <body>
 <main class="shell">
@@ -26,17 +26,35 @@
     <p class="eyebrow">PRIVATE BETA</p>
     <h1>Human performance,<br><em>explained.</em></h1>
     <p class="lede">Your training, recovery and source truth in one installable app.</p>
-    <div id="identityState" class="identity">Checking your linked account…</div>
-    <form id="loginForm" class="login" hidden>
-      <input id="emailInput" type="email" autocomplete="email" placeholder="your email address" required>
-      <button type="submit">Send sign-in code</button>
-      <p class="fine">We will email you a secure 6-digit code to sign in or register instantly.</p>
-    </form>
-    <div id="otpBox" class="login" hidden>
-      <p class="fine">Enter the 6-digit code sent to <strong id="sentEmailDisplay"></strong>:</p>
-      <input id="otpInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="6-digit code" autocomplete="one-time-code">
+    <div id="identityState" class="identity">Enter your email or verification code to access your athlete data.</div>
+
+    <div class="auth-tabs" id="authTabs">
+      <button id="tabCodeBtn" class="tab-btn active" type="button">6-Digit Code</button>
+      <button id="tabEmailBtn" class="tab-btn" type="button">Request Code</button>
+      <button id="tabPasteBtn" class="tab-btn" type="button">Paste Link / Token</button>
+    </div>
+
+    <!-- Pane 1: Enter 6-Digit Code (Default) -->
+    <div id="otpBox" class="login">
+      <p class="fine">Enter your email and the 6-digit confirmation code from your inbox:</p>
+      <input id="otpEmailInput" type="email" autocomplete="email" placeholder="your email address" required>
+      <input id="otpInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="6-digit code" autocomplete="one-time-code" required>
       <button id="verifyOtpBtn" type="button">Verify & Sign In</button>
-      <button id="backToEmailBtn" class="quiet" type="button">Use a different email</button>
+    </div>
+
+    <!-- Pane 2: Request New Code -->
+    <form id="loginForm" class="login" hidden>
+      <p class="fine">Request a new sign-in code sent to your inbox:</p>
+      <input id="emailInput" type="email" autocomplete="email" placeholder="your email address" required>
+      <button type="submit">Send Sign-In Code</button>
+      <p class="fine subtext">We will send a 6-digit code to this address.</p>
+    </form>
+
+    <!-- Pane 3: Paste Link / Token (For when redirect bounced to localhost:3000) -->
+    <div id="pasteBox" class="login" hidden>
+      <p class="fine">Did your email link open at <code>localhost:3000</code>? Copy the URL from that browser tab and paste it here:</p>
+      <input id="pasteInput" type="text" placeholder="http://localhost:3000/#access_token=... or eyJhbGci..." autocomplete="off">
+      <button id="verifyPasteBtn" type="button">Sign In with Link / Token</button>
     </div>
   </section>
 
@@ -87,6 +105,6 @@
 
   <footer>Private beta · Supabase identity · Neon performance authority</footer>
 </main>
-<script type="module" src="./app.js"></script>
+<script type="module" src="./app.js?v=20261001-3"></script>
 </body>
 </html>
