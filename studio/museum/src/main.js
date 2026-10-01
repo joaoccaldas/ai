@@ -74,11 +74,11 @@ function boot() {
       void main(){vec2 d=vUv-.5;float r=length(d*vec2(uAspect,1.));vec3 c=texture2D(tDiffuse,vUv).rgb;
         float ca=.0014*r*r; c.r=texture2D(tDiffuse,vUv+d*ca).r; c.b=texture2D(tDiffuse,vUv-d*ca).b;
         c*=mix(1.,smoothstep(1.25,.25,r),.55); gl_FragColor=vec4(c,1.);}` });
-  lens.enabled = !lite; composer.addPass(lens);
+  lens.enabled = !lite && !touch; composer.addPass(lens);
   composer.addPass(new OutputPass());
   composer.setPixelRatio(dpr); composer.setSize(innerWidth, innerHeight);
   addEventListener('resize', onResize);
-  load().then(() => { $('loader').classList.add('done'); requestAnimationFrame(frame); if (!lite) setTimeout(upgradeKatana, 400); }).catch(err => { console.warn('museum assets failed', err && err.message); $('loader').classList.add('done'); $('webglFail').hidden = false; });
+  load().then(() => { $('loader').classList.add('done'); requestAnimationFrame(frame); if (!lite && !touch) setTimeout(upgradeKatana, 400); }).catch(err => { console.warn('museum assets failed', err && err.message); $('loader').classList.add('done'); $('webglFail').hidden = false; });
   window.__MUSEUM = { capture: () => { composer.render(); return canvas.toDataURL('image/jpeg', .85); }, teleport: (x, y, yaw, pitch = -.05) => { Object.assign(P, { x, y, yaw, pitch, vx: 0, vy: 0 }); autoPath = null; started = true; document.body.classList.add('walking'); }, go: slug => walkToExhibit(slug), get state() { return { ...P, curWing, target: target && target.slug, locked }; } };
 }
 function onResize() {
@@ -301,7 +301,7 @@ async function load() {
           float edge=smoothstep(0.,.12,vL.x)*smoothstep(1.,.88,vL.x)*smoothstep(0.,.1,vL.y)*smoothstep(1.,.9,vL.y);
           gl_FragColor=vec4(c*uStrength*edge,1.); }` } });
   floorRef.rotation.x = -Math.PI / 2; Object.assign(floorRef.material, { transparent: true, blending: THREE.AdditiveBlending, depthWrite: false });
-  floorRef.visible = !lite; scene.add(floorRef); placeReflector('atrium');
+  floorRef.visible = !lite && !touch; scene.add(floorRef); placeReflector('atrium');
   // a beam of light for the diamond, sparkles around it, steam over the coffee, the lighthouse beam
   const eclat = layout.exhibits.find(e => e.slug === 'eclat');
   if (eclat) {
