@@ -11,6 +11,7 @@
 <body>
   <a class="skip" href="#scene-copy">Skip to story</a>
   <canvas id="world" aria-label="Interactive 3D portfolio world"></canvas>
+  <div class="fallback-world" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
 
@@ -18,11 +19,11 @@
     <button class="brand" id="homeBtn" aria-label="Return to beginning"><span class="brand-dot"></span><span>CALDAS <b>STUDIO 2</b></span></button>
     <div class="top-actions">
       <button class="ghost" id="mapBtn">Map</button>
-      <button class="ghost" id="qualityBtn" aria-pressed="false">Quality · Auto</button>
-      <a class="ghost" href="../studio/">Studio 1</a>
+      <button class="ghost" id="allProjectsBtn">Projects</button>
+      <button class="ghost quality-control" id="qualityBtn" aria-pressed="false">Quality · Auto</button>
+      <a class="ghost studio1-link" href="../studio/">Studio 1</a>
     </div>
   </header>
-  <div class="runtime-pill" id="runtimeStatus" role="status" aria-live="polite">Loading 3D…</div>
 
   <main>
     <section class="opening" id="opening">
@@ -32,7 +33,7 @@
         <p class="lede">Projects live, fail, mutate, get buried and sometimes crawl back out. Walk through the evidence.</p>
         <div class="opening-actions">
           <button class="primary" id="enterBtn">Enter the world</button>
-          <button class="secondary" id="quickBtn">Open project index</button>
+          <button class="secondary" id="quickBtn">Browse all projects</button>
         </div>
         <p class="tiny">Seven acts · one canonical project registry · source and live links where verified</p>
       </div>
@@ -51,8 +52,9 @@
       <p class="scene-line" id="sceneLine">Before the systems, there were sparks.</p>
       <p class="scene-body" id="sceneBody"></p>
       <div class="scene-actions">
-        <button class="primary small" id="projectsBtn">Inspect projects</button>
-        <button class="secondary small" id="nextBtn">Next act</button>
+        <button class="secondary small" id="prevBtn">Previous</button>
+        <button class="primary small" id="projectsBtn">Projects</button>
+        <button class="secondary small" id="nextBtn">Next</button>
       </div>
     </section>
 
@@ -69,17 +71,19 @@
     </section>
 
     <section class="map-panel" id="mapPanel" aria-hidden="true">
-      <div class="drawer-head"><div><p class="eyebrow">World map</p><h2>Seven acts</h2></div><button class="close" id="mapClose">×</button></div>
+      <div class="drawer-head"><div><p class="eyebrow">World map</p><h2>Seven acts</h2></div><button class="close" id="mapClose" aria-label="Close map">×</button></div>
       <div class="map-grid" id="mapGrid"></div>
     </section>
 
     <dialog id="projectModal" class="project-modal">
-      <button class="close modal-close" id="modalClose" aria-label="Close project details">×</button>
+      <button class="close modal-close" id="modalClose" aria-label="Close project">×</button>
       <div id="modalContent"></div>
     </dialog>
   </main>
 
+  <div class="world-status" id="worldStatus" role="status" aria-live="polite">Loading 3D…</div>
   <div class="hint" id="hint">drag to look · scroll to move between acts</div>
+  <noscript><div class="noscript">JavaScript is required for the interactive world. Project links remain available in the repository.</div></noscript>
   <script type="module" src="./app.js"></script>
 </body>
 </html>
