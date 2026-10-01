@@ -29,6 +29,8 @@ jobs:
       - name: Validate JavaScript syntax
         run: |
           node --check studio/rooms.js
+          node --check studio/digital-works.js
+          node --check studio/catalog.js
           node --check studio/museum/museum.js
           node --check studio/concept.js
           node --check studio/kit.js
