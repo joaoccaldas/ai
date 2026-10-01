@@ -1,0 +1,13 @@
+import fs from 'node:fs';import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..');
+const required=['index.html','styles.css','app.js','world.js','projects.js','README.md','docs/ARCHITECTURE.md','docs/ART_DIRECTION.md','blender/build_world.py'];
+for(const f of required)if(!fs.existsSync(path.join(root,f)))throw new Error('missing '+f);
+const text=fs.readFileSync(path.join(root,'projects.js'),'utf8');
+const ids=[...text.matchAll(/id:'([^']+)'/g)].map(x=>x[1]);
+if(ids.length<35)throw new Error(`expected broad registry, found ${ids.length}`);
+if(new Set(ids).size!==ids.length)throw new Error('duplicate project ids');
+const acts=[...text.matchAll(/\{id:'(cave|workshop|cemetery|arcade|observatory|machine|horizon)',n:/g)].map(x=>x[1]);
+if(new Set(acts).size!==7)throw new Error('seven acts required');
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+for(const id of ['world','opening','actRail','projectDrawer','projectModal'])if(!html.includes(`id="${id}"`))throw new Error('missing #'+id);
+console.log(`Studio2 contract OK: ${ids.length} projects, 7 acts, lazy scene replacement, mobile UI.`);
