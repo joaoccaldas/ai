@@ -4,10 +4,12 @@ const SESSION_KEY='kona.supabase.session.v1';
 const DATA_API='https://ep-old-unit-b2kpv7vr.apirest.c-6.eu-central-1.aws.neon.tech/performance_os/rest/v1';
 
 const $=id=>document.getElementById(id);
-const json=async r=>{const t=await r.text();let d=null;try{d=t?JSON.parse(t):null}catch{}if(!r.ok)throw new Error(d?.message||d?.error||d?.hint||('HTTP '+r.status));return d};
+const json=async r=>{const t=await r.text();let d=null;try{d=t?JSON.parse(t):null}catch{}if(!r.ok)throw new Error(d?.message||d?.error_description||d?.error||d?.hint||('HTTP '+r.status));return d};
 const baseHeaders=()=>({apikey:SUPABASE_KEY,'Content-Type':'application/json'});
 const readSession=()=>{try{return JSON.parse(localStorage.getItem(SESSION_KEY)||'null')}catch{return null}};
 const saveSession=s=>{try{s?localStorage.setItem(SESSION_KEY,JSON.stringify(s)):localStorage.removeItem(SESSION_KEY)}catch{}};
+
+let pendingEmail='';
 
 function consumeCallback(){
  const h=new URLSearchParams(location.hash.replace(/^#/,''));
@@ -35,7 +37,35 @@ async function currentUser(){
  catch{saveSession(null);return null}
 }
 async function sendMagicLink(email){
- return json(await fetch(SUPABASE_URL+'/auth/v1/otp',{method:'POST',headers:baseHeaders(),body:JSON.stringify({email:String(email).trim().toLowerCase(),create_user:false,email_redirect_to:location.origin+location.pathname})}));
+ pendingEmail=String(email).trim().toLowerCase();
+ return json(await fetch(SUPABASE_URL+'/auth/v1/otp',{
+  method:'POST',
+  headers:baseHeaders(),
+  body:JSON.stringify({
+   email:pendingEmail,
+   create_user:true,
+   email_redirect_to:location.origin+location.pathname
+  })
+ }));
+}
+async function verifyOtp(token){
+ if(!pendingEmail)pendingEmail=$('emailInput').value.trim().toLowerCase();
+ if(!pendingEmail)throw new Error('Please enter your email first');
+ const cleanToken=String(token).trim().replace(/\s+/g,'');
+ const d=await json(await fetch(SUPABASE_URL+'/auth/v1/verify',{
+  method:'POST',
+  headers:baseHeaders(),
+  body:JSON.stringify({
+   type:'email',
+   email:pendingEmail,
+   token:cleanToken
+  })
+ }));
+ if(d?.access_token){
+  saveSession(d);
+  return d;
+ }
+ throw new Error(d?.message||d?.error_description||'Invalid or expired code');
 }
 async function bootstrap(){
  const s=await validSession();if(!s)throw new Error('Sign in first');
@@ -62,19 +92,70 @@ async function start(){
  consumeCallback();
  const u=await currentUser();
  if(!u){
-  $('identityState').textContent='Sign in to link this install to your existing private account.';
+  $('identityState').textContent='Enter your email to sign in or register.';
   $('loginForm').hidden=false;return;
  }
  $('identityState').textContent='Linked account detected. Loading Performance OS…';
  try{render(await bootstrap())}
- catch(e){$('identityState').textContent='Account linked, but the beta data bridge is not ready: '+e.message;$('loginForm').hidden=true}
+ catch(e){$('identityState').textContent='Account linked, but data bridge returned: '+e.message;$('loginForm').hidden=true}
 }
-$('loginForm').addEventListener('submit',async e=>{e.preventDefault();const btn=e.currentTarget.querySelector('button');btn.disabled=true;try{await sendMagicLink($('emailInput').value);$('identityState').textContent='Check your inbox and open the sign-in link on this phone.';$('loginForm').hidden=true}catch(err){$('identityState').textContent=err.message}finally{btn.disabled=false}});
+
+$('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+ const btn=e.currentTarget.querySelector('button');
+ const email=$('emailInput').value.trim();
+ btn.disabled=true;
+ $('identityState').textContent='Sending code to '+email+'…';
+ try{
+  await sendMagicLink(email);
+  $('sentEmailDisplay').textContent=email;
+  $('identityState').textContent='Check your email for the 6-digit code or sign-in link.';
+  $('loginForm').hidden=true;
+  $('otpBox').hidden=false;
+  $('otpInput').value='';
+  $('otpInput').focus();
+ }catch(err){
+  $('identityState').textContent=err.message;
+ }finally{
+  btn.disabled=false;
+ }
+});
+
+async function handleVerify(){
+ const code=$('otpInput').value.trim();
+ if(!code){alert('Please enter the 6-digit code');return}
+ const btn=$('verifyOtpBtn');
+ btn.disabled=true;btn.textContent='Verifying…';
+ $('identityState').textContent='Verifying code…';
+ try{
+  await verifyOtp(code);
+  $('otpBox').hidden=true;
+  $('identityState').textContent='Authenticated. Loading Performance OS…';
+  render(await bootstrap());
+ }catch(err){
+  $('identityState').textContent='Verification failed: '+err.message;
+ }finally{
+  btn.disabled=false;btn.textContent='Verify & Sign In';
+ }
+}
+
+$('verifyOtpBtn').addEventListener('click',handleVerify);
+$('otpInput').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();handleVerify()}});
+
+$('backToEmailBtn').addEventListener('click',()=>{
+ $('otpBox').hidden=true;
+ $('loginForm').hidden=false;
+ $('identityState').textContent='Enter your email to sign in or register.';
+ $('emailInput').focus();
+});
+
 $('refreshBtn').addEventListener('click',async()=>{try{render(await bootstrap())}catch(e){alert(e.message)}});
 $('signOutBtn').addEventListener('click',async()=>{const s=await validSession();if(s?.access_token)fetch(SUPABASE_URL+'/auth/v1/logout',{method:'POST',headers:{...baseHeaders(),Authorization:'Bearer '+s.access_token}}).catch(()=>{});saveSession(null);location.reload()});
 $('themeBtn').addEventListener('click',()=>{const h=document.documentElement;h.dataset.theme=h.dataset.theme==='dark'?'light':'dark';document.querySelector('meta[name="theme-color"]').content=h.dataset.theme==='dark'?'#071018':'#F8F8F3'});
+
 let installPrompt=null;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;$('installBtn').hidden=false});
 $('installBtn').addEventListener('click',async()=>{if(!installPrompt)return;installPrompt.prompt();await installPrompt.userChoice;installPrompt=null;$('installBtn').hidden=true});
+
 if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 start();

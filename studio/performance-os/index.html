@@ -8,7 +8,7 @@
 <meta name="description" content="Performance OS private beta — human performance, explained.">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://mtvpnoqwjpoqaiocrklq.supabase.co https://ep-old-unit-b2kpv7vr.apirest.c-6.eu-central-1.aws.neon.tech; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://mtvpnoqwjpoqaiocrklq.supabase.co https://*.apirest.c-6.eu-central-1.aws.neon.tech https://*.neon.tech; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <title>Performance OS</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
@@ -28,10 +28,16 @@
     <p class="lede">Your training, recovery and source truth in one installable app.</p>
     <div id="identityState" class="identity">Checking your linked account…</div>
     <form id="loginForm" class="login" hidden>
-      <input id="emailInput" type="email" autocomplete="email" placeholder="your Gmail address" required>
-      <button type="submit">Send sign-in link</button>
-      <p class="fine">Uses the same private Supabase account as your KONA/Canyon login.</p>
+      <input id="emailInput" type="email" autocomplete="email" placeholder="your email address" required>
+      <button type="submit">Send sign-in code</button>
+      <p class="fine">We will email you a secure 6-digit code to sign in or register instantly.</p>
     </form>
+    <div id="otpBox" class="login" hidden>
+      <p class="fine">Enter the 6-digit code sent to <strong id="sentEmailDisplay"></strong>:</p>
+      <input id="otpInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="6-digit code" autocomplete="one-time-code">
+      <button id="verifyOtpBtn" type="button">Verify & Sign In</button>
+      <button id="backToEmailBtn" class="quiet" type="button">Use a different email</button>
+    </div>
   </section>
 
   <section id="app" hidden>
