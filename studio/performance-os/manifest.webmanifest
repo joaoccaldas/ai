@@ -1,0 +1,15 @@
+{
+  "id": "/ai/studio/performance-os/",
+  "name": "Performance OS",
+  "short_name": "Performance",
+  "description": "Human performance, explained.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071018",
+  "theme_color": "#071018",
+  "orientation": "portrait-primary",
+  "icons": [
+    {"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

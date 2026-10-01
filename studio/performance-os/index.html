@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#071018">
+<meta name="color-scheme" content="dark light">
+<meta name="description" content="Performance OS private beta — human performance, explained.">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://mtvpnoqwjpoqaiocrklq.supabase.co https://ep-old-unit-b2kpv7vr.apirest.c-6.eu-central-1.aws.neon.tech; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<title>Performance OS</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icon.svg">
+<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<main class="shell">
+  <header class="topbar">
+    <div class="brand"><span class="mark">P</span><span>Performance OS</span></div>
+    <button id="themeBtn" class="quiet" type="button">Theme</button>
+  </header>
+
+  <section id="gate" class="hero">
+    <p class="eyebrow">PRIVATE BETA</p>
+    <h1>Human performance,<br><em>explained.</em></h1>
+    <p class="lede">Your training, recovery and source truth in one installable app.</p>
+    <div id="identityState" class="identity">Checking your linked account…</div>
+    <form id="loginForm" class="login" hidden>
+      <input id="emailInput" type="email" autocomplete="email" placeholder="your Gmail address" required>
+      <button type="submit">Send sign-in link</button>
+      <p class="fine">Uses the same private Supabase account as your KONA/Canyon login.</p>
+    </form>
+  </section>
+
+  <section id="app" hidden>
+    <div class="status-strip">
+      <span id="linkedPill" class="pill ok">Linked</span>
+      <span id="freshnessText" class="muted">Loading source freshness…</span>
+    </div>
+
+    <section class="hero compact">
+      <p class="eyebrow">TODAY</p>
+      <h2 id="todayTitle">Performance OS</h2>
+      <p id="todayMeta" class="lede small">Loading your latest verified state…</p>
+    </section>
+
+    <div class="grid">
+      <article class="card">
+        <span class="label">RESTING HR</span>
+        <strong id="rhr">—</strong>
+        <small>bpm · latest observed</small>
+      </article>
+      <article class="card">
+        <span class="label">HRV</span>
+        <strong id="hrv">—</strong>
+        <small>ms · never zero-filled</small>
+      </article>
+      <article class="card">
+        <span class="label">SLEEP</span>
+        <strong id="sleep">—</strong>
+        <small>hours · latest observed</small>
+      </article>
+      <article class="card">
+        <span class="label">LATEST SESSION</span>
+        <strong id="activity">—</strong>
+        <small id="activityMeta">canonical activity</small>
+      </article>
+    </div>
+
+    <section class="sources">
+      <div class="section-head"><h3>Source truth</h3><span>live provenance</span></div>
+      <div id="sourcesList"></div>
+    </section>
+
+    <button id="installBtn" class="install" type="button" hidden>Install Performance OS</button>
+    <button id="refreshBtn" class="secondary" type="button">Refresh data</button>
+    <button id="signOutBtn" class="quiet wide" type="button">Sign out</button>
+  </section>
+
+  <footer>Private beta · Supabase identity · Neon performance authority</footer>
+</main>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
