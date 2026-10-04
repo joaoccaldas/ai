@@ -24,9 +24,59 @@
       "authority": "template_only",
       "competition_use": false,
       "notes": "Explicitly blocks concept authority until municipal/competition geometry is ingested."
+    },
+    {
+      "id": "SITE_ORTHO_001",
+      "path": "output/site_v0_1/site_ortho.svg",
+      "status": "PASS_SECONDARY_SITE_GEOMETRY",
+      "authority": "secondary",
+      "competition_use": false,
+      "scores": {
+        "geometry_truth": 5,
+        "composition": 4,
+        "material_light": 0,
+        "human_scale": 1,
+        "competition_readiness": 2
+      },
+      "notes": "Real OSM plaza+basilica geometry and CARTO block unions. Municipal DWG still supersedes."
+    },
+    {
+      "id": "SITE_AXON_001",
+      "path": "output/site_v0_1/site_axon.svg",
+      "status": "PASS_NORMALIZED_MASSING_ONLY",
+      "authority": "secondary",
+      "competition_use": false,
+      "scores": {
+        "geometry_truth": 4,
+        "composition": 4,
+        "material_light": 0,
+        "human_scale": 1,
+        "competition_readiness": 2
+      },
+      "notes": "Horizontal geometry real; heights deliberately normalized and not factual."
+    },
+    {
+      "id": "SOLAR_001",
+      "path": "external-artifact:gaudi_solar_baseline_001.png",
+      "status": "PASS_BASELINE_VECTOR_ONLY",
+      "authority": "derived",
+      "competition_use": false,
+      "scores": {
+        "geometry_truth": 5,
+        "composition": 4,
+        "material_light": 1,
+        "human_scale": 0,
+        "competition_readiness": 2
+      },
+      "notes": "Computed sun vectors on real site geometry. No shadow claims until heights/topography are authoritative."
     }
   ],
-  "required_for_G1": ["SITE_ORTHO_001","SITE_AXON_001","SIGHTLINE_001","SOLAR_001"],
+  "required_for_G1": [
+    "SITE_ORTHO_001",
+    "SITE_AXON_001",
+    "SIGHTLINE_001",
+    "SOLAR_001"
+  ],
   "visual_pass_requirements": [
     "source-traceable geometry",
     "camera metadata recorded",
