@@ -1,0 +1,35 @@
+name: Gaudi Nexus Checks
+
+on:
+  push:
+    branches: [gaudi-nexus]
+    paths:
+      - 'projects/gaudi-nexus/**'
+      - '.github/workflows/gaudi-nexus-checks.yml'
+  pull_request:
+    paths:
+      - 'projects/gaudi-nexus/**'
+      - '.github/workflows/gaudi-nexus-checks.yml'
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: projects/gaudi-nexus
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate project contract
+        run: python scripts/validate_project.py
+      - name: Regenerate M0 outputs
+        run: python scripts/generate_site_truth.py
+      - name: Validate M0 traceability
+        run: python scripts/check_m0.py
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: Determinism check
+        run: git diff --exit-code -- output/m0/cerda_block_template.geojson output/m0/cerda_block_template.svg output/m0/site_truth_report.json
