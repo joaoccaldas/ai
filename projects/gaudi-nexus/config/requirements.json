@@ -1,29 +1,102 @@
 {
-  "version": 1,
-  "status": "DRAFT_UNTIL_OFFICIAL_BRIEF_AUDIT_COMPLETE",
+  "version": 2,
+  "status": "OFFICIAL_BRIEF_AUDITED_2026-10-04",
   "competition": "AI × Gaudí / The Gaudí Nexus",
+  "official_brief": {
+    "source": "Fundación Antoni Gaudí / Archademy",
+    "url": "https://fundacionantoniogaudi.org/concurso_arq_2026/GxAI_BRIEFING_ES.pdf",
+    "audited_utc": "2026-10-04T19:13:00Z"
+  },
   "submission": {
     "language": "English",
-    "main_board": "A1 JPEG/JPG",
-    "max_file_mb": 15,
+    "main_board": {
+      "size": "A1",
+      "dimensions_mm": [
+        594,
+        841
+      ],
+      "orientation": [
+        "horizontal",
+        "vertical"
+      ],
+      "format": [
+        "JPEG",
+        "JPG"
+      ],
+      "max_file_mb": 15
+    },
+    "optional_design_board": {
+      "size": "A4",
+      "dimensions_mm": [
+        210,
+        297
+      ],
+      "orientation": [
+        "horizontal",
+        "vertical"
+      ],
+      "format": [
+        "JPEG",
+        "JPG"
+      ],
+      "max_file_mb": 10
+    },
     "anonymous": true,
+    "identifier": "participant order number only; must appear at bottom-right and be used as filename",
     "deadline": "2026-12-16",
-    "deadline_timezone": "VERIFY_BEFORE_SUBMISSION"
+    "deadline_time_local": "23:59",
+    "deadline_timezone": "PDT (GMT-7) per official brief; re-verify organizer website before final upload"
   },
   "site": {
     "city": "Barcelona",
     "area": "Plaça de la Sagrada Família / Passion façade side",
-    "streets": ["Mallorca", "Provença", "Sardenya", "Sicília"],
+    "coordinates_dms": "41°24'13.0\"N 2°10'24.0\"E",
+    "block_side_m": 113.3,
+    "chamfer_description": "four 20 m chamfers per official brief",
+    "streets": [
+      "Mallorca",
+      "Provença",
+      "Sardenya",
+      "Sicília"
+    ],
     "full_plaza_reconfiguration_required": true,
     "preserve_sagrada_visual_primacy": true
   },
   "program": {
-    "target_area_m2": [1500, 2000],
-    "local_market": true,
-    "digital_culture_interpretation": true,
-    "community_program": true,
-    "viewpoint": true,
-    "workshops": true,
-    "admin_logistics_services": true
+    "target_area_m2": [
+      1500,
+      2000
+    ],
+    "approximate_area_split_pct": {
+      "market_and_neighborhood": 45,
+      "interpretation_and_viewpoint": 25,
+      "meeting_point": 15,
+      "administration_logistics_services": 15
+    },
+    "market_stalls_approx": 20,
+    "market_occupancy_approx": 100,
+    "neighborhood_occupancy_approx": 50,
+    "interpretation_occupancy_approx": 50,
+    "viewpoint_occupancy_approx": 25,
+    "cooking_workshops": {
+      "independent_kitchens": 2,
+      "people_per_kitchen_approx": 20
+    },
+    "administration_workstations": 8,
+    "public_toilets": true,
+    "logistics_storage_maintenance_plant": true
+  },
+  "jury_rubric_points": {
+    "architecture_and_program": 20,
+    "plaza_and_urban_context": 20,
+    "gaudi_principles_and_logic": 20,
+    "ai_integration_and_spatial_coherence": 20,
+    "sustainability_and_passive_strategies": 10,
+    "visual_communication_and_presentation": 10
+  },
+  "ai_and_rights": {
+    "ai_use_encouraged": true,
+    "participant_responsible_for_tool_terms_and_third_party_rights": true,
+    "submission_must_reflect_original_creative_direction_and_decision_making": true
   }
 }
