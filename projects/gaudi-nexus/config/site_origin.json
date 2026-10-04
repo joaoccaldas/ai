@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "status": "REFERENCE_ORIGIN_NOT_SURVEY_CONTROL",
+  "crs_geographic": "EPSG:4326",
+  "crs_projected_target": "EPSG:25831",
+  "units": "metres",
+  "origin": {
+    "name": "Sagrada Familia official getting-here reference",
+    "latitude": 41.4047166667,
+    "longitude": 2.1747666667,
+    "elevation_m": null
+  },
+  "axis_convention": {
+    "+X": "east",
+    "+Y": "north",
+    "+Z": "up"
+  },
+  "authority_note": "The published basilica coordinate is a georeferencing anchor only. Competition-site parcel/block boundaries must be replaced by authoritative GIS or surveyed geometry before Gate 0B closes.",
+  "source_ids": ["SRC-SF-001"]
+}
