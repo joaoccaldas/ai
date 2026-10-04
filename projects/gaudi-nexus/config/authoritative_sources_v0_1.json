@@ -28,12 +28,25 @@
       ]
     },
     {
+      "id": "BCN-3D-SLPK",
+      "authority": "Ajuntament de Barcelona / CartoBCN catalog",
+      "title": "Model Tridimensional d'edificacions",
+      "catalog_product_id": "7_19",
+      "carto_product": 145,
+      "format": "SLPK",
+      "coordinate_system": "ETRS89 EPSG:25831",
+      "url_dest": "http://w20.bcn.cat/cartobcn?prod=145",
+      "link_atom": "http://w20.bcn.cat/CartoBCN/getFile.ashx?prod=145.BARCELONA.46",
+      "status": "OFFICIAL_CATALOG_RECORD_AND_ATOM_ENDPOINT_CONFIRMED_DOWNLOAD_UNRESOLVED",
+      "use": "preferred city 3D context source if importer/conversion path is reliable"
+    },
+    {
       "id": "BCN-3D-SF",
       "authority": "Ajuntament de Barcelona / Barcelona Dades / CartoBCN",
       "title": "3D building model — DWG 3D (la Sagrada Família)",
       "portal": "https://portaldades.ajuntament.barcelona.cat/mapes/146",
       "license": "CC BY 4.0",
-      "status": "OFFICIAL_PRODUCT_CONFIRMED_DIRECT_FILE_URL_PENDING",
+      "status": "OFFICIAL_CATALOG_RECORD_CONFIRMED_DIRECT_FILE_URL_PENDING",
       "required_for": [
         "authoritative context heights",
         "Sagrada/context massing",
@@ -45,7 +58,13 @@
         "archive checksum",
         "convert DWG to open intermediate",
         "validate vertical datum"
-      ]
+      ],
+      "catalog_product_id": "7_20",
+      "carto_product": 146,
+      "product_name_ca": "Model Tridimensional d'edificacions CAD 3D",
+      "product_name_en": "Municipal Topographic Cartography - CAD",
+      "format": "DWG",
+      "coordinate_system": "ETRS89 EPSG:25831"
     },
     {
       "id": "OSM-SF-PARK",
