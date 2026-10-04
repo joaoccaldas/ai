@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-04T19:20:00Z",
+  "updated_utc": "2026-10-04T19:46:00Z",
   "definition_of_100": "No known competition requirement gap, no unresolved source-of-truth conflict, no unverified competition-facing claim, no broken deliverable, and all final-release gates green.",
   "official_jury_points": {
     "architecture_program": 20,
@@ -15,7 +15,7 @@
       "id": 1,
       "name": "SITE_TRUTH_V1",
       "weight_pct": 10,
-      "status": "BLOCKED_TRUSTED_DWG_CONVERTER",
+      "status": "CONVERTED_CROP_READY_CUSTOM_IMPORT_BLOCKED",
       "why": "All downstream geometry, sightlines, shadow studies and context realism depend on authoritative municipal geometry.",
       "done_when": [
         "verified municipal DWG converted through named reproducible toolchain",
@@ -28,14 +28,18 @@
       "evidence": [
         "config/authoritative_sources_v0_1.json",
         "config/current_world.json",
-        "docs/OFFICIAL_BRIEF_AUDIT_2026-10-04.md"
-      ]
+        "docs/OFFICIAL_BRIEF_AUDIT_2026-10-04.md",
+        "ODA File Converter 27.9 verified conversion to R2018 DXF",
+        "300 m municipal GLB crop: SHA256 f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+        "Durable Higgsfield media id eaef5ac9-3706-45dc-809e-73c0b8b4c864"
+      ],
+      "blocker": "Current 3D Jutsu import tool accepts catalog GLBs only; custom municipal GLB must enter through a supported custom-file import boundary before reconciliation."
     },
     {
       "id": 2,
       "name": "Canonical Blender world",
       "weight_pct": 8,
-      "status": "PARTIAL",
+      "status": "ADVANCED_REV15",
       "why": "Plan, section, axon and hero must derive from one scene.",
       "done_when": [
         "exact Rev 14 binary archived",
@@ -46,14 +50,15 @@
       ],
       "evidence": [
         "config/current_world.json",
-        "visuals/camera_registry.json"
+        "visuals/camera_registry.json",
+        "Higgsfield project revision 15: blend etag 02fa49ad3fc6c3f16b1437603cbf1837; glb etag 6eedb918dc908bf9b0bdad38f97cf2f7"
       ]
     },
     {
       "id": 3,
       "name": "Architecture vs brief closure",
       "weight_pct": 10,
-      "status": "PARTIAL",
+      "status": "ADVANCED_REV15",
       "why": "Program and plaza requirements carry major jury weight and cannot remain approximate.",
       "done_when": [
         "all official program items mapped to scene evidence",
@@ -65,14 +70,15 @@
       "evidence": [
         "config/requirements.json",
         "config/requirement_matrix_v0_1.json",
-        "config/primary_scheme_dimensions_v0_1.json"
+        "config/primary_scheme_dimensions_v0_1.json",
+        "config/program_audit_v1.json — kitchens + 8 admin workstations now scene-backed"
       ]
     },
     {
       "id": 4,
       "name": "Structural/Gaudi proof",
       "weight_pct": 10,
-      "status": "PARTIAL",
+      "status": "ADVANCED_PROXY",
       "why": "Gaudi logic is worth 20 points and must be functional rather than cosmetic.",
       "done_when": [
         "9 m span form-finding documented",
@@ -83,14 +89,15 @@
       ],
       "evidence": [
         "docs/PRIMARY_BAY_V0_3.md",
-        "docs/BAY_PERFORMANCE_V0_1.md"
+        "docs/BAY_PERFORMANCE_V0_1.md",
+        "output/final10/structural_thrust_v1.json"
       ]
     },
     {
       "id": 5,
       "name": "Environmental validation",
       "weight_pct": 10,
-      "status": "PARTIAL",
+      "status": "ADVANCED_BASELINE",
       "why": "Passive performance is explicit jury value and strengthens architectural credibility.",
       "done_when": [
         "annual solar/shade validated",
@@ -102,7 +109,8 @@
       ],
       "evidence": [
         "docs/BAY_PERFORMANCE_V0_1.md",
-        "docs/SOLAR_BASELINE_001.md"
+        "docs/SOLAR_BASELINE_001.md",
+        "output/final10/barcelona_solar_baseline_v1.json"
       ]
     },
     {
@@ -185,7 +193,7 @@
       "id": 10,
       "name": "Hostile final release audit",
       "weight_pct": 12,
-      "status": "NOT_STARTED",
+      "status": "AUDITOR_IMPLEMENTED_FINAL_FILES_PENDING",
       "why": "Submission failure modes are avoidable and must be eliminated before upload.",
       "done_when": [
         "A1 dimensions/format/size pass",
@@ -199,7 +207,8 @@
         "organizer deadline/timezone reverified"
       ],
       "evidence": [
-        "config/requirements.json"
+        "config/requirements.json",
+        "scripts/audit_submission.py"
       ]
     }
   ],

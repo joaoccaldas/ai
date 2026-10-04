@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-04T19:13:00Z",
+  "updated_utc": "2026-10-04T19:30:00Z",
   "authority": {
     "repository": "joaoccaldas/ai",
     "branch": "gaudi-nexus",
@@ -14,10 +14,10 @@
     "repo_scheme_version": "V0.6"
   },
   "current_3d": {
-    "revision": 14,
-    "status": "EXTERNAL_PROVISIONAL_CURRENT",
+    "revision": 15,
+    "status": "REV15_PROGRAM_CLOSURE_PENDING_VISUAL_APPROVAL",
     "higgsfield_url": "https://higgsfield.ai/3d-jutsu/6bfa2d88-eef7-4583-9d82-08218b0bf4e4",
-    "object_count": 1566,
+    "object_count": 1600,
     "blend_size_mb_approx": 17.8,
     "glb_size_mb_approx": 15,
     "camera": {
@@ -33,21 +33,63 @@
       "wet-stone and ground-detail cues"
     ],
     "promotion_blockers": [
-      "Rev 14 binary source files are not yet archived in the GitHub project lineage",
+      "Rev 15 hero verification render is pending approval",
       "municipal DWG has not yet been converted/reconciled into the world",
+      "canonical collection migration for legacy Rev 14 objects remains partial",
       "hero frame has not yet passed >=9/10 final visual gate",
       "A1 board is not final"
-    ]
+    ],
+    "blend_size_bytes": 18083163,
+    "blend_etag": "02fa49ad3fc6c3f16b1437603cbf1837",
+    "glb_size_bytes": 15289476,
+    "glb_etag": "6eedb918dc908bf9b0bdad38f97cf2f7",
+    "revision_15_changes": [
+      "added two editable teaching-kitchen zones, each tagged capacity_people=20",
+      "added eight editable admin workstations",
+      "added collection 21_PROGRAM_REQUIRED",
+      "preserved HeroCam at 1.56 m / 32 mm"
+    ],
+    "blend_sha256": "cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494",
+    "glb_sha256": "2001331e04266c43943535fcde50ab7522da09aeef1c3a30cae62ff7c621682d",
+    "binary_identity_verified_utc": "2026-10-04T19:38:00Z",
+    "geometry_verification": {
+      "workbench_hero": "PASS_GEOMETRY_FRAMING_ONLY",
+      "artifact_etag": "c5f1be8519e5fe0da4b5b79388330e98",
+      "pixel_size": [
+        480,
+        270
+      ],
+      "note": "Workbench proof completed; full Eevee material/light render exceeded worker time limit and remains unapproved."
+    },
+    "program_clearance_status": "PASS_DESIGN_DEVELOPMENT_CENTER_DISTANCE_AUDIT"
   },
   "authoritative_context": {
     "municipal_source_id": "BCN-3D-SF",
     "archive_sha256": "186ed46321b9ec3baf7f6dc14235a32a8dd7a3fa54d32e815cddc4d0a91d9ef9",
     "source_crs": "EPSG:25831",
     "units": "metres",
-    "next_gate": "Convert, crop, reconcile and promote SITE_TRUTH_V1.0 before replacing proxy context.",
-    "conversion_status": "BLOCKED_PENDING_TRUSTED_DWG_CONVERTER",
+    "next_gate": "Import cropped municipal GLB into canonical scene, reconcile against Rev 15 proxies, verify sightlines/shadows, then promote SITE_TRUTH_V1.0.",
+    "conversion_status": "CONVERTED_AND_CROPPED_IMPORT_RECONCILIATION_PENDING",
     "conversion_policy": "Fail closed: only a named, reproducible DWG->open-format converter may be used; preserve source checksum and CRS metadata.",
-    "topography_status": "Official 2026 municipal GeoPackage identified; ingest/crop still pending."
+    "topography_status": "Official 2026 municipal GeoPackage identified; ingest/crop still pending.",
+    "converter": {
+      "name": "ODA File Converter",
+      "release": "27.9 AppImage",
+      "sha256": "f2a8e125e84eee32d88c6d06d957c05b71c3b53b44304b1c479e466b2b0929ff"
+    },
+    "dxf": {
+      "bytes": 177781497,
+      "sha256": "d7653777a0a66023dacae6c44484a39b5423dd9463f44cbd5ddc1aca54330ec7"
+    },
+    "crop_glb": {
+      "bytes": 2110684,
+      "sha256": "f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+      "mesh_entities": 2900,
+      "vertices": 62188,
+      "triangles": 113640,
+      "crop_radius_m": 300,
+      "media_id": "eaef5ac9-3706-45dc-809e-73c0b8b4c864"
+    }
   },
   "anti_duplication_rules": [
     "Do not create another Gaudi repository.",

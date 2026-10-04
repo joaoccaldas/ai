@@ -46,7 +46,7 @@
       "title": "3D building model — DWG 3D (la Sagrada Família)",
       "portal": "https://portaldades.ajuntament.barcelona.cat/mapes/146",
       "license": "CC BY 4.0",
-      "status": "DOWNLOADED_AND_CHECKSUM_VERIFIED",
+      "status": "CONVERTED_TO_DXF_AND_CROPPED_GLB",
       "required_for": [
         "authoritative context heights",
         "Sagrada/context massing",
@@ -54,10 +54,10 @@
         "shadow studies"
       ],
       "checks_pending": [
-        "convert DWG through isolated conversion boundary to open intermediate",
-        "crop to competition context",
-        "reconcile against current secondary model and Rev 14 world",
-        "promote SITE_TRUTH_V1.0"
+        "import cropped municipal GLB into canonical Blender scene through supported custom-file import path",
+        "reconcile municipal context against Rev 15 proxy Sagrada/context",
+        "verify sightline and shadow changes",
+        "promote SITE_TRUTH_V1.0 and retire proxies only after comparison passes"
       ],
       "catalog_product_id": "7_20",
       "carto_product": 146,
@@ -90,7 +90,41 @@
         "Direct municipal download completed successfully.",
         "ZIP contains Barri_06_MTM_DWG.dwg, Barri_06_MTM_DWG.dwg.xml and Llegeix-me.txt.",
         "Municipal readme confirms DWG R2018, 3D building geometry, EPSG:25831 / ETRS89 UTM zone 31N, metre units, dated 20/05/2026."
-      ]
+      ],
+      "conversion": {
+        "tool": "ODA File Converter",
+        "release": "27.9 AppImage",
+        "tool_sha256": "f2a8e125e84eee32d88c6d06d957c05b71c3b53b44304b1c479e466b2b0929ff",
+        "output_format": "DXF R2018",
+        "dxf_size_bytes": 177781497,
+        "dxf_sha256": "d7653777a0a66023dacae6c44484a39b5423dd9463f44cbd5ddc1aca54330ec7"
+      },
+      "site_truth_v1_crop": {
+        "status": "CONVERTED_CROP_READY_IMPORT_RECONCILIATION_PENDING",
+        "local_origin_epsg25831": [
+          430901.597832363,
+          4583892.983829999,
+          33
+        ],
+        "crop_radius_m": 300,
+        "mesh_entities": 2900,
+        "vertices": 62188,
+        "triangles": 113640,
+        "local_bbox_min": [
+          -274.529,
+          -307.59,
+          -10
+        ],
+        "local_bbox_max": [
+          306.451,
+          315.1,
+          120.805
+        ],
+        "glb_size_bytes": 2110684,
+        "glb_sha256": "f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+        "durable_media_id": "eaef5ac9-3706-45dc-809e-73c0b8b4c864",
+        "receipt_media_id": "c31262b3-2364-469f-b4d3-85a6215a4dd2"
+      }
     },
     {
       "id": "OSM-SF-PARK",
