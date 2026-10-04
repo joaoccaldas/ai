@@ -29,6 +29,8 @@ jobs:
         run: python scripts/generate_site_truth.py
       - name: Validate M0 traceability
         run: python scripts/check_m0.py
+      - name: Visual evidence registry
+        run: python scripts/visual_evidence_gate.py
       - name: Unit tests
         run: python -m unittest discover -s tests -v
       - name: Determinism check
