@@ -1,123 +1,15 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#071018">
-<meta name="color-scheme" content="dark light">
-<meta name="description" content="Performance OS private beta — human performance, explained.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://mtvpnoqwjpoqaiocrklq.supabase.co https://*.apirest.c-6.eu-central-1.aws.neon.tech https://*.neon.tech; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+<meta http-equiv="refresh" content="0; url=https://performance-os-cloud.vercel.app/">
 <title>Performance OS</title>
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="./icon.svg">
-<link rel="stylesheet" href="./app.css?v=20261001-3">
+<style>:root{color-scheme:dark light}body{margin:0;min-height:100svh;display:grid;place-items:center;background:#071018;color:#edf4f4;font:16px/1.5 system-ui,sans-serif;padding:16px}@media(prefers-color-scheme:light){body{background:#f8f8f3;color:#0b0f14}}a{color:#34d399}</style>
 </head>
 <body>
-<main class="shell">
-  <header class="topbar">
-    <div class="brand"><span class="mark">P</span><span>Performance OS</span></div>
-    <button id="themeBtn" class="quiet" type="button">Theme</button>
-  </header>
-
-  <section id="gate" class="hero">
-    <p class="eyebrow">PRIVATE BETA</p>
-    <h1>Human performance,<br><em>explained.</em></h1>
-    <p class="lede">Your training, recovery and source truth in one installable app.</p>
-    <div id="identityState" class="identity">Enter your email or verification code to access your athlete data.</div>
-
-        <div class="sovereign-banner">
-      <span class="pill ok" style="margin-bottom:8px;display:inline-block">Tailscale Active</span>
-      <h3 style="margin:6px 0 4px;font-size:17px;font-weight:600">Sovereign Direct Sign-In</h3>
-      <p class="fine">Instant 1-click access without any passwords, emails, or codes:</p>
-      <a class="sovereign-btn" href="https://joaos-macbook-air.tail35034d.ts.net/">Open Performance OS (1-Click)</a>
-      <p class="fine subtext">Encrypted end-to-end via your private Tailscale connection.</p>
-    </div>
-    
-    <div style="display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--faint);font-size:12px">
-      <hr style="flex:1;border:0;border-top:1px solid var(--line)">
-      <span>OR CLOUD BETA SIGN-IN</span>
-      <hr style="flex:1;border:0;border-top:1px solid var(--line)">
-    </div>
-    <div class="auth-tabs" id="authTabs">
-      <button id="tabCodeBtn" class="tab-btn active" type="button">6-Digit Code</button>
-      <button id="tabEmailBtn" class="tab-btn" type="button">Request Code</button>
-      <button id="tabPasteBtn" class="tab-btn" type="button">Paste Link / Token</button>
-    </div>
-
-    <!-- Pane 1: Enter 6-Digit Code (Default) -->
-    <div id="otpBox" class="login">
-      <p class="fine">Enter your email and the 6-digit confirmation code from your inbox:</p>
-      <input id="otpEmailInput" type="email" autocomplete="email" placeholder="your email address" required>
-      <input id="otpInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="8" placeholder="6-digit code" autocomplete="one-time-code" required>
-      <button id="verifyOtpBtn" type="button">Verify & Sign In</button>
-    </div>
-
-    <!-- Pane 2: Request New Code -->
-    <form id="loginForm" class="login" hidden>
-      <p class="fine">Request a new sign-in code sent to your inbox:</p>
-      <input id="emailInput" type="email" autocomplete="email" placeholder="your email address" required>
-      <button type="submit">Send Sign-In Code</button>
-      <p class="fine subtext">We will send a 6-digit code to this address.</p>
-    </form>
-
-    <!-- Pane 3: Paste Link / Token (For when redirect bounced to localhost:3000) -->
-    <div id="pasteBox" class="login" hidden>
-      <p class="fine">Did your email link open at <code>localhost:3000</code>? Copy the URL from that browser tab and paste it here:</p>
-      <input id="pasteInput" type="text" placeholder="http://localhost:3000/#access_token=... or eyJhbGci..." autocomplete="off">
-      <button id="verifyPasteBtn" type="button">Sign In with Link / Token</button>
-    </div>
-  </section>
-
-  <section id="app" hidden>
-    <div class="status-strip">
-      <span id="linkedPill" class="pill ok">Linked</span>
-      <span id="freshnessText" class="muted">Loading source freshness…</span>
-    </div>
-
-    <section class="hero compact">
-      <p class="eyebrow">TODAY</p>
-      <h2 id="todayTitle">Performance OS</h2>
-      <p id="todayMeta" class="lede small">Loading your latest verified state…</p>
-    </section>
-
-    <div class="grid">
-      <article class="card">
-        <span class="label">RESTING HR</span>
-        <strong id="rhr">—</strong>
-        <small>bpm · latest observed</small>
-      </article>
-      <article class="card">
-        <span class="label">HRV</span>
-        <strong id="hrv">—</strong>
-        <small>ms · never zero-filled</small>
-      </article>
-      <article class="card">
-        <span class="label">SLEEP</span>
-        <strong id="sleep">—</strong>
-        <small>hours · latest observed</small>
-      </article>
-      <article class="card">
-        <span class="label">LATEST SESSION</span>
-        <strong id="activity">—</strong>
-        <small id="activityMeta">canonical activity</small>
-      </article>
-    </div>
-
-    <section class="sources">
-      <div class="section-head"><h3>Source truth</h3><span>live provenance</span></div>
-      <div id="sourcesList"></div>
-    </section>
-
-    <button id="installBtn" class="install" type="button" hidden>Install Performance OS</button>
-    <button id="refreshBtn" class="secondary" type="button">Refresh data</button>
-    <button id="signOutBtn" class="quiet wide" type="button">Sign out</button>
-  </section>
-
-  <footer>Private beta · Supabase identity · Neon performance authority</footer>
-</main>
-<script type="module" src="./app.js?v=20261001-3"></script>
+<p>Performance OS has moved to <a href="https://performance-os-cloud.vercel.app/">performance-os-cloud.vercel.app</a>.</p>
 </body>
 </html>
