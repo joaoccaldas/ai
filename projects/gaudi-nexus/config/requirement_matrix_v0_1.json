@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "basis": "Official AI x Gaudi brief as previously audited; re-verify final submission rules before G6.",
+  "scheme": "Living Threshold A+ V0.5",
+  "target_gfa_m2": 1800,
+  "program_m2": {
+    "market_neighborhood": 810,
+    "interpretation_viewpoint": 450,
+    "shared_cooking_community": 270,
+    "admin_logistics_services": 270
+  },
+  "program_percent": {
+    "market_neighborhood": 45,
+    "interpretation_viewpoint": 25,
+    "shared_cooking_community": 15,
+    "admin_logistics_services": 15
+  },
+  "requirements": [
+    {
+      "id": "R01",
+      "requirement": "Redesign the full competition plaza/public realm",
+      "status": "YELLOW",
+      "evidence": "SITE_TRUTH_V0.2 + Living Threshold topology",
+      "gap": "Municipal 3D/topography/trees and final public-realm design pending"
+    },
+    {
+      "id": "R02",
+      "requirement": "Building approximately 1,500-2,000 m²",
+      "status": "GREEN_CONCEPT",
+      "evidence": "1,800 m² target contract",
+      "gap": "Net/gross area reconciliation pending"
+    },
+    {
+      "id": "R03",
+      "requirement": "Market + neighborhood uses ~45%",
+      "status": "GREEN_CONCEPT",
+      "evidence": "810 m² = 45% of 1,800 m²",
+      "gap": "Detailed trader/support allocation pending"
+    },
+    {
+      "id": "R04",
+      "requirement": "Interpretation + viewpoint ~25%",
+      "status": "GREEN_CONCEPT",
+      "evidence": "450 m² = 25%",
+      "gap": "Exhibition sequence/viewpoint geometry pending"
+    },
+    {
+      "id": "R05",
+      "requirement": "Shared meeting/cooking ~15%",
+      "status": "GREEN_CONCEPT",
+      "evidence": "270 m² = 15%",
+      "gap": "Kitchen/workshop equipment and acoustics pending"
+    },
+    {
+      "id": "R06",
+      "requirement": "Admin/logistics/services ~15%",
+      "status": "GREEN_CONCEPT",
+      "evidence": "270 m² = 15%",
+      "gap": "Full BOH schedule and plant spaces pending"
+    },
+    {
+      "id": "R07",
+      "requirement": "About 20 local-food market stalls",
+      "status": "GREEN_GEOMETRY",
+      "evidence": "20/20 stall packing and hard-bar dimensioned plan",
+      "gap": "Trader mix, accessible counters, wash-down and refrigeration pending"
+    },
+    {
+      "id": "R08",
+      "requirement": "Preserve/enhance Sagrada Família visual primacy",
+      "status": "YELLOW_PLUS",
+      "evidence": "Protected-view proxy + sampled 0° obstruction for A+ V0.3",
+      "gap": "Exact Passion façade view volumes + municipal heights pending"
+    },
+    {
+      "id": "R09",
+      "requirement": "Integrate Gaudí principles/method rather than cosmetic imitation",
+      "status": "YELLOW_PLUS",
+      "evidence": "Cerdà deformation rules + 9 m compression-shell bay",
+      "gap": "Structural analysis/form finding must validate final shell"
+    },
+    {
+      "id": "R10",
+      "requirement": "AI integration is explicit and spatially coherent",
+      "status": "GREEN_PROCESS",
+      "evidence": "Requirements→site→variants→kill tests→evidence-driven iterations",
+      "gap": "Final process diagram and reproducibility export pending"
+    },
+    {
+      "id": "R11",
+      "requirement": "Plans, sections and 3D remain coherent",
+      "status": "YELLOW",
+      "evidence": "Primary 3D V0.1 derives from same dimension contract",
+      "gap": "Single authoritative Blender model not yet established"
+    },
+    {
+      "id": "R12",
+      "requirement": "Passive environmental strategy",
+      "status": "YELLOW",
+      "evidence": "solar/shadow proxies, narrow two-sided floorplates, shading-first strategy",
+      "gap": "Real heights/topography + validated daylight/wind/thermal simulation pending"
+    },
+    {
+      "id": "R13",
+      "requirement": "Public accessibility and safe egress",
+      "status": "YELLOW",
+      "evidence": "CTE concept screen, step-free routes, two remote stairs, lift",
+      "gap": "Full CTE DB-SUA/DB-SI check from every origin pending"
+    },
+    {
+      "id": "R14",
+      "requirement": "Visual communication on one A1 board",
+      "status": "RED_EARLY",
+      "evidence": "A1 storyboard exists",
+      "gap": "No competition-grade hero, final section or board composition yet"
+    },
+    {
+      "id": "R15",
+      "requirement": "English + anonymous final submission",
+      "status": "CONTROLLED",
+      "evidence": "Final-deliverable rule encoded",
+      "gap": "Final metadata/anonymity scrub pending"
+    },
+    {
+      "id": "R16",
+      "requirement": "AI/source/IP provenance",
+      "status": "YELLOW_PLUS",
+      "evidence": "Evidence ledger + source classes + CC BY data tracking",
+      "gap": "Final asset/license manifest pending"
+    },
+    {
+      "id": "R17",
+      "requirement": "Optional A4 design-prize object",
+      "status": "NOT_STARTED",
+      "evidence": "Candidate market module identified",
+      "gap": "Design and board not yet developed"
+    },
+    {
+      "id": "R18",
+      "requirement": "Submission format/file-size/deadline",
+      "status": "CONTROLLED",
+      "evidence": "Requirements contract",
+      "gap": "Final official timezone and upload-size re-verification pending"
+    }
+  ]
+}
