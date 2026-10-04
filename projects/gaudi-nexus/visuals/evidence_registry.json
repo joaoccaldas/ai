@@ -141,6 +141,62 @@
       "authority": "human_judgment_plus_derived_metrics",
       "competition_use": false,
       "notes": "A+ 81.6 vs C+ 80.5 provisional internal review. Not a jury prediction."
+    },
+    {
+      "id": "PROGRAM_FIT_001",
+      "path": "external-artifact:gaudi_program_fit_v0_1.png",
+      "status": "PASS_CONCEPT_PROGRAM_FEASIBILITY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Explicitly allocates service/waste, storage, toilets, cores, cooking/community and public program within both finalists."
+    },
+    {
+      "id": "EVENING_OPERATION_001",
+      "path": "external-artifact:gaudi_evening_operation_v0_1.png",
+      "status": "PASS_OPERATIONAL_MODE_SCREEN",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "A+ keeps ~443 m² ground civic edge open after market closure; C+ ~300 m² with more vertical dependency."
+    },
+    {
+      "id": "DAYLIGHT_DEPTH_001",
+      "path": "external-artifact:gaudi_daylight_depth_proxy_v0_1.png",
+      "status": "PASS_GEOMETRIC_DAYLIGHT_DEPTH_PROXY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "No lux claim. A+ deepest point ~5.0 m from exterior; C+ ~2.8 m."
+    },
+    {
+      "id": "SPATIAL_MASSING_001",
+      "path": "external-artifact:gaudi_spatial_massing_perspective_v0_1.png",
+      "status": "PASS_COMMON_CAMERA_MASSING_ONLY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Geometry-derived common-camera 3D check. Explicitly not a hero render."
+    },
+    {
+      "id": "MATERIAL_SYSTEM_001",
+      "path": "external-artifact:gaudi_material_system_v0_1.png",
+      "status": "PASS_MATERIAL_STRATEGY_ONLY",
+      "authority": "human_judgment_plus_primary_sources",
+      "competition_use": false,
+      "notes": "Material hierarchy rejects stylistic imitation; exact embodied-carbon/EPD verification still pending."
+    },
+    {
+      "id": "PRIMARY_SYNTHESIS_001",
+      "path": "external-artifact:gaudi_primary_scheme_synthesis_v0_1.png",
+      "status": "PASS_SCHEME_SELECTION_LOGIC",
+      "authority": "human_judgment_plus_derived_metrics",
+      "competition_use": false,
+      "notes": "Selects Living Threshold as architecture, Cerdà Mutation as method donor, Market Organism as service subsystem donor."
+    },
+    {
+      "id": "FINALIST_RUBRIC_003",
+      "path": "external-artifact:gaudi_finalist_rubric_v0_3.png",
+      "status": "PASS_INTERNAL_REVIEW_ONLY",
+      "authority": "human_judgment_plus_derived_metrics",
+      "competition_use": false,
+      "notes": "Primary Living Threshold 87.2 vs C+ 84.1. Not a jury prediction."
     }
   ],
   "required_for_G1": [
