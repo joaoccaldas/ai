@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-04T19:31:00Z",
+  "updated_utc": "2026-10-04T19:46:00Z",
   "definition_of_100": "No known competition requirement gap, no unresolved source-of-truth conflict, no unverified competition-facing claim, no broken deliverable, and all final-release gates green.",
   "official_jury_points": {
     "architecture_program": 20,
@@ -15,7 +15,7 @@
       "id": 1,
       "name": "SITE_TRUTH_V1",
       "weight_pct": 10,
-      "status": "BLOCKED_TRUSTED_DWG_CONVERTER",
+      "status": "CONVERTED_CROP_READY_CUSTOM_IMPORT_BLOCKED",
       "why": "All downstream geometry, sightlines, shadow studies and context realism depend on authoritative municipal geometry.",
       "done_when": [
         "verified municipal DWG converted through named reproducible toolchain",
@@ -28,8 +28,12 @@
       "evidence": [
         "config/authoritative_sources_v0_1.json",
         "config/current_world.json",
-        "docs/OFFICIAL_BRIEF_AUDIT_2026-10-04.md"
-      ]
+        "docs/OFFICIAL_BRIEF_AUDIT_2026-10-04.md",
+        "ODA File Converter 27.9 verified conversion to R2018 DXF",
+        "300 m municipal GLB crop: SHA256 f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+        "Durable Higgsfield media id eaef5ac9-3706-45dc-809e-73c0b8b4c864"
+      ],
+      "blocker": "Current 3D Jutsu import tool accepts catalog GLBs only; custom municipal GLB must enter through a supported custom-file import boundary before reconciliation."
     },
     {
       "id": 2,
