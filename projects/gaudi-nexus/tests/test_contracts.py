@@ -43,5 +43,23 @@ class Contracts(unittest.TestCase):
         self.assertEqual(sf['units'],'metres')
         self.assertEqual(sf['archive_sha256'],'186ed46321b9ec3baf7f6dc14235a32a8dd7a3fa54d32e815cddc4d0a91d9ef9')
 
+    def test_final_10_scorecard_is_complete(self):
+        s=json.loads((ROOT/'config/WIN_SCORECARD.json').read_text())
+        self.assertEqual(len(s['steps']),10)
+        self.assertEqual(sum(x['weight_pct'] for x in s['steps']),100)
+        self.assertEqual([x['id'] for x in s['steps']],list(range(1,11)))
+
+    def test_program_audit_matches_official_split(self):
+        p=json.loads((ROOT/'config/program_audit_v1.json').read_text())
+        self.assertEqual(sum(p['official_split_pct'].values()),100)
+        self.assertGreaterEqual(p['target_gfa_m2'],p['official_range_m2'][0])
+        self.assertLessEqual(p['target_gfa_m2'],p['official_range_m2'][1])
+
+    def test_release_gate_matches_official_a1(self):
+        r=json.loads((ROOT/'config/release_manifest_template.json').read_text())
+        a1=next(x for x in r['final_artifacts'] if x['id']=='A1_MAIN')
+        self.assertEqual(a1['dimensions_mm'],[594,841])
+        self.assertEqual(a1['max_mb'],15)
+
 if __name__=='__main__':
     unittest.main()
