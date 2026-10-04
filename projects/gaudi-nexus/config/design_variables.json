@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "principle": "Variables expose architectural decisions; they are not an excuse to optimize away judgment.",
+  "families": {
+    "urban": [
+      {"id":"public_ground_porosity","range":[0.35,0.85],"unit":"ratio"},
+      {"id":"resident_tourist_overlap","range":[0.15,0.65],"unit":"ratio"},
+      {"id":"protected_view_solid_angle","range":[0.0,1.0],"unit":"normalized"}
+    ],
+    "program": [
+      {"id":"gross_floor_area","range":[1500,2000],"unit":"m2"},
+      {"id":"market_share","range":[0.35,0.55],"unit":"ratio"},
+      {"id":"interpretation_share","range":[0.20,0.30],"unit":"ratio"}
+    ],
+    "environment": [
+      {"id":"summer_noon_shade_target","range":[0.45,0.80],"unit":"ratio"},
+      {"id":"cross_vent_open_fraction","range":[0.20,0.70],"unit":"ratio"}
+    ],
+    "structure": [
+      {"id":"primary_span","range":[4.0,18.0],"unit":"m"},
+      {"id":"structural_depth_ratio","range":[0.03,0.12],"unit":"span_ratio"}
+    ]
+  }
+}
