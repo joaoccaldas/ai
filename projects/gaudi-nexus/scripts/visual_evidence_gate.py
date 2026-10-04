@@ -11,9 +11,19 @@ reg = json.loads(reg_path.read_text())
 errors = []
 
 for entry in reg.get("entries", []):
-    p = ROOT / entry["path"]
-    if not p.exists():
-        errors.append(f"missing evidence file: {entry['path']}")
+    raw_path = entry["path"]
+
+    # External artifacts are evidence references, not repository-relative files.
+    # They may support internal design development, but they cannot be promoted
+    # to competition-facing authority until archived/reconciled into the repo.
+    if raw_path.startswith("external-artifact:"):
+        if entry.get("competition_use"):
+            errors.append(f"external artifact cannot be competition-facing: {entry['id']}")
+    else:
+        p = ROOT / raw_path
+        if not p.exists():
+            errors.append(f"missing evidence file: {raw_path}")
+
     if entry.get("competition_use") and entry.get("authority") != "authoritative":
         errors.append(f"competition visual is not authoritative: {entry['id']}")
 

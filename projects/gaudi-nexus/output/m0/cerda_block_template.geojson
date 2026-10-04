@@ -9,21 +9,48 @@
         "side_m": 113.0,
         "chamfer_leg_m": 14.0,
         "area_m2": 12377.0,
-        "warning": "Generic Cerdà template. Not final competition-site survey geometry."
+        "warning": "Generic Cerd\u00e0 template. Not final competition-site survey geometry."
       },
       "geometry": {
         "type": "Polygon",
         "coordinates": [
           [
-            [-42.5,-56.5],
-            [42.5,-56.5],
-            [56.5,-42.5],
-            [56.5,42.5],
-            [42.5,56.5],
-            [-42.5,56.5],
-            [-56.5,42.5],
-            [-56.5,-42.5],
-            [-42.5,-56.5]
+            [
+              -42.5,
+              -56.5
+            ],
+            [
+              42.5,
+              -56.5
+            ],
+            [
+              56.5,
+              -42.5
+            ],
+            [
+              56.5,
+              42.5
+            ],
+            [
+              42.5,
+              56.5
+            ],
+            [
+              -42.5,
+              56.5
+            ],
+            [
+              -56.5,
+              42.5
+            ],
+            [
+              -56.5,
+              -42.5
+            ],
+            [
+              -42.5,
+              -56.5
+            ]
           ]
         ]
       }
