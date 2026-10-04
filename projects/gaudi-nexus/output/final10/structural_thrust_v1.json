@@ -28,8 +28,8 @@
     {
       "roof_pressure_kPa": 2,
       "line_load_kN_per_m": 10,
-      "horizontal_reaction_kN_per_support": 75,
-      "vertical_reaction_kN_per_support": 45,
+      "horizontal_reaction_kN_per_support": 75.0,
+      "vertical_reaction_kN_per_support": 45.0,
       "resultant_reaction_kN_per_support": 87.464
     },
     {
