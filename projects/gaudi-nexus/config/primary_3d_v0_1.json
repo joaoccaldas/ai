@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "scheme": "Living Threshold A+ V0.5",
+  "status": "DESIGN_DEVELOPMENT",
+  "coordinate_system": "local metres; +X east, +Y north, +Z up",
+  "grid_rotation_deg": 44.14,
+  "site": {
+    "note": "Primary 3D V0.1 uses the real plaza geometry already stored in project site-truth data. The two bars remain concept-stage envelopes."
+  },
+  "hard_bar": {
+    "center_local_m": [
+      -50,
+      20
+    ],
+    "length_m": 45,
+    "width_m": 10,
+    "enclosed_eave_height_m": 4.8,
+    "roof_rise_m": 1.4,
+    "longitudinal_bay_m": 5,
+    "stall_count": 20,
+    "role": "market + service metabolism"
+  },
+  "civic_bar": {
+    "center_local_m": [
+      -15,
+      50
+    ],
+    "length_m": 45,
+    "width_m": 10,
+    "enclosed_eave_height_m": 4.8,
+    "roof_rise_m": 1.4,
+    "longitudinal_bay_m": 5,
+    "role": "community + interpretation + viewpoint"
+  },
+  "materials": {
+    "primary_structure": "low-carbon mineral / precast concept",
+    "roof": "thin tile/mineral catenary-informed concept",
+    "shading": "replaceable ceramic/terracotta modules",
+    "market_kit": "stainless + timber modular system",
+    "paving": "repairable mineral civic ground"
+  },
+  "authority": {
+    "spatial_truth": "bar dimensions and placement from A+ V0.5 contract",
+    "visual_truth": "NOT FINAL",
+    "warning": "This model is a truthful design-development massing model, not the final municipal-context or competition render."
+  }
+}
