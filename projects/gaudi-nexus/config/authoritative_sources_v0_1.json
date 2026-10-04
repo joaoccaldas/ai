@@ -46,7 +46,7 @@
       "title": "3D building model — DWG 3D (la Sagrada Família)",
       "portal": "https://portaldades.ajuntament.barcelona.cat/mapes/146",
       "license": "CC BY 4.0",
-      "status": "OFFICIAL_CATALOG_RECORD_CONFIRMED_DIRECT_FILE_URL_PENDING",
+      "status": "DIRECT_URL_CONFIRMED_AND_ARCHIVE_VERIFIED",
       "required_for": [
         "authoritative context heights",
         "Sagrada/context massing",
@@ -54,17 +54,35 @@
         "shadow studies"
       ],
       "checks_pending": [
-        "recover direct download endpoint",
-        "archive checksum",
         "convert DWG to open intermediate",
-        "validate vertical datum"
+        "crop to competition context",
+        "reconcile against current secondary model",
+        "promote SITE_TRUTH_V1.0"
       ],
       "catalog_product_id": "7_20",
       "carto_product": 146,
       "product_name_ca": "Model Tridimensional d'edificacions CAD 3D",
       "product_name_en": "Municipal Topographic Cartography - CAD",
-      "format": "DWG",
-      "coordinate_system": "ETRS89 EPSG:25831"
+      "format": "DWG R2018",
+      "coordinate_system": "ETRS89 EPSG:25831",
+      "atom_feed": "https://w20.bcn.cat/CartoBCN/atom.ashx?file=146",
+      "direct_download": "https://w20.bcn.cat/CartoBCN/getFile.ashx?prod=146.06.47",
+      "download_filename": "Barri_06_MTM_DWG.zip",
+      "archive_contents": [
+        "Barri_06_MTM_DWG.dwg",
+        "Barri_06_MTM_DWG.dwg.xml",
+        "Llegeix-me.txt"
+      ],
+      "dwg_size_bytes": 18182181,
+      "archive_size_approx_bytes": 11500000,
+      "crs": "EPSG:25831",
+      "units": "metres",
+      "source_date": "2026-05-20",
+      "notes": [
+        "Neighborhood product 06 = la Sagrada Família.",
+        "DWG contains extruded 3D multipatch building geometry with Z_MIN terrain base and Z_MAX roof elevation.",
+        "Municipal readme confirms EPSG:25831 / ETRS89 UTM zone 31N and metre units."
+      ]
     },
     {
       "id": "OSM-SF-PARK",
