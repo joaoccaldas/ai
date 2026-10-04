@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "scheme": "Living Threshold",
+  "bars": {
+    "hard_market": {
+      "overall_m": [
+        45,
+        10
+      ],
+      "support_zone_m": [
+        11,
+        10
+      ],
+      "market_hall_length_m": 31,
+      "stall_count": 20,
+      "stall_module_m": [
+        3,
+        2.4
+      ],
+      "central_public_aisle_m": 3.2,
+      "stairs_clear_m": [
+        1.5,
+        1.5
+      ],
+      "lift": true,
+      "accessible_wc": true
+    },
+    "civic": {
+      "overall_m": [
+        45,
+        10
+      ],
+      "stairs_clear_m": [
+        2,
+        2
+      ],
+      "lift": true,
+      "accessible_wc": true,
+      "ground_program_approx_m2": {
+        "neighborhood_community": 180,
+        "interpretation_intro": 140,
+        "foyer_coat_storage": 70,
+        "support_wc_store": 60
+      }
+    }
+  },
+  "note": "Concept-stage dimensions. Final compliance, structure and net/gross area coordination remain pending."
+}
