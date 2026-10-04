@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-04T19:46:00Z",
+  "updated_utc": "2026-10-04T19:54:00Z",
   "definition_of_100": "No known competition requirement gap, no unresolved source-of-truth conflict, no unverified competition-facing claim, no broken deliverable, and all final-release gates green.",
   "official_jury_points": {
     "architecture_program": 20,
@@ -135,7 +135,7 @@
       "id": 7,
       "name": "Hero frame >=9/10",
       "weight_pct": 12,
-      "status": "PARTIAL",
+      "status": "EEVEE_RENDERED_VISUAL_APPROVAL_PENDING",
       "why": "The hero must compress the thesis into an immediate jury read.",
       "done_when": [
         "same canonical scene as plan/section",
@@ -148,8 +148,10 @@
       ],
       "evidence": [
         "visuals/camera_registry.json",
-        "config/current_world.json"
-      ]
+        "config/current_world.json",
+        "Rev 15 Eevee 320x180 render operation gaudi-r15-eevee-small-007 succeeded; artifact bf473fa6951086144f14b09b45b258ca"
+      ],
+      "blocker": "Pixels could not be inspected through the current tool bridge; 9+/10 visual score remains unproven."
     },
     {
       "id": 8,
