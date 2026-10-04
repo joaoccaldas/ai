@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "status": "CONCEPT_SCREEN_NOT_CODE_CERTIFICATION",
+  "sources": {
+    "db_sua": "https://www.codigotecnico.org/DocumentosCTE/SeguridadUtilizacionAccesibilidad",
+    "db_si": "https://www.codigotecnico.org/DocumentosCTE/SeguridadEnCasoDeIncendio.html",
+    "note": "Current CTE pages are the authority. Numeric concept targets below are deliberately conservative design screens and must be reverified against the current documents before detailed design/submission claims."
+  },
+  "targets": {
+    "main_accessible_route_clear_m": 1.5,
+    "turning_circle_m": 1.5,
+    "stair_clear_width_m": 1.2,
+    "independent_vertical_cores": 2,
+    "upper_public_levels_lift_served": true,
+    "design_stress_occupancy_people": 700
+  },
+  "rules": [
+    "No upper public level without step-free vertical access.",
+    "No delivery/waste route through the central civic ground.",
+    "Two remote escape cores must remain feasible as geometry develops.",
+    "Stress occupancy is a design robustness screen, not a regulatory occupant-load calculation.",
+    "Final egress widths, travel distances, compartmentation and accessibility dimensions require current CTE verification."
+  ]
+}
