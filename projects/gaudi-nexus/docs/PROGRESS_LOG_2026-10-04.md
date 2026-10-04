@@ -69,3 +69,45 @@ The project now has enough systems depth to stop adding conceptual machinery.
 
 Highest-value work is:
 **authoritative municipal context → validated environmental/structural analysis → material/joint resolution → Blender/Cycles human scene → A1 composition.**
+
+## 13 — Primary Bay V0.3 physical-detail gate
+Resolved the first two real construction interfaces:
+
+### J01 roof / edge / column
+- pier;
+- edge beam;
+- bearing/movement layer;
+- shell springing;
+- waterproofing;
+- removable gutter;
+- downpipe cleanout;
+- independent ceramic-fin bracket;
+- MEP/light rail;
+- acoustic insert.
+
+### J02 stall / floor / service
+- demountable stall chassis;
+- quick wet/power/data connection;
+- cold/dry storage;
+- 0.90 m main counter;
+- 0.76 m accessible counter;
+- knee clearance;
+- fold-down evening bench;
+- wash-down drain;
+- repairable floor build-up.
+
+Added explicit bay-isolation / replacement sequence.
+
+The shell bond and the shading layer are now separate systems so ceramic expression cannot become an irreversible costume layer.
+
+Created **Primary Bay V0.3 GLB** with substantially higher component detail.
+
+## Bottleneck after V0.3
+Further technical-diagram expansion has sharply declining value.
+
+Next value jump:
+1. official municipal 3D/topography;
+2. structural form-finding / engineering;
+3. validated annual daylight/wind/thermal;
+4. Blender/Cycles material-light scene;
+5. A1 visual hierarchy.
