@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "updated_utc": "2026-10-04T19:20:00Z",
+  "definition_of_100": "No known competition requirement gap, no unresolved source-of-truth conflict, no unverified competition-facing claim, no broken deliverable, and all final-release gates green.",
+  "official_jury_points": {
+    "architecture_program": 20,
+    "plaza_context": 20,
+    "gaudi_logic": 20,
+    "ai_spatial_coherence": 20,
+    "passive_environment": 10,
+    "visual_communication": 10
+  },
+  "steps": [
+    {
+      "id": 1,
+      "name": "SITE_TRUTH_V1",
+      "weight_pct": 10,
+      "status": "BLOCKED_TRUSTED_DWG_CONVERTER",
+      "why": "All downstream geometry, sightlines, shadow studies and context realism depend on authoritative municipal geometry.",
+      "done_when": [
+        "verified municipal DWG converted through named reproducible toolchain",
+        "EPSG:25831 and metre units preserved",
+        "competition crop created",
+        "scale/north/heights checked",
+        "proxy context compared before retirement",
+        "SITE_TRUTH_V1 promoted"
+      ],
+      "evidence": [
+        "config/authoritative_sources_v0_1.json",
+        "config/current_world.json",
+        "docs/OFFICIAL_BRIEF_AUDIT_2026-10-04.md"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Canonical Blender world",
+      "weight_pct": 8,
+      "status": "PARTIAL",
+      "why": "Plan, section, axon and hero must derive from one scene.",
+      "done_when": [
+        "exact Rev 14 binary archived",
+        "canonical scene hash recorded",
+        "named collections contract applied",
+        "all competition cameras registered",
+        "exports trace to same scene"
+      ],
+      "evidence": [
+        "config/current_world.json",
+        "visuals/camera_registry.json"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Architecture vs brief closure",
+      "weight_pct": 10,
+      "status": "PARTIAL",
+      "why": "Program and plaza requirements carry major jury weight and cannot remain approximate.",
+      "done_when": [
+        "all official program items mapped to scene evidence",
+        "net/gross area reconciled",
+        "full-plaza design evidenced",
+        "access/egress screen closed",
+        "no UNKNOWN/TODO in requirement matrix"
+      ],
+      "evidence": [
+        "config/requirements.json",
+        "config/requirement_matrix_v0_1.json",
+        "config/primary_scheme_dimensions_v0_1.json"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Structural/Gaudi proof",
+      "weight_pct": 10,
+      "status": "PARTIAL",
+      "why": "Gaudi logic is worth 20 points and must be functional rather than cosmetic.",
+      "done_when": [
+        "9 m span form-finding documented",
+        "support reactions quantified",
+        "load path diagram complete",
+        "joints and movement strategy consistent",
+        "assumptions clearly labeled"
+      ],
+      "evidence": [
+        "docs/PRIMARY_BAY_V0_3.md",
+        "docs/BAY_PERFORMANCE_V0_1.md"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Environmental validation",
+      "weight_pct": 10,
+      "status": "PARTIAL",
+      "why": "Passive performance is explicit jury value and strengthens architectural credibility.",
+      "done_when": [
+        "annual solar/shade validated",
+        "daylight metric validated",
+        "wind/ventilation method documented",
+        "rainwater sized against official basis",
+        "acoustic strategy quantified",
+        "claims carry assumptions/source"
+      ],
+      "evidence": [
+        "docs/BAY_PERFORMANCE_V0_1.md",
+        "docs/SOLAR_BASELINE_001.md"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Material/construction reality",
+      "weight_pct": 10,
+      "status": "PARTIAL",
+      "why": "Final realism now depends more on assemblies, contact and material response than on object count.",
+      "done_when": [
+        "hero-frame materials use final PBR definitions",
+        "visible joints/attachments resolved",
+        "no floating/interpenetrating hero objects",
+        "wear/contact logic consistent",
+        "material choices solve stated performance need"
+      ],
+      "evidence": [
+        "docs/MATERIAL_SYSTEM_V0_1.md",
+        "docs/PRIMARY_BAY_V0_3.md"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Hero frame >=9/10",
+      "weight_pct": 12,
+      "status": "PARTIAL",
+      "why": "The hero must compress the thesis into an immediate jury read.",
+      "done_when": [
+        "same canonical scene as plan/section",
+        "1.55-1.56 m eye height",
+        "28-35 mm lens",
+        "real Barcelona date/time lighting",
+        "Sagrada primacy preserved",
+        "blind internal score >=9/10",
+        "no generative spatial invention"
+      ],
+      "evidence": [
+        "visuals/camera_registry.json",
+        "config/current_world.json"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "A1 jury board",
+      "weight_pct": 12,
+      "status": "EARLY",
+      "why": "The board controls whether judges can perceive the other 90 points.",
+      "done_when": [
+        "one dominant hero",
+        "one authoritative plan",
+        "one decisive section",
+        "one system/axon diagram",
+        "Gaudi logic explicit",
+        "AI workflow explicit",
+        "only defensible metrics",
+        "10-second thesis read passes"
+      ],
+      "evidence": [
+        "visuals/A1_STORYBOARD.md",
+        "config/requirements.json"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Optional A4 design object",
+      "weight_pct": 6,
+      "status": "PARTIAL",
+      "why": "Threshold Stall 01 can earn separate distinction and prove the long-life/short-life system at human scale.",
+      "done_when": [
+        "floor/service connection resolved",
+        "washdown/hygiene detail resolved",
+        "accessible knee/approach checked",
+        "lighting/material proof completed",
+        "final A4 composition produced"
+      ],
+      "evidence": [
+        "design/a4/THRESHOLD_STALL_01.md"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Hostile final release audit",
+      "weight_pct": 12,
+      "status": "NOT_STARTED",
+      "why": "Submission failure modes are avoidable and must be eliminated before upload.",
+      "done_when": [
+        "A1 dimensions/format/size pass",
+        "A4 dimensions/format/size pass if submitted",
+        "English-only board text",
+        "anonymity scrub pass",
+        "metadata scrub pass",
+        "participant number placement pass",
+        "rights/source manifest complete",
+        "final hashes recorded",
+        "organizer deadline/timezone reverified"
+      ],
+      "evidence": [
+        "config/requirements.json"
+      ]
+    }
+  ],
+  "rules": [
+    "No new architectural concept unless authoritative context invalidates the current one.",
+    "Every task must either increase an official jury criterion or remove a release risk.",
+    "No step may be marked DONE from prose alone; it requires inspectable evidence.",
+    "A later revision cannot become canonical without explicit manifest promotion."
+  ]
+}
