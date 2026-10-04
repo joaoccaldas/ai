@@ -49,3 +49,23 @@ We have a credible **design-development architecture**, not a winning final entr
 
 The current bottleneck is:
 **physical/detail resolution + environmental proof + material/light realism + final human experience.**
+
+## 11 — Bay performance
+Added explicit solar-fin, structural-thrust, acoustic-absorption and rainwater stress studies. These are recorded as proxies, not certifications, so unresolved engineering remains visible.
+
+## 12 — Optional A4 object
+Developed **Threshold Stall 01**:
+- 3.0 × 2.4 m;
+- integrated accessible counter zone;
+- plug-in wet/power/data chassis;
+- cold/dry storage;
+- after-hours transformation into civic seating;
+- detailed drawing + GLB.
+
+The optional design-prize requirement has moved from NOT_STARTED to GREEN_CONCEPT.
+
+## Current bottleneck update
+The project now has enough systems depth to stop adding conceptual machinery.
+
+Highest-value work is:
+**authoritative municipal context → validated environmental/structural analysis → material/joint resolution → Blender/Cycles human scene → A1 composition.**
