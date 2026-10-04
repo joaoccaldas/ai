@@ -33,7 +33,11 @@ jobs:
         run: python scripts/visual_evidence_gate.py
       - name: Final-10 control plane
         run: python scripts/check_final10.py
+      - name: Structural sensitivity evidence
+        run: python scripts/structural_thrust_v1.py
+      - name: Barcelona solar baseline evidence
+        run: python scripts/barcelona_solar_baseline_v1.py
       - name: Unit tests
         run: python -m unittest discover -s tests -v
       - name: Determinism check
-        run: git diff --exit-code -- output/m0/cerda_block_template.geojson output/m0/cerda_block_template.svg output/m0/site_truth_report.json
+        run: git diff --exit-code -- output/m0/cerda_block_template.geojson output/m0/cerda_block_template.svg output/m0/site_truth_report.json output/final10/structural_thrust_v1.json output/final10/barcelona_solar_baseline_v1.json
