@@ -317,6 +317,54 @@
       "authority": "derived_from_primary_contract",
       "competition_use": false,
       "notes": "3.0 × 2.4 m module with 0.90 m main counter, 0.76 m accessible counter section, storage, service rail and fold-down bench."
+    },
+    {
+      "id": "PRIMARY_BAY_GATE_003",
+      "path": "external-artifact:gaudi_primary_bay_v0_3_gate.png",
+      "status": "PASS_PHYSICAL_DETAIL_GATE",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Evidence board for J01/J02 details, maintenance sequence and tile/fin separation. Detail realism improved; still not photoreal."
+    },
+    {
+      "id": "JOINT_J01_001",
+      "path": "external-artifact:gaudi_joint_j01_roof_edge_v0_1.png",
+      "status": "PASS_CONSTRUCTION_INTERFACE_CONCEPT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Pier→edge beam→bearing→shell→gutter/downpipe→replaceable fin interface. Structural/water/wind engineering pending."
+    },
+    {
+      "id": "JOINT_J02_001",
+      "path": "external-artifact:gaudi_joint_j02_stall_floor_v0_1.png",
+      "status": "PASS_CONSTRUCTION_INTERFACE_CONCEPT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Demountable stall→service plinth→accessible counter→drain→floor interface. Hygiene/MEP detailing pending."
+    },
+    {
+      "id": "MAINTENANCE_001",
+      "path": "external-artifact:gaudi_maintenance_sequence_v0_1.png",
+      "status": "PASS_MAINTAINABILITY_LOGIC",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Bay-isolation and replace-only-failed-layer sequence. Supports long-life civic structure plus adaptable market fit-out."
+    },
+    {
+      "id": "TILE_FIXING_001",
+      "path": "external-artifact:gaudi_tile_bond_fixing_v0_1.png",
+      "status": "PASS_MATERIAL_SYSTEM_SEPARATION",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Separates shell bond from bolted replaceable solar-control fins; avoids irreversible decorative cladding."
+    },
+    {
+      "id": "PRIMARY_BAY_3D_003",
+      "path": "external-artifact:gaudi_primary_bay_v0_3.glb",
+      "status": "PASS_HIGHER_DETAIL_3D_DEVELOPMENT",
+      "authority": "primary_3d_design_development",
+      "competition_use": false,
+      "notes": "V0.3 GLB includes 145+ geometry components covering shell, tile proxy, bearings, gutters, downpipe, fins/brackets, stall connectors, drainage, tactile strip, MEP, acoustics, people and tree."
     }
   ],
   "required_for_G1": [
