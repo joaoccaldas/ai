@@ -9,7 +9,7 @@ OUT.mkdir(parents=True, exist_ok=True)
 lat=41.4036
 cases=[
  ('summer_solstice',23.44),
- ('equinox',0.0),
+ ('equinox',0),
  ('winter_solstice',-23.44),
 ]
 rows=[]
