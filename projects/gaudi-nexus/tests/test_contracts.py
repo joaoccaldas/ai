@@ -37,6 +37,13 @@ class Contracts(unittest.TestCase):
         self.assertEqual(w['current_3d']['blend_sha256'],'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494')
         self.assertEqual(w['current_3d']['glb_sha256'],'2001331e04266c43943535fcde50ab7522da09aeef1c3a30cae62ff7c621682d')
 
+    def test_site_truth_conversion_hashes_are_pinned(self):
+        src=json.loads((ROOT/'config/authoritative_sources_v0_1.json').read_text())
+        sf=next(x for x in src['sources'] if x['id']=='BCN-3D-SF')
+        self.assertEqual(sf['conversion']['dxf_sha256'],'d7653777a0a66023dacae6c44484a39b5423dd9463f44cbd5ddc1aca54330ec7')
+        self.assertEqual(sf['site_truth_v1_crop']['glb_sha256'],'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c')
+        self.assertEqual(sf['site_truth_v1_crop']['mesh_entities'],2900)
+
     def test_official_brief_is_locked(self):
         req=json.loads((ROOT/'config/requirements.json').read_text())
         self.assertTrue(req['status'].startswith('OFFICIAL_BRIEF_AUDITED'))
