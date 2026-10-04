@@ -32,6 +32,11 @@ class Contracts(unittest.TestCase):
         self.assertEqual(p07['status'],'PASS_SCENE_REV15')
         self.assertEqual(p08['status'],'PASS_SCENE_REV15')
 
+    def test_rev15_binary_identity_is_pinned(self):
+        w=json.loads((ROOT/'config/current_world.json').read_text())
+        self.assertEqual(w['current_3d']['blend_sha256'],'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494')
+        self.assertEqual(w['current_3d']['glb_sha256'],'2001331e04266c43943535fcde50ab7522da09aeef1c3a30cae62ff7c621682d')
+
     def test_official_brief_is_locked(self):
         req=json.loads((ROOT/'config/requirements.json').read_text())
         self.assertTrue(req['status'].startswith('OFFICIAL_BRIEF_AUDITED'))
