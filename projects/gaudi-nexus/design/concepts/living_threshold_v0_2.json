@@ -1,0 +1,33 @@
+{
+  "version": 2,
+  "date": "2026-10-04",
+  "concept": "Living Threshold",
+  "target_gfa_m2": 1800,
+  "previous": {
+    "max_obstruction_deg": 71.1843900012403,
+    "verdict": "FAIL_VIEW_PROXY"
+  },
+  "current": {
+    "footprint_m2": 899.6375814087792,
+    "ground_occupation_pct": 7.735167155654806,
+    "max_obstruction_deg": 0,
+    "sampled_approach_obstructions_deg": {
+      "west": 0,
+      "south": 0,
+      "southwest": 0
+    },
+    "view_proxy_overlap_m2": 0,
+    "bar_centers_local_m": [
+      [
+        20,
+        -45
+      ],
+      [
+        50,
+        -5
+      ]
+    ],
+    "max_enclosed_height_m": 9
+  },
+  "lesson": "The social thesis survived; the first geometry did not. Evidence changed the form rather than being used to justify it."
+}
