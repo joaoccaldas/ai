@@ -22,8 +22,15 @@ class Contracts(unittest.TestCase):
         self.assertEqual(w['authority']['repository'],'joaoccaldas/ai')
         self.assertEqual(w['authority']['branch'],'gaudi-nexus')
         self.assertEqual(w['authority']['project_path'],'projects/gaudi-nexus/')
-        self.assertEqual(w['current_3d']['revision'],14)
-        self.assertEqual(w['current_3d']['status'],'EXTERNAL_PROVISIONAL_CURRENT')
+        self.assertEqual(w['current_3d']['revision'],15)
+        self.assertEqual(w['current_3d']['status'],'REV15_PROGRAM_CLOSURE_PENDING_VISUAL_APPROVAL')
+
+    def test_rev15_program_closure_is_scene_backed(self):
+        p=json.loads((ROOT/'config/program_audit_v1.json').read_text())
+        p07=next(x for x in p['checks'] if x['id']=='P07')
+        p08=next(x for x in p['checks'] if x['id']=='P08')
+        self.assertEqual(p07['status'],'PASS_SCENE_REV15')
+        self.assertEqual(p08['status'],'PASS_SCENE_REV15')
 
     def test_official_brief_is_locked(self):
         req=json.loads((ROOT/'config/requirements.json').read_text())
