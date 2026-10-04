@@ -69,6 +69,46 @@
         "competition_readiness": 2
       },
       "notes": "Computed sun vectors on real site geometry. No shadow claims until heights/topography are authoritative."
+    },
+    {
+      "id": "ACCESS_EGRESS_001",
+      "path": "external-artifact:gaudi_access_egress_screen_v0_1.png",
+      "status": "PASS_CONCEPT_SCREEN_ONLY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Concept-stage step-free arrival and two-core feasibility screen. Not regulatory certification."
+    },
+    {
+      "id": "SERVICE_SPINE_002",
+      "path": "external-artifact:gaudi_service_spine_iteration_002.png",
+      "status": "PASS_ITERATION_EVIDENCE",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Service metabolism iteration. A+ reaches zero civic-center overlap; C+ still has ~3.6 m overlap to eliminate."
+    },
+    {
+      "id": "SHADOW_PROXY_001",
+      "path": "external-artifact:gaudi_shadow_proxy_v0_1.png",
+      "status": "PASS_COMPARATIVE_PROXY_ONLY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Conservative max-height shadow envelope comparison. Not final environmental simulation."
+    },
+    {
+      "id": "HUMAN_SCALE_SECTION_001",
+      "path": "external-artifact:gaudi_human_scale_section_v0_1.png",
+      "status": "FAIL_COMPETITION_VISUAL",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Useful first human-scale test but remains diagram architecture; explicitly fails final visual-quality gate."
+    },
+    {
+      "id": "A_ITERATION_003",
+      "path": "external-artifact:gaudi_living_threshold_iteration_003.png",
+      "status": "PASS_EVIDENCE_CHANGED_FORM",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "A+ V0.3 reduced service distance from ~85.6 m to ~10.0 m and winter 09:00 shadow proxy from ~78.5% to ~8.9% while retaining sampled 0° view obstruction."
     }
   ],
   "required_for_G1": [
