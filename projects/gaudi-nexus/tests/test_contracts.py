@@ -57,7 +57,7 @@ class Contracts(unittest.TestCase):
     def test_municipal_context_checksum_is_pinned(self):
         src=json.loads((ROOT/'config/authoritative_sources_v0_1.json').read_text())
         sf=next(x for x in src['sources'] if x['id']=='BCN-3D-SF')
-        self.assertEqual(sf['status'],'DOWNLOADED_AND_CHECKSUM_VERIFIED')
+        self.assertEqual(sf['status'],'CONVERTED_TO_DXF_AND_CROPPED_GLB')
         self.assertEqual(sf['crs'],'EPSG:25831')
         self.assertEqual(sf['units'],'metres')
         self.assertEqual(sf['archive_sha256'],'186ed46321b9ec3baf7f6dc14235a32a8dd7a3fa54d32e815cddc4d0a91d9ef9')
