@@ -237,6 +237,38 @@
       "authority": "derived",
       "competition_use": false,
       "notes": "Human-scale material/spatial section of hard edge, civic edge and unprogrammed middle; still not a competition render."
+    },
+    {
+      "id": "PRIMARY_BAY_SECTION_002",
+      "path": "external-artifact:gaudi_primary_bay_v0_2_section.png",
+      "status": "PASS_DETAIL_DEVELOPMENT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "5 m bay integrates 9 m clear compression span, rainwater, solar-control fins, lighting, acoustics, MEP, market interface and human scale."
+    },
+    {
+      "id": "ROOF_SYSTEM_DECISION_001",
+      "path": "external-artifact:gaudi_roof_system_decision_v0_1.png",
+      "status": "PASS_DECISION_EVIDENCE",
+      "authority": "research_plus_design_judgment",
+      "competition_use": false,
+      "notes": "Hybrid thin-tile/compression shell + robust edge frame selected; timber/steel catenary fallback preserved."
+    },
+    {
+      "id": "PRIMARY_BAY_ASSEMBLY_002",
+      "path": "external-artifact:gaudi_primary_bay_v0_2_assembly.png",
+      "status": "PASS_SYSTEM_INTEGRATION",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Exploded system separates structure, water, solar, acoustics, services, market kit and paving for maintainability."
+    },
+    {
+      "id": "PRIMARY_BAY_3D_002",
+      "path": "web/primary-bay-3d/index.html",
+      "status": "PASS_INTERACTIVE_DESIGN_DEVELOPMENT",
+      "authority": "primary_3d_design_development",
+      "competition_use": false,
+      "notes": "Interactive Three.js bay uses the same 5 m / 10 m / 9 m clear-span design contract."
     }
   ],
   "required_for_G1": [
