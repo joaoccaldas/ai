@@ -64,16 +64,16 @@
     {
       "id": "P07",
       "item": "Two teaching kitchens ~20 each",
-      "status": "OPEN",
-      "evidence": null,
-      "blocker": "explicitly model and schedule both kitchens"
+      "status": "PASS_SCENE_REV15",
+      "evidence": "TeachingKitchen_1 and TeachingKitchen_2 editable scene zones; capacity_people=20 tags",
+      "blocker": "final area/equipment/code validation"
     },
     {
       "id": "P08",
       "item": "8 administration workstations",
-      "status": "OPEN",
-      "evidence": null,
-      "blocker": "explicitly model and schedule 8 workstations"
+      "status": "PASS_SCENE_REV15",
+      "evidence": "AdminWorkstation_01..08 editable scene objects",
+      "blocker": "final operational layout/ergonomic validation"
     },
     {
       "id": "P09",
