@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-04T19:13:00Z",
+  "updated_utc": "2026-10-04T19:30:00Z",
   "authority": {
     "repository": "joaoccaldas/ai",
     "branch": "gaudi-nexus",
@@ -14,10 +14,10 @@
     "repo_scheme_version": "V0.6"
   },
   "current_3d": {
-    "revision": 14,
-    "status": "EXTERNAL_PROVISIONAL_CURRENT",
+    "revision": 15,
+    "status": "REV15_PROGRAM_CLOSURE_PENDING_VISUAL_APPROVAL",
     "higgsfield_url": "https://higgsfield.ai/3d-jutsu/6bfa2d88-eef7-4583-9d82-08218b0bf4e4",
-    "object_count": 1566,
+    "object_count": 1600,
     "blend_size_mb_approx": 17.8,
     "glb_size_mb_approx": 15,
     "camera": {
@@ -33,10 +33,21 @@
       "wet-stone and ground-detail cues"
     ],
     "promotion_blockers": [
-      "Rev 14 binary source files are not yet archived in the GitHub project lineage",
+      "Rev 15 hero verification render is pending approval",
       "municipal DWG has not yet been converted/reconciled into the world",
+      "canonical collection migration for legacy Rev 14 objects remains partial",
       "hero frame has not yet passed >=9/10 final visual gate",
       "A1 board is not final"
+    ],
+    "blend_size_bytes": 18083163,
+    "blend_etag": "02fa49ad3fc6c3f16b1437603cbf1837",
+    "glb_size_bytes": 15289476,
+    "glb_etag": "6eedb918dc908bf9b0bdad38f97cf2f7",
+    "revision_15_changes": [
+      "added two editable teaching-kitchen zones, each tagged capacity_people=20",
+      "added eight editable admin workstations",
+      "added collection 21_PROGRAM_REQUIRED",
+      "preserved HeroCam at 1.56 m / 32 mm"
     ]
   },
   "authoritative_context": {
