@@ -25,6 +25,16 @@ class Contracts(unittest.TestCase):
         self.assertEqual(w['current_3d']['revision'],14)
         self.assertEqual(w['current_3d']['status'],'EXTERNAL_PROVISIONAL_CURRENT')
 
+    def test_official_brief_is_locked(self):
+        req=json.loads((ROOT/'config/requirements.json').read_text())
+        self.assertTrue(req['status'].startswith('OFFICIAL_BRIEF_AUDITED'))
+        self.assertEqual(req['site']['block_side_m'],113.3)
+        self.assertEqual(req['program']['target_area_m2'],[1500,2000])
+        self.assertEqual(sum(req['jury_rubric_points'].values()),100)
+        self.assertEqual(req['submission']['main_board']['max_file_mb'],15)
+        self.assertEqual(req['submission']['optional_design_board']['max_file_mb'],10)
+        self.assertTrue(req['submission']['anonymous'])
+
     def test_municipal_context_checksum_is_pinned(self):
         src=json.loads((ROOT/'config/authoritative_sources_v0_1.json').read_text())
         sf=next(x for x in src['sources'] if x['id']=='BCN-3D-SF')
