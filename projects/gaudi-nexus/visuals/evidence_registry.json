@@ -109,6 +109,38 @@
       "authority": "derived",
       "competition_use": false,
       "notes": "A+ V0.3 reduced service distance from ~85.6 m to ~10.0 m and winter 09:00 shadow proxy from ~78.5% to ~8.9% while retaining sampled 0° view obstruction."
+    },
+    {
+      "id": "MARKET_STALL_TEST_002",
+      "path": "external-artifact:gaudi_market_stall_test_v0_2.png",
+      "status": "PASS_GEOMETRIC_FEASIBILITY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Corrected 4.0×2.4 m stall orientation + 3.0 m aisle proxy; both finalists fit 20 stalls with a service/support reserve."
+    },
+    {
+      "id": "MARKET_FLOORPLATE_EFF_001",
+      "path": "external-artifact:gaudi_market_floorplate_efficiency_001.png",
+      "status": "PASS_COMPARATIVE_EVIDENCE",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "C residual flexibility ~11.3%; A+ V0.3 ~42.5%. Shows operational slack difference, not final layout."
+    },
+    {
+      "id": "A_ITERATION_003_MULTI",
+      "path": "external-artifact:gaudi_living_threshold_iteration_003.png",
+      "status": "PASS_MULTI_OBJECTIVE_ITERATION",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "A+ V0.3 optimizes service distance and winter shadow while preserving sampled sightline clearance."
+    },
+    {
+      "id": "FINALIST_RUBRIC_002",
+      "path": "external-artifact:gaudi_finalist_rubric_v0_2.png",
+      "status": "PASS_INTERNAL_REVIEW_ONLY",
+      "authority": "human_judgment_plus_derived_metrics",
+      "competition_use": false,
+      "notes": "A+ 81.6 vs C+ 80.5 provisional internal review. Not a jury prediction."
     }
   ],
   "required_for_G1": [
