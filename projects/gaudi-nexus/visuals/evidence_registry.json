@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "principle": "Rendered successfully is not equivalent to visual evidence passed.",
+  "entries": [
+    {
+      "id": "M0_PLAN_001",
+      "path": "output/m0/cerda_block_template.svg",
+      "status": "PASS_CALIBRATION_ONLY",
+      "authority": "provisional",
+      "competition_use": false,
+      "scores": {
+        "geometry_truth": 7,
+        "composition": 2,
+        "material_light": 0,
+        "human_scale": 0,
+        "competition_readiness": 1
+      },
+      "notes": "Valid calibration artifact. Not a site-truth render and not architecture."
+    },
+    {
+      "id": "M0_SITE_REPORT_001",
+      "path": "output/m0/site_truth_report.json",
+      "status": "PASS_PROVISIONAL_TEMPLATE",
+      "authority": "template_only",
+      "competition_use": false,
+      "notes": "Explicitly blocks concept authority until municipal/competition geometry is ingested."
+    }
+  ],
+  "required_for_G1": ["SITE_ORTHO_001","SITE_AXON_001","SIGHTLINE_001","SOLAR_001"],
+  "visual_pass_requirements": [
+    "source-traceable geometry",
+    "camera metadata recorded",
+    "no debug overlays in competition-facing evidence",
+    "silhouette legible",
+    "scale reference present where needed",
+    "plan/section/render consistency",
+    "claims linked to evidence or simulation output",
+    "no generative image used as spatial authority"
+  ]
+}
