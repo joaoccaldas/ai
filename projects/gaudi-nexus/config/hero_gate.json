@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "id": "A_HERO_FINAL",
+  "status": "NOT_APPROVED",
+  "scene_rule": "must derive from canonical Blender scene",
+  "camera": {
+    "eye_height_m": [
+      1.55,
+      1.56
+    ],
+    "lens_mm": [
+      28,
+      35
+    ]
+  },
+  "requirements": [
+    "resident-scale foreground activity",
+    "market and civic exchange legible",
+    "Sagrada visual primacy preserved",
+    "Barcelona daylight tied to declared date/time",
+    "foreground/middle/background hierarchy",
+    "no fake fog masking geometry",
+    "no repeated entourage pattern visible",
+    "no floating/interpenetrating visible objects",
+    "no generative spatial invention"
+  ],
+  "scoring": {
+    "architecture_read": 10,
+    "human_life": 10,
+    "sagrada_relationship": 10,
+    "material_light": 10,
+    "composition": 10,
+    "truth_consistency": 10
+  },
+  "approval_rule": "mean score >=9.0/10 and no truth_consistency score below 9"
+}
