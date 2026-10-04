@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "cameras": [
+    {
+      "id": "A_OVERVIEW_001",
+      "purpose": "geometry overview only",
+      "renderer": "OpenSCAD preview",
+      "eye": [-95, -75, 38],
+      "target": [-20, 38, 5],
+      "projection": "perspective",
+      "competition_use": false
+    },
+    {
+      "id": "A_HUMAN_001",
+      "purpose": "human-scale geometry check",
+      "renderer": "OpenSCAD preview",
+      "eye": [-70, -15, 15],
+      "target": [-25, 35, 4],
+      "projection": "perspective",
+      "competition_use": false
+    },
+    {
+      "id": "A_HERO_TARGET_001",
+      "purpose": "future final market-morning hero",
+      "renderer": "Blender Cycles",
+      "eye_height_m": 1.55,
+      "lens_mm_target": [28, 35],
+      "requirements": [
+        "resident-scale foreground use",
+        "market activity without crowd clutter",
+        "Sagrada relationship legible but not theatrically centered",
+        "same geometry as plan/section",
+        "Barcelona daylight tied to real date/time",
+        "no generative spatial invention"
+      ],
+      "competition_use": false,
+      "status": "not_rendered"
+    }
+  ]
+}
