@@ -1,7 +1,7 @@
 {
   "version": 1,
   "basis": "Official AI x Gaudi brief as previously audited; re-verify final submission rules before G6.",
-  "scheme": "Living Threshold A+ V0.5",
+  "scheme": "Living Threshold A+ V0.6",
   "target_gfa_m2": 1800,
   "program_m2": {
     "market_neighborhood": 810,
@@ -76,8 +76,8 @@
       "id": "R09",
       "requirement": "Integrate Gaudí principles/method rather than cosmetic imitation",
       "status": "YELLOW_PLUS",
-      "evidence": "Cerdà deformation rules + 9 m compression-shell bay",
-      "gap": "Structural analysis/form finding must validate final shell"
+      "evidence": "Cerdà deformation rules + 9 m compression-shell bay + funicular thrust sensitivity",
+      "gap": "Detailed form-finding/FEA and construction engineering still required"
     },
     {
       "id": "R10",
@@ -96,9 +96,9 @@
     {
       "id": "R12",
       "requirement": "Passive environmental strategy",
-      "status": "YELLOW",
-      "evidence": "solar/shadow proxies, narrow two-sided floorplates, shading-first strategy",
-      "gap": "Real heights/topography + validated daylight/wind/thermal simulation pending"
+      "status": "YELLOW_PLUS",
+      "evidence": "solar/shadow proxies + optimized ceramic fin screen + acoustic RT proxy + rainwater stress envelope",
+      "gap": "Municipal heights/topography + validated annual daylight/wind/thermal and code rain sizing pending"
     },
     {
       "id": "R13",
@@ -131,9 +131,9 @@
     {
       "id": "R17",
       "requirement": "Optional A4 design-prize object",
-      "status": "NOT_STARTED",
-      "evidence": "Candidate market module identified",
-      "gap": "Design and board not yet developed"
+      "status": "GREEN_CONCEPT",
+      "evidence": "Threshold Stall 01 A4 concept + dimensioned accessible module + GLB",
+      "gap": "Final A4 competition composition, material/connection proof and optional prototype render pending"
     },
     {
       "id": "R18",
