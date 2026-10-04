@@ -1,0 +1,35 @@
+{
+  "version": "0.2",
+  "crs": "EPSG:25831",
+  "origin": {
+    "longitude": 2.1731664,
+    "latitude": 41.4026624,
+    "easting_m": 430886.6390042373,
+    "northing_m": 4583787.79227262
+  },
+  "plaza": {
+    "name": "Plaça de la Sagrada Família",
+    "area_m2": 11630.48662434008,
+    "perimeter_m": 415.25279032608574,
+    "source_class": "O",
+    "source": "OpenStreetMap/Nominatim polygon"
+  },
+  "basilica": {
+    "outline_area_m2": 6094.441643261262,
+    "source_class": "O",
+    "source": "OpenStreetMap/Nominatim building outline"
+  },
+  "relationships": {
+    "plaza_to_basilica_centroid_m": 137.64987704895077,
+    "plaza_to_nearest_basilica_boundary_m": 99.09408046342678,
+    "centroid_bearing_deg_from_north": 45.35229961699795,
+    "dominant_grid_axis_deg_from_east": 44.13780594852142
+  },
+  "program_pressure": {
+    "brief_gfa_m2": [1500, 2000],
+    "one_level_footprint_percent_plaza": [12.897141001365927, 17.196188001821236],
+    "two_level_footprint_percent_plaza": [6.4485705006829635, 8.598094000910618],
+    "three_level_footprint_percent_plaza": [4.299047000455309, 5.732062667273745]
+  },
+  "warning": "Geometry is materially more truthful than the prior generic Cerdà template, but municipal DWG/topographic data remain higher authority and must replace/cross-check these open-data geometries before Gate G1 is passed."
+}
