@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "total_points": 100,
+  "criteria": [
+    {"id":"architecture_program","points":20,"question":"Does the architecture resolve program, residents, visitors, circulation and convergence as a coherent whole?"},
+    {"id":"plaza_context","points":20,"question":"Does the proposal redesign the full plaza, respect Cerdà/Eixample scale, and preserve Sagrada Família visual primacy?"},
+    {"id":"gaudi_logic","points":20,"question":"Are Gaudí's structural/logical principles used to solve real problems rather than copied cosmetically?"},
+    {"id":"ai_coherence","points":20,"question":"Is the AI workflow explicit, controlled and spatially coherent across plans, sections and 3D?"},
+    {"id":"passive_environment","points":10,"question":"Does the design use credible passive ventilation, solar/thermal control and acoustic buffering?"},
+    {"id":"visual_communication","points":10,"question":"Can the jury understand the thesis, architecture, evidence and workflow quickly from the A1 board?"}
+  ]
+}
