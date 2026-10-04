@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "created_utc": "2026-10-04T10:22:00Z",
+  "policy": "competition-issued > Barcelona municipal > ICGC > OSM/CARTO cross-check",
+  "sources": [
+    {
+      "id": "BCN-TOPO-1K",
+      "authority": "Ajuntament de Barcelona / Open Data BCN",
+      "title": "Base map topographic of the city of Barcelona",
+      "package_api": "https://opendata-ajuntament.barcelona.cat/data/api/3/action/package_show?id=mapa-base-topografic",
+      "resource_name": "Topografic_1-1000.gpkg",
+      "direct_download": "https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download",
+      "reported_size_bytes": 652088394,
+      "license": "CC BY 4.0",
+      "status": "DIRECT_URL_IDENTIFIED",
+      "required_for": [
+        "levels",
+        "curbs",
+        "street geometry",
+        "urban furniture",
+        "authoritative horizontal/vertical cross-check"
+      ],
+      "checks_pending": [
+        "download checksum",
+        "layer inventory",
+        "CRS confirmation",
+        "crop to competition context"
+      ]
+    },
+    {
+      "id": "BCN-3D-SF",
+      "authority": "Ajuntament de Barcelona / Barcelona Dades / CartoBCN",
+      "title": "3D building model — DWG 3D (la Sagrada Família)",
+      "portal": "https://portaldades.ajuntament.barcelona.cat/mapes/146",
+      "license": "CC BY 4.0",
+      "status": "OFFICIAL_PRODUCT_CONFIRMED_DIRECT_FILE_URL_PENDING",
+      "required_for": [
+        "authoritative context heights",
+        "Sagrada/context massing",
+        "view-volume tests",
+        "shadow studies"
+      ],
+      "checks_pending": [
+        "recover direct download endpoint",
+        "archive checksum",
+        "convert DWG to open intermediate",
+        "validate vertical datum"
+      ]
+    },
+    {
+      "id": "OSM-SF-PARK",
+      "authority": "OpenStreetMap contributors",
+      "title": "Plaça de la Sagrada Família + basilica outline",
+      "license": "ODbL",
+      "status": "SECONDARY_CROSSCHECK_ACTIVE",
+      "use": "cross-check only after municipal sources are ingested"
+    },
+    {
+      "id": "CARTO-BUILDINGS",
+      "authority": "public Barcelona footprint dataset via CARTO",
+      "title": "Barcelona building-footprint context",
+      "status": "SECONDARY_CROSSCHECK_ACTIVE",
+      "use": "temporary context only; superseded by municipal data"
+    }
+  ]
+}
