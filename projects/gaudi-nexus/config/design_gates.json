@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "gates": [
+    {"id":"G0_BRIEF_LOCK","pass_if":["all mandatory requirements traced to a source","submission/anonymity/IP uncertainties logged"]},
+    {"id":"G1_SITE_TRUTH","pass_if":["project CRS fixed","competition block boundary verified","true north verified","Sagrada view corridors encoded","baseline solar study reproducible"]},
+    {"id":"G2_CONCEPT_DIVERGENCE","pass_if":["at least 5 materially different concepts","each resolves program/structure/climate/urban flow","no concept chosen from imagery alone"]},
+    {"id":"G3_CONCEPT_SELECTION","pass_if":["rubric review completed","fatal flaws closed","winner beats runner-up on architectural coherence, not render appeal"]},
+    {"id":"G4_MODEL_COHERENCE","pass_if":["plan section elevations and renders derive from same model","program area within brief","structure and circulation defensible"]},
+    {"id":"G5_VISUAL_AUTHORITY","pass_if":["hero renders pass material/light/camera QA","all diagrams cause→effect","no unsourced simulation claims"]},
+    {"id":"G6_SUBMISSION","pass_if":["A1 legible at 3 distances","anonymous","file format/size validated","source/provenance audit clean","submission completed with buffer"]}
+  ]
+}
