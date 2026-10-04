@@ -269,6 +269,54 @@
       "authority": "primary_3d_design_development",
       "competition_use": false,
       "notes": "Interactive Three.js bay uses the same 5 m / 10 m / 9 m clear-span design contract."
+    },
+    {
+      "id": "SOLAR_FIN_STUDY_001",
+      "path": "external-artifact:gaudi_solar_fin_study_v0_1.png",
+      "status": "PASS_GEOMETRIC_SOLAR_CONTROL_PROXY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "SE façade vertical-fin proxy selects a provisional fin geometry/rotation; not annual energy simulation."
+    },
+    {
+      "id": "STRUCTURAL_THRUST_PROXY_001",
+      "path": "external-artifact:gaudi_structural_thrust_proxy_v0_1.png",
+      "status": "PASS_STRUCTURAL_SENSITIVITY_PROXY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Parabolic funicular reaction sensitivity for 9 m span / 1.35 m rise / 5 m bay under explicit assumed roof pressures; not certification."
+    },
+    {
+      "id": "ACOUSTIC_BAY_PROXY_001",
+      "path": "external-artifact:gaudi_acoustic_bay_proxy_v0_1.png",
+      "status": "PASS_ACOUSTIC_CONCEPT_SCREEN",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Sabine-based absorption-area proxy for the 5 m bay; exact materials and RT target validation pending."
+    },
+    {
+      "id": "RAINWATER_STRESS_001",
+      "path": "external-artifact:gaudi_rainwater_stress_v0_1.png",
+      "status": "PASS_RAIN_STRESS_ENVELOPE",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Runoff stress envelope for one bay and full bar; final sizing awaits official current rainfall design intensity."
+    },
+    {
+      "id": "A4_THRESHOLD_STALL_001",
+      "path": "external-artifact:gaudi_threshold_stall_01_a4_concept.png",
+      "status": "PASS_A4_CONCEPT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Optional design-prize candidate converts from food stall to secured reset state to evening civic bench while preserving accessible counter and plug-in service chassis."
+    },
+    {
+      "id": "A4_THRESHOLD_STALL_DETAIL_001",
+      "path": "external-artifact:gaudi_threshold_stall_01_detail.png",
+      "status": "PASS_DIMENSIONED_OBJECT_CONCEPT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "3.0 × 2.4 m module with 0.90 m main counter, 0.76 m accessible counter section, storage, service rail and fold-down bench."
     }
   ],
   "required_for_G1": [
