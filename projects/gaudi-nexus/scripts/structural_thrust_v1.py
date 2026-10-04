@@ -7,10 +7,10 @@ ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'output'/'final10'
 OUT.mkdir(parents=True, exist_ok=True)
 
-L=9.0
+L=9
 rise=1.35
-bay=5.0
-pressures=[1.0,1.5,2.0,2.5,3.0]  # kPa = kN/m2 sensitivity cases only
+bay=5
+pressures=[1,1.5,2,2.5,3]  # kPa = kN/m2 sensitivity cases only
 rows=[]
 for p in pressures:
     w=p*bay
