@@ -1,0 +1,119 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gaudí Nexus — Primary Bay V0.2</title>
+<style>
+html,body{margin:0;height:100%;background:#e9e8e3;font-family:Inter,system-ui,sans-serif;color:#111}
+#app{position:relative;height:100%;overflow:hidden}
+#hud{position:absolute;left:14px;top:14px;z-index:5;background:rgba(255,255,255,.92);border:1px solid #aaa;padding:12px;max-width:360px}
+h1{font-size:16px;margin:0 0 5px} p{font-size:12px;line-height:1.35;margin:4px 0}
+#controls{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+button{border:1px solid #777;background:#fff;border-radius:6px;padding:7px 9px;cursor:pointer}
+</style>
+<div id="app">
+  <div id="hud">
+    <h1>Primary 5 m Bay V0.2</h1>
+    <p>9 m clear compression span inside a 10 m envelope. 5 m repeat. Structure, rain, solar control, lighting, acoustics, MEP and market kit are modeled as separate layers.</p>
+    <p><strong>Design-development geometry, not structural certification.</strong></p>
+    <div id="controls">
+      <button data-v="human">Human</button>
+      <button data-v="section">Section</button>
+      <button data-v="axon">Axon</button>
+      <button id="explode">Explode</button>
+      <button id="shade">Shade fins</button>
+    </div>
+  </div>
+</div>
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js";
+import {OrbitControls} from "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/controls/OrbitControls.js";
+
+const app=document.getElementById("app");
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true;
+app.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0xe9e8e3);
+const camera=new THREE.PerspectiveCamera(40,innerWidth/innerHeight,.1,300);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;
+controls.target.set(0,0,3);
+
+scene.add(new THREE.HemisphereLight(0xffffff,0x6d6b66,2.0));
+const sun=new THREE.DirectionalLight(0xffffff,3.0);
+sun.position.set(-12,-18,25);sun.castShadow=true;scene.add(sun);
+
+const M={
+ stone:new THREE.MeshStandardMaterial({color:0xaaa398,roughness:.9}),
+ tile:new THREE.MeshStandardMaterial({color:0xc18f5c,roughness:.8}),
+ ceramic:new THREE.MeshStandardMaterial({color:0xd6ab73,roughness:.7}),
+ steel:new THREE.MeshStandardMaterial({color:0x858888,roughness:.45,metalness:.35}),
+ timber:new THREE.MeshStandardMaterial({color:0x9a744e,roughness:.75}),
+ dark:new THREE.MeshStandardMaterial({color:0x424443,roughness:.8}),
+ green:new THREE.MeshStandardMaterial({color:0x5f6956,roughness:1}),
+ paving:new THREE.MeshStandardMaterial({color:0xc9c9c4,roughness:1}),
+};
+
+const root=new THREE.Group();scene.add(root);
+const explodable=[];const fins=[];
+function box(name,sx,sy,sz,x,y,z,mat,rx=0){
+  const m=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),mat);
+  m.name=name;m.position.set(x,y,z);m.rotation.x=rx;m.castShadow=true;m.receiveShadow=true;
+  root.add(m);return m;
+}
+box("paving",5.8,11.2,.16,0,0,-.08,M.paving);
+for(const x of [-2.5,2.5]) for(const y of [-4.5,4.5]) box("pier",.38,.48,4.65,x,y,2.325,M.stone);
+for(const y of [-4.5,4.5]) box("edgeBeam",5,.55,.38,0,y,4.65,M.stone);
+
+const span=9,half=4.5,rise=1.35,eave=4.8,a=8.73,n=44;
+const zf=y=>eave+(rise-(a*Math.cosh(y/a)-a));
+const dzdy=y=>-Math.sinh(y/a);
+for(let i=0;i<n;i++){
+  const y=-half+(i+.5)*(span/n), z=zf(y)+.06, slope=Math.atan(dzdy(y));
+  const thick=Math.abs(y)>4?.15:.12;
+  const s=box("roof",5,span/n+.01,thick,0,y,z,M.tile,slope);explodable.push(s);
+}
+for(const y of [-4.72,4.72]) box("gutter",5,.18,.15,0,y,4.53,M.steel);
+const dp=new THREE.Mesh(new THREE.CylinderGeometry(.07,.07,4.45,16),M.steel);dp.position.set(-2.32,-4.78,2.22);root.add(dp);
+
+for(let i=0;i<10;i++){const x=-2.25+i*.5;const f=box("fin",.08,.55,3,x,-5,2.75,M.ceramic);fins.push(f);}
+
+box("stallBase",3,2.4,.12,-.8,-2.9,.22,M.dark);
+box("counter",3,.65,.95,-.8,-1.98,.70,M.steel);
+for(const x of [-2.2,.6]) box("stallPost",.08,.08,2.3,x,-4.02,1.4,M.steel);
+box("stallRail",3,.08,.08,-.8,-4.02,2.52,M.steel);
+box("shelf",2.6,.48,.06,-.8,-3.65,1.30,M.timber);
+box("drain",4.4,.12,.05,0,-4.22,.05,M.steel);
+box("tactile",4.8,.32,.035,0,1.2,.035,M.ceramic);
+box("bench",1.8,.48,.10,1.4,3.8,.55,M.timber);
+
+for(const y of [-1.45,1.45]) box("light",4.5,.06,.06,0,y,zf(y)-.30,M.dark);
+box("mep",4.6,.15,.12,0,0,4.15,M.steel);
+for(const y of [-2.6,2.6]) box("acoustic",4,.55,.06,0,y,zf(y)-.42,M.timber);
+
+const person=new THREE.Mesh(new THREE.CapsuleGeometry(.18,.95,4,8),M.dark);person.position.set(1.55,.2,.85);root.add(person);
+const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.18,.22,3.9,14),M.timber);trunk.position.set(3.8,4,1.95);root.add(trunk);
+const crown=new THREE.Mesh(new THREE.SphereGeometry(1.5,18,12),M.green);crown.scale.set(1.15,1,.9);crown.position.set(3.8,4,4.7);root.add(crown);
+
+let exploded=false;
+document.getElementById("explode").addEventListener("click",()=>{
+  exploded=!exploded;
+  explodable.forEach((m,i)=>m.position.z += exploded ? 2.2 : -2.2);
+});
+document.getElementById("shade").addEventListener("click",()=>fins.forEach(f=>f.visible=!f.visible));
+
+function view(v){
+ if(v==="human"){camera.position.set(9,-15,6.2);controls.target.set(0,0,2.2);}
+ if(v==="section"){camera.position.set(16,0,4.8);controls.target.set(0,0,3);}
+ if(v==="axon"){camera.position.set(12,-16,11);controls.target.set(0,0,3);}
+ controls.update();
+}
+document.querySelectorAll("[data-v]").forEach(b=>b.addEventListener("click",()=>view(b.dataset.v)));
+view("human");
+
+addEventListener("resize",()=>{renderer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();});
+renderer.setAnimationLoop(()=>{controls.update();renderer.render(scene,camera);});
+</script>
