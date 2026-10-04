@@ -61,7 +61,19 @@
       ],
       "note": "Workbench proof completed; full Eevee material/light render exceeded worker time limit and remains unapproved."
     },
-    "program_clearance_status": "PASS_DESIGN_DEVELOPMENT_CENTER_DISTANCE_AUDIT"
+    "program_clearance_status": "PASS_DESIGN_DEVELOPMENT_CENTER_DISTANCE_AUDIT",
+    "material_light_verification": {
+      "status": "EEVEE_RENDER_SUCCEEDED_PIXELS_NOT_AGENT_INSPECTED",
+      "operation_id": "gaudi-r15-eevee-small-007",
+      "resolution": [
+        320,
+        180
+      ],
+      "artifact_id": "bf473fa6951086144f14b09b45b258ca",
+      "artifact_etag": "3da3258314b42b28eebcd3d7e29aea82",
+      "render_time_seconds_approx": 127,
+      "note": "Successful Eevee render verifies the scene can render with materials/lights. The current tool bridge did not expose the returned pixels for agent visual inspection, so hero visual approval remains open."
+    }
   },
   "authoritative_context": {
     "municipal_source_id": "BCN-3D-SF",
