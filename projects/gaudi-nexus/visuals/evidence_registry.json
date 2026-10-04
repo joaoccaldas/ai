@@ -197,6 +197,46 @@
       "authority": "human_judgment_plus_derived_metrics",
       "competition_use": false,
       "notes": "Primary Living Threshold 87.2 vs C+ 84.1. Not a jury prediction."
+    },
+    {
+      "id": "HARD_BAR_PLAN_001",
+      "path": "external-artifact:gaudi_primary_hard_bar_plan_v0_1.png",
+      "status": "PASS_DIMENSIONED_CONCEPT_PLAN",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "45×10 m hard market bar with 20 stalls, 3.2 m aisle, service/support head, two stairs, lift, accessible WC and market back-of-house."
+    },
+    {
+      "id": "CIVIC_BAR_PLAN_001",
+      "path": "external-artifact:gaudi_primary_civic_bar_l0_v0_1.png",
+      "status": "PASS_DIMENSIONED_CONCEPT_PLAN",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "45×10 m civic bar ground-floor concept with community, interpretation, support, two stairs, lift and accessible WC."
+    },
+    {
+      "id": "CTE_EGRESS_002",
+      "path": "external-artifact:gaudi_cte_egress_screen_v0_2.png",
+      "status": "PASS_CONCEPT_CODE_SCREEN_ONLY",
+      "authority": "primary_code_plus_derived",
+      "competition_use": false,
+      "notes": "Corrected current-CTE concept screen. Conservative floor occupancies 160/231/291/300; not final regulatory certification."
+    },
+    {
+      "id": "STRUCTURAL_BAY_001",
+      "path": "external-artifact:gaudi_primary_structural_bay_v0_1.png",
+      "status": "PASS_STRUCTURAL_HYPOTHESIS",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "10 m span, 5 m bay, ~1.4 m catenary-informed roof rise; load-path concept only, engineering pending."
+    },
+    {
+      "id": "PRIMARY_HUMAN_SECTION_002",
+      "path": "external-artifact:gaudi_primary_human_section_v0_2.png",
+      "status": "PASS_DESIGN_DEVELOPMENT_SECTION",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Human-scale material/spatial section of hard edge, civic edge and unprogrammed middle; still not a competition render."
     }
   ],
   "required_for_G1": [
