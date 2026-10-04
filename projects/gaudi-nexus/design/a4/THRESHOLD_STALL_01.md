@@ -53,3 +53,15 @@ This separation lets trader mix, technology and public use change without rebuil
 - exact lighting;
 - physical material test;
 - final A4 competition composition.
+
+
+## Final A4 gate
+The optional board is approved only when:
+- the floor service connection is dimensioned and buildable;
+- wash-down, drainage and hygiene sequence are explicit;
+- accessible approach, knee clearance and counter use are checked;
+- market -> reset -> civic transformation is shown in one reading sequence;
+- material choices are tied to hygiene, durability, repair and touch;
+- the object derives from the same 5 m bay/service logic as the main project;
+- no decorative Gaudí motif is used without functional justification;
+- final A4 JPEG/JPG is <=10 MB, anonymous and English.
