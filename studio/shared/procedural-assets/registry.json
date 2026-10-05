@@ -1,26 +1,624 @@
 {
-  "version": 1,
-  "units": "metres, Z up, origin at base centre",
-  "provenance": "All assets are generated procedurally by the scripts in procassets/. No third-party meshes, textures or scans. Rights: owned by the repository owner.",
-  "notes": "contract_id maps to projects/gaudi-nexus/scripts/asset_library_v1.py. Assets without contract_id are extras for reuse in other projects.",
-  "assets": [
-    {"id":"produce_crate","contract_id":"produce_crate","builder":"crate","params":{"w":0.6,"d":0.4,"h":0.28},"category":"market","reuse":["gaudi-nexus","studio/cafe","studio/florist"]},
-    {"id":"stall_standard","contract_id":"stall_standard","builder":"stall","params":{"w":2.7,"d":2.2,"h":2.1},"category":"market","reuse":["gaudi-nexus"]},
-    {"id":"civic_bench","contract_id":"civic_bench","builder":"bench","params":{},"category":"civic","reuse":["gaudi-nexus","studio/hall","studio/museum"]},
-    {"id":"lighting_pole","contract_id":"lighting_pole","builder":"lamp","params":{},"category":"lighting","reuse":["gaudi-nexus","studio/hall"]},
-    {"id":"fruit_orange","builder":"fruit","params":{"kind":"orange","diameter":0.075},"category":"market","reuse":["gaudi-nexus","studio/cafe","studio/florist"]},
-    {"id":"fruit_tomato","builder":"fruit","params":{"kind":"tomato","diameter":0.07},"category":"market","reuse":["gaudi-nexus","studio/cafe"]},
-    {"id":"fruit_apple","builder":"fruit","params":{"kind":"apple","diameter":0.075},"category":"market","reuse":["gaudi-nexus","studio/cafe"]},
-    {"id":"fruit_lemon","builder":"fruit","params":{"kind":"lemon","diameter":0.06},"category":"market","reuse":["gaudi-nexus","studio/cafe"]},
-    {"id":"fruit_aubergine","builder":"fruit","params":{"kind":"aubergine","diameter":0.07},"category":"market","reuse":["gaudi-nexus"]},
-    {"id":"fruit_pear","builder":"fruit","params":{"kind":"pear","diameter":0.07},"category":"market","reuse":["gaudi-nexus"]},
-    {"id":"basket_woven","builder":"basket","params":{"radius":0.19,"h":0.22},"category":"market","reuse":["gaudi-nexus","studio/cafe","studio/florist"]},
-    {"id":"bread_loaf","builder":"bread","params":{"L":0.14,"W":0.075,"H":0.055},"category":"market","reuse":["gaudi-nexus","studio/cafe"]},
-    {"id":"herb_tuft","builder":"herb","params":{},"category":"landscape","reuse":["gaudi-nexus","studio/florist","studio/cafe"]},
-    {"id":"tree_platane","builder":"tree","params":{"height":9.0,"leaves":6000},"category":"landscape","reuse":["gaudi-nexus","studio/hotel","studio/hall"]},
-    {"id":"person_walker","builder":"person","params":{"pose":"walk","h":1.72},"category":"entourage","reuse":["gaudi-nexus","studio/hall","studio/museum","studio/cafe"]},
-    {"id":"person_standing","builder":"person","params":{"pose":"stand","h":1.68},"category":"entourage","reuse":["gaudi-nexus","studio/hall","studio/museum","studio/cafe"]},
-    {"id":"person_child","builder":"person","params":{"pose":"walk","h":1.05,"child":true},"category":"entourage","reuse":["gaudi-nexus","studio/hall"]},
-    {"id":"cafe_set","builder":"cafe_set","params":{},"category":"furniture","reuse":["gaudi-nexus","studio/cafe","studio/hotel"]}
-  ]
+ "version": 1,
+ "units": "metres, Z up, origin at base centre",
+ "provenance": "All assets are generated procedurally by the scripts in procassets/. No third-party meshes, textures or scans. Rights: owned by the repository owner.",
+ "notes": "contract_id maps to projects/gaudi-nexus/scripts/asset_library_v1.py. Assets without contract_id are extras for reuse in other projects.",
+ "assets": [
+  {
+   "id": "produce_crate",
+   "contract_id": "produce_crate",
+   "builder": "crate",
+   "params": {
+    "w": 0.6,
+    "d": 0.4,
+    "h": 0.28
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe",
+    "studio/florist"
+   ]
+  },
+  {
+   "id": "stall_standard",
+   "contract_id": "stall_standard",
+   "builder": "stall",
+   "params": {
+    "w": 2.7,
+    "d": 2.2,
+    "h": 2.1
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus"
+   ]
+  },
+  {
+   "id": "civic_bench",
+   "contract_id": "civic_bench",
+   "builder": "bench",
+   "params": {},
+   "category": "civic",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "studio/museum"
+   ]
+  },
+  {
+   "id": "lighting_pole",
+   "contract_id": "lighting_pole",
+   "builder": "lamp",
+   "params": {},
+   "category": "lighting",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall"
+   ]
+  },
+  {
+   "id": "fruit_orange",
+   "builder": "fruit",
+   "params": {
+    "kind": "orange",
+    "diameter": 0.075
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe",
+    "studio/florist"
+   ]
+  },
+  {
+   "id": "fruit_tomato",
+   "builder": "fruit",
+   "params": {
+    "kind": "tomato",
+    "diameter": 0.07
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "fruit_apple",
+   "builder": "fruit",
+   "params": {
+    "kind": "apple",
+    "diameter": 0.075
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "fruit_lemon",
+   "builder": "fruit",
+   "params": {
+    "kind": "lemon",
+    "diameter": 0.06
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "fruit_aubergine",
+   "builder": "fruit",
+   "params": {
+    "kind": "aubergine",
+    "diameter": 0.07
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus"
+   ]
+  },
+  {
+   "id": "fruit_pear",
+   "builder": "fruit",
+   "params": {
+    "kind": "pear",
+    "diameter": 0.07
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus"
+   ]
+  },
+  {
+   "id": "basket_woven",
+   "builder": "basket",
+   "params": {
+    "radius": 0.19,
+    "h": 0.22
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe",
+    "studio/florist"
+   ]
+  },
+  {
+   "id": "bread_loaf",
+   "builder": "bread",
+   "params": {
+    "L": 0.14,
+    "W": 0.075,
+    "H": 0.055
+   },
+   "category": "market",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "herb_tuft",
+   "builder": "herb",
+   "params": {},
+   "category": "landscape",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/florist",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "tree_platane",
+   "builder": "tree",
+   "params": {
+    "height": 9.0,
+    "leaves": 6000
+   },
+   "category": "landscape",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hotel",
+    "studio/hall"
+   ]
+  },
+  {
+   "id": "person_walker",
+   "builder": "person",
+   "params": {
+    "pose": "walk",
+    "h": 1.72
+   },
+   "category": "entourage",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "studio/museum",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "person_standing",
+   "builder": "person",
+   "params": {
+    "pose": "stand",
+    "h": 1.68
+   },
+   "category": "entourage",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "studio/museum",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "person_child",
+   "builder": "person",
+   "params": {
+    "pose": "walk",
+    "h": 1.05,
+    "child": true
+   },
+   "category": "entourage",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall"
+   ]
+  },
+  {
+   "id": "cafe_set",
+   "builder": "cafe_set",
+   "params": {},
+   "category": "furniture",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe",
+    "studio/hotel"
+   ]
+  },
+  {
+   "id": "public_bin",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "public_bin",
+   "materials": [
+    "CastIron",
+    "Steel"
+   ],
+   "params": {},
+   "category": "public_realm",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "studio/cafe"
+   ],
+   "contract_id": "public_bin"
+  },
+  {
+   "id": "bike_rack_5",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "bike_rack_5",
+   "materials": [
+    "Steel"
+   ],
+   "params": {},
+   "category": "public_realm",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall"
+   ],
+   "contract_id": "bike_rack_5"
+  },
+  {
+   "id": "bollard",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "bollard",
+   "materials": [
+    "CastIron",
+    "Reflective"
+   ],
+   "params": {},
+   "category": "public_realm",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "studio/museum"
+   ],
+   "contract_id": "bollard"
+  },
+  {
+   "id": "drinking_fountain",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "drinking_fountain",
+   "materials": [
+    "Concrete",
+    "Steel"
+   ],
+   "params": {},
+   "category": "public_realm",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall"
+   ],
+   "contract_id": "drinking_fountain"
+  },
+  {
+   "id": "tree_grate_small",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "tree_grate_small",
+   "materials": [
+    "CastIron"
+   ],
+   "params": {},
+   "category": "landscape",
+   "reuse": [
+    "gaudi-nexus"
+   ],
+   "contract_id": "tree_grate_small"
+  },
+  {
+   "id": "low_planter",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "low_planter",
+   "materials": [
+    "Concrete",
+    "Soil",
+    "Herb"
+   ],
+   "params": {},
+   "category": "landscape",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hotel",
+    "studio/cafe"
+   ],
+   "contract_id": "low_planter"
+  },
+  {
+   "id": "community_table",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "community_table",
+   "materials": [
+    "Timber",
+    "Steel"
+   ],
+   "params": {},
+   "category": "civic",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "studio/cafe"
+   ],
+   "contract_id": "community_table"
+  },
+  {
+   "id": "queue_rail",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "queue_rail",
+   "materials": [
+    "Steel"
+   ],
+   "params": {},
+   "category": "operations",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "studio/museum"
+   ],
+   "contract_id": "queue_rail"
+  },
+  {
+   "id": "tactile_tile",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "tactile_tile",
+   "materials": [
+    "Ceramic"
+   ],
+   "params": {},
+   "category": "accessibility",
+   "reuse": [
+    "gaudi-nexus"
+   ],
+   "contract_id": "tactile_tile"
+  },
+  {
+   "id": "floor_drain_channel",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "floor_drain_channel",
+   "materials": [
+    "Steel",
+    "DarkChannel"
+   ],
+   "params": {},
+   "category": "service",
+   "reuse": [
+    "gaudi-nexus"
+   ],
+   "contract_id": "floor_drain_channel"
+  },
+  {
+   "id": "wayfinding_totem",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "wayfinding_totem",
+   "materials": [
+    "Concrete",
+    "Steel",
+    "SignPanel"
+   ],
+   "params": {},
+   "category": "wayfinding",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "studio/museum"
+   ],
+   "contract_id": "wayfinding_totem"
+  },
+  {
+   "id": "market_sign_blade",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "market_sign_blade",
+   "materials": [
+    "Steel",
+    "SignPanel"
+   ],
+   "params": {},
+   "category": "wayfinding",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe"
+   ],
+   "contract_id": "market_sign_blade"
+  },
+  {
+   "id": "handwash_station",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "handwash_station",
+   "materials": [
+    "Ceramic",
+    "Steel"
+   ],
+   "params": {},
+   "category": "service",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hotel"
+   ],
+   "contract_id": "handwash_station"
+  },
+  {
+   "id": "waste_sorting_station",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "waste_sorting_station",
+   "materials": [
+    "Steel",
+    "BinGreen",
+    "BinBlue",
+    "BinYellow"
+   ],
+   "params": {},
+   "category": "service",
+   "reuse": [
+    "gaudi-nexus"
+   ],
+   "contract_id": "waste_sorting_station"
+  },
+  {
+   "id": "potted_olive",
+   "builder": "gen",
+   "module": "props",
+   "func": "potted_olive",
+   "materials": [
+    "Terracotta",
+    "Bark",
+    "LeafSilver"
+   ],
+   "params": {},
+   "category": "landscape",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe",
+    "studio/florist",
+    "studio/hotel",
+    "studio/hall"
+   ]
+  },
+  {
+   "id": "vase_flowers",
+   "builder": "gen",
+   "module": "props",
+   "func": "vase_flowers",
+   "materials": [
+    "Ceramic",
+    "Stem",
+    "Petal",
+    "FlowerCentre"
+   ],
+   "params": {},
+   "category": "decor",
+   "reuse": [
+    "studio/florist",
+    "studio/hotel",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "coffee_cup",
+   "builder": "gen",
+   "module": "props",
+   "func": "coffee_cup",
+   "materials": [
+    "Porcelain"
+   ],
+   "params": {},
+   "category": "tableware",
+   "reuse": [
+    "studio/cafe",
+    "studio/hotel"
+   ]
+  },
+  {
+   "id": "wine_glass",
+   "builder": "gen",
+   "module": "props",
+   "func": "wine_glass",
+   "materials": [
+    "Glass"
+   ],
+   "params": {},
+   "category": "tableware",
+   "reuse": [
+    "studio/cafe",
+    "studio/hotel"
+   ]
+  },
+  {
+   "id": "wine_bottle",
+   "builder": "gen",
+   "module": "props",
+   "func": "wine_bottle",
+   "materials": [
+    "GlassDark",
+    "Label",
+    "Foil"
+   ],
+   "params": {},
+   "category": "tableware",
+   "reuse": [
+    "studio/cafe",
+    "studio/hotel"
+   ]
+  },
+  {
+   "id": "plate_setting",
+   "builder": "gen",
+   "module": "props",
+   "func": "plate_setting",
+   "materials": [
+    "Porcelain",
+    "Steel",
+    "Napkin"
+   ],
+   "params": {},
+   "category": "tableware",
+   "reuse": [
+    "studio/cafe",
+    "studio/hotel"
+   ]
+  },
+  {
+   "id": "pendant_lamp",
+   "builder": "gen",
+   "module": "props",
+   "func": "pendant_lamp",
+   "materials": [
+    "ShadeMetal",
+    "Cord",
+    "BulbEmissive"
+   ],
+   "params": {},
+   "category": "lighting",
+   "reuse": [
+    "studio/cafe",
+    "studio/hotel",
+    "studio/hall"
+   ]
+  },
+  {
+   "id": "bar_stool",
+   "builder": "gen",
+   "module": "props",
+   "func": "bar_stool",
+   "materials": [
+    "Timber",
+    "Steel"
+   ],
+   "params": {},
+   "category": "furniture",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/cafe",
+    "studio/hotel"
+   ]
+  }
+ ]
 }
