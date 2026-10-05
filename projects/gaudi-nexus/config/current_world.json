@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-05T03:34:00Z",
+  "updated_utc": "2026-10-05T04:18:00Z",
   "authority": {
     "repository": "joaoccaldas/ai",
     "branch": "gaudi-nexus",
@@ -75,7 +75,9 @@
       "artifact_etag": "3da3258314b42b28eebcd3d7e29aea82",
       "render_time_seconds_approx": 127,
       "note": "Successful Eevee render verifies the scene can render with materials/lights. The current tool bridge did not expose the returned pixels for agent visual inspection, so hero visual approval remains open."
-    }
+    },
+    "hero_camera_status": "REJECTED_AS_FINAL_JURY_HERO",
+    "hero_camera_rejection_reason": "Authoritative municipal comparison confirms the existing 1.56m / 32mm HeroCam does not make the Sagrada relationship sufficiently legible for the final hero role. Retain as secondary market-atmosphere camera."
   },
   "authoritative_context": {
     "municipal_source_id": "BCN-3D-SF",
@@ -103,6 +105,24 @@
       "triangles": 113640,
       "crop_radius_m": 300,
       "media_id": "eaef5ac9-3706-45dc-809e-73c0b8b4c864"
+    },
+    "status": "ALIGNED_COMPARISON_BUILT_NOT_YET_PROMOTED",
+    "alignment": {
+      "method": "municipal OSM plaza centroid -> Rev15 Plaza polygon area centroid",
+      "axis_restore": "glTF imported (x,y,z) remapped to source axes (x,z,-y)",
+      "translation_m": [
+        13.359293125672881,
+        108.63406337943947,
+        0
+      ],
+      "plan_rotation_deg": 0,
+      "reason": "Both source and scene contracts use east/north/up; Eixample rotation is embedded in geometry."
+    },
+    "rev17_comparison": {
+      "blend_sha256": "3de0f2062cd2a465a0322cfa1828d3b16b2267c6ffc31dfee22fcc51b5c47bcf",
+      "report_sha256": "0d43c9a84b1993ef40bf4103f26d25b44b30148dcfcbddabe5277da16ff663e8",
+      "artifact_run_id": 37262644884,
+      "note": "Rev17 keeps proxy and municipal context side-by-side; municipal context is not yet promoted."
     }
   },
   "anti_duplication_rules": [
