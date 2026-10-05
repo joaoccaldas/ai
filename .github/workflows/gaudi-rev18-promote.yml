@@ -1,0 +1,93 @@
+name: Gaudi Rev18 Municipal Context Candidate
+
+on:
+  push:
+    branches: [gaudi-nexus-rev16-build-tmp]
+    paths:
+      - '.github/workflows/gaudi-rev18-promote.yml'
+  workflow_dispatch:
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Blender 5.2
+        run: |
+          curl -fsSL 'https://download.blender.org/release/Blender5.2/blender-5.2.0-linux-x64.tar.xz' -o blender.tar.xz
+          tar -xf blender.tar.xz
+          echo "$PWD/blender-5.2.0-linux-x64" >> "$GITHUB_PATH"
+
+      - name: Download verified Rev17 aligned artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: gaudi-rev16-comparison
+          path: rev17
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37263171322
+
+      - name: Promote municipal building context non-destructively
+        run: |
+          cat > promote_rev18.py <<'PY'
+          import bpy, json, hashlib
+
+          scene=bpy.context.scene
+          proxy=bpy.data.collections.get('CONTEXT')
+          municipal=bpy.data.collections.get('00_SITE_MUNICIPAL_IMPORTED')
+          if municipal is None:
+              raise RuntimeError('municipal collection missing')
+          if proxy:
+              proxy.hide_render=True
+              proxy.hide_viewport=True
+              proxy['lifecycle']='RETIRED_PROXY_HIDDEN_RETAINED_FOR_ROLLBACK'
+          municipal.hide_render=False
+          municipal.hide_viewport=False
+          municipal['lifecycle']='ACTIVE_AUTHORITATIVE_BUILDING_CONTEXT'
+          municipal['authority']='Ajuntament de Barcelona Barri 06 3D building model'
+
+          f3=bpy.data.objects.get('HERO_F3')
+          if f3:
+              scene.camera=f3
+
+          scene['gaudi_revision_candidate']=18
+          scene['building_context_status']='MUNICIPAL_ACTIVE_PROXY_RETIRED_HIDDEN'
+          scene['site_truth_scope']='authoritative municipal building context; topography/trees/furniture microcontext pending'
+          scene['hero_geometry_candidate']='HERO_F3'
+
+          bpy.ops.wm.save_as_mainfile(filepath='rev18_municipal_context.blend')
+
+          def sha(path):
+              h=hashlib.sha256()
+              with open(path,'rb') as f:
+                  for c in iter(lambda:f.read(1024*1024),b''):
+                      h.update(c)
+              return h.hexdigest()
+
+          report={
+            'status':'REV18_MUNICIPAL_BUILDING_CONTEXT_CANDIDATE',
+            'objects':len(bpy.data.objects),
+            'municipal_active':not municipal.hide_render,
+            'proxy_hidden':bool(proxy and proxy.hide_render and proxy.hide_viewport),
+            'proxy_deleted':False,
+            'active_camera':scene.camera.name if scene.camera else None,
+            'source_rev17_blend_sha256':'3de0f2062cd2a465a0322cfa1828d3b16b2267c6ffc31dfee22fcc51b5c47bcf',
+            'municipal_glb_sha256':'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c',
+            'remaining_site_truth':['official topographic levels/curbs','authoritative trees/furniture','municipal-height shadow evidence']
+          }
+          report['blend_sha256']=sha('rev18_municipal_context.blend')
+          with open('rev18_report.json','w') as f:
+              json.dump(report,f,indent=2)
+          print(json.dumps(report,indent=2))
+          PY
+          blender --background rev17/rev17_aligned.blend --python promote_rev18.py
+          sha256sum rev18_municipal_context.blend rev18_report.json > rev18_sha256.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-rev18-municipal-context
+          path: |
+            rev18_municipal_context.blend
+            rev18_report.json
+            rev18_sha256.txt
+          retention-days: 30
