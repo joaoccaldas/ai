@@ -74,6 +74,7 @@ jobs:
           coll['alignment_translation_x_m']=13.359293125672881
           coll['alignment_translation_y_m']=108.63406337943947
           coll['alignment_anchor']='municipal OSM plaza centroid -> Rev15 Plaza polygon area centroid'
+          bpy.context.view_layer.update()
 
           pts=[]
           for o in imported:
@@ -113,6 +114,57 @@ jobs:
           bpy.context.scene['rev15_sha256']='cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494'
           bpy.context.scene['municipal_glb_sha256']='f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c'
 
+          # Diagnostic evidence renders before save.
+          scene=bpy.context.scene
+          scene.render.engine='BLENDER_WORKBENCH'
+          scene.display.shading.light='STUDIO'
+          scene.display.shading.show_shadows=True
+          scene.display.shading.show_cavity=True
+          scene.render.image_settings.file_format='PNG'
+
+          proxy_coll=bpy.data.collections.get('CONTEXT')
+          municipal_coll=coll
+
+          def set_hidden(collection, hidden):
+              if collection:
+                  collection.hide_render=hidden
+
+          # Top-down municipal context with old proxy context hidden.
+          diag=bpy.data.cameras.get('DIAG_TOP') or bpy.data.cameras.new('DIAG_TOP')
+          diag_obj=bpy.data.objects.get('DIAG_TOP') or bpy.data.objects.new('DIAG_TOP',diag)
+          if not diag_obj.users_collection:
+              scene.collection.objects.link(diag_obj)
+          diag.type='ORTHO'; diag.ortho_scale=650
+          diag_obj.location=(30,110,500)
+          diag_obj.rotation_euler=(0,0,0)
+          scene.camera=diag_obj
+          scene.render.resolution_x=900; scene.render.resolution_y=900; scene.render.resolution_percentage=100
+
+          set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
+          scene.render.filepath='top_municipal.png'
+          bpy.ops.render.render(write_still=True)
+
+          set_hidden(proxy_coll,False); set_hidden(municipal_coll,True)
+          scene.render.filepath='top_proxy.png'
+          bpy.ops.render.render(write_still=True)
+
+          # Existing hero camera with authoritative municipal vs proxy context.
+          hero=bpy.data.objects.get('HeroCam')
+          scene.camera=hero
+          scene.render.resolution_x=960; scene.render.resolution_y=540
+
+          set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
+          scene.render.filepath='hero_municipal.png'
+          bpy.ops.render.render(write_still=True)
+
+          set_hidden(proxy_coll,False); set_hidden(municipal_coll,True)
+          scene.render.filepath='hero_proxy.png'
+          bpy.ops.render.render(write_still=True)
+
+          # Return to non-destructive comparison state: both available.
+          set_hidden(proxy_coll,False); set_hidden(municipal_coll,False)
+          scene.camera=hero
+
           bpy.ops.wm.save_as_mainfile(filepath='rev17_aligned.blend')
 
           report={
@@ -141,4 +193,8 @@ jobs:
             rev17_aligned.blend
             rev17_report.json
             rev17_sha256.txt
+            top_municipal.png
+            top_proxy.png
+            hero_municipal.png
+            hero_proxy.png
           retention-days: 30
