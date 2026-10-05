@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "cameras": [
     {
       "id": "A_OVERVIEW_001",
@@ -53,10 +53,49 @@
         "no generative spatial invention"
       ],
       "competition_use": false,
-      "status": "REV14_CANDIDATE_NOT_APPROVED",
+      "status": "REJECTED_AS_FINAL_RETAIN_SECONDARY_MARKET_VIEW",
       "lens_mm": 32,
       "source_revision": 14,
       "higgsfield_scene": "https://higgsfield.ai/3d-jutsu/6bfa2d88-eef7-4583-9d82-08218b0bf4e4"
+    },
+    {
+      "id": "A_HERO_MUNICIPAL_F3",
+      "purpose": "new final-hero geometry candidate with authoritative municipal Sagrada",
+      "renderer": "Blender Workbench geometry proof; final target Blender Eevee/Cycles",
+      "eye_height_m": 1.56,
+      "lens_mm": 32,
+      "position": [
+        -15,
+        42,
+        1.56
+      ],
+      "rotation_euler": [
+        1.793622,
+        0,
+        -1.086838
+      ],
+      "target": [
+        96.1,
+        100.4,
+        30
+      ],
+      "source_scene": "Rev17 aligned municipal comparison",
+      "source_context": "Barcelona municipal Barri 06 3D model",
+      "status": "SELECTED_GEOMETRY_CANDIDATE_NOT_FINAL_VISUAL",
+      "competition_use": false,
+      "strengths": [
+        "authoritative Sagrada clearly legible",
+        "Living Threshold ceramic/structural edge frames left side",
+        "plaza life remains foreground/midground",
+        "human-eye perspective preserved",
+        "no architectural opening required"
+      ],
+      "next_gate": [
+        "photoreal material/light render",
+        "foreground choreography refinement",
+        "blind hero scoring >=9/10",
+        "truth-consistency >=9/10"
+      ]
     }
   ]
 }

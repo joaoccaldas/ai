@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-05T04:18:00Z",
+  "updated_utc": "2026-10-05T04:25:00Z",
   "definition_of_100": "No known competition requirement gap, no unresolved source-of-truth conflict, no unverified competition-facing claim, no broken deliverable, and all final-release gates green.",
   "official_jury_points": {
     "architecture_program": 20,
@@ -139,7 +139,7 @@
       "id": 7,
       "name": "Hero frame >=9/10",
       "weight_pct": 12,
-      "status": "CURRENT_HERO_REJECTED_CAMERA_SEARCH_ACTIVE",
+      "status": "F3_GEOMETRY_SELECTED_PHOTOREAL_GATE_PENDING",
       "why": "The hero must compress the thesis into an immediate jury read.",
       "done_when": [
         "same canonical scene as plan/section",
@@ -155,9 +155,10 @@
         "config/current_world.json",
         "Rev 15 Eevee 320x180 render operation gaudi-r15-eevee-small-007 succeeded; artifact bf473fa6951086144f14b09b45b258ca",
         "Municipal cluster weighted center projects to HeroCam screen (0.542, 0.525), depth ~181.4 m; no full camera redesign required.",
-        "Rev17 proxy/municipal HeroCam comparison renders show inadequate cathedral legibility."
+        "Rev17 proxy/municipal HeroCam comparison renders show inadequate cathedral legibility.",
+        "HERO_F3 Workbench: (-15,42,1.56), 32mm, target (96.1,100.4,30), authoritative municipal context."
       ],
-      "blocker": "Select and validate a new human-eye camera from unobstructed plaza sightline search, then rerun 9+/10 visual gate."
+      "blocker": "Photoreal Eevee/Cycles render, choreography/material pass, and >=9/10 blind hero score still required."
     },
     {
       "id": 8,
