@@ -72,10 +72,10 @@ jobs:
           # OSM plaza centroid onto the Rev15 Plaza polygon centroid.
           import math
           for o in imported:
-              o.rotation_euler[0] = -math.pi/2
+              o.rotation_euler[0] -= math.pi/2
               o.location.x += 13.359293125672881
               o.location.y += 108.63406337943947
-          coll['alignment_rotation_x_deg']=-90.0
+          coll['alignment_rotation_x_delta_deg']=-90.0\n          coll['alignment_final_rotation_x_deg']=0.0
           coll['alignment_translation_x_m']=13.359293125672881
           coll['alignment_translation_y_m']=108.63406337943947
           coll['alignment_anchor']='municipal OSM plaza centroid -> Rev15 Plaza polygon area centroid'
