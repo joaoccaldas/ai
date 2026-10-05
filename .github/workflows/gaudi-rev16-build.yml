@@ -325,6 +325,62 @@ jobs:
           with open('architectural_survey_cameras.json','w') as f:
               json.dump({'views':survey_rows},f,indent=2)
 
+
+          # Survey II: perimeter, program, structure, service, circulation and close-range blind spots.
+          scene.render.engine='BLENDER_WORKBENCH'
+          scene.display.shading.light='STUDIO'
+          scene.display.shading.show_shadows=True
+          scene.display.shading.show_cavity=True
+          scene.render.image_settings.file_format='PNG'
+          set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
+          survey2=[
+            ('S2_WEST_APPROACH',(-92.0,25.0,1.56),(-18.0,38.0,3.0),35),
+            ('S2_EAST_APPROACH',(58.0,45.0,1.56),(-8.0,42.0,3.0),35),
+            ('S2_SOUTH_APPROACH',(-20.0,-48.0,1.56),(-12.0,38.0,3.0),35),
+            ('S2_NORTH_APPROACH',(18.0,102.0,1.56),(-10.0,43.0,3.0),35),
+            ('S2_SW_CORNER',(-72.0,-22.0,1.56),(-16.0,37.0,3.0),30),
+            ('S2_SE_CORNER',(48.0,-18.0,1.56),(-8.0,39.0,3.0),30),
+            ('S2_NW_CORNER',(-62.0,88.0,1.56),(-15.0,43.0,3.0),30),
+            ('S2_NE_CORNER',(58.0,92.0,1.56),(-8.0,45.0,3.0),30),
+            ('S2_MARKET_END_SOUTH',(-46.0,15.0,1.56),(-24.0,35.0,2.0),26),
+            ('S2_MARKET_END_NORTH',(-8.0,66.0,1.56),(-27.0,42.0,2.0),26),
+            ('S2_CIVIC_END_WEST',(-42.0,50.0,1.56),(-8.0,51.0,2.0),26),
+            ('S2_CIVIC_END_EAST',(22.0,58.0,1.56),(-9.0,49.0,2.0),26),
+            ('S2_KITCHEN_ZONE',(-2.0,47.0,1.56),(3.0,55.0,1.6),24),
+            ('S2_ADMIN_ZONE',(-28.0,40.0,1.56),(-24.0,49.0,1.5),24),
+            ('S2_COMMUNITY_TABLE',(-18.0,35.0,1.56),(-9.0,46.0,1.5),24),
+            ('S2_MARKET_STALL_CLOSE',(-38.0,30.0,1.56),(-29.0,38.0,1.5),24),
+            ('S2_MARKET_AISLE',(-31.0,28.0,1.56),(-20.0,45.0,1.7),24),
+            ('S2_CIVIC_PASSAGE',(-8.0,43.0,1.56),(-1.0,55.0,1.8),24),
+            ('S2_ROOF_LOW',(-28.0,25.0,9.0),(-12.0,43.0,3.5),28),
+            ('S2_ROOF_HIGH',(-42.0,20.0,28.0),(-8.0,44.0,2.0),38),
+            ('S2_STRUCTURE_UNDERSIDE',(-24.0,40.0,1.2),(-12.0,47.0,6.0),20),
+            ('S2_STRUCTURE_DIAGONAL',(-52.0,54.0,4.5),(-10.0,43.0,4.0),32),
+            ('S2_SERVICE_EDGE',(-34.0,56.0,1.56),(-12.0,52.0,2.0),28),
+            ('S2_PLAZA_SAGRADA_WIDE',(-18.0,28.0,1.56),(96.1,100.4,32.0),28),
+            ('S2_SAGRADA_REVERSE_WIDE',(92.0,100.0,8.0),(-12.0,40.0,4.0),32),
+            ('S2_BIRDSEYE_VERTICAL',(-8.0,42.0,125.0),(-8.0,42.0,0.0),50),
+            ('S2_OBLIQUE_SAGRADA_SITE',(105.0,120.0,75.0),(-5.0,42.0,5.0),48),
+            ('S2_OBLIQUE_CITY_SITE',(-130.0,-90.0,70.0),(-5.0,42.0,5.0),48),
+          ]
+          survey2_rows=[]
+          scene.render.resolution_x=800; scene.render.resolution_y=450
+          for cid,pos,tgt,lens in survey2:
+              data=bpy.data.cameras.get(cid) or bpy.data.cameras.new(cid)
+              cam=bpy.data.objects.get(cid) or bpy.data.objects.new(cid,data)
+              if not cam.users_collection:
+                  scene.collection.objects.link(cam)
+              data.lens=lens
+              cam.location=pos
+              point_camera(cam,tgt)
+              scene.camera=cam
+              scene.render.filepath='//'+cid.lower()+'.png'
+              bpy.ops.render.render(write_still=True)
+              survey2_rows.append({'id':cid,'position':list(pos),'target':list(tgt),'lens_mm':lens,
+                                   'rotation_euler':[round(float(x),6) for x in cam.rotation_euler]})
+          with open('architectural_survey_ii_cameras.json','w') as f:
+              json.dump({'views':survey2_rows},f,indent=2)
+
           # Eevee proof of the selected F3 geometry candidate.
           scene.render.engine='BLENDER_EEVEE'
           scene.render.resolution_x=960; scene.render.resolution_y=540
@@ -405,4 +461,33 @@ jobs:
             survey_sagrada_back_to_project.png
             survey_wide_context.png
             architectural_survey_cameras.json
+            s2_west_approach.png
+            s2_east_approach.png
+            s2_south_approach.png
+            s2_north_approach.png
+            s2_sw_corner.png
+            s2_se_corner.png
+            s2_nw_corner.png
+            s2_ne_corner.png
+            s2_market_end_south.png
+            s2_market_end_north.png
+            s2_civic_end_west.png
+            s2_civic_end_east.png
+            s2_kitchen_zone.png
+            s2_admin_zone.png
+            s2_community_table.png
+            s2_market_stall_close.png
+            s2_market_aisle.png
+            s2_civic_passage.png
+            s2_roof_low.png
+            s2_roof_high.png
+            s2_structure_underside.png
+            s2_structure_diagonal.png
+            s2_service_edge.png
+            s2_plaza_sagrada_wide.png
+            s2_sagrada_reverse_wide.png
+            s2_birdseye_vertical.png
+            s2_oblique_sagrada_site.png
+            s2_oblique_city_site.png
+            architectural_survey_ii_cameras.json
           retention-days: 30
