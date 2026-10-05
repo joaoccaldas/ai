@@ -181,6 +181,45 @@ jobs:
           scene.render.filepath='//hero_proxy.png'
           bpy.ops.render.render(write_still=True)
 
+
+          # Human-eye camera search against authoritative municipal context.
+          from mathutils import Vector
+          def point_camera(cam_obj, target):
+              direction=Vector(target)-cam_obj.location
+              cam_obj.rotation_euler=direction.to_track_quat('-Z','Y').to_euler()
+
+          target=(101.7,97.4,32.0)
+          candidates=[
+              ('VIEWBAY_A',(-5.351,54.417,1.56)),
+              ('VIEWBAY_B',(-12.0,50.0,1.56)),
+              ('COMMUNITY_C',(-20.0,47.0,1.56)),
+              ('THRESHOLD_D',(-30.0,38.0,1.56)),
+              ('MARKET_EDGE_E',(-40.0,28.0,1.56)),
+          ]
+          camera_rows=[]
+          set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
+          scene.render.resolution_x=720; scene.render.resolution_y=405
+          for cid,pos in candidates:
+              data=bpy.data.cameras.get('SEARCH_'+cid) or bpy.data.cameras.new('SEARCH_'+cid)
+              cam=bpy.data.objects.get('SEARCH_'+cid) or bpy.data.objects.new('SEARCH_'+cid,data)
+              if not cam.users_collection:
+                  scene.collection.objects.link(cam)
+              data.lens=32
+              cam.location=pos
+              point_camera(cam,target)
+              scene.camera=cam
+              scene.render.filepath='//camera_'+cid.lower()+'.png'
+              bpy.ops.render.render(write_still=True)
+              camera_rows.append({
+                  'id':cid,
+                  'position':[round(float(x),3) for x in cam.location],
+                  'rotation_euler':[round(float(x),6) for x in cam.rotation_euler],
+                  'lens_mm':32,
+                  'target':list(target)
+              })
+          with open('camera_search.json','w') as f:
+              json.dump({'target':list(target),'candidates':camera_rows},f,indent=2)
+
           # Return to non-destructive comparison state: both available.
           set_hidden(proxy_coll,False); set_hidden(municipal_coll,False)
           scene.camera=hero
@@ -218,4 +257,10 @@ jobs:
             top_proxy.png
             hero_municipal.png
             hero_proxy.png
+            camera_viewbay_a.png
+            camera_viewbay_b.png
+            camera_community_c.png
+            camera_threshold_d.png
+            camera_market_edge_e.png
+            camera_search.json
           retention-days: 30
