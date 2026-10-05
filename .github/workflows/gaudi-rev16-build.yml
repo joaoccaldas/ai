@@ -1,4 +1,4 @@
-name: Gaudi Rev16 Comparison Build
+name: Gaudi Rev17 Aligned Comparison Build
 
 on:
   push:
@@ -26,9 +26,9 @@ jobs:
           echo 'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494  rev15.blend' | sha256sum -c -
           echo 'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c  municipal.glb' | sha256sum -c -
 
-      - name: Build Rev16 comparison scene
+      - name: Build Rev17 aligned comparison scene
         run: |
-          cat > build_rev16.py <<'PY'
+          cat > build_rev17.py <<'PY'
           import bpy, json, hashlib
           from mathutils import Vector
 
@@ -61,7 +61,19 @@ jobs:
           coll['local_origin_e']=430901.597832363
           coll['local_origin_n']=4583892.983829999
           coll['local_origin_z']=33.0
-          coll['status']='IMPORTED_UNALIGNED_COMPARISON_ONLY'
+          coll['status']='IMPORTED_ALIGNED_TO_PLAZA_CENTROID_COMPARISON_ONLY'
+          # glTF import maps source Z-up into Blender as X=X, Y=-Z, Z=Y.
+          # Restore municipal EPSG:25831 axes, then translate the municipal
+          # OSM plaza centroid onto the Rev15 Plaza polygon centroid.
+          import math
+          for o in imported:
+              o.rotation_euler[0] = -math.pi/2
+              o.location.x += 13.359293125672881
+              o.location.y += 108.63406337943947
+          coll['alignment_rotation_x_deg']=-90.0
+          coll['alignment_translation_x_m']=13.359293125672881
+          coll['alignment_translation_y_m']=108.63406337943947
+          coll['alignment_anchor']='municipal OSM plaza centroid -> Rev15 Plaza polygon area centroid'
 
           pts=[]
           for o in imported:
@@ -97,36 +109,36 @@ jobs:
               }
 
           bpy.context.scene['gaudi_revision_candidate']=16
-          bpy.context.scene['municipal_import_status']='UNALIGNED_COMPARISON_ONLY'
+          bpy.context.scene['municipal_import_status']='ALIGNED_BY_PLAZA_CENTROID_COMPARISON_ONLY'
           bpy.context.scene['rev15_sha256']='cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494'
           bpy.context.scene['municipal_glb_sha256']='f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c'
 
-          bpy.ops.wm.save_as_mainfile(filepath='rev16_comparison.blend')
+          bpy.ops.wm.save_as_mainfile(filepath='rev17_aligned.blend')
 
           report={
-              'status':'REV16_COMPARISON_BUILT_NOT_PROMOTED',
+              'status':'REV17_ALIGNED_COMPARISON_BUILT_NOT_PROMOTED',
               'imported_objects':len(imported),
               'total_objects':len(bpy.data.objects),
               'municipal_bbox':municipal_bbox,
               'proxy_sagrada_bbox':proxy_bbox,
               'rev15_sha256':'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494',
               'municipal_glb_sha256':'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c',
-              'note':'Municipal collection imported at its localized coordinates with no reconciliation transform. Proxy remains untouched.'
+              'note':'Municipal collection axis-restored and translated by plaza-centroid anchor. Proxy remains untouched for side-by-side reconciliation.'
           }
-          with open('rev16_report.json','w') as f:
+          with open('rev17_report.json','w') as f:
               json.dump(report,f,indent=2)
           print(json.dumps(report,indent=2))
           PY
 
           blender --background rev15.blend --python build_rev16.py
-          sha256sum rev16_comparison.blend rev16_report.json > rev16_sha256.txt
-          ls -lh rev16_comparison.blend rev16_report.json rev16_sha256.txt
+          sha256sum rev17_aligned.blend rev17_report.json > rev17_sha256.txt
+          ls -lh rev17_aligned.blend rev17_report.json rev17_sha256.txt
 
       - uses: actions/upload-artifact@v4
         with:
           name: gaudi-rev16-comparison
           path: |
-            rev16_comparison.blend
-            rev16_report.json
-            rev16_sha256.txt
+            rev17_aligned.blend
+            rev17_report.json
+            rev17_sha256.txt
           retention-days: 30
