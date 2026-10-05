@@ -171,7 +171,7 @@ jobs:
           # Existing hero camera with authoritative municipal vs proxy context.
           hero=bpy.data.objects.get('HeroCam')
           scene.camera=hero
-          scene.render.resolution_x=960; scene.render.resolution_y=540
+          scene.render.resolution_x=480; scene.render.resolution_y=270
 
           set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
           scene.render.filepath='//hero_municipal.png'
