@@ -23,7 +23,8 @@ if cl:
     rnd=mathn(nt,'ADD',mathn(nt,'MULTIPLY',oi.outputs['Random'],0.35),0.8)
     rc=nt.nodes.new('ShaderNodeCombineColor'); [nt.links.new(rnd,rc.inputs[i]) for i in range(3)]
     c1=mixrgb(nt,src,grad.outputs['Color'],1.0,'MULTIPLY'); c2=mixrgb(nt,c1,rc.outputs['Color'],1.0,'MULTIPLY')
-    nt.links.new(c2,p.inputs['Base Color'])
+    hs=nt.nodes.new('ShaderNodeHueSaturation'); hs.inputs['Saturation'].default_value=0.62; hs.inputs['Value'].default_value=1.08; nt.links.new(c2,hs.inputs['Color'])   # tame the flat saturated ochre
+    nt.links.new(hs.outputs['Color'],p.inputs['Base Color'])
 try: p.inputs['Coat Weight'].default_value=0.6; p.inputs['Coat Roughness'].default_value=0.08
 except Exception: pass
 for l in [l for l in nt.links if l.to_socket==p.inputs['Roughness']]: nt.links.remove(l)
