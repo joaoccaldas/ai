@@ -26,6 +26,13 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Build and validate the portfolio
+        run: |
+          npm ci --prefix studio/portfolio --ignore-scripts
+          npm run build --prefix studio/portfolio
+          npm run validate --prefix studio/portfolio
+          git diff --exit-code -- studio/index.html studio/mobile/index.html studio/gallery.html studio/project-catalog.js studio/projects studio/portfolio/hero.js studio/museum/museum.js
+
       - name: Validate JavaScript syntax
         run: |
           node --check studio/rooms.js
@@ -52,17 +59,17 @@ jobs:
           import json, re
 
           root = Path('studio')
-          required = [root / 'index.html', root / 'rooms.js', root / 'ROOM_SYSTEM.md', root / 'museum' / 'museum.js',
+          required = [root / 'gallery.html', root / 'rooms.js', root / 'ROOM_SYSTEM.md', root / 'museum' / 'museum.js',
                       root / 'museum' / 'assets' / 'museum.glb', root / 'museum' / 'assets' / 'museum_lightmap.jpg',
                       root / 'museum' / 'assets' / 'museum_layout.json', root / 'museum' / 'blender' / 'museum.py',
                       root / 'sokai' / 'index.html', root / 'sokai' / 'making' / 'index.html']
           missing = [str(p) for p in required if not p.is_file()]
           if missing:
               raise SystemExit('Missing required files: ' + ', '.join(missing))
-          html = (root / 'index.html').read_text(encoding='utf-8')
+          html = (root / 'gallery.html').read_text(encoding='utf-8')
           for ref in ('rooms.js', 'museum/museum.js', 'id="museum"', 'id="loader"', 'id="modal"'):
               if ref not in html:
-                  raise SystemExit(f'index.html is missing {ref}')
+                  raise SystemExit(f'gallery.html is missing {ref}')
           source = (root / 'rooms.js').read_text(encoding='utf-8')
           works = re.findall(r"slug:'([^']+)', wing:'([^']+)'", source)
           urls = re.findall(r"url:'([^']+)',\s*img:", source)
@@ -84,7 +91,7 @@ jobs:
           missing_imgs = [i for i in imgs if not (root / i).is_file()]
           if missing_pages or missing_imgs:
               raise SystemExit(f'Missing pages {missing_pages} or artwork {missing_imgs}')
-          print(f'Validated {len(slugs)} works in {len(layout["wings"])} rooms; every work has a sculpture.')
+          print(f'Validated {len(slugs)} archive works and baked placements across {len(layout["wings"])} rooms.')
 
       - name: Check file sizes
         run: |

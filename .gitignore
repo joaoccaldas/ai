@@ -1,3 +1,6 @@
 node_modules/
 **/test-artifacts/
 .DS_Store
+
+/.playwright-cli/
+/output/playwright/

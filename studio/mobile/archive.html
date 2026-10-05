@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08090a">
+<title>Caldas Studio — Concept archive</title>
+<meta name="description" content="Caldas Studio mobile portfolio: immersive websites, digital worlds, brands and experiments.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{--bg:#08090a;--ink:#f2ede3;--muted:rgba(242,237,227,.62);--faint:rgba(242,237,227,.38);--gold:#c9a86a;--line:rgba(242,237,227,.14)}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Jost,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+header{position:fixed;z-index:30;top:0;left:0;right:0;height:64px;padding:env(safe-area-inset-top,0) 16px 0;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(180deg,rgba(8,9,10,.96),rgba(8,9,10,.55),transparent);backdrop-filter:blur(10px)}
+.brand{display:inline-flex;align-items:center;min-height:44px;font-size:.72rem;letter-spacing:.22em;font-weight:500}
+.toplink{display:inline-flex;align-items:center;min-height:44px;border:1px solid var(--line);padding:.55rem .8rem;border-radius:999px;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase}
+.hero{position:relative;height:90svh;min-height:640px;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,7,.05) 22%,rgba(5,7,7,.32) 52%,rgba(5,7,7,.96) 100%),linear-gradient(90deg,rgba(5,7,7,.18),transparent 72%)}
+.hero-copy{position:absolute;z-index:2;left:18px;right:18px;bottom:34px}
+.eyebrow{font-size:.52rem;letter-spacing:.21em;text-transform:uppercase;color:var(--gold);font-weight:500}
+.hero h1{font-family:"Cormorant Garamond",serif;font-weight:300;font-size:clamp(3.9rem,18vw,5.8rem);line-height:.82;letter-spacing:-.035em;margin:.7rem 0 .55rem}
+.hero p{font-family:"Cormorant Garamond",serif;font-size:1.14rem;line-height:1.28;color:rgba(242,237,227,.8);font-style:italic;max-width:27ch;margin:0}
+.hero-cta{display:inline-flex;align-items:center;min-height:44px;margin-top:1.1rem;border-bottom:1px solid rgba(242,237,227,.5);font-size:.56rem;letter-spacing:.17em;text-transform:uppercase}
+.intro{padding:3.2rem 18px 1.8rem}
+.intro h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2.6rem,12vw,4rem);font-weight:300;line-height:.92;letter-spacing:-.025em;margin:.75rem 0 .8rem;max-width:9ch}
+.intro p{color:var(--muted);font-size:.88rem;line-height:1.6;max-width:34ch;margin:0}
+.indexbar{display:flex;justify-content:space-between;align-items:end;gap:18px;margin:1.5rem 18px .8rem}
+.indexbar h3{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:300;margin:0}
+.indexbar small{display:block;margin-top:.2rem;font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.surprise{min-height:44px;border:1px solid rgba(201,168,106,.4);border-radius:999px;padding:.65rem .85rem;background:rgba(201,168,106,.04);color:var(--gold);font-size:.5rem;letter-spacing:.13em;text-transform:uppercase;white-space:nowrap}
+.filters{position:sticky;top:64px;z-index:20;display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;padding:.7rem 18px .8rem;background:linear-gradient(180deg,rgba(8,9,10,.98),rgba(8,9,10,.92));backdrop-filter:blur(14px);border-top:1px solid rgba(242,237,227,.07);border-bottom:1px solid rgba(242,237,227,.07)}
+.filters::-webkit-scrollbar{display:none}
+.filters button{flex:0 0 auto;min-width:44px;min-height:44px;border:1px solid var(--line);border-radius:999px;padding:.65rem .8rem;color:var(--muted);background:rgba(255,255,255,.02);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}
+.filters button.on{background:var(--gold);border-color:var(--gold);color:#090807}
+.grid{display:grid;grid-template-columns:1fr;gap:28px;padding:24px 18px 0}
+.work{display:block}.work[hidden]{display:none!important}
+.work img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:10px;background:#121212;transition:box-shadow .3s ease}
+.work small{display:block;margin-top:.72rem;color:var(--accent,var(--gold));font-size:.48rem;letter-spacing:.14em;text-transform:uppercase}
+.work b{display:block;font-family:"Cormorant Garamond",serif;font-weight:400;font-size:1.85rem;line-height:1;margin:.35rem 0 .25rem}
+.work em{display:block;font-family:"Cormorant Garamond",serif;font-size:.98rem;line-height:1.3;color:var(--muted)}
+.work.flash img{box-shadow:0 0 0 2px var(--accent,var(--gold)),0 20px 50px rgba(0,0,0,.4)}
+footer{margin:4rem 18px 0;padding:1.3rem 0 calc(2rem + env(safe-area-inset-bottom,0));border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:14px;color:var(--faint);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase}
+footer a{display:inline-flex;align-items:center;min-height:44px;color:var(--gold)}
+@media(max-width:370px){.hero h1{font-size:3.5rem}.hero{min-height:590px}.intro h2{font-size:2.45rem}.indexbar{align-items:center}.indexbar h3{font-size:1.75rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.work img{transition:none}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="../index.html">CALDAS STUDIO</a><a class="toplink" href="#works">Portfolio</a></header>
+<main id="app" aria-live="polite"></main>
+<script src="../digital-works.js"></script>
+<script src="../rooms.js"></script>
+<script>
+(() => {
+  const root=document.getElementById('app');
+  const esc=v=>String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const physical=Array.isArray(window.STUDIO_ROOMS)?window.STUDIO_ROOMS:[];
+  const digital=Array.isArray(window.STUDIO_DIGITAL_WORKS)?window.STUDIO_DIGITAL_WORKS:[];
+  const all=[...digital,...physical];
+  const featured=digital.find(w=>w.featured)||digital[0]||physical[0];
+  const others=all.filter(w=>!featured||w.slug!==featured.slug);
+  const wingTitle=w=>window.STUDIO_WINGS?.[w.wing]?.title||w.room||'Other';
+  const asset=p=>/^https?:/.test(p)?p:'../'+p.replace(/^\.\//,'');
+  const href=u=>/^https?:/.test(u)?u:'../'+u.replace(/^\.\//,'');
+  const rooms=[...new Set(others.map(wingTitle).filter(Boolean))];
+  const filters=['All',...rooms].map((r,i)=>`<button type="button" class="${i===0?'on':''}" data-filter="${esc(r)}" aria-pressed="${i===0}">${esc(r)}</button>`).join('');
+  const cards=others.map((w,i)=>`<a class="work" data-room="${esc(wingTitle(w))}" href="${esc(href(w.url))}" style="--accent:${esc(w.accent||'#c9a86a')}"><img loading="lazy" src="${esc(asset(w.img))}" alt="${esc(w.n)} portfolio artwork"><small>${String(i+2).padStart(2,'0')} · ${esc(wingTitle(w))}</small><b>${esc(w.n)}</b><em>${esc(w.tag||w.note||'')}</em></a>`).join('');
+  root.innerHTML=`
+    <section class="hero">
+      <img src="${esc(asset(featured.img))}" alt="${esc(featured.n)} featured artwork">
+      <div class="hero-copy"><span class="eyebrow">Featured acquisition · ${esc(featured.acquired||'2026')}</span><h1>${esc(featured.n)}</h1><p>${esc(featured.tag||featured.note||'')}</p><a class="hero-cta" href="${esc(href(featured.url))}">Enter the work ↗</a></div>
+    </section>
+    <section class="intro"><span class="eyebrow">Caldas Studio · Portfolio</span><h2>Art, technology, places and ideas.</h2><p>Immersive websites, digital worlds, brands and experiments. Built to be entered, not just looked at.</p></section>
+    <div class="indexbar" id="works"><div><h3>Selected works</h3><small id="count">${others.length} works</small></div><button type="button" class="surprise" id="surprise">Surprise me ↗</button></div>
+    <div class="filters" aria-label="Filter works">${filters}</div>
+    <section class="grid">${cards}</section>
+    <footer><span>Caldas Studio · 2026</span><a href="mailto:hello@caldas.studio">Commission a piece ↗</a></footer>`;
+  const buttons=[...document.querySelectorAll('.filters button')], cardsEls=[...document.querySelectorAll('.work')], count=document.getElementById('count');
+  const updateCount=()=>{const n=cardsEls.filter(c=>!c.hidden).length;count.textContent=n+' work'+(n===1?'':'s')};
+  buttons.forEach(btn=>btn.addEventListener('click',()=>{buttons.forEach(b=>{const on=b===btn;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on))});const f=btn.dataset.filter;cardsEls.forEach(c=>c.hidden=f!=='All'&&c.dataset.room!==f);updateCount()}));
+  document.getElementById('surprise').addEventListener('click',()=>{const v=cardsEls.filter(c=>!c.hidden);if(!v.length)return;const p=v[Math.floor(Math.random()*v.length)];p.scrollIntoView({behavior:'smooth',block:'center'});p.classList.add('flash');setTimeout(()=>p.classList.remove('flash'),900)});
+})();
+</script>
+</body>
+</html>

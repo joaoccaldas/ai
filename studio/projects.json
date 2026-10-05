@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "owner": "João Caldas",
+  "projects": [
+    {
+      "id": "konam", "title": "Konam", "category": "3D experiences", "status": "Interactive prototype", "year": "2026",
+      "summary": "A bicycle becomes a canvas. A digital museum of speed, engineering and color.",
+      "image": "portfolio/assets/hero-poster.webp", "imageAlt": "Speedmax CFR bicycle with the Sanctuary Stained Glass procedural finish",
+      "focus": "3D art direction · asset pipelines · interaction design",
+      "question": "How can a precision machine feel like an artwork you can explore, rather than a product photograph?",
+      "approach": "Konam combines detailed bicycle models, material systems and themed museum spaces. The Sanctuary edition gives the Speedmax CFR a flowing five-color finish, while carbon, tyres and mechanical parts retain their own materials.",
+      "details": ["Named material slots keep the paint system separate from the geometry.", "A procedural shader carries the Stained Glass palette across the frame without a flat image texture.", "For this portfolio, the original 509,624-triangle bike becomes two compressed derivatives: 131,772 triangles on desktop and 44,717 on mobile."],
+      "result": "A working bike and material system, presented here as a standalone exhibit. The wider museum remains an evolving prototype.",
+      "next": "Broaden device testing, document each model’s provenance, and refine the full museum’s navigation.",
+      "stack": ["Blender", "Three.js", "glTF", "Meshopt", "GLSL"],
+      "links": [{"label": "Explore the source", "url": "https://github.com/joaoccaldas/konam"}, {"label": "Asset provenance", "url": "portfolio/assets/bike-provenance.json"}],
+      "evidence": ["https://github.com/joaoccaldas/konam/tree/a3df4271d6c321c83391f4ba402c18ca520a5cb0", "portfolio/assets/bike-provenance.json"]
+    },
+    {
+      "id": "noema", "title": "NOEMA", "category": "Research systems", "status": "Research prototype", "year": "2026",
+      "summary": "An observatory for beliefs, rituals and deep time. Every claim has a source; every unknown stays visible.",
+      "image": "portfolio/assets/noema.svg", "imageAlt": "Abstract diagram of NOEMA’s separation of observations, claims and hypotheses",
+      "focus": "Research infrastructure · data provenance · interface design",
+      "question": "How can a research interface reveal connections without turning resemblance into an unsupported conclusion?",
+      "approach": "NOEMA separates observations, claims, interpretations and hypotheses. Discovery and ingestion feed review gates; provenance and competing explanations remain part of the public research view.",
+      "details": ["Typed records distinguish evidence from interpretation.", "Source resolution and review queues sit between ingestion and approved evidence.", "The observatory offers a browser interface to geography, chronology and research context."],
+      "result": "A research system with an implemented observatory and ingestion architecture. It is a tool for investigation, with scientific conclusions subject to review.",
+      "next": "Continue source audits and human review, and make the limits of every public projection easier to inspect.",
+      "stack": ["Python", "Pydantic", "FastAPI", "JavaScript"],
+      "links": [{"label": "Open the observatory", "url": "../projects/noema/site/observatory.html"}, {"label": "Read the research contract", "url": "https://github.com/joaoccaldas/ai/tree/main/projects/noema"}],
+      "evidence": ["../projects/noema/README.md"]
+    },
+    {
+      "id": "sokai", "title": "SŌKAI", "category": "3D experiences", "status": "Interactive concept", "year": "2026",
+      "summary": "The anatomy of a katana, made tangible through light, movement and a carefully built digital object.",
+      "image": "gallery/sokai.jpg", "imageAlt": "SŌKAI katana exhibit",
+      "focus": "Object modeling · lighting · browser interaction",
+      "question": "Can an object’s construction become the experience itself?",
+      "approach": "A Blender-authored katana is rendered live in Three.js. Visitors can orbit the object, inspect parts, reveal the blade and explore its assembly. A dedicated making-of route follows the construction process.",
+      "details": ["The object can be drawn and taken apart through interactive controls.", "Part inspection brings the visitor closer to the model’s construction.", "The making-of experience connects the final exhibit to its modeling process."],
+      "result": "A functioning interactive object study and making-of experience. SŌKAI is an independent concept, rather than a commissioned product launch.",
+      "next": "Refine keyboard interaction and measure the asset budget across a wider range of phones.",
+      "stack": ["Blender", "Cycles", "Three.js", "glTF"],
+      "links": [{"label": "Explore the katana", "url": "sokai/"}, {"label": "See the making-of", "url": "sokai/making/"}],
+      "evidence": ["sokai/README.md"]
+    },
+    {
+      "id": "gaudi", "title": "Gaudí Nexus", "category": "Architecture", "status": "Concept in development", "year": "2026",
+      "summary": "An architectural investigation where site, program and evidence shape the form.",
+      "image": "portfolio/assets/gaudi.svg", "imageAlt": "Conceptual line illustration of architectural bays, labelled as a process study",
+      "focus": "Architectural visualization · brief analysis · design evaluation",
+      "question": "How can a visual concept stay accountable to its brief, site constraints and design evidence?",
+      "approach": "Gaudí Nexus pairs a structured competition brief with candidate concepts, an evidence ledger and Blender-based architectural studies. The current work investigates a Living Threshold scheme and a provisional digital world.",
+      "details": ["A structured rubric compares the concept against the design brief.", "Site context and program requirements are tracked alongside the visual work.", "Blender and browser studies support iteration before the proposal is considered resolved."],
+      "result": "An evolving architectural concept and evaluation process. The design still needs authoritative site reconciliation, structural and environmental proof, and final presentation renders.",
+      "next": "Resolve the site context and engineering evidence before developing the final competition boards.",
+      "stack": ["Blender", "Python", "Three.js", "Design rubric"],
+      "links": [{"label": "Explore the design research", "url": "https://github.com/joaoccaldas/ai/tree/gaudi-nexus/projects/gaudi-nexus"}],
+      "evidence": ["https://github.com/joaoccaldas/ai/tree/gaudi-nexus/projects/gaudi-nexus"]
+    },
+    {
+      "id": "belong", "title": "Belong", "category": "Digital worlds", "status": "Independent website concept", "year": "2026",
+      "summary": "A landscape-led website that turns a sense of place into a living, changing atmosphere.",
+      "image": "gallery/belong.jpg", "imageAlt": "Belong landscape website concept",
+      "focus": "Visual design · shader environments · web development",
+      "question": "How can a website communicate the feeling of a place before a visitor reads its story?",
+      "approach": "Belong uses an atmospheric browser landscape, day and night lighting and a scroll-led narrative to connect environment and content. The scene is part of the visual identity, rather than a separate decoration.",
+      "details": ["A real-time environment changes the mood of the page.", "Typography and scrolling place the story within the landscape.", "The project includes its own browser smoke checks."],
+      "result": "An implemented creative website concept. It is presented as an independent design study; client adoption or business impact has not been established.",
+      "next": "Strengthen the static fallback and evaluate readability and performance on lower-powered devices.",
+      "stack": ["JavaScript", "WebGL", "GLSL", "CSS"],
+      "links": [{"label": "Visit the experience", "url": "../belong/"}],
+      "evidence": ["../belong/index.html", "../belong/tests/smoke.mjs"]
+    },
+    {
+      "id": "studio-museum", "title": "Studio Museum", "category": "3D experiences", "status": "Interactive portfolio experiment", "year": "2026",
+      "summary": "A walkable collection of digital objects and speculative websites, arranged as rooms of a museum.",
+      "image": "portfolio/assets/museum.svg", "imageAlt": "Plan diagram of the Studio Museum’s central atrium and five wings",
+      "focus": "Spatial navigation · art direction · portfolio architecture",
+      "question": "What changes when a portfolio is a place you can walk through?",
+      "approach": "The original Studio puts eighteen physical exhibits into a Blender-authored museum. Rooms organize the work by theme; visitors can navigate by keyboard, touch, the map or a guided route to an exhibit.",
+      "details": ["Five wings connect to a central atrium with a featured object.", "Exhibits connect directly to their interactive websites.", "The portfolio now gives these experiments context through readable case studies before inviting visitors into the museum."],
+      "result": "A working spatial portfolio experiment, preserved alongside this curated project index. The archive includes speculative brand and website studies, rather than verified commercial commissions.",
+      "next": "Replace more generic exhibits with project-specific artifacts and add stronger labels within the 3D space.",
+      "stack": ["Blender", "Three.js", "Lightmaps", "JavaScript"],
+      "links": [{"label": "Enter the museum", "url": "gallery.html"}, {"label": "Browse the concept archive", "url": "mobile/archive.html"}],
+      "evidence": ["museum/src/main.js", "rooms.js"]
+    }
+  ]
+}

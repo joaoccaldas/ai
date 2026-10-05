@@ -32,6 +32,22 @@ jobs:
           python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/studio-server.log 2>&1 &
           sleep 2
 
+      - name: Verify portfolio interactions and failure modes
+        run: |
+          mkdir -p output/playwright
+          node <<'JS'
+          const { chromium } = require('playwright');
+          (async () => {
+            const browser = await chromium.launch({ headless: true, args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+            try {
+              const page = await browser.newPage();
+              await page.goto('http://127.0.0.1:4173/studio/');
+              const { default: verify } = await import('./studio/portfolio/browser-check.mjs');
+              await verify(page);
+            } finally { await browser.close(); }
+          })().catch(error => { console.error(error); process.exitCode = 1; });
+          JS
+
       - name: Walk the hall and capture evidence
         run: |
           node <<'JS'
@@ -44,10 +60,10 @@ jobs:
             const yawFor = a => Math.atan2(-Math.cos(a * Math.PI / 180), Math.sin(a * Math.PI / 180));
             const tw = (a, u) => [Math.cos(a * Math.PI / 180) * u, Math.sin(a * Math.PI / 180) * u];
             async function walk(name, viewport) {
-              const page = await browser.newPage({ viewport, deviceScaleFactor: 1 });
+              const page = await browser.newPage({ viewport, deviceScaleFactor: 1, isMobile: name === 'mobile', hasTouch: name === 'mobile' });
               page.on('console', m => { if (m.type() === 'error' && !m.text().includes('Failed to load resource') && !m.text().includes('pointer lock')) errors.push(`${name}: ${m.text()}`); });
               page.on('pageerror', e => errors.push(`${name}: ${e.message}`));
-              await page.goto('http://127.0.0.1:4173/studio/', { waitUntil: 'networkidle', timeout: 240000 });
+              await page.goto('http://127.0.0.1:4173/studio/gallery.html', { waitUntil: 'networkidle', timeout: 240000 });
               await page.waitForFunction(() => document.querySelector('#loader')?.classList.contains('done'), null, { timeout: 240000 });
               const title = await page.evaluate(() => document.querySelector('#intro h1')?.textContent || '');
               if (!title.includes('walk into')) throw new Error(`${name}: hero did not render`);
@@ -78,5 +94,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: studio-visual-evidence
-          path: visual-evidence
+          path: |
+            visual-evidence
+            output/playwright
           if-no-files-found: error

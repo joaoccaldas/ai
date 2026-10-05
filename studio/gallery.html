@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="icon" href="portfolio/assets/icon.svg" type="image/svg+xml">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Caldas Studio — The Museum</title>
+<meta name="description" content="Walk into Caldas Studio: a museum built in Blender and rendered live in your browser. Every sculpture is a website concept for a real kind of business — click one to enter it." />
+<meta name="theme-color" content="#07070a" />
+<meta property="og:title" content="Caldas Studio — The Museum" />
+<meta property="og:description" content="A website you can walk into. Every sculpture opens a site." />
+<meta property="og:image" content="https://joaoccaldas.github.io/ai/studio/gallery/sokai.jpg" />
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--bg:#07070a;--ink:#f2ede3;--muted:rgba(242,237,227,.62);--faint:rgba(242,237,227,.36);--gold:#c9a86a;--line:rgba(242,237,227,.15);--glass:rgba(12,11,10,.6)}
+  html,body{background:var(--bg)}
+  body{font-family:'Jost',system-ui,sans-serif;color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  body.walking{overflow:hidden}
+  a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  :focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+  #museum{position:fixed;inset:0;width:100vw;height:100vh;display:block;z-index:0;touch-action:none}
+  #grain{position:fixed;inset:-50%;z-index:1;pointer-events:none;opacity:.045;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr 6s steps(6) infinite}
+  @keyframes gr{50%{transform:translate(4%,-4%)}}
+  header{position:fixed;top:0;left:0;right:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:calc(1.2rem + env(safe-area-inset-top,0px)) 4vw 1.2rem;pointer-events:none}
+  header>*{pointer-events:auto}
+  .brand{font-size:.92rem;letter-spacing:.3em;font-weight:500;white-space:nowrap}.brand b{color:var(--muted);font-weight:300}
+  header nav{display:flex;gap:.4rem;align-items:center}
+  header nav button,header nav a{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:.6rem .95rem;border-radius:40px;border:1px solid transparent;color:var(--muted);transition:.3s;white-space:nowrap;background:rgba(12,11,10,.35);backdrop-filter:blur(8px)}
+  header nav button:hover,header nav a:hover{color:var(--ink);border-color:var(--line)}
+  header nav .pill{border-color:var(--line);color:var(--ink)}header nav .pill:hover{border-color:var(--gold);color:var(--gold)}
+  header nav kbd{font-family:inherit;font-size:.55rem;border:1px solid var(--line);border-radius:4px;padding:.05rem .3rem;margin-left:.4rem;color:var(--faint)}
+  #sound.on{color:var(--gold)}
+  /* entrance */
+  #intro{position:fixed;inset:0;z-index:20;display:flex;flex-direction:column;justify-content:center;padding:0 5vw;background:linear-gradient(90deg,rgba(7,7,10,.86),rgba(7,7,10,.5) 48%,rgba(7,7,10,.05) 80%);transition:opacity .9s}
+  #intro.off{opacity:0;pointer-events:none}
+  #intro .kick{font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:.9rem}
+  #intro .kick:before{content:"";width:34px;height:1px;background:var(--gold)}
+  #intro h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(3rem,8vw,7rem);line-height:.92;letter-spacing:-.015em;margin:1.3rem 0 1.4rem;max-width:12ch}
+  #intro h1 em{font-style:italic;color:#e9dcc0}
+  #intro p{max-width:46ch;color:var(--muted);font-weight:300;font-size:clamp(.98rem,1.35vw,1.12rem);line-height:1.7}
+  #intro .ctas{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2.1rem}
+  .btn{display:inline-flex;align-items:center;gap:.6rem;padding:1rem 1.7rem;border-radius:50px;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;font-weight:500;transition:.35s}
+  .btn.gold{background:var(--gold);color:#0c0b0a}.btn.gold:hover{background:#dcbd81;transform:translateY(-2px)}
+  .btn.ghost{border:1px solid var(--line)}.btn.ghost:hover{border-color:#7fe8ff;color:#7fe8ff}
+  .keys{margin-top:2.4rem;display:grid;grid-template-columns:repeat(4,auto);gap:1.2rem 2rem;width:max-content;max-width:100%;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+  .keys div{display:flex;flex-direction:column;gap:.5rem}.keys b{color:var(--ink);font-weight:400;letter-spacing:.1em;font-size:.72rem}
+  .keys kbd{display:inline-block;min-width:1.7rem;text-align:center;border:1px solid var(--line);border-radius:6px;padding:.25rem .4rem;margin-right:.2rem;color:var(--ink);font-family:inherit;font-size:.66rem}
+  #loader{position:fixed;inset:0;z-index:90;background:var(--bg);display:grid;place-items:center;transition:opacity 1.2s,visibility 1.2s}
+  #loader.done{opacity:0;visibility:hidden}
+  #loader div{width:min(320px,70vw);text-align:center}
+  #loader h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2rem;margin-bottom:1.2rem}
+  #loader .bar{height:1px;background:var(--line)}#loader .bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .4s}
+  #loader p{margin-top:1rem;font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:var(--faint)}
+  /* walking chrome */
+  #crosshair{position:fixed;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(242,237,227,.8);box-shadow:0 0 0 1px rgba(0,0,0,.4);z-index:15;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none}
+  body.locked #crosshair{opacity:1}
+  body.locked #aim.on ~ #crosshair{transform:scale(2.2);background:var(--gold)}
+  #aim{position:fixed;z-index:16;transform:translateX(-50%);text-align:center;pointer-events:none;opacity:0;transition:opacity .25s;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(10px);padding:.6rem .95rem;border-radius:12px;white-space:nowrap}
+  #aim.on{opacity:1}
+  #aim b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.25rem}
+  #aim span{display:block;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:.15rem}
+  #aim em{display:block;font-style:normal;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-top:.35rem}
+  #roomName{position:fixed;left:4vw;bottom:calc(1.4rem + env(safe-area-inset-bottom,0px));z-index:14;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.15rem;color:var(--muted);opacity:0;transition:.5s}
+  body.walking #roomName{opacity:1}
+  #hint{position:fixed;left:50%;bottom:calc(1.4rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:14;display:flex;gap:1.2rem;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);opacity:0;transition:.5s;white-space:nowrap}
+  body.walking #hint{opacity:1}#hint kbd{font-family:inherit;border:1px solid var(--line);border-radius:4px;padding:.1rem .35rem;color:var(--muted);margin-right:.3rem}
+  #miniMap{position:fixed;right:4vw;bottom:calc(1.2rem + env(safe-area-inset-bottom,0px));width:210px;z-index:14;opacity:0;transition:.5s;background:var(--glass);border:1px solid var(--line);border-radius:14px;padding:.4rem;backdrop-filter:blur(10px)}
+  body.walking #miniMap{opacity:1}
+  #miniMap svg,#bigMap svg{display:block;width:100%;height:auto}
+  #banner{position:fixed;left:50%;top:18vh;transform:translate(-50%,-8px);z-index:14;text-align:center;opacity:0;transition:opacity .9s,transform .9s;pointer-events:none;text-shadow:0 2px 24px rgba(0,0,0,.8)}
+  #banner.on{opacity:1;transform:translate(-50%,0)}
+  #banner .k{font-size:.62rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold)}
+  #banner h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.2rem,5vw,3.8rem);margin:.3rem 0}
+  #banner p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.1rem}
+  /* panels */
+  .panel{position:fixed;inset:0;z-index:60;background:rgba(7,7,10,.86);backdrop-filter:blur(10px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6rem 4vw 3rem;opacity:0;visibility:hidden;transition:opacity .4s;overflow:auto}
+  .panel.on{opacity:1;visibility:visible}
+  #works{justify-content:flex-start;align-items:stretch}#works h3{margin-top:1.5rem}
+  .panel .x{position:fixed;top:calc(1.2rem + env(safe-area-inset-top,0px));right:4vw;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--line);border-radius:40px;padding:.6rem 1rem;color:var(--muted)}
+  .panel h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2rem,4vw,3rem);margin-bottom:1.4rem;align-self:flex-start}
+  #mapPanel .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:2rem;width:min(1100px,100%)}
+  #bigMap{background:rgba(242,237,227,.03);border:1px solid var(--line);border-radius:16px;padding:1rem}
+  #bigMap .wing:hover,#miniMap .wing:hover{fill:rgba(201,168,106,.2)}
+  #mapWings{display:flex;flex-direction:column;gap:.5rem}
+  #mapWings button{display:grid;grid-template-columns:2rem 1fr auto;align-items:center;gap:.2rem .6rem;text-align:left;padding:.8rem 1rem;border:1px solid var(--line);border-radius:12px;transition:.25s}
+  #mapWings button:hover{border-color:var(--gold)}
+  #mapWings i{font-style:normal;font-family:'Cormorant Garamond',serif;color:var(--gold);grid-row:span 2}
+  #mapWings b{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.2rem}
+  #mapWings span{grid-column:2;font-size:.62rem;letter-spacing:.08em;color:var(--muted)}
+  #mapWings kbd{grid-row:1/3;grid-column:3;font-family:inherit;font-size:.62rem;border:1px solid var(--line);border-radius:5px;padding:.2rem .45rem;color:var(--muted)}
+  #works .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;width:min(1200px,100%)}
+  #works .card{text-align:left;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#100f0d;transition:.3s}
+  #works .card:hover{border-color:var(--gold);transform:translateY(-3px)}
+  #works .card img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover}
+  #works .card div{padding:.7rem .8rem}#works .card b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.2rem}
+  #works .card span{display:block;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:.2rem 0}
+  #works .card em{font-size:.72rem;color:var(--muted);font-style:italic;font-family:'Cormorant Garamond',serif}
+  #pause{position:fixed;left:50%;top:50%;transform:translate(-50%,-46%);z-index:40;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(14px);border-radius:18px;padding:1.6rem 1.8rem;text-align:center;opacity:0;visibility:hidden;transition:.35s;width:min(420px,90vw)}
+  #pause.on{opacity:1;visibility:visible;transform:translate(-50%,-50%)}
+  #pause h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:1.8rem;margin-bottom:.4rem}
+  #pause p{font-size:.8rem;color:var(--muted);margin-bottom:1.2rem}
+  #pause .row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+  /* preview */
+  #modal{position:fixed;inset:0;z-index:80;display:flex;flex-direction:column;background:rgba(7,7,10,.92);backdrop-filter:blur(8px);opacity:0;visibility:hidden;transition:opacity .4s}
+  #modal.on{opacity:1;visibility:visible}
+  #modal .bar{display:flex;justify-content:space-between;align-items:center;padding:calc(1rem + env(safe-area-inset-top,0px)) 3vw 1rem}
+  #modal .t{font-family:'Cormorant Garamond',serif;font-size:1.3rem}#modal .t small{font-family:'Jost';font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-left:.8rem}
+  #modal .a{display:flex;gap:.6rem}
+  #modal .a a,#modal .a button{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--line);border-radius:40px;padding:.55rem 1.1rem}
+  #modal .a a:hover,#modal .a button:hover{border-color:var(--gold);color:var(--gold)}
+  #modal .frameWrap{flex:1;margin:0 3vw 3vh;border:1px solid var(--line);border-radius:10px;overflow:hidden;position:relative;background:#0c0b0a}
+  #modal iframe{width:100%;height:100%;border:0;display:block}
+  #modal .ld{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:.62rem;letter-spacing:.3em;text-transform:uppercase;transition:opacity .4s;pointer-events:none}
+  #webglFail{position:fixed;inset:0;z-index:25;display:grid;place-items:center;text-align:center;padding:2rem;background:radial-gradient(60% 60% at 50% 40%,#1a1712,#07070a 72%)}
+  #webglFail[hidden]{display:none}
+  /* the page below the museum (reachable before entering) */
+  section.block{position:relative;z-index:3;background:#0c0b0a}
+  #spacer{height:100vh}
+  #studio{padding:14vh 6vw;border-top:1px solid var(--line)}
+  .k{font-size:.64rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:1.3rem}
+  #studio h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(1.8rem,4vw,3rem);max-width:20ch;line-height:1.06}
+  .steps{margin-top:4rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2.4rem}
+  .steps .s{border-top:1px solid var(--line);padding-top:1.4rem}.steps .n{font-family:'Cormorant Garamond',serif;color:var(--gold)}
+  .steps h4{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.4rem;margin:.3rem 0 .6rem}.steps p{font-size:.92rem;color:var(--muted);line-height:1.65;font-weight:300}
+  #cta{padding:16vh 6vw;text-align:center;border-top:1px solid var(--line)}
+  #cta h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.02}
+  #cta p{margin:1.4rem auto 0;max-width:46ch;color:var(--muted);font-weight:300;line-height:1.7}
+  #cta .btns{margin-top:2.6rem;display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap}
+  footer{position:relative;z-index:3;background:#0c0b0a;padding:6vh 5vw 4vh;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+  footer .c{font-size:.66rem;color:var(--faint)}footer .s{display:flex;gap:1.4rem;font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  /* data-driven digital acquisitions */
+  .acquisition{position:absolute;right:4vw;bottom:5vh;width:min(445px,35vw);z-index:2;border:1px solid rgba(201,168,106,.38);border-radius:14px;overflow:hidden;background:rgba(8,9,9,.72);backdrop-filter:blur(10px);box-shadow:0 24px 80px rgba(0,0,0,.34);transition:transform .35s,border-color .35s}
+  .acquisition:hover{transform:translateY(-5px);border-color:var(--gold)}
+  .acquisition img{display:block;width:100%;aspect-ratio:1.16/1;object-fit:cover;object-position:top center;filter:saturate(.88) contrast(1.03)}
+  .acquisition .plaque{padding:.75rem .85rem .9rem}
+  .acquisition .plaque small{display:block;font-size:.52rem;letter-spacing:.23em;text-transform:uppercase;color:var(--gold);margin-bottom:.3rem}
+  .acquisition .plaque b{display:block;font-family:'Cormorant Garamond',serif;font-weight:400;font-size:1.25rem}
+  .acquisition .plaque em{display:block;margin-top:.12rem;font-family:'Cormorant Garamond',serif;font-size:.88rem;color:var(--muted)}
+  .acquisition .plaque span{display:block;margin-top:.55rem;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+  #works .card.digital-acquisition{border-color:color-mix(in srgb,var(--piece-accent,#c9a86a) 55%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--piece-accent,#c9a86a) 10%,transparent)}
+  #works .card.digital-acquisition:hover{border-color:var(--piece-accent,#c9a86a)}
+  #acquisitionMount:empty{display:none}
+  #mobilePortfolio{display:none}
+  .mobile-only{display:none}
+  @media(max-width:760px){
+    html,body{width:100%;height:100%;overflow:hidden;background:var(--bg)}
+    body{overscroll-behavior:none}
+    #museum{display:block!important;position:fixed;inset:0;width:100vw;height:100dvh;touch-action:none}
+    #mobilePortfolio,#spacer,#studio,#cta,main>footer{display:none!important}
+    header{position:fixed;top:0;left:0;right:0;z-index:40;padding:calc(.7rem + env(safe-area-inset-top,0px)) 12px .7rem;background:linear-gradient(180deg,rgba(7,7,10,.8),rgba(7,7,10,.18),transparent);backdrop-filter:blur(6px)}
+    .brand{font-size:.68rem;letter-spacing:.18em}
+    header nav{gap:.28rem}
+    header nav button,header nav a{min-height:40px;padding:.48rem .58rem;font-size:.5rem;letter-spacing:.12em;background:rgba(8,8,10,.46);border-color:rgba(242,237,227,.13);backdrop-filter:blur(9px)}
+    header nav #sound,header nav .pill{display:none!important}
+    header nav .hide-m{display:inline-flex!important}
+    header nav .mobile-only{display:inline-flex!important}
+    header nav kbd{display:none}
+    #loader div{width:min(270px,72vw)}
+    #loader h2{font-size:1.6rem}
+    #intro{justify-content:flex-end;padding:0 18px calc(2rem + env(safe-area-inset-bottom,0px));background:linear-gradient(0deg,rgba(7,7,10,.94),rgba(7,7,10,.5) 54%,rgba(7,7,10,.06));pointer-events:auto}
+    #intro .kick{font-size:.52rem;letter-spacing:.3em}
+    #intro h1{font-size:clamp(3rem,15vw,4.8rem);margin:.9rem 0 .8rem;max-width:9ch}
+    #intro p{font-size:.9rem;line-height:1.55;max-width:36ch}
+    #intro .ctas{margin-top:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    #intro .btn{justify-content:center;padding:.82rem 1rem;font-size:.58rem}
+    #intro .keys{display:grid;grid-template-columns:1fr 1fr;gap:.55rem 1rem;width:100%;margin-top:1.2rem;font-size:.5rem;letter-spacing:.12em}
+    #intro .keys div:nth-child(1){display:none}
+    #intro .keys b{font-size:.6rem}
+    #acquisitionMount{display:none!important}
+    #hint,#miniMap{display:none!important}
+    #roomName{left:14px;bottom:calc(8.3rem + env(safe-area-inset-bottom,0px));font-size:.9rem}
+    #aim{max-width:76vw;padding:.5rem .7rem}
+    #aim b{font-size:1rem}
+    #pause{width:min(330px,88vw);padding:1.2rem}
+    #mapPanel,#works{padding:calc(4.5rem + env(safe-area-inset-top,0px)) 14px calc(1rem + env(safe-area-inset-bottom,0px));justify-content:flex-start}
+    #mapPanel .wrap{grid-template-columns:1fr;gap:1rem}
+    #mapPanel .x,#works .x{top:calc(.65rem + env(safe-area-inset-top,0px));right:12px;min-height:40px}
+    #mapPanel h3,#works h3{font-size:1.8rem;margin-bottom:.8rem}
+    #bigMap{padding:.5rem}
+    #mapWings{gap:.35rem}
+    #mapWings button{padding:.6rem .7rem}
+    #works .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;width:100%}
+    #works .card img{aspect-ratio:3/4}
+    #works .card div{padding:.55rem}
+    #works .card b{font-size:1rem}
+    #works .card em{display:none}
+    #modal .bar{padding:calc(.7rem + env(safe-area-inset-top,0px)) 12px .7rem;gap:.5rem}
+    #modal .t{font-size:1rem;min-width:0}
+    #modal .t small{display:none}
+    #modal .a{gap:.35rem}
+    #modal .a a,#modal .a button{padding:.5rem .65rem;font-size:.48rem}
+    #modal .frameWrap{margin:0 8px calc(8px + env(safe-area-inset-bottom,0px));border-radius:8px}
+    #touchHud{display:block;position:fixed;z-index:35;inset:auto 0 0 0;padding:0 14px calc(14px + env(safe-area-inset-bottom,0px));pointer-events:none;opacity:0;transition:opacity .35s}
+    body.walking #touchHud{opacity:1}
+    #touchHint{position:absolute;left:50%;bottom:calc(7.4rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:max-content;max-width:86vw;padding:.48rem .7rem;border:1px solid rgba(242,237,227,.14);border-radius:999px;background:rgba(8,8,10,.5);backdrop-filter:blur(8px);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);pointer-events:none}
+    .touch-pad{width:126px;height:126px;display:grid;grid-template:repeat(3,42px)/repeat(3,42px);pointer-events:auto;touch-action:none}
+    .touch-pad button{width:40px;height:40px;border-radius:50%;border:1px solid rgba(242,237,227,.2);background:rgba(8,8,10,.56);backdrop-filter:blur(10px);font-size:1rem;color:var(--ink);display:grid;place-items:center}
+    .touch-pad button.active{background:rgba(201,168,106,.28);border-color:var(--gold);color:var(--gold)}
+    .touch-pad [data-key="w"]{grid-column:2;grid-row:1}
+    .touch-pad [data-key="a"]{grid-column:1;grid-row:2}
+    .touch-pad [data-key="s"]{grid-column:2;grid-row:3}
+    .touch-pad [data-key="d"]{grid-column:3;grid-row:2}
+    .touch-actions{position:absolute;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));display:grid;gap:.45rem;pointer-events:auto}
+    .touch-actions button,.touch-actions a{min-width:84px;min-height:42px;display:grid;place-items:center;border:1px solid rgba(242,237,227,.18);border-radius:999px;background:rgba(8,8,10,.56);backdrop-filter:blur(10px);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase}
+    .touch-actions a{color:var(--muted)}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="loader"><div><h2>The Caldas Museum</h2><div class="bar"><i id="loadbar"></i></div><p id="loadtxt">Opening the doors</p></div></div>
+<canvas tabindex="0" aria-label="Museum scene; use WASD to walk and mouse or arrow keys to look" id="museum" aria-label="A museum rendered in 3D. Walk with W A S D or the arrow keys, look with the mouse, click a sculpture to open its website."></canvas>
+<div id="grain"></div>
+
+<header>
+  <a class="brand" href="index.html">CALDAS <b>STUDIO</b></a>
+  <nav aria-label="Museum">
+    <button id="mapBtn">Map<kbd>M</kbd></button>
+    <button id="worksBtn" class="hide-m">All works</button>
+    <label style="font-size:.55rem;letter-spacing:.12em">QUALITY <select id="qualitySelect" aria-label="Visual quality" style="color:inherit;background:#111;border:1px solid var(--line);padding:.5rem;font:inherit;min-height:44px"><option value="auto">Auto</option><option value="balanced">Balanced</option><option value="cinematic">Cinematic</option></select></label>
+    <button id="sound" class="hide-m" aria-pressed="false">Sound</button>
+    <a class="mobile-only" href="index.html#work">Portfolio</a><a class="pill hide-m" href="index.html#about">About</a>
+  </nav>
+</header>
+
+<section id="intro" aria-labelledby="heroTitle">
+  <div class="kick">Caldas Studio · The Art Gallery</div>
+  <h1 id="heroTitle">A website you can <em>walk into.</em></h1>
+  <p>A Blender-authored museum of interactive objects and independent website concepts. Choose a work or a room, then follow its exhibit into the experience. For project context, explore the selected work portfolio.</p>
+  <div class="ctas"><button class="btn gold" id="enterBtn">Enter the museum →</button><a class="btn ghost" href="sokai/">See SŌKAI ↗</a></div>
+  <a class="btn ghost" href="projects/konam/" style="margin-top:1rem">Featured artwork · Speedmax CFR ↗</a>
+  <div class="keys" aria-label="Controls">
+    <div><b><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></b>Walk</div>
+    <div><b>Mouse</b>Look around</div>
+    <div><b>Click · <kbd>E</kbd></b>Open a work</div>
+    <div><b><kbd>M</kbd> · <kbd>1</kbd>–<kbd>5</kbd></b>Map · rooms</div>
+  </div>
+</section>
+
+<div id="aim" aria-live="polite"><b id="aimName"></b><span id="aimType"></span><em id="aimHint"></em></div>
+<div id="crosshair"></div>
+<div id="roomName">The Atrium</div>
+<div id="hint"><span><kbd>WASD</kbd>walk</span><span><kbd>Shift</kbd>stroll faster</span><span><kbd>E</kbd>open</span><span><kbd>M</kbd>map</span><span><kbd>Esc</kbd>free the mouse</span></div>
+<div id="miniMap" aria-label="Floor plan"></div>
+<div id="touchHud" aria-label="Mobile museum controls">
+  <div id="touchHint">Drag to look · tap floor to walk · tap art to open</div>
+  <div class="touch-pad" aria-label="Move around">
+    <button type="button" data-key="w" aria-label="Move forward">↑</button>
+    <button type="button" data-key="a" aria-label="Strafe left">←</button>
+    <button type="button" data-key="s" aria-label="Move backward">↓</button>
+    <button type="button" data-key="d" aria-label="Strafe right">→</button>
+  </div>
+  <div class="touch-actions">
+    <button type="button" id="touchWorks">Works</button>
+    <button type="button" id="touchMap">Map</button>
+    <a href="mobile/">Portfolio</a>
+  </div>
+</div>
+
+<div id="pause"><h3>Paused</h3><p>Your mouse is free. Click the scene or resume to keep walking.</p><div class="row"><button class="btn gold" id="resume">Resume walking</button><button class="btn ghost" id="pauseMap">Map</button></div></div>
+
+<div class="panel" id="mapPanel" role="dialog" aria-modal="true" aria-label="Map"><button class="x" id="mapClose">Close ✕</button><div class="wrap"><div><h3>The floor plan</h3><div id="bigMap"></div></div><div><h3>Rooms</h3><div id="mapWings"></div></div></div></div>
+<div class="panel" id="works" role="dialog" aria-modal="true" aria-label="All works"><button class="x" id="worksClose">Close ✕</button><!-- PROJECTS:start --><h3>Selected projects</h3><div class="grid" id="selectedProjects"><a class="card" href="projects/konam/"><img loading="lazy" src="portfolio/assets/hero-poster.webp" alt="Speedmax CFR bicycle with the Sanctuary Stained Glass procedural finish"><div><b>Konam</b><span>Interactive prototype</span><em>A bicycle becomes a canvas. A digital museum of speed, engineering and color.</em></div></a><a class="card" href="projects/noema/"><img loading="lazy" src="portfolio/assets/noema.svg" alt="Abstract diagram of NOEMA’s separation of observations, claims and hypotheses"><div><b>NOEMA</b><span>Research prototype</span><em>An observatory for beliefs, rituals and deep time. Every claim has a source; every unknown stays visible.</em></div></a><a class="card" href="projects/sokai/"><img loading="lazy" src="gallery/sokai.jpg" alt="SŌKAI katana exhibit"><div><b>SŌKAI</b><span>Interactive concept</span><em>The anatomy of a katana, made tangible through light, movement and a carefully built digital object.</em></div></a><a class="card" href="projects/gaudi/"><img loading="lazy" src="portfolio/assets/gaudi.svg" alt="Conceptual line illustration of architectural bays, labelled as a process study"><div><b>Gaudí Nexus</b><span>Concept in development</span><em>An architectural investigation where site, program and evidence shape the form.</em></div></a><a class="card" href="projects/belong/"><img loading="lazy" src="gallery/belong.jpg" alt="Belong landscape website concept"><div><b>Belong</b><span>Independent website concept</span><em>A landscape-led website that turns a sense of place into a living, changing atmosphere.</em></div></a><a class="card" href="projects/studio-museum/"><img loading="lazy" src="portfolio/assets/museum.svg" alt="Plan diagram of the Studio Museum’s central atrium and five wings"><div><b>Studio Museum</b><span>Interactive portfolio experiment</span><em>A walkable collection of digital objects and speculative websites, arranged as rooms of a museum.</em></div></a></div><h3>Concepts &amp; object studies</h3><!-- PROJECTS:end --><div class="grid" id="worksGrid"></div></div>
+
+<div id="modal" role="dialog" aria-modal="true" aria-label="Project preview"><div class="bar"><div class="t"><span id="m-name">—</span><small id="m-room"></small></div><div class="a"><a id="m-open" href="#" target="_blank" rel="noopener">Open full ↗</a><button id="m-close">Back to the museum ✕</button></div></div><div class="frameWrap"><div class="ld">Opening the work…</div><iframe id="m-frame" title="Website preview"></iframe></div></div>
+<div id="webglFail" hidden><div><h2 style="font-family:'Cormorant Garamond',serif;font-weight:300;font-size:2.4rem">The museum could not load.</h2><p style="color:var(--muted);margin:1rem 0 1.6rem">The project portfolio is available with or without 3D:</p><a class="btn gold" href="index.html#work">Browse selected work</a></div></div>
+
+
+
+
+<script src="digital-works.js"></script>
+<script src="rooms.js"></script>
+<script src="project-catalog.js"></script>
+<script src="museum/museum.js" defer></script>
+<script src="catalog.js" defer></script>
+
+<script>
+/* Mobile 3D controls bridge */
+(function(){
+  const coarse=matchMedia('(pointer:coarse)').matches||innerWidth<=760;
+  if(!coarse)return;
+  const send=(key,type)=>window.dispatchEvent(new KeyboardEvent(type,{key,bubbles:true}));
+  document.querySelectorAll('.touch-pad [data-key]').forEach(btn=>{
+    const key=btn.dataset.key;
+    const down=e=>{e.preventDefault();btn.classList.add('active');send(key,'keydown');};
+    const up=e=>{e.preventDefault();btn.classList.remove('active');send(key,'keyup');};
+    btn.addEventListener('pointerdown',down);
+    btn.addEventListener('pointerup',up);
+    btn.addEventListener('pointercancel',up);
+    btn.addEventListener('pointerleave',e=>{if(btn.classList.contains('active'))up(e)});
+  });
+  document.getElementById('touchWorks')?.addEventListener('click',()=>document.getElementById('worksBtn')?.click());
+  document.getElementById('touchMap')?.addEventListener('click',()=>document.getElementById('mapBtn')?.click());
+  const hint=document.getElementById('touchHint');
+  document.getElementById('enterBtn')?.addEventListener('click',()=>{if(hint)setTimeout(()=>hint.style.opacity='0',5200)},{once:true});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)document.querySelectorAll('.touch-pad [data-key].active').forEach(btn=>{btn.classList.remove('active');send(btn.dataset.key,'keyup')})});
+})();
+</script>
+
+<script>
+/* ---- generative ambient soundscape (ethereal gallery) ---- */
+(function(){
+  let actx,master,playing=false,chimeTimer;const btn=document.getElementById('sound');if(!btn)return;
+  function initAudio(){
+    actx=new (window.AudioContext||window.webkitAudioContext)();
+    master=actx.createGain();master.gain.value=0;master.connect(actx.destination);
+    // warm low drone
+    [55,82.4,110.5].forEach((f,i)=>{const o=actx.createOscillator();o.type='sine';o.frequency.value=f;const g=actx.createGain();g.gain.value=i===0?0.05:0.025;
+      const lfo=actx.createOscillator();lfo.frequency.value=0.05+i*0.02;const lg=actx.createGain();lg.gain.value=0.012;lfo.connect(lg);lg.connect(g.gain);lfo.start();
+      o.connect(g);g.connect(master);o.start();});
+    // airy shimmer (filtered noise)
+    const len=actx.sampleRate*3,buf=actx.createBuffer(1,len,actx.sampleRate),d=buf.getChannelData(0);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*0.5;
+    const ns=actx.createBufferSource();ns.buffer=buf;ns.loop=true;const bp=actx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=2200;bp.Q.value=0.7;
+    const ng=actx.createGain();ng.gain.value=0.03;ns.connect(bp);bp.connect(ng);ng.connect(master);ns.start();
+    scheduleChime();
+  }
+  function scheduleChime(){const next=4000+Math.random()*7000;chimeTimer=setTimeout(()=>{if(playing&&Math.random()<0.7)chime();scheduleChime();},next);}
+  function chime(){const t=actx.currentTime;const scale=[220,277.2,329.6,440,554.4];const f=scale[Math.floor(Math.random()*scale.length)]*(Math.random()<0.5?1:2);
+    const o=actx.createOscillator();o.type='sine';o.frequency.value=f;const g=actx.createGain();
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.05,t+0.4);g.gain.exponentialRampToValueAtTime(0.0001,t+4.5);
+    const o2=actx.createOscillator();o2.type='sine';o2.frequency.value=f*2.001;const g2=actx.createGain();g2.gain.value=0.02;o2.connect(g2);g2.connect(g);
+    o.connect(g);g.connect(master);o.start(t);o2.start(t);o.stop(t+4.6);o2.stop(t+4.6);}
+  btn.addEventListener('click',()=>{
+    if(!actx)initAudio();if(actx.state==='suspended')actx.resume();
+    playing=!playing;const now=actx.currentTime;master.gain.cancelScheduledValues(now);
+    master.gain.linearRampToValueAtTime(playing?0.3:0.0,now+(playing?1.8:0.7));
+    btn.classList.toggle('on',playing);btn.setAttribute('aria-pressed',playing);
+  });
+})();
+</script>
+</body>
+</html>

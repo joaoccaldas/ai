@@ -1,0 +1,73 @@
+{
+  "source": "konam/assets/museum/speedmax_web.glb",
+  "sourceRepository": "https://github.com/joaoccaldas/konam",
+  "sourceCommit": "a3df4271d6c321c83391f4ba402c18ca520a5cb0",
+  "sourceSHA256": "d0562d1e445099f60e79e258f980e4fc0d098efdb851f2ff1365351d719ed0e0",
+  "sourceTriangles": 509624,
+  "sourcePrimitives": 74,
+  "sourceBounds": {
+    "min": [
+      -0.7527493685483932,
+      -0.003949994094707109,
+      -0.20849047315246394
+    ],
+    "max": [
+      0.938250720500946,
+      1.0880027491025526,
+      0.20849047315246394
+    ]
+  },
+  "edition": "edition-film-sanctuary",
+  "material": "paint_frame",
+  "palette": [
+    "#b3122e",
+    "#1d4fd6",
+    "#f2c14e",
+    "#2f9e5a",
+    "#6f4cd9"
+  ],
+  "derivatives": [
+    {
+      "name": "desktop",
+      "file": "speedmax-desktop.glb",
+      "triangles": 131772,
+      "primitives": 20,
+      "bounds": {
+        "min": [
+          -0.7525835217179662,
+          -0.003949994095963179,
+          -0.20851583445967534
+        ],
+        "max": [
+          0.9379201496032046,
+          1.0875437484780077,
+          0.20805540048463952
+        ]
+      },
+      "bytes": 628612,
+      "ratio": 0.25,
+      "error": 0.001
+    },
+    {
+      "name": "mobile",
+      "file": "speedmax-mobile.glb",
+      "triangles": 44717,
+      "primitives": 20,
+      "bounds": {
+        "min": [
+          -0.7480661838754017,
+          -0.003949994095963179,
+          -0.20846035130660187
+        ],
+        "max": [
+          0.9367631433100314,
+          1.0875448150177836,
+          0.20799991733156606
+        ]
+      },
+      "bytes": 276572,
+      "ratio": 0.07,
+      "error": 0.004
+    }
+  ]
+}
