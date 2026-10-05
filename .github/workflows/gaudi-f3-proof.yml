@@ -48,11 +48,12 @@ jobs:
               raise RuntimeError('HERO_F3 camera missing from Rev17 artifact')
           scene.camera=cam
           scene.render.engine='BLENDER_EEVEE'
-          scene.render.resolution_x=480
-          scene.render.resolution_y=270
+          scene.render.resolution_x=320
+          scene.render.resolution_y=180
           scene.render.resolution_percentage=100
           scene.render.image_settings.file_format='PNG'
-          scene.render.filepath='hero_f3_eevee_480.png'
+          import pathlib
+          scene.render.filepath=str(pathlib.Path.cwd()/'hero_f3_eevee_320.png')
           bpy.ops.render.render(write_still=True)
 
           with open('hero_f3_proof.json','w') as f:
@@ -62,19 +63,19 @@ jobs:
                   'rotation_euler':[round(float(x),6) for x in cam.rotation_euler],
                   'lens_mm':cam.data.lens,
                   'engine':'BLENDER_EEVEE',
-                  'resolution':[480,270],
+                  'resolution':[320,180],
                   'municipal_visible': municipal is not None and not municipal.hide_render,
                   'proxy_hidden': proxy is not None and proxy.hide_render
               },f,indent=2)
           PY
           blender --background rev17/rev17_aligned.blend --python render_f3.py
-          sha256sum hero_f3_eevee_480.png > hero_f3_sha256.txt
+          sha256sum hero_f3_eevee_320.png > hero_f3_sha256.txt
 
       - uses: actions/upload-artifact@v4
         with:
           name: gaudi-f3-eevee-proof
           path: |
-            hero_f3_eevee_480.png
+            hero_f3_eevee_320.png
             hero_f3_proof.json
             hero_f3_sha256.txt
           retention-days: 30
