@@ -1,0 +1,80 @@
+name: Gaudi F3 Eevee Proof
+
+on:
+  push:
+    branches: [gaudi-nexus-rev16-build-tmp]
+    paths:
+      - '.github/workflows/gaudi-f3-proof.yml'
+  workflow_dispatch:
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Blender 5.2
+        run: |
+          curl -fsSL 'https://download.blender.org/release/Blender5.2/blender-5.2.0-linux-x64.tar.xz' -o blender.tar.xz
+          tar -xf blender.tar.xz
+          echo "$PWD/blender-5.2.0-linux-x64" >> "$GITHUB_PATH"
+
+      - name: Install headless render runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libegl1
+
+      - name: Download verified Rev17 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: gaudi-rev16-comparison
+          path: rev17
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: 37263171322
+
+      - name: Render F3 only
+        run: |
+          cat > render_f3.py <<'PY'
+          import bpy, json
+
+          scene=bpy.context.scene
+          proxy=bpy.data.collections.get('CONTEXT')
+          municipal=bpy.data.collections.get('00_SITE_MUNICIPAL_IMPORTED')
+          if proxy: proxy.hide_render=True
+          if municipal: municipal.hide_render=False
+
+          cam=bpy.data.objects.get('HERO_F3')
+          if cam is None:
+              raise RuntimeError('HERO_F3 camera missing from Rev17 artifact')
+          scene.camera=cam
+          scene.render.engine='BLENDER_EEVEE'
+          scene.render.resolution_x=480
+          scene.render.resolution_y=270
+          scene.render.resolution_percentage=100
+          scene.render.image_settings.file_format='PNG'
+          scene.render.filepath='hero_f3_eevee_480.png'
+          bpy.ops.render.render(write_still=True)
+
+          with open('hero_f3_proof.json','w') as f:
+              json.dump({
+                  'camera':'HERO_F3',
+                  'position':[round(float(x),3) for x in cam.location],
+                  'rotation_euler':[round(float(x),6) for x in cam.rotation_euler],
+                  'lens_mm':cam.data.lens,
+                  'engine':'BLENDER_EEVEE',
+                  'resolution':[480,270],
+                  'municipal_visible': municipal is not None and not municipal.hide_render,
+                  'proxy_hidden': proxy is not None and proxy.hide_render
+              },f,indent=2)
+          PY
+          blender --background rev17/rev17_aligned.blend --python render_f3.py
+          sha256sum hero_f3_eevee_480.png > hero_f3_sha256.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-f3-eevee-proof
+          path: |
+            hero_f3_eevee_480.png
+            hero_f3_proof.json
+            hero_f3_sha256.txt
+          retention-days: 30
