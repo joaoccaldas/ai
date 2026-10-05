@@ -146,11 +146,11 @@ jobs:
           scene.render.resolution_x=900; scene.render.resolution_y=900; scene.render.resolution_percentage=100
 
           set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
-          scene.render.filepath='top_municipal.png'
+          scene.render.filepath='//top_municipal.png'
           bpy.ops.render.render(write_still=True)
 
           set_hidden(proxy_coll,False); set_hidden(municipal_coll,True)
-          scene.render.filepath='top_proxy.png'
+          scene.render.filepath='//top_proxy.png'
           bpy.ops.render.render(write_still=True)
 
           # Existing hero camera with authoritative municipal vs proxy context.
@@ -159,11 +159,11 @@ jobs:
           scene.render.resolution_x=960; scene.render.resolution_y=540
 
           set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
-          scene.render.filepath='hero_municipal.png'
+          scene.render.filepath='//hero_municipal.png'
           bpy.ops.render.render(write_still=True)
 
           set_hidden(proxy_coll,False); set_hidden(municipal_coll,True)
-          scene.render.filepath='hero_proxy.png'
+          scene.render.filepath='//hero_proxy.png'
           bpy.ops.render.render(write_still=True)
 
           # Return to non-destructive comparison state: both available.
