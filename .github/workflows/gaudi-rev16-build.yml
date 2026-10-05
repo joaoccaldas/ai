@@ -19,6 +19,11 @@ jobs:
           tar -xf blender.tar.xz
           echo "$PWD/blender-5.2.0-linux-x64" >> "$GITHUB_PATH"
 
+      - name: Install headless render runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libegl1
+
       - name: Download exact Rev15 and municipal crop
         run: |
           curl -fsSL 'https://695d5a9fc666e505559765690b5db7dd.r2.cloudflarestorage.com/3d-scene-builder/projects/6bfa2d88-eef7-4583-9d82-08218b0bf4e4/revisions/00000015-gaudi-r15-program-closure-001/scene.blend?X-Amz-Expires=900&X-Amz-Date=20261005T030842Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=f4fb15da414147020cebc9c7007b912d%2F20261005%2Fauto%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=27f81303cd3e7bc38c89ad418287f640ec20bf1e6545271b9665be2a6d4b641d' -o rev15.blend
