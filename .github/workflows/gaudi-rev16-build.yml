@@ -108,7 +108,7 @@ jobs:
                   'size':[round(float(mx[i]-mn[i]),3) for i in range(3)]
               }
 
-          bpy.context.scene['gaudi_revision_candidate']=16
+          bpy.context.scene['gaudi_revision_candidate']=17
           bpy.context.scene['municipal_import_status']='ALIGNED_BY_PLAZA_CENTROID_COMPARISON_ONLY'
           bpy.context.scene['rev15_sha256']='cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494'
           bpy.context.scene['municipal_glb_sha256']='f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c'
@@ -130,7 +130,7 @@ jobs:
           print(json.dumps(report,indent=2))
           PY
 
-          blender --background rev15.blend --python build_rev16.py
+          blender --background rev15.blend --python build_rev17.py
           sha256sum rev17_aligned.blend rev17_report.json > rev17_sha256.txt
           ls -lh rev17_aligned.blend rev17_report.json rev17_sha256.txt
 
