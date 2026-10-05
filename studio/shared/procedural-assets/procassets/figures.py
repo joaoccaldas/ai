@@ -36,6 +36,14 @@ def ball(bm,c,r,mi,sx=1,sy=1,sz=1):
     for v in vs: v.co=Vector((v.co.x*sx,v.co.y*sy,v.co.z*sz))+c
     for f in {f for v in vs for f in v.link_faces}: f.material_index=mi
     return vs
+def hand(bm,wr,s,side=1):
+    box_=bmesh.ops.create_cube(bm,size=1.0)
+    for v in box_['verts']: v.co=Vector((v.co.x*0.052*s,v.co.y*0.026*s,v.co.z*0.085*s))+wr+Vector((0,0,-0.048*s))
+    for f in {f for v in box_['verts'] for f in v.link_faces}: f.material_index=0
+    for k in range(4):
+        x=(-0.019+k*0.0127)*s; L=(0.058 if k in (1,2) else 0.05)*s
+        seg(bm,wr+Vector((x,0,-0.09*s)),wr+Vector((x,0.006*s,-0.09*s-L)),0.0075*s,0.0062*s,0,6)
+    seg(bm,wr+Vector((side*0.03*s,0.004*s,-0.03*s)),wr+Vector((side*0.045*s,0.014*s,-0.075*s)),0.008*s,0.0065*s,0,6)
 def person(name,x,y,z,yaw,h=1.72,seed=0,pose='walk',child=False,carry=False):
     r=random.Random(seed); s=h/1.75; bm=bmesh.new()
     mats=[pmat(f's{seed}',r.choice(SKINS),0.55,sub=0.15),pmat(f'h{seed}',r.choice(HAIR),0.5),pmat(f't{seed}',r.choice(TOPS),0.85),pmat(f'b{seed}',r.choice(BOTS),0.8),pmat(f'sh{seed}',(0.05,0.045,0.04),0.6),pmat('bread',(0.55,0.32,0.12),0.75)]
@@ -55,13 +63,22 @@ def person(name,x,y,z,yaw,h=1.72,seed=0,pose='walk',child=False,carry=False):
         if up: el=Vector((side*0.24*s,0.16*s,1.42*s)); wr=Vector((side*0.1*s,0.3*s,1.6*s))
         elif carry and side>0: el=Vector((side*0.24*s,0.12*s,1.12*s)); wr=Vector((side*0.1*s,0.28*s,1.2*s))
         else: el=Vector((side*0.25*s,k*0.05*s,1.15*s)); wr=Vector((side*0.24*s,k*0.14*s,0.9*s))
-        seg(bm,sho,el,0.066*s,0.052*s,2); seg(bm,el,wr,0.052*s,0.04*s,2 if r.random()<0.5 else 0); ball(bm,wr,0.04*s,0)
+        seg(bm,sho,el,0.066*s,0.052*s,2); seg(bm,el,wr,0.052*s,0.04*s,2 if r.random()<0.5 else 0); hand(bm,wr,s,side)
     if pose=='photo': arm(-1,0,True); arm(1,0,True)
     else: arm(-1,-sw); arm(1,sw)
     seg(bm,Vector((0,0,sh_z+0.02*s)),Vector((0,0.01*s,sh_z+0.12*s)),0.056*s,0.05*s,0)
     hc=Vector((0,0.015*s,sh_z+0.2*s)); ball(bm,hc,0.112*s*(1.3 if child else 1.0),0,0.92,1.05,1.12)
     ball(bm,hc+Vector((0,0.1*s,-0.01*s)),0.022*s,0,0.8,1.2,1.0)
     for sx_ in (-1,1): ball(bm,hc+Vector((sx_*0.105*s,0,0)),0.02*s,0,0.5,1,1.3)
+    hs=1.3 if child else 1.0
+    for sx_ in (-1,1):
+        ball(bm,hc+Vector((sx_*0.041*s*hs,0.108*s*hs,0.022*s*hs)),0.0105*s*hs,4,1,0.7,1)                      # eyes
+        e=bmesh.ops.create_cube(bm,size=1.0)
+        for v in e['verts']: v.co=Vector((v.co.x*0.036*s*hs,v.co.y*0.006*s*hs,v.co.z*0.006*s*hs))+hc+Vector((sx_*0.041*s*hs,0.112*s*hs,0.042*s*hs))
+        for f in {f for v in e['verts'] for f in v.link_faces}: f.material_index=1                              # brows
+    m_=bmesh.ops.create_cube(bm,size=1.0)
+    for v in m_['verts']: v.co=Vector((v.co.x*0.04*s*hs,v.co.y*0.006*s*hs,v.co.z*0.007*s*hs))+hc+Vector((0,0.1*s*hs,-0.05*s*hs))
+    for f in {f for v in m_['verts'] for f in v.link_faces}: f.material_index=4                                  # mouth
     hv=ball(bm,hc+Vector((0,-0.012*s,0.02*s)),0.119*s,1,0.96,1.08,1.12)
     if fem and r.random()<0.65:
         seg(bm,hc+Vector((0,-0.03*s,0.05*s)),hc+Vector((0,-0.09*s,-0.2*s)),0.115*s,0.09*s,1)
