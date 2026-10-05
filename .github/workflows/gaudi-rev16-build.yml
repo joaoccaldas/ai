@@ -283,6 +283,48 @@ jobs:
               json.dump({'candidates':refined_rows},f,indent=2)
 
 
+
+          # Architectural survey: deliberately different angles/aspects.
+          scene.render.engine='BLENDER_WORKBENCH'
+          scene.display.shading.light='STUDIO'
+          scene.display.shading.show_shadows=True
+          scene.display.shading.show_cavity=True
+          scene.render.image_settings.file_format='PNG'
+          set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
+
+          survey=[
+            # id, position, target, lens
+            ('SURVEY_AERIAL_SW',(-120.0,-80.0,110.0),(0.0,30.0,8.0),38),
+            ('SURVEY_AERIAL_NE',(125.0,145.0,100.0),(-10.0,35.0,7.0),42),
+            ('SURVEY_MARKET_EDGE',(-58.0,8.0,1.56),(-18.0,39.0,1.8),28),
+            ('SURVEY_CIVIC_EDGE',(22.0,62.0,1.56),(-10.0,43.0,2.2),28),
+            ('SURVEY_PLAZA_CENTER',(0.0,10.0,1.56),(-8.0,44.0,3.0),30),
+            ('SURVEY_SAGRADA_THRESHOLD',(-15.0,42.0,1.56),(96.1,100.4,30.0),32),
+            ('SURVEY_REVERSE_FROM_NORTH',(30.0,78.0,1.56),(-20.0,34.0,3.0),30),
+            ('SURVEY_LONG_AXIS_SOUTH',(-35.0,-20.0,1.56),(-8.0,45.0,3.0),35),
+            ('SURVEY_UNDER_MARKET',(-34.0,29.0,1.56),(-18.0,43.0,1.8),24),
+            ('SURVEY_UNDER_CIVIC',(-4.0,51.0,1.56),(-22.0,37.0,1.8),24),
+            ('SURVEY_SAGRADA_BACK_TO_PROJECT',(75.0,88.0,1.56),(-10.0,40.0,4.0),35),
+            ('SURVEY_WIDE_CONTEXT',(-95.0,25.0,35.0),(5.0,55.0,8.0),45),
+          ]
+          survey_rows=[]
+          scene.render.resolution_x=900; scene.render.resolution_y=506
+          for cid,pos,tgt,lens in survey:
+              data=bpy.data.cameras.get(cid) or bpy.data.cameras.new(cid)
+              cam=bpy.data.objects.get(cid) or bpy.data.objects.new(cid,data)
+              if not cam.users_collection:
+                  scene.collection.objects.link(cam)
+              data.lens=lens
+              cam.location=pos
+              point_camera(cam,tgt)
+              scene.camera=cam
+              scene.render.filepath='//'+cid.lower()+'.png'
+              bpy.ops.render.render(write_still=True)
+              survey_rows.append({'id':cid,'position':list(pos),'target':list(tgt),'lens_mm':lens,
+                                  'rotation_euler':[round(float(x),6) for x in cam.rotation_euler]})
+          with open('architectural_survey_cameras.json','w') as f:
+              json.dump({'views':survey_rows},f,indent=2)
+
           # Eevee proof of the selected F3 geometry candidate.
           scene.render.engine='BLENDER_EEVEE'
           scene.render.resolution_x=960; scene.render.resolution_y=540
@@ -350,4 +392,17 @@ jobs:
             camera_hero_f5.png
             camera_refined_hero_search.json
             hero_f3_eevee.png
+            survey_aerial_sw.png
+            survey_aerial_ne.png
+            survey_market_edge.png
+            survey_civic_edge.png
+            survey_plaza_center.png
+            survey_sagrada_threshold.png
+            survey_reverse_from_north.png
+            survey_long_axis_south.png
+            survey_under_market.png
+            survey_under_civic.png
+            survey_sagrada_back_to_project.png
+            survey_wide_context.png
+            architectural_survey_cameras.json
           retention-days: 30
