@@ -220,6 +220,37 @@ jobs:
           with open('camera_search.json','w') as f:
               json.dump({'target':list(target),'candidates':camera_rows},f,indent=2)
 
+
+          # Open-plaza human-eye candidates found by ray-cast visibility search.
+          open_candidates=[
+              ('PLAZA_0_50',(0.0,50.0,1.56),(96.1,100.4,22.0)),
+              ('PLAZA_10_50',(10.0,50.0,1.56),(96.1,100.4,22.0)),
+              ('PLAZA_0_40',(0.0,40.0,1.56),(96.1,100.4,30.0)),
+              ('PLAZA_N10_40',(-10.0,40.0,1.56),(96.1,100.4,22.0)),
+              ('PLAZA_N30_50',(-30.0,50.0,1.56),(96.1,100.4,45.0)),
+          ]
+          open_rows=[]
+          set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
+          scene.render.resolution_x=720; scene.render.resolution_y=405
+          for cid,pos,tgt in open_candidates:
+              data=bpy.data.cameras.get('SEARCH_'+cid) or bpy.data.cameras.new('SEARCH_'+cid)
+              cam=bpy.data.objects.get('SEARCH_'+cid) or bpy.data.objects.new('SEARCH_'+cid,data)
+              if not cam.users_collection:
+                  scene.collection.objects.link(cam)
+              data.lens=32
+              cam.location=pos
+              point_camera(cam,tgt)
+              scene.camera=cam
+              scene.render.filepath='//camera_'+cid.lower()+'.png'
+              bpy.ops.render.render(write_still=True)
+              open_rows.append({
+                  'id':cid,'position':list(pos),
+                  'rotation_euler':[round(float(x),6) for x in cam.rotation_euler],
+                  'lens_mm':32,'target':list(tgt)
+              })
+          with open('camera_open_plaza_search.json','w') as f:
+              json.dump({'candidates':open_rows},f,indent=2)
+
           # Return to non-destructive comparison state: both available.
           set_hidden(proxy_coll,False); set_hidden(municipal_coll,False)
           scene.camera=hero
@@ -263,4 +294,10 @@ jobs:
             camera_threshold_d.png
             camera_market_edge_e.png
             camera_search.json
+            camera_plaza_0_50.png
+            camera_plaza_10_50.png
+            camera_plaza_0_40.png
+            camera_plaza_n10_40.png
+            camera_plaza_n30_50.png
+            camera_open_plaza_search.json
           retention-days: 30
