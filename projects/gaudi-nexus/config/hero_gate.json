@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "A_HERO_FINAL",
-  "status": "NOT_APPROVED",
+  "status": "CURRENT_HERO_REJECTED_SEARCHING_REPLACEMENT",
   "scene_rule": "must derive from canonical Blender scene",
   "camera": {
     "eye_height_m": [
@@ -32,5 +32,16 @@
     "composition": 10,
     "truth_consistency": 10
   },
-  "approval_rule": "mean score >=9.0/10 and no truth_consistency score below 9"
+  "approval_rule": "mean score >=9.0/10 and no truth_consistency score below 9",
+  "previous_candidate": {
+    "id": "HeroCam",
+    "eye_height_m": 1.56,
+    "lens_mm": 32,
+    "disposition": "retain as secondary market-atmosphere view, not final jury hero"
+  },
+  "rejection_reasons": [
+    "authoritative municipal comparison does not make Sagrada relationship sufficiently legible",
+    "ray-cast to cathedral target is blocked by Hard_Pier_5_-4.5 from current HeroCam",
+    "final hero must be reselected from unobstructed human-height plaza positions"
+  ]
 }
