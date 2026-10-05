@@ -251,6 +251,37 @@ jobs:
           with open('camera_open_plaza_search.json','w') as f:
               json.dump({'candidates':open_rows},f,indent=2)
 
+
+          # Tight final-hero geometry refinement around the strongest open-plaza zone.
+          refined=[
+              ('HERO_F1',(-8.0,38.0,1.56),(96.1,100.4,28.0),32),
+              ('HERO_F2',(-12.0,40.0,1.56),(96.1,100.4,28.0),32),
+              ('HERO_F3',(-15.0,42.0,1.56),(96.1,100.4,30.0),32),
+              ('HERO_F4',(-18.0,44.0,1.56),(96.1,100.4,32.0),32),
+              ('HERO_F5',(-12.0,40.0,1.56),(96.1,100.4,28.0),35),
+          ]
+          refined_rows=[]
+          set_hidden(proxy_coll,True); set_hidden(municipal_coll,False)
+          scene.render.resolution_x=720; scene.render.resolution_y=405
+          for cid,pos,tgt,lens in refined:
+              data=bpy.data.cameras.get(cid) or bpy.data.cameras.new(cid)
+              cam=bpy.data.objects.get(cid) or bpy.data.objects.new(cid,data)
+              if not cam.users_collection:
+                  scene.collection.objects.link(cam)
+              data.lens=lens
+              cam.location=pos
+              point_camera(cam,tgt)
+              scene.camera=cam
+              scene.render.filepath='//camera_'+cid.lower()+'.png'
+              bpy.ops.render.render(write_still=True)
+              refined_rows.append({
+                  'id':cid,'position':list(pos),
+                  'rotation_euler':[round(float(x),6) for x in cam.rotation_euler],
+                  'lens_mm':lens,'target':list(tgt)
+              })
+          with open('camera_refined_hero_search.json','w') as f:
+              json.dump({'candidates':refined_rows},f,indent=2)
+
           # Return to non-destructive comparison state: both available.
           set_hidden(proxy_coll,False); set_hidden(municipal_coll,False)
           scene.camera=hero
@@ -300,4 +331,10 @@ jobs:
             camera_plaza_n10_40.png
             camera_plaza_n30_50.png
             camera_open_plaza_search.json
+            camera_hero_f1.png
+            camera_hero_f2.png
+            camera_hero_f3.png
+            camera_hero_f4.png
+            camera_hero_f5.png
+            camera_refined_hero_search.json
           retention-days: 30
