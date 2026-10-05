@@ -1,0 +1,65 @@
+name: Gaudi Municipal Topography Crop
+
+on:
+  push:
+    branches: [gaudi-nexus-rev16-build-tmp]
+    paths:
+      - '.github/workflows/gaudi-topo-crop.yml'
+  workflow_dispatch:
+
+jobs:
+  crop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install GDAL
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gdal-bin
+
+      - name: Download official Barcelona 1:1000 topography
+        run: |
+          curl -L --fail --retry 3             'https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download'             -o Topografic_1-1000.gpkg
+          sha256sum Topografic_1-1000.gpkg > topography_source_sha256.txt
+          ls -lh Topografic_1-1000.gpkg
+          ogrinfo Topografic_1-1000.gpkg > layer_inventory.txt
+          sed -n '1,240p' layer_inventory.txt
+
+      - name: Crop competition context
+        run: |
+          # ~600m x 700m EPSG:25831 context around the competition site.
+          ogr2ogr -f GPKG site_topography_600m.gpkg Topografic_1-1000.gpkg             -spat 430600 4583500 431200 4584200             -skipfailures
+          sha256sum site_topography_600m.gpkg > site_topography_sha256.txt
+          ogrinfo site_topography_600m.gpkg > cropped_layer_inventory.txt
+          python3 - <<'PY'
+          import json, re, subprocess, pathlib
+          txt=pathlib.Path('cropped_layer_inventory.txt').read_text(errors='ignore')
+          layers=[]
+          for line in txt.splitlines():
+              m=re.match(r'\s*\d+:\s+(.+?)\s+\(',line)
+              if m: layers.append(m.group(1))
+          out={
+            'status':'OFFICIAL_TOPOGRAPHY_CROPPED_NOT_YET_RECONCILED',
+            'source':'Ajuntament de Barcelona / Open Data BCN Topografic_1-1000.gpkg',
+            'crs_expected':'EPSG:25831',
+            'crop_bbox_epsg25831':[430600,4583500,431200,4584200],
+            'layers':layers,
+            'layer_count':len(layers),
+            'crop_bytes':pathlib.Path('site_topography_600m.gpkg').stat().st_size
+          }
+          pathlib.Path('topography_crop_receipt.json').write_text(json.dumps(out,indent=2)+'\n')
+          print(json.dumps(out,indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-official-topography-crop
+          path: |
+            site_topography_600m.gpkg
+            topography_source_sha256.txt
+            site_topography_sha256.txt
+            layer_inventory.txt
+            cropped_layer_inventory.txt
+            topography_crop_receipt.json
+          retention-days: 30
