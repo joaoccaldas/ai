@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-04T19:54:00Z",
+  "updated_utc": "2026-10-05T03:34:00Z",
   "definition_of_100": "No known competition requirement gap, no unresolved source-of-truth conflict, no unverified competition-facing claim, no broken deliverable, and all final-release gates green.",
   "official_jury_points": {
     "architecture_program": 20,
@@ -15,7 +15,7 @@
       "id": 1,
       "name": "SITE_TRUTH_V1",
       "weight_pct": 10,
-      "status": "CONVERTED_CROP_READY_CUSTOM_IMPORT_BLOCKED",
+      "status": "MUNICIPAL_3D_ALIGNED_TOPOGRAPHY_AND_SIGHTLINE_PENDING",
       "why": "All downstream geometry, sightlines, shadow studies and context realism depend on authoritative municipal geometry.",
       "done_when": [
         "verified municipal DWG converted through named reproducible toolchain",
@@ -31,9 +31,11 @@
         "docs/OFFICIAL_BRIEF_AUDIT_2026-10-04.md",
         "ODA File Converter 27.9 verified conversion to R2018 DXF",
         "300 m municipal GLB crop: SHA256 f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
-        "Durable Higgsfield media id eaef5ac9-3706-45dc-809e-73c0b8b4c864"
+        "Durable Higgsfield media id eaef5ac9-3706-45dc-809e-73c0b8b4c864",
+        "Rev17 corrected comparison blend SHA256 78cd3253881f07178e7878711a6dc11efced02d7e45e0e5ee5f7ae655ac10fd5",
+        "GitHub build run 37259743278 / artifact 11323444092: corrected top-down + HeroCam municipal/proxy diagnostics"
       ],
-      "blocker": "Current 3D Jutsu import tool accepts catalog GLBs only; custom municipal GLB must enter through a supported custom-file import boundary before reconciliation."
+      "blocker": "Municipal 1:1000 topography/levels + final sightline/shadow recomputation still required before SITE_TRUTH_V1 promotion."
     },
     {
       "id": 2,
@@ -135,7 +137,7 @@
       "id": 7,
       "name": "Hero frame >=9/10",
       "weight_pct": 12,
-      "status": "EEVEE_RENDERED_VISUAL_APPROVAL_PENDING",
+      "status": "HEROCAM_SURVIVES_MUNICIPAL_CONTEXT_FINAL_POLISH_PENDING",
       "why": "The hero must compress the thesis into an immediate jury read.",
       "done_when": [
         "same canonical scene as plan/section",
@@ -149,7 +151,8 @@
       "evidence": [
         "visuals/camera_registry.json",
         "config/current_world.json",
-        "Rev 15 Eevee 320x180 render operation gaudi-r15-eevee-small-007 succeeded; artifact bf473fa6951086144f14b09b45b258ca"
+        "Rev 15 Eevee 320x180 render operation gaudi-r15-eevee-small-007 succeeded; artifact bf473fa6951086144f14b09b45b258ca",
+        "Municipal cluster weighted center projects to HeroCam screen (0.542, 0.525), depth ~181.4 m; no full camera redesign required."
       ],
       "blocker": "Pixels could not be inspected through the current tool bridge; 9+/10 visual score remains unproven."
     },
