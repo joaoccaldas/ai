@@ -33,6 +33,8 @@ CATALOG = {
  'Terracotta': ((0.55, 0.22, 0.1), 0.85, 0.0), 'Bark': ((0.25, 0.17, 0.1), 0.9, 0.0), 'LeafSilver': ((0.35, 0.42, 0.32), 0.6, 0.0), 'Stem': ((0.1, 0.3, 0.08), 0.7, 0.0),
  'Petal': ((0.85, 0.2, 0.3), 0.6, 0.0), 'FlowerCentre': ((0.8, 0.6, 0.05), 0.7, 0.0), 'Porcelain': ((0.92, 0.9, 0.86), 0.15, 0.0), 'Glass': ((0.9, 0.95, 1.0), 0.02, 0.0),
  'GlassDark': ((0.02, 0.08, 0.03), 0.05, 0.0), 'Label': ((0.9, 0.85, 0.7), 0.7, 0.0), 'Foil': ((0.7, 0.5, 0.1), 0.3, 1.0), 'Napkin': ((0.85, 0.85, 0.9), 0.9, 0.0),
+ 'Fabric': ((0.45, 0.4, 0.34), 0.95, 0.0), 'RugField': ((0.55, 0.38, 0.25), 1.0, 0.0), 'RugBorder': ((0.2, 0.18, 0.15), 1.0, 0.0), 'BookRed': ((0.5, 0.08, 0.07), 0.7, 0.0), 'BookBlue': ((0.08, 0.14, 0.4), 0.7, 0.0), 'BookGreen': ((0.1, 0.3, 0.15), 0.7, 0.0), 'Paper': ((0.9, 0.88, 0.8), 0.9, 0.0),
+ 'Canvas': ((0.7, 0.55, 0.35), 0.9, 0.0), 'LeafDark': ((0.06, 0.25, 0.1), 0.5, 0.0), 'Zinc': ((0.6, 0.62, 0.64), 0.35, 0.9), 'Rubber': ((0.04, 0.04, 0.04), 0.9, 0.0), 'PlinthBody': ((0.88, 0.87, 0.84), 0.6, 0.0), 'PlinthTop': ((0.95, 0.95, 0.93), 0.3, 0.0),
  'ShadeMetal': ((0.1, 0.1, 0.1), 0.35, 0.8), 'Cord': ((0.02, 0.02, 0.02), 0.8, 0.0), 'BulbEmissive': ((1.0, 0.85, 0.55), 0.3, 0.0),
 }
 def catmat(name):
@@ -94,9 +96,9 @@ if SHEET:
     fm = bpy.data.materials.new('floor'); fm.use_nodes = True; fm.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value = (0.7, 0.7, 0.68, 1); fl.data.materials.append(fm)
     sun = bpy.data.lights.new('s', 'SUN'); sun.energy = 3.5; so = bpy.data.objects.new('s', sun); sc.collection.objects.link(so); so.rotation_euler = (math.radians(50), 0, math.radians(30))
     w = sc.world or bpy.data.worlds.new('w'); sc.world = w; w.use_nodes = True; w.node_tree.nodes['Background'].inputs['Color'].default_value = (0.85, 0.9, 1.0, 1); w.node_tree.nodes['Background'].inputs['Strength'].default_value = 1.0
-    cd = bpy.data.cameras.new('c'); cd.type = 'ORTHO'; cd.ortho_scale = cols * cell + 0.6; co = bpy.data.objects.new('c', cd); sc.collection.objects.link(co)
-    co.location = ((cols - 1) * cell / 2, -(rows - 1) * cell / 2 - 3.0, 4.5); co.rotation_euler = (math.radians(58), 0, 0); sc.camera = co
-    sc.render.engine = 'CYCLES'; sc.cycles.samples = 24; sc.cycles.use_denoising = True; sc.render.resolution_x = 1800; sc.render.resolution_y = int(1800 * (rows * cell + 1.2) / (cols * cell + 0.6)) + 120
+    cd = bpy.data.cameras.new('c'); cd.type = 'ORTHO'; cd.ortho_scale = max(cols * cell + 0.6, rows * cell * 1.5 + 1.0); co = bpy.data.objects.new('c', cd); sc.collection.objects.link(co)
+    cy = -(rows - 1) * cell / 2; co.location = ((cols - 1) * cell / 2, cy - 8.0, 8.0); co.rotation_euler = (math.radians(45), 0, 0); sc.camera = co
+    sc.render.engine = 'CYCLES'; sc.cycles.samples = 24; sc.cycles.use_denoising = True; sc.render.resolution_x = 1800; sc.render.resolution_y = 1100 if rows <= 2 else 1500
     sc.view_settings.view_transform = 'AgX'; sc.render.filepath = os.path.join(out, 'contact_sheet.png'); bpy.ops.render.render(write_still=True); print('SHEET', len(sheet_items), 'assets ->', sc.render.filepath)
 else:
     json.dump({'assets': manifest}, open(os.path.join(out, 'exported_manifest.json'), 'w'), indent=1)

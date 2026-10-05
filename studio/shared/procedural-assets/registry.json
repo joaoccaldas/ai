@@ -619,6 +619,205 @@
     "studio/cafe",
     "studio/hotel"
    ]
+  },
+  {
+   "id": "sofa_two_seat",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "sofa_two_seat",
+   "materials": [
+    "Fabric",
+    "Timber"
+   ],
+   "params": {},
+   "category": "furniture",
+   "reuse": [
+    "studio/hotel",
+    "studio/hall",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "armchair",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "armchair",
+   "materials": [
+    "Fabric",
+    "Timber"
+   ],
+   "params": {},
+   "category": "furniture",
+   "reuse": [
+    "studio/hotel",
+    "studio/hall"
+   ]
+  },
+  {
+   "id": "rug_round",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "rug_round",
+   "materials": [
+    "RugField",
+    "RugBorder"
+   ],
+   "params": {},
+   "category": "decor",
+   "reuse": [
+    "studio/hotel",
+    "studio/hall"
+   ]
+  },
+  {
+   "id": "book_stack",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "book_stack",
+   "materials": [
+    "BookRed",
+    "BookBlue",
+    "BookGreen",
+    "Paper"
+   ],
+   "params": {},
+   "category": "decor",
+   "reuse": [
+    "studio/hotel",
+    "studio/museum",
+    "studio/cafe"
+   ]
+  },
+  {
+   "id": "picture_frame",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "picture_frame",
+   "materials": [
+    "Timber",
+    "Canvas"
+   ],
+   "params": {},
+   "category": "decor",
+   "reuse": [
+    "studio/hotel",
+    "studio/hall",
+    "studio/museum"
+   ]
+  },
+  {
+   "id": "monstera_potted",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "monstera_potted",
+   "materials": [
+    "Terracotta",
+    "Stem",
+    "LeafDark"
+   ],
+   "params": {},
+   "category": "landscape",
+   "reuse": [
+    "studio/hotel",
+    "studio/hall",
+    "studio/cafe",
+    "studio/florist"
+   ]
+  },
+  {
+   "id": "flower_bucket",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "flower_bucket",
+   "materials": [
+    "Zinc",
+    "Stem",
+    "Petal",
+    "FlowerCentre"
+   ],
+   "params": {},
+   "category": "decor",
+   "reuse": [
+    "studio/florist"
+   ]
+  },
+  {
+   "id": "dumbbell_pair",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "dumbbell_pair",
+   "materials": [
+    "Rubber",
+    "Steel"
+   ],
+   "params": {},
+   "category": "fitness",
+   "reuse": [
+    "studio/gym"
+   ]
+  },
+  {
+   "id": "kettlebell",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "kettlebell",
+   "materials": [
+    "CastIron"
+   ],
+   "params": {},
+   "category": "fitness",
+   "reuse": [
+    "studio/gym"
+   ]
+  },
+  {
+   "id": "yoga_mat_rolled",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "yoga_mat_rolled",
+   "materials": [
+    "Rubber"
+   ],
+   "params": {},
+   "category": "fitness",
+   "reuse": [
+    "studio/gym"
+   ]
+  },
+  {
+   "id": "plinth_display",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "plinth_display",
+   "materials": [
+    "PlinthBody",
+    "PlinthTop"
+   ],
+   "params": {},
+   "category": "exhibit",
+   "reuse": [
+    "studio/museum",
+    "studio/jewelry",
+    "studio/gallery"
+   ]
+  },
+  {
+   "id": "display_case_glass",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "display_case_glass",
+   "materials": [
+    "PlinthBody",
+    "Steel",
+    "Glass"
+   ],
+   "params": {},
+   "category": "exhibit",
+   "reuse": [
+    "studio/museum",
+    "studio/jewelry",
+    "studio/gallery"
+   ]
   }
  ]
 }

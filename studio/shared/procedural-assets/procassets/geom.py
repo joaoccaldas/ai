@@ -44,3 +44,12 @@ def arc_tube(bm, center, radius, a0, a1, r_tube, steps=12, plane='XZ', mi=0):
         a = a0 + (a1 - a0) * k / steps
         pts.append(Vector(center) + (Vector((math.cos(a) * radius, 0, math.sin(a) * radius)) if plane == 'XZ' else Vector((math.cos(a) * radius, math.sin(a) * radius, 0)) if plane == 'XY' else Vector((0, math.cos(a) * radius, math.sin(a) * radius))))
     for k in range(steps): cyl(bm, pts[k], pts[k + 1], r_tube, r_tube, 8, mi, caps=False)
+
+def rbox(bm, c, s, r=0.02, rotz=0.0, mi=0, seg=3):
+    """Rounded box: like box() but with bevelled edges."""
+    before = set(bm.faces); g = bmesh.ops.create_cube(bm, size=1.0)
+    for v in g['verts']:
+        q = Matrix.Rotation(rotz, 3, 'Z') @ Vector((v.co.x * s[0], v.co.y * s[1], v.co.z * s[2])); v.co = q + Vector(c)
+    edges = list({e for v in g['verts'] for e in v.link_edges})
+    if r > 0: bmesh.ops.bevel(bm, geom=edges, offset=r, segments=seg, affect='EDGES')
+    for f in set(bm.faces) - before: f.material_index = mi; f.smooth = True
