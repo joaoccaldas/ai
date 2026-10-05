@@ -26,7 +26,7 @@ jobs:
 
       - name: Download exact Rev15 and municipal crop
         run: |
-          curl -fsSL 'https://695d5a9fc666e505559765690b5db7dd.r2.cloudflarestorage.com/3d-scene-builder/projects/6bfa2d88-eef7-4583-9d82-08218b0bf4e4/revisions/00000015-gaudi-r15-program-closure-001/scene.blend?X-Amz-Expires=900&X-Amz-Date=20261005T030842Z&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=f4fb15da414147020cebc9c7007b912d%2F20261005%2Fauto%2Fs3%2Faws4_request&X-Amz-SignedHeaders=host&X-Amz-Signature=27f81303cd3e7bc38c89ad418287f640ec20bf1e6545271b9665be2a6d4b641d' -o rev15.blend
+          curl -fsSL 'https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/57590020-3bff-4a29-89c7-9bdf05a130c6.blend' -o rev15.blend
           curl -fsSL 'https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/eaef5ac9-3706-45dc-809e-73c0b8b4c864.glb' -o municipal.glb
           echo 'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494  rev15.blend' | sha256sum -c -
           echo 'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c  municipal.glb' | sha256sum -c -
