@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "A_HERO_FINAL",
-  "status": "CURRENT_HERO_REJECTED_SEARCHING_REPLACEMENT",
+  "status": "HERO_F3_SELECTED_GEOMETRY_PROOF_FINAL_VISUAL_PENDING",
   "scene_rule": "must derive from canonical Blender scene",
   "camera": {
     "eye_height_m": [
@@ -43,5 +43,26 @@
     "authoritative municipal comparison does not make Sagrada relationship sufficiently legible",
     "ray-cast to cathedral target is blocked by Hard_Pier_5_-4.5 from current HeroCam",
     "final hero must be reselected from unobstructed human-height plaza positions"
+  ],
+  "selected_candidate": {
+    "id": "A_HERO_MUNICIPAL_F3",
+    "position": [
+      -15,
+      42,
+      1.56
+    ],
+    "lens_mm": 32,
+    "target": [
+      96.1,
+      100.4,
+      30
+    ],
+    "source": "Rev17 municipal Workbench camera search"
+  },
+  "selection_rationale": [
+    "cathedral is legible using authoritative municipal geometry",
+    "intervention edge remains visible and identifiable",
+    "human activity/plaza foreground survives",
+    "no architectural surgery required to achieve the view"
   ]
 }
