@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-04T19:30:00Z",
+  "updated_utc": "2026-10-05T03:20:00Z",
   "authority": {
     "repository": "joaoccaldas/ai",
     "branch": "gaudi-nexus",
@@ -33,10 +33,11 @@
       "wet-stone and ground-detail cues"
     ],
     "promotion_blockers": [
-      "Rev 15 hero verification render is pending approval",
-      "municipal DWG has not yet been converted/reconciled into the world",
-      "canonical collection migration for legacy Rev 14 objects remains partial",
-      "hero frame has not yet passed >=9/10 final visual gate",
+      "Rev17 municipal comparison must pass numeric + visual reconciliation before becoming canonical",
+      "proxy Sagrada/context remains non-authoritative until retirement",
+      "engineer-grade structural validation remains open",
+      "annual environmental validation remains open",
+      "hero frame has not passed >=9/10 visual gate",
       "A1 board is not final"
     ],
     "blend_size_bytes": 18083163,
@@ -109,5 +110,32 @@
     "Do not overwrite older world revisions; promote by explicit manifest update.",
     "Do not treat Higgsfield URL alone as archival source-of-truth.",
     "Do not replace Rev 14 geometry with municipal context until coordinate, scale and sightline reconciliation passes."
-  ]
+  ],
+  "comparison_candidate": {
+    "revision": 17,
+    "status": "ALIGNED_MUNICIPAL_COMPARISON_NOT_PROMOTED",
+    "build_artifact_sha256": "67cc3eeb60838b1ca684d127f1bde4da987db8923617c997b80414a7526eed24",
+    "base_rev15_sha256": "cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494",
+    "municipal_glb_sha256": "f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+    "municipal_collection": "00_SITE_MUNICIPAL_IMPORTED",
+    "alignment": {
+      "source_axes": "+X east / +Y north / +Z up",
+      "gltf_axis_restore_rotation_x_deg": -90,
+      "translation_m": [
+        13.359293125672881,
+        108.63406337943947,
+        0
+      ],
+      "anchor": "municipal OSM plaza centroid -> Rev15 Plaza polygon area centroid",
+      "rev15_plaza_centroid": [
+        -1.599535,
+        3.442506
+      ],
+      "municipal_plaza_centroid_in_crop": [
+        -14.95882812567288,
+        -105.19155737943947
+      ]
+    },
+    "rule": "Comparison only. Do not replace proxy context or approve hero until diagnostic reconciliation passes."
+  }
 }
