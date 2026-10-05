@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-04T19:30:00Z",
+  "updated_utc": "2026-10-05T03:34:00Z",
   "authority": {
     "repository": "joaoccaldas/ai",
     "branch": "gaudi-nexus",
@@ -33,10 +33,12 @@
       "wet-stone and ground-detail cues"
     ],
     "promotion_blockers": [
-      "Rev 15 hero verification render is pending approval",
-      "municipal DWG has not yet been converted/reconciled into the world",
-      "canonical collection migration for legacy Rev 14 objects remains partial",
-      "hero frame has not yet passed >=9/10 final visual gate",
+      "municipal building context is aligned, but municipal 1:1000 topography/levels/trees/furniture still require ingestion/cross-check",
+      "Passion-façade sightline and shadow studies must be recomputed against municipal context",
+      "proxy Sagrada/context must be retired from competition-facing renders",
+      "engineer-grade structural validation remains open",
+      "annual environmental validation remains open",
+      "hero frame has not passed >=9/10 final visual gate",
       "A1 board is not final"
     ],
     "blend_size_bytes": 18083163,
@@ -109,5 +111,91 @@
     "Do not overwrite older world revisions; promote by explicit manifest update.",
     "Do not treat Higgsfield URL alone as archival source-of-truth.",
     "Do not replace Rev 14 geometry with municipal context until coordinate, scale and sightline reconciliation passes."
-  ]
+  ],
+  "comparison_candidate": {
+    "revision": 17,
+    "status": "MUNICIPAL_CONTEXT_ALIGNED_AND_DIAGNOSTICALLY_VERIFIED_NOT_CANONICAL",
+    "build_run_id": 37259743278,
+    "build_artifact_id": 11323444092,
+    "build_artifact_digest": "sha256:2da26bd464f7dfa12b3f6acba38027da195d0b177684220154e82d9d7736307a",
+    "blend_sha256": "78cd3253881f07178e7878711a6dc11efced02d7e45e0e5ee5f7ae655ac10fd5",
+    "report_sha256": "bc775361219119be548a2cf270467974086856102c11b24fe4afe6a69f8faa37",
+    "base_rev15_sha256": "cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494",
+    "municipal_glb_sha256": "f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+    "municipal_collection": "00_SITE_MUNICIPAL_IMPORTED",
+    "alignment": {
+      "method": "mesh_coordinate_remap_plus_plaza_centroid_translation",
+      "imported_mesh_observed_bbox_min": [
+        -274.528839,
+        -120.805,
+        -307.590118
+      ],
+      "imported_mesh_observed_bbox_max": [
+        306.451172,
+        10,
+        315.100159
+      ],
+      "coordinate_map": "imported (x,y,z) -> source EPSG:25831 axes (x,z,-y)",
+      "object_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "translation_m": [
+        13.359293125672881,
+        108.63406337943947,
+        0
+      ],
+      "anchor": "municipal OSM plaza centroid -> Rev15 Plaza polygon area centroid",
+      "rev15_plaza_centroid": [
+        -1.599535,
+        3.442506
+      ],
+      "municipal_plaza_centroid_in_crop": [
+        -14.95882812567288,
+        -105.19155737943947
+      ]
+    },
+    "verified_world_bbox": {
+      "min": [
+        -261.17,
+        -198.956,
+        -10
+      ],
+      "max": [
+        319.81,
+        423.734,
+        120.805
+      ],
+      "size": [
+        580.98,
+        622.69,
+        130.805
+      ]
+    },
+    "hero_camera_projection": {
+      "proxy_sagrada_bbox_center": {
+        "x": 0.51759,
+        "y": 1.00555,
+        "depth_m": 186.675
+      },
+      "municipal_cluster_bbox_center": {
+        "x": 0.55906,
+        "y": 0.77607,
+        "depth_m": 184.477
+      },
+      "municipal_cluster_weighted_center": {
+        "x": 0.54194,
+        "y": 0.5253,
+        "depth_m": 181.362
+      },
+      "interpretation": "Municipal mass remains in the intended HeroCam sector and sits more naturally inside frame than the vertically exaggerated proxy."
+    },
+    "diagnostics": {
+      "top_down": "PASS_AXIS_AND_URBAN_CONTEXT_READ",
+      "hero_cam": "PASS_DIRECTION_CONTINUITY_MATERIAL_LIGHT_NOT_FINAL",
+      "proxy_context_verdict": "RETIRE_BEFORE_COMPETITION_OUTPUT"
+    },
+    "rule": "Rev17 is an evidence/comparison build. Do not call it canonical until topography/levels and sightline/shadow gates close."
+  }
 }
