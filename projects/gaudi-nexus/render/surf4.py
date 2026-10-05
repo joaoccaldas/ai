@@ -3,13 +3,13 @@
 pm=bpy.data.materials.get('PlazaSlabs'); nt=pm.node_tree; p=bsdf(pm)
 damp=[n for n in nt.nodes if n.bl_idname=='ShaderNodeTexNoise' and abs(n.inputs['Scale'].default_value-0.22)<1e-6]
 if damp:
-    pud=ramp(nt,damp[0].outputs['Fac'],[(0.625,(0,0,0,1)),(0.640,(1,1,1,1))])
+    pud=ramp(nt,damp[0].outputs['Fac'],[(0.572,(0,0,0,1)),(0.588,(1,1,1,1))])
     rl=[l for l in nt.links if l.to_socket==p.inputs['Roughness']][0]
     rsrc=rl.from_socket; nt.links.remove(rl)
     pr=mathn(nt,'MULTIPLY',rsrc,mathn(nt,'SUBTRACT',1.0,mathn(nt,'MULTIPLY',pud.outputs['Color'],0.96)))
     nt.links.new(pr,p.inputs['Roughness'])
     cl=[l for l in nt.links if l.to_socket==p.inputs['Base Color']][0]; csrc=cl.from_socket; nt.links.remove(cl)
-    nt.links.new(mixrgb(nt,csrc,(0.05,0.05,0.05,1),pud.outputs['Color']),p.inputs['Base Color'])
+    nt.links.new(mixrgb(nt,csrc,(0.012,0.012,0.014,1),pud.outputs['Color']),p.inputs['Base Color'])
     nl=[l for l in nt.links if l.to_socket==p.inputs['Normal']]
     for l in nl:   # flatten normals inside puddles
         pass

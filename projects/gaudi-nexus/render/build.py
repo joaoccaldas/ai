@@ -89,7 +89,7 @@ mm=newmat('MuniLimestone'); nt=mm.node_tree; p=bsdf(mm)
 mp=mapping(nt); mp.inputs['Rotation'].default_value=(math.radians(90),0,0); br=nt.nodes.new('ShaderNodeTexBrick'); nt.links.new(mp.outputs['Vector'],br.inputs['Vector'])
 br.inputs['Scale'].default_value=1.0; br.inputs['Brick Width'].default_value=2.2; br.inputs['Row Height'].default_value=0.9
 br.inputs['Mortar Size'].default_value=0.03; br.inputs['Mortar Smooth'].default_value=0.2; br.offset=0.5
-br.inputs['Color1'].default_value=(0.74,0.62,0.44,1); br.inputs['Color2'].default_value=(0.66,0.54,0.38,1); br.inputs['Mortar'].default_value=(0.36,0.31,0.25,1)
+br.inputs['Color1'].default_value=(0.78,0.65,0.45,1); br.inputs['Color2'].default_value=(0.55,0.43,0.30,1); br.inputs['Mortar'].default_value=(0.36,0.31,0.25,1)
 br.inputs['Color Variation' if 'Color Variation' in br.inputs else 'Bias'].default_value=0.0 if 'Color Variation' not in br.inputs else 0.5
 mpB=mapping(nt); mpB.inputs['Rotation'].default_value=(math.radians(90),0,math.radians(90)); brB=nt.nodes.new('ShaderNodeTexBrick'); nt.links.new(mpB.outputs['Vector'],brB.inputs['Vector'])
 for k_ in ('Scale','Brick Width','Row Height','Mortar Size','Mortar Smooth','Color1','Color2','Mortar'): brB.inputs[k_].default_value=br.inputs[k_].default_value
@@ -103,7 +103,10 @@ mp2=mapping(nt,(0.28,0.28,0.28)); streak=noise(nt,mp2,1.0,6,0.6)   # tall vertic
 mp3=mapping(nt,(0.12,0.12,0.12)); patina=noise(nt,mp3,1.0,6,0.6)
 dark=ramp(nt,streak.outputs['Fac'],[(0.35,(1,1,1,1)),(0.75,(0.52,0.48,0.42,1))])
 col=mixrgb(nt,_bc.outputs[2],dark.outputs['Color'],0.18,'MULTIPLY')
-col=mixrgb(nt,col,ramp(nt,patina.outputs['Fac'],[(0.4,(1,1,1,1)),(0.7,(0.78,0.75,0.68,1))]).outputs['Color'],0.5,'MULTIPLY')
+col=mixrgb(nt,col,ramp(nt,patina.outputs['Fac'],[(0.4,(1,1,1,1)),(0.7,(0.72,0.68,0.6,1))]).outputs['Color'],0.6,'MULTIPLY')
+_zs=nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(nt.nodes.new('ShaderNodeTexCoord').outputs['Object'],_zs.inputs['Vector'])
+_base=ramp(nt,mathn(nt,'DIVIDE',_zs.outputs['Z'],40.0,True),[(0.0,(0.62,0.55,0.48,1)),(0.25,(0.9,0.86,0.8,1)),(1.0,(1.08,1.06,1.02,1))])   # dirt toward the base, cleaner higher up
+col=mixrgb(nt,col,_base.outputs['Color'],1.0,'MULTIPLY')
 nt.links.new(col,p.inputs['Base Color']); p.inputs['Roughness'].default_value=0.88
 h=mathn(nt,'SUBTRACT',1.0,_bf.outputs[0]); bump(nt,mathn(nt,'ADD',h,mathn(nt,'MULTIPLY',noise(nt,mapping(nt,(1,1,1)),40,8,0.55).outputs['Fac'],0.35)),0.8,0.05,p)
 wv=nt.nodes.new('ShaderNodeTexWave'); wv.wave_type='BANDS'; wv.bands_direction='X'; wv.inputs['Scale'].default_value=0.22; wv.inputs['Distortion'].default_value=2.5; wv.inputs['Detail'].default_value=3
