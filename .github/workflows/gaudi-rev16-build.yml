@@ -71,12 +71,26 @@ jobs:
           # Restore municipal EPSG:25831 axes, then translate the municipal
           # OSM plaza centroid onto the Rev15 Plaza polygon centroid.
           import math
+          import_state=[]
           for o in imported:
-              o.rotation_euler[0] -= math.pi/2
+              import_state.append({
+                  'name':o.name,
+                  'rotation_euler_deg':[round(math.degrees(float(v)),6) for v in o.rotation_euler],
+                  'location':[round(float(v),6) for v in o.location],
+                  'local_bbox_min':[round(float(min(v.co[i] for v in o.data.vertices)),6) for i in range(3)] if o.type=='MESH' else None,
+                  'local_bbox_max':[round(float(max(v.co[i] for v in o.data.vertices)),6) for i in range(3)] if o.type=='MESH' else None
+              })
+              if o.type=='MESH':
+                  for v in o.data.vertices:
+                      x,y,z=v.co
+                      v.co=(x,z,-y)
+                  o.data.update()
+              o.rotation_euler=(0.0,0.0,0.0)
               o.location.x += 13.359293125672881
               o.location.y += 108.63406337943947
-          coll['alignment_rotation_x_delta_deg']=-90.0
-          coll['alignment_final_rotation_x_deg']=0.0
+          coll['alignment_method']='mesh_coordinate_remap'
+          coll['alignment_coordinate_map']='imported (x,y,z) -> source axes (x,z,-y)'
+          coll['alignment_object_rotation_deg']=[0.0,0.0,0.0]
           coll['alignment_translation_x_m']=13.359293125672881
           coll['alignment_translation_y_m']=108.63406337943947
           coll['alignment_anchor']='municipal OSM plaza centroid -> Rev15 Plaza polygon area centroid'
@@ -178,6 +192,7 @@ jobs:
               'imported_objects':len(imported),
               'total_objects':len(bpy.data.objects),
               'municipal_bbox':municipal_bbox,
+              'import_state_before_axis_restore':import_state,
               'proxy_sagrada_bbox':proxy_bbox,
               'rev15_sha256':'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494',
               'municipal_glb_sha256':'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c',
