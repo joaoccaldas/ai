@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-05T04:18:00Z",
+  "updated_utc": "2026-10-05T04:25:00Z",
   "authority": {
     "repository": "joaoccaldas/ai",
     "branch": "gaudi-nexus",
@@ -76,8 +76,23 @@
       "render_time_seconds_approx": 127,
       "note": "Successful Eevee render verifies the scene can render with materials/lights. The current tool bridge did not expose the returned pixels for agent visual inspection, so hero visual approval remains open."
     },
-    "hero_camera_status": "REJECTED_AS_FINAL_JURY_HERO",
-    "hero_camera_rejection_reason": "Authoritative municipal comparison confirms the existing 1.56m / 32mm HeroCam does not make the Sagrada relationship sufficiently legible for the final hero role. Retain as secondary market-atmosphere camera."
+    "hero_camera_status": "F3_SELECTED_OLD_HEROCAM_SECONDARY",
+    "hero_camera_rejection_reason": "Authoritative municipal comparison confirms the existing 1.56m / 32mm HeroCam does not make the Sagrada relationship sufficiently legible for the final hero role. Retain as secondary market-atmosphere camera.",
+    "new_hero_candidate": {
+      "id": "A_HERO_MUNICIPAL_F3",
+      "position": [
+        -15,
+        42,
+        1.56
+      ],
+      "lens_mm": 32,
+      "target": [
+        96.1,
+        100.4,
+        30
+      ],
+      "status": "GEOMETRY_SELECTED_FINAL_VISUAL_PENDING"
+    }
   },
   "authoritative_context": {
     "municipal_source_id": "BCN-3D-SF",
