@@ -44,6 +44,15 @@ class Contracts(unittest.TestCase):
         self.assertEqual(sf['site_truth_v1_crop']['glb_sha256'],'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c')
         self.assertEqual(sf['site_truth_v1_crop']['mesh_entities'],2900)
 
+    def test_rev17_comparison_identity_is_pinned(self):
+        w=json.loads((ROOT/'config/current_world.json').read_text())
+        r=w['comparison_candidate']
+        self.assertEqual(r['revision'],17)
+        self.assertEqual(r['blend_sha256'],'78cd3253881f07178e7878711a6dc11efced02d7e45e0e5ee5f7ae655ac10fd5')
+        self.assertEqual(r['municipal_glb_sha256'],'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c')
+        self.assertEqual(r['diagnostics']['top_down'],'PASS_AXIS_AND_URBAN_CONTEXT_READ')
+        self.assertEqual(r['diagnostics']['proxy_context_verdict'],'RETIRE_BEFORE_COMPETITION_OUTPUT')
+
     def test_official_brief_is_locked(self):
         req=json.loads((ROOT/'config/requirements.json').read_text())
         self.assertTrue(req['status'].startswith('OFFICIAL_BRIEF_AUDITED'))
