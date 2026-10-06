@@ -32,7 +32,8 @@ const SOURCES=Object.freeze({
 });
 export default async function handler(req,res){
   if(req.method!=='GET'&&req.method!=='HEAD')return res.status(405).json({ok:false,error:'method_not_allowed'});
-  const item=SOURCES[String(req.query?.id||'')];
+  const parsed=new URL(req.url,'http://spatial.local');
+  const item=SOURCES[String(parsed.searchParams.get('id')||'')];
   if(!item)return res.status(404).json({ok:false,error:'unknown_asset'});
   try{
     const upstream=await fetch(item.url,{method:req.method==='HEAD'?'HEAD':'GET',headers:{'user-agent':'caldas-spatial-lab/0'}});
