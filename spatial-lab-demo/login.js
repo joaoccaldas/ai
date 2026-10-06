@@ -24,3 +24,22 @@ form.addEventListener('submit',async e=>{
     form.querySelector('[name=password]').value='';
   }finally{button.disabled=false;}
 });
+const recover=document.querySelector('#recover');
+recover.addEventListener('click',async()=>{
+  const email=String(new FormData(form).get('email')||'').trim();
+  if(!email||!email.includes('@')){status.textContent='Enter your KONA account email first.';return;}
+  recover.disabled=true; status.textContent='Requesting a reset link…';
+  try{
+    const redirect='https://joaoccaldas.github.io/konam/index.html';
+    const response=await fetch(SUPA_URL+'/auth/v1/recover?redirect_to='+encodeURIComponent(redirect),{
+      method:'POST',
+      headers:{apikey:SUPA_KEY,'content-type':'application/json'},
+      body:JSON.stringify({email})
+    });
+    if(response.status===429){status.textContent='Too many reset requests. Check your inbox for an earlier link, then try again later.';return;}
+    if(!response.ok)throw new Error('recover');
+    status.textContent='If that KONA account exists, check your email. Reset the password in KONA, then return here and sign in.';
+  }catch{
+    status.textContent='Password reset could not be requested right now.';
+  }finally{recover.disabled=false;}
+});
