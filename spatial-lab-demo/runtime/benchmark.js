@@ -2,7 +2,7 @@ export function percentile(samples=[],p=.95){
   const sorted=[...samples].filter(Number.isFinite).sort((a,b)=>a-b);
   if(!sorted.length)return null;
   const q=Math.max(0,Math.min(1,Number(p)||0));
-  return sorted[Math.min(sorted.length-1,Math.floor((sorted.length-1)*q))];
+  return sorted[Math.min(sorted.length-1,Math.max(0,Math.ceil(sorted.length*q)-1))];
 }
 export function summarizeFrames(samples=[]){
   const clean=samples.filter(v=>Number.isFinite(v)&&v>0);
