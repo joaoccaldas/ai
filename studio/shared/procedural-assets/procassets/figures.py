@@ -108,7 +108,7 @@ def populate(cam_name,seed=7,dscale=1.0):
     placed=[]
     def spot(dmin,dmax,lat_max):
         for _ in range(300):
-            dmin2,dmax2=max(dmin*dscale,(5.5 if dscale<1 else 0)),max(dmax*dscale,(14 if dscale<1 else 0)); d=r.uniform(dmin2,dmax2); lat=r.uniform(-lat_max,lat_max)*d/(12*dscale)
+            dmin2,dmax2=max(dmin*dscale,(9.0 if dscale<1 else 0)),max(dmax*dscale,(26 if dscale<1 else 0)); d=r.uniform(dmin2,dmax2); lat=r.uniform(-lat_max,lat_max)*d/(12*dscale)
             x=cx+f.x*d+lf.x*lat; y=cy+f.y*d+lf.y*lat
             if abs(math.degrees(math.atan2(lat,d)))>29: continue
             if any(math.hypot(x-px,y-py)<3.6*max(dscale,0.6) for px,py in placed): continue

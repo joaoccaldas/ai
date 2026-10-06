@@ -191,6 +191,13 @@ from procassets.market import *
 replace_market_assets(); replace_stalls_and_herbs()
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'surf3.py')).read())
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'surf4.py')).read())
+if CAM=='AERIAL':   # from above, large soft stains read as leopard spots: keep only rare, small puddles
+    _pm=bpy.data.materials.get('PlazaSlabs')
+    for _n in _pm.node_tree.nodes:
+        if _n.bl_idname=='ShaderNodeValToRGB' and len(_n.color_ramp.elements)==2:
+            _e=_n.color_ramp.elements; _p0=_e[0].position
+            if abs(_p0-0.572)<0.01: _e[0].position=0.995; _e[1].position=1.0   # no puddles from above
+            elif abs(_p0-0.50)<0.01: _e[0].position=0.66; _e[1].position=0.80   # broad damp stain mask (30% coverage) -> rare
 from procassets.furniture import *
 replace_furniture()
 bm=bpy.data.materials.get('HeroBrass')
