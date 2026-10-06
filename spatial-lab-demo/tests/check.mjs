@@ -66,7 +66,8 @@ assert.ok(registry.worlds.some(w=>w.id==='room:spatial-lab:bellagio-lobby-r0'&&w
 assert.ok(registry.worlds.every(w=>typeof w.scene_manifest==='string'&&w.scene_manifest.length>0),'every registered scene has a manifest');
 assert.equal(worldZero.schema,'caldas.scene/v0');
 assert.equal(worldZero.assets[0].delivery.id,'speedmax');
-assert.equal(worldZero.benchmark_policy.upload,false);
+assert.equal(worldZero.benchmark_policy.upload,true,'World Zero benchmark persistence is enabled');
+assert.equal(worldZero.benchmark_policy.persistence,'owner-scoped-supabase-rls','World Zero benchmark persistence is owner-scoped through RLS');
 assert.doesNotMatch(loginJs,/localStorage|sessionStorage/,'auth token must not use browser storage');
 assert.match(login,/id="recover"/,'password recovery is visible');
 assert.match(loginJs,/https:\/\/joaoccaldas\.github\.io\/konam\/index\.html/,'recovery reuses canonical KONA callback');
