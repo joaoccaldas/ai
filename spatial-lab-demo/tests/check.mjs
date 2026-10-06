@@ -18,7 +18,7 @@ for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
 }
 assert.match(index,/href="\/bellagio\.html"/,'World Zero routes to Bellagio benchmark');
 assert.match(index,/href="\/diagnostics\.html"/,'World Zero routes to device diagnostics');
-const diagnostics=read('diagnostics.html'), evidencePage=read('evidence.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js'), xrCore=read('runtime/xr-interactions.js'), spatialStudio=read('runtime/spatial-studio.js'), spatialLayout=read('runtime/spatial-layout.js'), layoutClient=read('runtime/layout-state.js'), layoutApi=read('api/layout.js'), layoutMigration=read('supabase/migrations/20261006112200_spatial_layout_owner_state.sql');
+const diagnostics=read('diagnostics.html'), evidencePage=read('evidence.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js'), xrCore=read('runtime/xr-interactions.js'), spatialStudio=read('runtime/spatial-studio.js'), spatialLayout=read('runtime/spatial-layout.js'), locomotion=read('runtime/xr-locomotion.js'), layoutClient=read('runtime/layout-state.js'), layoutApi=read('api/layout.js'), layoutMigration=read('supabase/migrations/20261006112200_spatial_layout_owner_state.sql');
 assert.match(diagnostics,/navigator\.gpu/,'diagnostics checks WebGPU');
 assert.match(diagnostics,/isSessionSupported\('immersive-vr'\)/,'diagnostics checks immersive WebXR');
 assert.match(diagnostics,/MAX_TEXTURE_SIZE/,'diagnostics inspects GPU limits');
@@ -126,6 +126,19 @@ assert.match(layoutMigration,/enable row level security/i,'layout table enables 
 assert.match(layoutMigration,/force row level security/i,'layout table forces RLS');
 assert.match(layoutMigration,/grant select, insert, update on table public\.spatial_layout_state to authenticated/i,'layout table grants only required owner operations');
 assert.doesNotMatch(layoutMigration,/grant .*delete|grant .*truncate/i,'layout table grants no delete or truncate');
+assert.match(index,/createTeleportSystem/,'World Zero uses shared XR locomotion core');
+assert.match(index,/playerRig=new THREE\.Group\(\)/,'World Zero uses a movable player rig');
+assert.match(index,/id:'center',label:'CENTER'/,'CENTER teleport anchor is semantic');
+assert.match(index,/id:'agents',label:'AGENTS'/,'AGENTS teleport anchor is semantic');
+assert.match(index,/id:'bike',label:'BIKE'/,'BIKE teleport anchor is semantic');
+assert.match(index,/id:'wall',label:'COMMAND WALL'/,'COMMAND WALL teleport anchor is semantic');
+assert.match(index,/canTeleport:\(\)=>!mrState\.active&&!benchActive/,'teleport is disabled in MR and measured benchmarks');
+assert.match(locomotion,/renderer\.xr\.getCamera\(\)/,'teleport derives the actual XR head world position');
+assert.match(locomotion,/rig\.position\.x\+=target\.x-head\.x/,'teleport moves the player rig relative to current head pose');
+assert.match(locomotion,/rig\.position\.z\+=target\.z-head\.z/,'teleport preserves room-scale offset while moving horizontally');
+assert.match(locomotion,/canTeleport\(\)/,'locomotion has an external comfort/safety gate');
+assert.doesNotMatch(locomotion,/navigator\.userAgent|Quest|Oculus|Meta Quest/i,'locomotion does not device-sniff');
+assert.doesNotMatch(locomotion,/gamepad\.axes|thumbstick|smooth.?locomotion/i,'V0 locomotion avoids continuous joystick motion');
 assert.equal(scene.semantic_authority,'mesh');
 assert.ok(scene.assets.some(a=>a.role==='semantic-mesh'&&a.bytes===3950912));
 assert.ok(scene.excluded_from_r0.some(a=>a.path==='assets/city.glb'&&a.bytes===11940384));
@@ -210,7 +223,7 @@ assert.match(xrBenchmarkMigration,/xr_frame_rate >= 30/i,'XR frame rate is bound
 const health=read('api/health.js');
 assert.match(health,/VERCEL_GIT_COMMIT_SHA/,'health exposes deployed SHA');
 assert.match(health,/bellagio-lobby-r0/,'health lists Bellagio benchmark');
-for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js','api/benchmark.js','api/layout.js','runtime/evidence.js','runtime/xr-interactions.js','runtime/spatial-studio.js','runtime/spatial-layout.js','runtime/layout-state.js']){
+for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js','api/benchmark.js','api/layout.js','runtime/evidence.js','runtime/xr-interactions.js','runtime/spatial-studio.js','runtime/spatial-layout.js','runtime/layout-state.js','runtime/xr-locomotion.js']){
   const r=spawnSync(process.execPath,['--check',new URL('../'+file,import.meta.url).pathname],{encoding:'utf8'});
   assert.equal(r.status,0,file+' node syntax: '+r.stderr);
 }
