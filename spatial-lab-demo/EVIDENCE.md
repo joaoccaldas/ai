@@ -39,3 +39,50 @@ No production or public KONA route is changed by this work.
 - Physical phone and Quest evidence: NOT_RUN.
 
 Confidence that signed-out world access is gated: **98%**. Confidence in authenticated world rendering remains **not yet measured** until owner login is exercised.
+
+## Session delta — 2026-10-06 07:20–07:42 UTC
+
+### Authentication blocker
+
+User reported that login did not work. Live browser automation with intentionally invalid credentials proved:
+- login JavaScript executes;
+- Supabase password endpoint is reachable and returns a normal invalid-credentials response;
+- the failure occurs before `/api/session` when Supabase rejects the password.
+
+Remediation:
+- added **Reset KONA password**;
+- reused KONA's canonical hosted recovery callback `https://joaoccaldas.github.io/konam/index.html`;
+- did not create a second recovery system;
+- live automation on the current release confirmed the reset control is visible, functional and returns generic non-enumerating messaging.
+
+Confidence that the recovery path itself works: **98%**.
+Actual owner password login after reset: **NOT_RUN by automation** because no owner credential is stored in test tooling.
+
+### Bellagio semantic room extraction
+
+Source inspection proved Bellagio's Blender bake merges lobby + passage + conservatory into one `BAKED_INTERIOR` atlas. Therefore simple object-level visibility could not isolate the lobby.
+
+Implemented:
+- authoritative lobby bounds from pinned Bellagio manifest;
+- runtime triangle-centroid cropping of the shared baked geometry while retaining UV attributes;
+- realtime-mesh bounds culling;
+- reuse of Bellagio's existing Fiori di Como procedural reconstruction from `chihuly_pieces`;
+- fixed XR origin / OrbitControls local-vs-world coordinate mismatch;
+- deliberately excludes the ~11.94 MB city GLB from the lobby benchmark.
+
+This is a reusable hypothesis: **semantic bounds can drive geometry residency from one canonical shared asset instead of duplicating room GLBs**.
+
+### CI and deployment evidence
+
+- GitHub workflow `Spatial Lab checks` now gates auth storage, owner allowlist, responsive contracts, XR entry, fallbacks, scene source pinning, room extraction, diagnostics and JS syntax.
+- Exact semantic-extraction CI SHA `6d7ed313532e4d2c3b277f72afb06782b056bd91`: PASS.
+- Exact diagnostics/mobile-safety SHA `c6af8e75cf0e2b6ab18f6650f98e789269567603`: PASS.
+- Vercel deployment `dpl_9FGskZYssKBRnhQmtAdfp2nBZdMT`: READY.
+- Live `/api/health` reports release SHA `c6af8e75cf0e2b6ab18f6650f98e789269567603`.
+- Live signed-out `/diagnostics.html` and `/bellagio.html` both redirect to owner login.
+
+### Mobile regression prevention
+
+Adding P95 telemetry initially created a plausible 320 px overflow risk. Before deployment, mobile telemetry was changed to a three-column strip showing only FPS, P95 and DPR; draw calls and triangle counts remain on larger screens. CI asserts the responsive rule exists.
+
+Physical Samsung and Quest visual evidence remains **NOT_RUN**.
