@@ -3,7 +3,7 @@ import {spawnSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
-const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), asset=read('api/asset.js'), sourceHealth=read('api/source-health.js'), benchmarkApi=read('api/benchmark.js'), evidenceClient=read('runtime/evidence.js'), benchmarkMigration=read('supabase/migrations/20261006080500_spatial_benchmarks_owner_evidence.sql'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json')), worldZero=JSON.parse(read('worlds/world-zero.scene.json')), registry=JSON.parse(read('worlds/registry.json'));
+const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), asset=read('api/asset.js'), sourceHealth=read('api/source-health.js'), benchmarkApi=read('api/benchmark.js'), evidenceClient=read('runtime/evidence.js'), benchmarkMigration=read('supabase/migrations/20261006080500_spatial_benchmarks_owner_evidence.sql'), benchmarkGrantHardening=read('supabase/migrations/20261006081000_harden_spatial_benchmark_grants.sql'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json')), worldZero=JSON.parse(read('worlds/world-zero.scene.json')), registry=JSON.parse(read('worlds/registry.json'));
 
 for(const [name,html] of [['world-zero',index],['bellagio',bellagio],['login',login]]){
   assert.match(html,/width=device-width,initial-scale=1,viewport-fit=cover/,name+' viewport contract');
@@ -108,6 +108,9 @@ assert.match(benchmarkMigration,/enable row level security/i,'benchmark table en
 assert.match(benchmarkMigration,/force row level security/i,'benchmark table forces RLS');
 assert.match(benchmarkMigration,/grant select, insert on table public\.spatial_benchmarks to authenticated/i,'benchmark table grants only read+insert to authenticated');
 assert.doesNotMatch(benchmarkMigration,/grant .*update|grant .*delete/i,'benchmark migration grants no update/delete');
+assert.match(benchmarkGrantHardening,/revoke all on table public\.spatial_benchmarks from authenticated/i,'hardening revokes Supabase default authenticated grants');
+assert.match(benchmarkGrantHardening,/grant select, insert on table public\.spatial_benchmarks to authenticated/i,'hardening restores only select+insert');
+assert.doesNotMatch(benchmarkGrantHardening,/grant .*update|grant .*delete|grant .*truncate/i,'hardening grants no mutation beyond insert');
 const health=read('api/health.js');
 assert.match(health,/VERCEL_GIT_COMMIT_SHA/,'health exposes deployed SHA');
 assert.match(health,/bellagio-lobby-r0/,'health lists Bellagio benchmark');
