@@ -1,0 +1,54 @@
+{
+  "schema": "caldas.scene/v0",
+  "id": "scene:spatial-lab:world-zero-r0",
+  "name": "World Zero Benchmark Lab",
+  "lifecycle": "research",
+  "semantic_authority": "procedural-mesh",
+  "source": {
+    "repository": "joaoccaldas/ai",
+    "branch": "feat/spatial-lab-v0"
+  },
+  "assets": [
+    {
+      "role": "hero-bike",
+      "semantic_id": "bike:speedmax:study",
+      "bytes": 2081248,
+      "source": {
+        "repository": "joaoccaldas/konam",
+        "revision": "6feb3203ecc3e5d98f9b75a970699d9486d087ca",
+        "path": "assets/museum/speedmax_web.glb"
+      },
+      "delivery": {
+        "id": "speedmax",
+        "transport": "same-origin-auth-gateway"
+      },
+      "fallback": "procedural-bike"
+    }
+  ],
+  "quality_policy": {
+    "core": "runtime/quality.js",
+    "auto_governor": "p95-frame-time",
+    "manual_tiers": [
+      "low",
+      "balanced",
+      "high",
+      "ultra"
+    ]
+  },
+  "benchmark_policy": {
+    "core": "runtime/benchmark.js",
+    "warmup_seconds": 3,
+    "measured_seconds": 12,
+    "upload": false
+  },
+  "acceptance": [
+    "auth-gated",
+    "phone-portrait",
+    "phone-landscape",
+    "desktop",
+    "quest-webxr",
+    "real-speedmax-or-explicit-fallback",
+    "frame-metrics",
+    "safe-renderer-fallback"
+  ]
+}
