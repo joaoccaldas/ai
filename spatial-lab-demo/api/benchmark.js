@@ -26,7 +26,7 @@ export default async function handler(req,res){
   const identity=await owner(req);if(!identity)return res.status(401).json({ok:false,error:'sign_in_required'});
   if(req.method==='GET'){
     try{
-      const select='id,scene_id,release_sha,asset_state,quality_mode,quality_tier,dpr,approx_fps,avg_ms,p50_ms,p95_ms,p99_ms,draw_calls,triangles,viewport_width,viewport_height,hardware_concurrency,device_memory_gb,webxr,webgpu,created_at';
+      const select='id,scene_id,release_sha,asset_state,quality_mode,quality_tier,dpr,approx_fps,avg_ms,p50_ms,p95_ms,p99_ms,draw_calls,triangles,viewport_width,viewport_height,hardware_concurrency,device_memory_gb,webxr,webgpu,xr_active,xr_frame_rate,created_at';
       const url=SUPA_URL+'/rest/v1/spatial_benchmarks?select='+encodeURIComponent(select)+'&order=created_at.desc&limit=20';
       const r=await fetch(url,{headers:{apikey:SUPA_KEY,authorization:'Bearer '+identity.token}});
       if(!r.ok)return res.status(502).json({ok:false,error:'evidence_read_failed'});
@@ -62,13 +62,16 @@ export default async function handler(req,res){
     hardware_concurrency:body.hardware_concurrency==null?null:integer(body.hardware_concurrency,1,1024),
     device_memory_gb:body.device_memory_gb==null?null:finite(body.device_memory_gb,.1,2048),
     webxr:body.webxr===true,
-    webgpu:body.webgpu===true
+    webgpu:body.webgpu===true,
+    xr_active:body.xr_active===true,
+    xr_frame_rate:body.xr_frame_rate==null?null:finite(body.xr_frame_rate,30,240)
   };
   for(const key of ['dpr','approx_fps','avg_ms','p50_ms','p95_ms','p99_ms','draw_calls','triangles','viewport_width','viewport_height']){
     if(row[key]===null)return res.status(400).json({ok:false,error:'invalid_metric',field:key});
   }
   if(body.hardware_concurrency!=null&&row.hardware_concurrency===null)return res.status(400).json({ok:false,error:'invalid_metric',field:'hardware_concurrency'});
   if(body.device_memory_gb!=null&&row.device_memory_gb===null)return res.status(400).json({ok:false,error:'invalid_metric',field:'device_memory_gb'});
+  if(body.xr_frame_rate!=null&&row.xr_frame_rate===null)return res.status(400).json({ok:false,error:'invalid_metric',field:'xr_frame_rate'});
   try{
     const r=await fetch(SUPA_URL+'/rest/v1/spatial_benchmarks',{
       method:'POST',
