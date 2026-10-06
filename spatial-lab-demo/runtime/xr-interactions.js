@@ -55,13 +55,23 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     return best;
   }
 
+  function inputAnchor(state){
+    if(state.isHand&&state.hand)return state.hand.joints?.['index-finger-tip']||state.hand.joints?.['wrist']||state.hand;
+    return state.controller;
+  }
+  function inputWorldPosition(state,target){
+    return inputAnchor(state).getWorldPosition(target);
+  }
+
   function startPrimary(entry,state,hit){
-    entry.heldBy=state.controller;
+    const anchor=inputAnchor(state);
+    entry.heldBy=anchor;
     entry.primaryState=state;
     entry.velocity?.set(0,0,0);
     state.held=entry;
     state.holdRole='primary';
-    state.controller.attach(entry.object);
+    state.holdParent=anchor;
+    anchor.attach(entry.object);
     entry.onGrab?.(hit);
     onStatus(entry.label?('XR grabbed · '+entry.label):'XR grabbed object');
   }
@@ -71,8 +81,8 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     entry.secondaryState=state;
     state.held=entry;
     state.holdRole='secondary';
-    const a=entry.primaryState.controller.getWorldPosition(new THREE.Vector3());
-    const b=state.controller.getWorldPosition(new THREE.Vector3());
+    const a=inputWorldPosition(entry.primaryState,new THREE.Vector3());
+    const b=inputWorldPosition(state,new THREE.Vector3());
     entry.twoHandStartDistance=Math.max(.05,a.distanceTo(b));
     entry.twoHandStartScale.copy(entry.object.scale);
     entry.onTwoHandStart?.(hit);
@@ -106,6 +116,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
         entry.secondaryState=null;
         state.held=null;
         state.holdRole=null;
+        state.holdParent=null;
         entry.onTwoHandEnd?.();
         onStatus(entry.label?('XR two-hand ended · '+entry.label):'XR two-hand ended');
         return;
@@ -113,10 +124,12 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
       if(state.holdRole==='primary'&&entry.secondaryState){
         const next=entry.secondaryState;
         scene.attach(entry.object);
-        next.controller.attach(entry.object);
+        const nextAnchor=inputAnchor(next);
+        nextAnchor.attach(entry.object);
         entry.primaryState=next;
         entry.secondaryState=null;
-        entry.heldBy=next.controller;
+        entry.heldBy=nextAnchor;
+        next.holdParent=nextAnchor;
         next.holdRole='primary';
         state.held=null;
         state.holdRole=null;
@@ -137,6 +150,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     }finally{
       if(state.held===entry)state.held=null;
       state.holdRole=null;
+      state.holdParent=null;
     }
   }
 
@@ -151,7 +165,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     line.scale.z=maxDistance;
     c.add(line);
     const state={
-      controller:c,line,held:null,holdRole:null,hand:null,inputSource:null,isHand:false,
+      controller:c,line,held:null,holdRole:null,holdParent:null,hand:null,inputSource:null,isHand:false,
       lastPosition:new THREE.Vector3(),
       currentPosition:new THREE.Vector3(),
       velocity:new THREE.Vector3(),
@@ -192,8 +206,8 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     const a=new THREE.Vector3(),b=new THREE.Vector3();
     for(const entry of interactables){
       if(!entry.twoHand||!entry.primaryState||!entry.secondaryState)continue;
-      entry.primaryState.controller.getWorldPosition(a);
-      entry.secondaryState.controller.getWorldPosition(b);
+      inputWorldPosition(entry.primaryState,a);
+      inputWorldPosition(entry.secondaryState,b);
       const distance=Math.max(.05,a.distanceTo(b));
       const ratio=distance/entry.twoHandStartDistance;
       const refX=Math.max(.0001,entry.referenceScale.x);
@@ -249,7 +263,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
       let best=null;
       for(const state of controllers){
         const c=state.controller;
-        c.getWorldPosition(state.currentPosition);
+        inputWorldPosition(state,state.currentPosition);
         if(state.hasPosition)state.velocity.copy(state.currentPosition).sub(state.lastPosition).multiplyScalar(1/dt);
         else state.hasPosition=true;
         state.lastPosition.copy(state.currentPosition);
