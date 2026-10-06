@@ -3,7 +3,7 @@ import {spawnSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
-const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), asset=read('api/asset.js'), sourceHealth=read('api/source-health.js'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json')), registry=JSON.parse(read('worlds/registry.json'));
+const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), asset=read('api/asset.js'), sourceHealth=read('api/source-health.js'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json')), worldZero=JSON.parse(read('worlds/world-zero.scene.json')), registry=JSON.parse(read('worlds/registry.json'));
 
 for(const [name,html] of [['world-zero',index],['bellagio',bellagio],['login',login]]){
   assert.match(html,/width=device-width,initial-scale=1,viewport-fit=cover/,name+' viewport contract');
@@ -50,6 +50,10 @@ assert.equal(registry.schema,'caldas.world-registry/v0');
 assert.equal(new Set(registry.worlds.map(w=>w.id)).size,registry.worlds.length,'world ids unique');
 assert.equal(new Set(registry.worlds.map(w=>w.route)).size,registry.worlds.length,'world routes unique');
 assert.ok(registry.worlds.some(w=>w.id==='room:spatial-lab:bellagio-lobby-r0'&&w.scene_manifest==='worlds/bellagio-lobby.scene.json'));
+assert.ok(registry.worlds.every(w=>typeof w.scene_manifest==='string'&&w.scene_manifest.length>0),'every registered scene has a manifest');
+assert.equal(worldZero.schema,'caldas.scene/v0');
+assert.equal(worldZero.assets[0].delivery.id,'speedmax');
+assert.equal(worldZero.benchmark_policy.upload,false);
 assert.doesNotMatch(loginJs,/localStorage|sessionStorage/,'auth token must not use browser storage');
 assert.match(login,/id="recover"/,'password recovery is visible');
 assert.match(loginJs,/https:\/\/joaoccaldas\.github\.io\/konam\/index\.html/,'recovery reuses canonical KONA callback');
