@@ -12,10 +12,10 @@ main{width:min(100%,1080px);margin:auto}.top{display:flex;justify-content:space-
 </head>
 <body>
 <main>
-<div class="top"><div><p class="eyebrow">CALDAS // SPATIAL LAB</p><h1>3D evidence.</h1></div><div class="actions"><a class="btn" href="/diagnostics.html">Device</a><a class="btn" href="/?benchmark=1">Bench Zero</a><a class="btn" href="/bellagio.html?benchmark=1">Bench Bellagio</a><button class="btn" id="refresh" type="button">Refresh</button></div></div>
+<div class="top"><div><p class="eyebrow">CALDAS // SPATIAL LAB</p><h1>3D evidence.</h1></div><div class="actions"><a class="btn" href="/diagnostics.html">Device</a><a class="btn" href="/?benchmark=screen">Bench Zero</a><a class="btn" href="/bellagio.html?benchmark=screen">Bench Bellagio</a><a class="btn" href="/?benchmark=xr">XR Zero</a><a class="btn" href="/bellagio.html?benchmark=xr">XR Bellagio</a><button class="btn" id="refresh" type="button">Refresh</button></div></div>
 <p class="intro">Durable owner-scoped benchmark receipts. Release SHA comes from the server; user identity comes from the verified session. Rows are read through Supabase RLS and contain no email, IP, precise location or raw user agent.</p>
-<section class="summary"><div class="card"><span>Receipts</span><strong id="count">–</strong></div><div class="card"><span>Best FPS</span><strong id="best">–</strong></div><div class="card"><span>Best p95</span><strong id="p95">–</strong></div><div class="card"><span>XR receipts</span><strong id="xr">–</strong></div></section>
-<div class="table"><div class="empty" id="empty">Loading evidence…</div><table id="table" hidden><thead><tr><th>Time</th><th>Scene</th><th>FPS</th><th>p95 ms</th><th>DPR</th><th>Draws</th><th>Triangles</th><th>Viewport</th><th>XR</th><th>GPU</th><th>Release</th><th>Asset</th></tr></thead><tbody></tbody></table></div>
+<section class="summary"><div class="card"><span>Receipts</span><strong id="count">–</strong></div><div class="card"><span>Best FPS</span><strong id="best">–</strong></div><div class="card"><span>Best p95</span><strong id="p95">–</strong></div><div class="card"><span>Immersive XR</span><strong id="xr">–</strong></div></section>
+<div class="table"><div class="empty" id="empty">Loading evidence…</div><table id="table" hidden><thead><tr><th>Time</th><th>Scene</th><th>FPS</th><th>p95 ms</th><th>DPR</th><th>Draws</th><th>Triangles</th><th>Viewport</th><th>XR active</th><th>XR Hz</th><th>XR API</th><th>GPU</th><th>Release</th><th>Asset</th></tr></thead><tbody></tbody></table></div>
 <p class="status" id="status"></p>
 </main>
 <script>
@@ -30,11 +30,11 @@ async function load(){
     $('#count').textContent=rows.length;
     $('#best').textContent=rows.length?Math.max(...rows.map(x=>Number(x.approx_fps)||0)).toFixed(1):'–';
     const p=rows.map(x=>Number(x.p95_ms)).filter(Number.isFinite);$('#p95').textContent=p.length?Math.min(...p).toFixed(1)+' ms':'–';
-    $('#xr').textContent=rows.filter(x=>x.webxr).length;
+    $('#xr').textContent=rows.filter(x=>x.xr_active).length;
     const tbody=$('#table tbody');tbody.replaceChildren();
     for(const x of rows){
       const tr=document.createElement('tr');
-      const vals=[fmtTime(x.created_at),sceneName(x.scene_id),Number(x.approx_fps).toFixed(1),Number(x.p95_ms).toFixed(1),Number(x.dpr).toFixed(2),x.draw_calls,Number(x.triangles)>999999?(Number(x.triangles)/1e6).toFixed(1)+'M':Math.round(Number(x.triangles)/1000)+'K',x.viewport_width+'×'+x.viewport_height,x.webxr?'yes':'no',x.webgpu?'yes':'no',String(x.release_sha||'').slice(0,10),x.asset_state||'–'];
+      const vals=[fmtTime(x.created_at),sceneName(x.scene_id),Number(x.approx_fps).toFixed(1),Number(x.p95_ms).toFixed(1),Number(x.dpr).toFixed(2),x.draw_calls,Number(x.triangles)>999999?(Number(x.triangles)/1e6).toFixed(1)+'M':Math.round(Number(x.triangles)/1000)+'K',x.viewport_width+'×'+x.viewport_height,x.xr_active?'yes':'no',x.xr_frame_rate==null?'–':Number(x.xr_frame_rate).toFixed(0),x.webxr?'yes':'no',x.webgpu?'yes':'no',String(x.release_sha||'').slice(0,10),x.asset_state||'–'];
       vals.forEach((v,i)=>{const td=document.createElement('td');td.textContent=String(v);if(i===1)td.className='scene';tr.append(td)});tbody.append(tr);
     }
     $('#empty').hidden=rows.length>0;$('#empty').textContent=rows.length?'':'No benchmark receipts yet. Run World Zero or Bellagio benchmark on a device.';
