@@ -18,12 +18,17 @@ for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
 }
 assert.match(index,/href="\/bellagio\.html"/,'World Zero routes to Bellagio benchmark');
 assert.match(index,/href="\/diagnostics\.html"/,'World Zero routes to device diagnostics');
-const diagnostics=read('diagnostics.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js');
+const diagnostics=read('diagnostics.html'), evidencePage=read('evidence.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js');
 assert.match(diagnostics,/navigator\.gpu/,'diagnostics checks WebGPU');
 assert.match(diagnostics,/isSessionSupported\('immersive-vr'\)/,'diagnostics checks immersive WebXR');
 assert.match(diagnostics,/MAX_TEXTURE_SIZE/,'diagnostics inspects GPU limits');
 assert.doesNotMatch(diagnostics,/fetch\(|XMLHttpRequest/,'diagnostics stays local-only');
 assert.match(diagnostics,/\?benchmark=1/,'diagnostics exposes benchmark links');
+assert.match(diagnostics,/href="\/evidence\.html"/,'diagnostics links owner evidence');
+assert.match(evidencePage,/fetch\('\/api\/benchmark'/,'evidence page reads only same-origin owner endpoint');
+assert.doesNotMatch(evidencePage,/email|ip address|user_agent|user agent/i,'evidence page source does not request personal identifiers');
+assert.match(evidencePage,/No benchmark receipts yet/,'evidence page starts honestly empty');
+assert.doesNotMatch(evidencePage,/dummy|fixture|seed/i,'evidence page contains no synthetic benchmark rows');
 assert.match(index,/benchmarkRequested/,'World Zero supports local benchmark mode');
 assert.match(bellagio,/benchmarkRequested/,'Bellagio supports local benchmark mode');
 assert.match(index,/summarizeFrames/,'World Zero uses shared benchmark core');
@@ -103,6 +108,8 @@ assert.match(benchmarkApi,/VERCEL_GIT_COMMIT_SHA/,'server owns release identity'
 assert.match(benchmarkApi,/OWNER_ID/,'server verifies owner identity');
 assert.match(benchmarkApi,/spatial_token/,'server reads only HttpOnly session cookie');
 assert.match(benchmarkApi,/rest\/v1\/spatial_benchmarks/,'server writes through Supabase RLS path');
+assert.match(benchmarkApi,/req\.method==='GET'/,'benchmark API supports owner-scoped reads');
+assert.doesNotMatch(benchmarkApi,/email|user_agent|user agent|ip_address/i,'benchmark API does not persist direct personal identifiers');
 assert.doesNotMatch(benchmarkApi,/service[_-]?role/i,'benchmark API has no service-role credential');
 assert.match(benchmarkMigration,/enable row level security/i,'benchmark table enables RLS');
 assert.match(benchmarkMigration,/force row level security/i,'benchmark table forces RLS');
