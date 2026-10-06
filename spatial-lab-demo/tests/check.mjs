@@ -77,6 +77,10 @@ assert.match(xrCore,/controller\.attach\(entry\.object\)/,'grabbable objects att
 assert.match(xrCore,/scene\.attach\(entry\.object\)/,'released objects return to scene space');
 assert.match(xrCore,/entry\.velocity\.copy\(state\.velocity\)/,'throw inherits tracked input velocity');
 assert.match(xrCore,/index-finger-tip/,'tracked-hand pinch resolves from fingertip position');
+assert.match(xrCore,/function inputAnchor\(state\)/,'XR core separates hand and controller attachment anchors');
+assert.match(xrCore,/state\.hand\.joints\?\.\['index-finger-tip'\]/,'direct hand grabs attach to fingertip joint');
+assert.match(xrCore,/inputWorldPosition\(state,state\.currentPosition\)/,'hand throw velocity is measured from input anchor');
+assert.match(xrCore,/inputWorldPosition\(entry\.primaryState,a\)/,'two-hand scale measures actual input-anchor separation');
 assert.match(xrCore,/resolveDirectGrab\(state\)\|\|resolveHit/,'direct pinch is preferred before ray selection');
 assert.match(xrCore,/line\.visible=!state\.isHand/,'tracked hands hide controller-style target ray');
 assert.match(index,/grabbable:true/,'World Zero exposes a grabbable object');
