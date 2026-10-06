@@ -28,3 +28,14 @@ Git branch: `feat/spatial-lab-v0`
 5. Only then promote performance claims.
 
 No production or public KONA route is changed by this work.
+
+## Live auth-boundary verification — 2026-10-06
+
+- Deployment `dpl_ANZgL1FFsgmopzvYonucgXcs5pf7`: READY.
+- Vercel SSO: disabled after app gate deployed.
+- Independent public fetch of `/`: redirected to `/login.html?next=%2F`.
+- Independent public fetch of `/login.html`: returned the Spatial Lab owner-login page.
+- Protected-world authenticated rendering: NOT_RUN by automation because no owner credentials are stored in test tooling.
+- Physical phone and Quest evidence: NOT_RUN.
+
+Confidence that signed-out world access is gated: **98%**. Confidence in authenticated world rendering remains **not yet measured** until owner login is exercised.
