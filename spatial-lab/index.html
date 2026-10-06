@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050708">
+<title>Caldas Spatial Lab · World Zero</title>
+<style>
+:root{color-scheme:dark;--bg:#050708;--panel:rgba(8,12,13,.78);--line:rgba(235,241,239,.16);--text:#f4f1e8;--muted:#9ca7a5;--accent:#e85b2a}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif}
+#world{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.ui{position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr auto;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));pointer-events:none}
+.top,.hero,.stats,.bottom{pointer-events:auto}.top{display:flex;justify-content:space-between;gap:12px}.eyebrow{margin:0 0 6px;font-size:10px;letter-spacing:.18em;font-weight:800;color:#bdc7c5}.top h1{margin:0;font:400 clamp(20px,3vw,34px)/1 Georgia,serif}
+.chip{display:inline-flex;align-items:center;min-height:34px;max-width:min(56vw,520px);padding:0 11px;border:1px solid var(--line);border-radius:999px;background:var(--panel);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero{align-self:center;max-width:min(560px,48vw);text-shadow:0 2px 28px #000}.hero h2{margin:0 0 14px;font:400 clamp(42px,6vw,80px)/.92 Georgia,serif;letter-spacing:-.055em}.hero p:last-child{margin:0;max-width:46ch;color:#c8cfcd;line-height:1.55;font-size:clamp(13px,1.2vw,16px)}
+.stats{position:absolute;right:max(12px,env(safe-area-inset-right));top:50%;transform:translateY(-50%);display:grid;grid-template-columns:repeat(2,minmax(72px,1fr));gap:7px;width:min(200px,28vw)}.stats div{padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:var(--panel)}.stats span{display:block;font-size:9px;letter-spacing:.14em;color:var(--muted)}.stats strong{display:block;margin-top:4px;font-size:17px;font-variant-numeric:tabular-nums}
+.bottom{align-self:end;display:flex;gap:8px;flex-wrap:wrap;align-items:center}.bottom button,.bottom select{min-height:44px;border:1px solid var(--line);border-radius:999px;background:var(--panel);color:var(--text);padding:0 14px}.note{font-size:10px;color:#8e9996}
+@media(max-width:760px){.ui{padding:max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom))}.hero{align-self:end;max-width:100%;padding-bottom:138px}.hero h2{font-size:clamp(38px,12vw,58px);max-width:9ch}.hero p:last-child{max-width:34ch}.stats{top:auto;right:12px;bottom:104px;transform:none;width:auto;display:flex}.stats div{min-width:58px;padding:8px}.stats div:nth-child(3){display:none}.bottom{position:absolute;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr}.bottom>*{min-width:0;width:100%}.note{grid-column:1/-1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+@media(max-height:500px) and (orientation:landscape){.hero{align-self:center;max-width:44vw;padding:0}.hero h2{font-size:clamp(28px,7vh,42px)}.hero p:last-child{display:none}.stats{top:58px;bottom:auto}.bottom{left:auto;right:12px;width:min(54vw,560px);display:flex;justify-content:flex-end}.note{display:none}}
+</style>
+</head>
+<body>
+<canvas id="world"></canvas>
+<div class="ui">
+<header class="top"><div><p class="eyebrow">CALDAS // SPATIAL LAB</p><h1>World Zero</h1></div><span class="chip" id="status">Starting renderer…</span></header>
+<section class="hero"><p class="eyebrow">SESSION 01 · MESH BASELINE</p><h2>One room.<br>One bike.<br>One runtime.</h2><p>Procedural geometry first. This is the stable baseline before imported KONA assets, WebXR hands and optional Gaussian appearance layers.</p></section>
+<aside class="stats"><div><span>FPS</span><strong id="fps">–</strong></div><div><span>DRAWS</span><strong id="draws">–</strong></div><div><span>TRIS</span><strong id="tris">–</strong></div><div><span>DPR</span><strong id="dpr">–</strong></div></aside>
+<footer class="bottom"><button id="reset" type="button">Reset view</button><select id="quality" aria-label="Quality"><option value="auto">Auto quality</option><option value="low">Low</option><option value="high">High</option></select><span class="note">drag to orbit · pinch/wheel to zoom</span></footer>
+</div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.186.1/+esm';
+import {OrbitControls} from 'https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/controls/OrbitControls.js/+esm';
+const c=document.querySelector('#world'),status=document.querySelector('#status');
+const renderer=new THREE.WebGLRenderer({canvas:c,antialias:true,powerPreference:'high-performance'});
+renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.04;
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x05090b);scene.fog=new THREE.FogExp2(0x071014,.045);
+const camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.05,100);camera.position.set(0,1.65,7.2);
+const controls=new OrbitControls(camera,c);controls.target.set(0,1.2,-2.45);controls.enablePan=false;controls.enableDamping=true;controls.minDistance=3;controls.maxDistance=10;controls.maxPolarAngle=Math.PI*.66;
+scene.add(new THREE.HemisphereLight(0x8fc4d1,0x15100d,1.05));const key=new THREE.DirectionalLight(0xffe6cf,2.4);key.position.set(3.5,7,5);scene.add(key);const rim=new THREE.SpotLight(0x55aabe,34,18,.7,.65,1.1);rim.position.set(-5,4,2);rim.target.position.set(1,1,-3);scene.add(rim,rim.target);
+const mat=(color,r=.65,m=.08)=>new THREE.MeshStandardMaterial({color,roughness:r,metalness:m});
+function box(size,pos,color){const o=new THREE.Mesh(new THREE.BoxGeometry(...size),mat(color));o.position.set(...pos);scene.add(o);return o}
+box([18,.22,18],[0,-.12,-1],0x0b1011);box([18,6,.22],[0,2.9,-6],0x101719);box([.22,6,18],[-8.85,2.9,-1],0x0b1113);box([.22,6,18],[8.85,2.9,-1],0x0b1113);
+const ped=new THREE.Mesh(new THREE.CylinderGeometry(1.45,1.65,.24,64),new THREE.MeshPhysicalMaterial({color:0x101415,roughness:.3,metalness:.4,clearcoat:.65,clearcoatRoughness:.2}));ped.position.set(2.1,.12,-2.65);scene.add(ped);
+const bike=new THREE.Group();const wheel=()=>new THREE.Mesh(new THREE.TorusGeometry(.56,.035,14,56),mat(0x24292a,.28,.5));const w1=wheel(),w2=wheel();w1.position.x=-.68;w2.position.x=.68;w1.rotation.y=w2.rotation.y=Math.PI/2;bike.add(w1,w2);const tube=(len,r=.045)=>new THREE.Mesh(new THREE.CylinderGeometry(r,r,len,12),mat(0xd65328,.28,.36));const top=tube(1.18,.052);top.rotation.z=Math.PI/2;top.position.y=.13;bike.add(top);const down=tube(.92,.055);down.rotation.z=-.62;down.position.set(.17,-.18,0);bike.add(down);const seat=tube(.66,.045);seat.rotation.z=.35;seat.position.set(-.22,.24,0);bike.add(seat);const fork=tube(.75,.035);fork.rotation.z=-.22;fork.position.set(.55,-.18,0);bike.add(fork);bike.position.set(2.1,1.05,-2.65);bike.rotation.y=-.62;scene.add(bike);
+function portal(x,color){const g=new THREE.Mesh(new THREE.TorusGeometry(.68,.05,16,64),new THREE.MeshStandardMaterial({color,emissive:color,emissiveIntensity:2,roughness:.3,metalness:.5}));g.rotation.x=Math.PI/2;g.position.set(x,1.15,-4.9);g.userData.portal=true;scene.add(g)}portal(-1.5,0xe85b2a);portal(0,0x4d8c9a);portal(1.5,0xb5a275);
+function quality(name='auto'){const mobile=matchMedia('(pointer:coarse)').matches||Math.min(innerWidth,innerHeight)<700;const cap=name==='low'?1:name==='high'?1.75:(mobile?1.2:1.6);renderer.setPixelRatio(Math.min(devicePixelRatio||1,cap));document.querySelector('#dpr').textContent=renderer.getPixelRatio().toFixed(2);resize()}
+function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight,false)}addEventListener('resize',resize,{passive:true});document.querySelector('#quality').addEventListener('change',e=>quality(e.target.value));document.querySelector('#reset').addEventListener('click',()=>{camera.position.set(0,1.65,7.2);controls.target.set(0,1.2,-2.45);controls.update()});quality();status.textContent='Mesh baseline ready';
+let frames=0,last=performance.now();const clock=new THREE.Clock();function loop(){const dt=Math.min(clock.getDelta(),.05);controls.update();bike.rotation.y+=dt*.07;for(const o of scene.children)if(o.userData.portal)o.rotation.y+=dt*.09;renderer.render(scene,camera);frames++;const now=performance.now();if(now-last>700){document.querySelector('#fps').textContent=Math.round(frames*1000/(now-last));frames=0;last=now;document.querySelector('#draws').textContent=renderer.info.render.calls;document.querySelector('#tris').textContent=Math.round(renderer.info.render.triangles/1000)+'k'}requestAnimationFrame(loop)}loop();
+</script>
+</body></html>
