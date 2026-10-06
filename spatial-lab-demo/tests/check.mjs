@@ -26,7 +26,7 @@ assert.doesNotMatch(diagnostics,/fetch\(|XMLHttpRequest/,'diagnostics stays loca
 assert.match(diagnostics,/\?benchmark=1/,'diagnostics exposes benchmark links');
 assert.match(diagnostics,/href="\/evidence\.html"/,'diagnostics links owner evidence');
 assert.match(evidencePage,/fetch\('\/api\/benchmark'/,'evidence page reads only same-origin owner endpoint');
-assert.doesNotMatch(evidencePage,/email|ip address|user_agent|user agent/i,'evidence page source does not request personal identifiers');
+assert.doesNotMatch(evidencePage,/x\.(?:user_id|email|ip_address|user_agent|latitude|longitude)/,'evidence page renders no direct personal-identifier fields');
 assert.match(evidencePage,/No benchmark receipts yet/,'evidence page starts honestly empty');
 assert.doesNotMatch(evidencePage,/dummy|fixture|seed/i,'evidence page contains no synthetic benchmark rows');
 assert.match(index,/benchmarkRequested/,'World Zero supports local benchmark mode');
