@@ -46,12 +46,38 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     tip.getWorldPosition(directPoint);
     let best=null;
     for(const entry of interactables){
-      if(!entry.grabbable||entry.heldBy)continue;
+      if(!entry.grabbable)continue;
+      if(entry.primaryState&&!(entry.twoHand&&!entry.secondaryState&&entry.primaryState!==state))continue;
       entry.object.getWorldPosition(objectPoint);
       const distance=directPoint.distanceTo(objectPoint);
       if(distance<=maxDistance&&(!best||distance<best.hit.distance))best={entry,hit:{distance,point:directPoint.clone(),object:entry.object}};
     }
     return best;
+  }
+
+  function startPrimary(entry,state,hit){
+    entry.heldBy=state.controller;
+    entry.primaryState=state;
+    entry.velocity?.set(0,0,0);
+    state.held=entry;
+    state.holdRole='primary';
+    state.controller.attach(entry.object);
+    entry.onGrab?.(hit);
+    onStatus(entry.label?('XR grabbed · '+entry.label):'XR grabbed object');
+  }
+
+  function startSecondary(entry,state,hit){
+    if(!entry.twoHand||!entry.primaryState||entry.secondaryState||entry.primaryState===state)return false;
+    entry.secondaryState=state;
+    state.held=entry;
+    state.holdRole='secondary';
+    const a=entry.primaryState.controller.getWorldPosition(new THREE.Vector3());
+    const b=state.controller.getWorldPosition(new THREE.Vector3());
+    entry.twoHandStartDistance=Math.max(.05,a.distanceTo(b));
+    entry.twoHandStartScale.copy(entry.object.scale);
+    entry.onTwoHandStart?.(hit);
+    onStatus(entry.label?('XR two-hand · '+entry.label):'XR two-hand manipulate');
+    return true;
   }
 
   function beginSelect(state){
@@ -60,14 +86,9 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     if(!picked)return;
     const entry=picked.entry;
     try{
-      if(entry.grabbable&&!entry.heldBy){
-        entry.heldBy=state.controller;
-        entry.velocity?.set(0,0,0);
-        state.held=entry;
-        state.controller.attach(entry.object);
-        entry.onGrab?.(picked.hit);
-        onStatus(entry.label?('XR grabbed · '+entry.label):'XR grabbed object');
-        return;
+      if(entry.grabbable){
+        if(!entry.primaryState){startPrimary(entry,state,picked.hit);return;}
+        if(startSecondary(entry,state,picked.hit))return;
       }
       entry.onSelect?.(picked.hit);
       onStatus(entry.label?('XR selected · '+entry.label):'XR selection');
@@ -81,15 +102,42 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     const entry=state.held;
     if(!entry)return;
     try{
+      if(state.holdRole==='secondary'){
+        entry.secondaryState=null;
+        state.held=null;
+        state.holdRole=null;
+        entry.onTwoHandEnd?.();
+        onStatus(entry.label?('XR two-hand ended · '+entry.label):'XR two-hand ended');
+        return;
+      }
+      if(state.holdRole==='primary'&&entry.secondaryState){
+        const next=entry.secondaryState;
+        scene.attach(entry.object);
+        next.controller.attach(entry.object);
+        entry.primaryState=next;
+        entry.secondaryState=null;
+        entry.heldBy=next.controller;
+        next.holdRole='primary';
+        state.held=null;
+        state.holdRole=null;
+        entry.onTwoHandEnd?.();
+        onStatus(entry.label?('XR handoff · '+entry.label):'XR handoff');
+        return;
+      }
       scene.attach(entry.object);
       entry.heldBy=null;
+      entry.primaryState=null;
+      entry.secondaryState=null;
       if(entry.throwable&&entry.velocity)entry.velocity.copy(state.velocity).multiplyScalar(entry.throwScale);
       entry.onRelease?.(entry.velocity);
       onStatus(entry.label?('XR released · '+entry.label):'XR released object');
     }catch(error){
       console.warn('XR release failed',error);
       onStatus('XR release failed safely');
-    }finally{state.held=null;}
+    }finally{
+      if(state.held===entry)state.held=null;
+      state.holdRole=null;
+    }
   }
 
   function makeController(index){
@@ -103,7 +151,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     line.scale.z=maxDistance;
     c.add(line);
     const state={
-      controller:c,line,held:null,hand:null,inputSource:null,isHand:false,
+      controller:c,line,held:null,holdRole:null,hand:null,inputSource:null,isHand:false,
       lastPosition:new THREE.Vector3(),
       currentPosition:new THREE.Vector3(),
       velocity:new THREE.Vector3(),
@@ -140,6 +188,22 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     onStatus('XR session ended');
   });
 
+  function updateTwoHand(){
+    const a=new THREE.Vector3(),b=new THREE.Vector3();
+    for(const entry of interactables){
+      if(!entry.twoHand||!entry.primaryState||!entry.secondaryState)continue;
+      entry.primaryState.controller.getWorldPosition(a);
+      entry.secondaryState.controller.getWorldPosition(b);
+      const distance=Math.max(.05,a.distanceTo(b));
+      const ratio=distance/entry.twoHandStartDistance;
+      const refX=Math.max(.0001,entry.referenceScale.x);
+      const desired=(entry.twoHandStartScale.x*ratio)/refX;
+      const factor=Math.max(entry.minScale,Math.min(entry.maxScale,desired));
+      entry.object.scale.copy(entry.referenceScale).multiplyScalar(factor);
+      entry.onTransform?.({type:'two-hand-scale',scale:factor});
+    }
+  }
+
   function updatePhysics(dt){
     for(const entry of interactables){
       if(!entry.throwable||entry.heldBy||!entry.velocity)continue;
@@ -160,11 +224,14 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
   }
 
   return {
-    register(object,{label='',onSelect,onHover,onBlur,onGrab,onRelease,onPhysics,grabbable=false,throwable=false,floorY=.35,gravity=4.8,bounce=.48,floorDamping=.78,airDamping=.992,throwScale=1}={}){
+    register(object,{label='',onSelect,onHover,onBlur,onGrab,onRelease,onPhysics,onTransform,onTwoHandStart,onTwoHandEnd,grabbable=false,throwable=null,twoHand=false,minScale=.55,maxScale=2.25,floorY=.35,gravity=4.8,bounce=.48,floorDamping=.78,airDamping=.992,throwScale=1}={}){
       if(!object)return ()=>{};
       const entry={
-        object,label,onSelect,onHover,onBlur,onGrab,onRelease,onPhysics,
-        grabbable,throwable:throwable||grabbable,heldBy:null,
+        object,label,onSelect,onHover,onBlur,onGrab,onRelease,onPhysics,onTransform,onTwoHandStart,onTwoHandEnd,
+        grabbable,throwable:throwable==null?grabbable:!!throwable,twoHand:!!twoHand,
+        heldBy:null,primaryState:null,secondaryState:null,
+        referenceScale:object.scale.clone(),twoHandStartScale:object.scale.clone(),twoHandStartDistance:1,
+        minScale,maxScale,
         velocity:new THREE.Vector3(),floorY,gravity,bounce,floorDamping,airDamping,throwScale
       };
       interactables.push(entry);
@@ -176,6 +243,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     },
     update(){
       const now=performance.now(),dt=Math.min(.05,Math.max(.001,(now-lastUpdate)/1000));lastUpdate=now;
+      updateTwoHand();
       updatePhysics(dt);
       if(!renderer.xr.isPresenting){setHover(null);return;}
       let best=null;
