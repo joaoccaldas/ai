@@ -1,0 +1,16 @@
+'use strict';
+(async()=>{
+ const grid=document.getElementById('films'),filters=document.getElementById('filters'),search=document.getElementById('search'),count=document.getElementById('count');
+ if(!['localhost','127.0.0.1','::1'].includes(location.hostname)){grid.replaceChildren(Object.assign(document.createElement('p'),{textContent:'This private collection is available in the local studio. Public film selections will appear after review.',className:'empty'}));return;}
+ let selected='All films',films=[];const el=(tag,text,cls)=>{const n=document.createElement(tag);if(text)n.textContent=text;if(cls)n.className=cls;return n;};
+ function paint(){
+  const list=films.filter(f=>(selected==='All films'||selected==='Music only'&&f.treatment==='Music only'||f.project===selected)&&(f.title+' '+f.project+' '+f.treatment).toLowerCase().includes(search.value.toLowerCase()));count.textContent=`${list.length} films`;grid.replaceChildren();
+  for(const f of list){const card=el('article',null,'film');if(f.videoUrl){const video=el('video');video.controls=true;video.playsInline=true;video.preload='none';video.src=f.videoUrl;if(f.posterUrl)video.poster=f.posterUrl;video.setAttribute('aria-label',f.title);video.addEventListener('play',()=>grid.querySelectorAll('video').forEach(v=>{if(v!==video)v.pause();}));card.append(video);}else{const cover=el('a',null,'cover');cover.href=f.previewUrl;cover.append(el('span','▷'),el('b',f.project));card.append(cover);}
+   const meta=el('div',null,'meta');meta.append(el('span',f.project),el('span',f.videoUrl?'MP4':'Editable preview'));card.append(meta,el('h2',f.title),el('p',`${f.seconds}s · ${f.format} · ${f.treatment}`,'details'));
+   const links=el('div',null,'links');if(f.videoUrl){const download=el('a','Download MP4 ↓');download.href=f.videoUrl;download.download=f.id+'.mp4';links.append(download);}if(f.previewUrl){const edit=el('a','Open original edit ↗');edit.href=f.previewUrl;links.append(edit);}card.append(links);if(!f.videoUrl)card.append(el('p',f.status==='rendering'?'MP4 export in progress.':'This edit has not yet been exported.','note'));grid.append(card);
+  }if(!list.length)grid.append(el('p','No films match this selection.','empty'));
+ }
+ const response=await fetch('portfolio/private-films/library.json',{cache:'no-store'});if(!response.ok)throw Error('Film library unavailable');films=(await response.json()).films;
+ for(const name of ['All films','Music only',...new Set(films.map(f=>f.project))]){const button=el('button',name);button.setAttribute('aria-pressed',String(name===selected));button.onclick=()=>{selected=name;filters.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));paint();};filters.append(button);}search.addEventListener('input',paint);paint();
+ setInterval(async()=>{try{const r=await fetch('portfolio/private-films/library.json',{cache:'no-store'});const next=(await r.json()).films;if(JSON.stringify(next)!==JSON.stringify(films)&&!Array.from(grid.querySelectorAll('video')).some(v=>!v.paused)){films=next;paint();}}catch{}},5000);
+})().catch(()=>{document.getElementById('films').textContent='The local film library is being prepared. Reopen this page when the studio is ready.';});

@@ -4,3 +4,6 @@ node_modules/
 
 /.playwright-cli/
 /output/playwright/
+
+# Private local screening media and manifest; never part of a public build.
+/studio/portfolio/private-films/
