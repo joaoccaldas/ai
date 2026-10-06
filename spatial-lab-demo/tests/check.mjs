@@ -18,7 +18,7 @@ for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
 }
 assert.match(index,/href="\/bellagio\.html"/,'World Zero routes to Bellagio benchmark');
 assert.match(index,/href="\/diagnostics\.html"/,'World Zero routes to device diagnostics');
-const diagnostics=read('diagnostics.html'), evidencePage=read('evidence.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js'), xrCore=read('runtime/xr-interactions.js'), spatialStudio=read('runtime/spatial-studio.js');
+const diagnostics=read('diagnostics.html'), evidencePage=read('evidence.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js'), xrCore=read('runtime/xr-interactions.js'), spatialStudio=read('runtime/spatial-studio.js'), spatialLayout=read('runtime/spatial-layout.js'), layoutClient=read('runtime/layout-state.js'), layoutApi=read('api/layout.js'), layoutMigration=read('supabase/migrations/20261006112200_spatial_layout_owner_state.sql');
 assert.match(diagnostics,/navigator\.gpu/,'diagnostics checks WebGPU');
 assert.match(diagnostics,/isSessionSupported\('immersive-vr'\)/,'diagnostics checks immersive WebXR');
 assert.match(diagnostics,/MAX_TEXTURE_SIZE/,'diagnostics inspects GPU limits');
@@ -91,6 +91,37 @@ assert.match(index,/isSessionSupported\('immersive-ar'\)/,'MR is capability-dete
 assert.match(index,/requestSession\('immersive-ar'/,'MR uses standards-based immersive-ar');
 assert.match(index,/mrHide/,'World shell has MR visibility contract');
 assert.match(index,/scene\.background=null;scene\.fog=null/,'MR removes opaque virtual background');
+assert.match(index,/createSpatialLayoutManager/,'World Zero uses shared spatial layout manager');
+assert.match(index,/loadSpatialLayout/,'World Zero restores owner spatial layout');
+assert.match(index,/saveSpatialLayout/,'World Zero persists owner spatial layout');
+assert.match(index,/id="reset-panels"/,'World Zero exposes panel reset recovery');
+assert.match(spatialStudio,/spatialPanelId=d\.id/,'command-wall panels carry stable semantic IDs');
+assert.match(spatialStudio,/id:'caldas-agents'/,'Caldas panel ID is stable');
+assert.match(spatialStudio,/id:'kona-world'/,'KONA panel ID is stable');
+assert.match(spatialStudio,/id:'performance-live'/,'Performance panel ID is stable');
+assert.match(xrCore,/startSecondary/,'XR core supports a second manipulation hand');
+assert.match(xrCore,/twoHandStartDistance/,'XR core derives two-hand scale from hand separation');
+assert.match(xrCore,/throwable:throwable==null\?grabbable:!!throwable/,'grabbable objects may explicitly disable throwing');
+assert.match(xrCore,/state\.held\.onTransform/,'XR core emits continuous transform events while held');
+assert.match(xrCore,/directBox\.distanceToPoint/,'direct pinch measures distance to object surface');
+assert.match(spatialLayout,/throwable:false/,'spatial panels never inherit throw physics');
+assert.match(spatialLayout,/twoHand:true/,'spatial panels enable two-hand resize');
+assert.match(spatialLayout,/distanceToDock/,'layout manager computes dock proximity');
+assert.match(spatialLayout,/applyWorld\(record\.object,record\.dock\)/,'layout manager snaps panels to dock transform');
+assert.match(spatialLayout,/setTimeout\(saveNow,220\)/,'layout persistence is debounced after manipulation');
+assert.match(layoutClient,/fetch\('\/api\/layout'/,'layout client uses same-origin owner endpoint');
+assert.doesNotMatch(layoutClient,/service[_-]?role/i,'layout client has no service-role credential');
+assert.match(layoutApi,/PANEL_IDS=new Set\(\['caldas-agents','kona-world','performance-live'\]\)/,'layout API closes panel allowlist');
+assert.match(layoutApi,/scale=finite\(raw\.scale,.45,2.5\)/,'layout API bounds persisted scale');
+assert.match(layoutApi,/position=vector\(raw\.position,3,-20,20\)/,'layout API bounds persisted position');
+assert.match(layoutApi,/OWNER_ID/,'layout API verifies owner identity');
+assert.match(layoutApi,/spatial_token/,'layout API reads HttpOnly owner session');
+assert.match(layoutApi,/on_conflict=user_id,scene_id/,'layout API upserts only owner scene record');
+assert.doesNotMatch(layoutApi,/service[_-]?role/i,'layout API has no service-role credential');
+assert.match(layoutMigration,/enable row level security/i,'layout table enables RLS');
+assert.match(layoutMigration,/force row level security/i,'layout table forces RLS');
+assert.match(layoutMigration,/grant select, insert, update on table public\.spatial_layout_state to authenticated/i,'layout table grants only required owner operations');
+assert.doesNotMatch(layoutMigration,/grant .*delete|grant .*truncate/i,'layout table grants no delete or truncate');
 assert.equal(scene.semantic_authority,'mesh');
 assert.ok(scene.assets.some(a=>a.role==='semantic-mesh'&&a.bytes===3950912));
 assert.ok(scene.excluded_from_r0.some(a=>a.path==='assets/city.glb'&&a.bytes===11940384));
@@ -175,7 +206,7 @@ assert.match(xrBenchmarkMigration,/xr_frame_rate >= 30/i,'XR frame rate is bound
 const health=read('api/health.js');
 assert.match(health,/VERCEL_GIT_COMMIT_SHA/,'health exposes deployed SHA');
 assert.match(health,/bellagio-lobby-r0/,'health lists Bellagio benchmark');
-for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js','api/benchmark.js','runtime/evidence.js','runtime/xr-interactions.js','runtime/spatial-studio.js']){
+for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js','api/benchmark.js','api/layout.js','runtime/evidence.js','runtime/xr-interactions.js','runtime/spatial-studio.js','runtime/spatial-layout.js','runtime/layout-state.js']){
   const r=spawnSync(process.execPath,['--check',new URL('../'+file,import.meta.url).pathname],{encoding:'utf8'});
   assert.equal(r.status,0,file+' node syntax: '+r.stderr);
 }
