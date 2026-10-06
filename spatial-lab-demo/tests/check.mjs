@@ -13,10 +13,18 @@ for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
   assert.match(html,/@media\(max-width:760px\)/,name+' phone reflow');
   assert.match(html,/@media\(max-height:500px\) and \(orientation:landscape\)/,name+' short-landscape reflow');
   assert.match(html,/VRButton\.createButton/,name+' WebXR entry');
-  for(const id of ['fps','draws','tris','dpr'])assert.match(html,new RegExp('id="'+id+'"'),name+' telemetry '+id);
+  for(const id of ['fps','draws','tris','dpr','p95'])assert.match(html,new RegExp('id="'+id+'"'),name+' telemetry '+id);
   assert.match(html,/SAFE FALLBACK/,name+' safe fallback');
 }
 assert.match(index,/href="\/bellagio\.html"/,'World Zero routes to Bellagio benchmark');
+assert.match(index,/href="\/diagnostics\.html"/,'World Zero routes to device diagnostics');
+const diagnostics=read('diagnostics.html');
+assert.match(diagnostics,/navigator\.gpu/,'diagnostics checks WebGPU');
+assert.match(diagnostics,/isSessionSupported\('immersive-vr'\)/,'diagnostics checks immersive WebXR');
+assert.match(diagnostics,/MAX_TEXTURE_SIZE/,'diagnostics inspects GPU limits');
+assert.doesNotMatch(diagnostics,/fetch\(|XMLHttpRequest/,'diagnostics stays local-only');
+assert.match(index,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/,'World Zero mobile telemetry is width-safe');
+assert.match(bellagio,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/,'Bellagio mobile telemetry is width-safe');
 assert.match(bellagio,/function cropGeometry\(/,'Bellagio benchmark crops the shared baked mesh by room bounds');
 assert.match(bellagio,/LOBBY_BOUNDS/,'Bellagio benchmark uses semantic lobby bounds');
 assert.match(bellagio,/function chihuly\(/,'Bellagio reuses its canonical Fiori di Como generator');
