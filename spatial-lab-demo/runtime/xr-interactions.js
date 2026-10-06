@@ -8,7 +8,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
   const hands=[];
   const handFactory=new XRHandModelFactory();
   let hovered=null;
-  const directPoint=new THREE.Vector3(),objectPoint=new THREE.Vector3();
+  const directPoint=new THREE.Vector3(),objectPoint=new THREE.Vector3(),directBox=new THREE.Box3();
   let lastUpdate=performance.now();
 
   function controllerRay(controller){
@@ -48,8 +48,8 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     for(const entry of interactables){
       if(!entry.grabbable)continue;
       if(entry.primaryState&&!(entry.twoHand&&!entry.secondaryState&&entry.primaryState!==state))continue;
-      entry.object.getWorldPosition(objectPoint);
-      const distance=directPoint.distanceTo(objectPoint);
+      directBox.setFromObject(entry.object);
+      const distance=directBox.isEmpty()?entry.object.getWorldPosition(objectPoint).distanceTo(directPoint):directBox.distanceToPoint(directPoint);
       if(distance<=maxDistance&&(!best||distance<best.hit.distance))best={entry,hit:{distance,point:directPoint.clone(),object:entry.object}};
     }
     return best;
