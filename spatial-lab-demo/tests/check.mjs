@@ -3,7 +3,7 @@ import {spawnSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
-const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json')), registry=JSON.parse(read('worlds/registry.json'));
+const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), asset=read('api/asset.js'), sourceHealth=read('api/source-health.js'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json')), registry=JSON.parse(read('worlds/registry.json'));
 
 for(const [name,html] of [['world-zero',index],['bellagio',bellagio],['login',login]]){
   assert.match(html,/width=device-width,initial-scale=1,viewport-fit=cover/,name+' viewport contract');
@@ -55,7 +55,17 @@ assert.doesNotMatch(mw,/PUBLIC[^\n]*'\/'/,'world root must not be public');
 const csp=vercel.headers[0].headers.find(h=>h.key==='Content-Security-Policy')?.value||'';
 assert.ok(csp&&!csp.includes('*'),'CSP must exist without wildcard');
 assert.match(csp,/frame-ancestors 'none'/);
-assert.match(csp,/raw\.githubusercontent\.com/);
+assert.doesNotMatch(csp,/raw\.githubusercontent\.com/,'browser CSP must not contact raw GitHub directly');
+assert.match(index,/BIKE='\/api\/asset\?id=speedmax'/,'Speedmax uses same-origin gateway');
+assert.match(bellagio,/ASSET=id=>\/api\/asset\?id=/,'Bellagio uses same-origin gateway');
+assert.match(asset,/Object\.freeze\(\{/,'asset gateway is a closed allowlist');
+assert.match(asset,/expectedBytes:2081248/,'Speedmax byte identity pinned');
+assert.match(asset,/expectedBytes:3950912/,'Bellagio GLB byte identity pinned');
+assert.doesNotMatch(asset,/req\.query/,'asset route does not rely on framework query helpers');
+assert.match(sourceHealth,/speedmax/,'source health covers Speedmax');
+assert.match(sourceHealth,/bellagio/,'source health covers Bellagio');
+assert.match(mw,/\/api\/source-health/,'source health is explicitly public');
+assert.doesNotMatch(mw,/PUBLIC[^\n]*\/api\/asset/,'asset bytes stay behind auth');
 
 function inlineModule(html){
   const matches=[...html.matchAll(/<script type="module">(.*?)<\/script>/gs)];
@@ -68,7 +78,7 @@ for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
 const health=read('api/health.js');
 assert.match(health,/VERCEL_GIT_COMMIT_SHA/,'health exposes deployed SHA');
 assert.match(health,/bellagio-lobby-r0/,'health lists Bellagio benchmark');
-for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js']){
+for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js']){
   const r=spawnSync(process.execPath,['--check',new URL('../'+file,import.meta.url).pathname],{encoding:'utf8'});
   assert.equal(r.status,0,file+' node syntax: '+r.stderr);
 }
