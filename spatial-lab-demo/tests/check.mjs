@@ -24,6 +24,14 @@ assert.match(diagnostics,/isSessionSupported\('immersive-vr'\)/,'diagnostics che
 assert.match(diagnostics,/MAX_TEXTURE_SIZE/,'diagnostics inspects GPU limits');
 assert.doesNotMatch(diagnostics,/fetch\(|XMLHttpRequest/,'diagnostics stays local-only');
 assert.match(index,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/,'World Zero mobile telemetry is width-safe');
+assert.match(index,/\[hidden\]\{display:none!important\}/,'World Zero hidden attribute cannot be overridden');
+assert.match(bellagio,/\[hidden\]\{display:none!important\}/,'Bellagio hidden attribute cannot be overridden');
+assert.match(index,/@media\(max-height:500px\) and \(orientation:landscape\).*?\.controls>\*\{width:auto/s,'World Zero short landscape cancels phone full-width controls');
+assert.match(bellagio,/@media\(max-height:500px\) and \(orientation:landscape\).*?\.actions>\*\{width:auto/s,'Bellagio short landscape cancels phone full-width controls');
+assert.doesNotMatch(index,/function available\(/,'World Zero must not create a throwaway WebGL probe context');
+assert.doesNotMatch(bellagio,/function available\(/,'Bellagio must not create a throwaway WebGL probe context');
+assert.match(index,/new THREE\.WebGLRenderer[\s\S]*?catch\(error\)/,'World Zero renderer init is the capability gate');
+assert.match(bellagio,/new THREE\.WebGLRenderer[\s\S]*?catch\(error\)/,'Bellagio renderer init is the capability gate');
 assert.match(bellagio,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/,'Bellagio mobile telemetry is width-safe');
 assert.match(bellagio,/function cropGeometry\(/,'Bellagio benchmark crops the shared baked mesh by room bounds');
 assert.match(bellagio,/LOBBY_BOUNDS/,'Bellagio benchmark uses semantic lobby bounds');
