@@ -11,7 +11,8 @@ export function qualityProfile(name='auto',env={}){
     high:{dpr:1.7,shadow:true,foveation:.3},
     ultra:{dpr:2,shadow:true,foveation:.1}
   }[tier]||{dpr:1.25,shadow:false,foveation:.55};
-  return {tier,...profile};
+  const sceneCap=Number(env.caps?.[tier]);
+  return {tier,...profile,dpr:Number.isFinite(sceneCap)?sceneCap:profile.dpr};
 }
 
 export function percentile95(samples=[]){
