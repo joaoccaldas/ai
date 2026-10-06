@@ -51,5 +51,13 @@
     "real-speedmax-or-explicit-fallback",
     "frame-metrics",
     "safe-renderer-fallback"
-  ]
+  ],
+  "interaction_policy": {
+    "core": "runtime/xr-interactions.js",
+    "input_model": "webxr-target-ray-select",
+    "hand_compatible": "via-browser-select-events",
+    "device_sniffing": false,
+    "locomotion": "not_yet_enabled",
+    "grab_physics": "not_yet_enabled"
+  }
 }
