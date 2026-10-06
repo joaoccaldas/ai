@@ -100,7 +100,17 @@
     "warmup_seconds": 3,
     "measured_seconds": 12,
     "upload": true,
-    "persistence": "owner-scoped-supabase-rls"
+    "persistence": "owner-scoped-supabase-rls",
+    "modes": [
+      "screen",
+      "xr"
+    ],
+    "xr_mode_rule": "Measurement starts only after renderer.xr.isPresenting is true.",
+    "adaptive_quality_during_measurement": false,
+    "xr_session_fields": [
+      "xr_active",
+      "xr_frame_rate"
+    ]
   },
   "interaction_policy": {
     "core": "runtime/xr-interactions.js",
