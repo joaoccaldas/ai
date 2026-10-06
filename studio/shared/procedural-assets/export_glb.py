@@ -12,11 +12,15 @@ from procassets import market, vegetation, figures, furniture
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 args = sys.argv[sys.argv.index('--') + 1:] if '--' in sys.argv else []
+if sys.platform=='darwin' and '--sheet' in args:
+    raise SystemExit('Mac rendering is disabled by user request; export GLBs without --sheet.')
 out = args[0] if args else os.path.join(HERE, '_out'); only = set(args[1:])
+bpy.context.scene.unit_settings.system='METRIC';bpy.context.scene.unit_settings.scale_length=1
 os.makedirs(out, exist_ok=True)
 
 def mat(name, col, rough=0.7, metal=0.0):
     m = bpy.data.materials.get(name) or bpy.data.materials.new(name); m.use_nodes = True
+    m.diffuse_color=col+(1,);m.roughness=rough;m.metallic=metal
     p = m.node_tree.nodes['Principled BSDF']; p.inputs['Base Color'].default_value = col + (1,); p.inputs['Roughness'].default_value = rough; p.inputs['Metallic'].default_value = metal
     return m
 
@@ -69,15 +73,20 @@ for a in reg['assets']:
     if only and a['id'] not in only: continue
     before = set(bpy.data.objects)
     objs = build(a) or [o for o in bpy.data.objects if o not in before]
+    for o in objs:
+        o['asset_id']=a['id'];o['generator']='procassets/1';o['units']='metres'
+        o['license']='original procedural; no third-party model';o['contract_id']=a.get('contract_id','')
+        o['anchor']=a.get('anchor','base_centre')
     bpy.ops.object.select_all(action='DESELECT')
     for o in objs: o.select_set(True)
     bpy.context.view_layer.objects.active = objs[0]
     path = os.path.join(out, a['id'] + '.glb')
-    if not SHEET: bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, export_apply=True)
+    if not SHEET: bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, use_active_scene=True, export_apply=True, export_extras=True)
+    bpy.context.view_layer.update()
     tris = sum(len(pl.vertices) - 2 for o in objs if o.type == 'MESH' for pl in o.data.polygons)
     cs = [o.matrix_world @ Vector(c) for o in objs if o.type == 'MESH' for c in o.bound_box]
     bb = [[round(min(c[k] for c in cs), 3) for k in range(3)], [round(max(c[k] for c in cs), 3) for k in range(3)]]
-    if not SHEET: manifest.append({'id': a['id'], 'contract_id': a.get('contract_id'), 'file': os.path.basename(path), 'triangles': tris, 'bbox_m': bb, 'sha256': hashlib.sha256(open(path, 'rb').read()).hexdigest(), 'bytes': os.path.getsize(path)})
+    if not SHEET: manifest.append({'id': a['id'], 'contract_id': a.get('contract_id'), 'anchor':a.get('anchor','base_centre'), 'file': os.path.basename(path), 'triangles': tris, 'bbox_m': bb, 'sha256': hashlib.sha256(open(path, 'rb').read()).hexdigest(), 'bytes': os.path.getsize(path)})
     if SHEET: sheet_items.append((a, objs))
     else:
         for o in objs: bpy.data.objects.remove(o, do_unlink=True)

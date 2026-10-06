@@ -7,7 +7,7 @@ def _cyl(bm,p0,p1,r0,r1,n=10):
     ring=lambda c,r:[bm.verts.new(c+(u*math.cos(2*math.pi*i/n)+v*math.sin(2*math.pi*i/n))*r) for i in range(n)]
     A=ring(p0,r0); B=ring(p1,r1)
     for i in range(n): bm.faces.new((A[i],A[(i+1)%n],B[(i+1)%n],B[i]))
-    bm.faces.new(A); bm.faces.new(B[::-1])
+    bm.faces.new(A[::-1]); bm.faces.new(B)
 def _box(bm,c,s,rotz=0.0):
     g=bmesh.ops.create_cube(bm,size=1.0)
     for v in g['verts']:

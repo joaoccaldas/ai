@@ -5,14 +5,41 @@ Sun is derived from declared inputs: Barcelona 41.4036N 2.1744E, 2026-09-21, UTC
 ENRICH_SAGRADA toggles the disclosed, shader-only window/arch enrichment of the municipal Sagrada massing.
 Assets come from studio/shared/procedural-assets (procassets).
 """
-import os, sys
+import os, sys, argparse, json, hashlib, time
 sys.path.insert(0, os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../../studio/shared/procedural-assets')))
 import bpy, math, mathutils, sys
 from mathutils import Vector
 # usage: -- CAM HOUR_LOCAL W H SAMPLES OUT
-CAM,HOUR,W,H,S,OUT=sys.argv[-6],float(sys.argv[-5]),int(sys.argv[-4]),int(sys.argv[-3]),int(sys.argv[-2]),sys.argv[-1]
+_parser=argparse.ArgumentParser()
+for _name,_type in [('camera',str),('hour',float),('width',int),('height',int),('samples',int),('output',str)]:_parser.add_argument(_name,type=_type)
+_parser.add_argument('--device',choices=['CPU','METAL'],default='CPU')
+_parser.add_argument('--enrich-context',action='store_true',help='Experimental invented cathedral shader; not authoritative competition context')
+_parser.add_argument('--save-blend')
+_parser.add_argument('--prepare-only',action='store_true',help='Assemble/export a derived scene without invoking any renderer')
+_parser.add_argument('--expected-source-sha256')
+_args=_parser.parse_args(sys.argv[sys.argv.index('--')+1:])
+if sys.platform=='darwin' and not _args.prepare_only:
+    raise SystemExit('Local Mac rendering is disabled by user request. Use --prepare-only or the remote workflow.')
+if _args.prepare_only and not _args.save_blend:
+    raise SystemExit('--prepare-only requires --save-blend')
+CAM,HOUR,W,H,S,OUT=_args.camera,_args.hour,_args.width,_args.height,_args.samples,_args.output
+_input_path=bpy.data.filepath
+_input_sha=hashlib.sha256(open(_input_path,'rb').read()).hexdigest()
+if _args.expected_source_sha256 and _input_sha!=_args.expected_source_sha256:
+    raise SystemExit('Source SHA-256 does not match the pinned municipal scene')
+_started=time.perf_counter()
 LAT,LON,UTC_OFF,DOY=41.4036,2.1744,2,264  # Barcelona, 2026-09-21, CEST
 sc=bpy.context.scene; N=lambda m:m.node_tree.nodes; 
+sys.path.insert(0,os.path.join(os.path.dirname(os.path.abspath(__file__)),'../scripts'))
+from build_visual_world import snapshots as _snapshots
+_source_objects=_snapshots()
+_municipal=bpy.data.objects.get('geometry_0')
+if not _municipal or _municipal.type!='MESH' or len(_municipal.data.polygons)!=113584:
+    raise SystemExit('Expected 113,584-face municipal context is missing; refusing proxy-only candidate')
+if 'HERO_F3' not in bpy.data.objects:
+    _registered=bpy.data.objects.get('A_HERO_MUNICIPAL_F3')
+    if not _registered:raise SystemExit('Registered F3 camera is missing')
+    _f3=_registered.copy();_f3.data=_registered.data.copy();_f3.name='HERO_F3';sc.collection.objects.link(_f3)
 if CAM=='TOP_MARKET':
     cd_=bpy.data.cameras.new('TM'); cd_.type='ORTHO'; cd_.ortho_scale=26; co=bpy.data.objects.new('TOP_MARKET',cd_); sc.collection.objects.link(co); co.location=(-56,9,60); co.rotation_euler=(0,0,0)
     for o in bpy.data.objects:
@@ -26,6 +53,11 @@ if CAM=='MARKET_WIDE':
 if CAM=='MARKET_CLOSE':
     cd_=bpy.data.cameras.new('MC'); cd_.lens=40; co=bpy.data.objects.new('MARKET_CLOSE',cd_); sc.collection.objects.link(co)
     co.location=Vector((-49.8,8.9,1.5)); co.rotation_euler=(Vector((-53.2,12.4,1.0))-co.location).to_track_quat('-Z','Y').to_euler()
+for _name,_pos,_target,_lens in [('MARKET_WIDE',(-47.6,6.9,1.7),(-53.0,12.6,1.5),26),('AERIAL',(-120,-70,95),(-20,48,6),32)]:
+    if _name in bpy.data.objects:continue
+    _cd=bpy.data.cameras.new(_name);_cd.lens=_lens
+    _co=bpy.data.objects.new(_name,_cd);sc.collection.objects.link(_co)
+    _co.location=_pos;_co.rotation_euler=(Vector(_target)-_co.location).to_track_quat('-Z','Y').to_euler()
 
 # ---------- solar position from declared inputs ----------
 decl=math.radians(-23.44*math.cos(math.radians(360/365*(DOY+10))))
@@ -36,13 +68,11 @@ alt=math.asin(math.sin(ph)*math.sin(decl)+math.cos(ph)*math.cos(decl)*math.cos(h
 az=math.atan2(math.sin(ha),math.cos(ha)*math.sin(ph)-math.tan(decl)*math.cos(ph))+math.pi  # from north, clockwise
 print('SUN',HOUR,'alt',round(math.degrees(alt),1),'az',round(math.degrees(az)%360,1))
 d=mathutils.Vector((math.cos(alt)*math.sin(az),math.cos(alt)*math.cos(az),math.sin(alt)))
-sun=bpy.data.objects['Sun']; sun.location=d*200; sun.rotation_euler=(-d).to_track_quat('-Z','Y').to_euler()
+_original_sun=bpy.data.objects['Sun'];sun=_original_sun.copy();sun.data=_original_sun.data.copy()
+sun.name='VIS_Sun';sc.collection.objects.link(sun);_original_sun.hide_render=True
+sun.location=d*200; sun.rotation_euler=(-d).to_track_quat('-Z','Y').to_euler()
 sun.data.energy=8.0; sun.data.angle=math.radians(0.53)
-# BOUNCE: weak warm fill from the opposite side, no shadows
-bl=bpy.data.lights.new('BOUNCE','SUN'); bl.energy=0.9; bl.color=(1.0,0.82,0.62); bl.use_shadow=False; bl.angle=math.radians(25)
-bo=bpy.data.objects.new('BOUNCE',bl); sc.collection.objects.link(bo)
-bd=Vector((math.cos(math.radians(12))*math.sin(az+math.pi),math.cos(math.radians(12))*math.cos(az+math.pi),math.sin(math.radians(12))))
-bo.location=bd*200; bo.rotation_euler=(-bd).to_track_quat('-Z','Y').to_euler()
+# Cycles computes indirect light; no unshadowed opposite-side sun is added.
 warm=max(0.0,min(1.0,(30-math.degrees(alt))/25)); sun.data.color=(1.0,0.97-0.12*warm,0.92-0.3*warm)
 # ---------- geometry visibility: municipal context only ----------
 for c in bpy.data.collections:
@@ -126,9 +156,9 @@ _ledge=mathn(nt,'MULTIPLY',mathn(nt,'LESS_THAN',_fz,0.09),mathn(nt,'GREATER_THAN
 _groove=mathn(nt,'MULTIPLY',mathn(nt,'GREATER_THAN',_fz,0.09),mathn(nt,'LESS_THAN',_fz,0.15))
 nt.links.new(mathn(nt,'SUBTRACT',mathn(nt,'ADD',h,mathn(nt,'MULTIPLY',wv.outputs['Fac'],2.0)),mathn(nt,'MULTIPLY',_ledge,-4.0)),b3.inputs['Height'])
 _gcol=mixrgb(nt,col2,(0.55,0.50,0.43,1),mathn(nt,'MULTIPLY',_groove,0.8))
-nt.links.new(_gcol,p.inputs['Base Color'])   # overwritten below if window enrichment relinks; nt.links.new(b3.outputs['Normal'],p.inputs['Normal'])
+nt.links.new(_gcol if _args.enrich_context else col2,p.inputs['Base Color'])
 # ---- VISUAL ENRICHMENT (non-authoritative): window recesses above street level, derived render copy only ----
-ENRICH_SAGRADA=True
+ENRICH_SAGRADA=_args.enrich_context
 if ENRICH_SAGRADA:
     tcw=nt.nodes.new('ShaderNodeTexCoord'); sx=nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(tcw.outputs['Object'],sx.inputs['Vector'])
     gn=nt.nodes.new('ShaderNodeNewGeometry'); sn=nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(gn.outputs['Normal'],sn.inputs['Vector'])
@@ -196,27 +226,24 @@ for a in [('Tile',6,1.1,0.4,0.2,0.7),('Ceramic',1.6,1.5,0.1,0.14,0.55),('Timber'
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'surf2.py')).read())
 from procassets.market import *
 replace_market_assets(); replace_stalls_and_herbs()
+from procassets.contacts import settle_on_supports,fit_footprint_on_box_top
+_counter_produce=[o for o in bpy.context.scene.objects if o.name.startswith('F_Produce_')]
+_produce_footprints=[]
+for _fruit in _counter_produce:
+    _parts=_fruit.name.split('_');_counter=bpy.data.objects['Counter_'+_parts[2]+'_'+_parts[3]]
+    _produce_footprints.append(fit_footprint_on_box_top(_fruit,_counter))
+_produce_contacts=settle_on_supports(_counter_produce,
+    [o for o in bpy.context.scene.objects if o.name.startswith('Counter_')])
+if any(r['status']!='SETTLED' for r in _produce_contacts):
+    raise RuntimeError('Counter produce has unresolved supports: '+repr([r for r in _produce_contacts if r['status']!='SETTLED']))
 
 # GRAVITY: fabric canopies/awnings sag between supports (catenary-like) with a slight weave wave
-import bmesh as _bmx
+from procassets.fabric import sagged_copy
 for _o in list(bpy.data.objects):
     if _o.type=='MESH' and _o.name.startswith(('StallCanopy','HeroAwning')) and 'Rail' not in _o.name and _o.dimensions.z<0.12:
-        _o.data=_o.data.copy(); _bm=_bmx.new(); _bm.from_mesh(_o.data)
-        _bmx.ops.subdivide_edges(_bm,edges=_bm.edges[:],cuts=12,use_grid_fill=True)
-        _w=max(_o.dimensions.x,1e-3); _d=max(_o.dimensions.y,1e-3)
-        for _v in _bm.verts:
-            _u=(2*_v.co.x/_w); _t=(2*_v.co.y/_d)
-            _v.co.z-=0.05*max(0.0,1-_u*_u)*max(0.0,1-_t*_t)+0.004*math.sin(_v.co.x*11.0)*max(0.0,1-_t*_t)
-        _bm.to_mesh(_o.data); _bm.free()
+        sagged_copy(_o)
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'surf3.py')).read())
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'surf4.py')).read())
-if CAM=='AERIAL':   # from above, large soft stains read as leopard spots: keep only rare, small puddles
-    _pm=bpy.data.materials.get('PlazaSlabs')
-    for _n in _pm.node_tree.nodes:
-        if _n.bl_idname=='ShaderNodeValToRGB' and len(_n.color_ramp.elements)==2:
-            _e=_n.color_ramp.elements; _p0=_e[0].position
-            if abs(_p0-0.572)<0.01: _e[0].position=0.995; _e[1].position=1.0   # no puddles from above
-            elif abs(_p0-0.50)<0.01: _e[0].position=0.66; _e[1].position=0.80   # broad damp stain mask (30% coverage) -> rare
 from procassets.furniture import *
 replace_furniture()
 bm=bpy.data.materials.get('HeroBrass')
@@ -227,7 +254,7 @@ if bm and bm.use_nodes:
 from procassets.vegetation import *
 replace_trees()
 from procassets.figures import *
-populate(CAM,dscale=(1.0 if CAM=='HERO_F3' else (3.0 if CAM=='AERIAL' else 0.45)))
+populate('HERO_F3',seed=7,dscale=1.0)  # one frozen scene for all submission cameras
 
 # VIBE: warm pendant lamps hung from the vault roof along the market aisle, with real lights; street trees on the plaza edge
 from procassets import props as _props
@@ -260,7 +287,7 @@ hz=bpy.data.meshes.new('HazeMesh'); import bmesh as _bm
 _b=_bm.new(); _bm.ops.create_cube(_b,size=1.0); _b.to_mesh(hz); _b.free()
 hzo=bpy.data.objects.new('HAZE',hz); hzo.scale=(900,900,160); hzo.location=(30,110,70); sc.collection.objects.link(hzo)
 hm=bpy.data.materials.new('HazeMat'); hm.use_nodes=True; hn=hm.node_tree; hn.nodes.clear()
-hs=hn.nodes.new('ShaderNodeVolumeScatter'); hs.inputs['Density'].default_value=0.0009+0.0020*warm; hs.inputs['Anisotropy'].default_value=0.35; hs.inputs['Color'].default_value=(0.85,0.9,1.0,1)
+hs=hn.nodes.new('ShaderNodeVolumeScatter'); hs.inputs['Density'].default_value=0.00018+0.00025*warm; hs.inputs['Anisotropy'].default_value=0.35; hs.inputs['Color'].default_value=(0.85,0.9,1.0,1)
 ho=hn.nodes.new('ShaderNodeOutputMaterial'); hn.links.new(hs.outputs[0],ho.inputs['Volume']); hz.materials.append(hm)
 hzo.visible_shadow=False
 tcg=wt.nodes.new('ShaderNodeTexCoord'); mpg=wt.nodes.new('ShaderNodeMapping'); mpg.inputs['Scale'].default_value=(2.6,2.6,7.0); wt.links.new(tcg.outputs['Generated'],mpg.inputs['Vector'])
@@ -270,13 +297,37 @@ sepz=wt.nodes.new('ShaderNodeSeparateXYZ'); wt.links.new(tcg.outputs['Generated'
 hz_=wt.nodes.new('ShaderNodeMapRange'); hz_.inputs['From Min'].default_value=0.05; hz_.inputs['From Max'].default_value=0.35; wt.links.new(sepz.outputs['Z'],hz_.inputs['Value'])
 cm_=wt.nodes.new('ShaderNodeMath'); cm_.operation='MULTIPLY'; wt.links.new(cr.outputs['Result'],cm_.inputs[0]); wt.links.new(hz_.outputs['Result'],cm_.inputs[1])
 cmix=wt.nodes.new('ShaderNodeMix'); cmix.data_type='RGBA'; wt.links.new(cm_.outputs['Value'],cmix.inputs[0]); wt.links.new(sky.outputs[0],cmix.inputs[6]); cmix.inputs[7].default_value=(1.9,1.55,1.2,1)
-wt.links.new(cmix.outputs[2],bg.inputs['Color']); wt.links.new(bg.outputs[0],wo.inputs['Surface'])
+wt.links.new(sky.outputs[0],bg.inputs['Color']); wt.links.new(bg.outputs[0],wo.inputs['Surface'])
 sc.view_settings.view_transform='AgX'; sc.view_settings.exposure=-0.8
 # ---------- camera/render ----------
 sc.camera=bpy.data.objects[CAM]
-sc.camera.data.dof.use_dof=(CAM=='HERO_F3')   # 32 mm f/2.8 focused at 18 m: foreground (<7 m) falls soft, background stays sharp
-sc.camera.data.dof.focus_distance=18.0; sc.camera.data.dof.aperture_fstop=2.8
+sc.camera.data.dof.use_dof=(CAM=='HERO_F3')
+sc.camera.data.dof.focus_distance=18.0; sc.camera.data.dof.aperture_fstop=8.0
 sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=S; sc.cycles.use_denoising=True; sc.cycles.max_bounces=6
+_devices=[]
+if _args.device=='METAL':
+    _pref=bpy.context.preferences.addons['cycles'].preferences
+    _pref.compute_device_type='METAL'; _pref.get_devices()
+    for _dev in _pref.devices:
+        _dev.use=_dev.type=='METAL'
+        if _dev.use:_devices.append(_dev.name)
+    if _devices:sc.cycles.device='GPU'
+sc.cycles.use_adaptive_sampling=True;sc.cycles.adaptive_threshold=.025;sc.cycles.use_light_tree=True
 sc.render.resolution_x=W; sc.render.resolution_y=H; sc.render.resolution_percentage=100
 sc.render.image_settings.file_format='PNG'; sc.render.filepath=OUT
+sc.render.image_settings.color_depth='16'
+os.makedirs(os.path.dirname(os.path.abspath(OUT)),exist_ok=True)
+_after=_snapshots()
+_changed=[n for n,h in _source_objects.items() if _after.get(n)!=h]
+if _changed:raise RuntimeError('Source geometry/transforms changed: '+repr(_changed))
+if _args.save_blend:bpy.ops.wm.save_as_mainfile(filepath=os.path.abspath(_args.save_blend))
+if _args.prepare_only:
+    _prepared={'status':'DERIVED_SCENE_PREPARED_NO_RENDER','source_sha256':_input_sha,'source_unchanged':hashlib.sha256(open(_input_path,'rb').read()).hexdigest()==_input_sha,'candidate_sha256':hashlib.sha256(open(_args.save_blend,'rb').read()).hexdigest(),'municipal_faces':len(_municipal.data.polygons),'choreography_camera':'HERO_F3','choreography_seed':7,'hour_CEST':HOUR,'date':'2026-09-21','solar_altitude_deg':math.degrees(alt),'solar_azimuth_deg':math.degrees(az)%360,'invented_cathedral_shader':ENRICH_SAGRADA,'render_invocations':0,'seconds_build':round(time.perf_counter()-_started,2)}
+    _prepared['source_geometry_transform_signatures_preserved']=len(_source_objects)
+    _prepared['produce_contacts']=_produce_contacts
+    _prepared['produce_footprints']=_produce_footprints
+    open(_args.save_blend+'.receipt.json','w').write(json.dumps(_prepared,indent=2)+'\n')
+    raise SystemExit(0)
 bpy.ops.render.render(write_still=True)
+_receipt={'status':'DERIVED_VISUAL_CANDIDATE_NOT_COMPETITION_APPROVED','upstream_renderer':'e783204','source':_input_path,'source_sha256':_input_sha,'source_unchanged':hashlib.sha256(open(_input_path,'rb').read()).hexdigest()==_input_sha,'camera':CAM,'hour_CEST':HOUR,'date':'2026-09-21','latitude':LAT,'longitude':LON,'solar_altitude_deg':math.degrees(alt),'solar_azimuth_deg':math.degrees(az)%360,'width':W,'height':H,'samples':S,'device':sc.cycles.device,'devices':_devices,'invented_cathedral_shader':ENRICH_SAGRADA,'illustrative_figures':True,'weather':'design-development haze; no observed-weather claim','postprocess':'none','seconds_build_and_render':round(time.perf_counter()-_started,2),'render_sha256':hashlib.sha256(open(OUT,'rb').read()).hexdigest()}
+open(OUT+'.receipt.json','w').write(json.dumps(_receipt,indent=2)+'\n')

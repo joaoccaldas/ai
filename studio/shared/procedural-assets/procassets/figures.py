@@ -28,7 +28,7 @@ def seg(bm,p0,p1,r0,r1,mi,n=8):
     t=p1-p0; A=[bm.verts.new(v) for v in _ring(p0,t,r0,n)]; B=[bm.verts.new(v) for v in _ring(p1,t,r1,n)]
     for i in range(n):
         f=bm.faces.new((A[i],A[(i+1)%n],B[(i+1)%n],B[i])); f.material_index=mi
-    for R in (A,B[::-1]):
+    for R in (A[::-1],B):
         f=bm.faces.new(R); f.material_index=mi
 def ball(bm,c,r,mi,sx=1,sy=1,sz=1):
     g=bmesh.ops.create_uvsphere(bm,u_segments=10,v_segments=7,radius=r)

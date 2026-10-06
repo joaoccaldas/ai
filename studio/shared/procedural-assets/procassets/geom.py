@@ -14,7 +14,7 @@ def cyl(bm, p0, p1, r0, r1, n=12, mi=0, caps=True):
     ring = lambda c, r: [bm.verts.new(c + (u * math.cos(2 * math.pi * i / n) + v * math.sin(2 * math.pi * i / n)) * r) for i in range(n)]
     A = ring(p0, r0); B = ring(p1, r1); fs = []
     for i in range(n): fs.append(bm.faces.new((A[i], A[(i + 1) % n], B[(i + 1) % n], B[i])))
-    if caps: fs += [bm.faces.new(A), bm.faces.new(B[::-1])]
+    if caps: fs += [bm.faces.new(A[::-1]), bm.faces.new(B)]
     for f in fs: f.material_index = mi; f.smooth = True
 
 def lathe(bm, profile, seg=28, mi=0, cap_bottom=True, center=(0, 0, 0)):

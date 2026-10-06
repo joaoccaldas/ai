@@ -82,7 +82,7 @@ def platane(name,loc,seed,height=9.0,spread=5.2,leaves=9000):
     return
 def replace_trees():
     for o in bpy.data.objects:
-        if o.name.startswith(('Crown_','Trunk_','tree_oak_01','CAT_OakTree')): o.hide_render=True; o.hide_viewport=True
+        if o.name.startswith(('Crown_','Trunk_','tree_oak_01','CAT_OakTree','RT_Oak')): o.hide_render=True; o.hide_viewport=True
     sites=[(-33,44,0.0),(-56,46,0.0),(-40,62,0.0),(-7,18,0.0),(6,38,0.0),(-18,70,0.0),(9,58,0.0)]
     for i,(x,y,z) in enumerate(sites):
         platane(f'Platane_{i}',(x,y,z),seed=100+i*17,height=8.5+i%3*0.9,leaves=8000)

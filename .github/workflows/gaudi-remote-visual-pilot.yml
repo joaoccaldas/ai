@@ -1,0 +1,91 @@
+name: Gaudi remote visual pilot
+
+on:
+  push:
+    branches: [codex/gaudi-visual-quality-20261005]
+    paths: ['.github/workflows/gaudi-remote-visual-pilot.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: gaudi-remote-visual-pilot-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    env:
+      SOURCE_SHA: fbe674a0573bac16e8ca0ae8f4b0546e802b354ff171530685d3135cca9270ce
+      PILOT_DIR: projects/gaudi-nexus/output/remote-pilot
+    steps:
+      - uses: actions/checkout@v4
+      - name: Retrieve the pinned municipal survey artifact
+        uses: actions/download-artifact@v4
+        with:
+          artifact-ids: '11326907149'
+          run-id: '37265636228'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: _source_artifact
+          merge-multiple: true
+      - name: Verify scene identity
+        run: |
+          mkdir -p "$PILOT_DIR"
+          python3 - <<'PY'
+          import hashlib,os,shutil
+          from pathlib import Path
+          matches=[p for p in Path('_source_artifact').rglob('*.blend') if hashlib.sha256(p.read_bytes()).hexdigest()==os.environ['SOURCE_SHA']]
+          assert len(matches)==1, f'Expected one pinned scene; found {len(matches)}'
+          shutil.copy2(matches[0],'source.blend')
+          PY
+      - name: Download and verify Blender 5.2.2 Linux
+        run: |
+          curl --retry 3 -fsSL https://download.blender.org/release/Blender5.2/blender-5.2.2-linux-x64.tar.xz -o blender.tar.xz
+          echo '84098912789dc450e95697c4184fb8a90acbe5111c2ba4aede3fecb57806a168  blender.tar.xz' | sha256sum -c -
+          tar -xf blender.tar.xz
+          echo "$PWD/blender-5.2.2-linux-x64" >> "$GITHUB_PATH"
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libegl1 libxrender1 libxi6 libxkbcommon0
+      - name: Assemble one scene without rendering
+        run: |
+          set -o pipefail
+          timeout 8m blender -b source.blend --python-exit-code 1 --python projects/gaudi-nexus/render/build.py -- HERO_F3 17 640 900 32 "$PILOT_DIR/unused.png" --device CPU --expected-source-sha256 "$SOURCE_SHA" --prepare-only --save-blend "$PILOT_DIR/candidate.blend" 2>&1 | tee "$PILOT_DIR/assembly.log"
+      - name: Audit programme geometry
+        run: |
+          blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/scripts/inspect_program_geometry.py -- "$PILOT_DIR/program-geometry.json" > "$PILOT_DIR/program-audit.log" 2>&1
+      - name: Render registered hero on the remote runner
+        run: |
+          set -o pipefail
+          timeout 17m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- HERO_F3 "$PILOT_DIR/hero-f3.png" --width 640 --height 900 --samples 32 2>&1 | tee "$PILOT_DIR/hero-f3.log"
+      - name: Render market from the same prepared scene
+        run: |
+          set -o pipefail
+          timeout 17m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- MARKET_WIDE "$PILOT_DIR/market.png" --width 960 --height 540 --samples 32 2>&1 | tee "$PILOT_DIR/market.log"
+      - name: Render plaza from the same prepared scene
+        run: |
+          set -o pipefail
+          timeout 17m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- AERIAL "$PILOT_DIR/plaza.png" --width 960 --height 540 --samples 32 2>&1 | tee "$PILOT_DIR/plaza.log"
+      - name: Check all views share one source and candidate
+        run: |
+          python3 - <<'PY'
+          import json,os
+          from pathlib import Path
+          root=Path(os.environ['PILOT_DIR'])
+          prep=json.loads((root/'candidate.blend.receipt.json').read_text())
+          for name in ['hero-f3','market','plaza']:
+              r=json.loads((root/(name+'.png.receipt.json')).read_text())
+              assert r['source_sha256']==os.environ['SOURCE_SHA']
+              assert r['candidate_sha256']==prep['candidate_sha256'] and r['candidate_unchanged']
+          (root/'pilot-completion.json').write_text(json.dumps({'status':'TECHNICAL_PILOT_COMPLETE_VISUAL_REVIEW_PENDING','views':3,'source_sha256':os.environ['SOURCE_SHA'],'candidate_sha256':prep['candidate_sha256']},indent=2))
+          PY
+      - name: Preserve images, source receipts and failure logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-remote-visual-pilot-${{ github.run_id }}
+          path: projects/gaudi-nexus/output/remote-pilot/
+          retention-days: 30
+          if-no-files-found: warn

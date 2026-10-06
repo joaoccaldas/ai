@@ -86,6 +86,8 @@ def main():
     p.add_argument('--views',nargs='+',default=['F3','CIVIC','MARKET'])
     p.add_argument('--skip-render',action='store_true');p.add_argument('--export-glb',action='store_true')
     args=p.parse_args(sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else [])
+    if sys.platform=='darwin' and not args.skip_render:
+        raise SystemExit('Mac rendering is disabled by user request. Use --skip-render or the remote workflow.')
     args.output.mkdir(parents=True,exist_ok=True)
     if sha(args.reference)!=PINNED:raise ValueError('Pinned municipal Rev17 checksum mismatch')
     if sha(args.source) not in [PINNED,LATEST]:raise ValueError('Unregistered input scene; reconcile it first')
