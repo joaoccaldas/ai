@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#071012">
+<title>3D Evidence · Caldas Spatial Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#06090a;--card:#0d1214;--line:rgba(255,255,255,.12);--text:#f3f1eb;--muted:#91a09d;--accent:#e85b2a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -10%,#1b3035 0,#091113 35%,var(--bg) 75%);color:var(--text);font-family:Inter,system-ui,sans-serif}body{padding:max(16px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(24px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+main{width:min(100%,1080px);margin:auto}.top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}.eyebrow{margin:0 0 7px;font-size:10px;letter-spacing:.17em;font-weight:760;color:#afbcba}h1{margin:0;font:400 clamp(38px,7vw,66px)/.95 Georgia,serif;letter-spacing:-.05em}.intro{max-width:68ch;color:var(--muted);line-height:1.55;margin:14px 0 24px}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:rgba(13,18,20,.82);color:var(--text);text-decoration:none;font:inherit;cursor:pointer}.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}.card{min-width:0;border:1px solid var(--line);border-radius:17px;background:rgba(13,18,20,.84);padding:14px}.card span{display:block;color:var(--muted);font-size:10px;letter-spacing:.1em;text-transform:uppercase}.card strong{display:block;margin-top:5px;font-size:22px;font-variant-numeric:tabular-nums}.table{overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:rgba(13,18,20,.84)}table{width:100%;border-collapse:collapse;min-width:880px}th,td{text-align:left;padding:11px 12px;border-bottom:1px solid rgba(255,255,255,.07);font-size:12px;white-space:nowrap}th{color:#a8b5b2;font-size:10px;letter-spacing:.08em;text-transform:uppercase}td{font-variant-numeric:tabular-nums}.scene{white-space:normal;min-width:180px}.empty{padding:28px;color:var(--muted);text-align:center}.status{margin:12px 2px;color:#82908d;font-size:11px}
+@media(max-width:700px){.summary{grid-template-columns:repeat(2,minmax(0,1fr))}.actions{width:100%}.actions>*{flex:1;min-width:130px}.card strong{font-size:19px}}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><div><p class="eyebrow">CALDAS // SPATIAL LAB</p><h1>3D evidence.</h1></div><div class="actions"><a class="btn" href="/diagnostics.html">Device</a><a class="btn" href="/?benchmark=1">Bench Zero</a><a class="btn" href="/bellagio.html?benchmark=1">Bench Bellagio</a><button class="btn" id="refresh" type="button">Refresh</button></div></div>
+<p class="intro">Durable owner-scoped benchmark receipts. Release SHA comes from the server; user identity comes from the verified session. Rows are read through Supabase RLS and contain no email, IP, precise location or raw user agent.</p>
+<section class="summary"><div class="card"><span>Receipts</span><strong id="count">–</strong></div><div class="card"><span>Best FPS</span><strong id="best">–</strong></div><div class="card"><span>Best p95</span><strong id="p95">–</strong></div><div class="card"><span>XR receipts</span><strong id="xr">–</strong></div></section>
+<div class="table"><div class="empty" id="empty">Loading evidence…</div><table id="table" hidden><thead><tr><th>Time</th><th>Scene</th><th>FPS</th><th>p95 ms</th><th>DPR</th><th>Draws</th><th>Triangles</th><th>Viewport</th><th>XR</th><th>GPU</th><th>Release</th><th>Asset</th></tr></thead><tbody></tbody></table></div>
+<p class="status" id="status"></p>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const sceneName=id=>id.includes('bellagio')?'Bellagio Lobby':'World Zero';
+const fmtTime=v=>{try{return new Intl.DateTimeFormat(undefined,{dateStyle:'short',timeStyle:'medium'}).format(new Date(v))}catch{return String(v)}};
+async function load(){
+  $('#status').textContent='Reading owner-scoped receipts…';
+  try{
+    const r=await fetch('/api/benchmark',{cache:'no-store'});if(!r.ok)throw new Error('read');
+    const data=await r.json(),rows=Array.isArray(data.rows)?data.rows:[];
+    $('#count').textContent=rows.length;
+    $('#best').textContent=rows.length?Math.max(...rows.map(x=>Number(x.approx_fps)||0)).toFixed(1):'–';
+    const p=rows.map(x=>Number(x.p95_ms)).filter(Number.isFinite);$('#p95').textContent=p.length?Math.min(...p).toFixed(1)+' ms':'–';
+    $('#xr').textContent=rows.filter(x=>x.webxr).length;
+    const tbody=$('#table tbody');tbody.replaceChildren();
+    for(const x of rows){
+      const tr=document.createElement('tr');
+      const vals=[fmtTime(x.created_at),sceneName(x.scene_id),Number(x.approx_fps).toFixed(1),Number(x.p95_ms).toFixed(1),Number(x.dpr).toFixed(2),x.draw_calls,Number(x.triangles)>999999?(Number(x.triangles)/1e6).toFixed(1)+'M':Math.round(Number(x.triangles)/1000)+'K',x.viewport_width+'×'+x.viewport_height,x.webxr?'yes':'no',x.webgpu?'yes':'no',String(x.release_sha||'').slice(0,10),x.asset_state||'–'];
+      vals.forEach((v,i)=>{const td=document.createElement('td');td.textContent=String(v);if(i===1)td.className='scene';tr.append(td)});tbody.append(tr);
+    }
+    $('#empty').hidden=rows.length>0;$('#empty').textContent=rows.length?'':'No benchmark receipts yet. Run World Zero or Bellagio benchmark on a device.';
+    $('#table').hidden=rows.length===0;$('#status').textContent=rows.length?'Latest 20 receipts, newest first.':'No synthetic rows were added; the table is waiting for real device evidence.';
+  }catch{$('#empty').hidden=false;$('#empty').textContent='Evidence could not be loaded.';$('#table').hidden=true;$('#status').textContent='Read failed without changing the 3D worlds.';}
+}
+$('#refresh').addEventListener('click',load);load();
+</script>
+</body>
+</html>
