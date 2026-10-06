@@ -119,7 +119,14 @@ nt.links.new(wv.outputs['Fac'],b2.inputs['Height']); b2.inputs['Normal'].default
 for l in list(nt.links):
     if l.to_socket==p.inputs['Normal']: nt.links.remove(l)
 b3=nt.nodes.new('ShaderNodeBump'); b3.inputs['Strength'].default_value=0.5; b3.inputs['Distance'].default_value=0.05
-nt.links.new(mathn(nt,'ADD',h,mathn(nt,'MULTIPLY',wv.outputs['Fac'],2.0)),b3.inputs['Height']); nt.links.new(b3.outputs['Normal'],p.inputs['Normal'])
+# STRING_COURSES: horizontal ledges every 4.2 m with a shadow groove below (shader-only relief)
+_tcz=nt.nodes.new('ShaderNodeTexCoord'); _sz=nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(_tcz.outputs['Object'],_sz.inputs['Vector'])
+_fz=mathn(nt,'FRACT',mathn(nt,'DIVIDE',_sz.outputs['Z'],4.2))
+_ledge=mathn(nt,'MULTIPLY',mathn(nt,'LESS_THAN',_fz,0.09),mathn(nt,'GREATER_THAN',_sz.outputs['Z'],3.0))
+_groove=mathn(nt,'MULTIPLY',mathn(nt,'GREATER_THAN',_fz,0.09),mathn(nt,'LESS_THAN',_fz,0.15))
+nt.links.new(mathn(nt,'SUBTRACT',mathn(nt,'ADD',h,mathn(nt,'MULTIPLY',wv.outputs['Fac'],2.0)),mathn(nt,'MULTIPLY',_ledge,-4.0)),b3.inputs['Height'])
+_gcol=mixrgb(nt,col2,(0.55,0.50,0.43,1),mathn(nt,'MULTIPLY',_groove,0.8))
+nt.links.new(_gcol,p.inputs['Base Color'])   # overwritten below if window enrichment relinks; nt.links.new(b3.outputs['Normal'],p.inputs['Normal'])
 # ---- VISUAL ENRICHMENT (non-authoritative): window recesses above street level, derived render copy only ----
 ENRICH_SAGRADA=True
 if ENRICH_SAGRADA:
@@ -140,7 +147,7 @@ if ENRICH_SAGRADA:
     cc=nt.nodes.new('ShaderNodeCombineXYZ'); nt.links.new(cx,cc.inputs['X']); nt.links.new(cy,cc.inputs['Y']); nt.links.new(cz,cc.inputs['Z'])
     wn_=nt.nodes.new('ShaderNodeTexWhiteNoise'); wn_.noise_dimensions='3D'; nt.links.new(cc.outputs['Vector'],wn_.inputs['Vector'])
     win=mathn(nt,'MULTIPLY',win,mathn(nt,'GREATER_THAN',wn_.outputs['Value'],0.3))
-    darkc=mixrgb(nt,col2,(0.07,0.06,0.05,1),win)
+    darkc=mixrgb(nt,_gcol,(0.07,0.06,0.05,1),win)
     nt.links.new(darkc,p.inputs['Base Color'])
     b4=nt.nodes.new('ShaderNodeBump'); b4.inputs['Strength'].default_value=1.0; b4.inputs['Distance'].default_value=0.9; b4.invert=True
     nt.links.new(win,b4.inputs['Height']); nt.links.new(b3.outputs['Normal'],b4.inputs['Normal']); nt.links.new(b4.outputs['Normal'],p.inputs['Normal'])

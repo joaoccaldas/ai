@@ -47,3 +47,24 @@ try: p.inputs['Coat Weight'].default_value=0.6; p.inputs['Coat Roughness'].defau
 except Exception: pass
 for l in [l for l in nt.links if l.to_socket==p.inputs['Roughness']]: nt.links.remove(l)
 p.inputs['Roughness'].default_value=0.22
+
+# --- plaza threshold inlay: same trencadis palette, finer shards ---
+_im=bpy.data.materials.get('PlazaInlay')
+if _im:
+    _nt=_im.node_tree; _p=bsdf(_im)
+    for _l in [l for l in _nt.links if l.to_socket in (_p.inputs['Base Color'], _p.inputs['Normal'])]: _nt.links.remove(_l)
+    _tc=_nt.nodes.new('ShaderNodeTexCoord'); _vc=_nt.nodes.new('ShaderNodeTexVoronoi'); _vc.feature='F1'; _vc.inputs['Scale'].default_value=34.0
+    _ve=_nt.nodes.new('ShaderNodeTexVoronoi'); _ve.feature='DISTANCE_TO_EDGE'; _ve.inputs['Scale'].default_value=34.0
+    _nt.links.new(_tc.outputs['Object'],_vc.inputs['Vector']); _nt.links.new(_tc.outputs['Object'],_ve.inputs['Vector'])
+    _sp=_nt.nodes.new('ShaderNodeSeparateColor'); _nt.links.new(_vc.outputs['Color'],_sp.inputs['Color'])
+    _pl=_nt.nodes.new('ShaderNodeValToRGB'); _pl.color_ramp.interpolation='CONSTANT'
+    _st=[(0.0,(0.80,0.70,0.45,1)),(0.2,(0.93,0.90,0.82,1)),(0.4,(0.10,0.28,0.55,1)),(0.6,(0.12,0.55,0.55,1)),(0.8,(0.72,0.32,0.12,1))]
+    _pl.color_ramp.elements[0].position=_st[0][0]; _pl.color_ramp.elements[0].color=_st[0][1]; _pl.color_ramp.elements[1].position=_st[1][0]; _pl.color_ramp.elements[1].color=_st[1][1]
+    for _pp,_cc in _st[2:]:
+        _e=_pl.color_ramp.elements.new(_pp); _e.color=_cc
+    _nt.links.new(_sp.outputs['Red'],_pl.inputs['Fac'])
+    _gm=_nt.nodes.new('ShaderNodeMath'); _gm.operation='GREATER_THAN'; _gm.inputs[1].default_value=0.04; _nt.links.new(_ve.outputs['Distance'],_gm.inputs[0])
+    _mx=_nt.nodes.new('ShaderNodeMix'); _mx.data_type='RGBA'; _nt.links.new(_gm.outputs['Value'],_mx.inputs[0]); _mx.inputs[6].default_value=(0.06,0.055,0.05,1); _nt.links.new(_pl.outputs['Color'],_mx.inputs[7])
+    _nt.links.new(_mx.outputs[2],_p.inputs['Base Color'])
+    _bp=_nt.nodes.new('ShaderNodeBump'); _bp.inputs['Strength'].default_value=0.7; _bp.inputs['Distance'].default_value=0.003; _nt.links.new(_gm.outputs['Value'],_bp.inputs['Height']); _nt.links.new(_bp.outputs['Normal'],_p.inputs['Normal'])
+    # trencadis-inlay
