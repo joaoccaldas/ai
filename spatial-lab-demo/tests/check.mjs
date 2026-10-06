@@ -57,7 +57,7 @@ assert.ok(csp&&!csp.includes('*'),'CSP must exist without wildcard');
 assert.match(csp,/frame-ancestors 'none'/);
 assert.doesNotMatch(csp,/raw\.githubusercontent\.com/,'browser CSP must not contact raw GitHub directly');
 assert.match(index,/BIKE='\/api\/asset\?id=speedmax'/,'Speedmax uses same-origin gateway');
-assert.match(bellagio,/ASSET=id=>\/api\/asset\?id=/,'Bellagio uses same-origin gateway');
+assert.match(bellagio,/ASSET=id=>'\/api\/asset\?id='/,'Bellagio uses same-origin gateway');
 assert.match(asset,/Object\.freeze\(\{/,'asset gateway is a closed allowlist');
 assert.match(asset,/expectedBytes:2081248/,'Speedmax byte identity pinned');
 assert.match(asset,/expectedBytes:3950912/,'Bellagio GLB byte identity pinned');
