@@ -27,19 +27,31 @@
       "role": "semantic-mesh",
       "path": "assets/bellagio.glb",
       "bytes": 3950912,
-      "load": "intent"
+      "load": "intent",
+      "delivery": {
+        "id": "bellagio-glb",
+        "transport": "same-origin-auth-gateway"
+      }
     },
     {
       "role": "interior-lightmap",
       "path": "assets/lm_interior_day.webp",
       "bytes": 919872,
-      "load": "with-room"
+      "load": "with-room",
+      "delivery": {
+        "id": "bellagio-lightmap",
+        "transport": "same-origin-auth-gateway"
+      }
     },
     {
       "role": "environment",
       "path": "assets/env_day.hdr",
       "bytes": 844034,
-      "load": "opportunistic"
+      "load": "opportunistic",
+      "delivery": {
+        "id": "bellagio-hdr",
+        "transport": "same-origin-auth-gateway"
+      }
     }
   ],
   "excluded_from_r0": [
@@ -76,5 +88,11 @@
     "quest-webxr",
     "frame-metrics",
     "fallback-on-source-failure"
-  ]
+  ],
+  "asset_delivery_contract": {
+    "rule": "Semantic asset identity is independent of transport and device representation.",
+    "gateway": "/api/asset?id=<allowlisted-id>",
+    "source_revision_locked": true,
+    "byte_identity_checked": true
+  }
 }
