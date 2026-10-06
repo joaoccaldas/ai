@@ -3,7 +3,7 @@ import {spawnSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
-const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), asset=read('api/asset.js'), sourceHealth=read('api/source-health.js'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json')), worldZero=JSON.parse(read('worlds/world-zero.scene.json')), registry=JSON.parse(read('worlds/registry.json'));
+const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), asset=read('api/asset.js'), sourceHealth=read('api/source-health.js'), benchmarkApi=read('api/benchmark.js'), evidenceClient=read('runtime/evidence.js'), benchmarkMigration=read('supabase/migrations/20261006080500_spatial_benchmarks_owner_evidence.sql'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json')), worldZero=JSON.parse(read('worlds/world-zero.scene.json')), registry=JSON.parse(read('worlds/registry.json'));
 
 for(const [name,html] of [['world-zero',index],['bellagio',bellagio],['login',login]]){
   assert.match(html,/width=device-width,initial-scale=1,viewport-fit=cover/,name+' viewport contract');
@@ -95,10 +95,23 @@ const br=bmod.summarizeFrames([16,16,17,20]);
 assert.equal(br.samples,4); assert.ok(br.approxFps>55&&br.approxFps<65); assert.equal(br.p95Ms,20);
 assert.doesNotMatch(benchmark,/fetch\(|XMLHttpRequest/,'benchmark core is pure/local');
 assert.doesNotMatch(qualityCore,/fetch\(|XMLHttpRequest/,'quality core is pure/local');
+assert.match(index,/persistBenchmark/,'World Zero persists benchmark evidence');
+assert.match(bellagio,/persistBenchmark/,'Bellagio persists benchmark evidence');
+assert.match(evidenceClient,/fetch\('\/api\/benchmark'/,'evidence client uses same-origin benchmark endpoint');
+assert.doesNotMatch(evidenceClient,/service[_-]?role/i,'evidence client has no service-role credential');
+assert.match(benchmarkApi,/VERCEL_GIT_COMMIT_SHA/,'server owns release identity');
+assert.match(benchmarkApi,/OWNER_ID/,'server verifies owner identity');
+assert.match(benchmarkApi,/spatial_token/,'server reads only HttpOnly session cookie');
+assert.match(benchmarkApi,/rest\/v1\/spatial_benchmarks/,'server writes through Supabase RLS path');
+assert.doesNotMatch(benchmarkApi,/service[_-]?role/i,'benchmark API has no service-role credential');
+assert.match(benchmarkMigration,/enable row level security/i,'benchmark table enables RLS');
+assert.match(benchmarkMigration,/force row level security/i,'benchmark table forces RLS');
+assert.match(benchmarkMigration,/grant select, insert on table public\.spatial_benchmarks to authenticated/i,'benchmark table grants only read+insert to authenticated');
+assert.doesNotMatch(benchmarkMigration,/grant .*update|grant .*delete/i,'benchmark migration grants no update/delete');
 const health=read('api/health.js');
 assert.match(health,/VERCEL_GIT_COMMIT_SHA/,'health exposes deployed SHA');
 assert.match(health,/bellagio-lobby-r0/,'health lists Bellagio benchmark');
-for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js']){
+for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js','api/benchmark.js','runtime/evidence.js']){
   const r=spawnSync(process.execPath,['--check',new URL('../'+file,import.meta.url).pathname],{encoding:'utf8'});
   assert.equal(r.status,0,file+' node syntax: '+r.stderr);
 }
