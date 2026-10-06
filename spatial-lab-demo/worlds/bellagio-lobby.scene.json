@@ -1,0 +1,80 @@
+{
+  "schema": "caldas.scene/v0",
+  "id": "scene:spatial-lab:bellagio-lobby-r0",
+  "name": "Bellagio Main Lobby Benchmark",
+  "lifecycle": "research",
+  "semantic_authority": "mesh",
+  "optional_appearance_layers": [
+    "KHR_gaussian_splatting:future"
+  ],
+  "source": {
+    "repository": "joaoccaldas/bellagio",
+    "revision": "b13ece357ddf46086acfec0966a4f63a947f29f3",
+    "manifest_path": "assets/manifest.json"
+  },
+  "bounds_source": {
+    "lobby": [
+      22,
+      -112,
+      68.4,
+      -88,
+      9.5
+    ],
+    "survey_to_three": "(x,z,-y)"
+  },
+  "assets": [
+    {
+      "role": "semantic-mesh",
+      "path": "assets/bellagio.glb",
+      "bytes": 3950912,
+      "load": "intent"
+    },
+    {
+      "role": "interior-lightmap",
+      "path": "assets/lm_interior_day.webp",
+      "bytes": 919872,
+      "load": "with-room"
+    },
+    {
+      "role": "environment",
+      "path": "assets/env_day.hdr",
+      "bytes": 844034,
+      "load": "opportunistic"
+    }
+  ],
+  "excluded_from_r0": [
+    {
+      "path": "assets/city.glb",
+      "bytes": 11940384,
+      "reason": "not required for lobby benchmark"
+    },
+    {
+      "group": "non-interior baked groups",
+      "reason": "reduce active visual scope while retaining canonical source file"
+    }
+  ],
+  "quality_policy": {
+    "low": {
+      "dpr_cap": 0.9,
+      "shadows": false
+    },
+    "balanced": {
+      "dpr_cap": 1.15,
+      "shadows": false
+    },
+    "high": {
+      "dpr_cap": 1.55,
+      "shadows": true
+    },
+    "xr_foveation": "optional-capability"
+  },
+  "acceptance": [
+    "auth-gated",
+    "phone-portrait",
+    "phone-landscape",
+    "desktop",
+    "quest-webxr",
+    "frame-metrics",
+    "fallback-on-source-failure"
+  ]
+}
