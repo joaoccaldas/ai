@@ -8,6 +8,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
   const hands=[];
   const handFactory=new XRHandModelFactory();
   let hovered=null;
+  const directPoint=new THREE.Vector3(),objectPoint=new THREE.Vector3();
   let lastUpdate=performance.now();
 
   function controllerRay(controller){
@@ -38,8 +39,23 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     if(hovered?.entry?.onHover)try{hovered.entry.onHover(hovered.hit)}catch{}
   }
 
+  function resolveDirectGrab(state,maxDistance=.24){
+    if(!state.isHand||!state.hand)return null;
+    const tip=state.hand.joints?.['index-finger-tip']||state.hand.joints?.['wrist'];
+    if(!tip)return null;
+    tip.getWorldPosition(directPoint);
+    let best=null;
+    for(const entry of interactables){
+      if(!entry.grabbable||entry.heldBy)continue;
+      entry.object.getWorldPosition(objectPoint);
+      const distance=directPoint.distanceTo(objectPoint);
+      if(distance<=maxDistance&&(!best||distance<best.hit.distance))best={entry,hit:{distance,point:directPoint.clone(),object:entry.object}};
+    }
+    return best;
+  }
+
   function beginSelect(state){
-    const picked=resolveHit(state.controller);
+    const picked=resolveDirectGrab(state)||resolveHit(state.controller);
     setHover(picked);
     if(!picked)return;
     const entry=picked.entry;
@@ -87,14 +103,14 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
     line.scale.z=maxDistance;
     c.add(line);
     const state={
-      controller:c,line,held:null,
+      controller:c,line,held:null,hand:null,inputSource:null,isHand:false,
       lastPosition:new THREE.Vector3(),
       currentPosition:new THREE.Vector3(),
       velocity:new THREE.Vector3(),
       hasPosition:false
     };
-    c.addEventListener('connected',()=>{c.visible=true;});
-    c.addEventListener('disconnected',()=>{c.visible=false;endSelect(state);});
+    c.addEventListener('connected',event=>{state.inputSource=event.data||null;state.isHand=!!event.data?.hand;c.visible=true;line.visible=!state.isHand;});
+    c.addEventListener('disconnected',()=>{state.inputSource=null;state.isHand=false;c.visible=false;line.visible=true;endSelect(state);});
     c.addEventListener('selectstart',()=>beginSelect(state));
     c.addEventListener('selectend',()=>endSelect(state));
     scene.add(c);
@@ -110,6 +126,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
       hand.add(model);
     }catch(error){console.warn('XR hand model unavailable',error);}
     scene.add(hand);
+    if(controllers[index])controllers[index].hand=hand;
     hands.push(hand);
   }
 
@@ -170,7 +187,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
         state.lastPosition.copy(state.currentPosition);
         if(!c.visible)continue;
         const picked=resolveHit(c);
-        state.line.scale.z=picked?.hit?.distance?Math.min(maxDistance,picked.hit.distance):maxDistance;
+        if(state.line.visible)state.line.scale.z=picked?.hit?.distance?Math.min(maxDistance,picked.hit.distance):maxDistance;
         if(picked&&(!best||picked.hit.distance<best.hit.distance))best=picked;
       }
       setHover(best);
