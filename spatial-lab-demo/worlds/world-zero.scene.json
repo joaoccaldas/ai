@@ -82,7 +82,8 @@
       "direct-hand-pinch",
       "target-ray-select"
     ],
-    "visible_hand_model": "spheres"
+    "visible_hand_model": "spheres",
+    "panel_manipulation": "one-hand move + two-hand uniform resize + dock snap"
   },
   "spatial_ui": {
     "command_wall": {
@@ -110,5 +111,25 @@
     "capability_detected": true,
     "shell_visibility": "hide architectural shell; retain spatial UI, agents, portals and product objects",
     "fallback": "immersive-vr or flat screen"
+  },
+  "spatial_layout": {
+    "core": "runtime/spatial-layout.js",
+    "persistence": "owner-scoped-supabase-rls",
+    "panels": [
+      "caldas-agents",
+      "kona-world",
+      "performance-live"
+    ],
+    "one_hand": "move",
+    "two_hand": "uniform-resize",
+    "throwing": false,
+    "docking": "snap-to-original-command-wall-slot",
+    "reset_control": "reset-panels",
+    "stored_fields": [
+      "position",
+      "quaternion",
+      "uniform-scale",
+      "docked"
+    ]
   }
 }
