@@ -148,8 +148,8 @@ xrInteractions.register(ideaOrb.group,{
   throwable:true,
   floorY:.42,
   throwScale:.92,
-  onHover:()=>{if(!ideaOrb.group.parent?.userData?.inputIndex)ideaOrb.group.scale.copy(orbBase).multiplyScalar(1.08)},
-  onBlur:()=>{if(!ideaOrb.group.parent?.userData?.inputIndex)ideaOrb.group.scale.copy(orbBase)},
+  onHover:()=>{if(ideaOrb.group.parent?.userData?.inputIndex==null)ideaOrb.group.scale.copy(orbBase).multiplyScalar(1.08)},
+  onBlur:()=>{if(ideaOrb.group.parent?.userData?.inputIndex==null)ideaOrb.group.scale.copy(orbBase)},
   onGrab:()=>{ideaOrb.group.scale.copy(orbBase).multiplyScalar(.9);ideaOrb.light.intensity=7;status.textContent='PINCH · IDEA ORB'},
   onRelease:()=>{ideaOrb.group.scale.copy(orbBase);ideaOrb.light.intensity=3.2;status.textContent='THROW · IDEA ORB'}
 });
