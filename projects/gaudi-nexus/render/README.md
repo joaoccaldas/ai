@@ -15,3 +15,6 @@ Disclosure: `ENRICH_SAGRADA` adds window recesses and pointed arches to the muni
 
 Assets: `studio/shared/procedural-assets`. Scene-specific materials: `surf2.py` (vault tile, produce, fabrics), `surf3.py` (plaza slabs, inlay, fin hardware), `surf4.py` (puddles, fin glaze).
 CPU-only Cycles: a 1200×1600 / 128-sample frame takes ~20–30 min on 4 cores; iterate at 900×1200 / 48.
+
+Finishing: `python3 finish.py in.png out.png` applies a declared photographic finish (bloom/halation, vignette, slight chromatic aberration, filmic curve, grain). Needs `pip install pillow numpy`. Disclose in captions.
+Entourage: figures are procedural and illustrative (no real or AI-generated people); caption accordingly.
