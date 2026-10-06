@@ -68,6 +68,47 @@
     "hand_compatible": "via-browser-select-events",
     "device_sniffing": false,
     "locomotion": "not_yet_enabled",
-    "grab_physics": "not_yet_enabled"
+    "grab_physics": "not_yet_enabled",
+    "direct_manipulation": "near-fingertip pinch for grabbable objects",
+    "throwable_objects": [
+      "idea-orb"
+    ],
+    "non_throwable_selectables": [
+      "speedmax",
+      "agents",
+      "portals"
+    ],
+    "input_priority": [
+      "direct-hand-pinch",
+      "target-ray-select"
+    ],
+    "visible_hand_model": "spheres"
+  },
+  "spatial_ui": {
+    "command_wall": {
+      "core": "runtime/spatial-studio.js",
+      "layout": "three-panel-curved",
+      "surfaces": [
+        "caldas-agents",
+        "kona-world",
+        "performance-live"
+      ]
+    },
+    "agent_ring": {
+      "agents": [
+        "SOL",
+        "LUNA",
+        "TERRA",
+        "ATLAS",
+        "NOVA"
+      ],
+      "center_object": "idea-orb"
+    }
+  },
+  "mixed_reality": {
+    "mode": "immersive-ar",
+    "capability_detected": true,
+    "shell_visibility": "hide architectural shell; retain spatial UI, agents, portals and product objects",
+    "fallback": "immersive-vr or flat screen"
   }
 }
