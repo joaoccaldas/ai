@@ -196,6 +196,18 @@ for a in [('Tile',6,1.1,0.4,0.2,0.7),('Ceramic',1.6,1.5,0.1,0.14,0.55),('Timber'
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'surf2.py')).read())
 from procassets.market import *
 replace_market_assets(); replace_stalls_and_herbs()
+
+# GRAVITY: fabric canopies/awnings sag between supports (catenary-like) with a slight weave wave
+import bmesh as _bmx
+for _o in list(bpy.data.objects):
+    if _o.type=='MESH' and _o.name.startswith(('StallCanopy','HeroAwning')) and 'Rail' not in _o.name and _o.dimensions.z<0.12:
+        _o.data=_o.data.copy(); _bm=_bmx.new(); _bm.from_mesh(_o.data)
+        _bmx.ops.subdivide_edges(_bm,edges=_bm.edges[:],cuts=12,use_grid_fill=True)
+        _w=max(_o.dimensions.x,1e-3); _d=max(_o.dimensions.y,1e-3)
+        for _v in _bm.verts:
+            _u=(2*_v.co.x/_w); _t=(2*_v.co.y/_d)
+            _v.co.z-=0.05*max(0.0,1-_u*_u)*max(0.0,1-_t*_t)+0.004*math.sin(_v.co.x*11.0)*max(0.0,1-_t*_t)
+        _bm.to_mesh(_o.data); _bm.free()
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'surf3.py')).read())
 exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'surf4.py')).read())
 if CAM=='AERIAL':   # from above, large soft stains read as leopard spots: keep only rare, small puddles
@@ -241,7 +253,9 @@ cmix=wt.nodes.new('ShaderNodeMix'); cmix.data_type='RGBA'; wt.links.new(cm_.outp
 wt.links.new(cmix.outputs[2],bg.inputs['Color']); wt.links.new(bg.outputs[0],wo.inputs['Surface'])
 sc.view_settings.view_transform='AgX'; sc.view_settings.exposure=-0.8
 # ---------- camera/render ----------
-sc.camera=bpy.data.objects[CAM]; sc.camera.data.dof.use_dof=False
+sc.camera=bpy.data.objects[CAM]
+sc.camera.data.dof.use_dof=(CAM=='HERO_F3')   # 32 mm f/2.8 focused at 18 m: foreground (<7 m) falls soft, background stays sharp
+sc.camera.data.dof.focus_distance=18.0; sc.camera.data.dof.aperture_fstop=2.8
 sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=S; sc.cycles.use_denoising=True; sc.cycles.max_bounces=6
 sc.render.resolution_x=W; sc.render.resolution_y=H; sc.render.resolution_percentage=100
 sc.render.image_settings.file_format='PNG'; sc.render.filepath=OUT

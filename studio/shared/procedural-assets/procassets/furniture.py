@@ -29,8 +29,8 @@ def cafe_set_objs(origin_mw,wood,iron,name):
     _cyl(bi,Vector((0,0,0.015)),Vector((0,0,0.70)),0.028,0.022,10); _cyl(bi,Vector((0,0,0)),Vector((0,0,0.02)),0.22,0.2,24)   # pedestal + base
     _cyl(bw,Vector((0,0,0.705)),Vector((0,0,0.73)),0.36,0.36,32)                                                           # round top
     for k in range(3):
-        a=k*2*math.pi/3+0.4; c=Vector((math.cos(a)*0.62,math.sin(a)*0.62,0)); 
-        b1=bmesh.new(); b2=bmesh.new(); chair_parts(b1,b2,a+math.pi/2*0+math.pi)   # face the table
+        _rj=random.Random(__import__('zlib').crc32(name.encode())%9973+k*31); a=k*2*math.pi/3+0.4+_rj.uniform(-0.15,0.15); c=Vector((math.cos(a)*(0.62+_rj.uniform(-0.05,0.09)),math.sin(a)*(0.62+_rj.uniform(-0.05,0.09)),0)); 
+        b1=bmesh.new(); b2=bmesh.new(); chair_parts(b1,b2,a+math.pi+_rj.uniform(-0.14,0.14))   # face the table
         for src,dst in ((b1,bw),(b2,bi)):
             vm={}
             for v in src.verts: vm[v]=dst.verts.new(v.co+c)
