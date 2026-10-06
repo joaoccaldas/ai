@@ -1,0 +1,12 @@
+{
+  "$schema":"https://openapi.vercel.sh/vercel.json",
+  "framework":null,
+  "headers":[{"source":"/(.*)","headers":[
+    {"key":"Content-Security-Policy","value":"default-src 'self'; script-src 'self' 'unsafe-inline' https://esm.sh; connect-src 'self' https://esm.sh https://raw.githubusercontent.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; upgrade-insecure-requests"},
+    {"key":"Referrer-Policy","value":"no-referrer"},
+    {"key":"X-Content-Type-Options","value":"nosniff"},
+    {"key":"X-Frame-Options","value":"DENY"},
+    {"key":"Permissions-Policy","value":"camera=(), microphone=(), geolocation=(), xr-spatial-tracking=(self)"},
+    {"key":"X-Robots-Tag","value":"noindex, nofollow, noarchive"}
+  ]}]
+}
