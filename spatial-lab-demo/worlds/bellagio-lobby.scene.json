@@ -101,5 +101,13 @@
     "measured_seconds": 12,
     "upload": true,
     "persistence": "owner-scoped-supabase-rls"
+  },
+  "interaction_policy": {
+    "core": "runtime/xr-interactions.js",
+    "input_model": "webxr-target-ray-select",
+    "hand_compatible": "via-browser-select-events",
+    "device_sniffing": false,
+    "locomotion": "not_yet_enabled",
+    "grab_physics": "not_yet_enabled"
   }
 }
