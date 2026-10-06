@@ -13,7 +13,7 @@
         "repository": "joaoccaldas/ai",
         "branch": "feat/spatial-lab-v0"
       },
-      "scene_manifest": null
+      "scene_manifest": "worlds/world-zero.scene.json"
     },
     {
       "id": "room:spatial-lab:bellagio-lobby-r0",
