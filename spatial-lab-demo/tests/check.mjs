@@ -22,6 +22,8 @@ assert.ok(scene.assets.some(a=>a.role==='semantic-mesh'&&a.bytes===3950912));
 assert.ok(scene.excluded_from_r0.some(a=>a.path==='assets/city.glb'&&a.bytes===11940384));
 assert.equal(scene.source.revision,'b13ece357ddf46086acfec0966a4f63a947f29f3');
 assert.doesNotMatch(loginJs,/localStorage|sessionStorage/,'auth token must not use browser storage');
+assert.match(login,/id="recover"/,'password recovery is visible');
+assert.match(loginJs,/https:\/\/joaoccaldas\.github\.io\/konam\/index\.html/,'recovery reuses canonical KONA callback');
 for(const token of ['HttpOnly','Secure','SameSite=Lax'])assert.match(session,new RegExp(token),'session cookie '+token);
 assert.match(session,/a0468c5f-ea3c-4e59-9c7f-201c0131bea9/,'owner UUID allowlist');
 assert.match(mw,/PUBLIC=new Set\(\['\/login\.html'/,'explicit public allowlist');
