@@ -32,10 +32,11 @@ import {GLTFLoader} from 'https://esm.sh/three@0.186.1/examples/jsm/loaders/GLTF
 import {MeshoptDecoder} from 'https://esm.sh/three@0.186.1/examples/jsm/libs/meshopt_decoder.module.js';
 import {qualityProfile,percentile95,nextAutoDpr} from '/runtime/quality.js';
 import {summarizeFrames} from '/runtime/benchmark.js';
+import {persistBenchmark} from '/runtime/evidence.js';
 import {HDRLoader} from 'https://esm.sh/three@0.186.1/examples/jsm/loaders/HDRLoader.js';
 const SHA='b13ece357ddf46086acfec0966a4f63a947f29f3',ASSET=id=>'/api/asset?id='+encodeURIComponent(id);
 const $=s=>document.querySelector(s),canvas=$('#c'),status=$('#status'),reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
-let renderer,scene,camera,controls,rig,clock,root,last=performance.now(),frames=0,frameMs=[],qualityMode='auto',autoDpr=null,governorWindows=0,benchActive=false,benchSamples=[];
+let renderer,scene,camera,controls,rig,clock,root,last=performance.now(),frames=0,frameMs=[],qualityMode='auto',autoDpr=null,governorWindows=0,benchActive=false,benchSamples=[],assetState='loading';
 const CENTER=new THREE.Vector3(45.2,1.65,100),TARGET=new THREE.Vector3(45.2,1.55,95);
 const LOCAL_TARGET=TARGET.clone().sub(CENTER);
 const LOBBY_BOUNDS=new THREE.Box3(new THREE.Vector3(20,-.6,86),new THREE.Vector3(70.4,12.5,114));
@@ -82,9 +83,10 @@ function chihuly(pieces){
   const m=new THREE.MeshStandardMaterial({vertexColors:true,roughness:.16,metalness:0,side:THREE.DoubleSide,envMapIntensity:.9,emissive:0x221106,emissiveIntensity:.16});
   const mesh=new THREE.Mesh(g,m);mesh.name='Fiori di Como · reused generator';return mesh;
 }
-function procedural(){const g=new THREE.Group();const warm=new THREE.MeshStandardMaterial({color:0x8a7354,roughness:.58,metalness:.08}),stone=new THREE.MeshStandardMaterial({color:0xaaa092,roughness:.78});for(let x=-5;x<=5;x+=2.5){const c=new THREE.Mesh(new THREE.CylinderGeometry(.24,.28,4.6,24),stone);c.position.set(x,2.3,-3);g.add(c)}const desk=new THREE.Mesh(new THREE.BoxGeometry(5.4,.95,1.2),warm);desk.position.set(0,.55,-2);g.add(desk);const floor=new THREE.Mesh(new THREE.PlaneGeometry(18,14),new THREE.MeshStandardMaterial({color:0x3b3027,roughness:.72,metalness:.1}));floor.rotation.x=-Math.PI/2;g.add(floor);g.position.copy(CENTER).add(new THREE.Vector3(0,0,-3));scene.add(g);status.textContent='Fallback lobby · source load failed';$('#fallback').hidden=false}
+function procedural(){assetState='lobby-fallback';const g=new THREE.Group();const warm=new THREE.MeshStandardMaterial({color:0x8a7354,roughness:.58,metalness:.08}),stone=new THREE.MeshStandardMaterial({color:0xaaa092,roughness:.78});for(let x=-5;x<=5;x+=2.5){const c=new THREE.Mesh(new THREE.CylinderGeometry(.24,.28,4.6,24),stone);c.position.set(x,2.3,-3);g.add(c)}const desk=new THREE.Mesh(new THREE.BoxGeometry(5.4,.95,1.2),warm);desk.position.set(0,.55,-2);g.add(desk);const floor=new THREE.Mesh(new THREE.PlaneGeometry(18,14),new THREE.MeshStandardMaterial({color:0x3b3027,roughness:.72,metalness:.1}));floor.rotation.x=-Math.PI/2;g.add(floor);g.position.copy(CENTER).add(new THREE.Vector3(0,0,-3));scene.add(g);status.textContent='Fallback lobby · source load failed';$('#fallback').hidden=false;startBenchmark()}
 const benchmarkRequested=new URLSearchParams(location.search).has('benchmark');
-function startBenchmark(){if(!benchmarkRequested||benchActive)return;status.textContent='Benchmark warm-up · 3 s';setTimeout(()=>{benchSamples=[];benchActive=true;status.textContent='Benchmark running · 12 s';setTimeout(()=>{benchActive=false;const r=summarizeFrames(benchSamples);if(!r)return;status.textContent=`BENCH ${r.approxFps.toFixed(1)} FPS · p50 ${r.p50Ms.toFixed(1)} · p95 ${r.p95Ms.toFixed(1)} · p99 ${r.p99Ms.toFixed(1)} ms · DPR ${renderer.getPixelRatio().toFixed(2)} · ${renderer.info.render.calls} draws · ${Math.round(renderer.info.render.triangles/1000)}K tris`;},12000);},3000)}
+function benchmarkReceipt(r){const q=qualityProfile(qualityMode,env());return {scene_id:'scene:spatial-lab:bellagio-lobby-r0',asset_state:assetState,quality_mode:qualityMode,quality_tier:q.tier,dpr:renderer.getPixelRatio(),approx_fps:r.approxFps,avg_ms:r.avgMs,p50_ms:r.p50Ms,p95_ms:r.p95Ms,p99_ms:r.p99Ms,draw_calls:renderer.info.render.calls,triangles:renderer.info.render.triangles,viewport_width:innerWidth,viewport_height:innerHeight,hardware_concurrency:navigator.hardwareConcurrency||null,device_memory_gb:navigator.deviceMemory||null,webxr:!!navigator.xr,webgpu:!!navigator.gpu}}
+function startBenchmark(){if(!benchmarkRequested||benchActive)return;status.textContent='Benchmark warm-up · 3 s';setTimeout(()=>{benchSamples=[];benchActive=true;status.textContent='Benchmark running · 12 s';setTimeout(async()=>{benchActive=false;const r=summarizeFrames(benchSamples);if(!r)return;const summary=`BENCH ${r.approxFps.toFixed(1)} FPS · p50 ${r.p50Ms.toFixed(1)} · p95 ${r.p95Ms.toFixed(1)} · p99 ${r.p99Ms.toFixed(1)} ms · DPR ${renderer.getPixelRatio().toFixed(2)} · ${renderer.info.render.calls} draws · ${Math.round(renderer.info.render.triangles/1000)}K tris`;status.textContent=summary+' · saving…';const saved=await persistBenchmark(benchmarkReceipt(r));status.textContent=summary+(saved.ok?' · evidence saved':' · evidence unsaved');},12000);},3000)}
 async function loadBellagio(){
   const loader=new GLTFLoader();loader.setMeshoptDecoder(MeshoptDecoder);const texLoader=new THREE.TextureLoader();
   try{
@@ -113,7 +115,7 @@ async function loadBellagio(){
       }
       visible++;
     });
-    scene.add(root);
+    scene.add(root);assetState='bellagio-canonical';
     const flower=chihuly(manifest.chihuly_pieces||[]);scene.add(flower);
     const reduction=originalTris?Math.round((1-keptTris/originalTris)*100):0;
     status.textContent='Lobby extracted · '+visible+' mesh groups · '+hidden+' culled · '+reduction+'% cropped from shared interior';startBenchmark();
