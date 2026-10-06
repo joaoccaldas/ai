@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "kit_version": "1.0.0",
+  "authoring": {
+    "tested_blender": "5.2.2 LTS",
+    "length_unit": "metre",
+    "world_axes": ["east", "north", "up"],
+    "asset_origin": "ground contact",
+    "randomness": "local seeded RNG",
+    "source_policy": "preserve source geometry and transforms; generate a candidate"
+  },
+  "required_asset_metadata": ["asset_id", "generator", "units", "license"],
+  "material_contract": {
+    "model": "metallic-roughness PBR",
+    "color_values": "linear",
+    "texture_coordinates": "world metres",
+    "procedural_export": "bake or explicitly label PBR approximation",
+    "no_implicit_equivalence": "Cycles, Eevee and web views require separate validation"
+  },
+  "geometry": {
+    "foliage": "batched leaf meshes; shared mesh datablocks between instances",
+    "detail_policy": "spend geometry on silhouette, contact, shadow and close-view meaning",
+    "navigation": "separate simplified colliders from render geometry",
+    "municipal_context": "immutable mesh and world transform with source hash and CRS"
+  },
+  "render_authority": {
+    "final": "Cycles",
+    "iteration": "Eevee",
+    "interactive": "Three.js / glTF 2.0",
+    "color_transform": "AgX"
+  },
+  "runtime_targets_from_studio2": {
+    "mobile_initial_compressed_geometry_mb": 3,
+    "mobile_texture_gpu_mb": 32,
+    "mobile_default_dpr_max": 1.05,
+    "mobile_fps_target": 30,
+    "desktop_auto_dpr_max": 1.4,
+    "desktop_fps_target": 60,
+    "scene_policy": "one active scene; dispose retired geometry/materials/textures",
+    "status": "targets, not measured acceptance"
+  },
+  "evidence": [
+    "studio2/docs/ARCHITECTURE.md",
+    "projects/gaudi-nexus/docs/TECH_STACK.md",
+    "projects/gaudi-nexus/docs/RENDER_PIPELINE.md",
+    "projects/gaudi-nexus/docs/CANONICAL_SCENE_CONTRACT.md",
+    "https://www.khronos.org/gltf/"
+  ]
+}
