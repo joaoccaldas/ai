@@ -31,7 +31,7 @@ import {VRButton} from 'https://esm.sh/three@0.186.1/examples/jsm/webxr/VRButton
 import {GLTFLoader} from 'https://esm.sh/three@0.186.1/examples/jsm/loaders/GLTFLoader.js';
 import {MeshoptDecoder} from 'https://esm.sh/three@0.186.1/examples/jsm/libs/meshopt_decoder.module.js';
 import {HDRLoader} from 'https://esm.sh/three@0.186.1/examples/jsm/loaders/HDRLoader.js';
-const SHA='b13ece357ddf46086acfec0966a4f63a947f29f3',BASE='https://raw.githubusercontent.com/joaoccaldas/bellagio/'+SHA+'/assets/';
+const SHA='b13ece357ddf46086acfec0966a4f63a947f29f3',ASSET=id=>'/api/asset?id='+encodeURIComponent(id);
 const $=s=>document.querySelector(s),canvas=$('#c'),status=$('#status'),reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
 let renderer,scene,camera,controls,rig,clock,root,last=performance.now(),frames=0,frameMs=[];
 const CENTER=new THREE.Vector3(45.2,1.65,100),TARGET=new THREE.Vector3(45.2,1.55,95);
@@ -84,9 +84,9 @@ async function loadBellagio(){
   const loader=new GLTFLoader();loader.setMeshoptDecoder(MeshoptDecoder);const texLoader=new THREE.TextureLoader();
   try{
     const [gltf,lm,manifest]=await Promise.all([
-      loader.loadAsync(BASE+'bellagio.glb'),
-      texLoader.loadAsync(BASE+'lm_interior_day.webp'),
-      fetch(BASE+'manifest.json').then(r=>{if(!r.ok)throw new Error('manifest');return r.json()})
+      loader.loadAsync(ASSET('bellagio-glb')),
+      texLoader.loadAsync(ASSET('bellagio-lightmap')),
+      fetch(ASSET('bellagio-manifest')).then(r=>{if(!r.ok)throw new Error('manifest');return r.json()})
     ]);
     lm.flipY=false;lm.colorSpace=THREE.SRGBColorSpace;lm.generateMipmaps=false;lm.minFilter=THREE.LinearFilter;lm.magFilter=THREE.LinearFilter;
     root=gltf.scene;root.updateMatrixWorld(true);
@@ -114,7 +114,7 @@ async function loadBellagio(){
     status.textContent='Lobby extracted · '+visible+' mesh groups · '+hidden+' culled · '+reduction+'% cropped from shared interior';
   }catch(e){console.warn(e);procedural()}
 }
-async function environment(){try{const hdr=await new HDRLoader().loadAsync(BASE+'env_day.hdr');hdr.mapping=THREE.EquirectangularReflectionMapping;const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromEquirectangular(hdr).texture;hdr.dispose();pmrem.dispose()}catch(e){console.warn('HDR fallback',e)}}
+async function environment(){try{const hdr=await new HDRLoader().loadAsync(ASSET('bellagio-hdr'));hdr.mapping=THREE.EquirectangularReflectionMapping;const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromEquirectangular(hdr).texture;hdr.dispose();pmrem.dispose()}catch(e){console.warn('HDR fallback',e)}}
 function init(){try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});}catch(error){console.warn('WebGL renderer init failed',error);$('#fallback').hidden=false;document.querySelector('.ui').hidden=true;return}renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.AgXToneMapping;renderer.toneMappingExposure=1.02;renderer.xr.enabled=true;renderer.xr.setReferenceSpaceType('local-floor');renderer.shadowMap.type=THREE.PCFSoftShadowMap;scene=new THREE.Scene();scene.background=new THREE.Color(0x100d0b);scene.fog=new THREE.FogExp2(0x17120d,.006);camera=new THREE.PerspectiveCamera(52,innerWidth/innerHeight,.05,500);rig=new THREE.Group();scene.add(rig);rig.add(camera);rig.position.copy(CENTER);camera.position.set(0,0,6.4);controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.enablePan=false;controls.minDistance=1.2;controls.maxDistance=14;controls.maxPolarAngle=Math.PI*.72;controls.target.copy(LOCAL_TARGET);scene.add(new THREE.HemisphereLight(0xffe7cd,0x1c1410,.8));const key=new THREE.DirectionalLight(0xffdfbd,1.4);key.position.set(48,9,105);scene.add(key);const vr=VRButton.createButton(renderer,{requiredFeatures:['local-floor'],optionalFeatures:['bounded-floor','hand-tracking','layers']});vr.removeAttribute('style');$('#xr').append(vr);$('#quality').addEventListener('change',e=>quality(e.target.value));$('#reset').addEventListener('click',reset);addEventListener('resize',resize,{passive:true});quality('auto');clock=new THREE.Clock();environment();loadBellagio();renderer.setAnimationLoop(render)}
 function render(){const dt=Math.min(clock.getDelta(),.05);frameMs.push(dt*1000);if(frameMs.length>180)frameMs.shift();if(!renderer.xr.isPresenting)controls.update();renderer.render(scene,camera);frames++;const now=performance.now();if(now-last>=750){$('#fps').textContent=Math.round(frames*1000/(now-last));frames=0;last=now;$('#draws').textContent=renderer.info.render.calls;if(frameMs.length){const sorted=[...frameMs].sort((a,b)=>a-b);$('#p95').textContent=sorted[Math.min(sorted.length-1,Math.floor(sorted.length*.95))].toFixed(1)}const t=renderer.info.render.triangles;$('#tris').textContent=t>999999?(t/1e6).toFixed(1)+'M':Math.round(t/1000)+'K'}}
 init();
