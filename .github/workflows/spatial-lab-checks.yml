@@ -26,3 +26,24 @@ jobs:
           node-version: '22'
       - name: Spatial Lab contract
         run: node spatial-lab-demo/tests/check.mjs
+
+  layout:
+    needs: contract
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated Chromium harness
+        run: |
+          npm install --prefix /tmp/spatial-pw playwright@1.55.0
+          /tmp/spatial-pw/node_modules/.bin/playwright install --with-deps chromium
+      - name: Serve static Spatial Lab
+        run: |
+          python3 -m http.server 4173 --directory spatial-lab-demo >/tmp/spatial-http.log 2>&1 &
+          echo $! >/tmp/spatial-http.pid
+          sleep 1
+      - name: Physical-layout contract in Chromium
+        run: node spatial-lab-demo/tests/layout.cjs
