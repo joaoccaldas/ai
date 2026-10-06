@@ -30,3 +30,26 @@ The 2026-10-06 KONA research delta (`SPLAT_INTEROP_CONVERGENCE`, confidence 0.96
 2. `EXP-BLENDER-ASSET-AS-CODE-001`: diffable procedural source -> generated Blender artifact -> deterministic rebuild.
 
 Production remains mesh-first until those experiments generate comparative evidence.
+
+
+## Asset delivery boundary
+
+Browser worlds no longer depend directly on repository raw-file hosts.
+
+```
+semantic asset id
+      |
+      v
+scene manifest
+      |
+      v
+allowlisted delivery id
+      |
+      v
+authenticated same-origin /api/asset
+      |
+      v
+exact repo + revision + path + expected byte identity
+```
+
+This separates semantic identity, source authority, delivery representation and transport. V0 has one representation per asset. Future LOD/KTX2/splat variants should extend the delivery mapping without forking semantic identity or room code.
