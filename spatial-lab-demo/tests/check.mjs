@@ -45,6 +45,9 @@ function inlineModule(html){
 for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
   try{new Function(inlineModule(html));}catch(e){throw new Error(name+' inline JS parse failed: '+e.message);}
 }
+const health=read('api/health.js');
+assert.match(health,/VERCEL_GIT_COMMIT_SHA/,'health exposes deployed SHA');
+assert.match(health,/bellagio-lobby-r0/,'health lists Bellagio benchmark');
 for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js']){
   const r=spawnSync(process.execPath,['--check',new URL('../'+file,import.meta.url).pathname],{encoding:'utf8'});
   assert.equal(r.status,0,file+' node syntax: '+r.stderr);
