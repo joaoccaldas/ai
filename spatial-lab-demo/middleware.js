@@ -1,7 +1,7 @@
 const SUPA_URL="https://mtvpnoqwjpoqaiocrklq.supabase.co";
 const SUPA_KEY="sb_publishable_lVueu3GqNcPe4Z9KsChvJw_VfmnVi5u";
 const OWNER_ID="a0468c5f-ea3c-4e59-9c7f-201c0131bea9";
-const PUBLIC=new Set(['/login.html','/login.js','/favicon.ico','/api/session','/api/logout','/api/health']);
+const PUBLIC=new Set(['/login.html','/login.js','/favicon.ico','/api/session','/api/logout','/api/health','/api/source-health']);
 function cookie(req,name){
   for(const part of (req.headers.get('cookie')||'').split(/;\s*/)){
     const i=part.indexOf('=');
