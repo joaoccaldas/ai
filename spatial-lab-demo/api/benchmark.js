@@ -22,8 +22,17 @@ async function owner(req){
   }catch{return null;}
 }
 export default async function handler(req,res){
-  if(req.method!=='POST')return res.status(405).json({ok:false,error:'method_not_allowed'});
+  if(!['GET','POST'].includes(req.method))return res.status(405).json({ok:false,error:'method_not_allowed'});
   const identity=await owner(req);if(!identity)return res.status(401).json({ok:false,error:'sign_in_required'});
+  if(req.method==='GET'){
+    try{
+      const select='id,scene_id,release_sha,asset_state,quality_mode,quality_tier,dpr,approx_fps,avg_ms,p50_ms,p95_ms,p99_ms,draw_calls,triangles,viewport_width,viewport_height,hardware_concurrency,device_memory_gb,webxr,webgpu,created_at';
+      const url=SUPA_URL+'/rest/v1/spatial_benchmarks?select='+encodeURIComponent(select)+'&order=created_at.desc&limit=20';
+      const r=await fetch(url,{headers:{apikey:SUPA_KEY,authorization:'Bearer '+identity.token}});
+      if(!r.ok)return res.status(502).json({ok:false,error:'evidence_read_failed'});
+      const rows=await r.json();res.setHeader('Cache-Control','no-store');return res.status(200).json({ok:true,rows:Array.isArray(rows)?rows:[]});
+    }catch{return res.status(502).json({ok:false,error:'evidence_read_failed'});}
+  }
   const release=String(process.env.VERCEL_GIT_COMMIT_SHA||'');
   if(!/^[0-9a-f]{40}$/.test(release))return res.status(503).json({ok:false,error:'release_identity_unavailable'});
   let body=req.body;
