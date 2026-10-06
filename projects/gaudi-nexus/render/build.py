@@ -84,6 +84,7 @@ def mathn(nt,op,a,b=None,clamp=False):
         if hasattr(x,'node'): nt.links.new(x,m.inputs[i])
         else: m.inputs[i].default_value=x
     return m.outputs['Value']
+exec(open(os.path.join(os.path.dirname(os.path.abspath(__file__)),'pbr.py')).read())
 # ---------- municipal limestone: coursed ashlar, vertical weathering ----------
 mm=newmat('MuniLimestone'); nt=mm.node_tree; p=bsdf(mm)
 mp=mapping(nt); mp.inputs['Rotation'].default_value=(math.radians(90),0,0); br=nt.nodes.new('ShaderNodeTexBrick'); nt.links.new(mp.outputs['Vector'],br.inputs['Vector'])
@@ -102,13 +103,15 @@ _bf=nt.nodes.new('ShaderNodeMix'); _bf.data_type='FLOAT'; nt.links.new(_ay,_bf.i
 mp2=mapping(nt,(0.28,0.28,0.28)); streak=noise(nt,mp2,1.0,6,0.6)   # tall vertical rain streaks
 mp3=mapping(nt,(0.12,0.12,0.12)); patina=noise(nt,mp3,1.0,6,0.6)
 dark=ramp(nt,streak.outputs['Fac'],[(0.35,(1,1,1,1)),(0.75,(0.52,0.48,0.42,1))])
-col=mixrgb(nt,_bc.outputs[2],dark.outputs['Color'],0.18,'MULTIPLY')
+_T=pbr_maps(nt,'sandstone_blocks_08',3.0)
+col=mixrgb(nt,(_T['color'] if _T else _bc.outputs[2]),dark.outputs['Color'],0.18,'MULTIPLY')
 col=mixrgb(nt,col,ramp(nt,patina.outputs['Fac'],[(0.4,(1,1,1,1)),(0.7,(0.72,0.68,0.6,1))]).outputs['Color'],0.6,'MULTIPLY')
 _zs=nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(nt.nodes.new('ShaderNodeTexCoord').outputs['Object'],_zs.inputs['Vector'])
 _base=ramp(nt,mathn(nt,'DIVIDE',_zs.outputs['Z'],40.0,True),[(0.0,(0.62,0.55,0.48,1)),(0.25,(0.9,0.86,0.8,1)),(1.0,(1.08,1.06,1.02,1))])   # dirt toward the base, cleaner higher up
 col=mixrgb(nt,col,_base.outputs['Color'],1.0,'MULTIPLY')
 nt.links.new(col,p.inputs['Base Color']); p.inputs['Roughness'].default_value=0.88
-h=mathn(nt,'SUBTRACT',1.0,_bf.outputs[0]); bump(nt,mathn(nt,'ADD',h,mathn(nt,'MULTIPLY',noise(nt,mapping(nt,(1,1,1)),40,8,0.55).outputs['Fac'],0.35)),0.8,0.05,p)
+if _T: nt.links.new(_T['rough'],p.inputs['Roughness'])
+h=(mathn(nt,'MULTIPLY',_T['height'],1.0) if _T else mathn(nt,'SUBTRACT',1.0,_bf.outputs[0])); bump(nt,mathn(nt,'ADD',h,mathn(nt,'MULTIPLY',noise(nt,mapping(nt,(1,1,1)),40,8,0.55).outputs['Fac'],0.35)),0.8,0.05,p)
 wv=nt.nodes.new('ShaderNodeTexWave'); wv.wave_type='BANDS'; wv.bands_direction='X'; wv.inputs['Scale'].default_value=0.22; wv.inputs['Distortion'].default_value=2.5; wv.inputs['Detail'].default_value=3
 nt.links.new(mapping(nt).outputs['Vector'],wv.inputs['Vector'])
 bl=noise(nt,mapping(nt,(0.035,0.035,0.05)),1.0,5,0.55)
@@ -165,7 +168,8 @@ br.inputs['Color1'].default_value=(0.47,0.44,0.40,1); br.inputs['Color2'].defaul
 mpd=mapping(nt); damp=noise(nt,mpd,0.22,5,0.5)       # metre-scale damp/puddle breakup
 mpf=mapping(nt); fine=noise(nt,mpf,70,6,0.6)          # aggregate
 dampmask=ramp(nt,damp.outputs['Fac'],[(0.50,(0,0,0,1)),(0.62,(1,1,1,1))])
-col=mixrgb(nt,br.outputs['Color'],ramp(nt,fine.outputs['Fac'],[(0.3,(0.88,0.88,0.88,1)),(0.7,(1.1,1.08,1.05,1))]).outputs['Color'],0.5,'MULTIPLY')
+_P=pbr_maps(nt,'concrete_pavers_02',2.0)
+col=mixrgb(nt,(_P['color'] if _P else br.outputs['Color']),ramp(nt,fine.outputs['Fac'],[(0.3,(0.88,0.88,0.88,1)),(0.7,(1.1,1.08,1.05,1))]).outputs['Color'],0.5,'MULTIPLY')
 col=mixrgb(nt,col,(0.45,0.43,0.41,1),dampmask.outputs['Color'],'MULTIPLY')
 nt.links.new(col,p.inputs['Base Color'])
 rough=mathn(nt,'ADD',0.78,mathn(nt,'MULTIPLY',fine.outputs['Fac'],-0.25))
@@ -174,7 +178,7 @@ rd=nt.nodes.new('ShaderNodeMapRange'); rd.inputs['From Min'].default_value=0.0; 
 nt.links.new(dampmask.outputs['Color'],rd.inputs['Value']); rd.inputs['To Min'].default_value=0.85; rd.inputs['To Max'].default_value=0.12
 rmix=nt.nodes.new('ShaderNodeMath'); rmix.operation='MULTIPLY'; nt.links.new(rd.outputs['Result'],rmix.inputs[0]); nt.links.new(fine.outputs['Fac'],rmix.inputs[1])
 rm=nt.nodes.new('ShaderNodeMapRange'); nt.links.new(rmix.outputs['Value'],rm.inputs['Value']); rm.inputs['From Min'].default_value=0.0; rm.inputs['From Max'].default_value=0.85; rm.inputs['To Min'].default_value=0.05; rm.inputs['To Max'].default_value=0.9
-nt.links.new(rm.outputs['Result'],p.inputs['Roughness'])
+nt.links.new((mathn(nt,'ADD',mathn(nt,'MULTIPLY',rm.outputs['Result'],0.5),mathn(nt,'MULTIPLY',_P['rough'],0.5)) if _P else rm.outputs['Result']),p.inputs['Roughness'])
 bump(nt,mathn(nt,'ADD',mathn(nt,'SUBTRACT',1.0,br.outputs['Fac']),mathn(nt,'MULTIPLY',fine.outputs['Fac'],0.2)),0.6,0.01,p)
 for nm in ('Plaza','Street_Base'):
     o=bpy.data.objects.get(nm)
@@ -248,6 +252,21 @@ for _i in range(8):
         _ld=bpy.data.lights.new(f'PendantLight_{_nl}','POINT'); _ld.energy=90.0; _ld.color=(1.0,0.72,0.42); _ld.shadow_soft_size=0.05
         _lo=bpy.data.objects.new(f'PendantLight_{_nl}',_ld); _lo.location=(_x,_y,_loc.z-_drop-0.03); sc.collection.objects.link(_lo); _nl+=1
 print('PENDANTS',_nl)
+# SURROUNDINGS: plane trees along the plaza edge for wide/aerial views (the hero keeps its designed composition)
+if CAM!='HERO_F3':
+    from procassets.vegetation import platane as _platane
+    _pl=bpy.data.objects.get('Plaza'); _c=_pl.matrix_world.translation; _hx=_pl.dimensions.x/2-5.0; _hy=_pl.dimensions.y/2-5.0; _nt=0
+    _edge=[]
+    for _k in range(0,int(2*_hx),16): _edge+= [(_c.x-_hx+_k,_c.y-_hy),(_c.x-_hx+_k,_c.y+_hy)]
+    for _k in range(16,int(2*_hy)-8,16): _edge+= [(_c.x-_hx,_c.y-_hy+_k),(_c.x+_hx,_c.y-_hy+_k)]
+    for _x,_y in _edge:
+        if abs((_y-_x)-70.2)<10: continue                      # keep the market strip clear
+        _hit,_loc,_n,_i,_ob,_mw=sc.ray_cast(_dg,Vector((_x,_y,40)),Vector((0,0,-1)),distance=60)
+        if not _hit or _ob.name not in ('Plaza','Street_Base') or _n.z<0.9: continue
+        if any(sc.ray_cast(_dg,Vector((_x,_y,1.0)),Vector((math.cos(a_),math.sin(a_),0)),distance=3.0)[0] for a_ in (0,1.57,3.14,4.71)): continue
+        _platane(f'StreetPlane_{_nt}',(_x,_y,_loc.z),seed=300+_nt*13,height=8.0+(_nt%4)*0.8,leaves=2600); _nt+=1
+    print('STREET TREES',_nt)
+
 # ---------- sky, exposure ----------
 w=sc.world or bpy.data.worlds.new('W'); sc.world=w; w.use_nodes=True; wt=w.node_tree; wt.nodes.clear()
 sky=wt.nodes.new('ShaderNodeTexSky')

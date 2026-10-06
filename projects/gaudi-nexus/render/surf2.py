@@ -12,10 +12,11 @@ if tm and tm.use_nodes:
     br.inputs['Color1'].default_value=(0.58,0.24,0.11,1); br.inputs['Color2'].default_value=(0.46,0.18,0.08,1); br.inputs['Mortar'].default_value=(0.2,0.15,0.11,1)
     wn=noise(nt,mapping(nt,(0.25,0.25,0.25)),1.0,6,0.55)
     wc=ramp(nt,wn.outputs['Fac'],[(0.35,(1,1,1,1)),(0.7,(0.7,0.62,0.55,1))])
-    col=mixrgb(nt,br.outputs['Color'],wc.outputs['Color'],0.7,'MULTIPLY'); nt.links.new(col,p.inputs['Base Color'])
+    _R=pbr_maps(nt,'clay_roof_tiles_02',2.5)
+    col=mixrgb(nt,(_R['color'] if _R else br.outputs['Color']),wc.outputs['Color'],0.7,'MULTIPLY'); nt.links.new(col,p.inputs['Base Color'])
     pn=noise(nt,mapping(nt,(60,60,60)),1.0,5,0.6)
     rr=nt.nodes.new('ShaderNodeMapRange'); nt.links.new(pn.outputs['Fac'],rr.inputs['Value']); rr.inputs['To Min'].default_value=0.38; rr.inputs['To Max'].default_value=0.72
-    nt.links.new(rr.outputs['Result'],p.inputs['Roughness'])
+    nt.links.new((mathn(nt,'ADD',mathn(nt,'MULTIPLY',rr.outputs['Result'],0.4),mathn(nt,'MULTIPLY',_R['rough'],0.6)) if _R else rr.outputs['Result']),p.inputs['Roughness'])
     bump(nt,mathn(nt,'ADD',mathn(nt,'SUBTRACT',1.0,br.outputs['Fac']),mathn(nt,'MULTIPLY',pn.outputs['Fac'],0.25)),0.8,0.012,p)
 # --- produce / bread / herbs: per-item colour jitter, pores, subsurface, roughness spread ---
 for m in list(bpy.data.materials):
