@@ -45,3 +45,6 @@ Not reusable (brand/IP, wrong context): Kona/Speedmax/Cervélo bikes, Nike/Breit
 
 ## Limits (be honest in captions)
 Figures are procedural silhouettes: fine at distance, not close-up (no faces/hands). Fruit and crates are modelled, not scanned. Photoreal foreground humans need licensed scans.
+
+## Per-asset build-meta
+`export_glb.py` now writes `<id>.build-meta.json` next to each GLB: `representation` (`geometry-study`), provenance, generator + params, units/axes, triangles, bbox, semantic parts, materials, bytes, sha256. Mobile budget gating is not applied yet; the fields exist so a Konam-side intake can apply its own.

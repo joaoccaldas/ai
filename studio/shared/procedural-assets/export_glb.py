@@ -77,6 +77,12 @@ for a in reg['assets']:
     tris = sum(len(pl.vertices) - 2 for o in objs if o.type == 'MESH' for pl in o.data.polygons)
     cs = [o.matrix_world @ Vector(c) for o in objs if o.type == 'MESH' for c in o.bound_box]
     bb = [[round(min(c[k] for c in cs), 3) for k in range(3)], [round(max(c[k] for c in cs), 3) for k in range(3)]]
+    if not SHEET:
+        meta = {'id': a['id'], 'contract_id': a.get('contract_id'), 'representation': 'geometry-study', 'provenance': 'procedural (bmesh), no scans, no AI-generated geometry',
+                'generator': {'builder': a['builder'], 'module': a.get('module'), 'func': a.get('func'), 'params': a['params']}, 'units': 'metres', 'up_axis_source': 'Z', 'up_axis_gltf': 'Y',
+                'triangles': tris, 'bbox_m': bb, 'semantic_parts': sorted(o.name for o in objs), 'materials': sorted({s.material.name for o in objs if o.type == 'MESH' for s in o.material_slots if s.material}),
+                'bytes': os.path.getsize(path), 'sha256': hashlib.sha256(open(path, 'rb').read()).hexdigest()}
+        json.dump(meta, open(os.path.join(out, a['id'] + '.build-meta.json'), 'w'), indent=1)
     if not SHEET: manifest.append({'id': a['id'], 'contract_id': a.get('contract_id'), 'file': os.path.basename(path), 'triangles': tris, 'bbox_m': bb, 'sha256': hashlib.sha256(open(path, 'rb').read()).hexdigest(), 'bytes': os.path.getsize(path)})
     if SHEET: sheet_items.append((a, objs))
     else:
