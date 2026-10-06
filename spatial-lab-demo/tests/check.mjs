@@ -18,7 +18,7 @@ for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
 }
 assert.match(index,/href="\/bellagio\.html"/,'World Zero routes to Bellagio benchmark');
 assert.match(index,/href="\/diagnostics\.html"/,'World Zero routes to device diagnostics');
-const diagnostics=read('diagnostics.html'), evidencePage=read('evidence.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js'), xrCore=read('runtime/xr-interactions.js');
+const diagnostics=read('diagnostics.html'), evidencePage=read('evidence.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js'), xrCore=read('runtime/xr-interactions.js'), spatialStudio=read('runtime/spatial-studio.js');
 assert.match(diagnostics,/navigator\.gpu/,'diagnostics checks WebGPU');
 assert.match(diagnostics,/isSessionSupported\('immersive-vr'\)/,'diagnostics checks immersive WebXR');
 assert.match(diagnostics,/MAX_TEXTURE_SIZE/,'diagnostics inspects GPU limits');
@@ -69,6 +69,25 @@ assert.match(index,/location\.assign\(route\)/,'World Zero has a navigable XR po
 assert.match(index,/registerBikeInteraction/,'Speedmax is XR-selectable');
 assert.match(bellagio,/WORLD ZERO/,'Bellagio includes XR return portal');
 assert.doesNotMatch(xrCore,/navigator\.userAgent|Quest|Oculus|Meta Quest/i,'XR core does not device-sniff');
+assert.match(xrCore,/XRHandModelFactory/,'XR core renders tracked hands');
+assert.match(xrCore,/createHandModel\(hand,'spheres'\)/,'tracked hands use lightweight sphere model');
+assert.match(xrCore,/selectstart/,'grab begins with standard WebXR selectstart');
+assert.match(xrCore,/selectend/,'grab release uses standard WebXR selectend');
+assert.match(xrCore,/controller\.attach\(entry\.object\)/,'grabbable objects attach to active XR input');
+assert.match(xrCore,/scene\.attach\(entry\.object\)/,'released objects return to scene space');
+assert.match(xrCore,/entry\.velocity\.copy\(state\.velocity\)/,'throw inherits tracked input velocity');
+assert.match(index,/grabbable:true/,'World Zero exposes a grabbable object');
+assert.match(index,/label:'Idea Orb'/,'Idea Orb is the grabbable spatial object');
+assert.doesNotMatch(index,/label:'Speedmax'[\s\S]{0,200}grabbable:true/,'Speedmax is not throwable');
+assert.match(index,/createAgentRing/,'World Zero builds agent ring');
+assert.match(index,/createCommandWall/,'World Zero builds curved spatial command wall');
+assert.match(spatialStudio,/CALDAS \/\/ AGENTS/,'command wall uses Caldas agent surface');
+assert.match(spatialStudio,/KONA \/\/ WORLD/,'command wall reuses KONA content');
+assert.match(spatialStudio,/PERFORMANCE \/\/ LIVE/,'command wall reuses Performance OS surface');
+assert.match(index,/isSessionSupported\('immersive-ar'\)/,'MR is capability-detected');
+assert.match(index,/requestSession\('immersive-ar'/,'MR uses standards-based immersive-ar');
+assert.match(index,/mrHide/,'World shell has MR visibility contract');
+assert.match(index,/scene\.background=null;scene\.fog=null/,'MR removes opaque virtual background');
 assert.equal(scene.semantic_authority,'mesh');
 assert.ok(scene.assets.some(a=>a.role==='semantic-mesh'&&a.bytes===3950912));
 assert.ok(scene.excluded_from_r0.some(a=>a.path==='assets/city.glb'&&a.bytes===11940384));
@@ -153,7 +172,7 @@ assert.match(xrBenchmarkMigration,/xr_frame_rate >= 30/i,'XR frame rate is bound
 const health=read('api/health.js');
 assert.match(health,/VERCEL_GIT_COMMIT_SHA/,'health exposes deployed SHA');
 assert.match(health,/bellagio-lobby-r0/,'health lists Bellagio benchmark');
-for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js','api/benchmark.js','runtime/evidence.js','runtime/xr-interactions.js']){
+for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js','api/benchmark.js','runtime/evidence.js','runtime/xr-interactions.js','runtime/spatial-studio.js']){
   const r=spawnSync(process.execPath,['--check',new URL('../'+file,import.meta.url).pathname],{encoding:'utf8'});
   assert.equal(r.status,0,file+' node syntax: '+r.stderr);
 }
