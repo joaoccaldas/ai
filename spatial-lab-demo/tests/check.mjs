@@ -3,7 +3,7 @@ import {spawnSync} from 'node:child_process';
 import assert from 'node:assert/strict';
 
 const read=p=>fs.readFileSync(new URL('../'+p,import.meta.url),'utf8');
-const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json'));
+const index=read('index.html'), bellagio=read('bellagio.html'), login=read('login.html'), loginJs=read('login.js'), mw=read('middleware.js'), session=read('api/session.js'), vercel=JSON.parse(read('vercel.json')), scene=JSON.parse(read('worlds/bellagio-lobby.scene.json')), registry=JSON.parse(read('worlds/registry.json'));
 
 for(const [name,html] of [['world-zero',index],['bellagio',bellagio],['login',login]]){
   assert.match(html,/width=device-width,initial-scale=1,viewport-fit=cover/,name+' viewport contract');
@@ -33,6 +33,10 @@ assert.equal(scene.semantic_authority,'mesh');
 assert.ok(scene.assets.some(a=>a.role==='semantic-mesh'&&a.bytes===3950912));
 assert.ok(scene.excluded_from_r0.some(a=>a.path==='assets/city.glb'&&a.bytes===11940384));
 assert.equal(scene.source.revision,'b13ece357ddf46086acfec0966a4f63a947f29f3');
+assert.equal(registry.schema,'caldas.world-registry/v0');
+assert.equal(new Set(registry.worlds.map(w=>w.id)).size,registry.worlds.length,'world ids unique');
+assert.equal(new Set(registry.worlds.map(w=>w.route)).size,registry.worlds.length,'world routes unique');
+assert.ok(registry.worlds.some(w=>w.id==='room:spatial-lab:bellagio-lobby-r0'&&w.scene_manifest==='worlds/bellagio-lobby.scene.json'));
 assert.doesNotMatch(loginJs,/localStorage|sessionStorage/,'auth token must not use browser storage');
 assert.match(login,/id="recover"/,'password recovery is visible');
 assert.match(loginJs,/https:\/\/joaoccaldas\.github\.io\/konam\/index\.html/,'recovery reuses canonical KONA callback');
