@@ -1,0 +1,28 @@
+name: Spatial Lab checks
+
+on:
+  push:
+    branches:
+      - feat/spatial-lab-v0
+    paths:
+      - 'spatial-lab-demo/**'
+      - '.github/workflows/spatial-lab-checks.yml'
+  pull_request:
+    paths:
+      - 'spatial-lab-demo/**'
+      - '.github/workflows/spatial-lab-checks.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Spatial Lab contract
+        run: node spatial-lab-demo/tests/check.mjs
