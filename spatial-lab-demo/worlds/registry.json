@@ -1,0 +1,35 @@
+{
+  "schema": "caldas.world-registry/v0",
+  "generated": false,
+  "worlds": [
+    {
+      "id": "world:spatial-lab:zero",
+      "name": "World Zero",
+      "kind": "benchmark-lab",
+      "route": "/",
+      "lifecycle": "research",
+      "semantic_authority": "procedural-mesh",
+      "source": {
+        "repository": "joaoccaldas/ai",
+        "branch": "feat/spatial-lab-v0"
+      },
+      "scene_manifest": null
+    },
+    {
+      "id": "room:spatial-lab:bellagio-lobby-r0",
+      "name": "Bellagio · Main Lobby",
+      "kind": "semantic-room-extract",
+      "route": "/bellagio.html",
+      "lifecycle": "research",
+      "semantic_authority": "mesh",
+      "source": {
+        "repository": "joaoccaldas/bellagio",
+        "revision": "b13ece357ddf46086acfec0966a4f63a947f29f3"
+      },
+      "scene_manifest": "worlds/bellagio-lobby.scene.json",
+      "optional_appearance_layers": [
+        "KHR_gaussian_splatting:future"
+      ]
+    }
+  ]
+}
