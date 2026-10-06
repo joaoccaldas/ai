@@ -39,7 +39,8 @@
     "core": "runtime/benchmark.js",
     "warmup_seconds": 3,
     "measured_seconds": 12,
-    "upload": false
+    "upload": true,
+    "persistence": "owner-scoped-supabase-rls"
   },
   "acceptance": [
     "auth-gated",
