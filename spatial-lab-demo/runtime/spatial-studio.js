@@ -32,13 +32,13 @@ function makeLabel(THREE,text,{accent='#ffffff',scale=[1.45,.34,1]}={}){
 export function createCommandWall({THREE,scene,position=new THREE.Vector3(0,2.4,-5.7)}={}){
   const group=new THREE.Group();group.name='Caldas curved command wall';group.position.copy(position);
   const defs=[
-    {title:'CALDAS // AGENTS',kicker:'SPATIAL ORCHESTRATION',lines:['SOL · orchestrate','LUNA · research','TERRA · render'],accent:'#66d8d0'},
-    {title:'KONA // WORLD',kicker:'SPORTS & BIKES',lines:['Speedmax · semantic mesh','Bellagio · room system','Gaudí · architecture'],accent:'#e85b2a'},
-    {title:'PERFORMANCE // LIVE',kicker:'ATHLETE SYSTEM',lines:['readiness · recovery','training load · race','private data surface'],accent:'#d9c382'}
+    {id:'caldas-agents',title:'CALDAS // AGENTS',kicker:'SPATIAL ORCHESTRATION',lines:['SOL · orchestrate','LUNA · research','TERRA · render'],accent:'#66d8d0'},
+    {id:'kona-world',title:'KONA // WORLD',kicker:'SPORTS & BIKES',lines:['Speedmax · semantic mesh','Bellagio · room system','Gaudí · architecture'],accent:'#e85b2a'},
+    {id:'performance-live',title:'PERFORMANCE // LIVE',kicker:'ATHLETE SYSTEM',lines:['readiness · recovery','training load · race','private data surface'],accent:'#d9c382'}
   ];
   const xs=[-3.35,0,3.35],rot=[.18,0,-.18];
   const panels=[];
-  defs.forEach((d,i)=>{const p=makePanel(THREE,{...d,worldWidth:3.15,worldHeight:1.62});p.position.set(xs[i],0,Math.abs(xs[i])*.08);p.rotation.y=rot[i];group.add(p);panels.push(p);});
+  defs.forEach((d,i)=>{const p=makePanel(THREE,{...d,worldWidth:3.15,worldHeight:1.62});p.position.set(xs[i],0,Math.abs(xs[i])*.08);p.rotation.y=rot[i];p.userData.spatialPanelId=d.id;p.userData.spatialPanelLabel=d.title;group.add(p);panels.push(p);});
   scene.add(group);
   return {group,panels};
 }
