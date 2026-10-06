@@ -17,6 +17,10 @@ for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
   assert.match(html,/SAFE FALLBACK/,name+' safe fallback');
 }
 assert.match(index,/href="\/bellagio\.html"/,'World Zero routes to Bellagio benchmark');
+assert.match(bellagio,/function cropGeometry\(/,'Bellagio benchmark crops the shared baked mesh by room bounds');
+assert.match(bellagio,/LOBBY_BOUNDS/,'Bellagio benchmark uses semantic lobby bounds');
+assert.match(bellagio,/function chihuly\(/,'Bellagio reuses its canonical Fiori di Como generator');
+assert.match(bellagio,/LOCAL_TARGET/,'Bellagio OrbitControls use local coordinates under the XR origin rig');
 assert.equal(scene.semantic_authority,'mesh');
 assert.ok(scene.assets.some(a=>a.role==='semantic-mesh'&&a.bytes===3950912));
 assert.ok(scene.excluded_from_r0.some(a=>a.path==='assets/city.glb'&&a.bytes===11940384));
