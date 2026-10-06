@@ -253,6 +253,7 @@ export function createXRInteractionSystem({THREE,renderer,scene,maxDistance=12,o
         if(state.hasPosition)state.velocity.copy(state.currentPosition).sub(state.lastPosition).multiplyScalar(1/dt);
         else state.hasPosition=true;
         state.lastPosition.copy(state.currentPosition);
+        if(state.held&&state.holdRole==='primary')state.held.onTransform?.({type:state.held.secondaryState?'two-hand-active':'one-hand-move'});
         if(!c.visible)continue;
         const picked=resolveHit(c);
         if(state.line.visible)state.line.scale.z=picked?.hit?.distance?Math.min(maxDistance,picked.hit.distance):maxDistance;
