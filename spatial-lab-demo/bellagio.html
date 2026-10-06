@@ -39,7 +39,7 @@ const CENTER=new THREE.Vector3(45.2,1.65,100),TARGET=new THREE.Vector3(45.2,1.55
 const LOCAL_TARGET=TARGET.clone().sub(CENTER);
 const LOBBY_BOUNDS=new THREE.Box3(new THREE.Vector3(20,-.6,86),new THREE.Vector3(70.4,12.5,114));
 function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight,false)}
-function env(){return {coarse:matchMedia('(pointer:coarse)').matches,cores:navigator.hardwareConcurrency||4,memory:navigator.deviceMemory||4,short:Math.min(innerWidth,innerHeight)}}
+function env(){return {coarse:matchMedia('(pointer:coarse)').matches,cores:navigator.hardwareConcurrency||4,memory:navigator.deviceMemory||4,short:Math.min(innerWidth,innerHeight),caps:{low:.9,balanced:1.15,high:1.55,ultra:1.7}}}
 function quality(name){qualityMode=name;const q=qualityProfile(name,env());if(name==='auto'){if(autoDpr===null)autoDpr=q.dpr}else autoDpr=null;const dpr=name==='auto'?autoDpr:q.dpr;renderer.setPixelRatio(Math.min(devicePixelRatio||1,dpr));renderer.shadowMap.enabled=q.shadow;try{renderer.xr.setFoveation?.(q.foveation)}catch{}$('#dpr').textContent=renderer.getPixelRatio().toFixed(2);resize()}
 function govern(p95){if(qualityMode!=='auto'||renderer.xr.isPresenting||!Number.isFinite(p95))return;if(++governorWindows<4)return;governorWindows=0;const cap=qualityProfile('auto',env()).dpr,current=renderer.getPixelRatio(),next=nextAutoDpr({p95,current,cap});if(Math.abs(next-current)>=.049){autoDpr=next;renderer.setPixelRatio(Math.min(devicePixelRatio||1,next));$('#dpr').textContent=renderer.getPixelRatio().toFixed(2);resize()}}
 function reset(){rig.position.copy(CENTER);camera.position.set(0,0,6.4);controls.target.copy(LOCAL_TARGET);controls.update()}
