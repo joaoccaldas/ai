@@ -86,3 +86,25 @@ This is a reusable hypothesis: **semantic bounds can drive geometry residency fr
 Adding P95 telemetry initially created a plausible 320 px overflow risk. Before deployment, mobile telemetry was changed to a three-column strip showing only FPS, P95 and DPR; draw calls and triangle counts remain on larger screens. CI asserts the responsive rule exists.
 
 Physical Samsung and Quest visual evidence remains **NOT_RUN**.
+
+## Physical Android landscape evidence — 2026-10-06 07:48 UTC
+
+Owner screenshot captured on the live Spatial Lab in Android landscape (source image 1536 × 709 px).
+
+Observed:
+1. The 3D scene and telemetry were active at ~60 FPS / DPR 1.25 / P95 ~17.1 ms, proving a real WebGL renderer existed.
+2. The **SAFE FALLBACK / WebGL unavailable** overlay was simultaneously visible. Root cause: author CSS `.fallback{display:grid}` overrode the element's `hidden` state.
+3. Phone CSS set every control to `width:100%`; the short-landscape media rule changed the container to flex but did not cancel the child width. Result: oversized Bellagio / Device / Reset / Sign out rows colliding with the viewport.
+4. The screenshot therefore falsified our previous assumption that static responsive rules were sufficient evidence.
+
+Remediation:
+- global `[hidden]{display:none!important}` contract on both worlds;
+- short-landscape explicitly resets action children to `width:auto`;
+- compact 38 px landscape actions, hidden low-value note, reduced hero footprint;
+- remove throwaway WebGL preflight context entirely;
+- the actual `THREE.WebGLRenderer` constructor is now the single capability test;
+- fallback is displayed only when the real renderer initialization throws.
+
+This physical screenshot materially increased confidence in the debugging model because it showed **renderer success and fallback visibility at the same time**, isolating the bug to presentation state rather than GPU availability.
+
+Status after source fix: CI pending; new physical Android visual evidence required after deployment.
