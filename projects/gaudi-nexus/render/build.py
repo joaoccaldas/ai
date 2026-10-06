@@ -228,6 +228,26 @@ from procassets.vegetation import *
 replace_trees()
 from procassets.figures import *
 populate(CAM,dscale=(1.0 if CAM=='HERO_F3' else (3.0 if CAM=='AERIAL' else 0.45)))
+
+# VIBE: warm pendant lamps hung from the vault roof along the market aisle, with real lights; street trees on the plaza edge
+from procassets import props as _props
+_dg=bpy.context.evaluated_depsgraph_get()
+_shade=bpy.data.materials.new('LampShade'); _shade.use_nodes=True; _sp=_shade.node_tree.nodes['Principled BSDF']; _sp.inputs['Base Color'].default_value=(0.05,0.045,0.04,1); _sp.inputs['Metallic'].default_value=0.8; _sp.inputs['Roughness'].default_value=0.35
+_cord=bpy.data.materials.new('LampCord'); _cord.use_nodes=True; _cord.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value=(0.02,0.02,0.02,1)
+_bulb=bpy.data.materials.new('LampBulb'); _bulb.use_nodes=True; _bp=_bulb.node_tree.nodes['Principled BSDF']; _bp.inputs['Base Color'].default_value=(1,0.8,0.5,1); _bp.inputs['Emission Color'].default_value=(1.0,0.72,0.42,1); _bp.inputs['Emission Strength'].default_value=30.0
+_nl=0
+for _i in range(8):
+    for _h in (0.0,1.1):
+        _x=-59.5+2.2*_i+_h*0.7; _y=10.7+2.2*_i+_h*0.7
+        _hit,_loc,_n,_idx,_ob,_mw=sc.ray_cast(_dg,Vector((_x,_y,2.2)),Vector((0,0,1)),distance=9)
+        if not _hit or _n.z>-0.3: continue
+        _drop=min(1.1,max(0.6,_loc.z-2.7))
+        _o=bpy.data.objects.new(f'PendantLamp_{_nl}',bpy.data.meshes.new(f'PendantLamp_{_nl}')); _bm=_props.pendant_lamp(drop=_drop,d=0.36); _bm.to_mesh(_o.data); _bm.free()
+        for _m in (_shade,_cord,_bulb): _o.data.materials.append(_m)
+        _o.location=(_x,_y,_loc.z-0.005); sc.collection.objects.link(_o)
+        _ld=bpy.data.lights.new(f'PendantLight_{_nl}','POINT'); _ld.energy=90.0; _ld.color=(1.0,0.72,0.42); _ld.shadow_soft_size=0.05
+        _lo=bpy.data.objects.new(f'PendantLight_{_nl}',_ld); _lo.location=(_x,_y,_loc.z-_drop-0.03); sc.collection.objects.link(_lo); _nl+=1
+print('PENDANTS',_nl)
 # ---------- sky, exposure ----------
 w=sc.world or bpy.data.worlds.new('W'); sc.world=w; w.use_nodes=True; wt=w.node_tree; wt.nodes.clear()
 sky=wt.nodes.new('ShaderNodeTexSky')
@@ -240,7 +260,7 @@ hz=bpy.data.meshes.new('HazeMesh'); import bmesh as _bm
 _b=_bm.new(); _bm.ops.create_cube(_b,size=1.0); _b.to_mesh(hz); _b.free()
 hzo=bpy.data.objects.new('HAZE',hz); hzo.scale=(900,900,160); hzo.location=(30,110,70); sc.collection.objects.link(hzo)
 hm=bpy.data.materials.new('HazeMat'); hm.use_nodes=True; hn=hm.node_tree; hn.nodes.clear()
-hs=hn.nodes.new('ShaderNodeVolumeScatter'); hs.inputs['Density'].default_value=0.0009; hs.inputs['Anisotropy'].default_value=0.35; hs.inputs['Color'].default_value=(0.85,0.9,1.0,1)
+hs=hn.nodes.new('ShaderNodeVolumeScatter'); hs.inputs['Density'].default_value=0.0009+0.0020*warm; hs.inputs['Anisotropy'].default_value=0.35; hs.inputs['Color'].default_value=(0.85,0.9,1.0,1)
 ho=hn.nodes.new('ShaderNodeOutputMaterial'); hn.links.new(hs.outputs[0],ho.inputs['Volume']); hz.materials.append(hm)
 hzo.visible_shadow=False
 tcg=wt.nodes.new('ShaderNodeTexCoord'); mpg=wt.nodes.new('ShaderNodeMapping'); mpg.inputs['Scale'].default_value=(2.6,2.6,7.0); wt.links.new(tcg.outputs['Generated'],mpg.inputs['Vector'])

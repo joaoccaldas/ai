@@ -52,10 +52,10 @@ def plate_setting(d=0.26):   # mats: 0 porcelain, 1 steel cutlery, 2 napkin
     for s, nm in ((-1, 'fork'), (1, 'knife')):
         x = s * (r + 0.05); box(bm, (x, 0, 0.004), (0.016 if nm == 'fork' else 0.014, 0.19, 0.004), 0, 1)
     box(bm, (-(r + 0.12), 0, 0.006), (0.09, 0.09, 0.012), 0, 2); return bm
-def pendant_lamp(drop=1.0, d=0.38):   # mats: 0 shade metal, 1 cord, 2 bulb emissive
-    bm = bmesh.new(); cyl(bm, (0, 0, 0), (0, 0, drop), 0.004, 0.004, 6, 1); cyl(bm, (0, 0, drop - 0.01), (0, 0, drop + 0.03), 0.03, 0.03, 12, 1)
-    lathe(bm, [(0.025, 0.0), (d*0.2, -0.04), (d*0.42, -0.14), (d*0.5, -0.16), (d*0.48, -0.162), (d*0.4, -0.145), (d*0.18, -0.045), (0.02, -0.01)], 28, 0, cap_bottom=False, center=(0, 0, drop))
-    lathe(bm, [(0.0, -0.08), (0.04, -0.07), (0.05, -0.04), (0.035, -0.01), (0.0, 0.0)], 14, 2, cap_bottom=False, center=(0, 0, drop)); return bm
+def pendant_lamp(drop=1.0, d=0.38):   # origin at the ceiling attachment; mats: 0 shade metal, 1 cord, 2 bulb emissive
+    bm = bmesh.new(); cyl(bm, (0, 0, -drop + 0.12), (0, 0, 0), 0.004, 0.004, 6, 1); cyl(bm, (0, 0, -0.03), (0, 0, 0.0), 0.04, 0.04, 14, 1)
+    lathe(bm, [(0.025, 0.16), (d*0.2, 0.12), (d*0.42, 0.04), (d*0.5, 0.0), (d*0.48, -0.002), (d*0.4, 0.015), (d*0.18, 0.115), (0.02, 0.15)], 28, 0, cap_bottom=False, center=(0, 0, -drop))
+    lathe(bm, [(0.0, -0.08), (0.04, -0.07), (0.05, -0.04), (0.035, 0.0), (0.0, 0.03)], 14, 2, cap_bottom=False, center=(0, 0, -drop)); return bm
 def bar_stool(h=0.75, d=0.36):    # mats: 0 timber seat, 1 steel frame
     bm = bmesh.new(); lathe(bm, [(0.0, h), (d/2, h), (d/2*1.02, h-0.015), (d/2*0.95, h-0.045), (0.0, h-0.045)], 28, 0)
     for k in range(4):
