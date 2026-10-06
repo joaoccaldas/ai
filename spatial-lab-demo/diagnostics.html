@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#071012">
+<title>Device Diagnostics · Caldas Spatial Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#06090a;--card:#0d1214;--line:rgba(255,255,255,.12);--text:#f3f1eb;--muted:#91a09d;--accent:#e85b2a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% -10%,#1b3035 0,#091113 35%,var(--bg) 75%);color:var(--text);font-family:Inter,system-ui,sans-serif}body{padding:max(16px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left))}
+main{width:min(100%,940px);margin:auto}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}.eyebrow{margin:0 0 7px;font-size:10px;letter-spacing:.17em;font-weight:760;color:#afbcba}h1{margin:0;font:400 clamp(38px,7vw,66px)/.95 Georgia,serif;letter-spacing:-.05em}.intro{max-width:62ch;color:var(--muted);line-height:1.55;margin:14px 0 24px}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:rgba(13,18,20,.82);color:var(--text);text-decoration:none;font:inherit;cursor:pointer}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.card{min-width:0;border:1px solid var(--line);border-radius:18px;background:rgba(13,18,20,.84);padding:16px}.card h2{margin:0 0 12px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#b7c1bf}.metric{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid rgba(255,255,255,.07)}.metric:first-of-type{border-top:0}.metric span{color:var(--muted);font-size:12px}.metric strong{min-width:0;text-align:right;font-size:12px;overflow-wrap:anywhere}.hero{grid-column:span 2}.hero strong.big{display:block;font:400 clamp(34px,6vw,54px) Georgia,serif;margin:2px 0 8px;color:#f7f1e7}.status{font-size:12px;color:#c7d0ce}.note{margin:18px 2px 0;color:#75827f;font-size:11px;line-height:1.5}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.hero{grid-column:auto}.actions{width:100%}.actions>*{flex:1;min-width:130px}.card{padding:14px}}
+</style>
+</head>
+<body>
+<main>
+<div class="top"><div><p class="eyebrow">CALDAS // SPATIAL LAB</p><h1>Device diagnostics.</h1></div><div class="actions"><a class="btn" href="/">World Zero</a><a class="btn" href="/bellagio.html">Bellagio</a><button class="btn" id="refresh" type="button">Refresh</button></div></div>
+<p class="intro">Local-only capability inspection for quality decisions. Nothing on this page uploads device telemetry. Use it to separate actual GPU/browser capability from assumptions about “mobile” or “desktop.”</p>
+<section class="grid">
+<article class="card hero"><h2>Recommended profile</h2><strong class="big" id="tier">Measuring…</strong><p class="status" id="why"></p></article>
+<article class="card"><h2>Display</h2><div id="display"></div></article>
+<article class="card"><h2>Compute</h2><div id="compute"></div></article>
+<article class="card"><h2>Graphics</h2><div id="graphics"></div></article>
+<article class="card"><h2>XR / Future</h2><div id="xr"></div></article>
+<article class="card"><h2>Browser</h2><div id="browser"></div></article>
+</section>
+<p class="note">These are capability hints, not performance proof. Final quality promotion still requires measured frame pacing, sustained thermals and visual evidence in the real scene.</p>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const metric=(k,v)=>'<div class="metric"><span>'+k+'</span><strong>'+String(v)+'</strong></div>';
+async function measure(){
+  const coarse=matchMedia('(pointer:coarse)').matches,mem=navigator.deviceMemory||null,cores=navigator.hardwareConcurrency||null,short=Math.min(innerWidth,innerHeight);
+  const c=document.createElement('canvas'),gl=c.getContext('webgl2',{powerPreference:'high-performance'})||c.getContext('webgl',{powerPreference:'high-performance'});
+  let renderer='unavailable',vendor='unavailable',maxTexture='–',maxRender='–',maxSamples='–',webgl2=false;
+  if(gl){webgl2=typeof WebGL2RenderingContext!=='undefined'&&gl instanceof WebGL2RenderingContext;maxTexture=gl.getParameter(gl.MAX_TEXTURE_SIZE);maxRender=gl.getParameter(gl.MAX_RENDERBUFFER_SIZE);maxSamples=webgl2?gl.getParameter(gl.MAX_SAMPLES):'n/a';const ext=gl.getExtension('WEBGL_debug_renderer_info');if(ext){renderer=gl.getParameter(ext.UNMASKED_RENDERER_WEBGL);vendor=gl.getParameter(ext.UNMASKED_VENDOR_WEBGL)}else{renderer=gl.getParameter(gl.RENDERER);vendor=gl.getParameter(gl.VENDOR)}}
+  let immersive=false,inline=false;if(navigator.xr){try{immersive=await navigator.xr.isSessionSupported('immersive-vr')}catch{}try{inline=await navigator.xr.isSessionSupported('inline')}catch{}}
+  const webgpu=!!navigator.gpu;
+  let tier='balanced',reason='Conservative baseline.';
+  if(!gl){tier='fallback';reason='No WebGL context is available.'}
+  else if(coarse||short<700||(cores&&cores<=4)||(mem&&mem<=4)){tier='balanced';reason='Touch/small-screen or constrained compute signal. Start conservative and promote only from sustained evidence.'}
+  else if((cores||0)>=8&&(mem||0)>=8&&webgl2){tier='high';reason='Strong browser/compute signals. High is reasonable, but Ultra still requires scene-level frame evidence.'}
+  $('#tier').textContent=tier.toUpperCase();$('#why').textContent=reason;
+  $('#display').innerHTML=metric('Viewport',innerWidth+' × '+innerHeight+' CSS px')+metric('DPR',devicePixelRatio||1)+metric('Screen',screen.width+' × '+screen.height)+metric('Pointer',coarse?'coarse/touch':'fine');
+  $('#compute').innerHTML=metric('CPU threads',cores||'unknown')+metric('Device memory',mem?mem+' GB':'not exposed')+metric('Touch points',navigator.maxTouchPoints||0);
+  $('#graphics').innerHTML=metric('WebGL2',webgl2)+metric('Renderer',renderer)+metric('Vendor',vendor)+metric('Max texture',maxTexture)+metric('Max renderbuffer',maxRender)+metric('MSAA samples',maxSamples);
+  $('#xr').innerHTML=metric('WebXR API',!!navigator.xr)+metric('Immersive VR',immersive)+metric('Inline XR',inline)+metric('WebGPU',webgpu);
+  $('#browser').innerHTML=metric('Platform',navigator.platform||'unknown')+metric('Language',navigator.language||'unknown')+metric('Reduced motion',matchMedia('(prefers-reduced-motion:reduce)').matches)+metric('User agent',navigator.userAgent);
+}
+$('#refresh').addEventListener('click',measure);measure();
+</script>
+</body>
+</html>
