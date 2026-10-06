@@ -73,7 +73,7 @@ assert.match(xrCore,/XRHandModelFactory/,'XR core renders tracked hands');
 assert.match(xrCore,/createHandModel\(hand,'spheres'\)/,'tracked hands use lightweight sphere model');
 assert.match(xrCore,/selectstart/,'grab begins with standard WebXR selectstart');
 assert.match(xrCore,/selectend/,'grab release uses standard WebXR selectend');
-assert.match(xrCore,/controller\.attach\(entry\.object\)/,'grabbable objects attach to active XR input');
+assert.match(xrCore,/anchor\.attach\(entry\.object\)/,'grabbable objects attach to resolved XR input anchor');
 assert.match(xrCore,/scene\.attach\(entry\.object\)/,'released objects return to scene space');
 assert.match(xrCore,/entry\.velocity\.copy\(state\.velocity\)/,'throw inherits tracked input velocity');
 assert.match(xrCore,/index-finger-tip/,'tracked-hand pinch resolves from fingertip position');
