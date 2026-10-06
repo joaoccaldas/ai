@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#050708">
+<title>Sign in · Caldas Spatial Lab</title>
+<style>
+:root{color-scheme:dark;--bg:#050708;--panel:rgba(11,16,18,.92);--line:rgba(255,255,255,.14);--text:#f6f4ef;--muted:#9ca7a5;--accent:#e85b2a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 15%,#152327 0,#071012 32%,#050708 68%);color:var(--text);font-family:Inter,system-ui,-apple-system,sans-serif}
+body{min-height:100vh;display:grid;place-items:center;padding:max(18px,env(safe-area-inset-top)) 16px max(18px,env(safe-area-inset-bottom))}
+main{width:min(100%,430px);border:1px solid var(--line);border-radius:24px;background:var(--panel);padding:clamp(22px,6vw,34px);box-shadow:0 24px 80px rgba(0,0,0,.34)}
+.eyebrow{margin:0 0 10px;font-size:10px;letter-spacing:.18em;font-weight:760;color:#b9c4c1}h1{margin:0 0 12px;font:400 clamp(38px,11vw,58px)/.95 Georgia,serif;letter-spacing:-.045em}p{color:var(--muted);line-height:1.52}form{display:grid;gap:14px;margin-top:26px}label{display:grid;gap:7px;color:#d7dddb;font-size:13px}input{width:100%;min-height:50px;border:1px solid var(--line);border-radius:14px;background:#0a0e10;color:var(--text);padding:0 14px;font-size:16px;outline:none}input:focus{border-color:rgba(232,91,42,.85);box-shadow:0 0 0 3px rgba(232,91,42,.12)}button{min-height:50px;border:1px solid rgba(232,91,42,.7);border-radius:999px;background:#8e3014;color:#fff;font:650 15px system-ui;cursor:pointer}button:disabled{opacity:.55;cursor:wait}.status{min-height:22px;margin:2px 0 0;color:#cfd8d5;font-size:13px}.foot{margin:22px 0 0;font-size:11px;color:#73817e}
+@media(max-width:360px){main{border-radius:18px;padding:20px}h1{font-size:38px}}
+</style>
+</head>
+<body>
+<main>
+<p class="eyebrow">CALDAS // SPATIAL LAB</p>
+<h1>Private world.</h1>
+<p>Use the same confirmed account already used by KONA.m. Spatial Lab access is owner-only.</p>
+<form id="login" novalidate>
+<label>Email<input name="email" type="email" autocomplete="email" required></label>
+<label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+<button type="submit">Enter World Zero</button>
+<p id="status" class="status" role="status" aria-live="polite"></p>
+</form>
+<p class="foot">Your Supabase access token is exchanged for an HttpOnly browser session and is not written to localStorage.</p>
+</main>
+<script type="module" src="/login.js"></script>
+</body>
+</html>
