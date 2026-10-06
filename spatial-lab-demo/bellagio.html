@@ -31,10 +31,11 @@ import {VRButton} from 'https://esm.sh/three@0.186.1/examples/jsm/webxr/VRButton
 import {GLTFLoader} from 'https://esm.sh/three@0.186.1/examples/jsm/loaders/GLTFLoader.js';
 import {MeshoptDecoder} from 'https://esm.sh/three@0.186.1/examples/jsm/libs/meshopt_decoder.module.js';
 import {qualityProfile,percentile95,nextAutoDpr} from '/runtime/quality.js';
+import {summarizeFrames} from '/runtime/benchmark.js';
 import {HDRLoader} from 'https://esm.sh/three@0.186.1/examples/jsm/loaders/HDRLoader.js';
 const SHA='b13ece357ddf46086acfec0966a4f63a947f29f3',ASSET=id=>'/api/asset?id='+encodeURIComponent(id);
 const $=s=>document.querySelector(s),canvas=$('#c'),status=$('#status'),reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
-let renderer,scene,camera,controls,rig,clock,root,last=performance.now(),frames=0,frameMs=[],qualityMode='auto',autoDpr=null,governorWindows=0;
+let renderer,scene,camera,controls,rig,clock,root,last=performance.now(),frames=0,frameMs=[],qualityMode='auto',autoDpr=null,governorWindows=0,benchActive=false,benchSamples=[];
 const CENTER=new THREE.Vector3(45.2,1.65,100),TARGET=new THREE.Vector3(45.2,1.55,95);
 const LOCAL_TARGET=TARGET.clone().sub(CENTER);
 const LOBBY_BOUNDS=new THREE.Box3(new THREE.Vector3(20,-.6,86),new THREE.Vector3(70.4,12.5,114));
@@ -82,6 +83,8 @@ function chihuly(pieces){
   const mesh=new THREE.Mesh(g,m);mesh.name='Fiori di Como · reused generator';return mesh;
 }
 function procedural(){const g=new THREE.Group();const warm=new THREE.MeshStandardMaterial({color:0x8a7354,roughness:.58,metalness:.08}),stone=new THREE.MeshStandardMaterial({color:0xaaa092,roughness:.78});for(let x=-5;x<=5;x+=2.5){const c=new THREE.Mesh(new THREE.CylinderGeometry(.24,.28,4.6,24),stone);c.position.set(x,2.3,-3);g.add(c)}const desk=new THREE.Mesh(new THREE.BoxGeometry(5.4,.95,1.2),warm);desk.position.set(0,.55,-2);g.add(desk);const floor=new THREE.Mesh(new THREE.PlaneGeometry(18,14),new THREE.MeshStandardMaterial({color:0x3b3027,roughness:.72,metalness:.1}));floor.rotation.x=-Math.PI/2;g.add(floor);g.position.copy(CENTER).add(new THREE.Vector3(0,0,-3));scene.add(g);status.textContent='Fallback lobby · source load failed';$('#fallback').hidden=false}
+const benchmarkRequested=new URLSearchParams(location.search).has('benchmark');
+function startBenchmark(){if(!benchmarkRequested||benchActive)return;status.textContent='Benchmark warm-up · 3 s';setTimeout(()=>{benchSamples=[];benchActive=true;status.textContent='Benchmark running · 12 s';setTimeout(()=>{benchActive=false;const r=summarizeFrames(benchSamples);if(!r)return;status.textContent=`BENCH ${r.approxFps.toFixed(1)} FPS · p50 ${r.p50Ms.toFixed(1)} · p95 ${r.p95Ms.toFixed(1)} · p99 ${r.p99Ms.toFixed(1)} ms · DPR ${renderer.getPixelRatio().toFixed(2)} · ${renderer.info.render.calls} draws · ${Math.round(renderer.info.render.triangles/1000)}K tris`;},12000);},3000)}
 async function loadBellagio(){
   const loader=new GLTFLoader();loader.setMeshoptDecoder(MeshoptDecoder);const texLoader=new THREE.TextureLoader();
   try{
@@ -113,12 +116,12 @@ async function loadBellagio(){
     scene.add(root);
     const flower=chihuly(manifest.chihuly_pieces||[]);scene.add(flower);
     const reduction=originalTris?Math.round((1-keptTris/originalTris)*100):0;
-    status.textContent='Lobby extracted · '+visible+' mesh groups · '+hidden+' culled · '+reduction+'% cropped from shared interior';
+    status.textContent='Lobby extracted · '+visible+' mesh groups · '+hidden+' culled · '+reduction+'% cropped from shared interior';startBenchmark();
   }catch(e){console.warn(e);procedural()}
 }
 async function environment(){try{const hdr=await new HDRLoader().loadAsync(ASSET('bellagio-hdr'));hdr.mapping=THREE.EquirectangularReflectionMapping;const pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromEquirectangular(hdr).texture;hdr.dispose();pmrem.dispose()}catch(e){console.warn('HDR fallback',e)}}
 function init(){try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});}catch(error){console.warn('WebGL renderer init failed',error);$('#fallback').hidden=false;document.querySelector('.ui').hidden=true;return}renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.AgXToneMapping;renderer.toneMappingExposure=1.02;renderer.xr.enabled=true;renderer.xr.setReferenceSpaceType('local-floor');renderer.shadowMap.type=THREE.PCFSoftShadowMap;scene=new THREE.Scene();scene.background=new THREE.Color(0x100d0b);scene.fog=new THREE.FogExp2(0x17120d,.006);camera=new THREE.PerspectiveCamera(52,innerWidth/innerHeight,.05,500);rig=new THREE.Group();scene.add(rig);rig.add(camera);rig.position.copy(CENTER);camera.position.set(0,0,6.4);controls=new OrbitControls(camera,canvas);controls.enableDamping=true;controls.enablePan=false;controls.minDistance=1.2;controls.maxDistance=14;controls.maxPolarAngle=Math.PI*.72;controls.target.copy(LOCAL_TARGET);scene.add(new THREE.HemisphereLight(0xffe7cd,0x1c1410,.8));const key=new THREE.DirectionalLight(0xffdfbd,1.4);key.position.set(48,9,105);scene.add(key);const vr=VRButton.createButton(renderer,{requiredFeatures:['local-floor'],optionalFeatures:['bounded-floor','hand-tracking','layers']});vr.removeAttribute('style');$('#xr').append(vr);$('#quality').addEventListener('change',e=>quality(e.target.value));$('#reset').addEventListener('click',reset);addEventListener('resize',resize,{passive:true});quality('auto');clock=new THREE.Clock();environment();loadBellagio();renderer.setAnimationLoop(render)}
-function render(){const dt=Math.min(clock.getDelta(),.05);frameMs.push(dt*1000);if(frameMs.length>180)frameMs.shift();if(!renderer.xr.isPresenting)controls.update();renderer.render(scene,camera);frames++;const now=performance.now();if(now-last>=750){$('#fps').textContent=Math.round(frames*1000/(now-last));frames=0;last=now;$('#draws').textContent=renderer.info.render.calls;if(frameMs.length){const p=percentile95(frameMs);$('#p95').textContent=p.toFixed(1);govern(p)}const t=renderer.info.render.triangles;$('#tris').textContent=t>999999?(t/1e6).toFixed(1)+'M':Math.round(t/1000)+'K'}}
+function render(){const dt=Math.min(clock.getDelta(),.05);if(benchActive)benchSamples.push(dt*1000);frameMs.push(dt*1000);if(frameMs.length>180)frameMs.shift();if(!renderer.xr.isPresenting)controls.update();renderer.render(scene,camera);frames++;const now=performance.now();if(now-last>=750){$('#fps').textContent=Math.round(frames*1000/(now-last));frames=0;last=now;$('#draws').textContent=renderer.info.render.calls;if(frameMs.length){const p=percentile95(frameMs);$('#p95').textContent=p.toFixed(1);govern(p)}const t=renderer.info.render.triangles;$('#tris').textContent=t>999999?(t/1e6).toFixed(1)+'M':Math.round(t/1000)+'K'}}
 init();
 </script>
 </body>
