@@ -18,11 +18,16 @@ for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
 }
 assert.match(index,/href="\/bellagio\.html"/,'World Zero routes to Bellagio benchmark');
 assert.match(index,/href="\/diagnostics\.html"/,'World Zero routes to device diagnostics');
-const diagnostics=read('diagnostics.html');
+const diagnostics=read('diagnostics.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js');
 assert.match(diagnostics,/navigator\.gpu/,'diagnostics checks WebGPU');
 assert.match(diagnostics,/isSessionSupported\('immersive-vr'\)/,'diagnostics checks immersive WebXR');
 assert.match(diagnostics,/MAX_TEXTURE_SIZE/,'diagnostics inspects GPU limits');
 assert.doesNotMatch(diagnostics,/fetch\(|XMLHttpRequest/,'diagnostics stays local-only');
+assert.match(diagnostics,/\?benchmark=1/,'diagnostics exposes benchmark links');
+assert.match(index,/benchmarkRequested/,'World Zero supports local benchmark mode');
+assert.match(bellagio,/benchmarkRequested/,'Bellagio supports local benchmark mode');
+assert.match(index,/summarizeFrames/,'World Zero uses shared benchmark core');
+assert.match(bellagio,/summarizeFrames/,'Bellagio uses shared benchmark core');
 assert.match(index,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/,'World Zero mobile telemetry is width-safe');
 assert.match(index,/\[hidden\]\{display:none!important\}/,'World Zero hidden attribute cannot be overridden');
 assert.match(bellagio,/\[hidden\]\{display:none!important\}/,'Bellagio hidden attribute cannot be overridden');
@@ -75,6 +80,17 @@ function inlineModule(html){
 for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
   try{new Function(inlineModule(html));}catch(e){throw new Error(name+' inline JS parse failed: '+e.message);}
 }
+const qmod=await import(new URL('../runtime/quality.js',import.meta.url));
+const bmod=await import(new URL('../runtime/benchmark.js',import.meta.url));
+assert.equal(qmod.percentile95([10,20,30,40,50]),50,'p95 deterministic');
+assert.equal(qmod.nextAutoDpr({p95:25,current:1.25,cap:1.25}),1.15,'slow frame reduces DPR');
+assert.equal(qmod.nextAutoDpr({p95:12,current:1.0,cap:1.25}),1.05,'fast frame cautiously raises DPR');
+assert.equal(qmod.qualityProfile('auto',{coarse:true,cores:8,memory:8,short:800}).tier,'balanced','coarse device starts balanced');
+assert.equal(qmod.qualityProfile('auto',{coarse:false,cores:8,memory:8,short:900,caps:{high:1.55}}).dpr,1.55,'scene DPR cap overrides generic high');
+const br=bmod.summarizeFrames([16,16,17,20]);
+assert.equal(br.samples,4); assert.ok(br.approxFps>55&&br.approxFps<65); assert.equal(br.p95Ms,20);
+assert.doesNotMatch(benchmark,/fetch\(|XMLHttpRequest/,'benchmark core is pure/local');
+assert.doesNotMatch(qualityCore,/fetch\(|XMLHttpRequest/,'quality core is pure/local');
 const health=read('api/health.js');
 assert.match(health,/VERCEL_GIT_COMMIT_SHA/,'health exposes deployed SHA');
 assert.match(health,/bellagio-lobby-r0/,'health lists Bellagio benchmark');
