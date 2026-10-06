@@ -67,7 +67,7 @@
     "input_model": "webxr-target-ray-select",
     "hand_compatible": "via-browser-select-events",
     "device_sniffing": false,
-    "locomotion": "not_yet_enabled",
+    "locomotion": "semantic-teleport-anchors",
     "grab_physics": "not_yet_enabled",
     "direct_manipulation": "near-fingertip pinch for grabbable objects",
     "throwable_objects": [
@@ -83,7 +83,11 @@
       "target-ray-select"
     ],
     "visible_hand_model": "spheres",
-    "panel_manipulation": "one-hand move + two-hand uniform resize + dock snap"
+    "panel_manipulation": "one-hand move + two-hand uniform resize + dock snap",
+    "locomotion_core": "runtime/xr-locomotion.js",
+    "continuous_joystick_motion": false,
+    "teleport_disabled_in_mr": true,
+    "teleport_disabled_during_benchmark": true
   },
   "spatial_ui": {
     "command_wall": {
@@ -131,5 +135,16 @@
       "uniform-scale",
       "docked"
     ]
+  },
+  "locomotion": {
+    "anchors": [
+      "CENTER",
+      "AGENTS",
+      "BIKE",
+      "COMMAND WALL"
+    ],
+    "movement": "instant horizontal rig translation preserving current room-scale head offset",
+    "comfort": "no continuous artificial motion in V0",
+    "mr_behavior": "physical movement only"
   }
 }
