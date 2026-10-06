@@ -78,7 +78,7 @@ export function createSpatialLayoutManager({THREE,scene,xrInteractions,onStatus=
         onBlur:()=>{if(object.material)object.material.opacity=baseOpacity;},
         onGrab:()=>{record.docked=false;record.guide.visible=true;record.guide.material.opacity=.45;onStatus('Move · '+label+' · second hand resizes');},
         onTwoHandStart:()=>{record.guide.visible=true;record.guide.material.opacity=.8;onStatus('Two-hand resize · '+label);},
-        onTransform:()=>{const near=distanceToDock(record)<=dockDistance;record.guide.material.opacity=near?.95:.32;},
+        onTransform:()=>{const near=distanceToDock(record)<=dockDistance;record.guide.material.opacity=near ? .95 : .32;},
         onTwoHandEnd:()=>{record.guide.material.opacity=.45;},
         onRelease:()=>{
           const near=distanceToDock(record)<=dockDistance;
