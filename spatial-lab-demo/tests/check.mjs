@@ -18,7 +18,7 @@ for(const [name,html] of [['world-zero',index],['bellagio',bellagio]]){
 }
 assert.match(index,/href="\/bellagio\.html"/,'World Zero routes to Bellagio benchmark');
 assert.match(index,/href="\/diagnostics\.html"/,'World Zero routes to device diagnostics');
-const diagnostics=read('diagnostics.html'), evidencePage=read('evidence.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js');
+const diagnostics=read('diagnostics.html'), evidencePage=read('evidence.html'), benchmark=read('runtime/benchmark.js'), qualityCore=read('runtime/quality.js'), xrCore=read('runtime/xr-interactions.js');
 assert.match(diagnostics,/navigator\.gpu/,'diagnostics checks WebGPU');
 assert.match(diagnostics,/isSessionSupported\('immersive-vr'\)/,'diagnostics checks immersive WebXR');
 assert.match(diagnostics,/MAX_TEXTURE_SIZE/,'diagnostics inspects GPU limits');
@@ -47,6 +47,14 @@ assert.match(bellagio,/function cropGeometry\(/,'Bellagio benchmark crops the sh
 assert.match(bellagio,/LOBBY_BOUNDS/,'Bellagio benchmark uses semantic lobby bounds');
 assert.match(bellagio,/function chihuly\(/,'Bellagio reuses its canonical Fiori di Como generator');
 assert.match(bellagio,/LOCAL_TARGET/,'Bellagio OrbitControls use local coordinates under the XR origin rig');
+assert.match(index,/createXRInteractionSystem/,'World Zero uses shared XR interaction core');
+assert.match(bellagio,/createXRInteractionSystem/,'Bellagio uses shared XR interaction core');
+assert.match(xrCore,/selectstart/,'XR core uses standard select interaction');
+assert.match(xrCore,/getController\(index\)/,'XR core uses WebXR target-ray abstraction for controllers or hands');
+assert.match(index,/location\.assign\(route\)/,'World Zero has a navigable XR portal');
+assert.match(index,/registerBikeInteraction/,'Speedmax is XR-selectable');
+assert.match(bellagio,/WORLD ZERO/,'Bellagio includes XR return portal');
+assert.doesNotMatch(xrCore,/navigator\.userAgent|Quest|Oculus|Meta Quest/i,'XR core does not device-sniff');
 assert.equal(scene.semantic_authority,'mesh');
 assert.ok(scene.assets.some(a=>a.role==='semantic-mesh'&&a.bytes===3950912));
 assert.ok(scene.excluded_from_r0.some(a=>a.path==='assets/city.glb'&&a.bytes===11940384));
@@ -121,7 +129,7 @@ assert.doesNotMatch(benchmarkGrantHardening,/grant .*update|grant .*delete|grant
 const health=read('api/health.js');
 assert.match(health,/VERCEL_GIT_COMMIT_SHA/,'health exposes deployed SHA');
 assert.match(health,/bellagio-lobby-r0/,'health lists Bellagio benchmark');
-for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js','api/benchmark.js','runtime/evidence.js']){
+for(const file of ['login.js','middleware.js','api/session.js','api/logout.js','api/health.js','api/asset.js','api/source-health.js','api/benchmark.js','runtime/evidence.js','runtime/xr-interactions.js']){
   const r=spawnSync(process.execPath,['--check',new URL('../'+file,import.meta.url).pathname],{encoding:'utf8'});
   assert.equal(r.status,0,file+' node syntax: '+r.stderr);
 }
