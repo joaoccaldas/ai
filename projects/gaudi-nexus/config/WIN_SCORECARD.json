@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-07T03:48:00Z",
+  "updated_utc": "2026-10-07T03:52:00Z",
   "definition_of_100": "No known competition requirement gap, no unresolved source-of-truth conflict, no unverified competition-facing claim, no broken deliverable, and all final-release gates green.",
   "official_jury_points": {
     "architecture_program": 20,
@@ -37,9 +37,10 @@
         "Rev17 aligned comparison blend SHA256 3de0f2062cd2a465a0322cfa1828d3b16b2267c6ffc31dfee22fcc51b5c47bcf",
         "Alignment: +13.359293m X, +108.634063m Y, no plan rotation, axis restore x,z,-y",
         "2026-10-06 live Jutsu audit: Rev16 collections exclude 00_SITE_MUNICIPAL_IMPORTED; site-truth live integration gap confirmed.",
-        "Rev18 F3 sightline workflow 37568295670: 9/9 target-window rays reached 00_SITE_MUNICIPAL_IMPORTED first; 0 non-municipal blockers."
+        "Rev18 F3 sightline workflow 37568295670: 9/9 target-window rays reached 00_SITE_MUNICIPAL_IMPORTED first; 0 non-municipal blockers.",
+        "Rev18 authoritative shadow workflow 37568571128: 54 rays across 6 Barcelona sun vectors; 0 non-municipal shadow blockers on the 9 F3-visible municipal receiver points."
       ],
-      "blocker": "Official 1:1000 topography/levels + tree/street-furniture cross-check remain externally blocked by Open Data BCN hCaptcha; shadow recomputation and explicit SITE_TRUTH_V1 promotion remain open. F3 intervention-obstruction sightline test is now closed."
+      "blocker": "Official 1:1000 topography/levels + tree/street-furniture cross-check remain externally blocked by Open Data BCN hCaptcha, followed by explicit SITE_TRUTH_V1 promotion. F3 sightline and representative seasonal shadow obstruction tests are now closed."
     },
     {
       "id": 2,
@@ -118,7 +119,8 @@
       "evidence": [
         "docs/BAY_PERFORMANCE_V0_1.md",
         "docs/SOLAR_BASELINE_001.md",
-        "output/final10/barcelona_solar_baseline_v1.json"
+        "output/final10/barcelona_solar_baseline_v1.json",
+        "Rev18 geometry shadow diagnostic: 6 representative Barcelona sun vectors × 9 authoritative municipal receiver points; 0 non-municipal blockers. This is not annual simulation."
       ]
     },
     {
