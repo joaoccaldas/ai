@@ -10,9 +10,9 @@
       "package_api": "https://opendata-ajuntament.barcelona.cat/data/api/3/action/package_show?id=mapa-base-topografic",
       "resource_name": "Topografic_1-1000.gpkg",
       "direct_download": "https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download",
-      "reported_size_bytes": 652088394,
+      "reported_size_bytes": 648336609,
       "license": "CC BY 4.0",
-      "status": "DIRECT_URL_IDENTIFIED",
+      "status": "OFFICIAL_METADATA_CONFIRMED_AUTOMATION_BLOCKED_BY_HCAPTCHA",
       "required_for": [
         "levels",
         "curbs",
@@ -21,11 +21,18 @@
         "authoritative horizontal/vertical cross-check"
       ],
       "checks_pending": [
+        "authorized acquisition of exact official GeoPackage bytes",
         "download checksum",
         "layer inventory",
         "CRS confirmation",
         "crop to competition context"
-      ]
+      ],
+      "access_observation": {
+        "checked_utc": "2026-10-07T03:38:00Z",
+        "automated_routes_tested": 3,
+        "result": "Published download routes return the Open Data BCN anti-bot HTML challenge to automated clients instead of GeoPackage bytes.",
+        "policy": "Do not bypass hCaptcha. Acquire through an authorized human/browser path or another official machine-accessible distribution, then checksum before ingestion."
+      }
     },
     {
       "id": "BCN-3D-SLPK",
