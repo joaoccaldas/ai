@@ -57,7 +57,7 @@ jobs:
           assert r['status']=='REV18_F3_FAST_EEVEE_REVIEW'
           assert r['authoritative_municipal_present'] is True
           assert r['proxy_hidden'] is True
-          assert r['resolution']==[640,360]
+          assert r['resolution']==[320,180]
           assert r['render_seconds'] > 0
           assert os.path.getsize('f3_fast_eevee.png') > 10000
           PY
