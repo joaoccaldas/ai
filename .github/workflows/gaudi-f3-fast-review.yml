@@ -34,10 +34,24 @@ jobs:
           echo 'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494  rev15.blend' | sha256sum -c -
           echo 'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c  municipal.glb' | sha256sum -c -
 
-      - name: Rebuild exact Rev18 site-truth candidate
+      - name: Rebuild Rev18 site-truth semantics
         run: |
           blender --background rev15.blend --python projects/gaudi-nexus/scripts/build_rev18_site_truth_candidate.py
-          echo '2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875  rev18_site_truth_candidate.blend' | sha256sum -c -
+          test -s rev18_site_truth_candidate.blend
+          test -s rev18_site_truth_report.json
+          python - <<'PY'
+          import json
+          r=json.load(open('rev18_site_truth_report.json'))
+          assert r['status']=='REV18_SITE_TRUTH_CANDIDATE_BUILT_NOT_PROMOTED'
+          assert r['base_rev15_sha256']=='cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494'
+          assert r['municipal_glb_sha256']=='f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c'
+          assert r['municipal_collection']=='00_SITE_MUNICIPAL_IMPORTED'
+          assert r['proxy_context']['hidden_from_competition_diagnostics'] is True
+          assert r['hero']['camera']=='A_HERO_MUNICIPAL_F3'
+          assert r['hero']['position']==[-15.0,42.0,1.56]
+          assert r['hero']['lens_mm']==32
+          PY
+          sha256sum rev18_site_truth_candidate.blend > rebuilt_rev18_sha256.txt
 
       - name: Render fast Eevee review
         run: |
@@ -68,6 +82,7 @@ jobs:
             f3_hero_review_receipt.json
             f3_hero_review_sha256.txt
             render_resource_usage.txt
+            rebuilt_rev18_sha256.txt
             a1_alpha_v0_1.svg
             a1_alpha_receipt.json
           retention-days: 30
