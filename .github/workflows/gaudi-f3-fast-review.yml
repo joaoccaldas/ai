@@ -47,9 +47,16 @@ jobs:
           test -s f3_hero_review_receipt.json
           cat f3_hero_review_receipt.json
 
+      - name: Build A1 alpha diagnostic
+        run: |
+          python projects/gaudi-nexus/scripts/build_a1_alpha.py
+          test -s a1_alpha_v0_1.svg
+          test -s a1_alpha_receipt.json
+          cat a1_alpha_receipt.json
+
       - name: Record hashes
         run: |
-          sha256sum f3_hero_review_640.png f3_hero_review_960.png f3_hero_review_receipt.json > f3_hero_review_sha256.txt
+          sha256sum f3_hero_review_640.png f3_hero_review_960.png f3_hero_review_receipt.json a1_alpha_v0_1.svg a1_alpha_receipt.json > f3_hero_review_sha256.txt
           cat f3_hero_review_sha256.txt
 
       - uses: actions/upload-artifact@v4
@@ -61,4 +68,6 @@ jobs:
             f3_hero_review_receipt.json
             f3_hero_review_sha256.txt
             render_resource_usage.txt
+            a1_alpha_v0_1.svg
+            a1_alpha_receipt.json
           retention-days: 30
