@@ -65,7 +65,11 @@ jobs:
           assert r['target_window']['sample_count']==9
           # Fail closed only on malformed evidence, not on a blocked sightline.
           # The architectural verdict is recorded for review rather than hidden by CI.
-          assert r['verdict'] in ('CLEAR_TO_TARGET_POINT','BLOCKED_BEFORE_TARGET')
+          assert r['verdict'] in (
+              'CLEAR_TO_TARGET_POINT',
+              'REACHES_AUTHORITATIVE_MUNICIPAL_GEOMETRY_FIRST',
+              'BLOCKED_BY_NON_MUNICIPAL_GEOMETRY_BEFORE_TARGET'
+          )
           PY
 
       - uses: actions/upload-artifact@v4
