@@ -140,7 +140,7 @@
     "next_gate": "Integrate the checksum-pinned municipal crop into the live/canonical scene (or promote the validated Rev17 build), verify topography/levels and sightline/shadow gates, then promote SITE_TRUTH_V1.0.",
     "conversion_status": "CONVERTED_AND_CROPPED_IMPORT_RECONCILIATION_PENDING",
     "conversion_policy": "Fail closed: only a named, reproducible DWG->open-format converter may be used; preserve source checksum and CRS metadata.",
-    "topography_status": "Official 2026 municipal GeoPackage identified; ingest/crop still pending.",
+    "topography_status": "Official Barcelona 1:1000 GeoPackage metadata confirmed; automated acquisition is blocked by source hCaptcha as of 2026-10-07. Exact bytes still require authorized acquisition before checksum/crop.",
     "converter": {
       "name": "ODA File Converter",
       "release": "27.9 AppImage",
@@ -270,5 +270,27 @@
       "proxy_context_verdict": "RETIRE_BEFORE_COMPETITION_OUTPUT"
     },
     "rule": "Rev17 is an evidence/comparison build. Do not call it canonical until topography/levels and sightline/shadow gates close."
+  },
+  "site_truth_candidate": {
+    "revision": 18,
+    "status": "BUILT_NOT_PROMOTED",
+    "workflow_run_id": 37567330603,
+    "workflow_artifact_id": 11459725641,
+    "workflow_artifact_digest": "sha256:c647694336e25c6c6506a4ff21451f0f5aef836daea2921fbe0549caeee7bade",
+    "blend_sha256": "2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875",
+    "report_sha256": "998d543731af03c3495a2566a9839fc8efec63a5cb8d86796d74599632fb2878",
+    "municipal_collection": "00_SITE_MUNICIPAL_IMPORTED",
+    "proxy_context_retained": true,
+    "proxy_context_hidden_from_competition_diagnostics": true,
+    "hero_camera": "A_HERO_MUNICIPAL_F3",
+    "visual_review": "Workbench proof is promising: authoritative Sagrada is immediately legible and dominant while Living Threshold reads as a foreground civic edge. This is not photoreal hero approval.",
+    "remaining_gates": [
+      "official 1:1000 topography/levels cross-check",
+      "tree/street-furniture cross-check",
+      "Passion facade sightline recomputation",
+      "shadow recomputation",
+      "photoreal F3 pixel review and >=9/10 hero gate",
+      "explicit canonical promotion"
+    ]
   }
 }
