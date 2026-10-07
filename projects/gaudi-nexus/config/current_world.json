@@ -287,10 +287,34 @@
     "remaining_gates": [
       "official 1:1000 topography/levels cross-check",
       "tree/street-furniture cross-check",
-      "Passion facade sightline recomputation",
       "shadow recomputation",
       "photoreal F3 pixel review and >=9/10 hero gate",
       "explicit canonical promotion"
-    ]
+    ],
+    "sightline_evidence": {
+      "status": "F3_AUTHORITATIVE_MUNICIPAL_FIRST_NO_NON_MUNICIPAL_BLOCKERS_IN_3X3_WINDOW",
+      "workflow_run_id": 37568295670,
+      "artifact_id": 11460075455,
+      "artifact_digest": "sha256:aea3c07e6b16a9a639ad182c213a0a815d7d914a4b2452f2ec6033e72720dfc5",
+      "camera": "A_HERO_MUNICIPAL_F3",
+      "target": [
+        96.1,
+        100.4,
+        30
+      ],
+      "center_ray": {
+        "verdict": "REACHES_AUTHORITATIVE_MUNICIPAL_GEOMETRY_FIRST",
+        "first_hit_object": "geometry_0",
+        "first_hit_collection": "00_SITE_MUNICIPAL_IMPORTED",
+        "first_hit_distance_m": 83.0774,
+        "target_distance_m": 128.6958
+      },
+      "target_window": {
+        "sample_count": 9,
+        "municipal_first_count": 9,
+        "non_municipal_blocked_count": 0
+      },
+      "interpretation": "Within the tested F3 target window, Blender ray casts reach authoritative municipal geometry before the intended target point and do not encounter Living Threshold or other non-municipal geometry first. This is sightline geometry evidence, not final visual-quality approval."
+    }
   }
 }

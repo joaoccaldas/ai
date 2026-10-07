@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-06T17:55:00Z",
+  "updated_utc": "2026-10-07T03:48:00Z",
   "definition_of_100": "No known competition requirement gap, no unresolved source-of-truth conflict, no unverified competition-facing claim, no broken deliverable, and all final-release gates green.",
   "official_jury_points": {
     "architecture_program": 20,
@@ -36,9 +36,10 @@
         "GitHub build run 37259743278 / artifact 11323444092: corrected top-down + HeroCam municipal/proxy diagnostics",
         "Rev17 aligned comparison blend SHA256 3de0f2062cd2a465a0322cfa1828d3b16b2267c6ffc31dfee22fcc51b5c47bcf",
         "Alignment: +13.359293m X, +108.634063m Y, no plan rotation, axis restore x,z,-y",
-        "2026-10-06 live Jutsu audit: Rev16 collections exclude 00_SITE_MUNICIPAL_IMPORTED; site-truth live integration gap confirmed."
+        "2026-10-06 live Jutsu audit: Rev16 collections exclude 00_SITE_MUNICIPAL_IMPORTED; site-truth live integration gap confirmed.",
+        "Rev18 F3 sightline workflow 37568295670: 9/9 target-window rays reached 00_SITE_MUNICIPAL_IMPORTED first; 0 non-municipal blockers."
       ],
-      "blocker": "Authoritative municipal context is validated in Rev17 comparison evidence but absent from the live Jutsu Rev16 scene. Integrate/promote site truth, then close topography/levels plus sightline/shadow checks before proxy retirement."
+      "blocker": "Official 1:1000 topography/levels + tree/street-furniture cross-check remain externally blocked by Open Data BCN hCaptcha; shadow recomputation and explicit SITE_TRUTH_V1 promotion remain open. F3 intervention-obstruction sightline test is now closed."
     },
     {
       "id": 2,
@@ -164,7 +165,8 @@
         "HERO_F3 Workbench: (-15,42,1.56), 32mm, target (96.1,100.4,30), authoritative municipal context.",
         "2026-10-06 live Rev16 audit confirms A_HERO_MUNICIPAL_F3 is the active 32 mm camera at (-15,42,1.56).",
         "640x360 Workbench composition proof rendered as operation gaudi-r16-f3-workbench-20261006 / artifact fa5c862226fdc934f48eee4efe37140d.",
-        "640x360 Eevee review timed out at 300 s; no final material/light visual approval."
+        "640x360 Eevee review timed out at 300 s; no final material/light visual approval.",
+        "Rev18 F3 sightline diagnostic: central and 3x3 target-window rays reach authoritative municipal geometry first; 0/9 non-municipal blockers."
       ],
       "blocker": "First integrate/promote authoritative municipal context, then establish a faster photoreal review path, render F3, visually inspect pixels and pass the >=9/10 gate."
     },
