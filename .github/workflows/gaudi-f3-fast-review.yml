@@ -1,0 +1,64 @@
+name: Gaudi F3 Fast Hero Review
+
+on:
+  push:
+    branches: [gaudi-winning-pass-20261007]
+    paths:
+      - '.github/workflows/gaudi-f3-fast-review.yml'
+      - 'projects/gaudi-nexus/scripts/render_f3_review.py'
+      - 'projects/gaudi-nexus/scripts/build_rev18_site_truth_candidate.py'
+  workflow_dispatch:
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Blender 5.2
+        run: |
+          curl -fsSL 'https://download.blender.org/release/Blender5.2/blender-5.2.0-linux-x64.tar.xz' -o blender.tar.xz
+          tar -xf blender.tar.xz
+          echo "$PWD/blender-5.2.0-linux-x64" >> "$GITHUB_PATH"
+
+      - name: Install headless render runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libegl1
+
+      - name: Download checksum-pinned inputs
+        run: |
+          curl -fsSL 'https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/57590020-3bff-4a29-89c7-9bdf05a130c6.blend' -o rev15.blend
+          curl -fsSL 'https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/eaef5ac9-3706-45dc-809e-73c0b8b4c864.glb' -o municipal.glb
+          echo 'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494  rev15.blend' | sha256sum -c -
+          echo 'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c  municipal.glb' | sha256sum -c -
+
+      - name: Rebuild exact Rev18 site-truth candidate
+        run: |
+          blender --background rev15.blend --python projects/gaudi-nexus/scripts/build_rev18_site_truth_candidate.py
+          echo '2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875  rev18_site_truth_candidate.blend' | sha256sum -c -
+
+      - name: Render fast Eevee review
+        run: |
+          /usr/bin/time -v blender --background rev18_site_truth_candidate.blend --python projects/gaudi-nexus/scripts/render_f3_review.py 2> render_resource_usage.txt
+          test -s f3_hero_review_640.png
+          test -s f3_hero_review_960.png
+          test -s f3_hero_review_receipt.json
+          cat f3_hero_review_receipt.json
+
+      - name: Record hashes
+        run: |
+          sha256sum f3_hero_review_640.png f3_hero_review_960.png f3_hero_review_receipt.json > f3_hero_review_sha256.txt
+          cat f3_hero_review_sha256.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-f3-fast-hero-review
+          path: |
+            f3_hero_review_640.png
+            f3_hero_review_960.png
+            f3_hero_review_receipt.json
+            f3_hero_review_sha256.txt
+            render_resource_usage.txt
+          retention-days: 30
