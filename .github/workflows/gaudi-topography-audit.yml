@@ -1,0 +1,96 @@
+name: Gaudi Barcelona Topography Audit
+
+on:
+  push:
+    branches: [gaudi-site-truth-candidate-20261007]
+    paths:
+      - '.github/workflows/gaudi-topography-audit.yml'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install geospatial tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gdal-bin sqlite3
+
+      - name: Download official Barcelona 1:1000 topography
+        run: |
+          curl --retry 3 --retry-delay 5 -fL 'https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download' -o topography_1k.gpkg
+          test -s topography_1k.gpkg
+          sha256sum topography_1k.gpkg > topography_1k.sha256
+          stat -c '%s' topography_1k.gpkg > topography_1k.bytes
+          file topography_1k.gpkg
+
+      - name: Inventory GeoPackage
+        run: |
+          sqlite3 -header -csv topography_1k.gpkg "SELECT c.table_name,c.data_type,c.srs_id,c.min_x,c.min_y,c.max_x,c.max_y,g.geometry_type_name FROM gpkg_contents c LEFT JOIN gpkg_geometry_columns g ON c.table_name=g.table_name ORDER BY c.table_name;" > topography_layers.csv
+          cat topography_layers.csv
+          python - <<'PY'
+          import csv, json, os
+          rows=list(csv.DictReader(open('topography_layers.csv')))
+          srs=sorted({r['srs_id'] for r in rows if r.get('srs_id')})
+          report={
+            'status':'OFFICIAL_TOPOGRAPHY_DOWNLOADED_INVENTORIED',
+            'authority':'Ajuntament de Barcelona / Open Data BCN',
+            'resource':'Topografic_1-1000.gpkg',
+            'source_url':'https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download',
+            'bytes':int(open('topography_1k.bytes').read().strip()),
+            'sha256':open('topography_1k.sha256').read().split()[0],
+            'layer_count':len(rows),
+            'srs_ids':srs,
+            'layers':rows
+          }
+          json.dump(report,open('topography_inventory.json','w'),indent=2)
+          if '25831' not in srs:
+              raise SystemExit(f'Expected EPSG:25831 in GeoPackage, got {srs}')
+          PY
+
+      - name: Crop competition context
+        run: |
+          # 300 m radius around the verified municipal local origin used by the 3D crop.
+          ogr2ogr -f GPKG topography_crop_300m.gpkg topography_1k.gpkg             -spat 430601.597832363 4583592.983829999 431201.597832363 4584192.983829999             -skipfailures -progress
+          test -s topography_crop_300m.gpkg
+          sha256sum topography_crop_300m.gpkg > topography_crop_300m.sha256
+          stat -c '%s' topography_crop_300m.gpkg > topography_crop_300m.bytes
+          sqlite3 -header -csv topography_crop_300m.gpkg "SELECT table_name,data_type,srs_id,min_x,min_y,max_x,max_y FROM gpkg_contents ORDER BY table_name;" > topography_crop_layers.csv
+
+      - name: Build crop receipt
+        run: |
+          python - <<'PY'
+          import csv,json
+          inv=json.load(open('topography_inventory.json'))
+          rows=list(csv.DictReader(open('topography_crop_layers.csv')))
+          out={
+            'status':'BCN_TOPO_1K_CROP_BUILT_NOT_YET_INGESTED',
+            'source_sha256':inv['sha256'],
+            'source_bytes':inv['bytes'],
+            'source_layer_count':inv['layer_count'],
+            'crop_bbox_epsg25831':[430601.597832363,4583592.983829999,431201.597832363,4584192.983829999],
+            'crop_sha256':open('topography_crop_300m.sha256').read().split()[0],
+            'crop_bytes':int(open('topography_crop_300m.bytes').read().strip()),
+            'crop_layers':rows,
+            'next_gate':'Classify levels/curbs/street geometry/furniture layers and reconcile them against the Rev18 site-truth candidate.'
+          }
+          json.dump(out,open('topography_crop_report.json','w'),indent=2)
+          print(json.dumps(out,indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-bcn-topography-audit
+          path: |
+            topography_1k.sha256
+            topography_1k.bytes
+            topography_layers.csv
+            topography_inventory.json
+            topography_crop_300m.gpkg
+            topography_crop_300m.sha256
+            topography_crop_layers.csv
+            topography_crop_report.json
+          retention-days: 30
