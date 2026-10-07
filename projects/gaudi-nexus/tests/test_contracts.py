@@ -22,8 +22,9 @@ class Contracts(unittest.TestCase):
         self.assertEqual(w['authority']['repository'],'joaoccaldas/ai')
         self.assertEqual(w['authority']['branch'],'gaudi-nexus')
         self.assertEqual(w['authority']['project_path'],'projects/gaudi-nexus/')
-        self.assertEqual(w['current_3d']['revision'],15)
-        self.assertEqual(w['current_3d']['status'],'REV15_PROGRAM_CLOSURE_PENDING_VISUAL_APPROVAL')
+        self.assertEqual(w['current_3d']['revision'],16)
+        self.assertEqual(w['current_3d']['status'],'REV16_LIVE_UNPINNED_SITE_TRUTH_NOT_INTEGRATED')
+        self.assertFalse(w['current_3d']['revision_16_live_audit']['municipal_collection_present'])
 
     def test_rev15_program_closure_is_scene_backed(self):
         p=json.loads((ROOT/'config/program_audit_v1.json').read_text())
@@ -32,10 +33,12 @@ class Contracts(unittest.TestCase):
         self.assertEqual(p07['status'],'PASS_SCENE_REV15')
         self.assertEqual(p08['status'],'PASS_SCENE_REV15')
 
-    def test_rev15_binary_identity_is_pinned(self):
+    def test_live_rev16_is_not_falsely_checksum_promoted(self):
         w=json.loads((ROOT/'config/current_world.json').read_text())
-        self.assertEqual(w['current_3d']['blend_sha256'],'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494')
-        self.assertEqual(w['current_3d']['glb_sha256'],'2001331e04266c43943535fcde50ab7522da09aeef1c3a30cae62ff7c621682d')
+        self.assertNotIn('blend_sha256',w['current_3d'])
+        self.assertNotIn('glb_sha256',w['current_3d'])
+        self.assertIsNone(w['current_3d']['binary_identity_verified_utc'])
+        self.assertEqual(w['current_3d']['revision_16_live_audit']['project_revision'],16)
 
     def test_site_truth_conversion_hashes_are_pinned(self):
         src=json.loads((ROOT/'config/authoritative_sources_v0_1.json').read_text())
