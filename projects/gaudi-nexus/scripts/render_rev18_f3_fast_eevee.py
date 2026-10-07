@@ -5,7 +5,7 @@ CAMERA="A_HERO_MUNICIPAL_F3"
 PROXY="CONTEXT"
 AZ_DEG=223.0
 ALT_DEG=67.0
-RES=(640,360)
+RES=(320,180)
 
 scene=bpy.context.scene
 cam=bpy.data.objects.get(CAMERA)
