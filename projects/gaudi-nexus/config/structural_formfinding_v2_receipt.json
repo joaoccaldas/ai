@@ -1,0 +1,60 @@
+{
+  "version": 2,
+  "status": "DESIGN_DEVELOPMENT_FUNICULAR_PROOF_NOT_ENGINEER_CERTIFICATION",
+  "workflow_run_id": 37569970856,
+  "workflow_artifact_id": 11460735186,
+  "workflow_artifact_digest": "sha256:1c6880d6b604cd6c529db17a2f7a0ad5152973524eb482c48c43e7ca994ca320",
+  "geometry": {
+    "clear_span_m": 9,
+    "chosen_rise_m": 1.35,
+    "rise_span_ratio": 0.15,
+    "tributary_bay_m": 5
+  },
+  "design_development_load": {
+    "roof_pressure_kPa": 1.5,
+    "line_load_kN_per_m": 7.5,
+    "basis": "Illustrative design-development load already used in structural_thrust_v1; not a code load combination."
+  },
+  "chosen_case": {
+    "horizontal_reaction_kN_per_support": 56.25,
+    "vertical_reaction_kN_per_support": 33.75,
+    "resultant_reaction_kN_per_support": 65.598,
+    "support_resultant_angle_deg_above_horizontal": 30.964,
+    "support_tangent_angle_deg": 30.964,
+    "equilibrium_angle_residual_deg": 0
+  },
+  "rise_sensitivity": [
+    {
+      "rise_span_ratio": 0.1,
+      "horizontal_reaction_kN_per_support": 84.375,
+      "resultant_reaction_kN_per_support": 90.875
+    },
+    {
+      "rise_span_ratio": 0.125,
+      "horizontal_reaction_kN_per_support": 67.5,
+      "resultant_reaction_kN_per_support": 75.467
+    },
+    {
+      "rise_span_ratio": 0.15,
+      "horizontal_reaction_kN_per_support": 56.25,
+      "resultant_reaction_kN_per_support": 65.598
+    },
+    {
+      "rise_span_ratio": 0.175,
+      "horizontal_reaction_kN_per_support": 48.214,
+      "resultant_reaction_kN_per_support": 58.853
+    },
+    {
+      "rise_span_ratio": 0.2,
+      "horizontal_reaction_kN_per_support": 42.188,
+      "resultant_reaction_kN_per_support": 54.026
+    }
+  ],
+  "load_path": [
+    "roof pressure -> distributed vertical line load",
+    "funicular compression shell -> crown compression / springing thrust",
+    "springing block + replaceable bearing -> vertical + horizontal reaction transfer",
+    "primary pier/foundation or explicit tie/frame alternative -> ground"
+  ],
+  "claim_boundary": "Design-development geometry-force consistency only; not FEA, code load combinations, reinforcement sizing, shell buckling/stability, foundation design or engineer certification."
+}
