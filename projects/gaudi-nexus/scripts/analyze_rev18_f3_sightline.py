@@ -35,7 +35,11 @@ pre_target = {
 }
 
 if hit:
-    verdict="BLOCKED_BEFORE_TARGET"
+    hit_colls=collections(obj)
+    if MUNICIPAL_COLLECTION in hit_colls:
+        verdict="REACHES_AUTHORITATIVE_MUNICIPAL_GEOMETRY_FIRST"
+    else:
+        verdict="BLOCKED_BY_NON_MUNICIPAL_GEOMETRY_BEFORE_TARGET"
 else:
     verdict="CLEAR_TO_TARGET_POINT"
 
@@ -82,6 +86,11 @@ for lateral in (-4.0,0.0,4.0):
         })
 
 clear_count=sum(1 for s in samples if s["clear_to_target"])
+municipal_first_count=sum(
+    1 for s in samples
+    if (not s["clear_to_target"]) and MUNICIPAL_COLLECTION in s["blocking_collections"]
+)
+non_municipal_blocked_count=len(samples)-clear_count-municipal_first_count
 report={
     "status":"REV18_F3_SIGHTLINE_DIAGNOSTIC",
     "camera":CAMERA_NAME,
@@ -93,11 +102,12 @@ report={
     "extended_ray":extended,
     "target_window":{
         "sample_count":len(samples),
-        "clear_count":clear_count,
-        "blocked_count":len(samples)-clear_count,
+        "clear_to_target_count":clear_count,
+        "municipal_first_count":municipal_first_count,
+        "non_municipal_blocked_count":non_municipal_blocked_count,
         "samples":samples
     },
-    "interpretation_policy":"A CLEAR_TO_TARGET_POINT verdict means Blender found no scene geometry between F3 eye position and the intended Sagrada target point. The 3x3 window is a robustness diagnostic, not a code-compliance or final visual-quality claim."
+    "interpretation_policy":"If the first hit belongs to 00_SITE_MUNICIPAL_IMPORTED, the ray reaches authoritative municipal geometry before the target point and is not treated as obstruction by the Living Threshold intervention. BLOCKED_BY_NON_MUNICIPAL_GEOMETRY_BEFORE_TARGET is the adverse intervention/context obstruction verdict. The 3x3 window is a robustness diagnostic, not code-compliance or final visual-quality approval."
 }
 with open("rev18_f3_sightline_report.json","w") as f:
     json.dump(report,f,indent=2)
