@@ -32,7 +32,26 @@
         "automated_routes_tested": 3,
         "result": "Published download routes return the Open Data BCN anti-bot HTML challenge to automated clients instead of GeoPackage bytes.",
         "policy": "Do not bypass hCaptcha. Acquire through an authorized human/browser path or another official machine-accessible distribution, then checksum before ingestion."
-      }
+      },
+      "portal_2026": "https://portaldades.ajuntament.barcelona.cat/mapes/131",
+      "alternate_official_distribution": "https://w20.bcn.cat/cartobcn/default.aspx?lang=en",
+      "verified_metadata_2026": {
+        "data_year": 2026,
+        "portal_date": "2026-08-18",
+        "planimetric_precision_m": 0.2,
+        "altimetric_precision_m": 0.25,
+        "geodetic_reference": "ETRS89 / UTM31N",
+        "source": "Ajuntament de Barcelona",
+        "portal_download_label": "GeoPackage",
+        "note": "CartoBCN states municipal topographic GeoPackage distribution is available and registration is no longer required. Use an authorized browser/manual route if automated Open Data download is challenged."
+      },
+      "acquisition_strategy": [
+        "Prefer exact 2026 GeoPackage from Barcelona Dades map product 131 or CartoBCN.",
+        "Do not bypass hCaptcha or bot detection.",
+        "After authorized download, checksum exact bytes before any parsing or crop.",
+        "Validate EPSG:25831 / ETRS89 UTM31N and expected topographic layer families.",
+        "Crop to verified 300 m competition context and preserve source/crop hashes."
+      ]
     },
     {
       "id": "BCN-3D-SLPK",
