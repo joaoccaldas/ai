@@ -1,0 +1,71 @@
+name: Gaudi Rev18 F3 Shadow
+
+on:
+  push:
+    branches: [gaudi-rev18-shadow-20261007]
+    paths:
+      - '.github/workflows/gaudi-rev18-shadow.yml'
+      - 'projects/gaudi-nexus/scripts/analyze_rev18_f3_shadow.py'
+      - 'projects/gaudi-nexus/scripts/build_rev18_site_truth_candidate.py'
+  workflow_dispatch:
+
+jobs:
+  shadow:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Blender 5.2
+        run: |
+          curl -fsSL 'https://download.blender.org/release/Blender5.2/blender-5.2.0-linux-x64.tar.xz' -o blender.tar.xz
+          tar -xf blender.tar.xz
+          echo "$PWD/blender-5.2.0-linux-x64" >> "$GITHUB_PATH"
+
+      - name: Install headless runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libegl1
+
+      - name: Download checksum-pinned inputs
+        run: |
+          curl -fsSL 'https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/57590020-3bff-4a29-89c7-9bdf05a130c6.blend' -o rev15.blend
+          curl -fsSL 'https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/eaef5ac9-3706-45dc-809e-73c0b8b4c864.glb' -o municipal.glb
+          echo 'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494  rev15.blend' | sha256sum -c -
+          echo 'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c  municipal.glb' | sha256sum -c -
+
+      - name: Rebuild Rev18 semantic candidate
+        run: |
+          blender --background rev15.blend --python projects/gaudi-nexus/scripts/build_rev18_site_truth_candidate.py
+          python - <<'PY'
+          import json
+          r=json.load(open('rev18_site_truth_report.json'))
+          assert r['base_rev15_sha256']=='cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494'
+          assert r['municipal_glb_sha256']=='f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c'
+          assert r['total_objects']==1603
+          assert r['hero']['camera']=='A_HERO_MUNICIPAL_F3'
+          PY
+
+      - name: Run authoritative shadow diagnostic
+        run: |
+          blender --background rev18_site_truth_candidate.blend --python projects/gaudi-nexus/scripts/analyze_rev18_f3_shadow.py
+          test -s rev18_f3_shadow_report.json
+          cat rev18_f3_shadow_report.json
+          python - <<'PY'
+          import json
+          r=json.load(open('rev18_f3_shadow_report.json'))
+          assert r['status']=='REV18_F3_AUTHORITATIVE_SHADOW_DIAGNOSTIC'
+          assert r['surface_sample_count']==9
+          assert r['summary']['case_count']==6
+          assert r['summary']['ray_count']==54
+          assert r['summary']['verdict'] in (
+            'NO_NON_MUNICIPAL_SHADOW_BLOCKERS_ON_TESTED_F3_MUNICIPAL_SURFACES',
+            'NON_MUNICIPAL_SHADOW_BLOCKERS_DETECTED'
+          )
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-rev18-f3-shadow
+          path: rev18_f3_shadow_report.json
+          retention-days: 30
