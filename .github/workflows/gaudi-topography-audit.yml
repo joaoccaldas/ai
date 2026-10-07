@@ -21,8 +21,32 @@ jobs:
 
       - name: Download official Barcelona 1:1000 topography
         run: |
-          curl --retry 3 --retry-delay 5 -fL 'https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download' -o topography_1k.gpkg
-          test -s topography_1k.gpkg
+          set -euo pipefail
+          urls=(
+            'https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download/Topografic_1-1000.gpkg'
+            'https://opendata-ajuntament.barcelona.cat/data/dataset/mapa-base-topografic/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download/Topografic_1-1000.gpkg'
+            'https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download'
+          )
+          ok=0
+          for url in "${urls[@]}"; do
+            echo "Trying $url"
+            rm -f candidate.gpkg
+            if curl -A 'Mozilla/5.0' --retry 2 --retry-delay 3 -fL "$url" -o candidate.gpkg; then
+              sig="$(head -c 16 candidate.gpkg || true)"
+              size="$(stat -c '%s' candidate.gpkg)"
+              echo "candidate bytes=$size signature=$sig"
+              if [ "$sig" = 'SQLite format 3' ] && [ "$size" -gt 100000000 ]; then
+                mv candidate.gpkg topography_1k.gpkg
+                printf '%s\n' "$url" > topography_source_url.txt
+                ok=1
+                break
+              fi
+            fi
+          done
+          if [ "$ok" -ne 1 ]; then
+            echo 'Official catalog routes did not return the GeoPackage bytes.'
+            exit 26
+          fi
           sha256sum topography_1k.gpkg > topography_1k.sha256
           stat -c '%s' topography_1k.gpkg > topography_1k.bytes
           file topography_1k.gpkg
@@ -39,7 +63,7 @@ jobs:
             'status':'OFFICIAL_TOPOGRAPHY_DOWNLOADED_INVENTORIED',
             'authority':'Ajuntament de Barcelona / Open Data BCN',
             'resource':'Topografic_1-1000.gpkg',
-            'source_url':'https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download',
+            'source_url':open('topography_source_url.txt').read().strip(),
             'bytes':int(open('topography_1k.bytes').read().strip()),
             'sha256':open('topography_1k.sha256').read().split()[0],
             'layer_count':len(rows),
@@ -85,6 +109,7 @@ jobs:
         with:
           name: gaudi-bcn-topography-audit
           path: |
+            topography_source_url.txt
             topography_1k.sha256
             topography_1k.bytes
             topography_layers.csv
