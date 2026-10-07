@@ -287,7 +287,6 @@
     "remaining_gates": [
       "official 1:1000 topography/levels cross-check",
       "tree/street-furniture cross-check",
-      "shadow recomputation",
       "photoreal F3 pixel review and >=9/10 hero gate",
       "explicit canonical promotion"
     ],
@@ -315,6 +314,71 @@
         "non_municipal_blocked_count": 0
       },
       "interpretation": "Within the tested F3 target window, Blender ray casts reach authoritative municipal geometry before the intended target point and do not encounter Living Threshold or other non-municipal geometry first. This is sightline geometry evidence, not final visual-quality approval."
+    },
+    "shadow_evidence": {
+      "status": "NO_NON_MUNICIPAL_SHADOW_BLOCKERS_ON_TESTED_F3_MUNICIPAL_SURFACES",
+      "workflow_run_id": 37568571128,
+      "artifact_id": 11459522435,
+      "artifact_digest": "sha256:f58c586e1a9b358826e2dc7eed61d740b0f804bb581b492442f7d23c3e171b86",
+      "camera": "A_HERO_MUNICIPAL_F3",
+      "solar_basis": "SOLAR_BASELINE_001 representative Barcelona vectors",
+      "cases": [
+        {
+          "case": "summer_0900",
+          "azimuth_deg": 82,
+          "altitude_deg": 28,
+          "direct_sky_count": 0,
+          "municipal_self_or_urban_count": 9,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "summer_1200",
+          "azimuth_deg": 119,
+          "altitude_deg": 60,
+          "direct_sky_count": 0,
+          "municipal_self_or_urban_count": 9,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "summer_1500",
+          "azimuth_deg": 223,
+          "altitude_deg": 67,
+          "direct_sky_count": 9,
+          "municipal_self_or_urban_count": 0,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "winter_0900",
+          "azimuth_deg": 129,
+          "altitude_deg": 6,
+          "direct_sky_count": 0,
+          "municipal_self_or_urban_count": 9,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "winter_1200",
+          "azimuth_deg": 168,
+          "altitude_deg": 24,
+          "direct_sky_count": 9,
+          "municipal_self_or_urban_count": 0,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "winter_1500",
+          "azimuth_deg": 212,
+          "altitude_deg": 18,
+          "direct_sky_count": 9,
+          "municipal_self_or_urban_count": 0,
+          "non_municipal_blocker_count": 0
+        }
+      ],
+      "summary": {
+        "ray_count": 54,
+        "direct_sky_count": 27,
+        "municipal_self_or_urban_count": 27,
+        "non_municipal_shadow_blocker_count": 0
+      },
+      "interpretation": "Across six representative Barcelona sun vectors and nine F3-visible authoritative municipal receiver points, no non-municipal scene geometry blocks the sun. This is seasonal geometric shadow evidence, not annual daylight or thermal certification."
     }
   }
 }
