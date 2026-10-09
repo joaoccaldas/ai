@@ -5,7 +5,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
 import bpy,bmesh
 from mathutils import Vector
 from mathutils.bvhtree import BVHTree
-from studio.scene_kit.architecture import floor_plate,projected_top_area,switchback_stair
+from studio.scene_kit.architecture import floor_plate,projected_top_area,switchback_stair,parabolic_vault,partition_floor_areas
 from studio.scene_kit.materials import surface
 
 coll=bpy.data.collections.new('ArchitectureChecks');bpy.context.scene.collection.children.link(coll)
@@ -18,6 +18,24 @@ bm=bmesh.new();bm.from_mesh(slab.data)
 assert all(len(e.link_faces)==2 for e in bm.edges)
 bm.normal_update();assert bm.calc_volume()>0;bm.free()
 checks.extend(['overlapping_voids_count_once','floor_area_from_rotated_mesh','watertight_floor_with_voids','outward_floor_winding'])
+areas=partition_floor_areas((-5,-5,5,5),[(-2,-2,2,2),(0,0,3,3)],
+    {'left':(-5,-5,0,5),'right':(0,-5,5,5)})
+assert abs(sum(areas.values())-projected_top_area(slab))<.0002
+checks.append('programme_partition_matches_measured_slab')
+for zones in ({'a':(-5,-5,1,5),'b':(0,-5,5,5)}, {'a':(-5,-5,0,5)}):
+    try:partition_floor_areas((-5,-5,5,5),[],zones)
+    except ValueError:pass
+    else:raise AssertionError('Invalid programme partition accepted')
+checks.append('programme_overlap_and_gap_rejected')
+vault=parabolic_vault('VaultFixture',coll,mats)
+bm=bmesh.new();bm.from_mesh(vault.data)
+assert all(len(e.link_faces)==2 for e in bm.edges)
+bm.normal_update();assert bm.calc_volume()>0;bm.free()
+checks.append('vault_watertight_and_outward')
+for v in vault.data.vertices:
+    y=v.co.y;z=8.3+1.35*(1-(2*y/9)**2)
+    assert min(abs(v.co.z-z),abs(v.co.z-z-.18))<.000002
+checks.append('vault_mesh_matches_declared_parabolic_profile')
 stair,p,samples=switchback_stair('AccessCore',coll,mats)
 assert p['risers']*p['riser_m']==4.5 and p['riser_m']<=.18
 assert p['risers']==26 and abs(p['run_m']-3.36)<1e-9

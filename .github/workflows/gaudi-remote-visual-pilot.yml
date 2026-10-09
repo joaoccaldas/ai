@@ -1,4 +1,4 @@
-name: Gaudi remote visual refinement V3
+name: Gaudi coordinated architecture V4
 
 on:
   push:
@@ -17,7 +17,7 @@ concurrency:
 jobs:
   pilot:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 20
     env:
       SOURCE_SHA: 2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875
       PILOT_DIR: projects/gaudi-nexus/output/remote-pilot
@@ -52,26 +52,28 @@ jobs:
       - name: Assemble one scene without rendering
         run: |
           set -o pipefail
-          timeout 8m blender -b source.blend --python-exit-code 1 --python projects/gaudi-nexus/render/build.py -- HERO_F3 18.5 1200 900 32 "$PILOT_DIR/unused.png" --device CPU --expected-source-sha256 "$SOURCE_SHA" --prepare-only --save-blend "$PILOT_DIR/candidate.blend" 2>&1 | tee "$PILOT_DIR/assembly.log"
+          timeout 8m blender -b source.blend --python-exit-code 1 --python projects/gaudi-nexus/render/build.py -- HERO_F3 18.5 1200 900 32 "$PILOT_DIR/unused.png" --device CPU --expected-source-sha256 "$SOURCE_SHA" --prepare-only --save-blend "$PILOT_DIR/candidate-base.blend" 2>&1 | tee "$PILOT_DIR/assembly.log"
+      - name: Coordinate the two-level architecture without rendering
+        run: |
+          set -o pipefail
+          timeout 3m blender -b --factory-startup --python-exit-code 1 --python studio/scene_kit/check_architecture.py -- "$PILOT_DIR/architecture-checks.json" > "$PILOT_DIR/architecture-checks.log" 2>&1
+          timeout 3m blender -b --factory-startup --python-exit-code 1 --python projects/gaudi-nexus/scripts/build_architecture_coordination.py -- "$PILOT_DIR/coordination" > "$PILOT_DIR/coordination-build.log" 2>&1
+          timeout 3m blender -b "$PILOT_DIR/candidate-base.blend" --python-exit-code 1 --python projects/gaudi-nexus/scripts/coordinate_visual_candidate.py -- "$PILOT_DIR/coordination/architecture-coordination.blend" "$PILOT_DIR/candidate.blend" > "$PILOT_DIR/coordination-intake.log" 2>&1
       - name: Audit programme geometry
         run: |
           blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/scripts/inspect_program_geometry.py -- "$PILOT_DIR/program-geometry.json" > "$PILOT_DIR/program-audit.log" 2>&1
-      - name: Render registered hero on the remote runner
-        run: |
-          set -o pipefail
-          timeout 10m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- HERO_F3 "$PILOT_DIR/hero-f3.png" --width 960 --height 600 --samples 32 2>&1 | tee "$PILOT_DIR/hero-f3.log"
       - name: Render arrival candidate on the remote runner
         run: |
           set -o pipefail
-          timeout 10m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- HERO_ARRIVAL "$PILOT_DIR/arrival.png" --width 1200 --height 900 --samples 40 2>&1 | tee "$PILOT_DIR/arrival.log"
+          timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- HERO_ARRIVAL "$PILOT_DIR/arrival.png" --width 960 --height 720 --samples 32 2>&1 | tee "$PILOT_DIR/arrival.log"
       - name: Render market from the same prepared scene
         run: |
           set -o pipefail
-          timeout 10m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- MARKET_AISLE "$PILOT_DIR/market.png" --width 960 --height 600 --samples 32 2>&1 | tee "$PILOT_DIR/market.log"
+          timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- MARKET_AISLE "$PILOT_DIR/market.png" --width 960 --height 600 --samples 40 2>&1 | tee "$PILOT_DIR/market.log"
       - name: Render plaza from the same prepared scene
         run: |
           set -o pipefail
-          timeout 10m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- PLAZA_OBLIQUE "$PILOT_DIR/plaza.png" --width 960 --height 600 --samples 32 2>&1 | tee "$PILOT_DIR/plaza.log"
+          timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- PLAZA_OBLIQUE "$PILOT_DIR/plaza.png" --width 960 --height 600 --samples 24 2>&1 | tee "$PILOT_DIR/plaza.log"
       - name: Check all views share one source and candidate
         run: |
           python3 - <<'PY'
@@ -79,11 +81,11 @@ jobs:
           from pathlib import Path
           root=Path(os.environ['PILOT_DIR'])
           prep=json.loads((root/'candidate.blend.receipt.json').read_text())
-          for name in ['hero-f3','arrival','market','plaza']:
+          for name in ['arrival','market','plaza']:
               r=json.loads((root/(name+'.png.receipt.json')).read_text())
               assert r['source_sha256']==os.environ['SOURCE_SHA']
               assert r['candidate_sha256']==prep['candidate_sha256'] and r['candidate_unchanged']
-          (root/'pilot-completion.json').write_text(json.dumps({'status':'TECHNICAL_PILOT_COMPLETE_VISUAL_REVIEW_PENDING','views':4,'source_sha256':os.environ['SOURCE_SHA'],'candidate_sha256':prep['candidate_sha256']},indent=2))
+          (root/'pilot-completion.json').write_text(json.dumps({'status':'TECHNICAL_PILOT_COMPLETE_VISUAL_REVIEW_PENDING','views':3,'source_sha256':os.environ['SOURCE_SHA'],'candidate_sha256':prep['candidate_sha256']},indent=2))
           PY
       - name: Preserve images, source receipts and failure logs
         if: always()

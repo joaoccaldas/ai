@@ -62,6 +62,67 @@ def projected_top_area(obj):
     return area
 
 
+def partition_floor_areas(bounds, voids, zones):
+    """Partition actual slab cells by non-overlapping rectangular programme zones.
+
+    Areas include circulation inside each zone; they are not net room areas/GFA.
+    zones maps unique names to XY bounds in the slab's local metre coordinates.
+    """
+    def intersection(a, b):
+        return max(0, min(a[2], b[2])-max(a[0], b[0])) * max(0, min(a[3], b[3])-max(a[1], b[1]))
+    cells = rectangle_cells(bounds, voids)
+    items = list(zones.items())
+    for i, (_, zone) in enumerate(items):
+        rectangle_cells(zone)
+        if intersection(zone, bounds) < (zone[2]-zone[0])*(zone[3]-zone[1])-1e-8:
+            raise ValueError('Programme zone leaves floor bounds')
+        if any(intersection(zone, other) > 1e-8 for _, other in items[:i]):
+            raise ValueError('Programme zones overlap')
+    areas = {name: sum(intersection(cell, zone) for cell in cells) for name, zone in items}
+    total = sum((c-a)*(d-b) for a,b,c,d in cells)
+    if abs(sum(areas.values())-total) > 1e-7:
+        raise ValueError('Programme zones do not cover the slab')
+    return areas
+
+
+def parabolic_vault(name, collection, materials, length=45, span=9, rise=1.35,
+                    springing=8.3, thickness=.18, segments=36):
+    """Closed ruled cylinder; underside vertices follow the declared parabola.
+
+    Vertical shell thickness is a geometry convention. Section equilibrium
+    under uniform horizontal-distributed vertical load is not shell certification.
+    """
+    if not all(math.isfinite(v) and v > 0 for v in (length,span,rise,thickness)) or not math.isfinite(springing):
+        raise ValueError('Invalid vault dimensions')
+    if not isinstance(segments,int) or segments < 4:
+        raise ValueError('At least four vault segments required')
+    m=MeshBuilder();n=segments+1
+    def index(end, layer, j): return end*2*n+layer*n+j
+    for x in (-length/2,length/2):
+        for layer in (0,1):
+            for j in range(n):
+                y=-span/2+span*j/segments
+                z=springing+rise*(1-(2*y/span)**2)+layer*thickness
+                m.vertices.append((x,y,z))
+    for j in range(segments):
+        m.faces.extend([
+            (index(0,0,j),index(0,0,j+1),index(1,0,j+1),index(1,0,j)),
+            (index(0,1,j),index(1,1,j),index(1,1,j+1),index(0,1,j+1)),
+            (index(0,0,j),index(0,1,j),index(0,1,j+1),index(0,0,j+1)),
+            (index(1,0,j),index(1,0,j+1),index(1,1,j+1),index(1,1,j))])
+    m.faces.extend([(index(0,0,0),index(1,0,0),index(1,1,0),index(0,1,0)),
+                    (index(0,0,segments),index(0,1,segments),index(1,1,segments),index(1,0,segments))])
+    m.material_indices=[0]*len(m.faces)
+    obj=m.object(name,collection,materials,smooth=False)
+    obj['asset_id']='architecture/parabolic-vault';obj['span_m']=span;obj['rise_m']=rise
+    obj['springing_m']=springing;obj['profile']='uniform-horizontal-distributed-load parabola'
+    obj['evidence_status']='proposed analytical section; not historical reconstruction or certified shell'
+    # Smooth the longitudinal faces only; retain crisp closing edges.
+    for face in obj.data.polygons:
+        face.use_smooth=abs(face.normal.z)>.2 and abs(face.normal.x)<.1
+    return obj
+
+
 def switchback_parameters(rise=4.5,clear_width=1.5,going=.28,landing=1.5,max_riser=.18,gap=.2):
     if not all(math.isfinite(v) and v>0 for v in (rise,clear_width,going,landing,max_riser,gap)):
         raise ValueError('Stair dimensions must be finite and positive')
