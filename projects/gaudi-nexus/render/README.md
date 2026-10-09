@@ -18,3 +18,5 @@ CPU-only Cycles: a 1200×1600 / 128-sample frame takes ~20–30 min on 4 cores; 
 
 Finishing: `python3 finish.py in.png out.png` applies a declared photographic finish (bloom/halation, vignette, slight chromatic aberration, filmic curve, grain). Needs `pip install pillow numpy`. Disclose in captions.
 Entourage: figures are procedural and illustrative (no real or AI-generated people); caption accordingly.
+
+Scanned PBR base: `python3 fetch_textures.py` downloads the CC0 Poly Haven textures listed in `textures.json` (sandstone_blocks_08, concrete_pavers_02, clay_roof_tiles_02) into `_tex/` (git-ignored) and writes `_tex/provenance.json` with URL, SHA-256, author and licence per file. `build.py` box-projects them in object space at real-world scale and layers the procedural weathering on top; without the textures it falls back to the procedural look. Rights: CC0.

@@ -55,3 +55,6 @@ Use this registry for generic market, furniture and lifestyle assets. Extend exi
 `check_geometry.py` checks outward cap normals, fixed fabric edges, world gravity, sag in metres and original mesh preservation. It never renders. Khronos validation is provided by `studio/scene_kit/validate_glb.cjs`.
 
 For Gaudí, `render/build.py --prepare-only --save-blend ...` builds one derived scene. The remote pilot renders every view from that same saved scene and hash. **Mac rendering is disabled in the Gaudí rendering entry points by user request. Do not use `--sheet` on this device.**
+
+## Per-asset build metadata
+`export_glb.py` now writes `<id>.build-meta.json` next to each GLB: `representation` (`geometry-study`), provenance, generator + params, units/axes, triangles, bbox, semantic parts, materials, bytes, sha256. Mobile budget gating is not applied yet; the fields exist so a Konam-side intake can apply its own.

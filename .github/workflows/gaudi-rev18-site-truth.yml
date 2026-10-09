@@ -1,0 +1,69 @@
+name: Gaudi Rev18 Site Truth Candidate
+
+on:
+  push:
+    branches: [gaudi-site-truth-candidate-20261007]
+    paths:
+      - '.github/workflows/gaudi-rev18-site-truth.yml'
+      - 'projects/gaudi-nexus/scripts/build_rev18_site_truth_candidate.py'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download Blender 5.2
+        run: |
+          curl -fsSL 'https://download.blender.org/release/Blender5.2/blender-5.2.0-linux-x64.tar.xz' -o blender.tar.xz
+          tar -xf blender.tar.xz
+          echo "$PWD/blender-5.2.0-linux-x64" >> "$GITHUB_PATH"
+
+      - name: Install headless render runtime
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq libegl1
+
+      - name: Download checksum-pinned inputs
+        run: |
+          curl -fsSL 'https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/57590020-3bff-4a29-89c7-9bdf05a130c6.blend' -o rev15.blend
+          curl -fsSL 'https://d2ol7oe51mr4n9.cloudfront.net/user_31Vx2ThP2hxeA9WUkkpCfbJLaeb/eaef5ac9-3706-45dc-809e-73c0b8b4c864.glb' -o municipal.glb
+          echo 'cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494  rev15.blend' | sha256sum -c -
+          echo 'f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c  municipal.glb' | sha256sum -c -
+
+      - name: Build Rev18 candidate
+        run: |
+          blender --background rev15.blend --python projects/gaudi-nexus/scripts/build_rev18_site_truth_candidate.py
+          sha256sum rev18_site_truth_candidate.blend rev18_site_truth_report.json > rev18_sha256.txt
+          cat rev18_site_truth_report.json
+          cat rev18_sha256.txt
+
+      - name: Assert evidence outputs
+        run: |
+          test -s rev18_site_truth_candidate.blend
+          test -s rev18_site_truth_report.json
+          test -s site_truth_top.png
+          test -s f3_site_truth_workbench.png
+          python - <<'PY'
+          import json
+          r=json.load(open('rev18_site_truth_report.json'))
+          assert r['status']=='REV18_SITE_TRUTH_CANDIDATE_BUILT_NOT_PROMOTED'
+          assert r['municipal_collection']=='00_SITE_MUNICIPAL_IMPORTED'
+          assert r['proxy_context']['hidden_from_competition_diagnostics'] is True
+          assert r['hero']['camera']=='A_HERO_MUNICIPAL_F3'
+          assert abs(r['hero']['position'][2]-1.56)<1e-9
+          assert r['hero']['lens_mm']==32
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-rev18-site-truth-candidate
+          path: |
+            rev18_site_truth_candidate.blend
+            rev18_site_truth_report.json
+            rev18_sha256.txt
+            site_truth_top.png
+            f3_site_truth_workbench.png
+          retention-days: 30

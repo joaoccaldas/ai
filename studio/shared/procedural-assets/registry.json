@@ -870,6 +870,117 @@
     "studio/gallery"
    ],
    "anchor": "base_centre"
+  },
+  {
+   "id": "chalkboard_easel",
+   "builder": "gen",
+   "module": "market_props",
+   "func": "chalkboard_easel",
+   "materials": [
+    "Timber",
+    "Chalkboard",
+    "Chalk"
+   ],
+   "params": {},
+   "category": "market",
+   "reuse": [
+    "studio/cafe",
+    "studio/market",
+    "studio/restaurant"
+   ],
+   "anchor": "base_centre"
+  },
+  {
+   "id": "hanging_scale",
+   "builder": "gen",
+   "module": "market_props",
+   "func": "hanging_scale",
+   "materials": [
+    "Brass",
+    "Steel",
+    "Enamel"
+   ],
+   "params": {},
+   "category": "market",
+   "reuse": [
+    "studio/market",
+    "studio/shop"
+   ],
+   "anchor": "ceiling_attachment"
+  },
+  {
+   "id": "preserve_jar",
+   "builder": "gen",
+   "module": "market_props",
+   "func": "preserve_jar",
+   "materials": [
+    "Glass",
+    "Jam",
+    "Zinc",
+    "Label"
+   ],
+   "params": {},
+   "category": "market",
+   "reuse": [
+    "studio/market",
+    "studio/kitchen",
+    "studio/pantry"
+   ],
+   "anchor": "base_centre"
+  },
+  {
+   "id": "cheese_wheel",
+   "builder": "gen",
+   "module": "market_props",
+   "func": "cheese_wheel",
+   "materials": [
+    "Rind",
+    "CheeseCut"
+   ],
+   "params": {},
+   "category": "market",
+   "reuse": [
+    "studio/market",
+    "studio/deli"
+   ],
+   "anchor": "base_centre"
+  },
+  {
+   "id": "bunting_string",
+   "builder": "gen",
+   "module": "market_props",
+   "func": "bunting_string",
+   "materials": [
+    "Cord",
+    "FlagRed",
+    "FlagCream",
+    "FlagTeal"
+   ],
+   "params": {},
+   "category": "market",
+   "reuse": [
+    "studio/market",
+    "studio/festival",
+    "studio/cafe"
+   ],
+   "anchor": "ceiling_attachment"
+  },
+  {
+   "id": "olive_tin",
+   "builder": "gen",
+   "module": "market_props",
+   "func": "olive_tin",
+   "materials": [
+    "Zinc",
+    "Label"
+   ],
+   "params": {},
+   "category": "market",
+   "reuse": [
+    "studio/market",
+    "studio/pantry"
+   ],
+   "anchor": "base_centre"
   }
  ]
 }

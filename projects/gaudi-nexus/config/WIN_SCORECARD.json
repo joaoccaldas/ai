@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_utc": "2026-10-05T04:25:00Z",
+  "updated_utc": "2026-10-07T03:52:00Z",
   "definition_of_100": "No known competition requirement gap, no unresolved source-of-truth conflict, no unverified competition-facing claim, no broken deliverable, and all final-release gates green.",
   "official_jury_points": {
     "architecture_program": 20,
@@ -15,7 +15,7 @@
       "id": 1,
       "name": "SITE_TRUTH_V1",
       "weight_pct": 10,
-      "status": "ALIGNED_COMPARISON_BUILT_PROMOTION_PENDING",
+      "status": "ALIGNED_COMPARISON_VALIDATED_LIVE_INTEGRATION_BLOCKED",
       "why": "All downstream geometry, sightlines, shadow studies and context realism depend on authoritative municipal geometry.",
       "done_when": [
         "verified municipal DWG converted through named reproducible toolchain",
@@ -35,15 +35,18 @@
         "Rev17 corrected comparison blend SHA256 78cd3253881f07178e7878711a6dc11efced02d7e45e0e5ee5f7ae655ac10fd5",
         "GitHub build run 37259743278 / artifact 11323444092: corrected top-down + HeroCam municipal/proxy diagnostics",
         "Rev17 aligned comparison blend SHA256 3de0f2062cd2a465a0322cfa1828d3b16b2267c6ffc31dfee22fcc51b5c47bcf",
-        "Alignment: +13.359293m X, +108.634063m Y, no plan rotation, axis restore x,z,-y"
+        "Alignment: +13.359293m X, +108.634063m Y, no plan rotation, axis restore x,z,-y",
+        "2026-10-06 live Jutsu audit: Rev16 collections exclude 00_SITE_MUNICIPAL_IMPORTED; site-truth live integration gap confirmed.",
+        "Rev18 F3 sightline workflow 37568295670: 9/9 target-window rays reached 00_SITE_MUNICIPAL_IMPORTED first; 0 non-municipal blockers.",
+        "Rev18 authoritative shadow workflow 37568571128: 54 rays across 6 Barcelona sun vectors; 0 non-municipal shadow blockers on the 9 F3-visible municipal receiver points."
       ],
-      "blocker": "Complete municipal-vs-proxy sightline/shadow reconciliation, then retire proxies and promote SITE_TRUTH_V1.0."
+      "blocker": "Official 1:1000 topography/levels + tree/street-furniture cross-check remain externally blocked by Open Data BCN hCaptcha, followed by explicit SITE_TRUTH_V1 promotion. F3 sightline and representative seasonal shadow obstruction tests are now closed."
     },
     {
       "id": 2,
       "name": "Canonical Blender world",
       "weight_pct": 8,
-      "status": "ADVANCED_REV15",
+      "status": "LIVE_REV16_UNPINNED_CONTEXT_GAP",
       "why": "Plan, section, axon and hero must derive from one scene.",
       "done_when": [
         "exact Rev 14 binary archived",
@@ -55,14 +58,16 @@
       "evidence": [
         "config/current_world.json",
         "visuals/camera_registry.json",
-        "Higgsfield project revision 15: blend etag 02fa49ad3fc6c3f16b1437603cbf1837; glb etag 6eedb918dc908bf9b0bdad38f97cf2f7"
-      ]
+        "Higgsfield project revision 15: blend etag 02fa49ad3fc6c3f16b1437603cbf1837; glb etag 6eedb918dc908bf9b0bdad38f97cf2f7",
+        "Live Jutsu revision 16 audited 2026-10-06: 1601 objects / 1500 meshes, active A_HERO_MUNICIPAL_F3, blend etag 6e363709b9f3d14ce29ec73571315454, GLB etag e2a0f0b77cf42036c62ffd57e6470bc6."
+      ],
+      "blocker": "Checksum-pin the live/candidate canonical binary only after authoritative context reconciliation; do not promote the current Rev16 as SITE_TRUTH_V1."
     },
     {
       "id": 3,
       "name": "Architecture vs brief closure",
       "weight_pct": 10,
-      "status": "ADVANCED_REV15",
+      "status": "ADVANCED_PROGRAM_SCENE_BACKED_SITE_DEPENDENCIES_OPEN",
       "why": "Program and plaza requirements carry major jury weight and cannot remain approximate.",
       "done_when": [
         "all official program items mapped to scene evidence",
@@ -114,14 +119,15 @@
       "evidence": [
         "docs/BAY_PERFORMANCE_V0_1.md",
         "docs/SOLAR_BASELINE_001.md",
-        "output/final10/barcelona_solar_baseline_v1.json"
+        "output/final10/barcelona_solar_baseline_v1.json",
+        "Rev18 geometry shadow diagnostic: 6 representative Barcelona sun vectors × 9 authoritative municipal receiver points; 0 non-municipal blockers. This is not annual simulation."
       ]
     },
     {
       "id": 6,
       "name": "Material/construction reality",
       "weight_pct": 10,
-      "status": "PARTIAL",
+      "status": "ADVANCED_PIPELINE_VISUAL_APPROVAL_PENDING",
       "why": "Final realism now depends more on assemblies, contact and material response than on object count.",
       "done_when": [
         "hero-frame materials use final PBR definitions",
@@ -132,14 +138,16 @@
       ],
       "evidence": [
         "docs/MATERIAL_SYSTEM_V0_1.md",
-        "docs/PRIMARY_BAY_V0_3.md"
-      ]
+        "docs/PRIMARY_BAY_V0_3.md",
+        "2026-10-06 branch work: CC0 PBR base texture provenance for stone/paving/vault tiles (commit 1aa83326); trencadis and stone relief passes (6b31850b, c864e630); catenary canopy/DOF and lighting refinements (202c49bb, e7832045); procedural market props with per-asset metadata (d20a39b4, aec0eb16)."
+      ],
+      "blocker": "Verify the material/assembly improvements in the final authoritative-context scene and hero pixels; repo implementation alone is not visual approval."
     },
     {
       "id": 7,
       "name": "Hero frame >=9/10",
       "weight_pct": 12,
-      "status": "F3_GEOMETRY_SELECTED_PHOTOREAL_GATE_PENDING",
+      "status": "F3_LIVE_CAMERA_PRESENT_SITE_TRUTH_AND_PHOTOREAL_GATES_PENDING",
       "why": "The hero must compress the thesis into an immediate jury read.",
       "done_when": [
         "same canonical scene as plan/section",
@@ -156,15 +164,19 @@
         "Rev 15 Eevee 320x180 render operation gaudi-r15-eevee-small-007 succeeded; artifact bf473fa6951086144f14b09b45b258ca",
         "Municipal cluster weighted center projects to HeroCam screen (0.542, 0.525), depth ~181.4 m; no full camera redesign required.",
         "Rev17 proxy/municipal HeroCam comparison renders show inadequate cathedral legibility.",
-        "HERO_F3 Workbench: (-15,42,1.56), 32mm, target (96.1,100.4,30), authoritative municipal context."
+        "HERO_F3 Workbench: (-15,42,1.56), 32mm, target (96.1,100.4,30), authoritative municipal context.",
+        "2026-10-06 live Rev16 audit confirms A_HERO_MUNICIPAL_F3 is the active 32 mm camera at (-15,42,1.56).",
+        "640x360 Workbench composition proof rendered as operation gaudi-r16-f3-workbench-20261006 / artifact fa5c862226fdc934f48eee4efe37140d.",
+        "640x360 Eevee review timed out at 300 s; no final material/light visual approval.",
+        "Rev18 F3 sightline diagnostic: central and 3x3 target-window rays reach authoritative municipal geometry first; 0/9 non-municipal blockers."
       ],
-      "blocker": "Photoreal Eevee/Cycles render, choreography/material pass, and >=9/10 blind hero score still required."
+      "blocker": "First integrate/promote authoritative municipal context, then establish a faster photoreal review path, render F3, visually inspect pixels and pass the >=9/10 gate."
     },
     {
       "id": 8,
       "name": "A1 jury board",
       "weight_pct": 12,
-      "status": "EARLY",
+      "status": "STORYBOARD_DEFINED_FINAL_ASSETS_MISSING",
       "why": "The board controls whether judges can perceive the other 90 points.",
       "done_when": [
         "one dominant hero",
@@ -226,5 +238,17 @@
     "Every task must either increase an official jury criterion or remove a release risk.",
     "No step may be marked DONE from prose alone; it requires inspectable evidence.",
     "A later revision cannot become canonical without explicit manifest promotion."
-  ]
+  ],
+  "current_assessment": {
+    "status": "TRUTH_SYNC_IN_PROGRESS",
+    "brief_compliance_readiness_pct_range": [
+      70,
+      78
+    ],
+    "winning_readiness_pct_range": [
+      50,
+      58
+    ],
+    "note": "Readiness ranges are an evidence-based project-management judgment, not an official jury score. The remaining work is disproportionately concentrated in site truth, final visual communication, and validated engineering/environmental proof."
+  }
 }
