@@ -2,7 +2,7 @@
 
 ## Why this exists
 
-The Living Threshold roof is not curved because curved forms look like Gaudí. The curvature is selected from a funicular load path.
+This study selects a proposed parabolic profile under a declared uniform vertical line load. It does not establish that the existing Living Threshold roof mesh matches that profile. Source mesh reconciliation remains pending.
 
 For the 9.0 m clear span and a design-development 1.5 kPa roof-pressure case across a 5.0 m tributary bay:
 
@@ -33,5 +33,7 @@ This makes the trade explicit: a shallower roof reduces height but rapidly incre
 The physical-detail gate already separates the primary pier, springing block, movement/bearing layer and shell. Waterproofing, gutter, ceramic fins, MEP rail and acoustic inserts remain secondary and replaceable, so the force path is not confused with maintenance layers.
 
 ## Claim boundary
+
+Structural equilibrium, documented architecture and creative interpretation are separate claims. This parabolic model is a new design study, not a historical reconstruction or a catenary under self-weight. A hanging model alone does not establish final vault geometry; see [CRM’s mathematical exposition](https://www.crm.cat/les-matematiques-de-gaudi/).
 
 This is design-development structural logic, not certification. It does not replace FEA, code load combinations, material nonlinearities, shell buckling/stability, reinforcement sizing, foundations, seismic/wind checks, or review by a qualified structural engineer.

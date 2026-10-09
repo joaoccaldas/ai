@@ -28,6 +28,8 @@ offline render is not a mobile performance pass.
 | market | open serving frames, cabinets, shelves, fittings | dimensions and front orientation explicit |
 | landscape | seeded herbs, lavender, stone curbs, timber seating | proposed planting; caller checks placement and circulation |
 | collision | separate low-poly static trunk, seat and stall profiles | suggested friction/restitution; engine integration remains caller responsibility |
+| visibility | sampled camera clearance with render visibility and restored viewport state | catches near obstructions; does not prove the entire composition is clear |
+| render_checks | luminance range of an existing output image | detects collapsed frames; does not approve aesthetic quality |
 | export / build_assets | evaluated mesh GLBs and standalone asset registry | portable PBR approximation, source objects retained |
 
 ```python
@@ -46,6 +48,13 @@ Solar direction, leaf backlighting, microbump, roughness, clearcoat and contact
 shadows are rendering behavior. They do not validate structure, wind, drainage,
 annual energy or crowd circulation. Keep those claims in separate engineering
 evidence. Do not introduce fake wind/fluid simulations as performance evidence.
+
+Keep three evidence types separate: mathematical equilibrium under declared
+loads, surveyed/documented architecture, and creative design interpretation.
+Matching a force model does not establish historical dimensions or prove that
+the delivered mesh follows the model. A parabola under uniform load per horizontal
+metre and a catenary under uniform self-weight per arc length need different
+checks. Each project must reconcile its actual geometry with the claimed model.
 
 Procedural shaders do not travel intact in glTF. Bake them before claiming web
 material equivalence, or label exports as PBR approximations. Use the
