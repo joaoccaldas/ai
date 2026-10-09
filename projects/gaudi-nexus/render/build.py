@@ -294,6 +294,11 @@ if CAM!='HERO_F3':
         _platane(f'StreetPlane_{_nt}',(_x,_y,_loc.z),seed=300+_nt*13,height=8.0+(_nt%4)*0.8,leaves=2600); _nt+=1
     print('STREET TREES',_nt)
 
+# Pixel-reviewed refinement uses the same scene for all cameras.
+sys.path.insert(0,os.path.dirname(os.path.abspath(__file__)))
+from refine_scene import refine as _refine
+_refinement=_refine()
+
 # ---------- sky, exposure ----------
 w=sc.world or bpy.data.worlds.new('W'); sc.world=w; w.use_nodes=True; wt=w.node_tree; wt.nodes.clear()
 sky=wt.nodes.new('ShaderNodeTexSky')
@@ -343,6 +348,7 @@ if _args.save_blend:bpy.ops.wm.save_as_mainfile(filepath=os.path.abspath(_args.s
 if _args.prepare_only:
     _prepared={'status':'DERIVED_SCENE_PREPARED_NO_RENDER','source_sha256':_input_sha,'source_unchanged':hashlib.sha256(open(_input_path,'rb').read()).hexdigest()==_input_sha,'candidate_sha256':hashlib.sha256(open(_args.save_blend,'rb').read()).hexdigest(),'municipal_faces':len(_municipal.data.polygons),'choreography_camera':'HERO_F3','choreography_seed':7,'hour_CEST':HOUR,'date':'2026-09-21','solar_altitude_deg':math.degrees(alt),'solar_azimuth_deg':math.degrees(az)%360,'invented_cathedral_shader':ENRICH_SAGRADA,'render_invocations':0,'seconds_build':round(time.perf_counter()-_started,2)}
     _prepared['source_geometry_transform_signatures_preserved']=len(_source_objects)
+    _prepared['refinement']=_refinement
     _prepared['produce_contacts']=_produce_contacts
     _prepared['produce_footprints']=_produce_footprints
     open(_args.save_blend+'.receipt.json','w').write(json.dumps(_prepared,indent=2)+'\n')

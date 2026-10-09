@@ -6,7 +6,7 @@ import bpy
 from pathlib import Path
 
 p=argparse.ArgumentParser()
-p.add_argument('camera',choices=['HERO_F3','MARKET_WIDE','AERIAL'])
+p.add_argument('camera',choices=['HERO_F3','MARKET_WIDE','AERIAL','HERO_ARRIVAL','MARKET_AISLE','PLAZA_OBLIQUE'])
 p.add_argument('output')
 p.add_argument('--samples',type=int,default=32)
 p.add_argument('--width',type=int,default=960)
@@ -19,7 +19,7 @@ prep=json.loads(Path(str(source)+'.receipt.json').read_text())
 if sha!=prep['candidate_sha256'] or not prep['source_unchanged'] or prep['invented_cathedral_shader']:
     raise SystemExit('Unverified prepared scene')
 sc=bpy.context.scene;sc.camera=bpy.data.objects[a.camera]
-if a.camera=='HERO_F3' and not (abs(sc.camera.location.z-1.56)<.001 and 28<=sc.camera.data.lens<=35):
+if a.camera in ('HERO_F3','HERO_ARRIVAL') and not (abs(sc.camera.location.z-1.56)<.001 and 28<=sc.camera.data.lens<=35):
     raise SystemExit('F3 camera violates the hero contract')
 sc.render.engine='CYCLES';sc.cycles.device='CPU';sc.cycles.samples=a.samples
 sc.cycles.use_adaptive_sampling=True;sc.cycles.adaptive_threshold=.035
@@ -36,7 +36,7 @@ receipt={'status':'REMOTE_PILOT_NOT_COMPETITION_APPROVED','source_sha256':prep['
     'solar_azimuth_deg':prep['solar_azimuth_deg'],'width':a.width,'height':a.height,'max_samples':a.samples,
     'blender_version':bpy.app.version_string,'device':'CPU','view_transform':sc.view_settings.view_transform,
     'seconds_render':round(time.perf_counter()-start,2),'render_sha256':hashlib.sha256(out.read_bytes()).hexdigest(),
-    'postprocess':'none','invented_cathedral_shader':False,'weather':'design-development haze, no observed-weather claim',
+    'refinement_version':prep.get('refinement',{}).get('version'),'postprocess':'none','invented_cathedral_shader':False,'weather':'design-development haze, no observed-weather claim',
     'limits':['Procedural people are illustrative.','Programme GFA and accessibility remain unverified.','Municipal site alignment is not yet promoted.']}
 Path(str(out)+'.receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
 print(json.dumps(receipt))
