@@ -21,6 +21,7 @@ offline render is not a mobile performance pass.
 | --- | --- | --- |
 | materials | limestone, paving, mineral, glaze, timber, fabric, foliage | caller supplies an unscaled world-coordinate Empty |
 | geometry | tubes, ellipsoids, batched mesh creation | real dimensions; no per-leaf Blender objects |
+| architecture | floor plates with explicit voids, measured mesh areas, switchback stair geometry | dimensioned coordination geometry; no GFA/code/structural certification |
 | vegetation | seeded holm oak, branch hierarchy, leaf variation, shared instances | visual botanical approximation, hero/low detail choices |
 | entourage | civic figures with tapered limbs, shoes, hair, bags | architectural entourage, not scanned people |
 | lighting | solar direction, daylight, Metal/CPU Cycles presets | location/date/time/UTC offset explicit |
