@@ -1,0 +1,56 @@
+name: Gaudi Structural Formfinding V2
+
+on:
+  push:
+    branches: [gaudi-structural-proof-20261007]
+    paths:
+      - '.github/workflows/gaudi-structural-v2.yml'
+      - 'projects/gaudi-nexus/scripts/structural_formfinding_v2.py'
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate form-finding evidence
+        run: |
+          python projects/gaudi-nexus/scripts/structural_formfinding_v2.py
+          test -s projects/gaudi-nexus/output/final10/structural_formfinding_v2.json
+          test -s projects/gaudi-nexus/visuals/structural_formfinding_v2.svg
+          test -s projects/gaudi-nexus/docs/STRUCTURAL_FORMFINDING_V2.md
+
+      - name: Verify equilibrium and claim boundaries
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('projects/gaudi-nexus/output/final10/structural_formfinding_v2.json')
+          r=json.loads(p.read_text())
+          c=r['chosen_case']
+          assert r['status']=='DESIGN_DEVELOPMENT_FUNICULAR_PROOF_NOT_ENGINEER_CERTIFICATION'
+          assert r['geometry']['clear_span_m']==9.0
+          assert r['geometry']['chosen_rise_m']==1.35
+          assert abs(c['horizontal_reaction_kN_per_support']-56.25)<1e-6
+          assert abs(c['vertical_reaction_kN_per_support']-33.75)<1e-6
+          assert abs(c['equilibrium_angle_residual_deg'])<0.001
+          assert len(c['funicular_coordinates_m'])==37
+          assert len(r['rise_sensitivity'])==5
+          assert 'not' in r['claim_boundary'].lower()
+          print(json.dumps({
+            'H_kN':c['horizontal_reaction_kN_per_support'],
+            'V_kN':c['vertical_reaction_kN_per_support'],
+            'R_kN':c['resultant_reaction_kN_per_support'],
+            'angle_deg':c['support_resultant_angle_deg_above_horizontal'],
+            'residual_deg':c['equilibrium_angle_residual_deg']
+          },indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-structural-formfinding-v2
+          path: |
+            projects/gaudi-nexus/output/final10/structural_formfinding_v2.json
+            projects/gaudi-nexus/visuals/structural_formfinding_v2.svg
+            projects/gaudi-nexus/docs/STRUCTURAL_FORMFINDING_V2.md
+          retention-days: 30
