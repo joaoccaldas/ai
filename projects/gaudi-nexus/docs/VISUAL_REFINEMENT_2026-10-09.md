@@ -40,3 +40,9 @@ Remaining competition work includes programme/GFA reconciliation, site truth pro
 The six upstream props initially failed export because ten materials were missing from the catalogue. Their definitions are now supplied. All 58 registered assets export: 2,058,604 bytes combined, 49,406 triangles, zero Khronos errors or warnings. Build metadata matches GLB hashes and includes metre units and anchors. The shared scene-kit exporter now respects per-object material overrides while sharing identical unmodified meshes; six direct export checks pass and restore source selection. These are portable geometry/PBR approximations; procedural Cycles textures are not baked.
 
 The [organizer page](https://fundacionantoniogaudi.org/concurso-de-arquitectura-y-diseno-ai-x-gaudi/) was checked on 9 October and still lists 16 December 2026 as the submission date. Upload time-zone details still need a final organizer check.
+
+## V2 pixels and camera correction
+
+[Run 37917747029](https://github.com/joaoccaldas/ai/actions/runs/37917747029) completed in 7m37s. F3 and plaza images confirm restrained fins and dry paving; the proposal and municipal context remain low-detail. Arrival was black and market was almost uniform brown. Geometry diagnosis finds all nine arrival rays hit municipal geometry within 0.59 m; market rays hit the opaque `ServiceHead` within 2.61 m. These frames failed despite job success.
+
+V3 moves arrival to (-75,-25,1.56), looking at (5,58,25) at 32 mm in a 4:3 frame, and moves aisle camera beyond the service head. Nine sampled clearance rays now gate all views before rendering. The viewport state is restored after this geometry check. Remote outputs also require a non-collapsed pixel range, which detects empty/opaque frames without pretending to score quality. The source geometry is retained. The next remote job is capped at 45 minutes: previous approved work used about 12m39s total, leaving the combined worst-case below 65 minutes.

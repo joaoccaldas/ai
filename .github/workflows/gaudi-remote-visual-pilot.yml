@@ -1,4 +1,4 @@
-name: Gaudi remote visual refinement V2
+name: Gaudi remote visual refinement V3
 
 on:
   push:
@@ -17,7 +17,7 @@ concurrency:
 jobs:
   pilot:
     runs-on: ubuntu-latest
-    timeout-minutes: 55
+    timeout-minutes: 45
     env:
       SOURCE_SHA: 2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875
       PILOT_DIR: projects/gaudi-nexus/output/remote-pilot
@@ -52,7 +52,7 @@ jobs:
       - name: Assemble one scene without rendering
         run: |
           set -o pipefail
-          timeout 8m blender -b source.blend --python-exit-code 1 --python projects/gaudi-nexus/render/build.py -- HERO_F3 18.5 1200 750 32 "$PILOT_DIR/unused.png" --device CPU --expected-source-sha256 "$SOURCE_SHA" --prepare-only --save-blend "$PILOT_DIR/candidate.blend" 2>&1 | tee "$PILOT_DIR/assembly.log"
+          timeout 8m blender -b source.blend --python-exit-code 1 --python projects/gaudi-nexus/render/build.py -- HERO_F3 18.5 1200 900 32 "$PILOT_DIR/unused.png" --device CPU --expected-source-sha256 "$SOURCE_SHA" --prepare-only --save-blend "$PILOT_DIR/candidate.blend" 2>&1 | tee "$PILOT_DIR/assembly.log"
       - name: Audit programme geometry
         run: |
           blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/scripts/inspect_program_geometry.py -- "$PILOT_DIR/program-geometry.json" > "$PILOT_DIR/program-audit.log" 2>&1
@@ -63,7 +63,7 @@ jobs:
       - name: Render arrival candidate on the remote runner
         run: |
           set -o pipefail
-          timeout 10m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- HERO_ARRIVAL "$PILOT_DIR/arrival.png" --width 1200 --height 750 --samples 40 2>&1 | tee "$PILOT_DIR/arrival.log"
+          timeout 10m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- HERO_ARRIVAL "$PILOT_DIR/arrival.png" --width 1200 --height 900 --samples 40 2>&1 | tee "$PILOT_DIR/arrival.log"
       - name: Render market from the same prepared scene
         run: |
           set -o pipefail

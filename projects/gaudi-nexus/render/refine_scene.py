@@ -14,6 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 from studio.scene_kit import materials as M
 from studio.scene_kit.landscape import planted_island
 from studio.scene_kit.vegetation import holm_oak, instance_tree
+from studio.scene_kit.visibility import render_geometry, camera_clearance
 from procassets.figures import person
 from procassets.contacts import settle_on_supports
 
@@ -118,8 +119,8 @@ def refine():
         raise ValueError('Market citizens have unresolved ground contacts: '+repr(contacts))
     # New arrival camera complements, rather than overwrites, registered F3.
     views = [
-        ('HERO_ARRIVAL',(-95,-48,1.56),(22,58,27),32),
-        ('MARKET_AISLE',(*local(-14,0),1.56),(*local(12,0),2.0),32),
+        ('HERO_ARRIVAL',(-75,-25,1.56),(5,58,25),32),
+        ('MARKET_AISLE',(*local(-9,0),1.56),(*local(12,0),2.0),32),
         ('PLAZA_OBLIQUE',(-105,-80,58),(-7,25,3),38),
     ]
     for name,pos,target,lens in views:
@@ -134,8 +135,13 @@ def refine():
         obj.rotation_euler = (Vector(target)-obj.location).to_track_quat('-Z','Y').to_euler()
         obj['status'] = 'DESIGN_DEVELOPMENT_CAMERA_NOT_REGISTERED_HERO_APPROVAL'
     bpy.context.view_layer.update()
+    with render_geometry(scene) as dg:
+        clearance = [camera_clearance(scene,bpy.data.objects[name],dg) for name in
+                     ['HERO_F3','HERO_ARRIVAL','MARKET_AISLE','PLAZA_OBLIQUE']]
+    if any(r['status']!='PASS_SAMPLED_CLEARANCE' for r in clearance):
+        raise ValueError('Camera obstruction: '+repr(clearance))
     # Projection is a geometric diagnostic, not visibility or a visual-quality score.
-    scene.render.resolution_x,scene.render.resolution_y = 1200,750
+    scene.render.resolution_x,scene.render.resolution_y = 1200,900
     projection = {}
     for name,_,_,_ in views:
         cam = bpy.data.objects[name]
@@ -144,9 +150,9 @@ def refine():
                             'municipal_target':(96.1,100.4,30),'municipal_height_check':(96.1,100.4,120)}.items():
             v = world_to_camera_view(scene,cam,Vector(point))
             projection[name][label] = [round(float(k),4) for k in v]
-    return {'version':'2026-10-09-v2','materials':changed,'wet_props_hidden':wet_hidden,
+    return {'version':'2026-10-09-v3','materials':changed,'wet_props_hidden':wet_hidden,
             'planting':beds,'tree_count':13,'shared_oak_variants':3,'market_people':len(citizens),
-            'market_people_contacts':contacts,'camera_projection':projection,
+            'market_people_contacts':contacts,'camera_projection':projection,'camera_clearance':clearance,
             'limits':['Planting positions are design proposals, not surveyed inventory.',
                       'Municipal geometry remains low-detail massing.',
                       'Static contacts are not human motion or crowd simulation.',

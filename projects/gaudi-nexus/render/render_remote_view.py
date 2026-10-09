@@ -4,6 +4,8 @@ if sys.platform=='darwin':
     raise SystemExit('Mac rendering is disabled by user request. Run this on the remote runner.')
 import bpy
 from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[3]))
+from studio.scene_kit.render_checks import image_health
 
 p=argparse.ArgumentParser()
 p.add_argument('camera',choices=['HERO_F3','MARKET_WIDE','AERIAL','HERO_ARRIVAL','MARKET_AISLE','PLAZA_OBLIQUE'])
@@ -28,6 +30,8 @@ sc.render.resolution_x=a.width;sc.render.resolution_y=a.height;sc.render.resolut
 sc.render.image_settings.file_format='PNG';sc.render.image_settings.color_depth='16'
 out=Path(a.output).resolve();out.parent.mkdir(parents=True,exist_ok=True);sc.render.filepath=str(out)
 start=time.perf_counter();bpy.ops.render.render(write_still=True)
+render_seconds=time.perf_counter()-start
+health=image_health(out)
 receipt={'status':'REMOTE_PILOT_NOT_COMPETITION_APPROVED','source_sha256':prep['source_sha256'],
     'candidate_sha256':sha,'candidate_unchanged':hashlib.sha256(source.read_bytes()).hexdigest()==sha,
     'camera':a.camera,'position_m':list(sc.camera.location),'lens_mm':sc.camera.data.lens,
@@ -35,8 +39,10 @@ receipt={'status':'REMOTE_PILOT_NOT_COMPETITION_APPROVED','source_sha256':prep['
     'hour_CEST':prep['hour_CEST'],'date':prep['date'],'solar_altitude_deg':prep['solar_altitude_deg'],
     'solar_azimuth_deg':prep['solar_azimuth_deg'],'width':a.width,'height':a.height,'max_samples':a.samples,
     'blender_version':bpy.app.version_string,'device':'CPU','view_transform':sc.view_settings.view_transform,
-    'seconds_render':round(time.perf_counter()-start,2),'render_sha256':hashlib.sha256(out.read_bytes()).hexdigest(),
+    'seconds_render':round(render_seconds,2),'pixel_health':health,'render_sha256':hashlib.sha256(out.read_bytes()).hexdigest(),
     'refinement_version':prep.get('refinement',{}).get('version'),'postprocess':'none','invented_cathedral_shader':False,'weather':'design-development haze, no observed-weather claim',
     'limits':['Procedural people are illustrative.','Programme GFA and accessibility remain unverified.','Municipal site alignment is not yet promoted.']}
 Path(str(out)+'.receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
 print(json.dumps(receipt))
+if health['status']!='PASS_PIXEL_RANGE':
+    raise SystemExit('Produced image fails pixel-range check: '+repr(health))
