@@ -13,14 +13,19 @@ def export_glb(path,objects):
     temp=bpy.data.collections.new('SK_TEMP_EXPORT')
     bpy.context.scene.collection.children.link(temp)
     deps=bpy.context.evaluated_depsgraph_get();copies=[];meshes={};materials={}
+    selected=list(bpy.context.selected_objects)
+    active=bpy.context.view_layer.objects.active
     try:
         for src in objects:
             if src.type not in ['MESH','CURVE','FONT','SURFACE']:continue
-            modifier_key=tuple((m.type,getattr(m,'width',None),getattr(m,'segments',None)) for m in src.modifiers)
-            key=(src.data.name,modifier_key)
+            # Object material overrides can differ even when the base mesh is shared.
+            # Modified/shape-key meshes may depend on object-specific evaluation.
+            slots=tuple(s.material for s in src.material_slots)
+            key=(src.data.name,tuple(m.name if m else None for m in slots),
+                 src.name if src.modifiers or getattr(src.data,'shape_keys',None) else None)
             if key not in meshes:
                 mesh=bpy.data.meshes.new_from_object(src.evaluated_get(deps),preserve_all_data_layers=True,depsgraph=deps)
-                for i,source_mat in enumerate(mesh.materials):
+                for i,source_mat in enumerate(slots):
                     if not source_mat:continue
                     if source_mat.name not in materials:
                         mat=bpy.data.materials.new('WEB_'+source_mat.name);mat.use_nodes=True
@@ -41,6 +46,7 @@ def export_glb(path,objects):
             obj=bpy.data.objects.new(src.name,meshes[key]);temp.objects.link(obj)
             obj.matrix_world=src.matrix_world.copy()
             for k in src.keys():obj[k]=src[k]
+            obj['source_object_name']=src.name
             copies.append(obj)
         bpy.ops.object.select_all(action='DESELECT')
         for obj in copies:obj.select_set(True)
@@ -58,3 +64,7 @@ def export_glb(path,objects):
             if mesh.users==0:bpy.data.meshes.remove(mesh)
         for mat in materials.values():
             if mat.users==0:bpy.data.materials.remove(mat)
+        for obj in selected:
+            if obj.name in bpy.context.view_layer.objects:obj.select_set(True)
+        if active and active.name in bpy.context.view_layer.objects:
+            bpy.context.view_layer.objects.active=active

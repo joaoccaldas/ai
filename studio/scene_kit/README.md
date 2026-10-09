@@ -70,3 +70,5 @@ the generator's self-report.
 
 Blender 5.2.2 uses Principled `Anisotropic`, sky `MULTIPLE_SCATTERING`, and
 `aerosol_density` names; probe the installed node API before porting an older script.
+
+`check_export.py -- /path/to/fixture.glb` verifies object material overrides, shared mesh reuse, source preservation and restored selection without rendering. Modified or shape-key meshes export separately; repeated unmodified meshes with identical material assignments share one mesh.

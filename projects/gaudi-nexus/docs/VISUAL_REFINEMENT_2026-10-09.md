@@ -34,3 +34,9 @@ The remote job is capped at 55 minutes, within the previously approved 65-minute
 The prototype detects a material source conflict: a 4.5 m upper floor cannot fit below the existing approximately 5 m roof underside. Twenty 3 m stall frontages also do not fit alongside the 11 m service head and end stairs; twenty 2.5 m modules fit the prototype. The current source/configuration remains unchanged. Do not portray this coordination study as the resolved architectural scheme.
 
 Remaining competition work includes programme/GFA reconciliation, site truth promotion, structural and annual environmental evidence, final visual approval, A1/A4 composition and anonymous release checks. No winning score is asserted.
+
+## Shared asset intake validation
+
+The six upstream props initially failed export because ten materials were missing from the catalogue. Their definitions are now supplied. All 58 registered assets export: 2,058,604 bytes combined, 49,406 triangles, zero Khronos errors or warnings. Build metadata matches GLB hashes and includes metre units and anchors. The shared scene-kit exporter now respects per-object material overrides while sharing identical unmodified meshes; six direct export checks pass and restore source selection. These are portable geometry/PBR approximations; procedural Cycles textures are not baked.
+
+The [organizer page](https://fundacionantoniogaudi.org/concurso-de-arquitectura-y-diseno-ai-x-gaudi/) was checked on 9 October and still lists 16 December 2026 as the submission date. Upload time-zone details still need a final organizer check.
