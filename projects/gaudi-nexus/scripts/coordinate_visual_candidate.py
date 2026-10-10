@@ -39,13 +39,15 @@ for obj in bpy.context.scene.objects:
 with bpy.data.libraries.load(str(prototype),link=False) as (src,dst):
     dst.collections=[n for n in src.collections if n=='70_ARCHITECTURE_COORDINATION_NOT_CANONICAL']
 coll=dst.collections[0];bpy.context.scene.collection.children.link(coll)
+bpy.context.view_layer.update()
 # Separate the finished slab from the existing plaza top by 5 mm. Coincident
 # surfaces produced black self-shadowing in the V4 interior. Datum is explicit;
 # no municipal terrain survey or accessible threshold certification is implied.
 plaza=bpy.data.objects['Plaza']
 ground_datum=max((plaza.matrix_world@v.co).z for v in plaza.data.vertices)+.005
 for obj in coll.objects:
-    obj.matrix_world.translation.z+=ground_datum
+    matrix=obj.matrix_world.copy();matrix.translation.z+=ground_datum
+    obj.matrix_world=matrix
 stone=surface('CoordWarmMineral',(.50,.45,.36),.75)[0]
 wood=surface('CoordOak',(.25,.15,.075),.60)[0]
 steel=surface('CoordBrushedSteel',(.24,.26,.26),.30,.8)[0]
