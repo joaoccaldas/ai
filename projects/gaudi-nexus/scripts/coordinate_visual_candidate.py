@@ -32,12 +32,20 @@ for name in ('ARCHITECTURE','MARKET','21_PROGRAM_REQUIRED'):
     bpy.data.collections[name].hide_render=True
 prefixes=('F_','C_Crate','B_Basket','Br_','SF_','FH_','HG_','H_','PendantLamp_',
           'PendantLight_','Citizen_','VIS_MarketCitizen_','SunMarker_','HeroWashLine_',
-          'MarketThresholdInlay_','PaveX_','PaveY_')
+          'MarketThresholdInlay_','PaveX_','PaveY_','TraderA_','BuyerA_','ResidentOlder_',
+          'Parent_','Child_','Cyclist_','VisitorA_','VisitorB_','HeroVendor')
 for obj in bpy.context.scene.objects:
     if obj.name.startswith(prefixes):obj.hide_render=True;hidden.append(obj.name)
 with bpy.data.libraries.load(str(prototype),link=False) as (src,dst):
     dst.collections=[n for n in src.collections if n=='70_ARCHITECTURE_COORDINATION_NOT_CANONICAL']
 coll=dst.collections[0];bpy.context.scene.collection.children.link(coll)
+# Separate the finished slab from the existing plaza top by 5 mm. Coincident
+# surfaces produced black self-shadowing in the V4 interior. Datum is explicit;
+# no municipal terrain survey or accessible threshold certification is implied.
+plaza=bpy.data.objects['Plaza']
+ground_datum=max((plaza.matrix_world@v.co).z for v in plaza.data.vertices)+.005
+for obj in coll.objects:
+    obj.matrix_world.translation.z+=ground_datum
 stone=surface('CoordWarmMineral',(.50,.45,.36),.75)[0]
 wood=surface('CoordOak',(.25,.15,.075),.60)[0]
 steel=surface('CoordBrushedSteel',(.24,.26,.26),.30,.8)[0]
@@ -50,7 +58,7 @@ for obj in coll.objects:
         obj.material_slots[0].link='OBJECT';obj.material_slots[0].material=stone
     if 'CoordStallFootprint' in obj.name:obj.hide_render=True
 angle=math.radians(44.14)
-transforms={bar:Matrix.Translation(Vector((*centre,0)))@Matrix.Rotation(angle,4,'Z')
+transforms={bar:Matrix.Translation(Vector((*centre,ground_datum)))@Matrix.Rotation(angle,4,'Z')
             for bar,centre in [('Hard',(-50,20)),('Civic',(-15,50))]}
 def box(name,bar,center,size,materials=(stone,),material=0):
     b=MeshBuilder();b.box(center,size,material);o=b.object(name,coll,list(materials),False)
@@ -109,7 +117,7 @@ people=[]
 for i,(x,y) in enumerate([(x,y) for x in (-4,2,8,12) for y in (-1.15,1.15)]):
     coat=surface('CoordCoat_'+str(i),[(.12,.16,.17),(.35,.30,.23),(.22,.27,.20)][i%3],.8)[0]
     o=person(f'CoordMarketPerson_{i}',coll,[skin,coat,dark,shoes,hair,wood],(0,0,0),seed=800+i)
-    o.matrix_world=transforms['Hard']@Matrix.Translation(Vector((x,y,.001)))@Matrix.Rotation(0 if y<0 else math.pi,4,'Z')
+    o.matrix_world=transforms['Hard']@Matrix.Translation(Vector((x,y,-.004)))@Matrix.Rotation(0 if y<0 else math.pi,4,'Z')
     people.append(o)
 
 # Pendant mounts reference the real upper slab underside, rather than old roof.
@@ -169,6 +177,7 @@ out=Path(a.output).resolve();out.parent.mkdir(parents=True,exist_ok=True)
 bpy.ops.wm.save_as_mainfile(filepath=str(out))
 prep.update(candidate_sha256=hashlib.sha256(out.read_bytes()).hexdigest())
 prep['architecture_coordination']={'status':'COORDINATED_DESIGN_CANDIDATE_NOT_CANONICAL',
+    'finished_ground_datum_m':ground_datum,'ground_separation_from_plaza_m':.005,
     'prototype_sha256':coord['blend_sha256'],'programme_category_areas_m2':coord['programme_category_areas_m2'],
     'programme_split_pct':coord['programme_split_pct'],'measured_slab_surface_m2':coord['measured_horizontal_slab_area_m2'],
     'certified_gfa_m2':None,'kitchens':kitchens,'administration_desks':desks,'fitted_stalls':20,

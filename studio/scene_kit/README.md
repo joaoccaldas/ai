@@ -21,7 +21,7 @@ offline render is not a mobile performance pass.
 | --- | --- | --- |
 | materials | limestone, paving, mineral, glaze, timber, fabric, foliage | caller supplies an unscaled world-coordinate Empty |
 | geometry | tubes, ellipsoids, batched mesh creation | real dimensions; no per-leaf Blender objects |
-| architecture | floor plates with explicit voids, measured mesh areas, switchback stair geometry | dimensioned coordination geometry; no GFA/code/structural certification |
+| architecture | floor plates with explicit voids, measured mesh areas, disjoint programme zones, switchbacks, closed parabolic vaults | dimensioned coordination geometry; no GFA/code/structural certification |
 | vegetation | seeded holm oak, branch hierarchy, leaf variation, shared instances | visual botanical approximation, hero/low detail choices |
 | entourage | civic figures with tapered limbs, shoes, hair, bags | architectural entourage, not scanned people |
 | lighting | solar direction, daylight, Metal/CPU Cycles presets | location/date/time/UTC offset explicit |
@@ -67,7 +67,10 @@ For export validation, install Khronos `gltf-validator` in a separate tooling fo
 then run `NODE_PATH=/tooling/node_modules node studio/scene_kit/validate_glb.cjs /new/assets`.
 The Gaudí adapter exports 39 static collision profiles through
 `projects/gaudi-nexus/scripts/build_collision_world.py`; they remain separate from
-the visual scene and are not a complete collision model of the buildings/site.
+the visual scene. The coordinated two-level candidate exports 47, adding actual
+floor and stair meshes with slab openings retained. Stall proxies accept the
+source width/depth/height. Neither export is a complete collision model of the
+buildings/site, and neither establishes runtime navigation or physics acceptance.
 
 ## Learning loop
 

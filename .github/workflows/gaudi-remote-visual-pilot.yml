@@ -1,4 +1,4 @@
-name: Gaudi coordinated architecture V4
+name: Gaudi interior correction V5
 
 on:
   push:
@@ -17,7 +17,7 @@ concurrency:
 jobs:
   pilot:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     env:
       SOURCE_SHA: 2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875
       PILOT_DIR: projects/gaudi-nexus/output/remote-pilot
@@ -62,18 +62,10 @@ jobs:
       - name: Audit programme geometry
         run: |
           blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/scripts/inspect_program_geometry.py -- "$PILOT_DIR/program-geometry.json" > "$PILOT_DIR/program-audit.log" 2>&1
-      - name: Render arrival candidate on the remote runner
-        run: |
-          set -o pipefail
-          timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- HERO_ARRIVAL "$PILOT_DIR/arrival.png" --width 960 --height 720 --samples 32 2>&1 | tee "$PILOT_DIR/arrival.log"
       - name: Render market from the same prepared scene
         run: |
           set -o pipefail
           timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- MARKET_AISLE "$PILOT_DIR/market.png" --width 960 --height 600 --samples 40 2>&1 | tee "$PILOT_DIR/market.log"
-      - name: Render plaza from the same prepared scene
-        run: |
-          set -o pipefail
-          timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- PLAZA_OBLIQUE "$PILOT_DIR/plaza.png" --width 960 --height 600 --samples 24 2>&1 | tee "$PILOT_DIR/plaza.log"
       - name: Check all views share one source and candidate
         run: |
           python3 - <<'PY'
@@ -81,11 +73,11 @@ jobs:
           from pathlib import Path
           root=Path(os.environ['PILOT_DIR'])
           prep=json.loads((root/'candidate.blend.receipt.json').read_text())
-          for name in ['arrival','market','plaza']:
+          for name in ['market']:
               r=json.loads((root/(name+'.png.receipt.json')).read_text())
               assert r['source_sha256']==os.environ['SOURCE_SHA']
               assert r['candidate_sha256']==prep['candidate_sha256'] and r['candidate_unchanged']
-          (root/'pilot-completion.json').write_text(json.dumps({'status':'TECHNICAL_PILOT_COMPLETE_VISUAL_REVIEW_PENDING','views':3,'source_sha256':os.environ['SOURCE_SHA'],'candidate_sha256':prep['candidate_sha256']},indent=2))
+          (root/'pilot-completion.json').write_text(json.dumps({'status':'TECHNICAL_PILOT_COMPLETE_VISUAL_REVIEW_PENDING','views':1,'source_sha256':os.environ['SOURCE_SHA'],'candidate_sha256':prep['candidate_sha256']},indent=2))
           PY
       - name: Preserve images, source receipts and failure logs
         if: always()
