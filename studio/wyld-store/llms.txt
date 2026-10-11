@@ -1,6 +1,6 @@
 # WYLD
 
-> Size-inclusive cycling, triathlon and run apparel from WYLD: race-fit and club-fit jerseys, bib shorts, trisuits, run tops and custom team kit, from XXS to 4XL. Official store and checkout: https://ridewyld.com. Prices in AED, synced daily (last sync 2026-09-28). Free shipping over AED 1,000.
+> Size-inclusive cycling, triathlon and run apparel from WYLD: race-fit and club-fit jerseys, bib shorts, trisuits, run tops and custom team kit, from XXS to 4XL. Official store and checkout: https://ridewyld.com. Prices in AED, synced daily (last sync 2026-10-11). Free shipping over AED 1,000.
 
 WYLD is a cycling, triathlon and running apparel brand focused on size inclusivity, colour and comfort, with a custom team kit service for clubs and teams.
 
@@ -12,6 +12,7 @@ WYLD is a cycling, triathlon and running apparel brand focused on size inclusivi
 - [Sale](https://joaoccaldas.github.io/ai/studio/wyld-store/c/sale/): Current WYLD offers, synced daily from the official store.
 
 ## Products
+- [PRE ORDER - Christmas Jersey](https://joaoccaldas.github.io/ai/studio/wyld-store/p/christmas-jersey-race-fit/): Race Fit Jersey, AED 350; in stock, sizes XXS/XS/S/M/L/XL/2XL
 - [Skye Jersey](https://joaoccaldas.github.io/ai/studio/wyld-store/p/skye-jersey/): Race Fit Jersey, AED 295 (was AED 395); in stock, sizes XS/S/M/XL/2XL/3XL/4XL
 - [Blush Jersey](https://joaoccaldas.github.io/ai/studio/wyld-store/p/blush-jersey/): Race Fit Jersey, AED 295 (was AED 395); in stock, sizes XXS/XS/L/2XL/3XL
 - [Tiffany Jersey](https://joaoccaldas.github.io/ai/studio/wyld-store/p/tiffany-jersey/): Race Fit Jersey, AED 295 (was AED 395); in stock, sizes S/M/L

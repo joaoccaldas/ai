@@ -1,6 +1,6 @@
 # WYLD — full catalog
 
-> Every product with price, fits, sizes in stock and description. Prices in AED, synced 2026-09-28 from https://ridewyld.com.
+> Every product with price, fits, sizes in stock and description. Prices in AED, synced 2026-10-11 from https://ridewyld.com.
 
 **What sizes does WYLD make?** WYLD makes size-inclusive kit. Across the current collection, sizes run from XXS–4XL, with women's and men's fits on most jerseys and bib shorts. Each product page lists the sizes in stock and links to the size guide.
 
@@ -13,6 +13,18 @@
 **Does WYLD make custom team kit?** Yes. WYLD designs custom jerseys, bib shorts, trisuits, T-shirts and run tops for individual athletes, clubs and teams — from a single piece to a full team order. Custom kit is not eligible for returns or exchanges.
 
 **Which prices are shown?** Prices are in AED and are synced from the official store every day, including current sale prices and stock.
+
+## PRE ORDER - Christmas Jersey
+
+- Type: Race Fit Jersey (Cycling)
+- Price: AED 350
+- Availability: in stock
+- Fit: Men, Women
+- Sizes in stock: XXS, XS, S, M, L, XL, 2XL
+- Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/christmas-jersey-race-fit/
+- Buy: https://ridewyld.com/products/christmas-jersey-race-fit
+
+This item is available on pre-order only- Pre-orders close Sunday 11th October- Estimated delivery Mid November
 
 ## Skye Jersey
 
