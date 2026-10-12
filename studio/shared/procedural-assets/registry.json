@@ -923,6 +923,138 @@
     "studio/market",
     "studio/pantry"
    ]
+  },
+  {
+   "id": "manhole_cover",
+   "builder": "gen",
+   "module": "street_furniture",
+   "func": "manhole_cover",
+   "materials": [
+    "CastIron",
+    "Granite"
+   ],
+   "params": {},
+   "category": "public_realm",
+   "reuse": [
+    "studio/street",
+    "studio/plaza",
+    "studio/city"
+   ]
+  },
+  {
+   "id": "kerb_stone",
+   "builder": "gen",
+   "module": "street_furniture",
+   "func": "kerb_stone",
+   "materials": [
+    "Granite"
+   ],
+   "params": {},
+   "category": "public_realm",
+   "reuse": [
+    "studio/street",
+    "studio/plaza",
+    "studio/city"
+   ]
+  },
+  {
+   "id": "cafe_parasol",
+   "builder": "gen",
+   "module": "street_furniture",
+   "func": "parasol",
+   "materials": [
+    "Aluminium",
+    "Canvas"
+   ],
+   "params": {},
+   "category": "cafe",
+   "reuse": [
+    "studio/cafe",
+    "studio/market",
+    "studio/hotel_terrace"
+   ]
+  },
+  {
+   "id": "wall_shelf",
+   "builder": "gen",
+   "module": "street_furniture",
+   "func": "wall_shelf",
+   "materials": [
+    "Timber",
+    "Steel"
+   ],
+   "params": {},
+   "category": "interior",
+   "reuse": [
+    "studio/shop",
+    "studio/kitchen",
+    "studio/gallery"
+   ]
+  },
+  {
+   "id": "paper_bag",
+   "builder": "gen",
+   "module": "street_furniture",
+   "func": "paper_bag",
+   "materials": [
+    "PaperKraft"
+   ],
+   "params": {},
+   "category": "retail",
+   "reuse": [
+    "studio/market",
+    "studio/shop"
+   ]
+  },
+  {
+   "id": "hanging_basket",
+   "builder": "gen",
+   "module": "street_furniture",
+   "func": "hanging_basket",
+   "materials": [
+    "Steel",
+    "Soil",
+    "LeafDark"
+   ],
+   "params": {},
+   "category": "planting",
+   "reuse": [
+    "studio/cafe",
+    "studio/market",
+    "studio/street"
+   ]
+  },
+  {
+   "id": "step_ladder",
+   "builder": "gen",
+   "module": "street_furniture",
+   "func": "step_ladder",
+   "materials": [
+    "Aluminium"
+   ],
+   "params": {},
+   "category": "props",
+   "reuse": [
+    "studio/shop",
+    "studio/market",
+    "studio/workshop"
+   ]
+  },
+  {
+   "id": "milk_crate_stack",
+   "builder": "gen",
+   "module": "street_furniture",
+   "func": "milk_crate_stack",
+   "materials": [
+    "Rubber"
+   ],
+   "params": {},
+   "category": "props",
+   "reuse": [
+    "studio/market",
+    "studio/shop",
+    "studio/logistics"
+   ]
   }
  ]
 }
