@@ -154,9 +154,15 @@ if ENRICH_SAGRADA:
     nt.links.new(darkc,p.inputs['Base Color'])
     b4=nt.nodes.new('ShaderNodeBump'); b4.inputs['Strength'].default_value=1.0; b4.inputs['Distance'].default_value=0.9; b4.invert=True
     nt.links.new(win,b4.inputs['Height']); nt.links.new(b3.outputs['Normal'],b4.inputs['Normal']); nt.links.new(b4.outputs['Normal'],p.inputs['Normal'])
-    dd=nt.nodes.new('ShaderNodeBsdfDiffuse'); dd.inputs['Color'].default_value=(0.015,0.013,0.012,1)
+    # glazing: dark interior diffuse + a sky-reflecting glossy layer, divided by a stone mullion and transom
+    _bx=mathn(nt,'ADD',mathn(nt,'MULTIPLY',mathn(nt,'LESS_THAN',mathn(nt,'ABSOLUTE',mathn(nt,'SUBTRACT',fr('X',3.4),0.5)),0.016),ay),mathn(nt,'MULTIPLY',mathn(nt,'LESS_THAN',mathn(nt,'ABSOLUTE',mathn(nt,'SUBTRACT',fr('Y',3.4),0.5)),0.016),ax))
+    _tr=band(fzv,0.50,0.525)
+    glass_m=mathn(nt,'MULTIPLY',win,mathn(nt,'SUBTRACT',1.0,mathn(nt,'MINIMUM',mathn(nt,'ADD',_bx,_tr),1.0)))
+    d0=nt.nodes.new('ShaderNodeBsdfDiffuse'); d0.inputs['Color'].default_value=(0.015,0.013,0.012,1)
+    gl=nt.nodes.new('ShaderNodeBsdfGlossy'); gl.inputs['Color'].default_value=(0.55,0.62,0.68,1); gl.inputs['Roughness'].default_value=0.05
+    dd=nt.nodes.new('ShaderNodeMixShader'); dd.inputs[0].default_value=0.45; nt.links.new(d0.outputs['BSDF'],dd.inputs[1]); nt.links.new(gl.outputs['BSDF'],dd.inputs[2])
     msh=nt.nodes.new('ShaderNodeMixShader'); out=nt.nodes['Material Output']
-    nt.links.new(win,msh.inputs[0]); nt.links.new(p.outputs['BSDF'],msh.inputs[1]); nt.links.new(dd.outputs['BSDF'],msh.inputs[2]); nt.links.new(msh.outputs['Shader'],out.inputs['Surface'])
+    nt.links.new(glass_m,msh.inputs[0]); nt.links.new(p.outputs['BSDF'],msh.inputs[1]); nt.links.new(dd.outputs['Shader'],msh.inputs[2]); nt.links.new(msh.outputs['Shader'],out.inputs['Surface'])
 
 mg=bpy.data.objects['geometry_0']; mg.data.materials.clear(); mg.data.materials.append(mm)
 # ---------- plaza paving: stone slabs, dirty joints, damp patches, puddles ----------
