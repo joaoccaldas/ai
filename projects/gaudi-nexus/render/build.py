@@ -166,7 +166,8 @@ if ENRICH_SAGRADA:
     _tr=band(fzv,0.50,0.525)
     glass_m=mathn(nt,'MULTIPLY',win,mathn(nt,'SUBTRACT',1.0,mathn(nt,'MINIMUM',mathn(nt,'ADD',_bx,_tr),1.0)))
     d0=nt.nodes.new('ShaderNodeBsdfDiffuse'); d0.inputs['Color'].default_value=(0.015,0.013,0.012,1)
-    gl=nt.nodes.new('ShaderNodeBsdfGlossy'); gl.inputs['Color'].default_value=(0.55,0.62,0.68,1); gl.inputs['Roughness'].default_value=0.05
+    gl=nt.nodes.new('ShaderNodeBsdfGlossy'); gl.inputs['Roughness'].default_value=0.05
+    nt.links.new(ramp(nt,wn_.outputs['Value'],[(0.0,(0.40,0.50,0.60,1)),(0.5,(0.62,0.62,0.60,1)),(1.0,(0.78,0.66,0.52,1))]).outputs['Color'],gl.inputs['Color'])   # per-pane reflection tint: cool sky / neutral / warm sunset
     dd=nt.nodes.new('ShaderNodeMixShader'); dd.inputs[0].default_value=0.45; nt.links.new(d0.outputs['BSDF'],dd.inputs[1]); nt.links.new(gl.outputs['BSDF'],dd.inputs[2])
     # a few interior-lit windows (warm tungsten glow) so the façade reads as inhabited at dusk; chosen per window cell by the same cell noise
     em=nt.nodes.new('ShaderNodeEmission'); em.inputs['Color'].default_value=(1.0,0.62,0.28,1); em.inputs['Strength'].default_value=1.6
