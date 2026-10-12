@@ -8,7 +8,7 @@ if tm and tm.use_nodes:
     for l in list(p.inputs['Base Color'].links)+list(p.inputs['Roughness'].links)+list(p.inputs['Normal'].links): nt.links.remove(l)
     mp=mapping(nt); br=nt.nodes.new('ShaderNodeTexBrick'); nt.links.new(mp.outputs['Vector'],br.inputs['Vector'])
     br.inputs['Scale'].default_value=1.0; br.inputs['Brick Width'].default_value=0.42; br.inputs['Row Height'].default_value=0.2
-    br.inputs['Mortar Size'].default_value=0.008; br.inputs['Mortar Smooth'].default_value=0.4; br.offset=0.5
+    br.inputs['Mortar Size'].default_value=0.022; br.inputs['Mortar Smooth'].default_value=0.25; br.offset=0.5
     br.inputs['Color1'].default_value=(0.58,0.24,0.11,1); br.inputs['Color2'].default_value=(0.46,0.18,0.08,1); br.inputs['Mortar'].default_value=(0.2,0.15,0.11,1)
     wn=noise(nt,mapping(nt,(0.25,0.25,0.25)),1.0,6,0.55)
     wc=ramp(nt,wn.outputs['Fac'],[(0.35,(1,1,1,1)),(0.7,(0.7,0.62,0.55,1))])
@@ -17,7 +17,7 @@ if tm and tm.use_nodes:
     pn=noise(nt,mapping(nt,(60,60,60)),1.0,5,0.6)
     rr=nt.nodes.new('ShaderNodeMapRange'); nt.links.new(pn.outputs['Fac'],rr.inputs['Value']); rr.inputs['To Min'].default_value=0.38; rr.inputs['To Max'].default_value=0.72
     nt.links.new((mathn(nt,'ADD',mathn(nt,'MULTIPLY',rr.outputs['Result'],0.4),mathn(nt,'MULTIPLY',_R['rough'],0.6)) if _R else rr.outputs['Result']),p.inputs['Roughness'])
-    bump(nt,mathn(nt,'ADD',mathn(nt,'SUBTRACT',1.0,br.outputs['Fac']),mathn(nt,'MULTIPLY',pn.outputs['Fac'],0.25)),0.8,0.012,p)
+    bump(nt,mathn(nt,'ADD',mathn(nt,'SUBTRACT',1.0,br.outputs['Fac']),mathn(nt,'MULTIPLY',pn.outputs['Fac'],0.25)),1.0,0.02,p)
 # --- produce / bread / herbs: per-item colour jitter, pores, subsurface, roughness spread ---
 for m in list(bpy.data.materials):
     if m.use_nodes and m.name.startswith(('Produce','Bread','Herb','FlowerRed')) and bsdf(m) and not bsdf(m).inputs['Base Color'].is_linked:

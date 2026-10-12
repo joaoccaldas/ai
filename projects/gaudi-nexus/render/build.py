@@ -323,7 +323,7 @@ sc.view_settings.view_transform='AgX'; sc.view_settings.exposure=-0.8
 # ---------- camera/render ----------
 sc.camera=bpy.data.objects[CAM]
 sc.camera.data.dof.use_dof=(CAM in ('HERO_F3','SEARCH_MARKET_EDGE_E'))   # 32 mm f/2.8 focused at 18 m: foreground (<7 m) falls soft, background stays sharp
-sc.camera.data.dof.focus_distance=(18.0 if CAM=='HERO_F3' else 9.0); sc.camera.data.dof.aperture_fstop=(2.8 if CAM=='HERO_F3' else 4.0)
+sc.camera.data.dof.focus_distance=(18.0 if CAM=='HERO_F3' else 7.0); sc.camera.data.dof.aperture_fstop=(2.8 if CAM=='HERO_F3' else 2.0)
 sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=S; sc.cycles.use_denoising=True; sc.cycles.max_bounces=6
 sc.render.resolution_x=W; sc.render.resolution_y=H; sc.render.resolution_percentage=100
 sc.render.image_settings.file_format='PNG'; sc.render.filepath=OUT
