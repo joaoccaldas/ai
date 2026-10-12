@@ -116,7 +116,14 @@ wv=nt.nodes.new('ShaderNodeTexWave'); wv.wave_type='BANDS'; wv.bands_direction='
 nt.links.new(mapping(nt).outputs['Vector'],wv.inputs['Vector'])
 bl=noise(nt,mapping(nt,(0.035,0.035,0.05)),1.0,5,0.55)
 blc=ramp(nt,bl.outputs['Fac'],[(0.35,(1.0,0.97,0.9,1)),(0.65,(0.62,0.55,0.46,1))])
-col2=mixrgb(nt,col,blc.outputs['Color'],0.6,'MULTIPLY'); nt.links.new(col2,p.inputs['Base Color'])
+col2=mixrgb(nt,col,blc.outputs['Color'],0.6,'MULTIPLY')
+# per-ashlar tone: each ~2.2 x 0.7 m block gets its own warm/cool, light/dark offset (real stone is never one colour)
+_btc=nt.nodes.new('ShaderNodeTexCoord'); _bsx=nt.nodes.new('ShaderNodeSeparateXYZ'); nt.links.new(_btc.outputs['Object'],_bsx.inputs['Vector'])
+_bcc=nt.nodes.new('ShaderNodeCombineXYZ')
+nt.links.new(mathn(nt,'FLOOR',mathn(nt,'DIVIDE',_bsx.outputs['X'],2.2)),_bcc.inputs['X']); nt.links.new(mathn(nt,'FLOOR',mathn(nt,'DIVIDE',_bsx.outputs['Y'],2.2)),_bcc.inputs['Y']); nt.links.new(mathn(nt,'FLOOR',mathn(nt,'DIVIDE',_bsx.outputs['Z'],0.7)),_bcc.inputs['Z'])
+_bwn=nt.nodes.new('ShaderNodeTexWhiteNoise'); _bwn.noise_dimensions='3D'; nt.links.new(_bcc.outputs['Vector'],_bwn.inputs['Vector'])
+_btint=ramp(nt,_bwn.outputs['Value'],[(0.0,(0.82,0.78,0.72,1)),(0.5,(1.0,0.97,0.92,1)),(1.0,(1.12,1.08,1.0,1))])
+col2=mixrgb(nt,col2,_btint.outputs['Color'],1.0,'MULTIPLY'); nt.links.new(col2,p.inputs['Base Color'])
 b2=nt.nodes.new('ShaderNodeBump'); b2.inputs['Strength'].default_value=1.0; b2.inputs['Distance'].default_value=0.6
 nt.links.new(wv.outputs['Fac'],b2.inputs['Height']); b2.inputs['Normal'].default_value=(0,0,1)
 for l in list(nt.links):
