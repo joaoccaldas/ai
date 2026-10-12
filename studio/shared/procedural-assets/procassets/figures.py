@@ -24,7 +24,7 @@ BOTS=[(0.06,0.09,0.17),(0.12,0.12,0.13),(0.45,0.38,0.28),(0.2,0.16,0.12),(0.62,0
 def _ring(c,t,r,n=8):
     t=t.normalized(); a=Vector((0,0,1)) if abs(t.z)<0.9 else Vector((1,0,0)); u=t.cross(a).normalized(); v=t.cross(u).normalized()
     return [c+(u*math.cos(2*math.pi*i/n)+v*math.sin(2*math.pi*i/n))*r for i in range(n)]
-def seg(bm,p0,p1,r0,r1,mi,n=8):
+def seg(bm,p0,p1,r0,r1,mi,n=10):
     t=p1-p0; A=[bm.verts.new(v) for v in _ring(p0,t,r0,n)]; B=[bm.verts.new(v) for v in _ring(p1,t,r1,n)]
     for i in range(n):
         f=bm.faces.new((A[i],A[(i+1)%n],B[(i+1)%n],B[i])); f.material_index=mi
@@ -88,7 +88,9 @@ def person(name,x,y,z,yaw,h=1.72,seed=0,pose='walk',child=False,carry=False):
     me=bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
     for m in mats: me.materials.append(m)
     for pl in me.polygons: pl.use_smooth=True
-    o=bpy.data.objects.new(name,me); o.location=(x,y,z); o.rotation_euler=(0,0,yaw); bpy.context.scene.collection.objects.link(o); return o
+    o=bpy.data.objects.new(name,me); o.location=(x,y,z); o.rotation_euler=(0,0,yaw); bpy.context.scene.collection.objects.link(o)
+    sm=o.modifiers.new('Soften','SUBSURF'); sm.levels=1; sm.render_levels=1   # rounds the tube-and-ball primitives into organic limbs; overlapping segment radii hide the joins
+    return o
 def populate(cam_name,seed=7,dscale=1.0):
     sc=bpy.context.scene; dg=bpy.context.evaluated_depsgraph_get(); cam=bpy.data.objects[cam_name]; cx,cy=cam.location.x,cam.location.y
     fw=cam.matrix_world.to_3x3()@Vector((0,0,-1)); f=Vector((fw.x,fw.y)).normalized(); lf=Vector((-f.y,f.x)); r=random.Random(seed)
