@@ -290,11 +290,13 @@ ho=hn.nodes.new('ShaderNodeOutputMaterial'); hn.links.new(hs.outputs[0],ho.input
 hzo.visible_shadow=False
 tcg=wt.nodes.new('ShaderNodeTexCoord'); mpg=wt.nodes.new('ShaderNodeMapping'); mpg.inputs['Scale'].default_value=(2.6,2.6,7.0); wt.links.new(tcg.outputs['Generated'],mpg.inputs['Vector'])
 cn=wt.nodes.new('ShaderNodeTexNoise'); cn.inputs['Scale'].default_value=1.2; cn.inputs['Detail'].default_value=9; cn.inputs['Roughness'].default_value=0.62; wt.links.new(mpg.outputs['Vector'],cn.inputs['Vector'])
-cr=wt.nodes.new('ShaderNodeMapRange'); cr.inputs['From Min'].default_value=0.46; cr.inputs['From Max'].default_value=0.70; wt.links.new(cn.outputs['Fac'],cr.inputs['Value'])
+cr=wt.nodes.new('ShaderNodeMapRange'); cr.inputs['From Min'].default_value=0.40; cr.inputs['From Max'].default_value=0.62; wt.links.new(cn.outputs['Fac'],cr.inputs['Value'])
 sepz=wt.nodes.new('ShaderNodeSeparateXYZ'); wt.links.new(tcg.outputs['Generated'],sepz.inputs['Vector'])
 hz_=wt.nodes.new('ShaderNodeMapRange'); hz_.inputs['From Min'].default_value=0.05; hz_.inputs['From Max'].default_value=0.35; wt.links.new(sepz.outputs['Z'],hz_.inputs['Value'])
 cm_=wt.nodes.new('ShaderNodeMath'); cm_.operation='MULTIPLY'; wt.links.new(cr.outputs['Result'],cm_.inputs[0]); wt.links.new(hz_.outputs['Result'],cm_.inputs[1])
-cmix=wt.nodes.new('ShaderNodeMix'); cmix.data_type='RGBA'; wt.links.new(cm_.outputs['Value'],cmix.inputs[0]); wt.links.new(sky.outputs[0],cmix.inputs[6]); cmix.inputs[7].default_value=(1.9,1.55,1.2,1)
+cmix=wt.nodes.new('ShaderNodeMix'); cmix.data_type='RGBA'; wt.links.new(cm_.outputs['Value'],cmix.inputs[0]); wt.links.new(sky.outputs[0],cmix.inputs[6]); _cl=wt.nodes.new('ShaderNodeMapRange'); _cl.inputs['From Min'].default_value=0.50; _cl.inputs['From Max'].default_value=0.72; wt.links.new(cn.outputs['Fac'],_cl.inputs['Value'])   # dense core -> lit warm top, thin base -> grey-blue underside
+_cc=wt.nodes.new('ShaderNodeMix'); _cc.data_type='RGBA'; wt.links.new(_cl.outputs['Result'],_cc.inputs[0]); _cc.inputs[6].default_value=(0.55,0.55,0.62,1); _cc.inputs[7].default_value=(2.1,1.6,1.15,1)
+wt.links.new(_cc.outputs[2],cmix.inputs[7])
 wt.links.new(cmix.outputs[2],bg.inputs['Color']); wt.links.new(bg.outputs[0],wo.inputs['Surface'])
 sc.view_settings.view_transform='AgX'; sc.view_settings.exposure=-0.8
 # ---------- camera/render ----------
