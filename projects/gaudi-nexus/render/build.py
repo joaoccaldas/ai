@@ -168,8 +168,11 @@ if ENRICH_SAGRADA:
     d0=nt.nodes.new('ShaderNodeBsdfDiffuse'); d0.inputs['Color'].default_value=(0.015,0.013,0.012,1)
     gl=nt.nodes.new('ShaderNodeBsdfGlossy'); gl.inputs['Color'].default_value=(0.55,0.62,0.68,1); gl.inputs['Roughness'].default_value=0.05
     dd=nt.nodes.new('ShaderNodeMixShader'); dd.inputs[0].default_value=0.45; nt.links.new(d0.outputs['BSDF'],dd.inputs[1]); nt.links.new(gl.outputs['BSDF'],dd.inputs[2])
+    # a few interior-lit windows (warm tungsten glow) so the façade reads as inhabited at dusk; chosen per window cell by the same cell noise
+    em=nt.nodes.new('ShaderNodeEmission'); em.inputs['Color'].default_value=(1.0,0.62,0.28,1); em.inputs['Strength'].default_value=1.6
+    dd2=nt.nodes.new('ShaderNodeMixShader'); nt.links.new(mathn(nt,'GREATER_THAN',wn_.outputs['Value'],0.86),dd2.inputs[0]); nt.links.new(dd.outputs['Shader'],dd2.inputs[1]); nt.links.new(em.outputs['Emission'],dd2.inputs[2])
     msh=nt.nodes.new('ShaderNodeMixShader'); out=nt.nodes['Material Output']
-    nt.links.new(glass_m,msh.inputs[0]); nt.links.new(p.outputs['BSDF'],msh.inputs[1]); nt.links.new(dd.outputs['Shader'],msh.inputs[2]); nt.links.new(msh.outputs['Shader'],out.inputs['Surface'])
+    nt.links.new(glass_m,msh.inputs[0]); nt.links.new(p.outputs['BSDF'],msh.inputs[1]); nt.links.new(dd2.outputs['Shader'],msh.inputs[2]); nt.links.new(msh.outputs['Shader'],out.inputs['Surface'])
 
 mg=bpy.data.objects['geometry_0']; mg.data.materials.clear(); mg.data.materials.append(mm)
 # ---------- plaza paving: stone slabs, dirty joints, damp patches, puddles ----------
