@@ -62,7 +62,20 @@ if sect_p:
     sh_ = int(rw * 9 / 16); drawing(sect_p, y, 'Section looking north, cut y = 50 m (uncapped)', sh_, 78 / 1600 * (1600 / rw), 10); y += sh_ + 40
 else:
     placeholder(rx, y, rw, 520, 'Decisive section', '9 m clear span, human scale, passive strategy'); y += 560
-placeholder(rx, y, rw, 330, 'Gaudi + AI logic', 'force/material logic, option generation to decision')
+def logic(x, y, w, h):
+    d.rectangle((x, y, x + w, y + h), outline=line, width=3); d.text((x + 20, y + 14), 'Options -> rejection -> decision (decision log)', font=font(24, True), fill=ink)
+    opts = [('A', 'Living Threshold'), ('B', 'Inverted Plaza'), ('C', 'Cerdà Mutation'), ('D', 'Urban Forest'), ('E', 'Market Organism')]
+    cw_ = (w - 40 - 4 * 10) // 5; fin = {'A', 'C'}; cur = 'A'
+    for i, (k, n) in enumerate(opts):
+        bx = x + 20 + i * (cw_ + 10); by_ = y + 60; col = ink if k in fin else mute
+        d.rectangle((bx, by_, bx + cw_, by_ + 92), outline=col, width=4 if k == cur else 2, fill=bg)
+        d.text((bx + 8, by_ + 6), k, font=font(30, True), fill=col)
+        for j, ln in enumerate(wrap(n, font(15), cw_ - 14)): d.text((bx + 8, by_ + 44 + j * 19), ln, font=font(15), fill=col)
+        d.text((bx + 8, by_ + 100), 'finalist' if k in fin else 'parked', font=font(16, True), fill=ink if k in fin else warn)
+    yy = text(x + 20, y + 180, 'Five hypotheses screened; C+ and A+ kept as finalists, B, D and E parked. E is parked but its service-spine logic was harvested into both finalists. Current scheme: Living Threshold (A+, bold box).', font(19), w - 40, gap=4)
+    yy = text(x + 20, yy + 6, 'Evidence changed form: V0.1 failed the approach-view proxy at about 71.2 deg worst obstruction; V0.2 samples 0 deg.', font(19, True), w - 40, gap=4)
+    text(x + 20, yy + 6, 'Internal screening heuristic, not the official jury score. Source: FINALIST_DECISION_002, CONCEPT_DIVERGENCE_V0_3.', font(16), w - 40, fill=warn, gap=3)
+logic(rx, y, rw, 400)
 
 by = top + hh + 230
 def evidence(x, y, w, h):
