@@ -273,6 +273,20 @@ if CAM!='HERO_F3':
         _platane(f'StreetPlane_{_nt}',(_x,_y,_loc.z),seed=300+_nt*13,height=8.0+(_nt%4)*0.8,leaves=2600); _nt+=1
     print('STREET TREES',_nt)
 
+# ---------- glazing: replace the milky alpha-blend pane with real thin glass (transmission; transparent to shadow rays) ----------
+_gm=bpy.data.materials.get('Glass')
+if _gm and _gm.use_nodes:
+    _gn=_gm.node_tree; _gp=bsdf(_gm)
+    _gp.inputs['Alpha'].default_value=1.0; _gp.inputs['Base Color'].default_value=(0.80,0.92,0.92,1); _gp.inputs['Roughness'].default_value=0.03; _gp.inputs['IOR'].default_value=1.45
+    _gp.inputs['Transmission Weight'].default_value=1.0
+    _lp=_gn.nodes.new('ShaderNodeLightPath'); _tr=_gn.nodes.new('ShaderNodeBsdfTransparent'); _mx=_gn.nodes.new('ShaderNodeMixShader'); _go=_gn.nodes['Material Output']
+    _gn.links.new(_lp.outputs['Is Shadow Ray'],_mx.inputs[0]); _gn.links.new(_gp.outputs['BSDF'],_mx.inputs[1]); _gn.links.new(_tr.outputs['BSDF'],_mx.inputs[2]); _gn.links.new(_mx.outputs['Shader'],_go.inputs['Surface'])
+    try: _gm.blend_method='OPAQUE'
+    except Exception: pass
+# hide small props that sit inside the lens' near field (they read as unfinished blobs)
+_cam=bpy.data.objects[CAM]
+for _o in bpy.data.objects:
+    if _o.type=='MESH' and not _o.hide_render and max(_o.dimensions)<1.0 and (_o.matrix_world.translation-_cam.matrix_world.translation).length<1.0: _o.hide_render=True; print('NEARFIELD HIDDEN',_o.name)
 # ---------- sky, exposure ----------
 w=sc.world or bpy.data.worlds.new('W'); sc.world=w; w.use_nodes=True; wt=w.node_tree; wt.nodes.clear()
 sky=wt.nodes.new('ShaderNodeTexSky')
@@ -301,8 +315,8 @@ wt.links.new(cmix.outputs[2],bg.inputs['Color']); wt.links.new(bg.outputs[0],wo.
 sc.view_settings.view_transform='AgX'; sc.view_settings.exposure=-0.8
 # ---------- camera/render ----------
 sc.camera=bpy.data.objects[CAM]
-sc.camera.data.dof.use_dof=(CAM=='HERO_F3')   # 32 mm f/2.8 focused at 18 m: foreground (<7 m) falls soft, background stays sharp
-sc.camera.data.dof.focus_distance=18.0; sc.camera.data.dof.aperture_fstop=2.8
+sc.camera.data.dof.use_dof=(CAM in ('HERO_F3','SEARCH_MARKET_EDGE_E'))   # 32 mm f/2.8 focused at 18 m: foreground (<7 m) falls soft, background stays sharp
+sc.camera.data.dof.focus_distance=(18.0 if CAM=='HERO_F3' else 9.0); sc.camera.data.dof.aperture_fstop=(2.8 if CAM=='HERO_F3' else 4.0)
 sc.render.engine='CYCLES'; sc.cycles.device='CPU'; sc.cycles.samples=S; sc.cycles.use_denoising=True; sc.cycles.max_bounces=6
 sc.render.resolution_x=W; sc.render.resolution_y=H; sc.render.resolution_percentage=100
 sc.render.image_settings.file_format='PNG'; sc.render.filepath=OUT
