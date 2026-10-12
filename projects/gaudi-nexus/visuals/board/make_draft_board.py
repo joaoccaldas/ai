@@ -1,6 +1,6 @@
 """DRAFT A1 board layout (portrait, 100 dpi) from the storyboard contract in ../A1_STORYBOARD.md.
 
-  python3 make_draft_board.py <hero.png> <vault.png> <out.png>
+  python3 make_draft_board.py <hero.png> <vault.png> <out.png> [plan.png section.png]
 
 Only real renders are placed. Plan, section, logic and evidence panels are explicit PENDING placeholders: nothing is invented, no metric is shown
 without provenance, and no personal name or identifying metadata is included. The board is NOT approvable until SITE_TRUTH_V1, the canonical scene,
@@ -10,6 +10,7 @@ import sys
 from PIL import Image, ImageDraw, ImageFont
 W, H, M = 2339, 3307, 80
 hero_p, vault_p, out_p = sys.argv[1:4]
+plan_p = sys.argv[4] if len(sys.argv) > 4 else None; sect_p = sys.argv[5] if len(sys.argv) > 5 else None   # optional drawings from render/plan_section.py
 F = '/usr/share/fonts/truetype/dejavu/'
 def font(sz, bold=False): return ImageFont.truetype(F + ('DejaVuSans-Bold.ttf' if bold else 'DejaVuSans.ttf'), sz)
 bg = (236, 232, 224); ink = (28, 26, 24); mute = (120, 114, 104); line = (190, 184, 172); warn = (160, 60, 40)
@@ -45,8 +46,21 @@ rx = M + hw + 60; rw = W - M - rx
 vh = int(rw * 9 / 16); im.paste(fit(vault_p, rw, vh), (rx, top))
 d.text((rx, top + vh + 10), 'Under the vault, 16:00 CEST.', font=font(22, True), fill=ink)
 y = top + vh + 60
-placeholder(rx, y, rw, 520, 'Authoritative plan', 'north, scale, program split, flows; needs SITE_TRUTH_V1'); y += 560
-placeholder(rx, y, rw, 520, 'Decisive section', '9 m clear span, human scale, passive strategy'); y += 560
+def drawing(p, y, title, h, scale_m_per_px, bar_m, north=False):
+    im.paste(fit(p, rw, h), (rx, y)); d.rectangle((rx, y, rx + rw, y + h), outline=line, width=3)
+    d.rectangle((rx + 12, y + 12, rx + 12 + d.textlength(title, font=font(24, True)) + 24, y + 56), fill=bg); d.text((rx + 24, y + 18), title, font=font(24, True), fill=ink)
+    bl = int(bar_m / scale_m_per_px); bx, byy = rx + 24, y + h - 40
+    d.rectangle((bx - 8, byy - 28, bx + bl + 90, byy + 22), fill=bg); d.rectangle((bx, byy, bx + bl, byy + 8), fill=ink); d.text((bx + bl + 12, byy - 14), f'{bar_m} m', font=font(20), fill=ink)
+    if north:
+        cx, cy = rx + rw - 50, y + 90; d.ellipse((cx - 34, cy - 34, cx + 34, cy + 34), fill=bg, outline=ink, width=3); d.polygon([(cx, cy - 26), (cx - 12, cy + 14), (cx + 12, cy + 14)], fill=ink); d.text((cx - 8, cy + 36), 'N', font=font(24, True), fill=ink)
+if plan_p:
+    ph = rw; drawing(plan_p, y, 'Plan (derived scene, massing context)', ph, 340 / 1200 * (1200 / rw), 50, north=True); y += ph + 40
+else:
+    placeholder(rx, y, rw, 520, 'Authoritative plan', 'north, scale, program split, flows; needs SITE_TRUTH_V1'); y += 560
+if sect_p:
+    sh_ = int(rw * 9 / 16); drawing(sect_p, y, 'Section looking north, cut y = 50 m (uncapped)', sh_, 78 / 1600 * (1600 / rw), 10); y += sh_ + 40
+else:
+    placeholder(rx, y, rw, 520, 'Decisive section', '9 m clear span, human scale, passive strategy'); y += 560
 placeholder(rx, y, rw, 330, 'Gaudi + AI logic', 'force/material logic, option generation to decision')
 
 by = top + hh + 230
