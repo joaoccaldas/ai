@@ -10,9 +10,14 @@ if damp:
     nt.links.new(pr,p.inputs['Roughness'])
     cl=[l for l in nt.links if l.to_socket==p.inputs['Base Color']][0]; csrc=cl.from_socket; nt.links.remove(cl)
     nt.links.new(mixrgb(nt,csrc,(0.012,0.012,0.014,1),pud.outputs['Color']),p.inputs['Base Color'])
-    nl=[l for l in nt.links if l.to_socket==p.inputs['Normal']]
-    for l in nl:   # flatten normals inside puddles
-        pass
+    # standing water is flat: fade slab bump/normal-map strength out inside puddles and lay a perfectly smooth coat (own geometric normal) on top
+    _flat=mathn(nt,'SUBTRACT',1.0,pud.outputs['Color'])
+    for _n in nt.nodes:
+        if _n.bl_idname in ('ShaderNodeBump','ShaderNodeNormalMap'):
+            _base=_n.inputs['Strength'].default_value; nt.links.new(mathn(nt,'MULTIPLY',_flat,_base),_n.inputs['Strength'])
+    try:
+        nt.links.new(pud.outputs['Color'],p.inputs['Coat Weight']); p.inputs['Coat Roughness'].default_value=0.0; p.inputs['Coat IOR'].default_value=1.33
+    except Exception as _e: print('PUDDLE COAT SKIPPED',_e)
 # --- ceramic fins: per-fin tone, dirt toward the base, glossy glaze ---
 cm=bpy.data.materials.get('Ceramic'); nt=cm.node_tree; p=bsdf(cm)
 cl=[l for l in nt.links if l.to_socket==p.inputs['Base Color']]
