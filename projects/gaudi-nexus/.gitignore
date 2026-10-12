@@ -1,0 +1,9 @@
+.DS_Store
+__pycache__/
+*.blend1
+output/*
+!output/.gitkeep
+.env
+.env.*
+secrets/
+private/

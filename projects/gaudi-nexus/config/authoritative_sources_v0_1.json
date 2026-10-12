@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "created_utc": "2026-10-04T10:22:00Z",
+  "policy": "competition-issued > Barcelona municipal > ICGC > OSM/CARTO cross-check",
+  "sources": [
+    {
+      "id": "BCN-TOPO-1K",
+      "authority": "Ajuntament de Barcelona / Open Data BCN",
+      "title": "Base map topographic of the city of Barcelona",
+      "package_api": "https://opendata-ajuntament.barcelona.cat/data/api/3/action/package_show?id=mapa-base-topografic",
+      "resource_name": "Topografic_1-1000.gpkg",
+      "direct_download": "https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download",
+      "reported_size_bytes": 648336609,
+      "license": "CC BY 4.0",
+      "status": "OFFICIAL_METADATA_CONFIRMED_AUTOMATION_BLOCKED_BY_HCAPTCHA",
+      "required_for": [
+        "levels",
+        "curbs",
+        "street geometry",
+        "urban furniture",
+        "authoritative horizontal/vertical cross-check"
+      ],
+      "checks_pending": [
+        "authorized acquisition of exact official GeoPackage bytes",
+        "download checksum",
+        "layer inventory",
+        "CRS confirmation",
+        "crop to competition context"
+      ],
+      "access_observation": {
+        "checked_utc": "2026-10-07T03:38:00Z",
+        "automated_routes_tested": 3,
+        "result": "Published download routes return the Open Data BCN anti-bot HTML challenge to automated clients instead of GeoPackage bytes.",
+        "policy": "Do not bypass hCaptcha. Acquire through an authorized human/browser path or another official machine-accessible distribution, then checksum before ingestion."
+      }
+    },
+    {
+      "id": "BCN-3D-SLPK",
+      "authority": "Ajuntament de Barcelona / CartoBCN catalog",
+      "title": "Model Tridimensional d'edificacions",
+      "catalog_product_id": "7_19",
+      "carto_product": 145,
+      "format": "SLPK",
+      "coordinate_system": "ETRS89 EPSG:25831",
+      "url_dest": "http://w20.bcn.cat/cartobcn?prod=145",
+      "link_atom": "http://w20.bcn.cat/CartoBCN/getFile.ashx?prod=145.BARCELONA.46",
+      "status": "OFFICIAL_CATALOG_RECORD_AND_ATOM_ENDPOINT_CONFIRMED_DOWNLOAD_UNRESOLVED",
+      "use": "preferred city 3D context source if importer/conversion path is reliable"
+    },
+    {
+      "id": "BCN-3D-SF",
+      "authority": "Ajuntament de Barcelona / Barcelona Dades / CartoBCN",
+      "title": "3D building model — DWG 3D (la Sagrada Família)",
+      "portal": "https://portaldades.ajuntament.barcelona.cat/mapes/146",
+      "license": "CC BY 4.0",
+      "status": "CONVERTED_TO_DXF_AND_CROPPED_GLB",
+      "required_for": [
+        "authoritative context heights",
+        "Sagrada/context massing",
+        "view-volume tests",
+        "shadow studies"
+      ],
+      "checks_pending": [
+        "import cropped municipal GLB into canonical Blender scene through supported custom-file import path",
+        "reconcile municipal context against Rev 15 proxy Sagrada/context",
+        "verify sightline and shadow changes",
+        "promote SITE_TRUTH_V1.0 and retire proxies only after comparison passes"
+      ],
+      "catalog_product_id": "7_20",
+      "carto_product": 146,
+      "product_name_ca": "Model Tridimensional d'edificacions CAD 3D",
+      "product_name_en": "Municipal Topographic Cartography - CAD",
+      "format": "DWG R2018",
+      "coordinate_system": "ETRS89 EPSG:25831",
+      "atom_feed": "https://w20.bcn.cat/CartoBCN/atom.ashx?file=146",
+      "direct_download": "https://w20.bcn.cat/CartoBCN/getFile.ashx?prod=146.06.47",
+      "download_filename": "Barri_06_MTM_DWG.zip",
+      "archive_contents": [
+        "Barri_06_MTM_DWG.dwg",
+        "Barri_06_MTM_DWG.dwg.xml",
+        "Llegeix-me.txt"
+      ],
+      "dwg_size_bytes": 18182181,
+      "archive_size_approx_bytes": 11500000,
+      "crs": "EPSG:25831",
+      "units": "metres",
+      "source_date": "2026-05-20",
+      "notes": [
+        "Neighborhood product 06 = la Sagrada Família.",
+        "DWG contains extruded 3D multipatch building geometry with Z_MIN terrain base and Z_MAX roof elevation.",
+        "Municipal readme confirms EPSG:25831 / ETRS89 UTM zone 31N and metre units."
+      ],
+      "archive_size_bytes": 11566301,
+      "archive_sha256": "186ed46321b9ec3baf7f6dc14235a32a8dd7a3fa54d32e815cddc4d0a91d9ef9",
+      "verification_utc": "2026-10-04T19:06:00Z",
+      "verification_notes": [
+        "Direct municipal download completed successfully.",
+        "ZIP contains Barri_06_MTM_DWG.dwg, Barri_06_MTM_DWG.dwg.xml and Llegeix-me.txt.",
+        "Municipal readme confirms DWG R2018, 3D building geometry, EPSG:25831 / ETRS89 UTM zone 31N, metre units, dated 20/05/2026."
+      ],
+      "conversion": {
+        "tool": "ODA File Converter",
+        "release": "27.9 AppImage",
+        "tool_sha256": "f2a8e125e84eee32d88c6d06d957c05b71c3b53b44304b1c479e466b2b0929ff",
+        "output_format": "DXF R2018",
+        "dxf_size_bytes": 177781497,
+        "dxf_sha256": "d7653777a0a66023dacae6c44484a39b5423dd9463f44cbd5ddc1aca54330ec7"
+      },
+      "site_truth_v1_crop": {
+        "status": "CONVERTED_CROP_READY_IMPORT_RECONCILIATION_PENDING",
+        "local_origin_epsg25831": [
+          430901.597832363,
+          4583892.983829999,
+          33
+        ],
+        "crop_radius_m": 300,
+        "mesh_entities": 2900,
+        "vertices": 62188,
+        "triangles": 113640,
+        "local_bbox_min": [
+          -274.529,
+          -307.59,
+          -10
+        ],
+        "local_bbox_max": [
+          306.451,
+          315.1,
+          120.805
+        ],
+        "glb_size_bytes": 2110684,
+        "glb_sha256": "f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+        "durable_media_id": "eaef5ac9-3706-45dc-809e-73c0b8b4c864",
+        "receipt_media_id": "c31262b3-2364-469f-b4d3-85a6215a4dd2"
+      }
+    },
+    {
+      "id": "OSM-SF-PARK",
+      "authority": "OpenStreetMap contributors",
+      "title": "Plaça de la Sagrada Família + basilica outline",
+      "license": "ODbL",
+      "status": "SECONDARY_CROSSCHECK_ACTIVE",
+      "use": "cross-check only after municipal sources are ingested"
+    },
+    {
+      "id": "CARTO-BUILDINGS",
+      "authority": "public Barcelona footprint dataset via CARTO",
+      "title": "Barcelona building-footprint context",
+      "status": "SECONDARY_CROSSCHECK_ACTIVE",
+      "use": "temporary context only; superseded by municipal data"
+    }
+  ]
+}

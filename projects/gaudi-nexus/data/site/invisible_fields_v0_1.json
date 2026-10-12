@@ -1,0 +1,52 @@
+{
+  "version": "0.1",
+  "legend": {
+    "O": "open-data fact",
+    "P": "computed physical condition",
+    "I": "geometry-derived inference",
+    "H": "hypothesis requiring validation"
+  },
+  "fields": [
+    {
+      "id": "metro_entrance_plaza",
+      "class": "O",
+      "geometry": {"type":"Point","coordinates":[2.1734110,41.4034291]},
+      "meaning": "Published OSM/Nominatim subway entrance on the plaza side."
+    },
+    {
+      "id": "basilica_view_relationship",
+      "class": "I",
+      "meaning": "Sightline fan from representative plaza points toward the closest basilica façade zone.",
+      "warning": "Not yet the authoritative Passion-façade protected view volume."
+    },
+    {
+      "id": "resident_shortcut_axes",
+      "class": "H",
+      "meaning": "Candidate daily-neighbourhood desire lines aligned with the measured Eixample/plaza grid axes.",
+      "validation_needed": ["pedestrian counts","site observation","street-origin/destination data"]
+    },
+    {
+      "id": "service_edge_candidate",
+      "class": "H",
+      "meaning": "Candidate market servicing approach along a plaza edge.",
+      "validation_needed": ["competition access rules","street loading conditions","turning/service requirements"]
+    },
+    {
+      "id": "summer_noon_sun",
+      "class": "P",
+      "date": "2026-06-21",
+      "local_time": "12:00 CEST",
+      "azimuth_deg": 118.6350815055243,
+      "altitude_deg": 60.44450242120422
+    },
+    {
+      "id": "winter_noon_sun",
+      "class": "P",
+      "date": "2026-12-21",
+      "local_time": "12:00 CET",
+      "azimuth_deg": 167.64220479311416,
+      "altitude_deg": 24.183747607862358
+    }
+  ],
+  "rule": "No H field may become an architectural constraint until it is validated or explicitly retained as a design hypothesis."
+}

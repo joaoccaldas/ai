@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "date": "2026-10-04",
+  "decision": "SELECT_TWO_FINALISTS",
+  "confidence": "medium",
+  "finalists": {
+    "C_plus": {
+      "base": "Cerdà Mutation",
+      "harvest": [
+        "Market Organism service band",
+        "wet-core concentration",
+        "modular market servicing"
+      ],
+      "unique_value": "Gaudí × Cerdà computational grammar",
+      "fatal_risk": "height and formalism"
+    },
+    "A_plus": {
+      "base": "Living Threshold V0.2",
+      "harvest": [
+        "Market Organism hard-service spine",
+        "wet-core concentration"
+      ],
+      "unique_value": "civic/social threshold + low section",
+      "fatal_risk": "split-building disconnection"
+    }
+  },
+  "parked": {
+    "E": "Market Organism",
+    "B": "Inverted Plaza",
+    "D": "Urban Forest"
+  },
+  "next_gate": [
+    "dimensioned section",
+    "egress/accessibility",
+    "service path",
+    "daylight/shade",
+    "structural bays",
+    "human-scale scene"
+  ]
+}

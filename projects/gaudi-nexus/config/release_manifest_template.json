@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "status": "TEMPLATE",
+  "final_artifacts": [
+    {
+      "id": "A1_MAIN",
+      "required": true,
+      "format": [
+        "JPEG",
+        "JPG"
+      ],
+      "dimensions_mm": [
+        594,
+        841
+      ],
+      "max_mb": 15
+    },
+    {
+      "id": "A4_OPTIONAL",
+      "required": false,
+      "format": [
+        "JPEG",
+        "JPG"
+      ],
+      "dimensions_mm": [
+        210,
+        297
+      ],
+      "max_mb": 10
+    }
+  ],
+  "checks": [
+    "English-only competition text",
+    "anonymous content",
+    "participant order number only",
+    "participant number bottom-right",
+    "filename follows organizer rule",
+    "pixel dimensions correspond to intended board size/resolution",
+    "file-size limit",
+    "embedded metadata scrubbed",
+    "no personal name/email/account identifier",
+    "source/IP manifest complete",
+    "competition-facing metrics all traceable",
+    "organizer deadline/timezone reverified on final upload day",
+    "SHA-256 recorded for exact submitted files"
+  ]
+}

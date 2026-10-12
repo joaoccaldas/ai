@@ -1,0 +1,60 @@
+{
+  "version": 2,
+  "date": "2026-10-04",
+  "note": "Computed geometry and human judgment are deliberately separated.",
+  "computed": {
+    "C_cerda_mutation": {
+      "footprint_m2": 600.0000000614597,
+      "ground_pct": 5.158855510016151,
+      "components": 2,
+      "perimeter_area_ratio": 0.3950386760047304,
+      "max_obstruction_deg": 0
+    },
+    "E_market_organism": {
+      "footprint_m2": 900,
+      "ground_pct": 7.7382832642315735,
+      "components": 5,
+      "perimeter_area_ratio": 0.34855764912320275,
+      "max_obstruction_deg": 13.307398568513396
+    },
+    "A_living_threshold_v0_2": {
+      "footprint_m2": 899.6375814087792,
+      "ground_pct": 7.735167155654806,
+      "components": 2,
+      "perimeter_area_ratio": 0.2439885745848685,
+      "max_obstruction_deg": 0
+    }
+  },
+  "human_judgment_0_to_10": {
+    "C_cerda_mutation": {
+      "service": 8,
+      "social": 7,
+      "climate": 8,
+      "structural_clarity": 8,
+      "risk_resilience": 7
+    },
+    "E_market_organism": {
+      "service": 10,
+      "social": 7,
+      "climate": 7,
+      "structural_clarity": 8,
+      "risk_resilience": 7
+    },
+    "A_living_threshold_v0_2": {
+      "service": 7,
+      "social": 10,
+      "climate": 9,
+      "structural_clarity": 8,
+      "risk_resilience": 8
+    }
+  },
+  "decision": "KEEP_THREE_SEMIFINALISTS",
+  "next_kill_gate": [
+    "dimensioned section",
+    "egress/accessibility",
+    "real service path",
+    "daylight/shade proxy",
+    "structural bay feasibility",
+    "human-scale scene"
+  ]
+}

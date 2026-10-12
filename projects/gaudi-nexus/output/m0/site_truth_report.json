@@ -1,0 +1,17 @@
+{
+  "status": "PASS_PROVISIONAL_TEMPLATE",
+  "geometry": {
+    "side_m": 113.0,
+    "chamfer_leg_m": 14.0,
+    "area_m2": 12377.0,
+    "vertex_count": 8
+  },
+  "authority": "template_only",
+  "next_required": [
+    "municipal or competition boundary geometry",
+    "verified true-north/orientation",
+    "existing trees/site furniture",
+    "Sagrada context geometry",
+    "view-corridor origins"
+  ]
+}

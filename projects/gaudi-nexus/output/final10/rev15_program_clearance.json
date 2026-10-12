@@ -1,0 +1,32 @@
+{
+  "revision": 15,
+  "status": "PASS_GEOMETRY_CLEARANCE_DESIGN_DEVELOPMENT",
+  "project_id": "6bfa2d88-eef7-4583-9d82-08218b0bf4e4",
+  "program_objects": 34,
+  "teaching_kitchens": [
+    {
+      "name": "TeachingKitchen_1_Island",
+      "nearest_civic_pier_m": 4.6,
+      "nearest_community_object_m": 12.23
+    },
+    {
+      "name": "TeachingKitchen_2_Island",
+      "nearest_civic_pier_m": 4.49,
+      "nearest_community_object_m": 18.19
+    }
+  ],
+  "admin_workstations": {
+    "count": 8,
+    "nearest_civic_pier_m_range": [
+      2.84,
+      3.33
+    ],
+    "minimum_nearest_community_object_m": 1.7,
+    "note": "Workstation 08 is the tightest community-furniture adjacency and remains a layout-refinement item."
+  },
+  "vertical_extent_m": [
+    0,
+    2.41
+  ],
+  "caveat": "Center-distance audit, not final code clearance or collision certification."
+}

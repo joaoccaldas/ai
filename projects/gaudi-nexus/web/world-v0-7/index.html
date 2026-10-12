@@ -1,0 +1,237 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Gaudí Nexus — Living Threshold World V0.7</title>
+<style>
+:root{color-scheme:dark;--bg:#111310;--panel:rgba(18,20,17,.82);--line:rgba(255,255,255,.15);--txt:#f0eee7;--mut:#a9aaa2;--accent:#d8ab72}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);font-family:Inter,system-ui,sans-serif;color:var(--txt);overflow:hidden}
+#app{position:relative;width:100%;height:100%}canvas{display:block}
+#hud{position:absolute;z-index:3;left:14px;top:14px;width:min(360px,calc(100% - 28px));background:var(--panel);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:14px;padding:13px 14px}
+#hud h1{font-size:16px;margin:0 0 4px}.sub{font-size:12px;color:var(--mut);line-height:1.35}.row{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+button,input{font:inherit}.row button{border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--txt);border-radius:9px;padding:7px 9px;font-size:12px;cursor:pointer}
+.row button:hover,.row button.active{background:rgba(216,171,114,.18);border-color:rgba(216,171,114,.5)}
+#timeRow{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;margin-top:9px;font-size:11px;color:var(--mut)}
+#time{width:100%}
+#legend{position:absolute;z-index:3;right:14px;bottom:14px;max-width:320px;background:var(--panel);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:14px;padding:11px 12px;font-size:11px;line-height:1.4;color:var(--mut)}
+#legend b{color:var(--txt)} #status{position:absolute;z-index:4;left:50%;bottom:18px;transform:translateX(-50%);background:rgba(0,0,0,.6);padding:7px 10px;border-radius:999px;font-size:11px;opacity:0;transition:.3s}
+@media(max-width:700px){#legend{display:none}#hud{width:calc(100% - 28px)}}
+</style>
+<div id="app">
+  <div id="hud">
+    <h1>Living Threshold · World V0.7</h1>
+    <div class="sub">Real plaza/basilica footprint + secondary urban context + detailed A+ architecture. Context heights remain provisional until municipal 3D ingestion closes.</div>
+    <div class="row" id="views">
+      <button data-view="hero" class="active">Tuesday 09:00</button>
+      <button data-view="market">Market</button>
+      <button data-view="civic">Civic middle</button>
+      <button data-view="sagrada">Sagrada frame</button>
+      <button data-view="axon">Axon</button>
+      <button data-view="top">Top</button>
+    </div>
+    <div class="row">
+      <button id="toggleContext">Context</button>
+      <button id="toggleRoof">Roofs</button>
+      <button id="toggleFins">Fins</button>
+      <button id="toggleOps">Operations</button>
+      <button id="quality">High quality</button>
+    </div>
+    <div id="timeRow"><span>Sun</span><input id="time" type="range" min="7" max="19" step=".25" value="9"><span id="timeLabel">09:00</span></div>
+  </div>
+  <div id="legend">
+    <b>Current authority</b><br>
+    A+ geometry: design-development authority.<br>
+    Plaza + basilica outline: real secondary open data.<br>
+    Urban heights / Sagrada towers: provisional reference only.<br><br>
+    <b>Goal:</b> preserve civic ground while making the market actually work.
+  </div>
+  <div id="status"></div>
+</div>
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js";
+import {OrbitControls} from "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/controls/OrbitControls.js";
+import {EffectComposer} from "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/EffectComposer.js";
+import {RenderPass} from "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/RenderPass.js";
+import {SSAOPass} from "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/SSAOPass.js";
+import {OutputPass} from "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/OutputPass.js";
+
+const app=document.getElementById('app');
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.8));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.toneMapping=THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure=1.05;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+app.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0xbfc6c6);
+scene.fog=new THREE.FogExp2(0xbfc6c6,.00115);
+
+const camera=new THREE.PerspectiveCamera(38,innerWidth/innerHeight,.1,1800);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true; controls.dampingFactor=.08; controls.maxPolarAngle=Math.PI*.49; controls.minDistance=4; controls.maxDistance=600;
+
+const composer=new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene,camera));
+const ssao=new SSAOPass(scene,camera,innerWidth,innerHeight); ssao.kernelRadius=8; ssao.minDistance=.002; ssao.maxDistance=.08; composer.addPass(ssao);
+composer.addPass(new OutputPass());
+
+const hemi=new THREE.HemisphereLight(0xe8eff4,0x8b755c,1.25); scene.add(hemi);
+const sun=new THREE.DirectionalLight(0xfff1d2,3.8); sun.castShadow=true; sun.shadow.mapSize.set(2048,2048); sun.shadow.camera.left=-180; sun.shadow.camera.right=180; sun.shadow.camera.top=180; sun.shadow.camera.bottom=-180; sun.shadow.camera.near=1; sun.shadow.camera.far=500; scene.add(sun);
+
+const M={
+  plaza:new THREE.MeshPhysicalMaterial({color:0xc9c2b6,roughness:.95}),
+  street:new THREE.MeshPhysicalMaterial({color:0x595b59,roughness:.98}),
+  context:new THREE.MeshPhysicalMaterial({color:0xa99f92,roughness:.93}),
+  context2:new THREE.MeshPhysicalMaterial({color:0x8f887e,roughness:.97}),
+  stone:new THREE.MeshPhysicalMaterial({color:0xa7a094,roughness:.84}),
+  tile:new THREE.MeshPhysicalMaterial({color:0xb86f40,roughness:.68,clearcoat:.05}),
+  tile2:new THREE.MeshPhysicalMaterial({color:0xd69a59,roughness:.74}),
+  ceramic:new THREE.MeshPhysicalMaterial({color:0xd9a466,roughness:.52,clearcoat:.16}),
+  steel:new THREE.MeshPhysicalMaterial({color:0x737b7a,roughness:.33,metalness:.75}),
+  timber:new THREE.MeshPhysicalMaterial({color:0x8c623f,roughness:.66}),
+  dark:new THREE.MeshPhysicalMaterial({color:0x292b29,roughness:.76}),
+  canopy:new THREE.MeshPhysicalMaterial({color:0x4e5b48,roughness:1}),
+  trunk:new THREE.MeshPhysicalMaterial({color:0x6e533d,roughness:1}),
+  produce1:new THREE.MeshPhysicalMaterial({color:0x9b4b30,roughness:.72}),
+  produce2:new THREE.MeshPhysicalMaterial({color:0xb88e38,roughness:.75}),
+  produce3:new THREE.MeshPhysicalMaterial({color:0x51633c,roughness:.78}),
+  glass:new THREE.MeshPhysicalMaterial({color:0xd5e1dc,roughness:.12,transmission:.65,opacity:.42,transparent:true})
+};
+const contextGroup=new THREE.Group();scene.add(contextGroup);
+const world=new THREE.Group();scene.add(world);
+const roofGroup=new THREE.Group();world.add(roofGroup);
+const finGroup=new THREE.Group();world.add(finGroup);
+const opsGroup=new THREE.Group();world.add(opsGroup);
+const treeGroup=new THREE.Group();world.add(treeGroup);
+
+function makeShape(points){const s=new THREE.Shape();points.forEach((p,i)=>i?s.lineTo(p[0],p[1]):s.moveTo(p[0],p[1]));s.closePath();return s}
+function extrude(points,h,mat,z=0){const g=new THREE.ExtrudeGeometry(makeShape(points),{depth:h,bevelEnabled:false});g.rotateX(Math.PI/2);g.translate(0,h+z,0);const m=new THREE.Mesh(g,mat);m.castShadow=m.receiveShadow=true;return m}
+function box(name,sx,sy,sz,x,y,z,mat,rz=0,parent=world){const o=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),mat);o.name=name;o.position.set(x,z,y);o.rotation.y=-rz;o.castShadow=o.receiveShadow=true;parent.add(o);return o}
+function local(cx,cy,x,y,ang){return [cx+x*Math.cos(ang)-y*Math.sin(ang),cy+x*Math.sin(ang)+y*Math.cos(ang)]}
+
+// Real plaza polygon in local metres, simplified from OSM.
+const plaza=[[-69,-6],[-42,-33],[-20,-55],[10,-54],[31,-38],[54,-20],[69,-3],[69,13],[45,32],[27,48],[9,64],[-9,64],[-26,52],[-45,37],[-69,17]];
+const plazaMesh=extrude(plaza,.18,M.plaza,-.18);world.add(plazaMesh);
+const plazaEdge=new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(plaza.map(p=>new THREE.Vector3(p[0],.03,p[1]))),new THREE.LineBasicMaterial({color:0xe2d7c7,transparent:true,opacity:.7}));world.add(plazaEdge);
+
+// Street plane + chamfer grid.
+box('street',330,330,.12,0,0,-.25,M.street,0,contextGroup);
+for(let x=-160;x<=160;x+=90){box('street-cut-x',14,330,.02,x,0,-.15,new THREE.MeshBasicMaterial({color:0x474947}),0,contextGroup)}
+for(let y=-160;y<=160;y+=90){box('street-cut-y',330,14,.02,0,y,-.15,new THREE.MeshBasicMaterial({color:0x474947}),0,contextGroup)}
+
+// Secondary context massing; heights intentionally uniform-ish by category, not authoritative.
+const blocks=[
+[[-135,-95],[-65,-95],[-48,-78],[-48,-15],[-66,2],[-135,2]],
+[[78,-92],[148,-92],[148,-18],[130,0],[82,0],[64,-18]],
+[[-145,74],[-76,74],[-58,92],[-58,146],[-77,164],[-145,164]],
+[[83,75],[151,75],[151,150],[133,168],[88,168],[70,150]],
+[[-145,8],[-78,8],[-61,25],[-61,64],[-78,81],[-145,81]],
+[[85,8],[150,8],[150,63],[133,80],[88,80],[71,63]]
+];
+blocks.forEach((p,i)=>{const m=extrude(p,18+(i%3)*3,i%2?M.context:M.context2,0);contextGroup.add(m)});
+
+// Sagrada proxy based on real footprint relationship, not final geometry.
+const sagrada=new THREE.Group();sagrada.position.set(96,0,101);sagrada.rotation.y=-THREE.MathUtils.degToRad(44.14);contextGroup.add(sagrada);
+box('basilica-base',52,44,26,0,0,13,M.stone,0,sagrada);
+for(const [x,z,h,r] of [[-18,-16,82,4.4],[-6,-17,96,4.5],[7,-17,108,4.7],[19,-15,120,4.8]]){
+  const t=new THREE.Mesh(new THREE.CylinderGeometry(r*.65,r,h,16),M.stone);t.position.set(x,h/2,z);t.castShadow=t.receiveShadow=true;sagrada.add(t);
+}
+const central=new THREE.Mesh(new THREE.CylinderGeometry(3.2,8,150,20),M.context);central.position.set(3,75,4);sagrada.add(central);
+const crown=new THREE.Mesh(new THREE.ConeGeometry(5,22,20),M.tile2);crown.position.set(3,161,4);sagrada.add(crown);
+
+// Architecture
+const ang=THREE.MathUtils.degToRad(44.14);
+function catenaryZ(y){const a=9.775;return 4.8+(1.35-(a*Math.cosh(y/a)-a))}
+function buildBar(cx,cy,type){
+  const g=new THREE.Group();g.position.set(cx,0,cy);g.rotation.y=-ang;world.add(g);
+  for(let bx=-20;bx<=20;bx+=5){
+    box(type+'-pier-a',.42,.48,4.45,bx,-4.5,2.225,M.stone,0,g);
+    box(type+'-pier-b',.42,.48,4.45,bx,4.5,2.225,M.stone,0,g);
+  }
+  box(type+'-beam-a',45,.65,.45,0,-4.5,4.58,M.stone,0,g);box(type+'-beam-b',45,.65,.45,0,4.5,4.58,M.stone,0,g);
+  const n=40;
+  for(let i=0;i<n;i++){const yy=-4.5+(i+.5)*(9/n),zz=catenaryZ(yy);const a=9.775,slope=Math.atan(-Math.sinh(yy/a));const strip=box(type+'-roof',45,9/n+.02,.12,0,yy,zz,M.tile,slope,g);roofGroup.attach(strip)}
+  const sunSide=-4.85;
+  for(let x=-21;x<=21;x+=1.5){const f=box(type+'-fin',.08,.58,3.0,x,sunSide,2.75,M.ceramic,0,g);finGroup.attach(f)}
+  for(let x=-20;x<=20;x+=5) box(type+'-light',4.2,.07,.07,x,0,4.05,M.dark,0,g);
+  return g;
+}
+const hard=buildBar(-50,20,'hard'),civic=buildBar(-15,50,'civic');
+
+// Service head + stalls
+box('service-head',11,9.2,4.4,-67,20,2.2,M.dark,ang,opsGroup);
+for(let i=0;i<10;i++)for(const row of [-3.0,3.0]){
+  const p=local(-50,20,-13.3+i*3.0,row,ang);
+  box('stall',2.85,2.3,2.15,p[0],p[1],1.08,M.steel,ang,opsGroup);
+  const produceMat=[M.produce1,M.produce2,M.produce3][i%3];
+  for(let k=0;k<6;k++){const q=local(p[0],p[1],-.9+k*.35,row<0?.4:-.4,0);const s=new THREE.Mesh(new THREE.SphereGeometry(.12,10,8),produceMat);s.position.set(q[0],1.65,q[1]);opsGroup.add(s)}
+}
+
+// Civic glazing/rooms as transparent volumes
+for(const x of [-28,-18,-8]){const p=local(-15,50,x+15,0,ang);box('civic-room',8.5,8.4,3.1,p[0],p[1],1.7,M.glass,ang,world)}
+
+// Trees in civic middle, instanced-ish regular deterministic.
+const treePositions=[[-42,34],[-34,44],[-23,31],[-10,38],[-2,27],[-30,15],[-18,56],[2,53]];
+for(const [tx,ty] of treePositions){
+  const tr=new THREE.Mesh(new THREE.CylinderGeometry(.22,.3,4.8,10),M.trunk);tr.position.set(tx,2.4,ty);treeGroup.add(tr);
+  const cr=new THREE.Mesh(new THREE.IcosahedronGeometry(2.5,2),M.canopy);cr.position.set(tx,5.7,ty);cr.scale.set(1.25,1,.92);cr.castShadow=true;treeGroup.add(cr);
+}
+
+// Benches and people
+for(const [x,y,r] of [[-36,28,0],[-23,43,.5],[-7,32,1.0],[-20,58,0]]){
+  box('bench',2.2,.55,.12,x,y,.55,M.timber,r,world);
+}
+const personMat=[0x283138,0x6d5544,0x7c7569,0x334b3e,0x6c4b55].map(c=>new THREE.MeshPhysicalMaterial({color:c,roughness:.9}));
+for(let i=0;i<28;i++){
+  const t=(i*0.61803398875)%1;const r=9+((i*7)%33);const theta=i*2.399;
+  const x=-24+Math.cos(theta)*r*.85,y=35+Math.sin(theta)*r*.55;
+  const body=new THREE.Mesh(new THREE.CapsuleGeometry(.18,.9,4,8),personMat[i%personMat.length]);body.position.set(x,.85,y);body.castShadow=true;world.add(body);
+}
+
+// paving seams
+for(let i=-6;i<=6;i++){box('pave-seam',140,.035,.02,0,i*7,.02,new THREE.MeshBasicMaterial({color:0xa8a198}),ang,world)}
+
+function solarForHour(hour){
+  // approximate June 21 Barcelona path, sufficient for interactive design preview.
+  const t=(hour-7)/12;
+  const az=THREE.MathUtils.degToRad(72+t*190);
+  const alt=THREE.MathUtils.degToRad(Math.max(8,18+Math.sin(t*Math.PI)*55));
+  const R=240;
+  sun.position.set(Math.sin(az)*Math.cos(alt)*R,Math.sin(alt)*R,Math.cos(az)*Math.cos(alt)*R);
+  const warm=hour<9||hour>17;
+  sun.color.setHex(warm?0xffd1a0:0xfff1d2);
+  renderer.toneMappingExposure=warm?.92:1.05;
+}
+solarForHour(9);
+
+const views={
+  hero:{p:[-9,6,-25],t:[-24,3,37],f:32},
+  market:{p:[-65,5,-6],t:[-47,2,24],f:34},
+  civic:{p:[13,5,17],t:[-22,2,39],f:34},
+  sagrada:{p:[-48,4,42],t:[80,35,96],f:48},
+  axon:{p:[105,105,-115],t:[-10,0,35],f:42},
+  top:{p:[0,230,20],t:[-10,0,35],f:45}
+};
+function setView(key){
+  const v=views[key];camera.position.set(...v.p);camera.fov=v.f;camera.updateProjectionMatrix();controls.target.set(...v.t);controls.update();
+  document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===key));
+}
+setView('hero');
+
+let high=true;
+document.getElementById('quality').onclick=()=>{high=!high;renderer.setPixelRatio(Math.min(devicePixelRatio,high?1.8:1));ssao.enabled=high;document.getElementById('quality').textContent=high?'High quality':'Fast mode'};
+document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>setView(b.dataset.view));
+document.getElementById('toggleContext').onclick=()=>contextGroup.visible=!contextGroup.visible;
+document.getElementById('toggleRoof').onclick=()=>roofGroup.visible=!roofGroup.visible;
+document.getElementById('toggleFins').onclick=()=>finGroup.visible=!finGroup.visible;
+document.getElementById('toggleOps').onclick=()=>opsGroup.visible=!opsGroup.visible;
+const time=document.getElementById('time'),label=document.getElementById('timeLabel');
+time.oninput=()=>{const h=+time.value;solarForHour(h);const hh=Math.floor(h),mm=Math.round((h-hh)*60);label.textContent=String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0')};
+
+function resize(){renderer.setSize(innerWidth,innerHeight);composer.setSize(innerWidth,innerHeight);camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix()}
+addEventListener('resize',resize);
+renderer.setAnimationLoop(()=>{controls.update();composer.render()});
+</script>

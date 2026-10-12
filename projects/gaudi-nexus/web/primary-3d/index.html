@@ -1,0 +1,178 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gaudí Nexus — Primary 3D V0.1</title>
+<style>
+  html,body{margin:0;height:100%;background:#eef0ed;font-family:Inter,system-ui,sans-serif;color:#111}
+  #app{position:relative;width:100%;height:100%;overflow:hidden}
+  #hud{position:absolute;z-index:2;left:16px;top:16px;background:rgba(255,255,255,.9);backdrop-filter:blur(8px);padding:12px 14px;border:1px solid #bbb;max-width:330px}
+  #hud h1{font-size:16px;margin:0 0 4px}
+  #hud p{font-size:12px;margin:4px 0;line-height:1.35}
+  #controls{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  button{border:1px solid #777;background:white;padding:7px 9px;border-radius:7px;font-size:12px;cursor:pointer}
+  button:hover{background:#f4f4f4}
+  canvas{display:block}
+</style>
+<div id="app">
+  <div id="hud">
+    <h1>Living Threshold A+ · Primary 3D V0.1</h1>
+    <p>Truthful design-development massing. Two 45×10 m bars, 5 m bay rhythm, 4.8 m eaves, catenary-informed roof.</p>
+    <p><strong>Not final:</strong> detailed structure, municipal heights, materials and competition lighting.</p>
+    <div id="controls">
+      <button data-view="human">Human</button>
+      <button data-view="axon">Axon</button>
+      <button data-view="top">Top</button>
+      <button id="roof">Toggle roofs</button>
+      <button id="grid">Toggle grid</button>
+    </div>
+  </div>
+</div>
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js";
+import {OrbitControls} from "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/controls/OrbitControls.js";
+
+const app=document.getElementById("app");
+const renderer=new THREE.WebGLRenderer({antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled=true;
+app.appendChild(renderer.domElement);
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color(0xeef0ed);
+
+const camera=new THREE.PerspectiveCamera(42,innerWidth/innerHeight,.1,1000);
+camera.position.set(82,-105,56);
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.target.set(-28,35,3);
+controls.enableDamping=true;
+
+scene.add(new THREE.HemisphereLight(0xffffff,0x777777,2.4));
+const sun=new THREE.DirectionalLight(0xffffff,2.8);
+sun.position.set(-60,-80,120);
+sun.castShadow=true;
+scene.add(sun);
+
+const groundMat=new THREE.MeshStandardMaterial({color:0xd8dad4,roughness:1});
+const ground=new THREE.Mesh(new THREE.BoxGeometry(170,150,.4),groundMat);
+ground.position.set(-20,28,-.25);
+ground.receiveShadow=true;
+scene.add(ground);
+
+const grid=new THREE.GridHelper(180,36,0x999999,0xc9c9c9);
+grid.rotation.z=THREE.MathUtils.degToRad(44.14);
+grid.position.z=.02;
+scene.add(grid);
+
+const hardMat=new THREE.MeshStandardMaterial({color:0x8b7460,roughness:.82});
+const civicMat=new THREE.MeshStandardMaterial({color:0xb7aea0,roughness:.88});
+const roofMat=new THREE.MeshStandardMaterial({color:0xc6a77a,roughness:.7,side:THREE.DoubleSide});
+const stallMat=new THREE.MeshStandardMaterial({color:0x5d665c,roughness:.7});
+const treeMat=new THREE.MeshStandardMaterial({color:0x60685a,roughness:1});
+const trunkMat=new THREE.MeshStandardMaterial({color:0x756451,roughness:1});
+
+const root=new THREE.Group();
+root.rotation.z=THREE.MathUtils.degToRad(44.14);
+scene.add(root);
+
+function bar(x,y,mat,name){
+  const g=new THREE.Group();
+  g.name=name;
+  const shell=new THREE.Mesh(new THREE.BoxGeometry(45,10,4.8),mat);
+  shell.position.z=2.4;
+  shell.castShadow=true; shell.receiveShadow=true;
+  g.add(shell);
+
+  // 5m bay ribs
+  for(let bx=-20; bx<=20; bx+=5){
+    const rib=new THREE.Mesh(new THREE.BoxGeometry(.14,10,5.0),
+      new THREE.MeshStandardMaterial({color:0x6c665e,roughness:.9}));
+    rib.position.set(bx,0,2.5);
+    g.add(rib);
+  }
+
+  // catenary-informed roof, sampled as narrow plates
+  const roof=new THREE.Group();
+  roof.name="roof";
+  const a=9.775; // approx parameter for 10m span / 1.4m rise
+  const samples=24;
+  for(let i=0;i<samples;i++){
+    const y0=-5 + i*(10/samples);
+    const yc=y0 + 5/samples;
+    const z=4.8 + (1.4 - (a*Math.cosh(yc/a)-a));
+    const strip=new THREE.Mesh(new THREE.BoxGeometry(45,10/samples+.02,.12),roofMat);
+    strip.position.set(0,yc,z);
+    strip.rotation.x=0;
+    roof.add(strip);
+  }
+  g.add(roof);
+
+  g.position.set(x,y,0);
+  root.add(g);
+  return g;
+}
+
+const hard=bar(-50,20,hardMat,"hard");
+const civic=bar(-15,50,civicMat,"civic");
+
+// Market stalls in hard bar
+for(let i=0;i<10;i++){
+  for(const sy of [-3.1,3.1]){
+    const s=new THREE.Mesh(new THREE.BoxGeometry(3,2.4,2.2),stallMat);
+    s.position.set(-63.3+i*3.05,20+sy,1.1);
+    root.add(s);
+  }
+}
+
+// Service head
+const service=new THREE.Mesh(new THREE.BoxGeometry(11,9.3,4.5),
+  new THREE.MeshStandardMaterial({color:0x4e4c48,roughness:.85}));
+service.position.set(-67,20,2.25);
+root.add(service);
+
+// Human-scale markers
+const personMat=new THREE.MeshStandardMaterial({color:0x222222});
+for(const p of [[-32,34],[-21,42],[-42,45],[-18,22],[-4,39],[6,50]]){
+  const body=new THREE.Mesh(new THREE.CapsuleGeometry(.18,.95,4,8),personMat);
+  body.position.set(p[0],p[1],.85);
+  root.add(body);
+}
+
+// Trees in civic middle
+for(const p of [[-36,34],[-28,44],[-20,30],[-10,38]]){
+  const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.22,.28,4.5,10),trunkMat);
+  trunk.position.set(p[0],p[1],2.25); root.add(trunk);
+  const crown=new THREE.Mesh(new THREE.SphereGeometry(2.6,18,12),treeMat);
+  crown.scale.set(1.2,1.0,.85); crown.position.set(p[0],p[1],5.4); root.add(crown);
+}
+
+// Sagrada proxy for orientation only
+const bas=new THREE.Mesh(new THREE.BoxGeometry(45,38,18),
+  new THREE.MeshStandardMaterial({color:0xb8b9b4,transparent:true,opacity:.24,roughness:1}));
+bas.position.set(38,88,9);
+root.add(bas);
+
+function setView(v){
+  if(v==="human"){camera.position.set(30,-65,9);controls.target.set(-28,37,2);}
+  if(v==="axon"){camera.position.set(82,-105,56);controls.target.set(-28,35,3);}
+  if(v==="top"){camera.position.set(-28,35,165);controls.target.set(-28,35,0);}
+  controls.update();
+}
+document.querySelectorAll("[data-view]").forEach(b=>b.addEventListener("click",()=>setView(b.dataset.view)));
+document.getElementById("roof").addEventListener("click",()=>{
+  [hard,civic].forEach(g=>{const r=g.getObjectByName("roof");r.visible=!r.visible;});
+});
+document.getElementById("grid").addEventListener("click",()=>grid.visible=!grid.visible);
+
+function resize(){
+  renderer.setSize(innerWidth,innerHeight);
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+}
+addEventListener("resize",resize);
+renderer.setAnimationLoop(()=>{
+  controls.update();
+  renderer.render(scene,camera);
+});
+</script>

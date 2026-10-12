@@ -1,0 +1,384 @@
+{
+  "version": 1,
+  "updated_utc": "2026-10-06T17:49:00Z",
+  "authority": {
+    "repository": "joaoccaldas/ai",
+    "branch": "gaudi-nexus",
+    "project_path": "projects/gaudi-nexus/",
+    "working_branch": "gaudi-nexus-site-truth-v1",
+    "rule": "No artifact becomes canonical unless registered here or promoted into the gaudi-nexus branch after validation."
+  },
+  "architecture": {
+    "scheme": "Living Threshold",
+    "design_lineage": "A+",
+    "repo_scheme_version": "V0.6"
+  },
+  "current_3d": {
+    "revision": 16,
+    "status": "REV16_LIVE_UNPINNED_SITE_TRUTH_NOT_INTEGRATED",
+    "higgsfield_url": "https://higgsfield.ai/3d-jutsu/6bfa2d88-eef7-4583-9d82-08218b0bf4e4",
+    "object_count": 1601,
+    "blend_size_mb_approx": 17.8,
+    "glb_size_mb_approx": 15,
+    "camera": {
+      "eye_height_m": 1.56,
+      "lens_mm": 32
+    },
+    "strengths": [
+      "foreground market story",
+      "linen awnings and brass rails",
+      "food, tableware and planting detail",
+      "foreground vendor interaction",
+      "warm market versus cooler civic lighting hierarchy",
+      "wet-stone and ground-detail cues"
+    ],
+    "promotion_blockers": [
+      "authoritative municipal context is not present in the live Jutsu scene; integrate verified context before final hero/context output",
+      "live Rev16 binary is not yet checksum-pinned in the canonical manifest",
+      "municipal 1:1000 topography/levels/trees/furniture still require ingestion/cross-check",
+      "Passion-façade sightline and shadow studies must be recomputed in the canonical site-truth scene",
+      "proxy Sagrada/context must be retired from competition-facing renders",
+      "engineer-grade structural validation remains open",
+      "annual environmental validation remains open",
+      "hero frame has not passed >=9/10 final visual gate",
+      "A1 board is not final"
+    ],
+    "blend_size_bytes": 18089612,
+    "blend_etag": "6e363709b9f3d14ce29ec73571315454",
+    "glb_size_bytes": 15289920,
+    "glb_etag": "e2a0f0b77cf42036c62ffd57e6470bc6",
+    "revision_15_changes": [
+      "added two editable teaching-kitchen zones, each tagged capacity_people=20",
+      "added eight editable admin workstations",
+      "added collection 21_PROGRAM_REQUIRED",
+      "preserved HeroCam at 1.56 m / 32 mm"
+    ],
+    "binary_identity_verified_utc": null,
+    "geometry_verification": {
+      "workbench_hero": "PASS_GEOMETRY_FRAMING_ONLY",
+      "artifact_etag": "c5f1be8519e5fe0da4b5b79388330e98",
+      "pixel_size": [
+        480,
+        270
+      ],
+      "note": "Workbench proof completed; full Eevee material/light render exceeded worker time limit and remains unapproved."
+    },
+    "program_clearance_status": "PASS_DESIGN_DEVELOPMENT_CENTER_DISTANCE_AUDIT",
+    "material_light_verification": {
+      "status": "EEVEE_RENDER_SUCCEEDED_PIXELS_NOT_AGENT_INSPECTED",
+      "operation_id": "gaudi-r15-eevee-small-007",
+      "resolution": [
+        320,
+        180
+      ],
+      "artifact_id": "bf473fa6951086144f14b09b45b258ca",
+      "artifact_etag": "3da3258314b42b28eebcd3d7e29aea82",
+      "render_time_seconds_approx": 127,
+      "note": "Successful Eevee render verifies the scene can render with materials/lights. The current tool bridge did not expose the returned pixels for agent visual inspection, so hero visual approval remains open."
+    },
+    "hero_camera_status": "F3_SELECTED_OLD_HEROCAM_SECONDARY",
+    "hero_camera_rejection_reason": "Authoritative municipal comparison confirms the existing 1.56m / 32mm HeroCam does not make the Sagrada relationship sufficiently legible for the final hero role. Retain as secondary market-atmosphere camera.",
+    "new_hero_candidate": {
+      "id": "A_HERO_MUNICIPAL_F3",
+      "position": [
+        -15,
+        42,
+        1.56
+      ],
+      "lens_mm": 32,
+      "target": [
+        96.1,
+        100.4,
+        30
+      ],
+      "status": "GEOMETRY_SELECTED_FINAL_VISUAL_PENDING"
+    },
+    "revision_16_live_audit": {
+      "audited_utc": "2026-10-06T17:42:14Z",
+      "project_revision": 16,
+      "scene_sequence": 6,
+      "object_count": 1601,
+      "mesh_count": 1500,
+      "camera_count": 2,
+      "active_camera": "A_HERO_MUNICIPAL_F3",
+      "collections": [
+        "21_PROGRAM_REQUIRED",
+        "ARCHITECTURE",
+        "CONTEXT",
+        "LANDSCAPE",
+        "LIGHTS",
+        "MARKET",
+        "SITE"
+      ],
+      "municipal_collection_present": false,
+      "finding": "F3 camera exists in the live Jutsu scene, but the authoritative municipal context collection is absent. The live scene must not be treated as SITE_TRUTH_V1 or used for final competition-facing context claims.",
+      "workbench_preview": {
+        "operation_id": "gaudi-r16-f3-workbench-20261006",
+        "artifact_id": "fa5c862226fdc934f48eee4efe37140d",
+        "resolution": [
+          640,
+          360
+        ],
+        "status": "RENDERED_COMPOSITION_PROOF_VISUAL_SCORE_NOT_RECORDED"
+      },
+      "eevee_preview": {
+        "operation_id": "gaudi-r16-f3-preview-20261006",
+        "resolution": [
+          640,
+          360
+        ],
+        "status": "TIMED_OUT_AFTER_300S",
+        "implication": "Current scene is too heavy for this worker's iterative 640x360 Eevee review path; optimize render/test path before repeated photoreal iterations."
+      }
+    }
+  },
+  "authoritative_context": {
+    "municipal_source_id": "BCN-3D-SF",
+    "archive_sha256": "186ed46321b9ec3baf7f6dc14235a32a8dd7a3fa54d32e815cddc4d0a91d9ef9",
+    "source_crs": "EPSG:25831",
+    "units": "metres",
+    "next_gate": "Integrate the checksum-pinned municipal crop into the live/canonical scene (or promote the validated Rev17 build), verify topography/levels and sightline/shadow gates, then promote SITE_TRUTH_V1.0.",
+    "conversion_status": "CONVERTED_AND_CROPPED_IMPORT_RECONCILIATION_PENDING",
+    "conversion_policy": "Fail closed: only a named, reproducible DWG->open-format converter may be used; preserve source checksum and CRS metadata.",
+    "topography_status": "Official Barcelona 1:1000 GeoPackage metadata confirmed; automated acquisition is blocked by source hCaptcha as of 2026-10-07. Exact bytes still require authorized acquisition before checksum/crop.",
+    "converter": {
+      "name": "ODA File Converter",
+      "release": "27.9 AppImage",
+      "sha256": "f2a8e125e84eee32d88c6d06d957c05b71c3b53b44304b1c479e466b2b0929ff"
+    },
+    "dxf": {
+      "bytes": 177781497,
+      "sha256": "d7653777a0a66023dacae6c44484a39b5423dd9463f44cbd5ddc1aca54330ec7"
+    },
+    "crop_glb": {
+      "bytes": 2110684,
+      "sha256": "f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+      "mesh_entities": 2900,
+      "vertices": 62188,
+      "triangles": 113640,
+      "crop_radius_m": 300,
+      "media_id": "eaef5ac9-3706-45dc-809e-73c0b8b4c864"
+    },
+    "status": "ALIGNED_COMPARISON_BUILT_LIVE_SCENE_GAP_CONFIRMED",
+    "alignment": {
+      "method": "municipal OSM plaza centroid -> Rev15 Plaza polygon area centroid",
+      "axis_restore": "glTF imported (x,y,z) remapped to source axes (x,z,-y)",
+      "translation_m": [
+        13.359293125672881,
+        108.63406337943947,
+        0
+      ],
+      "plan_rotation_deg": 0,
+      "reason": "Both source and scene contracts use east/north/up; Eixample rotation is embedded in geometry."
+    },
+    "rev17_comparison": {
+      "blend_sha256": "3de0f2062cd2a465a0322cfa1828d3b16b2267c6ffc31dfee22fcc51b5c47bcf",
+      "report_sha256": "0d43c9a84b1993ef40bf4103f26d25b44b30148dcfcbddabe5277da16ff663e8",
+      "artifact_run_id": 37262644884,
+      "note": "Rev17 keeps proxy and municipal context side-by-side; municipal context is not yet promoted."
+    }
+  },
+  "anti_duplication_rules": [
+    "Do not create another Gaudi repository.",
+    "Do not merge Gaudi competition work to main.",
+    "Do not overwrite older world revisions; promote by explicit manifest update.",
+    "Do not treat Higgsfield URL alone as archival source-of-truth.",
+    "Do not replace Rev 14 geometry with municipal context until coordinate, scale and sightline reconciliation passes."
+  ],
+  "comparison_candidate": {
+    "revision": 17,
+    "status": "MUNICIPAL_CONTEXT_ALIGNED_AND_DIAGNOSTICALLY_VERIFIED_NOT_CANONICAL",
+    "build_run_id": 37259743278,
+    "build_artifact_id": 11323444092,
+    "build_artifact_digest": "sha256:2da26bd464f7dfa12b3f6acba38027da195d0b177684220154e82d9d7736307a",
+    "blend_sha256": "78cd3253881f07178e7878711a6dc11efced02d7e45e0e5ee5f7ae655ac10fd5",
+    "report_sha256": "bc775361219119be548a2cf270467974086856102c11b24fe4afe6a69f8faa37",
+    "base_rev15_sha256": "cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494",
+    "municipal_glb_sha256": "f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+    "municipal_collection": "00_SITE_MUNICIPAL_IMPORTED",
+    "alignment": {
+      "method": "mesh_coordinate_remap_plus_plaza_centroid_translation",
+      "imported_mesh_observed_bbox_min": [
+        -274.528839,
+        -120.805,
+        -307.590118
+      ],
+      "imported_mesh_observed_bbox_max": [
+        306.451172,
+        10,
+        315.100159
+      ],
+      "coordinate_map": "imported (x,y,z) -> source EPSG:25831 axes (x,z,-y)",
+      "object_rotation_deg": [
+        0,
+        0,
+        0
+      ],
+      "translation_m": [
+        13.359293125672881,
+        108.63406337943947,
+        0
+      ],
+      "anchor": "municipal OSM plaza centroid -> Rev15 Plaza polygon area centroid",
+      "rev15_plaza_centroid": [
+        -1.599535,
+        3.442506
+      ],
+      "municipal_plaza_centroid_in_crop": [
+        -14.95882812567288,
+        -105.19155737943947
+      ]
+    },
+    "verified_world_bbox": {
+      "min": [
+        -261.17,
+        -198.956,
+        -10
+      ],
+      "max": [
+        319.81,
+        423.734,
+        120.805
+      ],
+      "size": [
+        580.98,
+        622.69,
+        130.805
+      ]
+    },
+    "hero_camera_projection": {
+      "proxy_sagrada_bbox_center": {
+        "x": 0.51759,
+        "y": 1.00555,
+        "depth_m": 186.675
+      },
+      "municipal_cluster_bbox_center": {
+        "x": 0.55906,
+        "y": 0.77607,
+        "depth_m": 184.477
+      },
+      "municipal_cluster_weighted_center": {
+        "x": 0.54194,
+        "y": 0.5253,
+        "depth_m": 181.362
+      },
+      "interpretation": "Municipal mass remains in the intended HeroCam sector and sits more naturally inside frame than the vertically exaggerated proxy."
+    },
+    "diagnostics": {
+      "top_down": "PASS_AXIS_AND_URBAN_CONTEXT_READ",
+      "hero_cam": "PASS_DIRECTION_CONTINUITY_MATERIAL_LIGHT_NOT_FINAL",
+      "proxy_context_verdict": "RETIRE_BEFORE_COMPETITION_OUTPUT"
+    },
+    "rule": "Rev17 is an evidence/comparison build. Do not call it canonical until topography/levels and sightline/shadow gates close."
+  },
+  "site_truth_candidate": {
+    "revision": 18,
+    "status": "BUILT_NOT_PROMOTED",
+    "workflow_run_id": 37567330603,
+    "workflow_artifact_id": 11459725641,
+    "workflow_artifact_digest": "sha256:c647694336e25c6c6506a4ff21451f0f5aef836daea2921fbe0549caeee7bade",
+    "blend_sha256": "2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875",
+    "report_sha256": "998d543731af03c3495a2566a9839fc8efec63a5cb8d86796d74599632fb2878",
+    "municipal_collection": "00_SITE_MUNICIPAL_IMPORTED",
+    "proxy_context_retained": true,
+    "proxy_context_hidden_from_competition_diagnostics": true,
+    "hero_camera": "A_HERO_MUNICIPAL_F3",
+    "visual_review": "Workbench proof is promising: authoritative Sagrada is immediately legible and dominant while Living Threshold reads as a foreground civic edge. This is not photoreal hero approval.",
+    "remaining_gates": [
+      "official 1:1000 topography/levels cross-check",
+      "tree/street-furniture cross-check",
+      "photoreal F3 pixel review and >=9/10 hero gate",
+      "explicit canonical promotion"
+    ],
+    "sightline_evidence": {
+      "status": "F3_AUTHORITATIVE_MUNICIPAL_FIRST_NO_NON_MUNICIPAL_BLOCKERS_IN_3X3_WINDOW",
+      "workflow_run_id": 37568295670,
+      "artifact_id": 11460075455,
+      "artifact_digest": "sha256:aea3c07e6b16a9a639ad182c213a0a815d7d914a4b2452f2ec6033e72720dfc5",
+      "camera": "A_HERO_MUNICIPAL_F3",
+      "target": [
+        96.1,
+        100.4,
+        30
+      ],
+      "center_ray": {
+        "verdict": "REACHES_AUTHORITATIVE_MUNICIPAL_GEOMETRY_FIRST",
+        "first_hit_object": "geometry_0",
+        "first_hit_collection": "00_SITE_MUNICIPAL_IMPORTED",
+        "first_hit_distance_m": 83.0774,
+        "target_distance_m": 128.6958
+      },
+      "target_window": {
+        "sample_count": 9,
+        "municipal_first_count": 9,
+        "non_municipal_blocked_count": 0
+      },
+      "interpretation": "Within the tested F3 target window, Blender ray casts reach authoritative municipal geometry before the intended target point and do not encounter Living Threshold or other non-municipal geometry first. This is sightline geometry evidence, not final visual-quality approval."
+    },
+    "shadow_evidence": {
+      "status": "NO_NON_MUNICIPAL_SHADOW_BLOCKERS_ON_TESTED_F3_MUNICIPAL_SURFACES",
+      "workflow_run_id": 37568571128,
+      "artifact_id": 11459522435,
+      "artifact_digest": "sha256:f58c586e1a9b358826e2dc7eed61d740b0f804bb581b492442f7d23c3e171b86",
+      "camera": "A_HERO_MUNICIPAL_F3",
+      "solar_basis": "SOLAR_BASELINE_001 representative Barcelona vectors",
+      "cases": [
+        {
+          "case": "summer_0900",
+          "azimuth_deg": 82,
+          "altitude_deg": 28,
+          "direct_sky_count": 0,
+          "municipal_self_or_urban_count": 9,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "summer_1200",
+          "azimuth_deg": 119,
+          "altitude_deg": 60,
+          "direct_sky_count": 0,
+          "municipal_self_or_urban_count": 9,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "summer_1500",
+          "azimuth_deg": 223,
+          "altitude_deg": 67,
+          "direct_sky_count": 9,
+          "municipal_self_or_urban_count": 0,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "winter_0900",
+          "azimuth_deg": 129,
+          "altitude_deg": 6,
+          "direct_sky_count": 0,
+          "municipal_self_or_urban_count": 9,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "winter_1200",
+          "azimuth_deg": 168,
+          "altitude_deg": 24,
+          "direct_sky_count": 9,
+          "municipal_self_or_urban_count": 0,
+          "non_municipal_blocker_count": 0
+        },
+        {
+          "case": "winter_1500",
+          "azimuth_deg": 212,
+          "altitude_deg": 18,
+          "direct_sky_count": 9,
+          "municipal_self_or_urban_count": 0,
+          "non_municipal_blocker_count": 0
+        }
+      ],
+      "summary": {
+        "ray_count": 54,
+        "direct_sky_count": 27,
+        "municipal_self_or_urban_count": 27,
+        "non_municipal_shadow_blocker_count": 0
+      },
+      "interpretation": "Across six representative Barcelona sun vectors and nine F3-visible authoritative municipal receiver points, no non-municipal scene geometry blocks the sun. This is seasonal geometric shadow evidence, not annual daylight or thermal certification."
+    }
+  }
+}

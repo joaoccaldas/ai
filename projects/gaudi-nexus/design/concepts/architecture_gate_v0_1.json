@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "date": "2026-10-04",
+  "target_gfa_m2": 1800,
+  "program_m2": {
+    "market_neighborhood": 810,
+    "interpretation_viewpoint": 450,
+    "shared_cooking": 270,
+    "admin_logistics": 270
+  },
+  "rubric_weights": {
+    "architecture_program": 20,
+    "plaza_context": 20,
+    "gaudi_logic": 20,
+    "ai_coherence": 20,
+    "passive_environment": 10,
+    "visual_communication": 10
+  },
+  "provisional_scores_0_to_10": {
+    "A_living_threshold": {
+      "architecture_program": 7,
+      "plaza_context": 8,
+      "gaudi_logic": 6.5,
+      "ai_coherence": 7,
+      "passive_environment": 7.5,
+      "visual_communication": 7.5,
+      "weighted_total_100": 72
+    },
+    "B_inverted_plaza": {
+      "architecture_program": 6,
+      "plaza_context": 9,
+      "gaudi_logic": 7,
+      "ai_coherence": 7,
+      "passive_environment": 5,
+      "visual_communication": 8,
+      "weighted_total_100": 71
+    },
+    "C_cerda_mutation": {
+      "architecture_program": 7.5,
+      "plaza_context": 8.5,
+      "gaudi_logic": 8.5,
+      "ai_coherence": 8,
+      "passive_environment": 7.5,
+      "visual_communication": 8.5,
+      "weighted_total_100": 81
+    },
+    "D_urban_forest": {
+      "architecture_program": 5.5,
+      "plaza_context": 8,
+      "gaudi_logic": 7.5,
+      "ai_coherence": 7,
+      "passive_environment": 8.5,
+      "visual_communication": 7,
+      "weighted_total_100": 71.5
+    },
+    "E_market_organism": {
+      "architecture_program": 8,
+      "plaza_context": 7,
+      "gaudi_logic": 6.5,
+      "ai_coherence": 7.5,
+      "passive_environment": 7.5,
+      "visual_communication": 7,
+      "weighted_total_100": 72.5
+    }
+  },
+  "decision": {
+    "status": "SEMIFINALISTS_NOT_FINALISTS",
+    "semifinalists": [
+      "C_cerda_mutation",
+      "E_market_organism",
+      "A_living_threshold"
+    ],
+    "eliminated_for_now": [
+      "B_inverted_plaza",
+      "D_urban_forest"
+    ],
+    "reason": "E and A differ by only 0.5 point, below decision confidence. B carries excavation/daylight/cost risk; D carries excessive operational fragmentation. C leads but must survive height/view and section tests.",
+    "next_gate": [
+      "section and height against basilica",
+      "market servicing",
+      "accessibility",
+      "structural bay feasibility",
+      "summer comfort/daylight",
+      "human-scale spatial quality"
+    ]
+  }
+}

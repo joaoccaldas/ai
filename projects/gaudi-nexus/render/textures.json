@@ -1,0 +1,10 @@
+{
+  "source": "Poly Haven (https://polyhaven.com), all assets CC0 1.0 (public domain); no attribution required, credited here for provenance",
+  "resolution": "2k",
+  "maps": ["Diffuse", "Rough", "nor_gl"],
+  "textures": [
+    {"id": "sandstone_blocks_08", "role": "sagrada_stone", "size_m": 3.0},
+    {"id": "concrete_pavers_02", "role": "plaza_paving", "size_m": 2.0},
+    {"id": "clay_roof_tiles_02", "role": "vault_roof", "size_m": 2.5}
+  ]
+}

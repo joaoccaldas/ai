@@ -1,0 +1,151 @@
+name: Gaudi Barcelona Topography Audit
+
+on:
+  push:
+    branches: [gaudi-site-truth-candidate-20261007]
+    paths:
+      - '.github/workflows/gaudi-topography-audit.yml'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install geospatial tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq gdal-bin sqlite3
+
+      - name: Download official Barcelona 1:1000 topography
+        id: topo_download
+        run: |
+          set -euo pipefail
+          urls=(
+            'https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download/Topografic_1-1000.gpkg'
+            'https://opendata-ajuntament.barcelona.cat/data/dataset/mapa-base-topografic/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download/Topografic_1-1000.gpkg'
+            'https://opendata-ajuntament.barcelona.cat/data/dataset/6db9ee2c-42fe-44c0-90bf-177146bf6c4d/resource/61910699-5fe9-48e6-981f-fcf3266e3472/download'
+          )
+          ok=0
+          blocked=0
+          : > topography_download_diagnostics.txt
+          for url in "${urls[@]}"; do
+            echo "Trying $url" | tee -a topography_download_diagnostics.txt
+            rm -f candidate.gpkg
+            if curl -A 'Mozilla/5.0' --retry 2 --retry-delay 3 -fL "$url" -o candidate.gpkg; then
+              sig="$(head -c 16 candidate.gpkg || true)"
+              size="$(stat -c '%s' candidate.gpkg)"
+              type="$(file -b candidate.gpkg)"
+              echo "candidate bytes=$size signature=$sig type=$type" | tee -a topography_download_diagnostics.txt
+              if [ "$sig" = 'SQLite format 3' ] && [ "$size" -gt 100000000 ]; then
+                mv candidate.gpkg topography_1k.gpkg
+                printf '%s\n' "$url" > topography_source_url.txt
+                ok=1
+                break
+              fi
+              if grep -Eqi 'Bot Detection|prove that you are Human|hcaptcha|challenge' candidate.gpkg; then
+                blocked=1
+              fi
+            fi
+          done
+          if [ "$ok" -eq 1 ]; then
+            echo "blocked=false" >> "$GITHUB_OUTPUT"
+            sha256sum topography_1k.gpkg > topography_1k.sha256
+            stat -c '%s' topography_1k.gpkg > topography_1k.bytes
+            file topography_1k.gpkg
+          else
+            echo "blocked=true" >> "$GITHUB_OUTPUT"
+            python - <<'PY'
+          import json
+          out={
+            "status":"OFFICIAL_TOPOGRAPHY_ACQUISITION_BLOCKED_BY_SOURCE_ANTI_BOT",
+            "authority":"Ajuntament de Barcelona / Open Data BCN",
+            "resource":"Topografic_1-1000.gpkg",
+            "published_resource_id":"61910699-5fe9-48e6-981f-fcf3266e3472",
+            "expected_format":"GeoPackage",
+            "expected_size_bytes":648336609,
+            "observed":"Published download routes returned the portal anti-bot HTML challenge instead of GeoPackage bytes.",
+            "policy":"Do not bypass hCaptcha. Obtain through an authorized human/browser download or another official machine-accessible distribution, then checksum before ingestion.",
+            "next_gate":"Acquire exact official bytes through an authorized path; then rerun CRS/layer inventory and 300 m crop."
+          }
+          json.dump(out,open("topography_access_report.json","w"),indent=2)
+          print(json.dumps(out,indent=2))
+          PY
+          fi
+
+      - name: Inventory GeoPackage
+        if: steps.topo_download.outputs.blocked != 'true'
+        run: |
+          sqlite3 -header -csv topography_1k.gpkg "SELECT c.table_name,c.data_type,c.srs_id,c.min_x,c.min_y,c.max_x,c.max_y,g.geometry_type_name FROM gpkg_contents c LEFT JOIN gpkg_geometry_columns g ON c.table_name=g.table_name ORDER BY c.table_name;" > topography_layers.csv
+          cat topography_layers.csv
+          python - <<'PY'
+          import csv, json, os
+          rows=list(csv.DictReader(open('topography_layers.csv')))
+          srs=sorted({r['srs_id'] for r in rows if r.get('srs_id')})
+          report={
+            'status':'OFFICIAL_TOPOGRAPHY_DOWNLOADED_INVENTORIED',
+            'authority':'Ajuntament de Barcelona / Open Data BCN',
+            'resource':'Topografic_1-1000.gpkg',
+            'source_url':open('topography_source_url.txt').read().strip(),
+            'bytes':int(open('topography_1k.bytes').read().strip()),
+            'sha256':open('topography_1k.sha256').read().split()[0],
+            'layer_count':len(rows),
+            'srs_ids':srs,
+            'layers':rows
+          }
+          json.dump(report,open('topography_inventory.json','w'),indent=2)
+          if '25831' not in srs:
+              raise SystemExit(f'Expected EPSG:25831 in GeoPackage, got {srs}')
+          PY
+
+      - name: Crop competition context
+        if: steps.topo_download.outputs.blocked != 'true'
+        run: |
+          # 300 m radius around the verified municipal local origin used by the 3D crop.
+          ogr2ogr -f GPKG topography_crop_300m.gpkg topography_1k.gpkg             -spat 430601.597832363 4583592.983829999 431201.597832363 4584192.983829999             -skipfailures -progress
+          test -s topography_crop_300m.gpkg
+          sha256sum topography_crop_300m.gpkg > topography_crop_300m.sha256
+          stat -c '%s' topography_crop_300m.gpkg > topography_crop_300m.bytes
+          sqlite3 -header -csv topography_crop_300m.gpkg "SELECT table_name,data_type,srs_id,min_x,min_y,max_x,max_y FROM gpkg_contents ORDER BY table_name;" > topography_crop_layers.csv
+
+      - name: Build crop receipt
+        if: steps.topo_download.outputs.blocked != 'true'
+        run: |
+          python - <<'PY'
+          import csv,json
+          inv=json.load(open('topography_inventory.json'))
+          rows=list(csv.DictReader(open('topography_crop_layers.csv')))
+          out={
+            'status':'BCN_TOPO_1K_CROP_BUILT_NOT_YET_INGESTED',
+            'source_sha256':inv['sha256'],
+            'source_bytes':inv['bytes'],
+            'source_layer_count':inv['layer_count'],
+            'crop_bbox_epsg25831':[430601.597832363,4583592.983829999,431201.597832363,4584192.983829999],
+            'crop_sha256':open('topography_crop_300m.sha256').read().split()[0],
+            'crop_bytes':int(open('topography_crop_300m.bytes').read().strip()),
+            'crop_layers':rows,
+            'next_gate':'Classify levels/curbs/street geometry/furniture layers and reconcile them against the Rev18 site-truth candidate.'
+          }
+          json.dump(out,open('topography_crop_report.json','w'),indent=2)
+          print(json.dumps(out,indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-bcn-topography-audit
+          if-no-files-found: warn
+          path: |
+            topography_access_report.json
+            topography_download_diagnostics.txt
+            topography_source_url.txt
+            topography_1k.sha256
+            topography_1k.bytes
+            topography_layers.csv
+            topography_inventory.json
+            topography_crop_300m.gpkg
+            topography_crop_300m.sha256
+            topography_crop_layers.csv
+            topography_crop_report.json
+          retention-days: 30

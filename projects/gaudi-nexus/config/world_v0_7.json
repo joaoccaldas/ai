@@ -1,0 +1,38 @@
+{
+  "version": "0.7",
+  "scheme": "Living Threshold A+",
+  "status": "EXPERIENCE_PROTOTYPE",
+  "camera_presets": [
+    "hero",
+    "market",
+    "civic",
+    "sagrada",
+    "axon",
+    "top"
+  ],
+  "render": {
+    "three": "0.186.1",
+    "tone_mapping": "ACESFilmic",
+    "ssao": true,
+    "soft_shadows": true,
+    "fog": true
+  },
+  "performance": {
+    "device_pixel_ratio_max": 1.8,
+    "quality_toggle": true
+  },
+  "truth_boundary": {
+    "authoritative": [
+      "A+ topology/current dimensions",
+      "5m bay system",
+      "real plaza relationship"
+    ],
+    "provisional": [
+      "urban heights",
+      "Sagrada proxy geometry",
+      "trees",
+      "topography",
+      "final material maps"
+    ]
+  }
+}

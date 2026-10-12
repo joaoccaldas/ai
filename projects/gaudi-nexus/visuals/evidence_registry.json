@@ -1,0 +1,386 @@
+{
+  "version": 1,
+  "principle": "Rendered successfully is not equivalent to visual evidence passed.",
+  "entries": [
+    {
+      "id": "M0_PLAN_001",
+      "path": "output/m0/cerda_block_template.svg",
+      "status": "PASS_CALIBRATION_ONLY",
+      "authority": "provisional",
+      "competition_use": false,
+      "scores": {
+        "geometry_truth": 7,
+        "composition": 2,
+        "material_light": 0,
+        "human_scale": 0,
+        "competition_readiness": 1
+      },
+      "notes": "Valid calibration artifact. Not a site-truth render and not architecture."
+    },
+    {
+      "id": "M0_SITE_REPORT_001",
+      "path": "output/m0/site_truth_report.json",
+      "status": "PASS_PROVISIONAL_TEMPLATE",
+      "authority": "template_only",
+      "competition_use": false,
+      "notes": "Explicitly blocks concept authority until municipal/competition geometry is ingested."
+    },
+    {
+      "id": "SITE_ORTHO_001",
+      "path": "output/site_v0_1/site_ortho.svg",
+      "status": "PASS_SECONDARY_SITE_GEOMETRY",
+      "authority": "secondary",
+      "competition_use": false,
+      "scores": {
+        "geometry_truth": 5,
+        "composition": 4,
+        "material_light": 0,
+        "human_scale": 1,
+        "competition_readiness": 2
+      },
+      "notes": "Real OSM plaza+basilica geometry and CARTO block unions. Municipal DWG still supersedes."
+    },
+    {
+      "id": "SITE_AXON_001",
+      "path": "output/site_v0_1/site_axon.svg",
+      "status": "PASS_NORMALIZED_MASSING_ONLY",
+      "authority": "secondary",
+      "competition_use": false,
+      "scores": {
+        "geometry_truth": 4,
+        "composition": 4,
+        "material_light": 0,
+        "human_scale": 1,
+        "competition_readiness": 2
+      },
+      "notes": "Horizontal geometry real; heights deliberately normalized and not factual."
+    },
+    {
+      "id": "SOLAR_001",
+      "path": "external-artifact:gaudi_solar_baseline_001.png",
+      "status": "PASS_BASELINE_VECTOR_ONLY",
+      "authority": "derived",
+      "competition_use": false,
+      "scores": {
+        "geometry_truth": 5,
+        "composition": 4,
+        "material_light": 1,
+        "human_scale": 0,
+        "competition_readiness": 2
+      },
+      "notes": "Computed sun vectors on real site geometry. No shadow claims until heights/topography are authoritative."
+    },
+    {
+      "id": "ACCESS_EGRESS_001",
+      "path": "external-artifact:gaudi_access_egress_screen_v0_1.png",
+      "status": "PASS_CONCEPT_SCREEN_ONLY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Concept-stage step-free arrival and two-core feasibility screen. Not regulatory certification."
+    },
+    {
+      "id": "SERVICE_SPINE_002",
+      "path": "external-artifact:gaudi_service_spine_iteration_002.png",
+      "status": "PASS_ITERATION_EVIDENCE",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Service metabolism iteration. A+ reaches zero civic-center overlap; C+ still has ~3.6 m overlap to eliminate."
+    },
+    {
+      "id": "SHADOW_PROXY_001",
+      "path": "external-artifact:gaudi_shadow_proxy_v0_1.png",
+      "status": "PASS_COMPARATIVE_PROXY_ONLY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Conservative max-height shadow envelope comparison. Not final environmental simulation."
+    },
+    {
+      "id": "HUMAN_SCALE_SECTION_001",
+      "path": "external-artifact:gaudi_human_scale_section_v0_1.png",
+      "status": "FAIL_COMPETITION_VISUAL",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Useful first human-scale test but remains diagram architecture; explicitly fails final visual-quality gate."
+    },
+    {
+      "id": "A_ITERATION_003",
+      "path": "external-artifact:gaudi_living_threshold_iteration_003.png",
+      "status": "PASS_EVIDENCE_CHANGED_FORM",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "A+ V0.3 reduced service distance from ~85.6 m to ~10.0 m and winter 09:00 shadow proxy from ~78.5% to ~8.9% while retaining sampled 0° view obstruction."
+    },
+    {
+      "id": "MARKET_STALL_TEST_002",
+      "path": "external-artifact:gaudi_market_stall_test_v0_2.png",
+      "status": "PASS_GEOMETRIC_FEASIBILITY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Corrected 4.0×2.4 m stall orientation + 3.0 m aisle proxy; both finalists fit 20 stalls with a service/support reserve."
+    },
+    {
+      "id": "MARKET_FLOORPLATE_EFF_001",
+      "path": "external-artifact:gaudi_market_floorplate_efficiency_001.png",
+      "status": "PASS_COMPARATIVE_EVIDENCE",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "C residual flexibility ~11.3%; A+ V0.3 ~42.5%. Shows operational slack difference, not final layout."
+    },
+    {
+      "id": "A_ITERATION_003_MULTI",
+      "path": "external-artifact:gaudi_living_threshold_iteration_003.png",
+      "status": "PASS_MULTI_OBJECTIVE_ITERATION",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "A+ V0.3 optimizes service distance and winter shadow while preserving sampled sightline clearance."
+    },
+    {
+      "id": "FINALIST_RUBRIC_002",
+      "path": "external-artifact:gaudi_finalist_rubric_v0_2.png",
+      "status": "PASS_INTERNAL_REVIEW_ONLY",
+      "authority": "human_judgment_plus_derived_metrics",
+      "competition_use": false,
+      "notes": "A+ 81.6 vs C+ 80.5 provisional internal review. Not a jury prediction."
+    },
+    {
+      "id": "PROGRAM_FIT_001",
+      "path": "external-artifact:gaudi_program_fit_v0_1.png",
+      "status": "PASS_CONCEPT_PROGRAM_FEASIBILITY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Explicitly allocates service/waste, storage, toilets, cores, cooking/community and public program within both finalists."
+    },
+    {
+      "id": "EVENING_OPERATION_001",
+      "path": "external-artifact:gaudi_evening_operation_v0_1.png",
+      "status": "PASS_OPERATIONAL_MODE_SCREEN",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "A+ keeps ~443 m² ground civic edge open after market closure; C+ ~300 m² with more vertical dependency."
+    },
+    {
+      "id": "DAYLIGHT_DEPTH_001",
+      "path": "external-artifact:gaudi_daylight_depth_proxy_v0_1.png",
+      "status": "PASS_GEOMETRIC_DAYLIGHT_DEPTH_PROXY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "No lux claim. A+ deepest point ~5.0 m from exterior; C+ ~2.8 m."
+    },
+    {
+      "id": "SPATIAL_MASSING_001",
+      "path": "external-artifact:gaudi_spatial_massing_perspective_v0_1.png",
+      "status": "PASS_COMMON_CAMERA_MASSING_ONLY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Geometry-derived common-camera 3D check. Explicitly not a hero render."
+    },
+    {
+      "id": "MATERIAL_SYSTEM_001",
+      "path": "external-artifact:gaudi_material_system_v0_1.png",
+      "status": "PASS_MATERIAL_STRATEGY_ONLY",
+      "authority": "human_judgment_plus_primary_sources",
+      "competition_use": false,
+      "notes": "Material hierarchy rejects stylistic imitation; exact embodied-carbon/EPD verification still pending."
+    },
+    {
+      "id": "PRIMARY_SYNTHESIS_001",
+      "path": "external-artifact:gaudi_primary_scheme_synthesis_v0_1.png",
+      "status": "PASS_SCHEME_SELECTION_LOGIC",
+      "authority": "human_judgment_plus_derived_metrics",
+      "competition_use": false,
+      "notes": "Selects Living Threshold as architecture, Cerdà Mutation as method donor, Market Organism as service subsystem donor."
+    },
+    {
+      "id": "FINALIST_RUBRIC_003",
+      "path": "external-artifact:gaudi_finalist_rubric_v0_3.png",
+      "status": "PASS_INTERNAL_REVIEW_ONLY",
+      "authority": "human_judgment_plus_derived_metrics",
+      "competition_use": false,
+      "notes": "Primary Living Threshold 87.2 vs C+ 84.1. Not a jury prediction."
+    },
+    {
+      "id": "HARD_BAR_PLAN_001",
+      "path": "external-artifact:gaudi_primary_hard_bar_plan_v0_1.png",
+      "status": "PASS_DIMENSIONED_CONCEPT_PLAN",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "45×10 m hard market bar with 20 stalls, 3.2 m aisle, service/support head, two stairs, lift, accessible WC and market back-of-house."
+    },
+    {
+      "id": "CIVIC_BAR_PLAN_001",
+      "path": "external-artifact:gaudi_primary_civic_bar_l0_v0_1.png",
+      "status": "PASS_DIMENSIONED_CONCEPT_PLAN",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "45×10 m civic bar ground-floor concept with community, interpretation, support, two stairs, lift and accessible WC."
+    },
+    {
+      "id": "CTE_EGRESS_002",
+      "path": "external-artifact:gaudi_cte_egress_screen_v0_2.png",
+      "status": "PASS_CONCEPT_CODE_SCREEN_ONLY",
+      "authority": "primary_code_plus_derived",
+      "competition_use": false,
+      "notes": "Corrected current-CTE concept screen. Conservative floor occupancies 160/231/291/300; not final regulatory certification."
+    },
+    {
+      "id": "STRUCTURAL_BAY_001",
+      "path": "external-artifact:gaudi_primary_structural_bay_v0_1.png",
+      "status": "PASS_STRUCTURAL_HYPOTHESIS",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "10 m span, 5 m bay, ~1.4 m catenary-informed roof rise; load-path concept only, engineering pending."
+    },
+    {
+      "id": "PRIMARY_HUMAN_SECTION_002",
+      "path": "external-artifact:gaudi_primary_human_section_v0_2.png",
+      "status": "PASS_DESIGN_DEVELOPMENT_SECTION",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Human-scale material/spatial section of hard edge, civic edge and unprogrammed middle; still not a competition render."
+    },
+    {
+      "id": "PRIMARY_BAY_SECTION_002",
+      "path": "external-artifact:gaudi_primary_bay_v0_2_section.png",
+      "status": "PASS_DETAIL_DEVELOPMENT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "5 m bay integrates 9 m clear compression span, rainwater, solar-control fins, lighting, acoustics, MEP, market interface and human scale."
+    },
+    {
+      "id": "ROOF_SYSTEM_DECISION_001",
+      "path": "external-artifact:gaudi_roof_system_decision_v0_1.png",
+      "status": "PASS_DECISION_EVIDENCE",
+      "authority": "research_plus_design_judgment",
+      "competition_use": false,
+      "notes": "Hybrid thin-tile/compression shell + robust edge frame selected; timber/steel catenary fallback preserved."
+    },
+    {
+      "id": "PRIMARY_BAY_ASSEMBLY_002",
+      "path": "external-artifact:gaudi_primary_bay_v0_2_assembly.png",
+      "status": "PASS_SYSTEM_INTEGRATION",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Exploded system separates structure, water, solar, acoustics, services, market kit and paving for maintainability."
+    },
+    {
+      "id": "PRIMARY_BAY_3D_002",
+      "path": "web/primary-bay-3d/index.html",
+      "status": "PASS_INTERACTIVE_DESIGN_DEVELOPMENT",
+      "authority": "primary_3d_design_development",
+      "competition_use": false,
+      "notes": "Interactive Three.js bay uses the same 5 m / 10 m / 9 m clear-span design contract."
+    },
+    {
+      "id": "SOLAR_FIN_STUDY_001",
+      "path": "external-artifact:gaudi_solar_fin_study_v0_1.png",
+      "status": "PASS_GEOMETRIC_SOLAR_CONTROL_PROXY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "SE façade vertical-fin proxy selects a provisional fin geometry/rotation; not annual energy simulation."
+    },
+    {
+      "id": "STRUCTURAL_THRUST_PROXY_001",
+      "path": "external-artifact:gaudi_structural_thrust_proxy_v0_1.png",
+      "status": "PASS_STRUCTURAL_SENSITIVITY_PROXY",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Parabolic funicular reaction sensitivity for 9 m span / 1.35 m rise / 5 m bay under explicit assumed roof pressures; not certification."
+    },
+    {
+      "id": "ACOUSTIC_BAY_PROXY_001",
+      "path": "external-artifact:gaudi_acoustic_bay_proxy_v0_1.png",
+      "status": "PASS_ACOUSTIC_CONCEPT_SCREEN",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Sabine-based absorption-area proxy for the 5 m bay; exact materials and RT target validation pending."
+    },
+    {
+      "id": "RAINWATER_STRESS_001",
+      "path": "external-artifact:gaudi_rainwater_stress_v0_1.png",
+      "status": "PASS_RAIN_STRESS_ENVELOPE",
+      "authority": "derived",
+      "competition_use": false,
+      "notes": "Runoff stress envelope for one bay and full bar; final sizing awaits official current rainfall design intensity."
+    },
+    {
+      "id": "A4_THRESHOLD_STALL_001",
+      "path": "external-artifact:gaudi_threshold_stall_01_a4_concept.png",
+      "status": "PASS_A4_CONCEPT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Optional design-prize candidate converts from food stall to secured reset state to evening civic bench while preserving accessible counter and plug-in service chassis."
+    },
+    {
+      "id": "A4_THRESHOLD_STALL_DETAIL_001",
+      "path": "external-artifact:gaudi_threshold_stall_01_detail.png",
+      "status": "PASS_DIMENSIONED_OBJECT_CONCEPT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "3.0 × 2.4 m module with 0.90 m main counter, 0.76 m accessible counter section, storage, service rail and fold-down bench."
+    },
+    {
+      "id": "PRIMARY_BAY_GATE_003",
+      "path": "external-artifact:gaudi_primary_bay_v0_3_gate.png",
+      "status": "PASS_PHYSICAL_DETAIL_GATE",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Evidence board for J01/J02 details, maintenance sequence and tile/fin separation. Detail realism improved; still not photoreal."
+    },
+    {
+      "id": "JOINT_J01_001",
+      "path": "external-artifact:gaudi_joint_j01_roof_edge_v0_1.png",
+      "status": "PASS_CONSTRUCTION_INTERFACE_CONCEPT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Pier→edge beam→bearing→shell→gutter/downpipe→replaceable fin interface. Structural/water/wind engineering pending."
+    },
+    {
+      "id": "JOINT_J02_001",
+      "path": "external-artifact:gaudi_joint_j02_stall_floor_v0_1.png",
+      "status": "PASS_CONSTRUCTION_INTERFACE_CONCEPT",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Demountable stall→service plinth→accessible counter→drain→floor interface. Hygiene/MEP detailing pending."
+    },
+    {
+      "id": "MAINTENANCE_001",
+      "path": "external-artifact:gaudi_maintenance_sequence_v0_1.png",
+      "status": "PASS_MAINTAINABILITY_LOGIC",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Bay-isolation and replace-only-failed-layer sequence. Supports long-life civic structure plus adaptable market fit-out."
+    },
+    {
+      "id": "TILE_FIXING_001",
+      "path": "external-artifact:gaudi_tile_bond_fixing_v0_1.png",
+      "status": "PASS_MATERIAL_SYSTEM_SEPARATION",
+      "authority": "derived_from_primary_contract",
+      "competition_use": false,
+      "notes": "Separates shell bond from bolted replaceable solar-control fins; avoids irreversible decorative cladding."
+    },
+    {
+      "id": "PRIMARY_BAY_3D_003",
+      "path": "external-artifact:gaudi_primary_bay_v0_3.glb",
+      "status": "PASS_HIGHER_DETAIL_3D_DEVELOPMENT",
+      "authority": "primary_3d_design_development",
+      "competition_use": false,
+      "notes": "V0.3 GLB includes 145+ geometry components covering shell, tile proxy, bearings, gutters, downpipe, fins/brackets, stall connectors, drainage, tactile strip, MEP, acoustics, people and tree."
+    }
+  ],
+  "required_for_G1": [
+    "SITE_ORTHO_001",
+    "SITE_AXON_001",
+    "SIGHTLINE_001",
+    "SOLAR_001"
+  ],
+  "visual_pass_requirements": [
+    "source-traceable geometry",
+    "camera metadata recorded",
+    "no debug overlays in competition-facing evidence",
+    "silhouette legible",
+    "scale reference present where needed",
+    "plan/section/render consistency",
+    "claims linked to evidence or simulation output",
+    "no generative image used as spatial authority"
+  ]
+}

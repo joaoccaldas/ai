@@ -1,0 +1,51 @@
+{
+  "status": "DESIGN_DEVELOPMENT_PROXY_NOT_CERTIFICATION",
+  "method": "parabolic funicular under uniform vertical line load",
+  "geometry": {
+    "clear_span_m": 9,
+    "rise_m": 1.35,
+    "tributary_bay_m": 5
+  },
+  "formulae": {
+    "H": "w*L^2/(8*f)",
+    "V": "w*L/2"
+  },
+  "cases": [
+    {
+      "roof_pressure_kPa": 1,
+      "line_load_kN_per_m": 5,
+      "horizontal_reaction_kN_per_support": 37.5,
+      "vertical_reaction_kN_per_support": 22.5,
+      "resultant_reaction_kN_per_support": 43.732
+    },
+    {
+      "roof_pressure_kPa": 1.5,
+      "line_load_kN_per_m": 7.5,
+      "horizontal_reaction_kN_per_support": 56.25,
+      "vertical_reaction_kN_per_support": 33.75,
+      "resultant_reaction_kN_per_support": 65.598
+    },
+    {
+      "roof_pressure_kPa": 2,
+      "line_load_kN_per_m": 10,
+      "horizontal_reaction_kN_per_support": 75.0,
+      "vertical_reaction_kN_per_support": 45.0,
+      "resultant_reaction_kN_per_support": 87.464
+    },
+    {
+      "roof_pressure_kPa": 2.5,
+      "line_load_kN_per_m": 12.5,
+      "horizontal_reaction_kN_per_support": 93.75,
+      "vertical_reaction_kN_per_support": 56.25,
+      "resultant_reaction_kN_per_support": 109.33
+    },
+    {
+      "roof_pressure_kPa": 3,
+      "line_load_kN_per_m": 15,
+      "horizontal_reaction_kN_per_support": 112.5,
+      "vertical_reaction_kN_per_support": 67.5,
+      "resultant_reaction_kN_per_support": 131.196
+    }
+  ],
+  "interpretation": "Support design must visibly accommodate horizontal thrust or the roof system must provide an explicit tie/frame alternative. Final material sizing requires engineer-grade load combinations and analysis."
+}

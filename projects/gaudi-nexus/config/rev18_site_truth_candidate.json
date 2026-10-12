@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "status": "REV18_SITE_TRUTH_CANDIDATE_BUILT_NOT_PROMOTED",
+  "built_utc": "2026-10-07T03:35:00Z",
+  "workflow_run_id": 37567330603,
+  "workflow_artifact_id": 11459725641,
+  "workflow_artifact_digest": "sha256:c647694336e25c6c6506a4ff21451f0f5aef836daea2921fbe0549caeee7bade",
+  "base_rev15_sha256": "cc1179cd2c2b379f954cbc55eb995f88d0786e08b37abfaca7e71417c4b1d494",
+  "municipal_glb_sha256": "f5c324141f1328666c528810b8212c3152f2b6970bd780c6bb4516ee8c3e3f1c",
+  "municipal_archive_sha256": "186ed46321b9ec3baf7f6dc14235a32a8dd7a3fa54d32e815cddc4d0a91d9ef9",
+  "candidate_blend_sha256": "2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875",
+  "candidate_report_sha256": "998d543731af03c3495a2566a9839fc8efec63a5cb8d86796d74599632fb2878",
+  "objects": 1603,
+  "municipal_collection": "00_SITE_MUNICIPAL_IMPORTED",
+  "proxy_context": {
+    "retained_for_audit": true,
+    "hidden_from_competition_diagnostics": true
+  },
+  "hero": {
+    "camera": "A_HERO_MUNICIPAL_F3",
+    "position": [-15.0, 42.0, 1.56],
+    "rotation_euler": [1.793622, 0.0, -1.086838],
+    "lens_mm": 32,
+    "target": [96.1, 100.4, 30.0],
+    "workbench_visual_review": {
+      "status": "PROMISING_COMPOSITION_NOT_PHOTOREAL_APPROVAL",
+      "finding": "Authoritative municipal geometry makes the Sagrada relationship immediately legible and dominant; the Living Threshold remains a foreground edge/threshold rather than a competing monument. Workbench geometry does not establish material, lighting or final-jury quality."
+    }
+  },
+  "remaining_promotion_gates": [
+    "official 1:1000 topography/levels cross-check",
+    "tree/street-furniture cross-check",
+    "Passion facade sightline recomputation",
+    "shadow recomputation against authoritative context",
+    "photoreal F3 pixel review and >=9/10 hero gate",
+    "explicit canonical promotion in current_world.json"
+  ]
+}

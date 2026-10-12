@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "status": "VALIDATION_REQUIRED",
+  "location": "Barcelona / Plaça de la Sagrada Família",
+  "required_studies": [
+    {
+      "id": "E01",
+      "name": "annual solar/shade",
+      "metric": "hours/direct-sun exposure by critical zone",
+      "baseline_comparison": true
+    },
+    {
+      "id": "E02",
+      "name": "daylight",
+      "metric": "documented daylight metric appropriate to concept stage",
+      "baseline_comparison": false
+    },
+    {
+      "id": "E03",
+      "name": "ventilation/wind",
+      "metric": "documented method + comfort/airflow result",
+      "baseline_comparison": true
+    },
+    {
+      "id": "E04",
+      "name": "rainwater",
+      "metric": "design flow/storage basis from official/current rainfall source",
+      "baseline_comparison": false
+    },
+    {
+      "id": "E05",
+      "name": "acoustics",
+      "metric": "target RT/reverberation strategy for market/community zones",
+      "baseline_comparison": false
+    },
+    {
+      "id": "E06",
+      "name": "summer comfort",
+      "metric": "explicit temperature/solar/air-movement assumptions",
+      "baseline_comparison": true
+    }
+  ],
+  "claim_rule": "No environmental number enters the A1 without source, date/weather basis, assumptions and reproducible method."
+}

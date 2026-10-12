@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "status": "VALIDATION_REQUIRED",
+  "geometry": {
+    "clear_span_m": 9,
+    "envelope_m": 10,
+    "bay_m": 5,
+    "nominal_rise_m": 1.35
+  },
+  "required_outputs": [
+    "form-found compression geometry or explicitly selected alternative",
+    "load cases and assumptions",
+    "vertical and horizontal support reactions",
+    "support/springing strategy",
+    "movement/bearing strategy",
+    "roof build-up and waterproofing continuity",
+    "failure-mode discussion",
+    "one jury-readable load-path diagram"
+  ],
+  "acceptance": [
+    "no structural quantity presented as certified unless produced by qualified analysis",
+    "all proxy calculations labeled proxy",
+    "final section matches canonical scene",
+    "ceramic expression is not load-bearing unless explicitly analyzed",
+    "Gaudi logic is explained as force/material reasoning, not visual imitation"
+  ]
+}

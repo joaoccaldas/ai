@@ -1,0 +1,19 @@
+{
+  "version": "0.3",
+  "target_gfa_m2": 1800,
+  "screen_is_jury_score": false,
+  "screen_dimensions": [
+    "public_ground_retention",
+    "view_proxy_protection",
+    "fragmentation",
+    "below_grade_dependency"
+  ],
+  "concepts": [
+    {"id":"A","name":"Living Threshold","footprint_m2":900,"plaza_occupation_pct":7.7383,"levels":2,"view_proxy_overlap_m2":0,"components":3,"screen_score":8.2232},
+    {"id":"B","name":"Inverted Plaza","footprint_m2":450,"plaza_occupation_pct":3.8691,"below_grade_share":0.75,"view_proxy_overlap_m2":0,"components":3,"screen_score":8.2991},
+    {"id":"C","name":"Cerdà Mutation","footprint_m2":600,"plaza_occupation_pct":5.1589,"levels":3,"view_proxy_overlap_m2":0,"components":2,"screen_score":8.8988},
+    {"id":"D","name":"Urban Forest","footprint_m2":900,"plaza_occupation_pct":7.7383,"levels":2,"view_proxy_overlap_m2":0,"components":9,"screen_score":6.7232},
+    {"id":"E","name":"Market Organism","footprint_m2":900,"plaza_occupation_pct":7.7383,"levels":2,"view_proxy_overlap_m2":0,"components":5,"screen_score":7.7232}
+  ],
+  "rule": "No concept advances on this screen alone. Section, logistics, accessibility, structure, climate and human experience can reverse the ranking."
+}

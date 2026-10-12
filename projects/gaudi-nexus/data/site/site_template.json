@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "status": "PROVISIONAL_GEOMETRY_TEMPLATE",
+  "block": {
+    "side_m": 113.0,
+    "chamfer_leg_m": 14.0,
+    "street_width_m": 20.0,
+    "orientation_deg_from_east": 0.0
+  },
+  "source_ids": ["SRC-CERDA-001"],
+  "warnings": [
+    "This is the generic Cerdà template, not a surveyed competition parcel.",
+    "Do not derive final areas, setbacks or architectural geometry from this file until municipal/competition geometry is verified."
+  ]
+}

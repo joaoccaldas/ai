@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "units": "m",
+  "classes": {
+    "context_massing": {"linear": 0.50, "use": "surrounding buildings/terrain used for views and massing"},
+    "site_public_realm": {"linear": 0.10, "use": "plaza edges, paths, trees, curbs, major site elements"},
+    "architecture_primary": {"linear": 0.02, "use": "walls, floors, roof, columns, stairs, major openings"},
+    "detail_competition": {"linear": 0.005, "use": "hero-render joinery, market module, rails, screens"}
+  },
+  "rule": "Do not imply precision finer than the source evidence supports."
+}

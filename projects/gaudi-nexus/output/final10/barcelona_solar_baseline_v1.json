@@ -1,0 +1,29 @@
+{
+  "status": "GEOMETRIC_SOLAR_BASELINE_NOT_ANNUAL_SIMULATION",
+  "latitude_deg": 41.4036,
+  "method": "solar-noon altitude from latitude and representative declination",
+  "cases": [
+    {
+      "case": "summer_solstice",
+      "solar_declination_deg": 23.44,
+      "solar_noon_altitude_deg": 72.04,
+      "horizontal_shadow_m_per_1m_height": 0.324,
+      "shadow_for_6m_height_m": 1.95
+    },
+    {
+      "case": "equinox",
+      "solar_declination_deg": 0,
+      "solar_noon_altitude_deg": 48.6,
+      "horizontal_shadow_m_per_1m_height": 0.882,
+      "shadow_for_6m_height_m": 5.29
+    },
+    {
+      "case": "winter_solstice",
+      "solar_declination_deg": -23.44,
+      "solar_noon_altitude_deg": 25.16,
+      "horizontal_shadow_m_per_1m_height": 2.129,
+      "shadow_for_6m_height_m": 12.78
+    }
+  ],
+  "next_required": "SITE_TRUTH_V1 plus annual weather-based shading/daylight analysis before competition-facing environmental metrics are finalized"
+}
