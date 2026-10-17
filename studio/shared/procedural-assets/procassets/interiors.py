@@ -84,3 +84,34 @@ def display_case_glass(w=0.6, d=0.6, h=1.45):   # mats: 0 base, 1 frame, 2 glass
     for z in (bh+0.012, h-0.012): box(bm, (0, 0, z), (w, d, 0.024), 0, 1)
     for sx in (-1, 1): box(bm, (sx*(w/2-0.003), 0, (bh+h)/2), (0.004, d-0.04, h-bh-0.05), 0, 2); box(bm, (0, sx*(d/2-0.003), (bh+h)/2), (w-0.04, 0.004, h-bh-0.05), 0, 2)
     return bm
+
+# Ogee moulding, outer back edge → bead → crown → cove → fillet → sight lip → inner back.
+MOULDING = [(0.0, 0.0), (0.0, 0.026), (0.003, 0.031), (0.008, 0.034), (0.014, 0.038), (0.021, 0.039),
+            (0.028, 0.036), (0.034, 0.030), (0.038, 0.028), (0.044, 0.028), (0.047, 0.024), (0.052, 0.022),
+            (0.056, 0.019), (0.056, 0.006)]
+
+def wall_mirror_moulded(w=0.72, h=1.02):   # mats: 0 moulding, 1 mirror glass, 2 backing board
+    """Hyper-detailed wall mirror: swept ogee moulding with mitred corners, 6 mm
+    bevelled silvered glass seated behind the sight lip, and a backing board."""
+    from .geom import frame_sweep, rect_outline, panel
+    bm = bmesh.new(); o = rect_outline(w, h)
+    frame_sweep(bm, o, MOULDING, 0)
+    panel(bm, o, 0.050, 0.012, 0.007, 0.0135, 1)
+    panel(bm, o, 0.020, 0.0, 0.001, 0.0045, 2)
+    return bm
+
+def floor_mirror_arched(w=0.66, h=1.82, lean=0.12):   # mats: 0 moulding, 1 mirror glass, 2 backing board, 3 strut
+    """Arched floor mirror leaning on a folding strut. Same moulding and glass
+    as the wall mirror, swept round a semicircular head (24 steps)."""
+    from .geom import frame_sweep, arch_outline, panel
+    bm = bmesh.new(); o = arch_outline(w, h, 24)
+    frame_sweep(bm, o, MOULDING, 0)
+    panel(bm, o, 0.050, 0.012, 0.007, 0.0135, 1)
+    panel(bm, o, 0.020, 0.0, 0.001, 0.0045, 2)
+    # Lean it back: rotate the frame about its bottom edge, then add the strut.
+    rot = Matrix.Rotation(lean, 4, 'X')   # top falls back, away from the viewer (-Y)
+    bmesh.ops.transform(bm, matrix=rot, verts=list(bm.verts))
+    top = rot @ Vector((0, 0, h * 0.62)); foot = Vector((0, -h * 0.42, 0.014))
+    cyl(bm, top + Vector((0, -0.004, 0)), foot, 0.011, 0.013, 10, 3)
+    cyl(bm, foot + Vector((0.03, 0, 0)), foot + Vector((-0.03, 0, 0)), 0.014, 0.014, 10, 3)
+    return bm

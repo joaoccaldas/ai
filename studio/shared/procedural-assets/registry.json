@@ -981,6 +981,143 @@
     "studio/pantry"
    ],
    "anchor": "base_centre"
+  },
+  {
+   "id": "wall_mirror_moulded",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "wall_mirror_moulded",
+   "materials": [
+    "Gilt",
+    "Mirror",
+    "Backboard"
+   ],
+   "params": {},
+   "category": "decor",
+   "reuse": [
+    "studio/hotel",
+    "studio/hall",
+    "studio/museum",
+    "konam/rooms"
+   ],
+   "anchor": "wall_attachment_centre",
+   "surfaces": {
+    "Gilt": "gilt"
+   },
+   "uv_metres": 0.25
+  },
+  {
+   "id": "floor_mirror_arched",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "floor_mirror_arched",
+   "materials": [
+    "Timber",
+    "Mirror",
+    "Backboard",
+    "Steel"
+   ],
+   "params": {},
+   "category": "decor",
+   "reuse": [
+    "studio/hotel",
+    "konam/rooms",
+    "studio/gallery"
+   ],
+   "anchor": "base_centre",
+   "surfaces": {
+    "Timber": "oak"
+   },
+   "uv_metres": 0.25
+  },
+  {
+   "id": "reflecting_basin",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "reflecting_basin",
+   "materials": [
+    "Stone",
+    "Water"
+   ],
+   "params": {},
+   "category": "landscape",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "bellagio",
+    "konam/rooms"
+   ],
+   "anchor": "base_centre",
+   "surfaces": {
+    "Stone": "stone",
+    "Water": "water"
+   },
+   "uv_metres": 0.6
+  },
+  {
+   "id": "reflecting_basin_octagonal",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "reflecting_basin",
+   "materials": [
+    "Stone",
+    "Water"
+   ],
+   "params": {
+    "d": 2.2,
+    "seg": 8
+   },
+   "category": "landscape",
+   "reuse": [
+    "gaudi-nexus",
+    "studio/hall",
+    "bellagio"
+   ],
+   "anchor": "base_centre",
+   "surfaces": {
+    "Stone": "stone",
+    "Water": "water"
+   },
+   "uv_metres": 0.6
+  },
+  {
+   "id": "cloud_cumulus",
+   "builder": "gen",
+   "module": "atmosphere",
+   "func": "cloud_cumulus",
+   "materials": [
+    "Cloud"
+   ],
+   "params": {},
+   "category": "sky",
+   "reuse": [
+    "studio/*",
+    "konam/rooms",
+    "bellagio",
+    "studio-kona"
+   ],
+   "anchor": "base_centre"
+  },
+  {
+   "id": "cloud_cumulus_tall",
+   "builder": "gen",
+   "module": "atmosphere",
+   "func": "cloud_cumulus",
+   "materials": [
+    "Cloud"
+   ],
+   "params": {
+    "w": 11.0,
+    "puffs": 34,
+    "seed": 9
+   },
+   "category": "sky",
+   "reuse": [
+    "studio/*",
+    "konam/rooms",
+    "studio-kona"
+   ],
+   "anchor": "base_centre"
   }
  ]
 }

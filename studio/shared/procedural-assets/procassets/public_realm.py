@@ -75,3 +75,20 @@ def waste_sorting_station(w=1.5, d=0.6, h=1.1):  # mats: 0 steel frame, 1 green,
         x = (i - 1) * (w / 3); box(bm, (x, 0, h*0.38), (w/3-0.05, d-0.1, h*0.76), 0, mi); box(bm, (x, 0, h*0.78), (w/3-0.03, d-0.07, 0.04), 0, 0); box(bm, (x, d/2-0.04, h*0.7), (0.18, 0.02, 0.08), 0, 0)
     for sx in (-w/2, w/2): box(bm, (sx, 0, h*0.4), (0.04, d, h*0.8), 0, 0)
     return bm
+
+def reflecting_basin(d=1.6, h=0.46, rim=0.11, water=0.06, seg=72):   # mats: 0 stone, 1 water surface
+    """Turned stone basin: plinth, battered wall, rolled and chamfered rim, inner
+    wall down to a still water surface kept as its own material/face set, so a
+    runtime can swap it for a live reflector or water shader. seg=8 gives an
+    octagonal basin."""
+    from .geom import lathe
+    bm = bmesh.new(); R = d / 2; wl = h - water
+    lathe(bm, [(R + 0.03, 0.0), (R + 0.03, 0.06), (R, 0.075), (R - 0.015, h - 0.06), (R, h - 0.035),
+               (R - 0.012, h - 0.004), (R - rim * 0.45, h), (R - rim + 0.012, h - 0.006), (R - rim, h - 0.03),
+               (R - rim - 0.004, wl - 0.04), (R - rim - 0.02, wl - 0.07), (0.0, wl - 0.07)], seg, 0)
+    lathe(bm, [(R - rim - 0.002, wl), (0.0, wl)], seg, 1, cap_bottom=False)
+    for f in bm.faces:
+        if f.material_index == 1:
+            f.normal_update()
+            if f.normal.z < 0: f.normal_flip()   # the water faces the sky
+    return bm

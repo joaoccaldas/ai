@@ -45,6 +45,8 @@ CATALOG = {
  'Jam': ((.23,.032,.018), .28, 0.), 'Rind': ((.48,.28,.10), .72, 0.),
  'CheeseCut': ((.75,.59,.27), .58, 0.), 'FlagRed': ((.35,.055,.032), .86, 0.),
  'FlagCream': ((.64,.57,.43), .86, 0.), 'FlagTeal': ((.045,.16,.16), .86, 0.),
+ 'Mirror': ((.94,.95,.95), .02, 1.), 'Gilt': ((.62,.46,.2), .32, .9), 'Backboard': ((.18,.15,.12), .9, 0.),
+ 'Stone': ((.66,.63,.58), .82, 0.), 'Water': ((.03,.09,.1), .04, 0.), 'Cloud': ((.96,.96,.97), 1., 0.),
 }
 def catmat(name):
     col, rough, metal = CATALOG[name]; m = mat('C_' + name, col, rough, metal); p = m.node_tree.nodes['Principled BSDF']
@@ -82,17 +84,33 @@ for a in reg['assets']:
         o['asset_id']=a['id'];o['generator']='procassets/1';o['units']='metres'
         o['license']='original procedural; no third-party model';o['contract_id']=a.get('contract_id','')
         o['anchor']=a.get('anchor','base_centre')
+    # Opt-in procedural surfaces: box UVs plus generated colour/normal maps on a
+    # per-surface material copy, so untextured assets sharing the base stay flat.
+    if a.get('surfaces'):
+        from procassets import surface
+        for o in objs:
+            if o.type != 'MESH': continue
+            surface.box_uv(o, a.get('uv_metres', 0.5))
+            for slot in o.material_slots:
+                base = slot.material.name[2:] if slot.material and slot.material.name.startswith('C_') else None
+                kind = a['surfaces'].get(base) if base else None
+                if not kind: continue
+                name = f'S_{base}_{kind}'
+                m = bpy.data.materials.get(name)
+                if not m:
+                    m = slot.material.copy(); m.name = name; surface.apply(m, kind, seed=a.get('surface_seed', 1))
+                slot.material = m
     bpy.ops.object.select_all(action='DESELECT')
     for o in objs: o.select_set(True)
     bpy.context.view_layer.objects.active = objs[0]
     path = os.path.join(out, a['id'] + '.glb')
-    if not SHEET: bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, use_active_scene=True, export_apply=True, export_extras=True)
+    if not SHEET: bpy.ops.export_scene.gltf(filepath=path, export_format='GLB', use_selection=True, use_active_scene=True, export_apply=True, export_extras=True, export_tangents=bool(a.get('surfaces')))
     bpy.context.view_layer.update()
     tris = sum(len(pl.vertices) - 2 for o in objs if o.type == 'MESH' for pl in o.data.polygons)
     cs = [o.matrix_world @ Vector(c) for o in objs if o.type == 'MESH' for c in o.bound_box]
     bb = [[round(min(c[k] for c in cs), 3) for k in range(3)], [round(max(c[k] for c in cs), 3) for k in range(3)]]
     if not SHEET:
-        meta = {'id': a['id'], 'contract_id': a.get('contract_id'), 'anchor': a.get('anchor','base_centre'), 'representation': 'geometry-study', 'provenance': 'procedural (bmesh), no scans, no AI-generated geometry',
+        meta = {'id': a['id'], 'contract_id': a.get('contract_id'), 'anchor': a.get('anchor','base_centre'), 'representation': 'textured-study' if a.get('surfaces') else 'geometry-study', 'surfaces': a.get('surfaces', {}), 'provenance': 'procedural (bmesh), no scans, no AI-generated geometry',
                 'generator': {'builder': a['builder'], 'module': a.get('module'), 'func': a.get('func'), 'params': a['params']}, 'units': 'metres', 'up_axis_source': 'Z', 'up_axis_gltf': 'Y',
                 'triangles': tris, 'bbox_m': bb, 'semantic_parts': sorted(o.name for o in objs), 'materials': sorted({s.material.name for o in objs if o.type == 'MESH' for s in o.material_slots if s.material}),
                 'bytes': os.path.getsize(path), 'sha256': hashlib.sha256(open(path, 'rb').read()).hexdigest()}
