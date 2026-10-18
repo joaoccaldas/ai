@@ -1118,6 +1118,100 @@
     "studio-kona"
    ],
    "anchor": "base_centre"
+  },
+  {
+   "id": "telescope_refractor",
+   "builder": "gen",
+   "module": "props",
+   "func": "telescope_refractor",
+   "materials": [
+    "Enamel",
+    "Steel",
+    "Brass",
+    "Glass",
+    "Rubber"
+   ],
+   "params": {},
+   "category": "exhibit",
+   "reuse": [
+    "konam/rooms",
+    "studio/museum",
+    "caldaspace"
+   ],
+   "anchor": "base_centre"
+  },
+  {
+   "id": "globe_on_stand",
+   "builder": "gen",
+   "module": "props",
+   "func": "globe_on_stand",
+   "materials": [
+    "GlobeSea",
+    "Graticule",
+    "Brass",
+    "Timber"
+   ],
+   "params": {},
+   "category": "exhibit",
+   "reuse": [
+    "konam/rooms",
+    "studio/museum",
+    "noema"
+   ],
+   "anchor": "base_centre",
+   "surfaces": {
+    "Timber": "oak"
+   },
+   "uv_metres": 0.25
+  },
+  {
+   "id": "signal_column",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "signal_column",
+   "materials": [
+    "Stone",
+    "SignalGreen",
+    "SignalAmber",
+    "SignalRed"
+   ],
+   "params": {},
+   "category": "exhibit",
+   "reuse": [
+    "konam/rooms",
+    "finance",
+    "studio/hall"
+   ],
+   "anchor": "base_centre",
+   "surfaces": {
+    "Stone": "stone"
+   },
+   "uv_metres": 0.4
+  },
+  {
+   "id": "data_plinth",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "data_plinth",
+   "materials": [
+    "Stone",
+    "Glass",
+    "Screen",
+    "DarkChannel"
+   ],
+   "params": {},
+   "category": "exhibit",
+   "reuse": [
+    "konam/rooms",
+    "finance",
+    "performance-os",
+    "studio/museum"
+   ],
+   "anchor": "base_centre",
+   "surfaces": {
+    "Stone": "stone"
+   },
+   "uv_metres": 0.5
   }
  ]
 }

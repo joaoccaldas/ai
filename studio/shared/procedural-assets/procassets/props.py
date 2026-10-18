@@ -61,3 +61,75 @@ def bar_stool(h=0.75, d=0.36):    # mats: 0 timber seat, 1 steel frame
     for k in range(4):
         a = k * math.pi / 2 + math.pi / 4; cyl(bm, (math.cos(a)*d*0.3, math.sin(a)*d*0.3, h-0.045), (math.cos(a)*d*0.5, math.sin(a)*d*0.5, 0.0), 0.012, 0.011, 8, 1)
     arc_tube(bm, (0, 0, 0.26), d * 0.43, 0, 2 * math.pi, 0.01, 28, 'XY'); return bm
+
+
+def _mark(bm):
+    """Remember how many verts exist; new geometry is appended after them."""
+    return len(bm.verts)
+
+
+def _transform_new(bm, start, matrix):
+    """Transform only the geometry created since `_mark` returned `start`.
+    (Python BMVert wrappers are not stable identities, so a set of them cannot
+    be used to tell old from new; vertex order can.)"""
+    bm.verts.ensure_lookup_table()
+    bmesh.ops.transform(bm, matrix=matrix, verts=[bm.verts[i] for i in range(start, len(bm.verts))])
+
+
+def telescope_refractor(L=1.45, ap=0.11, H=1.12):   # mats: 0 enamel tube, 1 steel, 2 brass, 3 objective glass, 4 rubber feet
+    """Refracting telescope on an equatorial mount and wooden-free steel tripod:
+    tapered legs with a spreader tray, mount head, counterweight bar, tube with
+    dew shield, objective cell and lens, focuser and finder scope."""
+    bm = bmesh.new(); head = Vector((0, 0, H))
+    feet = [Vector((math.cos(a) * 0.55, math.sin(a) * 0.55, 0.0)) for a in (math.pi / 2, math.pi / 2 + 2.094, math.pi / 2 + 4.189)]
+    for f in feet:
+        cyl(bm, head + (f - head) * 0.06, f + Vector((0, 0, 0.04)), 0.024, 0.017, 10, 1)
+        cyl(bm, f + Vector((0, 0, 0.04)), f, 0.02, 0.02, 10, 4)                      # rubber foot
+    mids = [head + (f - head) * 0.55 for f in feet]
+    for i in range(3): cyl(bm, mids[i], mids[(i + 1) % 3], 0.008, 0.008, 6, 1)        # spreader
+    lathe(bm, [(0.0, 0.0), (0.09, 0.0), (0.09, 0.03), (0.0, 0.03)], 24, 1, center=tuple(head))   # tripod head
+    before = _mark(bm)                                                              # mount head (polar axis tilted)
+    lathe(bm, [(0.0, 0.0), (0.055, 0.0), (0.055, 0.16), (0.045, 0.18), (0.0, 0.18)], 20, 1)
+    _transform_new(bm, before, Matrix.Translation(head + Vector((0, 0, 0.03))) @ Matrix.Rotation(math.radians(-30), 4, 'X'))
+    pivot = head + Vector((0, -0.08, 0.19))
+    cyl(bm, pivot + Vector((0, 0.0, 0)), pivot + Vector((0, 0.42, -0.18)), 0.012, 0.012, 10, 1)   # counterweight bar
+    before = _mark(bm)
+    lathe(bm, [(0.0, 0.0), (0.055, 0.0), (0.06, 0.012), (0.06, 0.05), (0.055, 0.062), (0.0, 0.062)], 24, 1)
+    _transform_new(bm, before, Matrix.Translation(pivot + Vector((0, 0.34, -0.15))) @ Matrix.Rotation(math.radians(-67), 4, 'X'))
+    r = ap * 0.58; dew = ap * 0.72                                                     # the tube, along +Z then aimed
+    before = _mark(bm)
+    lathe(bm, [(0.0, -0.06), (0.022, -0.06), (0.022, 0.0), (r * 0.9, 0.0), (r, 0.02), (r, L * 0.78), (r * 1.06, L * 0.8),
+               (r * 1.06, L * 0.83), (dew, L * 0.84), (dew, L), (dew - 0.004, L), (dew - 0.004, L * 0.86), (0.0, L * 0.86)], 32, 0)
+    lathe(bm, [(r * 1.08, L * 0.42), (r * 1.08, L * 0.46), (0.0, L * 0.46)], 24, 2)    # tube ring (brass)
+    lathe(bm, [(r * 0.98, L * 0.858), (0.0, L * 0.862)], 32, 3, cap_bottom=False)      # objective lens
+    cyl(bm, Vector((0, r, L * 0.62)), Vector((0, r + 0.05, L * 0.62)), 0.008, 0.008, 8, 2)   # finder bracket
+    cyl(bm, Vector((0, r + 0.06, L * 0.52)), Vector((0, r + 0.06, L * 0.78)), 0.016, 0.02, 12, 0)   # finder scope
+    cyl(bm, Vector((0, 0, -0.06)), Vector((0, 0, -0.14)), 0.016, 0.016, 12, 1)         # eyepiece holder
+    cyl(bm, Vector((0, 0, -0.14)), Vector((0, 0, -0.2)), 0.019, 0.019, 14, 4)          # eyepiece
+    aim = Matrix.Translation(pivot + Vector((0, -0.06, 0.02))) @ Matrix.Rotation(math.radians(-55), 4, 'X') @ Matrix.Translation(Vector((0, 0, -L * 0.42)))
+    _transform_new(bm, before, aim)
+    return bm
+
+
+def globe_on_stand(d=0.5, tilt=23.4):   # mats: 0 sea, 1 graticule, 2 brass meridian, 3 stand
+    """A blank graticule globe: sea-coloured sphere with latitude and longitude
+    rings every 30°, a brass meridian and axis, on a turned stand. Deliberately
+    blank: a room paints its own data on it."""
+    bm = bmesh.new(); R = d / 2; zc = 0.34 + R + 0.03
+    lathe(bm, [(0.17, 0.0), (0.17, 0.025), (0.15, 0.04), (0.07, 0.07), (0.045, 0.12), (0.06, 0.2), (0.04, 0.27),
+               (0.03, 0.34), (0.0, 0.34)], 40, 3)
+    before = _mark(bm)
+    g = bmesh.ops.create_icosphere(bm, subdivisions=4, radius=R)
+    for f in {f for v in g['verts'] for f in v.link_faces}: f.material_index = 0; f.smooth = True
+    for lat in (-60, -30, 0, 30, 60):                                                  # latitude rings
+        a = math.radians(lat); rr = (R + 0.002) * math.cos(a)
+        arc_tube(bm, (0, 0, (R + 0.002) * math.sin(a)), rr, 0, 2 * math.pi, 0.0018, 48, 'XY', 1)
+    for lon in range(0, 180, 30):                                                      # meridians
+        before_m = _mark(bm)
+        arc_tube(bm, (0, 0, 0), R + 0.002, 0, 2 * math.pi, 0.0018, 48, 'XZ', 1)
+        _transform_new(bm, before_m, Matrix.Rotation(math.radians(lon), 4, 'Z'))
+    arc_tube(bm, (0, 0, 0), R + 0.03, -math.pi / 2, math.pi / 2 + 0.0, 0.007, 36, 'XZ', 2)   # brass meridian (half ring)
+    cyl(bm, Vector((0, 0, -R - 0.04)), Vector((0, 0, R + 0.04)), 0.004, 0.004, 8, 2)        # axis
+    _transform_new(bm, before, Matrix.Translation(Vector((0, 0, zc))) @ Matrix.Rotation(math.radians(tilt), 4, 'Y'))
+    cyl(bm, Vector((0, 0, 0.34)), Vector((0, 0, zc - R * 0.98)), 0.012, 0.01, 12, 2)         # stand neck to meridian
+    return bm

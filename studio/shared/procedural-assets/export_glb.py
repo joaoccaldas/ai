@@ -47,10 +47,13 @@ CATALOG = {
  'FlagCream': ((.64,.57,.43), .86, 0.), 'FlagTeal': ((.045,.16,.16), .86, 0.),
  'Mirror': ((.94,.95,.95), .02, 1.), 'Gilt': ((.62,.46,.2), .32, .9), 'Backboard': ((.18,.15,.12), .9, 0.),
  'Stone': ((.66,.63,.58), .82, 0.), 'Water': ((.03,.09,.1), .04, 0.), 'Cloud': ((.96,.96,.97), 1., 0.),
+ 'GlobeSea': ((.11,.2,.27), .38, 0.), 'Graticule': ((.83,.79,.66), .45, 0.), 'Screen': ((.015,.02,.025), .12, 0.),
+ 'SignalGreen': ((.2,.85,.45), .3, 0.), 'SignalAmber': ((1.,.62,.12), .3, 0.), 'SignalRed': ((.95,.18,.12), .3, 0.),
 }
 def catmat(name):
     col, rough, metal = CATALOG[name]; m = mat('C_' + name, col, rough, metal); p = m.node_tree.nodes['Principled BSDF']
     if name == 'Glass': p.inputs['Transmission Weight'].default_value = 1.0
+    if name.startswith('Signal'): p.inputs['Emission Color'].default_value = col + (1,); p.inputs['Emission Strength'].default_value = 1.0
     if name == 'BulbEmissive': p.inputs['Emission Color'].default_value = col + (1,); p.inputs['Emission Strength'].default_value = 8.0
     return m
 

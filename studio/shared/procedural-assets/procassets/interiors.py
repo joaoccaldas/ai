@@ -115,3 +115,28 @@ def floor_mirror_arched(w=0.66, h=1.82, lean=0.12):   # mats: 0 moulding, 1 mirr
     cyl(bm, top + Vector((0, -0.004, 0)), foot, 0.011, 0.013, 10, 3)
     cyl(bm, foot + Vector((0.03, 0, 0)), foot + Vector((-0.03, 0, 0)), 0.014, 0.014, 10, 3)
     return bm
+
+
+def signal_column(h=1.45, r=0.075):   # mats: 0 stone, 1 green lamp, 2 amber lamp, 3 red lamp
+    """A stone column carrying three lamp rings. Each lamp is its own material
+    so a runtime can light one state at a time (green / amber / red)."""
+    bm = bmesh.new()
+    rbox(bm, (0, 0, 0.04), (0.32, 0.32, 0.08), 0.012, 0, 0, 2)
+    lathe(bm, [(0.11, 0.08), (0.09, 0.1), (r, 0.12), (r * 0.92, h - 0.42), (r, h - 0.4), (0.0, h - 0.4)], 24, 0)
+    for k, z in enumerate((h - 0.4, h - 0.29, h - 0.18)):
+        lathe(bm, [(r * 1.02, z), (r * 1.12, z + 0.01), (r * 1.12, z + 0.075), (r * 1.02, z + 0.085), (0.0, z + 0.085)], 32, 1 + k)
+        lathe(bm, [(r * 1.06, z + 0.085), (r * 1.06, z + 0.11), (0.0, z + 0.11)], 24, 0)   # stone collar between lamps
+    lathe(bm, [(r * 1.06, h - 0.07), (r * 0.8, h - 0.03), (r * 0.4, h - 0.005), (0.0, h)], 24, 0, cap_bottom=False)
+    return bm
+
+
+def data_plinth(w=1.1, d=0.6, h=0.92):   # mats: 0 stone body, 1 glass top, 2 screen, 3 shadow gap
+    """A stone exhibit plinth with a recessed kick, a glass top and an inset
+    screen under the glass. The screen is its own material for live data."""
+    bm = bmesh.new()
+    box(bm, (0, 0, 0.04), (w - 0.06, d - 0.06, 0.08), 0, 3)
+    rbox(bm, (0, 0, (h + 0.08) / 2 - 0.01), (w, d, h - 0.1), 0.01, 0, 0, 2)
+    for f in [f for f in bm.faces if f.material_index == 2]: f.material_index = 0
+    box(bm, (0, 0, h - 0.014), (w - 0.12, d - 0.12, 0.004), 0, 2)   # 2 mm below the glass: no coplanar faces
+    box(bm, (0, 0, h - 0.004), (w - 0.02, d - 0.02, 0.012), 0, 1)
+    return bm
