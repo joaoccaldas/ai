@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "id": "material-room-study",
+  "lifecycle": "candidate-private",
+  "contract": "studio/scene_kit/contract.json",
+  "purpose": "See how the same original objects change with a setting and lighting method.",
+  "loop": "arrive \u2192 inspect \u2192 change light \u2192 compare \u2192 reuse",
+  "units": "metres",
+  "axes": "Blender Z-up; exported glTF Y-up",
+  "assets": {
+    "mirror": {
+      "path": "projects/gaudi-nexus/output/environment-kit-2026-10-18/detail-final/wall_mirror_gallery.glb",
+      "sha256": "e4979d65a14367a1f2c20f4919370aaa80dd0873f5bbbd36502b1750d5950b55",
+      "decision": "REUSE",
+      "representation": "geometry-study",
+      "rights": "Procedural source; destination rights/appearance not approved"
+    },
+    "planter": {
+      "path": "projects/gaudi-nexus/output/decoration-study-2026-10-18/candidate/planter_ribbed.glb",
+      "sha256": "90d81a4f375f914c91d98ccec6860124480826b9b6f21e82bd4838e915174f59",
+      "decision": "REUSE",
+      "representation": "geometry-study",
+      "rights": "Procedural source; destination rights/appearance not approved"
+    },
+    "lantern": {
+      "path": "projects/gaudi-nexus/output/decoration-study-2026-10-18/candidate/lantern_louvred.glb",
+      "sha256": "e6f7b76a8435786f71036256e89b315cfc80b5bb61cc571cc6ac3f50309869b5",
+      "decision": "REUSE",
+      "representation": "geometry-study",
+      "rights": "Procedural source; destination rights/appearance not approved"
+    },
+    "vessel": {
+      "path": "projects/gaudi-nexus/output/environment-kit-2026-10-18/vase-refinement/vase_fluted.glb",
+      "sha256": "b262d1430d12d3468cfbeb2a04d31157292691c5b24af5da9a5868947f6bee74",
+      "decision": "REUSE",
+      "representation": "geometry-study",
+      "rights": "Procedural source; destination rights/appearance not approved"
+    },
+    "vessel_display": {
+      "path": "projects/gaudi-nexus/output/decoration-study-2026-10-18/candidate/vase_fluted_display.glb",
+      "sha256": "320ea34ae6179e01ea945aee0eb43b8c6eaf943adecd846c6215fa0c5bcb5e25",
+      "decision": "REUSE",
+      "representation": "geometry-study",
+      "rights": "Procedural source; destination rights/appearance not approved"
+    }
+  },
+  "variants": {
+    "daylight": {
+      "wall": [
+        0.56,
+        0.53,
+        0.46
+      ],
+      "floor": [
+        0.3,
+        0.19,
+        0.1
+      ]
+    },
+    "nocturne": {
+      "wall": [
+        0.1,
+        0.14,
+        0.14
+      ],
+      "floor": [
+        0.16,
+        0.1,
+        0.06
+      ]
+    }
+  },
+  "zones": [
+    "arrival",
+    "mirror-wall",
+    "object-pair",
+    "window-light",
+    "return"
+  ],
+  "placements": [
+    {
+      "asset": "mirror",
+      "at": [
+        -1.2,
+        3.55,
+        1.85
+      ],
+      "rotationZ": 180,
+      "scale": 1.4
+    },
+    {
+      "asset": "planter",
+      "at": [
+        -2.25,
+        2.5,
+        0
+      ],
+      "scale": 1.25
+    },
+    {
+      "asset": "lantern",
+      "at": [
+        1.25,
+        2.1,
+        0.9
+      ],
+      "scale": 1.3
+    },
+    {
+      "asset": "lantern",
+      "at": [
+        1.25,
+        -0.1,
+        0.9
+      ],
+      "scale": 1.3
+    },
+    {
+      "asset": "vessel",
+      "at": [
+        -0.6,
+        0.2,
+        0.85
+      ],
+      "scale": 1.25
+    },
+    {
+      "asset": "vessel_display",
+      "at": [
+        0.5,
+        0.2,
+        0.85
+      ],
+      "scale": 1.25
+    }
+  ],
+  "limits": [
+    "Study is not a commissioned building, photoreal certification or live mirror.",
+    "No collision/navigation acceptance; existing orbit/pan inspector remains the consumer.",
+    "No Blender image render, new renderer, external upload or public release."
+  ]
+}
