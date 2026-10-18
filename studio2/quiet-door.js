@@ -51,11 +51,11 @@ export function mountQuietDoor({doc=globalThis.document,win=globalThis.window}={
       active?.matches?.('input,textarea,select,[contenteditable="true"]'));
   }
   function tick(){
-    const t=now(),delta=Math.max(0,Math.min(t-last,1000));last=t;
+    const t=now(),delta=Math.max(0,t-last);last=t;
     if (finished)return;
     if (doc.hidden){idle=0;if(phase==='countdown')hide();return}
     visible+=delta;
-    if(!armed && visible>=QUIET_TIMING.armMs){armed=true;idle=0;}
+    if(!armed && visible>=QUIET_TIMING.armMs){armed=true;idle=0;return;}
     if(!armed)return;
     const blocked=busy();
     if(blocked){idle=0;if(phase==='countdown')hide();return}
