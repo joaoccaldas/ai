@@ -32,7 +32,7 @@ const {chromium}=require('playwright');
    await page.locator('#search').fill('Spatial Simulation Lab');
    assert.equal(await page.locator('.project-card').count(),1,'Research project discoverability');
    await page.locator('#search').fill('Canyon Museum');
-   assert.match(await page.locator('.project-card .status').innerText(),/archived/);
+   assert.match(await page.locator('.project-card .status').innerText(),/archived/i);
    await page.keyboard.press('Escape');
    assert.equal(await page.locator('#projectDrawer').getAttribute('aria-hidden'),'true');
    await page.close();
