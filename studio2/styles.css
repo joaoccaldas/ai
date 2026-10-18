@@ -147,3 +147,22 @@ body.sheet-open .scene-copy{pointer-events:none}
 .skill{font-size:11px;line-height:1.35;padding:5px 8px;color:#d4d7da}
 .meta span{font-size:13px;line-height:1.55}
 @media(max-width:440px){.sector-toolbar{grid-template-columns:minmax(0,1fr);gap:5px}.project-drawer .drawer-tools{top:-20px}.project-card{padding:16px}.status{font-size:10px}}
+
+
+/* Quiet Door: optional, nonmodal and explicitly one-shot per document. */
+.quiet-door[hidden],.quiet-door [hidden]{display:none!important}
+.quiet-door{position:fixed;right:clamp(12px,2vw,28px);bottom:calc(22px + env(safe-area-inset-bottom));z-index:27;
+  width:min(300px,calc(100vw - 24px));max-width:100%;padding:16px 18px;background:rgba(12,22,24,.96);
+  border:1px solid rgba(125,210,186,.48);border-radius:16px;color:#f0f6f2;
+  box-shadow:0 12px 44px rgba(0,0,0,.45);backdrop-filter:blur(12px)}
+.quiet-door-kicker{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#b4e8d5;margin-bottom:4px}
+.quiet-door-counter{font-size:14px;line-height:1.5;font-variant-numeric:tabular-nums}
+.quiet-door.is-revealed{padding:19px 19px 17px;background:linear-gradient(150deg,rgba(13,38,34,.97),rgba(14,19,28,.98))}
+.quiet-door-symbol{display:block;font-size:32px;color:#b8f8dc;line-height:1.2;margin:3px 0 8px}
+.quiet-door strong{display:block;font:400 26px/1.18 var(--serif)}
+.quiet-door p{color:#d0dfdc;font-size:13.5px;line-height:1.5;margin:8px 0 13px}
+.quiet-door-link{display:inline-flex;align-items:center;min-height:44px;color:#ccf6e5;font-weight:650;font-size:13px;text-underline-offset:3px}
+.quiet-door-close{position:absolute;right:10px;top:8px;width:38px;height:38px;border:0;border-radius:50%;background:transparent;color:#eaf4f0;font-size:24px;cursor:pointer}
+.quiet-door-close:focus-visible,.quiet-door-link:focus-visible{outline:2px solid #ccf6e5;outline-offset:3px}
+@media(max-width:700px){.quiet-door{display:none}}
+@media(prefers-reduced-motion:reduce){.quiet-door{animation:none;transition:none}}
