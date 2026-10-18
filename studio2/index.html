@@ -67,7 +67,10 @@
       </div>
       <div class="drawer-tools">
         <input id="search" type="search" placeholder="Search projects, skills or lessons…" autocomplete="off" />
-        <div class="filters" id="filters"></div>
+        <div class="sector-toolbar"><label for="sectorFilter">Application area</label><select id="sectorFilter" aria-describedby="sectorNote"><option value="all">All application areas</option></select></div>
+        <p class="sector-note" id="sectorNote">Industry fit indicates possible applications, not evidence of a client engagement.</p>
+        <div class="filters" id="filters" aria-label="Project lifecycle"></div>
+        <p id="projectCount" class="project-count" role="status" aria-live="polite"></p>
       </div>
       <div class="projects" id="projects"></div>
     </section>
