@@ -3,7 +3,7 @@ import json, math, os, sys
 sys.path.insert(0, os.path.dirname(__file__))
 from procassets.interiors import wall_mirror_gallery
 from procassets.public_realm import reflecting_basin
-from procassets.props import vase_fluted
+from procassets.props import vase_fluted, planter_ribbed, lantern_louvred
 
 checks = []
 def finite(bm):
@@ -51,4 +51,39 @@ for call in [lambda: reflecting_basin(seg=72,flutes=48), lambda: vase_fluted(flu
     except ValueError: pass
     else: raise AssertionError('Detail bounds not enforced')
 checks.append('invalid_detail_density_rejected')
+
+plain = planter_ribbed(ribs=0)
+detail = planter_ribbed()
+finite(plain); finite(detail)
+assert min(v.co.z for v in detail.verts) >= -1e-6
+assert max(v.co.z for v in detail.verts) <= .48001
+assert any((a.co-b.co).length > .001 for a,b in zip(plain.verts,detail.verts))
+assert all((a.co-b.co).length < 1e-8 for a,b in zip(plain.verts,detail.verts) if a.co.z >= .86*.48)
+checks.append('planter_ribbing_preserves_rim_and_floor_contact')
+plain.free(); detail.free()
+
+lantern = lantern_louvred()
+finite(lantern)
+assert {f.material_index for f in lantern.faces} == {0,1,2}
+assert min(v.co.z for v in lantern.verts) >= -1e-6
+assert .60 < max(v.co.z for v in lantern.verts) < .62
+assert max(abs(v.co.x) for v in lantern.verts) <= .151
+checks.append('lantern_parts_inside_authored_envelope')
+lantern.free()
+
+hero = vase_fluted()
+display = vase_fluted(flutes=32, segments=192, profile_steps=2)
+finite(display)
+assert len(display.faces) < len(hero.faces)*.4
+for axis in range(3):
+    assert abs(min(v.co[axis] for v in hero.verts)-min(v.co[axis] for v in display.verts)) < .002
+    assert abs(max(v.co[axis] for v in hero.verts)-max(v.co[axis] for v in display.verts)) < .002
+checks.append('display_vessel_keeps_bounds_with_fewer_faces')
+hero.free(); display.free()
+
+for call in [lambda: planter_ribbed(h=float('nan')),lambda: planter_ribbed(ribs=80),lambda: lantern_louvred(slats=2),lambda: lantern_louvred(d=float('inf'))]:
+    try: call()
+    except ValueError: pass
+    else: raise AssertionError('Decoration bounds not enforced')
+checks.append('invalid_decoration_parameters_rejected')
 print(json.dumps({'checks':checks,'rendered':False,'productionAccepted':False}))

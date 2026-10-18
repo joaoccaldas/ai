@@ -1,1323 +1,1412 @@
 {
- "version": 1,
- "units": "metres; Blender Z-up; glTF Y-up; anchor defined per asset",
- "provenance": "All assets are generated procedurally by the scripts in procassets/. No third-party meshes, textures or scans. Rights: owned by the repository owner.",
- "notes": "contract_id maps to projects/gaudi-nexus/scripts/asset_library_v1.py. Assets without contract_id are extras for reuse in other projects.",
- "assets": [
-  {
-   "id": "produce_crate",
-   "contract_id": "produce_crate",
-   "builder": "crate",
-   "params": {
-    "w": 0.6,
-    "d": 0.4,
-    "h": 0.28
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe",
-    "studio/florist"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "stall_standard",
-   "contract_id": "stall_standard",
-   "builder": "stall",
-   "params": {
-    "w": 2.7,
-    "d": 2.2,
-    "h": 2.1
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "civic_bench",
-   "contract_id": "civic_bench",
-   "builder": "bench",
-   "params": {},
-   "category": "civic",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "studio/museum"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "lighting_pole",
-   "contract_id": "lighting_pole",
-   "builder": "lamp",
-   "params": {},
-   "category": "lighting",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "fruit_orange",
-   "builder": "fruit",
-   "params": {
-    "kind": "orange",
-    "diameter": 0.075
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe",
-    "studio/florist"
-   ],
-   "anchor": "geometry_centre"
-  },
-  {
-   "id": "fruit_tomato",
-   "builder": "fruit",
-   "params": {
-    "kind": "tomato",
-    "diameter": 0.07
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe"
-   ],
-   "anchor": "geometry_centre"
-  },
-  {
-   "id": "fruit_apple",
-   "builder": "fruit",
-   "params": {
-    "kind": "apple",
-    "diameter": 0.075
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe"
-   ],
-   "anchor": "geometry_centre"
-  },
-  {
-   "id": "fruit_lemon",
-   "builder": "fruit",
-   "params": {
-    "kind": "lemon",
-    "diameter": 0.06
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe"
-   ],
-   "anchor": "geometry_centre"
-  },
-  {
-   "id": "fruit_aubergine",
-   "builder": "fruit",
-   "params": {
-    "kind": "aubergine",
-    "diameter": 0.07
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus"
-   ],
-   "anchor": "geometry_centre"
-  },
-  {
-   "id": "fruit_pear",
-   "builder": "fruit",
-   "params": {
-    "kind": "pear",
-    "diameter": 0.07
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus"
-   ],
-   "anchor": "geometry_centre"
-  },
-  {
-   "id": "basket_woven",
-   "builder": "basket",
-   "params": {
-    "radius": 0.19,
-    "h": 0.22
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe",
-    "studio/florist"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "bread_loaf",
-   "builder": "bread",
-   "params": {
-    "L": 0.14,
-    "W": 0.075,
-    "H": 0.055
-   },
-   "category": "market",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "herb_tuft",
-   "builder": "herb",
-   "params": {},
-   "category": "landscape",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/florist",
-    "studio/cafe"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "tree_platane",
-   "builder": "tree",
-   "params": {
-    "height": 9.0,
-    "leaves": 6000
-   },
-   "category": "landscape",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hotel",
-    "studio/hall"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "person_walker",
-   "builder": "person",
-   "params": {
-    "pose": "walk",
-    "h": 1.72
-   },
-   "category": "entourage",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "studio/museum",
-    "studio/cafe"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "person_standing",
-   "builder": "person",
-   "params": {
-    "pose": "stand",
-    "h": 1.68
-   },
-   "category": "entourage",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "studio/museum",
-    "studio/cafe"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "person_child",
-   "builder": "person",
-   "params": {
-    "pose": "walk",
-    "h": 1.05,
-    "child": true
-   },
-   "category": "entourage",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "cafe_set",
-   "builder": "cafe_set",
-   "params": {},
-   "category": "furniture",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe",
-    "studio/hotel"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "public_bin",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "public_bin",
-   "materials": [
-    "CastIron",
-    "Steel"
-   ],
-   "params": {},
-   "category": "public_realm",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "studio/cafe"
-   ],
-   "contract_id": "public_bin",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "bike_rack_5",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "bike_rack_5",
-   "materials": [
-    "Steel"
-   ],
-   "params": {},
-   "category": "public_realm",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall"
-   ],
-   "contract_id": "bike_rack_5",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "bollard",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "bollard",
-   "materials": [
-    "CastIron",
-    "Reflective"
-   ],
-   "params": {},
-   "category": "public_realm",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "studio/museum"
-   ],
-   "contract_id": "bollard",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "drinking_fountain",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "drinking_fountain",
-   "materials": [
-    "Concrete",
-    "Steel"
-   ],
-   "params": {},
-   "category": "public_realm",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall"
-   ],
-   "contract_id": "drinking_fountain",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "tree_grate_small",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "tree_grate_small",
-   "materials": [
-    "CastIron"
-   ],
-   "params": {},
-   "category": "landscape",
-   "reuse": [
-    "gaudi-nexus"
-   ],
-   "contract_id": "tree_grate_small",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "low_planter",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "low_planter",
-   "materials": [
-    "Concrete",
-    "Soil",
-    "Herb"
-   ],
-   "params": {},
-   "category": "landscape",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hotel",
-    "studio/cafe"
-   ],
-   "contract_id": "low_planter",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "community_table",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "community_table",
-   "materials": [
-    "Timber",
-    "Steel"
-   ],
-   "params": {},
-   "category": "civic",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "studio/cafe"
-   ],
-   "contract_id": "community_table",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "queue_rail",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "queue_rail",
-   "materials": [
-    "Steel"
-   ],
-   "params": {},
-   "category": "operations",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "studio/museum"
-   ],
-   "contract_id": "queue_rail",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "tactile_tile",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "tactile_tile",
-   "materials": [
-    "Ceramic"
-   ],
-   "params": {},
-   "category": "accessibility",
-   "reuse": [
-    "gaudi-nexus"
-   ],
-   "contract_id": "tactile_tile",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "floor_drain_channel",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "floor_drain_channel",
-   "materials": [
-    "Steel",
-    "DarkChannel"
-   ],
-   "params": {},
-   "category": "service",
-   "reuse": [
-    "gaudi-nexus"
-   ],
-   "contract_id": "floor_drain_channel",
-   "anchor": "finished_floor_level"
-  },
-  {
-   "id": "wayfinding_totem",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "wayfinding_totem",
-   "materials": [
-    "Concrete",
-    "Steel",
-    "SignPanel"
-   ],
-   "params": {},
-   "category": "wayfinding",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "studio/museum"
-   ],
-   "contract_id": "wayfinding_totem",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "market_sign_blade",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "market_sign_blade",
-   "materials": [
-    "Steel",
-    "SignPanel"
-   ],
-   "params": {},
-   "category": "wayfinding",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe"
-   ],
-   "contract_id": "market_sign_blade",
-   "anchor": "wall_attachment_centre"
-  },
-  {
-   "id": "handwash_station",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "handwash_station",
-   "materials": [
-    "Ceramic",
-    "Steel"
-   ],
-   "params": {},
-   "category": "service",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hotel"
-   ],
-   "contract_id": "handwash_station",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "waste_sorting_station",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "waste_sorting_station",
-   "materials": [
-    "Steel",
-    "BinGreen",
-    "BinBlue",
-    "BinYellow"
-   ],
-   "params": {},
-   "category": "service",
-   "reuse": [
-    "gaudi-nexus"
-   ],
-   "contract_id": "waste_sorting_station",
-   "anchor": "base_centre"
-  },
-  {
-   "id": "potted_olive",
-   "builder": "gen",
-   "module": "props",
-   "func": "potted_olive",
-   "materials": [
-    "Terracotta",
-    "Bark",
-    "LeafSilver"
-   ],
-   "params": {},
-   "category": "landscape",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe",
-    "studio/florist",
-    "studio/hotel",
-    "studio/hall"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "vase_flowers",
-   "builder": "gen",
-   "module": "props",
-   "func": "vase_flowers",
-   "materials": [
-    "Ceramic",
-    "Stem",
-    "Petal",
-    "FlowerCentre"
-   ],
-   "params": {},
-   "category": "decor",
-   "reuse": [
-    "studio/florist",
-    "studio/hotel",
-    "studio/cafe"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "coffee_cup",
-   "builder": "gen",
-   "module": "props",
-   "func": "coffee_cup",
-   "materials": [
-    "Porcelain"
-   ],
-   "params": {},
-   "category": "tableware",
-   "reuse": [
-    "studio/cafe",
-    "studio/hotel"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "wine_glass",
-   "builder": "gen",
-   "module": "props",
-   "func": "wine_glass",
-   "materials": [
-    "Glass"
-   ],
-   "params": {},
-   "category": "tableware",
-   "reuse": [
-    "studio/cafe",
-    "studio/hotel"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "wine_bottle",
-   "builder": "gen",
-   "module": "props",
-   "func": "wine_bottle",
-   "materials": [
-    "GlassDark",
-    "Label",
-    "Foil"
-   ],
-   "params": {},
-   "category": "tableware",
-   "reuse": [
-    "studio/cafe",
-    "studio/hotel"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "plate_setting",
-   "builder": "gen",
-   "module": "props",
-   "func": "plate_setting",
-   "materials": [
-    "Porcelain",
-    "Steel",
-    "Napkin"
-   ],
-   "params": {},
-   "category": "tableware",
-   "reuse": [
-    "studio/cafe",
-    "studio/hotel"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "pendant_lamp",
-   "builder": "gen",
-   "module": "props",
-   "func": "pendant_lamp",
-   "materials": [
-    "ShadeMetal",
-    "Cord",
-    "BulbEmissive"
-   ],
-   "params": {},
-   "category": "lighting",
-   "reuse": [
-    "studio/cafe",
-    "studio/hotel",
-    "studio/hall"
-   ],
-   "anchor": "ceiling_attachment"
-  },
-  {
-   "id": "bar_stool",
-   "builder": "gen",
-   "module": "props",
-   "func": "bar_stool",
-   "materials": [
-    "Timber",
-    "Steel"
-   ],
-   "params": {},
-   "category": "furniture",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/cafe",
-    "studio/hotel"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "sofa_two_seat",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "sofa_two_seat",
-   "materials": [
-    "Fabric",
-    "Timber"
-   ],
-   "params": {},
-   "category": "furniture",
-   "reuse": [
-    "studio/hotel",
-    "studio/hall",
-    "studio/cafe"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "armchair",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "armchair",
-   "materials": [
-    "Fabric",
-    "Timber"
-   ],
-   "params": {},
-   "category": "furniture",
-   "reuse": [
-    "studio/hotel",
-    "studio/hall"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "rug_round",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "rug_round",
-   "materials": [
-    "RugField",
-    "RugBorder"
-   ],
-   "params": {},
-   "category": "decor",
-   "reuse": [
-    "studio/hotel",
-    "studio/hall"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "book_stack",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "book_stack",
-   "materials": [
-    "BookRed",
-    "BookBlue",
-    "BookGreen",
-    "Paper"
-   ],
-   "params": {},
-   "category": "decor",
-   "reuse": [
-    "studio/hotel",
-    "studio/museum",
-    "studio/cafe"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "picture_frame",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "picture_frame",
-   "materials": [
-    "Timber",
-    "Canvas"
-   ],
-   "params": {},
-   "category": "decor",
-   "reuse": [
-    "studio/hotel",
-    "studio/hall",
-    "studio/museum"
-   ],
-   "anchor": "wall_attachment_centre"
-  },
-  {
-   "id": "monstera_potted",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "monstera_potted",
-   "materials": [
-    "Terracotta",
-    "Stem",
-    "LeafDark"
-   ],
-   "params": {},
-   "category": "landscape",
-   "reuse": [
-    "studio/hotel",
-    "studio/hall",
-    "studio/cafe",
-    "studio/florist"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "flower_bucket",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "flower_bucket",
-   "materials": [
-    "Zinc",
-    "Stem",
-    "Petal",
-    "FlowerCentre"
-   ],
-   "params": {},
-   "category": "decor",
-   "reuse": [
-    "studio/florist"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "dumbbell_pair",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "dumbbell_pair",
-   "materials": [
-    "Rubber",
-    "Steel"
-   ],
-   "params": {},
-   "category": "fitness",
-   "reuse": [
-    "studio/gym"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "kettlebell",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "kettlebell",
-   "materials": [
-    "CastIron"
-   ],
-   "params": {},
-   "category": "fitness",
-   "reuse": [
-    "studio/gym"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "yoga_mat_rolled",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "yoga_mat_rolled",
-   "materials": [
-    "Rubber"
-   ],
-   "params": {},
-   "category": "fitness",
-   "reuse": [
-    "studio/gym"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "plinth_display",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "plinth_display",
-   "materials": [
-    "PlinthBody",
-    "PlinthTop"
-   ],
-   "params": {},
-   "category": "exhibit",
-   "reuse": [
-    "studio/museum",
-    "studio/jewelry",
-    "studio/gallery"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "display_case_glass",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "display_case_glass",
-   "materials": [
-    "PlinthBody",
-    "Steel",
-    "Glass"
-   ],
-   "params": {},
-   "category": "exhibit",
-   "reuse": [
-    "studio/museum",
-    "studio/jewelry",
-    "studio/gallery"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "chalkboard_easel",
-   "builder": "gen",
-   "module": "market_props",
-   "func": "chalkboard_easel",
-   "materials": [
-    "Timber",
-    "Chalkboard",
-    "Chalk"
-   ],
-   "params": {},
-   "category": "market",
-   "reuse": [
-    "studio/cafe",
-    "studio/market",
-    "studio/restaurant"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "hanging_scale",
-   "builder": "gen",
-   "module": "market_props",
-   "func": "hanging_scale",
-   "materials": [
-    "Brass",
-    "Steel",
-    "Enamel"
-   ],
-   "params": {},
-   "category": "market",
-   "reuse": [
-    "studio/market",
-    "studio/shop"
-   ],
-   "anchor": "ceiling_attachment"
-  },
-  {
-   "id": "preserve_jar",
-   "builder": "gen",
-   "module": "market_props",
-   "func": "preserve_jar",
-   "materials": [
-    "Glass",
-    "Jam",
-    "Zinc",
-    "Label"
-   ],
-   "params": {},
-   "category": "market",
-   "reuse": [
-    "studio/market",
-    "studio/kitchen",
-    "studio/pantry"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "cheese_wheel",
-   "builder": "gen",
-   "module": "market_props",
-   "func": "cheese_wheel",
-   "materials": [
-    "Rind",
-    "CheeseCut"
-   ],
-   "params": {},
-   "category": "market",
-   "reuse": [
-    "studio/market",
-    "studio/deli"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "bunting_string",
-   "builder": "gen",
-   "module": "market_props",
-   "func": "bunting_string",
-   "materials": [
-    "Cord",
-    "FlagRed",
-    "FlagCream",
-    "FlagTeal"
-   ],
-   "params": {},
-   "category": "market",
-   "reuse": [
-    "studio/market",
-    "studio/festival",
-    "studio/cafe"
-   ],
-   "anchor": "ceiling_attachment"
-  },
-  {
-   "id": "olive_tin",
-   "builder": "gen",
-   "module": "market_props",
-   "func": "olive_tin",
-   "materials": [
-    "Zinc",
-    "Label"
-   ],
-   "params": {},
-   "category": "market",
-   "reuse": [
-    "studio/market",
-    "studio/pantry"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "wall_mirror_moulded",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "wall_mirror_moulded",
-   "materials": [
-    "Gilt",
-    "Mirror",
-    "Backboard"
-   ],
-   "params": {},
-   "category": "decor",
-   "reuse": [
-    "studio/hotel",
-    "studio/hall",
-    "studio/museum",
-    "konam/rooms"
-   ],
-   "anchor": "wall_attachment_centre",
-   "surfaces": {
-    "Gilt": "gilt"
-   },
-   "uv_metres": 0.25,
-   "inspection_direction": [
-    0.35,
-    0.18,
-    -1
-   ]
-  },
-  {
-   "id": "floor_mirror_arched",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "floor_mirror_arched",
-   "materials": [
-    "Timber",
-    "Mirror",
-    "Backboard",
-    "Steel"
-   ],
-   "params": {},
-   "category": "decor",
-   "reuse": [
-    "studio/hotel",
-    "konam/rooms",
-    "studio/gallery"
-   ],
-   "anchor": "base_centre",
-   "surfaces": {
-    "Timber": "oak"
-   },
-   "uv_metres": 0.25,
-   "inspection_direction": [
-    0.35,
-    0.18,
-    -1
-   ]
-  },
-  {
-   "id": "reflecting_basin",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "reflecting_basin",
-   "materials": [
-    "Stone",
-    "Water"
-   ],
-   "params": {},
-   "category": "landscape",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "bellagio",
-    "konam/rooms"
-   ],
-   "anchor": "base_centre",
-   "surfaces": {
-    "Stone": "stone",
-    "Water": "water"
-   },
-   "uv_metres": 0.6
-  },
-  {
-   "id": "reflecting_basin_octagonal",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "reflecting_basin",
-   "materials": [
-    "Stone",
-    "Water"
-   ],
-   "params": {
-    "d": 2.2,
-    "seg": 8
-   },
-   "category": "landscape",
-   "reuse": [
-    "gaudi-nexus",
-    "studio/hall",
-    "bellagio"
-   ],
-   "anchor": "base_centre",
-   "surfaces": {
-    "Stone": "stone",
-    "Water": "water"
-   },
-   "uv_metres": 0.6
-  },
-  {
-   "id": "cloud_cumulus",
-   "builder": "gen",
-   "module": "atmosphere",
-   "func": "cloud_cumulus",
-   "materials": [
-    "Cloud"
-   ],
-   "params": {},
-   "category": "sky",
-   "reuse": [
-    "studio/*",
-    "konam/rooms",
-    "bellagio",
-    "studio-kona"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "cloud_cumulus_tall",
-   "builder": "gen",
-   "module": "atmosphere",
-   "func": "cloud_cumulus",
-   "materials": [
-    "Cloud"
-   ],
-   "params": {
-    "w": 11.0,
-    "puffs": 34,
-    "seed": 9
-   },
-   "category": "sky",
-   "reuse": [
-    "studio/*",
-    "konam/rooms",
-    "studio-kona"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "telescope_refractor",
-   "builder": "gen",
-   "module": "props",
-   "func": "telescope_refractor",
-   "materials": [
-    "Enamel",
-    "Steel",
-    "Brass",
-    "Glass",
-    "Rubber"
-   ],
-   "params": {},
-   "category": "exhibit",
-   "reuse": [
-    "konam/rooms",
-    "studio/museum",
-    "caldaspace"
-   ],
-   "anchor": "base_centre"
-  },
-  {
-   "id": "globe_on_stand",
-   "builder": "gen",
-   "module": "props",
-   "func": "globe_on_stand",
-   "materials": [
-    "GlobeSea",
-    "Graticule",
-    "Brass",
-    "Timber"
-   ],
-   "params": {},
-   "category": "exhibit",
-   "reuse": [
-    "konam/rooms",
-    "studio/museum",
-    "noema"
-   ],
-   "anchor": "base_centre",
-   "surfaces": {
-    "Timber": "oak"
-   },
-   "uv_metres": 0.25
-  },
-  {
-   "id": "signal_column",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "signal_column",
-   "materials": [
-    "Stone",
-    "SignalGreen",
-    "SignalAmber",
-    "SignalRed"
-   ],
-   "params": {},
-   "category": "exhibit",
-   "reuse": [
-    "konam/rooms",
-    "finance",
-    "studio/hall"
-   ],
-   "anchor": "base_centre",
-   "surfaces": {
-    "Stone": "stone"
-   },
-   "uv_metres": 0.4
-  },
-  {
-   "id": "data_plinth",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "data_plinth",
-   "materials": [
-    "Stone",
-    "Glass",
-    "Screen",
-    "DarkChannel"
-   ],
-   "params": {},
-   "category": "exhibit",
-   "reuse": [
-    "konam/rooms",
-    "finance",
-    "performance-os",
-    "studio/museum"
-   ],
-   "anchor": "base_centre",
-   "surfaces": {
-    "Stone": "stone"
-   },
-   "uv_metres": 0.5
-  },
-  {
-   "id": "wall_mirror_gallery",
-   "builder": "gen",
-   "module": "interiors",
-   "func": "wall_mirror_gallery",
-   "materials": [
-    "Gilt",
-    "Mirror",
-    "Backboard"
-   ],
-   "params": {
-    "w": 0.85,
-    "h": 1.25,
-    "beads": 360
-   },
-   "category": "decor",
-   "reuse": [
-    "studio/hotel",
-    "studio/gallery",
-    "konam/rooms"
-   ],
-   "anchor": "wall_attachment_centre",
-   "surfaces": {
-    "Gilt": "gilt"
-   },
-   "surface_seed": 17,
-   "uv_metres": 0.25,
-   "inspection_direction": [
-    0.35,
-    0.18,
-    -1
-   ]
-  },
-  {
-   "id": "reflecting_basin_fluted",
-   "builder": "gen",
-   "module": "public_realm",
-   "func": "reflecting_basin",
-   "materials": [
-    "Stone",
-    "Water"
-   ],
-   "params": {
-    "d": 1.6,
-    "h": 0.46,
-    "seg": 288,
-    "flutes": 48
-   },
-   "category": "landscape",
-   "reuse": [
-    "studio/hotel",
-    "gaudi-nexus",
-    "konam/rooms"
-   ],
-   "anchor": "base_centre",
-   "surfaces": {
-    "Stone": "stone",
-    "Water": "water"
-   },
-   "surface_seed": 27,
-   "uv_metres": 0.6,
-   "inspection_direction": [
-    0.6,
-    0.85,
-    1
-   ]
-  },
-  {
-   "id": "vase_fluted",
-   "builder": "gen",
-   "module": "props",
-   "func": "vase_fluted",
-   "materials": [
-    "Porcelain",
-    "Brass"
-   ],
-   "params": {
-    "h": 0.52,
-    "r": 0.17,
-    "flutes": 48,
-    "segments": 288,
-    "profile_steps": 4
-   },
-   "category": "decor",
-   "reuse": [
-    "studio/hotel",
-    "studio/gallery",
-    "studio/museum"
-   ],
-   "anchor": "base_centre",
-   "inspection_direction": [
-    0.6,
-    0.35,
-    1
-   ]
-  }
- ]
+  "version": 1,
+  "units": "metres; Blender Z-up; glTF Y-up; anchor defined per asset",
+  "provenance": "All assets are generated procedurally by the scripts in procassets/. No third-party meshes, textures or scans. Rights: owned by the repository owner.",
+  "notes": "contract_id maps to projects/gaudi-nexus/scripts/asset_library_v1.py. Assets without contract_id are extras for reuse in other projects.",
+  "assets": [
+    {
+      "id": "produce_crate",
+      "contract_id": "produce_crate",
+      "builder": "crate",
+      "params": {
+        "w": 0.6,
+        "d": 0.4,
+        "h": 0.28
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe",
+        "studio/florist"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "stall_standard",
+      "contract_id": "stall_standard",
+      "builder": "stall",
+      "params": {
+        "w": 2.7,
+        "d": 2.2,
+        "h": 2.1
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "civic_bench",
+      "contract_id": "civic_bench",
+      "builder": "bench",
+      "params": {},
+      "category": "civic",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "studio/museum"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "lighting_pole",
+      "contract_id": "lighting_pole",
+      "builder": "lamp",
+      "params": {},
+      "category": "lighting",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "fruit_orange",
+      "builder": "fruit",
+      "params": {
+        "kind": "orange",
+        "diameter": 0.075
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe",
+        "studio/florist"
+      ],
+      "anchor": "geometry_centre"
+    },
+    {
+      "id": "fruit_tomato",
+      "builder": "fruit",
+      "params": {
+        "kind": "tomato",
+        "diameter": 0.07
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe"
+      ],
+      "anchor": "geometry_centre"
+    },
+    {
+      "id": "fruit_apple",
+      "builder": "fruit",
+      "params": {
+        "kind": "apple",
+        "diameter": 0.075
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe"
+      ],
+      "anchor": "geometry_centre"
+    },
+    {
+      "id": "fruit_lemon",
+      "builder": "fruit",
+      "params": {
+        "kind": "lemon",
+        "diameter": 0.06
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe"
+      ],
+      "anchor": "geometry_centre"
+    },
+    {
+      "id": "fruit_aubergine",
+      "builder": "fruit",
+      "params": {
+        "kind": "aubergine",
+        "diameter": 0.07
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus"
+      ],
+      "anchor": "geometry_centre"
+    },
+    {
+      "id": "fruit_pear",
+      "builder": "fruit",
+      "params": {
+        "kind": "pear",
+        "diameter": 0.07
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus"
+      ],
+      "anchor": "geometry_centre"
+    },
+    {
+      "id": "basket_woven",
+      "builder": "basket",
+      "params": {
+        "radius": 0.19,
+        "h": 0.22
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe",
+        "studio/florist"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "bread_loaf",
+      "builder": "bread",
+      "params": {
+        "L": 0.14,
+        "W": 0.075,
+        "H": 0.055
+      },
+      "category": "market",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "herb_tuft",
+      "builder": "herb",
+      "params": {},
+      "category": "landscape",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/florist",
+        "studio/cafe"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "tree_platane",
+      "builder": "tree",
+      "params": {
+        "height": 9.0,
+        "leaves": 6000
+      },
+      "category": "landscape",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hotel",
+        "studio/hall"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "person_walker",
+      "builder": "person",
+      "params": {
+        "pose": "walk",
+        "h": 1.72
+      },
+      "category": "entourage",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "studio/museum",
+        "studio/cafe"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "person_standing",
+      "builder": "person",
+      "params": {
+        "pose": "stand",
+        "h": 1.68
+      },
+      "category": "entourage",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "studio/museum",
+        "studio/cafe"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "person_child",
+      "builder": "person",
+      "params": {
+        "pose": "walk",
+        "h": 1.05,
+        "child": true
+      },
+      "category": "entourage",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "cafe_set",
+      "builder": "cafe_set",
+      "params": {},
+      "category": "furniture",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe",
+        "studio/hotel"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "public_bin",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "public_bin",
+      "materials": [
+        "CastIron",
+        "Steel"
+      ],
+      "params": {},
+      "category": "public_realm",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "studio/cafe"
+      ],
+      "contract_id": "public_bin",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "bike_rack_5",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "bike_rack_5",
+      "materials": [
+        "Steel"
+      ],
+      "params": {},
+      "category": "public_realm",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall"
+      ],
+      "contract_id": "bike_rack_5",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "bollard",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "bollard",
+      "materials": [
+        "CastIron",
+        "Reflective"
+      ],
+      "params": {},
+      "category": "public_realm",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "studio/museum"
+      ],
+      "contract_id": "bollard",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "drinking_fountain",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "drinking_fountain",
+      "materials": [
+        "Concrete",
+        "Steel"
+      ],
+      "params": {},
+      "category": "public_realm",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall"
+      ],
+      "contract_id": "drinking_fountain",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "tree_grate_small",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "tree_grate_small",
+      "materials": [
+        "CastIron"
+      ],
+      "params": {},
+      "category": "landscape",
+      "reuse": [
+        "gaudi-nexus"
+      ],
+      "contract_id": "tree_grate_small",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "low_planter",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "low_planter",
+      "materials": [
+        "Concrete",
+        "Soil",
+        "Herb"
+      ],
+      "params": {},
+      "category": "landscape",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hotel",
+        "studio/cafe"
+      ],
+      "contract_id": "low_planter",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "community_table",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "community_table",
+      "materials": [
+        "Timber",
+        "Steel"
+      ],
+      "params": {},
+      "category": "civic",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "studio/cafe"
+      ],
+      "contract_id": "community_table",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "queue_rail",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "queue_rail",
+      "materials": [
+        "Steel"
+      ],
+      "params": {},
+      "category": "operations",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "studio/museum"
+      ],
+      "contract_id": "queue_rail",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "tactile_tile",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "tactile_tile",
+      "materials": [
+        "Ceramic"
+      ],
+      "params": {},
+      "category": "accessibility",
+      "reuse": [
+        "gaudi-nexus"
+      ],
+      "contract_id": "tactile_tile",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "floor_drain_channel",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "floor_drain_channel",
+      "materials": [
+        "Steel",
+        "DarkChannel"
+      ],
+      "params": {},
+      "category": "service",
+      "reuse": [
+        "gaudi-nexus"
+      ],
+      "contract_id": "floor_drain_channel",
+      "anchor": "finished_floor_level"
+    },
+    {
+      "id": "wayfinding_totem",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "wayfinding_totem",
+      "materials": [
+        "Concrete",
+        "Steel",
+        "SignPanel"
+      ],
+      "params": {},
+      "category": "wayfinding",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "studio/museum"
+      ],
+      "contract_id": "wayfinding_totem",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "market_sign_blade",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "market_sign_blade",
+      "materials": [
+        "Steel",
+        "SignPanel"
+      ],
+      "params": {},
+      "category": "wayfinding",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe"
+      ],
+      "contract_id": "market_sign_blade",
+      "anchor": "wall_attachment_centre"
+    },
+    {
+      "id": "handwash_station",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "handwash_station",
+      "materials": [
+        "Ceramic",
+        "Steel"
+      ],
+      "params": {},
+      "category": "service",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hotel"
+      ],
+      "contract_id": "handwash_station",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "waste_sorting_station",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "waste_sorting_station",
+      "materials": [
+        "Steel",
+        "BinGreen",
+        "BinBlue",
+        "BinYellow"
+      ],
+      "params": {},
+      "category": "service",
+      "reuse": [
+        "gaudi-nexus"
+      ],
+      "contract_id": "waste_sorting_station",
+      "anchor": "base_centre"
+    },
+    {
+      "id": "potted_olive",
+      "builder": "gen",
+      "module": "props",
+      "func": "potted_olive",
+      "materials": [
+        "Terracotta",
+        "Bark",
+        "LeafSilver"
+      ],
+      "params": {},
+      "category": "landscape",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe",
+        "studio/florist",
+        "studio/hotel",
+        "studio/hall"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "vase_flowers",
+      "builder": "gen",
+      "module": "props",
+      "func": "vase_flowers",
+      "materials": [
+        "Ceramic",
+        "Stem",
+        "Petal",
+        "FlowerCentre"
+      ],
+      "params": {},
+      "category": "decor",
+      "reuse": [
+        "studio/florist",
+        "studio/hotel",
+        "studio/cafe"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "coffee_cup",
+      "builder": "gen",
+      "module": "props",
+      "func": "coffee_cup",
+      "materials": [
+        "Porcelain"
+      ],
+      "params": {},
+      "category": "tableware",
+      "reuse": [
+        "studio/cafe",
+        "studio/hotel"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "wine_glass",
+      "builder": "gen",
+      "module": "props",
+      "func": "wine_glass",
+      "materials": [
+        "Glass"
+      ],
+      "params": {},
+      "category": "tableware",
+      "reuse": [
+        "studio/cafe",
+        "studio/hotel"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "wine_bottle",
+      "builder": "gen",
+      "module": "props",
+      "func": "wine_bottle",
+      "materials": [
+        "GlassDark",
+        "Label",
+        "Foil"
+      ],
+      "params": {},
+      "category": "tableware",
+      "reuse": [
+        "studio/cafe",
+        "studio/hotel"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "plate_setting",
+      "builder": "gen",
+      "module": "props",
+      "func": "plate_setting",
+      "materials": [
+        "Porcelain",
+        "Steel",
+        "Napkin"
+      ],
+      "params": {},
+      "category": "tableware",
+      "reuse": [
+        "studio/cafe",
+        "studio/hotel"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "pendant_lamp",
+      "builder": "gen",
+      "module": "props",
+      "func": "pendant_lamp",
+      "materials": [
+        "ShadeMetal",
+        "Cord",
+        "BulbEmissive"
+      ],
+      "params": {},
+      "category": "lighting",
+      "reuse": [
+        "studio/cafe",
+        "studio/hotel",
+        "studio/hall"
+      ],
+      "anchor": "ceiling_attachment"
+    },
+    {
+      "id": "bar_stool",
+      "builder": "gen",
+      "module": "props",
+      "func": "bar_stool",
+      "materials": [
+        "Timber",
+        "Steel"
+      ],
+      "params": {},
+      "category": "furniture",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/cafe",
+        "studio/hotel"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "sofa_two_seat",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "sofa_two_seat",
+      "materials": [
+        "Fabric",
+        "Timber"
+      ],
+      "params": {},
+      "category": "furniture",
+      "reuse": [
+        "studio/hotel",
+        "studio/hall",
+        "studio/cafe"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "armchair",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "armchair",
+      "materials": [
+        "Fabric",
+        "Timber"
+      ],
+      "params": {},
+      "category": "furniture",
+      "reuse": [
+        "studio/hotel",
+        "studio/hall"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "rug_round",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "rug_round",
+      "materials": [
+        "RugField",
+        "RugBorder"
+      ],
+      "params": {},
+      "category": "decor",
+      "reuse": [
+        "studio/hotel",
+        "studio/hall"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "book_stack",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "book_stack",
+      "materials": [
+        "BookRed",
+        "BookBlue",
+        "BookGreen",
+        "Paper"
+      ],
+      "params": {},
+      "category": "decor",
+      "reuse": [
+        "studio/hotel",
+        "studio/museum",
+        "studio/cafe"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "picture_frame",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "picture_frame",
+      "materials": [
+        "Timber",
+        "Canvas"
+      ],
+      "params": {},
+      "category": "decor",
+      "reuse": [
+        "studio/hotel",
+        "studio/hall",
+        "studio/museum"
+      ],
+      "anchor": "wall_attachment_centre"
+    },
+    {
+      "id": "monstera_potted",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "monstera_potted",
+      "materials": [
+        "Terracotta",
+        "Stem",
+        "LeafDark"
+      ],
+      "params": {},
+      "category": "landscape",
+      "reuse": [
+        "studio/hotel",
+        "studio/hall",
+        "studio/cafe",
+        "studio/florist"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "flower_bucket",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "flower_bucket",
+      "materials": [
+        "Zinc",
+        "Stem",
+        "Petal",
+        "FlowerCentre"
+      ],
+      "params": {},
+      "category": "decor",
+      "reuse": [
+        "studio/florist"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "dumbbell_pair",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "dumbbell_pair",
+      "materials": [
+        "Rubber",
+        "Steel"
+      ],
+      "params": {},
+      "category": "fitness",
+      "reuse": [
+        "studio/gym"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "kettlebell",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "kettlebell",
+      "materials": [
+        "CastIron"
+      ],
+      "params": {},
+      "category": "fitness",
+      "reuse": [
+        "studio/gym"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "yoga_mat_rolled",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "yoga_mat_rolled",
+      "materials": [
+        "Rubber"
+      ],
+      "params": {},
+      "category": "fitness",
+      "reuse": [
+        "studio/gym"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "plinth_display",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "plinth_display",
+      "materials": [
+        "PlinthBody",
+        "PlinthTop"
+      ],
+      "params": {},
+      "category": "exhibit",
+      "reuse": [
+        "studio/museum",
+        "studio/jewelry",
+        "studio/gallery"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "display_case_glass",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "display_case_glass",
+      "materials": [
+        "PlinthBody",
+        "Steel",
+        "Glass"
+      ],
+      "params": {},
+      "category": "exhibit",
+      "reuse": [
+        "studio/museum",
+        "studio/jewelry",
+        "studio/gallery"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "chalkboard_easel",
+      "builder": "gen",
+      "module": "market_props",
+      "func": "chalkboard_easel",
+      "materials": [
+        "Timber",
+        "Chalkboard",
+        "Chalk"
+      ],
+      "params": {},
+      "category": "market",
+      "reuse": [
+        "studio/cafe",
+        "studio/market",
+        "studio/restaurant"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "hanging_scale",
+      "builder": "gen",
+      "module": "market_props",
+      "func": "hanging_scale",
+      "materials": [
+        "Brass",
+        "Steel",
+        "Enamel"
+      ],
+      "params": {},
+      "category": "market",
+      "reuse": [
+        "studio/market",
+        "studio/shop"
+      ],
+      "anchor": "ceiling_attachment"
+    },
+    {
+      "id": "preserve_jar",
+      "builder": "gen",
+      "module": "market_props",
+      "func": "preserve_jar",
+      "materials": [
+        "Glass",
+        "Jam",
+        "Zinc",
+        "Label"
+      ],
+      "params": {},
+      "category": "market",
+      "reuse": [
+        "studio/market",
+        "studio/kitchen",
+        "studio/pantry"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "cheese_wheel",
+      "builder": "gen",
+      "module": "market_props",
+      "func": "cheese_wheel",
+      "materials": [
+        "Rind",
+        "CheeseCut"
+      ],
+      "params": {},
+      "category": "market",
+      "reuse": [
+        "studio/market",
+        "studio/deli"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "bunting_string",
+      "builder": "gen",
+      "module": "market_props",
+      "func": "bunting_string",
+      "materials": [
+        "Cord",
+        "FlagRed",
+        "FlagCream",
+        "FlagTeal"
+      ],
+      "params": {},
+      "category": "market",
+      "reuse": [
+        "studio/market",
+        "studio/festival",
+        "studio/cafe"
+      ],
+      "anchor": "ceiling_attachment"
+    },
+    {
+      "id": "olive_tin",
+      "builder": "gen",
+      "module": "market_props",
+      "func": "olive_tin",
+      "materials": [
+        "Zinc",
+        "Label"
+      ],
+      "params": {},
+      "category": "market",
+      "reuse": [
+        "studio/market",
+        "studio/pantry"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "wall_mirror_moulded",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "wall_mirror_moulded",
+      "materials": [
+        "Gilt",
+        "Mirror",
+        "Backboard"
+      ],
+      "params": {},
+      "category": "decor",
+      "reuse": [
+        "studio/hotel",
+        "studio/hall",
+        "studio/museum",
+        "konam/rooms"
+      ],
+      "anchor": "wall_attachment_centre",
+      "surfaces": {
+        "Gilt": "gilt"
+      },
+      "uv_metres": 0.25,
+      "inspection_direction": [
+        0.35,
+        0.18,
+        -1
+      ]
+    },
+    {
+      "id": "floor_mirror_arched",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "floor_mirror_arched",
+      "materials": [
+        "Timber",
+        "Mirror",
+        "Backboard",
+        "Steel"
+      ],
+      "params": {},
+      "category": "decor",
+      "reuse": [
+        "studio/hotel",
+        "konam/rooms",
+        "studio/gallery"
+      ],
+      "anchor": "base_centre",
+      "surfaces": {
+        "Timber": "oak"
+      },
+      "uv_metres": 0.25,
+      "inspection_direction": [
+        0.35,
+        0.18,
+        -1
+      ]
+    },
+    {
+      "id": "reflecting_basin",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "reflecting_basin",
+      "materials": [
+        "Stone",
+        "Water"
+      ],
+      "params": {},
+      "category": "landscape",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "bellagio",
+        "konam/rooms"
+      ],
+      "anchor": "base_centre",
+      "surfaces": {
+        "Stone": "stone",
+        "Water": "water"
+      },
+      "uv_metres": 0.6
+    },
+    {
+      "id": "reflecting_basin_octagonal",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "reflecting_basin",
+      "materials": [
+        "Stone",
+        "Water"
+      ],
+      "params": {
+        "d": 2.2,
+        "seg": 8
+      },
+      "category": "landscape",
+      "reuse": [
+        "gaudi-nexus",
+        "studio/hall",
+        "bellagio"
+      ],
+      "anchor": "base_centre",
+      "surfaces": {
+        "Stone": "stone",
+        "Water": "water"
+      },
+      "uv_metres": 0.6
+    },
+    {
+      "id": "cloud_cumulus",
+      "builder": "gen",
+      "module": "atmosphere",
+      "func": "cloud_cumulus",
+      "materials": [
+        "Cloud"
+      ],
+      "params": {},
+      "category": "sky",
+      "reuse": [
+        "studio/*",
+        "konam/rooms",
+        "bellagio",
+        "studio-kona"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "cloud_cumulus_tall",
+      "builder": "gen",
+      "module": "atmosphere",
+      "func": "cloud_cumulus",
+      "materials": [
+        "Cloud"
+      ],
+      "params": {
+        "w": 11.0,
+        "puffs": 34,
+        "seed": 9
+      },
+      "category": "sky",
+      "reuse": [
+        "studio/*",
+        "konam/rooms",
+        "studio-kona"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "telescope_refractor",
+      "builder": "gen",
+      "module": "props",
+      "func": "telescope_refractor",
+      "materials": [
+        "Enamel",
+        "Steel",
+        "Brass",
+        "Glass",
+        "Rubber"
+      ],
+      "params": {},
+      "category": "exhibit",
+      "reuse": [
+        "konam/rooms",
+        "studio/museum",
+        "caldaspace"
+      ],
+      "anchor": "base_centre"
+    },
+    {
+      "id": "globe_on_stand",
+      "builder": "gen",
+      "module": "props",
+      "func": "globe_on_stand",
+      "materials": [
+        "GlobeSea",
+        "Graticule",
+        "Brass",
+        "Timber"
+      ],
+      "params": {},
+      "category": "exhibit",
+      "reuse": [
+        "konam/rooms",
+        "studio/museum",
+        "noema"
+      ],
+      "anchor": "base_centre",
+      "surfaces": {
+        "Timber": "oak"
+      },
+      "uv_metres": 0.25
+    },
+    {
+      "id": "signal_column",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "signal_column",
+      "materials": [
+        "Stone",
+        "SignalGreen",
+        "SignalAmber",
+        "SignalRed"
+      ],
+      "params": {},
+      "category": "exhibit",
+      "reuse": [
+        "konam/rooms",
+        "finance",
+        "studio/hall"
+      ],
+      "anchor": "base_centre",
+      "surfaces": {
+        "Stone": "stone"
+      },
+      "uv_metres": 0.4
+    },
+    {
+      "id": "data_plinth",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "data_plinth",
+      "materials": [
+        "Stone",
+        "Glass",
+        "Screen",
+        "DarkChannel"
+      ],
+      "params": {},
+      "category": "exhibit",
+      "reuse": [
+        "konam/rooms",
+        "finance",
+        "performance-os",
+        "studio/museum"
+      ],
+      "anchor": "base_centre",
+      "surfaces": {
+        "Stone": "stone"
+      },
+      "uv_metres": 0.5
+    },
+    {
+      "id": "wall_mirror_gallery",
+      "builder": "gen",
+      "module": "interiors",
+      "func": "wall_mirror_gallery",
+      "materials": [
+        "Gilt",
+        "Mirror",
+        "Backboard"
+      ],
+      "params": {
+        "w": 0.85,
+        "h": 1.25,
+        "beads": 360
+      },
+      "category": "decor",
+      "reuse": [
+        "studio/hotel",
+        "studio/gallery",
+        "konam/rooms"
+      ],
+      "anchor": "wall_attachment_centre",
+      "surfaces": {
+        "Gilt": "gilt"
+      },
+      "surface_seed": 17,
+      "uv_metres": 0.25,
+      "inspection_direction": [
+        0.35,
+        0.18,
+        -1
+      ]
+    },
+    {
+      "id": "reflecting_basin_fluted",
+      "builder": "gen",
+      "module": "public_realm",
+      "func": "reflecting_basin",
+      "materials": [
+        "Stone",
+        "Water"
+      ],
+      "params": {
+        "d": 1.6,
+        "h": 0.46,
+        "seg": 288,
+        "flutes": 48
+      },
+      "category": "landscape",
+      "reuse": [
+        "studio/hotel",
+        "gaudi-nexus",
+        "konam/rooms"
+      ],
+      "anchor": "base_centre",
+      "surfaces": {
+        "Stone": "stone",
+        "Water": "water"
+      },
+      "surface_seed": 27,
+      "uv_metres": 0.6,
+      "inspection_direction": [
+        0.6,
+        0.85,
+        1
+      ]
+    },
+    {
+      "id": "vase_fluted",
+      "builder": "gen",
+      "module": "props",
+      "func": "vase_fluted",
+      "materials": [
+        "Porcelain",
+        "Brass"
+      ],
+      "params": {
+        "h": 0.52,
+        "r": 0.17,
+        "flutes": 48,
+        "segments": 288,
+        "profile_steps": 4
+      },
+      "category": "decor",
+      "reuse": [
+        "studio/hotel",
+        "studio/gallery",
+        "studio/museum"
+      ],
+      "anchor": "base_centre",
+      "inspection_direction": [
+        0.6,
+        0.35,
+        1
+      ]
+    },
+    {
+      "id": "planter_ribbed",
+      "builder": "gen",
+      "module": "props",
+      "func": "planter_ribbed",
+      "materials": [
+        "Terracotta"
+      ],
+      "params": {
+        "h": 0.48,
+        "r": 0.26,
+        "ribs": 48,
+        "segments": 192
+      },
+      "category": "decor",
+      "reuse": [
+        "studio/hotel",
+        "studio/gallery",
+        "gaudi-nexus"
+      ],
+      "anchor": "base_centre",
+      "inspection_direction": [
+        0.6,
+        0.55,
+        1
+      ]
+    },
+    {
+      "id": "lantern_louvred",
+      "builder": "gen",
+      "module": "props",
+      "func": "lantern_louvred",
+      "materials": [
+        "Timber",
+        "Brass",
+        "Porcelain"
+      ],
+      "params": {
+        "h": 0.54,
+        "d": 0.3,
+        "slats": 32
+      },
+      "category": "lighting",
+      "reuse": [
+        "studio/hotel",
+        "studio/gallery",
+        "konam/rooms"
+      ],
+      "anchor": "base_centre",
+      "surfaces": {
+        "Timber": "oak"
+      },
+      "surface_seed": 31,
+      "uv_metres": 0.3,
+      "inspection_direction": [
+        0.6,
+        0.35,
+        1
+      ]
+    },
+    {
+      "id": "vase_fluted_display",
+      "builder": "gen",
+      "module": "props",
+      "func": "vase_fluted",
+      "materials": [
+        "Porcelain",
+        "Brass"
+      ],
+      "params": {
+        "h": 0.52,
+        "r": 0.17,
+        "flutes": 32,
+        "segments": 192,
+        "profile_steps": 2
+      },
+      "category": "decor",
+      "reuse": [
+        "studio/hotel",
+        "studio/gallery",
+        "studio/museum"
+      ],
+      "anchor": "base_centre",
+      "inspection_direction": [
+        0.6,
+        0.35,
+        1
+      ]
+    }
+  ]
 }

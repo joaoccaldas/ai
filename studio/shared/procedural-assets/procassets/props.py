@@ -4,6 +4,50 @@ import bmesh
 from mathutils import Vector, Matrix
 from .geom import box, cyl, lathe, arc_tube
 
+def planter_ribbed(h=.48, r=.26, ribs=48, segments=192):
+    """Hollow terracotta planter with a rolled rim; no plant or drainage claim."""
+    if not all(math.isfinite(v) for v in (h, r)) or not .2 <= h <= .9 or not .12 <= r <= .45 or not isinstance(ribs, int) or not 0 <= ribs <= 64 or not isinstance(segments, int) or not 48 <= segments <= 384 or (ribs and segments < ribs * 4):
+        raise ValueError('Planter dimensions/detail outside bounded brief')
+    from .geom import smooth_profile
+    bm = bmesh.new()
+    # Separate outer/inner profiles retain a visible wall and closed base.
+    profile = [(0,0),(.64,0),(.68,.025),(.68,.07),(.70,.11),
+               (.84,.46),(.97,.86),(1,.92),(1,.98),(.97,1),
+               (.90,1),(.88,.96),(.90,.90),(.78,.47),(.64,.16),(0,.16)]
+    curve = smooth_profile(profile, per=3)
+    lathe(bm, [(max(0., a)*r, max(0., min(1., z))*h) for a,z in curve], segments, 0)
+    for v in bm.verts:
+        radius = math.hypot(v.co.x, v.co.y)
+        # Exterior-only ribbing: the interior remains smooth and usable.
+        outer = (.70 + .28 * min(1., max(0., (v.co.z/h-.11)/.75))) * r
+        if ribs and .11*h < v.co.z < .86*h and radius > outer - .012*r:
+            fade = min(1., (v.co.z/h-.11)/.08, (.86-v.co.z/h)/.08)
+            scale = 1 + .022 * max(0.,fade) * math.cos(ribs*math.atan2(v.co.y,v.co.x))
+            v.co.x *= scale; v.co.y *= scale
+    return bm
+
+
+def lantern_louvred(h=.54, d=.30, slats=32):
+    """Oak slats, brass rings/handle, opaque porcelain diffuser; no live light."""
+    if not all(math.isfinite(v) for v in (h,d)) or not .25 <= h <= .9 or not .18 <= d <= .5 or not isinstance(slats,int) or not 16 <= slats <= 48:
+        raise ValueError('Lantern dimensions/detail outside bounded brief')
+    from .geom import rbox
+    bm = bmesh.new(); r = d/2
+    # Raised foot and canopy; all rendering comes from existing materials.
+    lathe(bm, [(0,0),(.82*r,0),(.88*r,.018),(.88*r,.04),(0,.04)], 96, 1)
+    lathe(bm, [(0,h-.08),(.93*r,h-.08),(r,h-.065),(r,h-.04),(.93*r,h-.025),(0,h-.025)], 96, 1)
+    lathe(bm, [(0,.055),(.64*r,.055),(.68*r,.075),(.68*r,h-.10),(.60*r,h-.09),(0,h-.09)], 96, 2)
+    for i in range(slats):
+        a = 2*math.pi*i/slats
+        # Bevel in the local frame before placement. Beveling a long thin box
+        # after rotation produced collapsed corner faces at some angles.
+        before = set(bm.verts)
+        rbox(bm, (0,0,0),(.025,.009,h-.12),r=.002,mi=0,seg=2)
+        transform = Matrix.Translation(Vector((math.cos(a)*.84*r,math.sin(a)*.84*r,(h-.04)/2))) @ Matrix.Rotation(a,4,'Z')
+        for v in set(bm.verts)-before: v.co = transform @ v.co
+    arc_tube(bm,(0,0,h-.045),r*.75,0,math.pi,.006,32,'XZ',1)
+    return bm
+
 def vase_fluted(h=.52, r=.17, flutes=48, segments=288, profile_steps=4):
     """Hollow porcelain vessel, radial fluting and a separate brass lip slot.
 
