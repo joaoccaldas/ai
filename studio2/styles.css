@@ -166,3 +166,6 @@ body.sheet-open .scene-copy{pointer-events:none}
 .quiet-door-close:focus-visible,.quiet-door-link:focus-visible{outline:2px solid #ccf6e5;outline-offset:3px}
 @media(max-width:700px){.quiet-door{display:none}}
 @media(prefers-reduced-motion:reduce){.quiet-door{animation:none;transition:none}}
+
+/* Do not advertise drag-based navigation when the WebGL world is unavailable. */
+body.world-fallback .hint{display:none!important}
