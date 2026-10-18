@@ -27,14 +27,23 @@ summary{cursor:pointer;color:#cbf0dc}summary:hover{text-decoration:underline}
 .note{margin-top:20px;padding:14px 18px;border-left:3px solid #9ac6ac;background:#1a2423;color:#d1e4df}
 .error{background:#402222;border-color:#d28f8f}
 footer{padding:20px 0 40px;border-top:1px solid #394047;color:#a3b1b3;font-size:.88rem}
+.story{margin-bottom:30px}.story .section-head{align-items:flex-end}.story .section-head h2{margin:4px 0}.story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.story-card{min-width:0;border:1px solid #3d4d4a;border-radius:12px;padding:22px;background:linear-gradient(145deg,#1c2a29,#13191c)}
+.story-card h3{margin:8px 0;font-size:1.15rem}.story-card p{color:#c6d0ce;font-size:.91rem}
+.story-number{font-size:.76rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#c0e4ce}
+.story-card a{font-size:.9rem}.trace-note{border-left:3px solid #9ac6ac;background:#1b2424;padding:14px 18px;font-size:.88rem;color:#d3dfdb;line-height:1.6}
+.markets{margin:28px 0 30px}.markets .section-head h2{margin:4px 0}
+.market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.market-grid>div{min-width:0;background:#181d20;border:1px solid #374244;border-radius:12px;padding:17px}
+.market-grid p{color:#bfcbca;font-size:.89rem;margin:8px 0 0}
+@media(max-width:750px){.story-grid,.market-grid{grid-template-columns:minmax(0,1fr)}.story-card{padding:16px}}
 @media(max-width:700px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:minmax(0,1fr)}.card,.panel{padding:16px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
 </style></head><body>
 <header>
 <div class="kicker">Caldas Studio / R&D / Evidence</div>
 <h1>Spatial Simulation Lab</h1>
-<p class="lead">Compare rendering techniques, asset reuse, caching, world generation and XR. Track what has actually been measured, under which conditions, and what remains unknown.</p>
-<nav aria-label="Related projects"><a href="../effects/">Effects Lab</a><a href="../shared/procedural-assets/README.md">Procedural asset source</a><a href="https://github.com/joaoccaldas/ai/tree/main/studio/simulation-lab">Source and protocol</a></nav>
+<p class="lead">We turn existing designs, geometry and research into spatial experiences. Follow an asset from generation to a room, then inspect exactly what we have tested, what is still a hypothesis and how we learn.</p>
+<nav aria-label="Related projects"><a href="../../studio2/">Project story</a><a href="../effects/">Live effects</a><a href="../shared/procedural-assets/README.md">Procedural asset source</a><a href="https://github.com/joaoccaldas/ai/tree/main/studio/simulation-lab">Source and protocol</a></nav>
 </header>
 <main>
 <section class="metrics" aria-label="Research state">
@@ -43,12 +52,27 @@ footer{padding:20px 0 40px;border-top:1px solid #394047;color:#a3b1b3;font-size:
 <div class="stat"><strong id="independent">—</strong><span>Independently reviewed</span></div>
 <div class="stat"><strong id="comparisons">—</strong><span>Comparable metric pairs</span></div>
 </section>
+<section class="story" aria-labelledby="story-title">
+<div class="section-head"><div><p class="kicker">From idea to measurable experience</p><h2 id="story-title">The same technology. Different worlds.</h2></div><a href="../../studio2/">Walk the seven-act project story ↗</a></div>
+<div class="story-grid">
+<article class="story-card"><span class="story-number">01 · Create and reuse</span><h3>Architecture and furniture</h3><p>Parametric asset generators produce GLBs with dimensions, source hashes and geometry metadata. The registry contains 66 definitions; two real exports passed structural checks in CI. Visual and commercial acceptance remain separate.</p><a href="../shared/procedural-assets/README.md">Inspect the existing asset factory ↗</a></article>
+<article class="story-card"><span class="story-number">02 · Compose and experience</span><h3>Rooms, worlds and interactive sites</h3><p>Blender buildings, terrain systems, real-time Three.js experiences and ten lightweight web effects already exist in different projects. Their cross-project interoperability still needs a benchmark.</p><a href="../effects/">Try interactive website effects ↗</a></article>
+<article class="story-card"><span class="story-number">03 · Measure before claiming</span><h3>Make the next rendering decision</h3><p>Six protocols compare geometry, LOD, streaming, persistence, XR and production economics. Each starts as planned, not as proven performance improvement. The dashboard shows only results with traceable receipts.</p><a href="#experiments">Inspect the experiment questions ↓</a></article>
+</div>
+<p class="trace-note"><strong>Verified technical checkpoint:</strong> headless Blender generated a bench (344 triangles; 19,016 bytes) and sofa (848 triangles; 17,700 bytes), with hashes and nondegenerate bounds validated. No headset, visual-perception or client economics claims follow from this result. <a href="https://github.com/joaoccaldas/ai/actions/runs/39119275334">View the pinned CI evidence ↗</a></p>
+</section>
+<section class="markets" aria-labelledby="markets-title"><div class="section-head"><div><p class="kicker">Possible customer applications</p><h2 id="markets-title">What a pilot could deliver</h2></div></div>
+<div class="market-grid">
+<div><strong>Architecture</strong><p>A navigable design presentation with licensed geometry and clear distinctions between physical evidence and visual interpretation.</p></div>
+<div><strong>Furniture / retail</strong><p>A material and product configuration inside an interactive room, with dimensions and asset provenance checked.</p></div>
+<div><strong>Web and brands</strong><p>Embeddable real-time or pseudo-3D effects with responsive behavior, accessibility and measured loading performance.</p></div>
+</div><p class="muted">These are pilot hypotheses, not published customer engagements or guaranteed deliverables.</p></section>
 <section class="panel">
 <h2>What counts as evidence?</h2>
 <p>A planned experiment is not a result. Instrumented results require a commit, scene hash, reproducible protocol, device, date and source. Independent review additionally requires a review receipt. Environmental mismatches never produce percentage improvement claims.</p>
 <p class="muted">Image metrics, physical correctness, frame times, human preference and financial impact remain separate dimensions. No composite “realism percentage” is fabricated.</p>
 </section>
-<section aria-label="Research experiments">
+<section id="experiments" aria-label="Research experiments">
 <div class="section-head"><h2>Research portfolio</h2>
 <label for="filter">Domain <select id="filter"><option value="all">All domains</option></select></label></div>
 <div id="experiments" class="grid" aria-live="polite"><p>Loading registered experiments…</p></div>
