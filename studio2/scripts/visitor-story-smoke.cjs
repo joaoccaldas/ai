@@ -31,6 +31,13 @@ const {chromium}=require('playwright');
    await page.locator('#sectorFilter').selectOption('architecture');
    assert.ok(await page.locator('.project-card').count()>=5,'Architecture includes related spatial studies and the asset factory');
    assert.match(await page.locator('.project-card').first().innerText(),/Architecture/i);
+   await page.waitForFunction(()=>{
+     const drawer=document.querySelector('.project-drawer.open');
+     if(!drawer)return false;
+     const b=drawer.getBoundingClientRect();
+     return Math.abs(b.right-window.innerWidth)<2 &&
+       b.left>=-1 && b.top>=-1 && b.bottom<=window.innerHeight+2;
+   },null,{timeout:5000});
    await page.screenshot({path:'studio2-visitor-evidence/classified-architecture-'+width+'.png',fullPage:false});
    const bodySize=await page.locator('.project-card p').first().evaluate(e=>parseFloat(getComputedStyle(e).fontSize));
    assert.ok(bodySize>=14,'Project context needs readable 14px+ body type');
