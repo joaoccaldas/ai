@@ -100,6 +100,36 @@ def wall_mirror_moulded(w=0.72, h=1.02):   # mats: 0 moulding, 1 mirror glass, 2
     panel(bm, o, 0.020, 0.0, 0.001, 0.0045, 2)
     return bm
 
+def wall_mirror_gallery(w=0.85, h=1.25, beads=360):
+    """Existing ogee mirror with individually modelled gilt sight-edge beads.
+
+    `beads=0` supplies the matched plain-frame comparison; it is not another asset.
+    Reflection remains a consuming-runtime feature, not generated geometry.
+    """
+    if not 0.4 <= w <= 3 or not 0.6 <= h <= 4 or not 0 <= beads <= 640:
+        raise ValueError('Mirror dimensions or bead count outside reviewed bounds')
+    bm = wall_mirror_moulded(w, h)
+    if not beads:
+        return bm
+    inset = .045
+    # Wall-attachment centre, matching rect_outline: X across, Z up, front +Y.
+    x0, x1, z0, z1 = -w / 2 + inset, w / 2 - inset, -h / 2 + inset, h / 2 - inset
+    span_x, span_z = x1 - x0, z1 - z0
+    perimeter = 2 * (span_x + span_z)
+    for i in range(beads):
+        distance = perimeter * (i + .5) / beads
+        if distance < span_x: x, z = x0 + distance, z0
+        elif distance < span_x + span_z: x, z = x1, z0 + distance - span_x
+        elif distance < 2 * span_x + span_z: x, z = x1 - (distance - span_x - span_z), z1
+        else: x, z = x0, z1 - (distance - 2 * span_x - span_z)
+        bead = bmesh.ops.create_uvsphere(bm, u_segments=8, v_segments=4, radius=.0048)
+        bmesh.ops.translate(bm, vec=Vector((x, .028, z)), verts=bead['verts'])
+        for face in {f for v in bead['verts'] for f in v.link_faces}:
+            face.material_index = 0
+            face.smooth = True
+    return bm
+
+
 def floor_mirror_arched(w=0.66, h=1.82, lean=0.12):   # mats: 0 moulding, 1 mirror glass, 2 backing board, 3 strut
     """Arched floor mirror leaning on a folding strut. Same moulding and glass
     as the wall mirror, swept round a semicircular head (24 steps)."""

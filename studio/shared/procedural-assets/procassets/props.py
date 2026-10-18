@@ -4,6 +4,34 @@ import bmesh
 from mathutils import Vector, Matrix
 from .geom import box, cyl, lathe, arc_tube
 
+def vase_fluted(h=.52, r=.17, flutes=48, segments=288, profile_steps=4):
+    """Hollow porcelain vessel, radial fluting and a separate brass lip slot.
+
+    Source units metres, base-centred; flutes=0 is the plain comparison.
+    """
+    if not .15 <= h <= 1.5 or not .05 <= r <= .4 or not 0 <= flutes <= 64 or not 48 <= segments <= 512 or not 1 <= profile_steps <= 6 or (flutes and segments < flutes * 6):
+        raise ValueError('Vessel dimensions/detail outside reviewed bounds')
+    bm = bmesh.new()
+    profile = [(0, 0), (.62, 0), (.68, .025), (.68, .06), (.49, .10),
+               (.58, .20), (.94, .45), (1, .62), (.86, .80), (.65, .90),
+               (.68, .98), (.70, 1), (.64, 1), (.62, .98), (.59, .90),
+               (.79, .80), (.93, .62), (.87, .45), (.5, .22), (0, .16)]
+    from .geom import smooth_profile
+    curved = smooth_profile(profile, per=profile_steps)
+    # Preserve the actual base and rim planes when the spline overshoots.
+    lathe(bm, [(max(0., radius) * r, min(1., max(0., z)) * h) for radius, z in curved], segments, 0)
+    for v in bm.verts:
+        if flutes and .10 * h < v.co.z < .91 * h:
+            theta = math.atan2(v.co.y, v.co.x)
+            fade = min(1., (v.co.z / h - .10) / .12, (.91 - v.co.z / h) / .10)
+            scale = 1 + .035 * max(0., fade) * math.cos(flutes * theta)
+            v.co.x *= scale; v.co.y *= scale
+    # A narrow rolled lip sits above the porcelain, with no coplanar overlay.
+    lathe(bm, [(.70*r, h), (.705*r, h+.0015), (.695*r, h+.003),
+               (.645*r, h+.003), (.635*r, h+.0015), (.64*r, h)], segments, 1, cap_bottom=False)
+    return bm
+
+
 def potted_olive(h=1.6, seed=4):   # mats: 0 terracotta, 1 bark, 2 silver-green leaf
     r = random.Random(seed); bm = bmesh.new()
     lathe(bm, [(0.17, 0), (0.2, 0.02), (0.25, 0.32), (0.27, 0.34), (0.25, 0.345), (0.0, 0.33)], 24, 0)

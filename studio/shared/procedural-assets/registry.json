@@ -1004,7 +1004,12 @@
    "surfaces": {
     "Gilt": "gilt"
    },
-   "uv_metres": 0.25
+   "uv_metres": 0.25,
+   "inspection_direction": [
+    0.35,
+    0.18,
+    -1
+   ]
   },
   {
    "id": "floor_mirror_arched",
@@ -1028,7 +1033,12 @@
    "surfaces": {
     "Timber": "oak"
    },
-   "uv_metres": 0.25
+   "uv_metres": 0.25,
+   "inspection_direction": [
+    0.35,
+    0.18,
+    -1
+   ]
   },
   {
    "id": "reflecting_basin",
@@ -1212,6 +1222,102 @@
     "Stone": "stone"
    },
    "uv_metres": 0.5
+  },
+  {
+   "id": "wall_mirror_gallery",
+   "builder": "gen",
+   "module": "interiors",
+   "func": "wall_mirror_gallery",
+   "materials": [
+    "Gilt",
+    "Mirror",
+    "Backboard"
+   ],
+   "params": {
+    "w": 0.85,
+    "h": 1.25,
+    "beads": 360
+   },
+   "category": "decor",
+   "reuse": [
+    "studio/hotel",
+    "studio/gallery",
+    "konam/rooms"
+   ],
+   "anchor": "wall_attachment_centre",
+   "surfaces": {
+    "Gilt": "gilt"
+   },
+   "surface_seed": 17,
+   "uv_metres": 0.25,
+   "inspection_direction": [
+    0.35,
+    0.18,
+    -1
+   ]
+  },
+  {
+   "id": "reflecting_basin_fluted",
+   "builder": "gen",
+   "module": "public_realm",
+   "func": "reflecting_basin",
+   "materials": [
+    "Stone",
+    "Water"
+   ],
+   "params": {
+    "d": 1.6,
+    "h": 0.46,
+    "seg": 288,
+    "flutes": 48
+   },
+   "category": "landscape",
+   "reuse": [
+    "studio/hotel",
+    "gaudi-nexus",
+    "konam/rooms"
+   ],
+   "anchor": "base_centre",
+   "surfaces": {
+    "Stone": "stone",
+    "Water": "water"
+   },
+   "surface_seed": 27,
+   "uv_metres": 0.6,
+   "inspection_direction": [
+    0.6,
+    0.85,
+    1
+   ]
+  },
+  {
+   "id": "vase_fluted",
+   "builder": "gen",
+   "module": "props",
+   "func": "vase_fluted",
+   "materials": [
+    "Porcelain",
+    "Brass"
+   ],
+   "params": {
+    "h": 0.52,
+    "r": 0.17,
+    "flutes": 48,
+    "segments": 288,
+    "profile_steps": 4
+   },
+   "category": "decor",
+   "reuse": [
+    "studio/hotel",
+    "studio/gallery",
+    "studio/museum"
+   ],
+   "anchor": "base_centre",
+   "inspection_direction": [
+    0.6,
+    0.35,
+    1
+   ]
   }
  ]
 }

@@ -67,3 +67,6 @@ Evidence for the first textured set (2026-10-17): all six GLBs pass Khronos glTF
 
 ## Per-asset build metadata
 `export_glb.py` now writes `<id>.build-meta.json` next to each GLB: `representation` (`geometry-study`), provenance, generator + params, units/axes, triangles, bbox, semantic parts, materials, bytes, sha256. Mobile budget gating is not applied yet; the fields exist so a Konam-side intake can apply its own.
+## Detail study and fixes — 18 October 2026
+
+See [the three environment studies](DETAIL_STUDIES_2026-10-18.md) for new mirror, basin and vessel variants, fixed-camera evidence, texture-seed identity, the zero-bevel slab fix, authored inspection directions and measured limits. Run `check_environment.py` for the bounded source geometry checks. Source recipes and historical exports remain preserved; new candidates still need consuming-room and device acceptance.

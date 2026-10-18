@@ -99,9 +99,13 @@ def arch_outline(w, h, steps=24):
 def panel(bm, outline, inset, bevel, y0, y1, mi=0):
     """A slab inside an outline with a bevelled front edge (glass, boards)."""
     back = [bm.verts.new((x, y0, z)) for x, z in outline(inset)]
-    edge = [bm.verts.new((x, y1 - bevel * 0.35, z)) for x, z in outline(inset)]
     front = [bm.verts.new((x, y1, z)) for x, z in outline(inset + bevel)]
+    # Zero bevel is a plain slab: a duplicate front/edge ring creates four
+    # zero-area faces on every rectangular mirror backing board.
+    edge = [bm.verts.new((x, y1 - bevel * 0.35, z)) for x, z in outline(inset)] if bevel > 0 else front
     n = len(back); fs = [bm.faces.new(front), bm.faces.new(back[::-1])]
     for a, b in ((back, edge), (edge, front)):
+        if a is b:
+            continue
         for i in range(n): fs.append(bm.faces.new((a[i], a[(i + 1) % n], b[(i + 1) % n], b[i])))
     for f in fs: f.material_index = mi

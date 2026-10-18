@@ -76,12 +76,14 @@ def waste_sorting_station(w=1.5, d=0.6, h=1.1):  # mats: 0 steel frame, 1 green,
     for sx in (-w/2, w/2): box(bm, (sx, 0, h*0.4), (0.04, d, h*0.8), 0, 0)
     return bm
 
-def reflecting_basin(d=1.6, h=0.46, rim=0.11, water=0.06, seg=72):   # mats: 0 stone, 1 water surface
+def reflecting_basin(d=1.6, h=0.46, rim=0.11, water=0.06, seg=72, flutes=0):   # mats: 0 stone, 1 water surface
     """Turned stone basin: plinth, battered wall, rolled and chamfered rim, inner
     wall down to a still water surface kept as its own material/face set, so a
     runtime can swap it for a live reflector or water shader. seg=8 gives an
     octagonal basin."""
     from .geom import lathe
+    if not 0 <= flutes <= 64 or (flutes and seg < flutes * 6):
+        raise ValueError('Flutes require at least six angular samples each')
     bm = bmesh.new(); R = d / 2; wl = h - water
     lathe(bm, [(R + 0.03, 0.0), (R + 0.03, 0.06), (R, 0.075), (R - 0.015, h - 0.06), (R, h - 0.035),
                (R - 0.012, h - 0.004), (R - rim * 0.45, h), (R - rim + 0.012, h - 0.006), (R - rim, h - 0.03),
@@ -91,4 +93,10 @@ def reflecting_basin(d=1.6, h=0.46, rim=0.11, water=0.06, seg=72):   # mats: 0 s
         if f.material_index == 1:
             f.normal_update()
             if f.normal.z < 0: f.normal_flip()   # the water faces the sky
+    if flutes:
+        for v in bm.verts:
+            radius = math.hypot(v.co.x, v.co.y)
+            if radius > R - .025 and .07 < v.co.z < h - .055:
+                scale = 1 + .004 / radius * math.cos(flutes * math.atan2(v.co.y, v.co.x))
+                v.co.x *= scale; v.co.y *= scale
     return bm

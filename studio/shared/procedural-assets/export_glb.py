@@ -87,6 +87,11 @@ for a in reg['assets']:
         o['asset_id']=a['id'];o['generator']='procassets/1';o['units']='metres'
         o['license']='original procedural; no third-party model';o['contract_id']=a.get('contract_id','')
         o['anchor']=a.get('anchor','base_centre')
+        if a.get('inspection_direction') is not None:
+            direction = a['inspection_direction']
+            if len(direction) != 3 or not all(isinstance(v, (int, float)) and math.isfinite(v) for v in direction) or sum(v*v for v in direction) < .01:
+                raise ValueError('Invalid glTF-space inspection direction')
+            o['inspection_direction'] = direction
     # Opt-in procedural surfaces: box UVs plus generated colour/normal maps on a
     # per-surface material copy, so untextured assets sharing the base stay flat.
     if a.get('surfaces'):
@@ -98,10 +103,13 @@ for a in reg['assets']:
                 base = slot.material.name[2:] if slot.material and slot.material.name.startswith('C_') else None
                 kind = a['surfaces'].get(base) if base else None
                 if not kind: continue
-                name = f'S_{base}_{kind}'
+                # Seed is part of material identity: a previous asset must not
+                # lend its generated pixels to a later variant in the batch.
+                surface_seed = a.get('surface_seed', 1)
+                name = f'S_{base}_{kind}_seed{surface_seed}'
                 m = bpy.data.materials.get(name)
                 if not m:
-                    m = slot.material.copy(); m.name = name; surface.apply(m, kind, seed=a.get('surface_seed', 1))
+                    m = slot.material.copy(); m.name = name; surface.apply(m, kind, seed=surface_seed)
                 slot.material = m
     bpy.ops.object.select_all(action='DESELECT')
     for o in objs: o.select_set(True)
@@ -114,7 +122,11 @@ for a in reg['assets']:
     bb = [[round(min(c[k] for c in cs), 3) for k in range(3)], [round(max(c[k] for c in cs), 3) for k in range(3)]]
     if not SHEET:
         meta = {'id': a['id'], 'contract_id': a.get('contract_id'), 'anchor': a.get('anchor','base_centre'), 'representation': 'textured-study' if a.get('surfaces') else 'geometry-study', 'surfaces': a.get('surfaces', {}), 'provenance': 'procedural (bmesh), no scans, no AI-generated geometry',
-                'generator': {'builder': a['builder'], 'module': a.get('module'), 'func': a.get('func'), 'params': a['params']}, 'units': 'metres', 'up_axis_source': 'Z', 'up_axis_gltf': 'Y',
+                'generator': {'builder': a['builder'], 'module': a.get('module'), 'func': a.get('func'), 'params': a['params']},
+                'surfaceSeed': a.get('surface_seed', 1) if a.get('surfaces') else None,
+                'uvMetres': a.get('uv_metres', .5) if a.get('surfaces') else None,
+                'inspectionDirection': a.get('inspection_direction'),
+                'units': 'metres', 'up_axis_source': 'Z', 'up_axis_gltf': 'Y',
                 'triangles': tris, 'bbox_m': bb, 'semantic_parts': sorted(o.name for o in objs), 'materials': sorted({s.material.name for o in objs if o.type == 'MESH' for s in o.material_slots if s.material}),
                 'bytes': os.path.getsize(path), 'sha256': hashlib.sha256(open(path, 'rb').read()).hexdigest()}
         json.dump(meta, open(os.path.join(out, a['id'] + '.build-meta.json'), 'w'), indent=1)
