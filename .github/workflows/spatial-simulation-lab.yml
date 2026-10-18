@@ -27,3 +27,28 @@ jobs:
         run: node studio/simulation-lab/audit-assets.mjs
       - name: Execute evidence contract tests
         run: node --test studio/simulation-lab/test/*.test.mjs
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium for dashboard regression tests
+        run: |
+          npm install --no-save --no-package-lock playwright@1.54.1
+          npx playwright install --with-deps chromium
+      - name: Start local site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/spatial-lab-server.log 2>&1 &
+          sleep 2
+      - name: Execute desktop and mobile dashboard checks
+        run: node studio/simulation-lab/test/browser-smoke.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spatial-lab-browser-evidence
+          path: spatial-lab-evidence
+          if-no-files-found: warn
