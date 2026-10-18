@@ -52,3 +52,22 @@ jobs:
           name: spatial-lab-browser-evidence
           path: spatial-lab-evidence
           if-no-files-found: warn
+
+  blender-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Blender
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender
+      - name: Export two existing canonical assets
+        run: |
+          mkdir -p "$RUNNER_TEMP/spatial-glbs"
+          blender -b --factory-startup --python studio/shared/procedural-assets/export_glb.py -- "$RUNNER_TEMP/spatial-glbs" civic_bench sofa_two_seat
+      - name: Verify actual GLB outputs, bounding boxes and hashes
+        run: node studio/simulation-lab/verify-exports.mjs "$RUNNER_TEMP/spatial-glbs" civic_bench sofa_two_seat
