@@ -1,5 +1,6 @@
 import { ACTS, PROJECTS } from './projects.js';
 import { SECTORS, classificationFor, projectsBySector } from './case-taxonomy.js';
+import { mountQuietDoor } from './quiet-door.js';
 
 const $=s=>document.querySelector(s); const $$=s=>[...document.querySelectorAll(s)];
 let index=0, activeFilter='all', activeSector='all', drawerScope='act';
@@ -103,4 +104,5 @@ function closeModal(){if(!els.modal)return;if(typeof els.modal.close==='function
 function toggleMap(on){els.map.classList.toggle('open',on);els.map.setAttribute('aria-hidden',String(!on));document.body.classList.toggle('sheet-open',on||els.drawer.classList.contains('open'));if(on)world.running=false;else world.wake()}
 
 initUI();
+mountQuietDoor();
 bootWorld();
