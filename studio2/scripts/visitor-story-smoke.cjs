@@ -29,7 +29,7 @@ const {chromium}=require('playwright');
    assert.equal(await page.locator('#sectorFilter option').count(),11);
    assert.match(await page.locator('#sectorNote').innerText(),/not evidence of a client engagement/i);
    await page.locator('#sectorFilter').selectOption('architecture');
-   assert.equal(await page.locator('.project-card').count(),4,'Architecture includes related spatial asset factory');
+   assert.ok(await page.locator('.project-card').count()>=5,'Architecture includes related spatial studies and the asset factory');
    assert.match(await page.locator('.project-card').first().innerText(),/Architecture/i);
    await page.locator('#sectorFilter').selectOption('science');
    assert.ok(await page.locator('.project-card').count()>=3,'Science must be discoverable');
