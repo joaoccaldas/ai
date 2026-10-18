@@ -64,10 +64,12 @@ jobs:
       - name: Install Blender
         run: |
           sudo apt-get update -qq
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
+          blender -b --factory-startup --python-expr 'import numpy; print("numpy:", numpy.__version__)'
       - name: Export two existing canonical assets
         run: |
           mkdir -p "$RUNNER_TEMP/spatial-glbs"
           blender -b --factory-startup --python studio/shared/procedural-assets/export_glb.py -- "$RUNNER_TEMP/spatial-glbs" civic_bench sofa_two_seat
+          test -s "$RUNNER_TEMP/spatial-glbs/exported_manifest.json"
       - name: Verify actual GLB outputs, bounding boxes and hashes
         run: node studio/simulation-lab/verify-exports.mjs "$RUNNER_TEMP/spatial-glbs" civic_bench sofa_two_seat
