@@ -78,7 +78,7 @@ function renderScene(){
 function toggleDrawer(on){els.drawer.classList.toggle('open',on);els.drawer.setAttribute('aria-hidden',String(!on));document.body.classList.toggle('sheet-open',on||els.map.classList.contains('open'));if(on)world.running=false;else world.wake()}
 function openDrawer(scope='act'){
   drawerScope=scope;els.drawerTitle.textContent=scope==='all'?'All projects':ACTS[index].title;
-  els.search.value='';activeFilter='all';activeSector='all';els.sector.value='all';$('.filter').forEach((b,i)=>b.classList.toggle('active',i===0));renderProjects();toggleDrawer(true)
+  els.search.value='';activeFilter='all';activeSector='all';els.sector.value='all';document.querySelectorAll('.filter').forEach((b,i)=>b.classList.toggle('active',i===0));renderProjects();toggleDrawer(true)
 }
 function renderProjects(){
   const q=els.search.value.trim().toLowerCase();const act=ACTS[index].id;
