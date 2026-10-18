@@ -28,6 +28,7 @@ jobs:
           npm run check
           node --check app.js
           node --check world.js
+          node --test tests/*.test.mjs
       - name: Guard against accidental Studio 1 coupling
         run: |
           test -f studio2/index.html
@@ -50,7 +51,9 @@ jobs:
           python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/studio2-server.log 2>&1 &
           sleep 2
       - name: Visit story, research, and project search
-        run: node studio2/scripts/visitor-story-smoke.cjs
+        run: |
+          node studio2/scripts/visitor-story-smoke.cjs
+          node studio2/scripts/quiet-door-browser.cjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
