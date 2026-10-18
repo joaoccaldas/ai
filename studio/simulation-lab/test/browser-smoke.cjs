@@ -16,6 +16,14 @@ const {chromium}=require('playwright');
    assert.equal(response.status(),200);
    await page.locator('.card').first().waitFor({timeout:15000});
    assert.equal(await page.locator('.card').count(),6);
+   const duplicateIds=await page.evaluate(()=>{
+    const ids=[...document.querySelectorAll('[id]')].map(x=>x.id);
+    return ids.filter((id,i)=>ids.indexOf(id)!==i);
+   });
+   assert.deepEqual(duplicateIds,[],'Duplicate DOM IDs break evidence controls');
+   assert.equal(await page.locator('.story-card').count(),3,'source-to-value story');
+   assert.equal(await page.locator('.market-grid > div').count(),3,'industry scenarios');
+
    assert.equal(await page.locator('#total').innerText(),'6');
    assert.equal(await page.locator('#measured').innerText(),'0');
    assert.equal(await page.locator('#independent').innerText(),'0');
