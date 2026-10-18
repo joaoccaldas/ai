@@ -23,5 +23,7 @@ jobs:
           node-version: '22'
       - name: Validate evidence registry
         run: node studio/simulation-lab/verify.mjs
+      - name: Verify current procedural asset inventory
+        run: node studio/simulation-lab/audit-assets.mjs
       - name: Execute evidence contract tests
         run: node --test studio/simulation-lab/test/*.test.mjs
