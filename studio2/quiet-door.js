@@ -74,7 +74,7 @@ export function mountQuietDoor({doc=globalThis.document,win=globalThis.window}={
     win.addEventListener(event,resetActivity,events);
   }
   doc.addEventListener('visibilitychange',()=>{last=now();idle=0;if(phase==='countdown')hide()},{signal:controller.signal});
-  doc.addEventListener('keydown',e=>{if(e.key==='Escape')dismiss()},{signal:controller.signal});
+  doc.addEventListener('keydown',e=>{if(e.key==='Escape' && !node.hidden)dismiss()},{signal:controller.signal});
   node.querySelector('#quietClose').addEventListener('click',dismiss,{signal:controller.signal});
   const timer=win.setInterval(tick,250);
   return ()=>{win.clearInterval(timer);controller.abort();node.remove()};
