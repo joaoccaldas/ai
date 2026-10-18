@@ -11,7 +11,7 @@ export function quietDoorPhase({armed=false,idleVisibleMs=0,busy=false,enabled=t
   return {phase:'countdown',seconds:Math.ceil(remainder/1000)};
 }
 export function mountQuietDoor({doc=globalThis.document,win=globalThis.window}={}) {
-  if (!doc?.body || !win || doc.getElementById('quietDoor')) return () => {};
+  if (!doc?.body || !win || doc.getElementById('quietDoor') || doc.documentElement?.dataset.quietDoor==='off') return () => {};
   const reduce=win.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches??false;
   const fine=win.matchMedia?.('(pointer: fine)')?.matches??false;
   if (reduce || !fine) return () => {};
@@ -44,7 +44,7 @@ export function mountQuietDoor({doc=globalThis.document,win=globalThis.window}={
     idle=0;
     if (phase==='countdown')hide();
   }
-  function dismiss(){finished=true;hide()}
+  function dismiss(){finished=true;hide();win.clearInterval(timer)}
   function busy(){
     const active=doc.activeElement;
     return !!(doc.querySelector('.project-drawer.open,.map-panel.open,dialog[open]')||
@@ -62,7 +62,7 @@ export function mountQuietDoor({doc=globalThis.document,win=globalThis.window}={
     idle+=delta;
     const state=quietDoorPhase({armed,idleVisibleMs:idle});
     if(state.phase==='reveal'){
-      finished=true;phase='reveal';node.hidden=false;counter.hidden=true;
+      finished=true;phase='reveal';win.clearInterval(timer);node.hidden=false;counter.hidden=true;
       reveal.hidden=false;node.classList.add('is-revealed');reveal.setAttribute('role','status');return;
     }
     if(state.phase==='countdown'){
