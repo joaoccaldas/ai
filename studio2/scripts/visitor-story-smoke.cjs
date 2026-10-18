@@ -15,6 +15,8 @@ const {chromium}=require('playwright');
    const res=await page.goto('http://127.0.0.1:4173/studio2/',{waitUntil:'domcontentloaded'});
    assert.equal(res.status(),200);
    await page.locator('#quickBtn').waitFor();
+   await page.locator('body.world-fallback').waitFor({timeout:5000});
+   assert.equal(await page.locator('#hint').isVisible(),false,'3D control hint must not appear in 2D fallback');
    const headline=await page.locator('.opening h1').innerText();
    assert.match(headline,/Everything/);
    assert.match(await page.locator('.lede').innerText(),/spatial experiences/);
