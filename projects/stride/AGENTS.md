@@ -1,0 +1,12 @@
+# STRIDE agent engineering contract
+
+1. Read README, docs/ROADMAP.md, docs/ARCHITECTURE.md, docs/RIGHTS.md, docs/REUSE_MANIFEST.md and latest checkpoint before proposing changes. Compare main and open PRs for related work. NEVER create a duplicate parser, renderer, store or asset without documenting an existing gap.
+2. Inspect original source projects by current source SHA, then decide REUSE > ADAPT > RESTYLE > COMPOSE > CREATE. Never copy brand- or athlete-specific content without rights evidence.
+3. Make changes in feature branches; bounded PRs, one purpose each; preserve client-only data processing. Never commit activity logs, GPS samples, private health, credentials, raw imported files, user contact data or API tokens.
+4. Source-derived metrics are deterministic and labeled. An absent value stays NULL / not recorded. Synthetic route examples remain clearly labeled. No pseudo-scientific causal inference.
+5. STRIDE must not ingest Strava API Data into LLMs, MCPs, third-party services, embeddings, permanent indexes, analytics, or commercial sharing. Any API idea needs a fresh first-party policy review and explicit rights decision. No scraping or token-based circumvention.
+6. Run parser tests, robust-invalid-input cases, lint/static checks, UI/mobile checks, keyboard navigation, visual screenshot comparisons, asset transfer/decode benchmarks and privacy share regressions as applicable. Report unexecuted checks as UNKNOWN, not PASS.
+7. Explicit provenance for every asset, shader, terrain, imagery, font and reference; licenses and permitted commercial uses, version SHA, mesh triangles, GLB/texture bytes, memory/draw costs and fallback behavior.
+8. No auto-merging, deployment, outbound communication or provisioning of paid services. Create inspectable PRs and requests for explicit approval. AI research may propose changes but cannot be fed personal location/health data.
+9. Every cycle must record: exact SHA + PR/CI; prior goal; change diff; evidence/tests; observed UX/performance; business/user value; unresolved risks; next 10 actions scored by impact, learning, risk, effort, dependency, confidence. If unchanged, state why and avoid busywork.
+10. Keep public GitHub project free of confidential company strategy and sensitive data. Private business assumptions and customer interview records must live in governed private systems.
