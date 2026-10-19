@@ -31,5 +31,26 @@ export function analyze(points){let distance=0,ascent=0,descent=0,minEle=Infinit
  const fastest=bins.length?bins.reduce((a,b)=>a.seconds<b.seconds?a:b):null,slowest=bins.length?bins.reduce((a,b)=>a.seconds>b.seconds?a:b):null,climb=bins.length?bins.reduce((a,b)=>a.ascent>b.ascent?a:b):null;
  const hr=rows.map(x=>x.hr).filter(x=>finite(x)&&x>25&&x<245);const avgHR=hr.length?hr.reduce((a,b)=>a+b,0)/hr.length:null;
  return {rows,distance,ascent,descent,minEle:finite(minEle)?minEle:null,maxEle:finite(maxEle)?maxEle:null,duration,fastest,slowest,climb,avgHR,bins};}
-export function shareSafe(points,trimMeters=700){if(!Array.isArray(points)||points.length<2)return [];const a=analyze(points),end=a.distance-trimMeters;return a.rows.filter(p=>p.d>=trimMeters&&p.d<=end).map(({lat,lon,t,ele,hr})=>({lat,lon,t,ele,hr}));}
+// Share projection policy: remove the first and last traveled 700 m AND all
+// visits within 700 m of either endpoint. Return disjoint index ranges, never
+// a flattened track that could reconnect across an intentionally hidden gap.
+// Privacy trimming reduces exposure; it does not make a route anonymous.
+export function planPrivateShare(points, trimMeters=700){
+ if(!Number.isFinite(trimMeters)||trimMeters<700)throw Error('Privacy trim must be at least 700 meters.');
+ const rows=analyze(points).rows,total=rows.at(-1).d;
+ const start=rows[0],end=rows.at(-1);const segments=[];let segment=[],retained=0;
+ for(let i=0;i<rows.length;i++){
+  const p=rows[i];
+  const visible=i>0&&i<rows.length-1&&p.d>=trimMeters&&total-p.d>=trimMeters
+   &&haversine(start,p)>=trimMeters&&haversine(end,p)>=trimMeters;
+  if(visible){segment.push(i);retained++;}
+  else if(segment.length){if(segment.length>=2)segments.push(segment);segment=[];}
+ }
+ if(segment.length>=2)segments.push(segment);
+ return {segments,totalMeters:total,redactedPoints:rows.length-retained,retainedPoints:retained,trimMeters};
+}
+export function shareSafe(points,trimMeters=700){
+ const plan=planPrivateShare(points,trimMeters);
+ return plan.segments.map(segment=>segment.map(i=>{const {lat,lon,t,ele,hr}=points[i];return {lat,lon,t,ele,hr};}));
+}
 export const fmtTime=s=>s==null?'—':Math.floor(s/3600)>0?`${Math.floor(s/3600)}h ${Math.round(s%3600/60)}m`:`${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
