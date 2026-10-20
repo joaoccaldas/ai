@@ -1,12 +1,17 @@
-import {loadActivity, analyze, planPrivateShare, toActivitySpec, toMomentSpecs, compareActivities, fmtTime, fmtDelta, haversine} from './core.mjs';
+import {loadActivity, analyze, planPrivateShare, toActivitySpec, toMomentSpecs, compareActivities, buildElevationProfile, generateProceduralScenery, fmtTime, fmtDelta, haversine} from './core.mjs';
 
 const $ = id => document.getElementById(id);
 const canvas=$('scene'),ctx=canvas.getContext('2d',{alpha:false}),container=$('sceneContainer');
+const profileCanvas=$('profileCanvas'),pctx=profileCanvas?profileCanvas.getContext('2d'):null;
 const reducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 
 let state={
   rows:[],
   model:null,
+  profile:null,
+  scenery:[],
+  showProps:true,
+  redactZones:[],
   title:'Fictional training route',
   isDemo:true,
   ghostRows:null,
@@ -24,6 +29,7 @@ let state={
   pitch:.85,
   zoom:1.0,
   drag:null,
+  profileDrag:false,
   last:0,
   share:false,
   sharePlan:null,
@@ -31,9 +37,9 @@ let state={
 };
 
 const palettes={
-  volcanic:{sky:'#182b32',back:'#426168',ground:'#293d40',rim:'#bd8a67',route:'#dafa94',point:'#f4c59b',ghost:'#7ce7ff'},
-  canyon:{sky:'#252d35',back:'#715c5b',ground:'#6c4744',rim:'#dfb58a',route:'#deffac',point:'#f6ce9f',ghost:'#7ce7ff'},
-  alpine:{sky:'#1c3842',back:'#56787a',ground:'#365554',rim:'#96b7a4',route:'#dafa94',point:'#fff5cb',ghost:'#7ce7ff'}
+  volcanic:{sky:'#182b32',back:'#426168',ground:'#293d40',rim:'#bd8a67',route:'#dafa94',point:'#f4c59b',ghost:'#7ce7ff',prop:'#507870',propTop:'#8bb89e'},
+  canyon:{sky:'#252d35',back:'#715c5b',ground:'#6c4744',rim:'#dfb58a',route:'#deffac',point:'#f6ce9f',ghost:'#7ce7ff',prop:'#8e5546',propTop:'#cfa07a'},
+  alpine:{sky:'#1c3842',back:'#56787a',ground:'#365554',rim:'#96b7a4',route:'#dafa94',point:'#fff5cb',ghost:'#7ce7ff',prop:'#4c746c',propTop:'#9ec5b5'}
 };
 
 function demo(paceOffset = 0){
@@ -69,6 +75,9 @@ function setup(points,title,isDemo=false){
   const a=analyze(points);
   state.rows=a.rows;
   state.model=a;
+  state.profile=buildElevationProfile(points,120);
+  state.redactZones=[];
+  if($('redactCountBadge'))$('redactCountBadge').textContent='0 pins';
   state.title=title;
   state.isDemo=isDemo;
   state.progress=0;
@@ -84,6 +93,8 @@ function setup(points,title,isDemo=false){
     lat0,lon0,range,min,max,
     points:local.map((p,i)=>({...p,x:p.x/range*13,z:p.z/range*13,y:finite(points[i].ele)?(points[i].ele-min)/Math.max(20,max-min)*3+.75:1}))
   };
+  state.scenery=generateProceduralScenery(state.geo.points,state.theme,24);
+  if($('propsCountBadge'))$('propsCountBadge').textContent=`${state.scenery.length} props · ${state.showProps?'ON':'OFF'}`;
   if(state.ghostRows){
     state.comparison=compareActivities(state.rows,state.ghostRows);
     state.ghostGeo=projectPoints(state.ghostRows,state.geo,min,max);
@@ -96,6 +107,9 @@ function setup(points,title,isDemo=false){
   $('timeStat').textContent=fmtTime(a.duration);
   $('ascentStat').textContent= a.minEle==null?'—':Math.round(a.ascent)+' m';
   $('heartStat').textContent=a.avgHR==null?'—':Math.round(a.avgHR)+' bpm';
+  if($('profileRangeLabel')){
+    $('profileRangeLabel').textContent=a.minEle==null?'NO ELEVATION STREAM':`${Math.round(a.minEle)}m – ${Math.round(a.maxEle)}m`;
+  }
   $('dataTruth').textContent='Original GPS positions and timestamps power the metrics. World terrain and lighting are illustrative.';
   renderMoments();
   updateLive();
@@ -184,6 +198,61 @@ function atPosition(p, rows = state.model?.rows, geoPoints = state.geo?.points){
   };
 }
 
+function drawProfile(){
+  if(!profileCanvas||!pctx||!state.profile)return;
+  const dpr=Math.min(2,window.devicePixelRatio||1),w=profileCanvas.clientWidth,h=profileCanvas.clientHeight;
+  if(!w||!h)return;
+  if(profileCanvas.width!==Math.round(w*dpr)||profileCanvas.height!==Math.round(h*dpr)){
+    profileCanvas.width=Math.round(w*dpr);
+    profileCanvas.height=Math.round(h*dpr);
+  }
+  pctx.setTransform(dpr,0,0,dpr,0,0);
+  pctx.clearRect(0,0,w,h);
+  const prof=state.profile;
+  const samples=prof.samples;
+  if(!samples.length)return;
+
+  // Draw kilometer split markers
+  for(const sp of prof.splitMarkers){
+    const sx=sp.progress*w;
+    pctx.beginPath();
+    pctx.moveTo(sx,0);
+    pctx.lineTo(sx,h);
+    pctx.strokeStyle=sp.isFastest?'#dbfa9455':sp.isClimb?'#f4c59b55':'#ffffff14';
+    pctx.lineWidth=sp.isFastest||sp.isClimb?1.5:1;
+    pctx.stroke();
+  }
+
+  // Draw elevation area & contour
+  pctx.beginPath();
+  samples.forEach((s,idx)=>{
+    const x=s.progress*w;
+    const norm=s.normalizedElevation??0.3;
+    const y=h-10-norm*(h-22);
+    if(idx===0)pctx.moveTo(x,y);else pctx.lineTo(x,y);
+  });
+  pctx.strokeStyle='#dbfa94';
+  pctx.lineWidth=1.8;
+  pctx.stroke();
+  pctx.lineTo(w,h);
+  pctx.lineTo(0,h);
+  pctx.closePath();
+  const grad=pctx.createLinearGradient(0,0,0,h);
+  grad.addColorStop(0,'#dbfa9444');
+  grad.addColorStop(1,'#dbfa9405');
+  pctx.fillStyle=grad;
+  pctx.fill();
+
+  // Draw playhead cursor
+  const cx=Math.max(0,Math.min(1,state.progress))*w;
+  pctx.beginPath();
+  pctx.moveTo(cx,0);
+  pctx.lineTo(cx,h);
+  pctx.strokeStyle='#f4c59b';
+  pctx.lineWidth=2;
+  pctx.stroke();
+}
+
 function updateLive(){
   if(!state.model)return;
   const a=state.model,p=atPosition(state.progress),i=p.index,point=a.rows[i],next=a.rows[Math.min(i+1,a.rows.length-1)];
@@ -214,6 +283,7 @@ function updateLive(){
     if(compareBanner)compareBanner.hidden=true;
     if(liveGhostRow)liveGhostRow.hidden=true;
   }
+  drawProfile();
 }
 
 function terrain(x,z){
@@ -231,6 +301,44 @@ function perspective(p,w,h){
     rx=px*cy-pz*sy,rz=px*sy+pz*cy,ry=p.y*cp-rz*sp,depth=p.y*sp+rz*cp;
   const scale=Math.min(w,h)*.037*state.zoom*(48/(48+depth));
   return {x:w*.5+rx*scale,y:h*.58-ry*scale,depth};
+}
+
+function drawProceduralProp(prop, pPalette, w, h){
+  const baseY = terrain(prop.x, prop.z);
+  const topY = baseY + (prop.builder === 'vegetation' ? 1.15 : prop.builder === 'nature' ? 0.95 : 0.85) * prop.scale;
+  const b = perspective({x:prop.x, y:baseY, z:prop.z}, w, h);
+  const t = perspective({x:prop.x, y:topY, z:prop.z}, w, h);
+  const rad = Math.max(2.2, 4.5 * prop.scale * state.zoom);
+  if (prop.builder === 'nature') {
+    // Spire / boulder polygon
+    ctx.beginPath();
+    ctx.moveTo(b.x - rad * 1.1, b.y);
+    ctx.lineTo(t.x, t.y);
+    ctx.lineTo(b.x + rad * 1.1, b.y);
+    ctx.closePath();
+    ctx.fillStyle = pPalette.prop;
+    ctx.fill();
+  } else if (prop.builder === 'vegetation') {
+    // Trunk + canopy silhouette (colors strictly distinct from route #dafa94)
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y);
+    ctx.lineTo(t.x, t.y);
+    ctx.strokeStyle = pPalette.prop;
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(t.x, t.y, rad, 0, Math.PI * 2);
+    ctx.fillStyle = pPalette.propTop;
+    ctx.fill();
+  } else {
+    // Beacon / marker post
+    ctx.beginPath();
+    ctx.moveTo(b.x, b.y);
+    ctx.lineTo(t.x, t.y);
+    ctx.strokeStyle = pPalette.rim;
+    ctx.lineWidth = 1.4;
+    ctx.stroke();
+  }
 }
 
 function draw(){
@@ -268,6 +376,14 @@ function draw(){
     ctx.strokeStyle='#c7d3ad08';
     ctx.stroke();
   }
+
+  // Draw rights-cleared procedural studio props (omitted during privacy raster export for clean route verification)
+  if(!state.share && state.showProps && state.scenery.length){
+    for(const prop of state.scenery){
+      drawProceduralProp(prop, p, w, h);
+    }
+  }
+
   if(!state.geo)return;
   const coords=state.geo.points;
   ctx.lineJoin='round';
@@ -390,10 +506,10 @@ function setMode(mode){
   }
   const wp = $('worldsPanel');
   if(wp){
-    if(mode === 'worlds' && !wp.hidden === false){
+    if(mode === 'worlds'){
       wp.hidden = false;
       renderWorldsAndContracts();
-    } else if(mode !== 'worlds'){
+    } else {
       wp.hidden = true;
     }
   }
@@ -422,12 +538,13 @@ async function renderWorldsAndContracts(){
 
   const c3 = document.createElement('div');
   c3.className = 'world-card';
-  c3.innerHTML = `<strong>Verified 3D Studio &amp; KONA.m Inventory</strong><span>66 procedural Blender assets (ai/studio) · 17 hand-built KONA.m rooms (36 indexed) · 21 bicycle studies · local read-only reuse.</span>`;
+  c3.innerHTML = `<strong>Verified 3D Studio &amp; KONA.m Inventory (${state.scenery.length} active props)</strong><span>66 procedural Blender assets (ai/studio) · 17 hand-built KONA.m rooms (36 indexed) · 21 bicycle studies · local read-only reuse.</span>`;
   const code3 = document.createElement('code');
   code3.textContent = state.reuseCatalog
     ? JSON.stringify(state.reuseCatalog, null, 2)
     : JSON.stringify({
         proceduralAssets: 66,
+        activeSceneProps: state.scenery.slice(0, 3).map(s => ({ id: s.assetId, builder: s.builder })),
         konamHandBuiltAreas: 17,
         konamIndexedRooms: 36,
         bicycleStudies: 21,
@@ -481,6 +598,28 @@ if($('ghostSampleBtn')){
   });
 }
 
+if($('propsToggleBtn')){
+  $('propsToggleBtn').addEventListener('click',()=>{
+    state.showProps=!state.showProps;
+    $('propsToggleBtn').setAttribute('aria-pressed',String(state.showProps));
+    if($('propsCountBadge'))$('propsCountBadge').textContent=`${state.scenery.length} props · ${state.showProps?'ON':'OFF'}`;
+    draw();
+  });
+}
+
+if($('redactPinBtn')){
+  $('redactPinBtn').addEventListener('click',()=>{
+    if(!state.rows.length)return;
+    const pos=atPosition(state.progress);
+    const pt=state.rows[pos.index];
+    if(pt){
+      state.redactZones.push({lat:pt.lat,lon:pt.lon,radiusMeters:500});
+      if($('redactCountBadge'))$('redactCountBadge').textContent=`${state.redactZones.length} pin${state.redactZones.length===1?'':'s'}`;
+      $('sourceState').textContent=`Added 500 m privacy redaction pin at ${(pos.target/1000).toFixed(2)} km (${state.redactZones.length} active).`;
+    }
+  });
+}
+
 if($('specBtn')){
   $('specBtn').addEventListener('click',()=>{
     const wp=$('worldsPanel');
@@ -503,6 +642,30 @@ $('scrub').addEventListener('input',e=>{
   $('play').textContent='▶';
   updateLive();
 });
+
+if(profileCanvas){
+  const scrubFromProfile = clientX => {
+    const rect=profileCanvas.getBoundingClientRect();
+    if(!rect.width)return;
+    state.progress=Math.max(0,Math.min(1,(clientX-rect.left)/rect.width));
+    state.playing=false;
+    $('play').textContent='▶';
+    $('scrub').value=Math.round(state.progress*1000);
+    updateLive();
+  };
+  profileCanvas.addEventListener('pointerdown',e=>{
+    profileCanvas.setPointerCapture(e.pointerId);
+    state.profileDrag=true;
+    scrubFromProfile(e.clientX);
+  });
+  profileCanvas.addEventListener('pointermove',e=>{
+    if(!state.profileDrag)return;
+    scrubFromProfile(e.clientX);
+  });
+  profileCanvas.addEventListener('pointerup',()=>state.profileDrag=false);
+  profileCanvas.addEventListener('pointercancel',()=>state.profileDrag=false);
+}
+
 $('speed').addEventListener('click',()=>{
   state.speed=state.speed===1?2:state.speed===2?4:1;
   $('speed').textContent=state.speed+'×';
@@ -532,6 +695,7 @@ for(const b of document.querySelectorAll('[data-theme]'))b.addEventListener('cli
   state.theme=b.dataset.theme;
   for(const s of document.querySelectorAll('[data-theme]'))s.classList.toggle('active',s===b);
   $('worldLabel').textContent={volcanic:'VOLCANIC COAST',canyon:'RED CANYON',alpine:'ALPINE MORNING'}[state.theme];
+  if(state.geo)state.scenery=generateProceduralScenery(state.geo.points,state.theme,24);
 });
 
 canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);state.drag={x:e.clientX,y:e.clientY};});
@@ -562,7 +726,7 @@ canvas.addEventListener('keydown',e=>{
 
 $('shareBtn').addEventListener('click',()=>{
   try{
-    const plan=planPrivateShare(state.rows,700);
+    const plan=planPrivateShare(state.rows,700,state.redactZones);
     if(!plan.segments.length){
       $('sourceState').textContent='Share export blocked: no safe continuous route remains after the 700 m endpoint and return-visit privacy zones.';
       $('sourceState').classList.add('error');

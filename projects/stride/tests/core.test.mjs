@@ -13,6 +13,8 @@ import {
   toActivitySpec,
   toMomentSpecs,
   compareActivities,
+  buildElevationProfile,
+  generateProceduralScenery,
   ALGORITHM_VERSION,
 } from '../core.mjs';
 
@@ -219,4 +221,36 @@ test('P1 versioned ActivitySpec, MomentSpec, and Compare course contracts', () =
   assert.equal(cmp.totalDurationDeltaSeconds, -15);
   assert.equal(cmp.splitComparisons.length, 1);
   assert.ok(cmp.splitComparisons[0].deltaSeconds < 0);
+});
+
+test('Cycle 0004: interactive elevation profile, procedural studio scenery, and intermediate privacy redaction pins', () => {
+  const pts = Array.from({ length: 40 }, (_, i) => ({
+    lat: 59 + i * 0.001,
+    lon: 17 + 0.0002 * Math.sin(i * 0.3),
+    t: 1700000000 + i * 30,
+    ele: 15 + 45 * Math.sin((i / 39) * Math.PI),
+    hr: 135 + (i % 15),
+  }));
+  const prof = buildElevationProfile(pts, 60);
+  assert.equal(prof.schema, 'stride.profile.v1');
+  assert.equal(prof.samples.length, 60);
+  assert.equal(prof.hasElevation, true);
+  assert.equal(prof.hasHeartRate, true);
+  assert.ok(prof.splitMarkers.length >= 4);
+
+  const localGeo = pts.map((p, i) => ({ x: (i - 20) * 0.5, y: 1, z: (i - 20) * 0.5 }));
+  const props = generateProceduralScenery(localGeo, 'volcanic', 18);
+  assert.equal(props.length, 18);
+  assert.equal(props[0].provenance, 'ai/studio/shared/procedural-assets/registry.json');
+
+  // Pin a 500 m redaction zone at the midpoint of the route
+  const mid = pts[20];
+  const basePlan = planPrivateShare(pts, 700);
+  const pinnedPlan = planPrivateShare(pts, 700, [{ lat: mid.lat, lon: mid.lon, radiusMeters: 500 }]);
+  assert.equal(basePlan.segments.length, 1);
+  assert.equal(pinnedPlan.segments.length, 2, 'mid-route redaction pin splits safe export into 2 disjoint subpaths');
+  assert.ok(pinnedPlan.retainedPoints < basePlan.retainedPoints);
+  for (const idx of pinnedPlan.segments.flat()) {
+    assert.ok(haversine(mid, pts[idx]) >= 500, 'no retained point falls inside the 500 m pinned redaction zone');
+  }
 });

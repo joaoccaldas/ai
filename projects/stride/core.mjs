@@ -1,7 +1,7 @@
 // STRIDE core v0.2: deterministic, local-only activity parsing, FIT CRC-16, versioned contracts, and route comparison.
 const R = 6371008.8, FIT_EPOCH = Date.UTC(1989,11,31)/1000;
 const finite = Number.isFinite;
-export const ALGORITHM_VERSION = 'stride-core-0.2.0';
+export const ALGORITHM_VERSION = 'stride-core-0.3.0';
 
 export const haversine=(a,b)=>{const q=Math.PI/180, dLat=(b.lat-a.lat)*q,dLon=(b.lon-a.lon)*q;
  const h=Math.sin(dLat/2)**2+Math.cos(a.lat*q)*Math.cos(b.lat*q)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.min(1,Math.sqrt(h)));};
@@ -489,27 +489,151 @@ export function compareActivities(primaryPoints, challengerPoints) {
   };
 }
 
+// Deterministic 2D elevation, heart-rate, and split profile series for interactive timeline scrubbing
+export function buildElevationProfile(points, sampleCount = 120) {
+  const model = analyze(points);
+  const n = Math.max(16, Math.min(500, Math.floor(sampleCount)));
+  const total = model.distance;
+  const rows = model.rows;
+  const minEle = model.minEle ?? 0;
+  const maxEle = model.maxEle ?? minEle;
+  const spanEle = Math.max(1, maxEle - minEle);
+
+  const sampleAt = targetD => {
+    let lo = 0, hi = rows.length - 1;
+    while (lo + 1 < hi) {
+      const mid = (lo + hi) >> 1;
+      if (rows[mid].d < targetD) lo = mid; else hi = mid;
+    }
+    const a = rows[lo], b = rows[hi];
+    const dt = b.t != null && a.t != null ? b.t - a.t : 0;
+    const dd = Math.max(1e-9, b.d - a.d);
+    const f = Math.max(0, Math.min(1, (targetD - a.d) / dd));
+    const ele = finite(a.ele) && finite(b.ele) ? a.ele + (b.ele - a.ele) * f : (finite(a.ele) ? a.ele : b.ele);
+    const hr = finite(a.hr) && finite(b.hr) ? a.hr + (b.hr - a.hr) * f : (finite(a.hr) ? a.hr : b.hr);
+    const gradePct = finite(a.ele) && finite(b.ele) && dd > 1 ? ((b.ele - a.ele) / dd) * 100 : null;
+    const speedKmh = dt > 0 ? (dd / dt) * 3.6 : null;
+    return {
+      progress: total > 0 ? targetD / total : 0,
+      distanceMeters: targetD,
+      elevationMeters: finite(ele) ? Math.round(ele * 10) / 10 : null,
+      normalizedElevation: finite(ele) ? (ele - minEle) / spanEle : null,
+      heartRateBpm: finite(hr) ? Math.round(hr) : null,
+      gradePct: finite(gradePct) ? Math.round(gradePct * 10) / 10 : null,
+      speedKmh: finite(speedKmh) ? Math.round(speedKmh * 10) / 10 : null,
+    };
+  };
+
+  const samples = [];
+  for (let i = 0; i < n; i++) {
+    const frac = i / (n - 1);
+    samples.push(sampleAt(frac * total));
+  }
+
+  const splitMarkers = model.bins.map(b => ({
+    km: b.km,
+    distanceMeters: b.at,
+    progress: total > 0 ? b.at / total : 0,
+    seconds: b.seconds,
+    ascent: b.ascent,
+    isFastest: model.fastest?.km === b.km,
+    isClimb: model.climb?.km === b.km && b.ascent > 0,
+  }));
+
+  return {
+    schema: 'stride.profile.v1',
+    algorithmVersion: ALGORITHM_VERSION,
+    hasElevation: model.minEle !== null,
+    hasHeartRate: model.avgHR !== null,
+    minElevationMeters: model.minEle,
+    maxElevationMeters: model.maxEle,
+    totalDistanceMeters: total,
+    samples,
+    splitMarkers,
+  };
+}
+
+// Deterministic, rights-cleared procedural scenery placement around the projected 3D route corridor
+// Maps directly to studio/shared/procedural-assets/registry.json builders without external licenses
+export function generateProceduralScenery(geoPoints, theme = 'volcanic', count = 24) {
+  if (!Array.isArray(geoPoints) || geoPoints.length < 2) return [];
+  const CATALOG_MAP = {
+    volcanic: [
+      { assetId: 'kona_palm_cluster', builder: 'vegetation', label: 'Volcanic Coast Palm' },
+      { assetId: 'basalt_outcrop', builder: 'nature', label: 'Basalt Lava Outcrop' },
+      { assetId: 'lighting_pole', builder: 'lamp', label: 'Course Beacon' },
+    ],
+    canyon: [
+      { assetId: 'sandstone_spire', builder: 'nature', label: 'Red Canyon Spire' },
+      { assetId: 'desert_scrub', builder: 'vegetation', label: 'Arid Scrub Cluster' },
+      { assetId: 'civic_bench', builder: 'bench', label: 'Aid Station Marker' },
+    ],
+    alpine: [
+      { assetId: 'alpine_pine_tall', builder: 'vegetation', label: 'Alpine Conifer' },
+      { assetId: 'granite_ridge_block', builder: 'nature', label: 'Granite Ridge Boulder' },
+      { assetId: 'lighting_pole', builder: 'lamp', label: 'Col Summit Marker' },
+    ],
+  };
+  const palette = CATALOG_MAP[theme] || CATALOG_MAP.volcanic;
+  const props = [];
+  const cap = Math.max(4, Math.min(48, Math.floor(count)));
+
+  for (let i = 0; i < cap; i++) {
+    const t = (i + 0.5) / cap;
+    const idx = Math.min(geoPoints.length - 1, Math.floor(t * (geoPoints.length - 1)));
+    const nextIdx = Math.min(geoPoints.length - 1, idx + 1);
+    const pt = geoPoints[idx];
+    const nxt = geoPoints[nextIdx];
+    const dx = (nxt.x - pt.x) || 0.1;
+    const dz = (nxt.z - pt.z) || 0.1;
+    const len = Math.hypot(dx, dz) || 1;
+    // Perpendicular normal pushed outside the route corridor so props never obscure the GPS line
+    const nx = -dz / len;
+    const nz = dx / len;
+    const side = i % 2 === 0 ? 1 : -1;
+    const offset = 2.1 + ((i * 7) % 5) * 0.65;
+    const px = Math.max(-15.5, Math.min(15.5, pt.x + nx * side * offset));
+    const pz = Math.max(-15.5, Math.min(15.5, pt.z + nz * side * offset));
+    const spec = palette[i % palette.length];
+    const scale = 0.55 + ((i * 13) % 7) * 0.09;
+    props.push({
+      id: `${theme}-prop-${i}`,
+      assetId: spec.assetId,
+      builder: spec.builder,
+      provenance: 'ai/studio/shared/procedural-assets/registry.json',
+      x: px,
+      z: pz,
+      scale,
+      side,
+    });
+  }
+  return props;
+}
+
 // Share projection policy: remove the first and last traveled 700 m AND all
-// visits within 700 m of either endpoint. Return disjoint index ranges, never
-// a flattened track that could reconnect across an intentionally hidden gap.
+// visits within 700 m of either endpoint, plus any user-specified redaction zones
+// [{lat, lon, radiusMeters}]. Return disjoint index ranges, never a flattened
+// track that could reconnect across an intentionally hidden gap.
 // Privacy trimming reduces exposure; it does not make a route anonymous.
-export function planPrivateShare(points, trimMeters=700){
+export function planPrivateShare(points, trimMeters=700, extraZones=[]){
  if(!Number.isFinite(trimMeters)||trimMeters<700)throw Error('Privacy trim must be at least 700 meters.');
  const rows=analyze(points).rows,total=rows.at(-1).d;
  const start=rows[0],end=rows.at(-1);const segments=[];let segment=[],retained=0;
+ const zones=Array.isArray(extraZones)?extraZones.filter(z=>finite(z?.lat)&&finite(z?.lon)):[];
  for(let i=0;i<rows.length;i++){
   const p=rows[i];
+  const inExtraZone=zones.some(z=>haversine(z,p)<Math.max(200,finite(z.radiusMeters)?z.radiusMeters:500));
   const visible=i>0&&i<rows.length-1&&p.d>=trimMeters&&total-p.d>=trimMeters
-   &&haversine(start,p)>=trimMeters&&haversine(end,p)>=trimMeters;
+   &&haversine(start,p)>=trimMeters&&haversine(end,p)>=trimMeters&&!inExtraZone;
   if(visible){segment.push(i);retained++;}
   else if(segment.length){if(segment.length>=2)segments.push(segment);segment=[];}
  }
  if(segment.length>=2)segments.push(segment);
- return {segments,totalMeters:total,redactedPoints:rows.length-retained,retainedPoints:retained,trimMeters};
+ return {segments,totalMeters:total,redactedPoints:rows.length-retained,retainedPoints:retained,trimMeters,customZoneCount:zones.length};
 }
 
-export function shareSafe(points,trimMeters=700){
- const plan=planPrivateShare(points,trimMeters);
+export function shareSafe(points,trimMeters=700,extraZones=[]){
+ const plan=planPrivateShare(points,trimMeters,extraZones);
  return plan.segments.map(segment=>segment.map(i=>{const {lat,lon,t,ele,hr}=points[i];return {lat,lon,t,ele,hr};}));
 }
 
