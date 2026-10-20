@@ -1,8 +1,227 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#081218"><meta name="description" content="STRIDE Moment Atlas. Private, local-first 3D activity storytelling, ghost comparison, and split analysis."><title>STRIDE · Moment Atlas</title><link rel="stylesheet" href="style.css"></head>
-<body><a class="skip-link" href="#mainWorkspace">Skip to interactive workspace</a><div class="shell"><header class="masthead"><div class="brand"><span class="brandmark" aria-hidden="true">S<span class="marktail">/</span></span><div><strong>STRIDE</strong><small>ATHLETE WORLDS / LAB 01</small></div></div><nav class="modenav" aria-label="Experience mode"><button type="button" class="modebtn active" data-mode="replay" aria-pressed="true">Replay</button><button type="button" class="modebtn" data-mode="cinema" aria-pressed="false">Cinema</button><button type="button" class="modebtn" data-mode="compare" aria-pressed="false">Compare</button><button type="button" class="modebtn" data-mode="worlds" aria-pressed="false">Worlds &amp; Reuse</button><button type="button" class="modebtn" data-mode="tutorials" aria-pressed="false">Tutorials</button></nav><span class="topflag"><span class="live-dot"></span> ON-DEVICE · NO ACCOUNT</span><a class="aboutlink" href="#how">How it works <span aria-hidden="true">↗</span></a></header>
-<section class="intro" id="rideThesisBar"><div><p class="eyebrow">WHERE DID YOU FLY · WHERE DID YOU CLIMB · WHY DID TIME SHIFT?</p><h1>Every effort has <em>a decisive moment.</em></h1><p class="subcopy" id="rideThesisText">A private 3D memory of your activity, built from your own route. Find your strongest kilometer, race a ghost effort, and see why time was gained or lost.</p></div><div class="intro-meta"><span>01 / Import</span><span>02 / Diagnose</span><span>03 / Compare</span><span>04 / Share Safe</span></div></section>
-<main class="workspace" id="mainWorkspace" tabindex="-1">
-<aside class="panel controls"><div class="section-kicker">01 <span>CREATE YOUR WORLD</span></div><h2>Bring a route.</h2><p class="help">Activity files only. Your location and health data stay in this browser.</p><label for="activityFile" class="upload" id="uploadZone"><span class="upicon">↗</span><strong>Choose an activity file</strong><small>GPX · TCX · FIT · .stride.json · up to 16 MB</small><input type="file" id="activityFile" accept=".gpx,.tcx,.fit,.json,application/gpx+xml,application/json,application/octet-stream"></label><button class="secondary full" id="demoBtn" type="button">Explore sample activity <span>→</span></button><button class="secondary full" id="ghostSampleBtn" type="button" style="margin-top:8px">Load ghost comparison (+18s pace) <span>⇄</span></button><label for="compareFile" class="secondary full" style="margin-top:8px;cursor:pointer;position:relative"><span>Import second file to compare</span><span>+</span><input type="file" id="compareFile" accept=".gpx,.tcx,.fit,.json,application/gpx+xml,application/json,application/octet-stream" style="position:absolute;opacity:0;inset:0;cursor:pointer"></label><div class="source" id="sourceState" role="status" aria-live="polite">Start with our fictional coastal training loop or open a file.</div><hr><div class="section-kicker">02 <span>WORLD &amp; GARAGE</span></div><p class="help">Stylized 3D relief with vertical elevation curtain, course gates, and KONA.m bike avatars.</p><div class="themes" role="group" aria-label="Choose environment"><button class="theme active" data-theme="volcanic" type="button"><span class="theme-swatch lava"></span><span>Lava coast (Kona preset)</span></button><button class="theme" data-theme="canyon" type="button"><span class="theme-swatch rust"></span><span>Red canyon (St. George preset)</span></button><button class="theme" data-theme="alpine" type="button"><span class="theme-swatch pine"></span><span>Alpine morning (Nice preset)</span></button></div><button class="secondary full" id="propsToggleBtn" type="button" aria-pressed="true" style="margin-top:8px"><span>Procedural studio props</span><span id="propsCountBadge">24 props · ON</span></button><label class="secondary full" style="margin-top:8px;cursor:pointer"><span>KONA.m equipment ID</span><select id="equipmentSelect" aria-label="Select KONA.m bicycle study" style="background:transparent;border:0;color:var(--accent);font:inherit;font-size:11px;text-align:right"><option value="canyon-cfr-2027">Speedmax CFR AXS (2027)</option><option value="canyon-slx-2027">Speedmax CF SLX 8 (2027)</option><option value="canyon-speedmax-cf-2011">Speedmax CF (2011)</option><option value="canyon-speedmax-three-2005">Speedmax Three (2005)</option><option value="">Runner / No Bike</option></select></label><label for="photoInput" class="secondary full" style="margin-top:8px;cursor:pointer;position:relative"><span>Pin local photo on route</span><span id="photoCountBadge">0 photos</span><input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" multiple style="position:absolute;opacity:0;inset:0;cursor:pointer"></label><hr><div class="section-kicker">03 <span>PRIVACY &amp; SHARE</span></div><p class="help">Share export hides the first and last 700 m of travel, return visits, and any pinned redaction zones. Nothing is uploaded.</p><button type="button" id="redactPinBtn" class="secondary full" style="margin-bottom:8px"><span>Pin 500 m redaction zone at playhead</span><span id="redactCountBadge">0 pins</span></button><button type="button" id="shareBtn" class="action full">Export privacy-trimmed PNG <span>↗</span></button><button type="button" id="bundleBtn" class="secondary full" style="margin-top:8px">Export redacted .stride.json <span>⇩</span></button><button type="button" id="specBtn" class="secondary full" style="margin-top:8px">Explore Worlds &amp; KONA.m Garage <span>◈</span></button><button type="button" id="tutorialLaunchBtn" class="secondary full" style="margin-top:8px"><span>Interactive Tutorials &amp; Tour</span><span>8 steps →</span></button><p class="tiny">This is not a Strava-connected app. Import files you are allowed to use. No automatic social posting.</p></aside>
-<section class="stage"><div class="canvas-head"><div><span class="section-kicker" id="stageKicker">THE ROUTE / 3D COURSE SCULPTURE &amp; CAUSAL REPLAY</span><h2 id="routeTitle">Coastal training loop <span class="demoTag">SAMPLE</span></h2></div><div class="scene-hints">DRAG OR ARROWS TO ORBIT · +/- TO ZOOM · CLICK ANY MOMENT TO FLY IN</div></div><div id="tourBanner" class="tour-banner" hidden><div class="tour-head"><span class="tour-step-badge" id="tourStepBadge">TUTORIAL 01 / 08</span><strong id="tourTitle">Bring Your Own Route</strong><div class="tour-nav"><button type="button" id="tourPrevBtn">◀ Prev</button><button type="button" id="tourNextBtn">Next ▶</button><button type="button" id="tourCloseBtn" aria-label="Close guided tour">×</button></div></div><p id="tourBody">Import a GPX, TCX, FIT, or .stride.json file directly in memory.</p><small id="tourRule">Rule: Zero network upload · FIT CRC-16 verified</small></div><div class="canvas-wrap" id="sceneContainer"><canvas id="scene" tabindex="0" aria-label="Interactive 3D perspective scene showing your activity route and position. Use arrow keys to orbit, plus or minus to zoom, Space to play or pause." role="application"></canvas><div class="causal-hud" id="causalHud"><span class="causal-kicker" id="causalHudKicker">CAUSAL MOMENT DIAGNOSIS · WHY HERE</span><strong id="causalHudTitle">Select a Moment card or scrub the contour</strong><small id="causalHudWhy">Every climb, sprint, and ghost split is explained from your recorded speed, grade, and heart rate.</small></div><div class="scene-caption"><span id="worldLabel">VOLCANIC COAST</span><span id="modeBadge">PROCEDURAL SCENE · NOT SURVEYED</span></div><div class="viewbtns"><button id="cinemaBtn" type="button" aria-pressed="false" title="Toggle autonomous drone camera">◈ <span>Cinema</span></button><button id="viewReset" type="button" title="Reset view">↺ <span>Reset view</span></button><button id="followBtn" type="button" aria-pressed="false">◎ <span>Follow</span></button></div></div><div class="playback"><div class="transport"><button id="play" type="button" aria-label="Pause activity replay">Ⅱ</button><div><strong id="posDistance">0.0 km</strong><small id="posTime">00:00 · activity time</small></div><div class="compare-pill" id="compareBanner" hidden><span class="ghost-dot"></span><span id="compareDeltaText">Ghost −0:00</span></div><div class="transport-right"><button class="speedBtn" id="speed" type="button" aria-label="Playback speed">1×</button></div></div><input id="scrub" aria-label="Replay progress" type="range" min="0" max="1000" value="0" step="1"><div class="scrub-label"><span>START</span><span id="activityDistance">8.7 KM</span><span>FINISH</span></div><div class="profile-wrap"><div class="profile-head"><span>ELEVATION &amp; SPLIT CONTOUR (CLICK OR DRAG TO SCRUB)</span><span id="profileRangeLabel">—</span></div><canvas id="profileCanvas" height="72" aria-label="Interactive elevation and split profile. Click or drag to scrub route position."></canvas></div></div><div class="stage-stats"><div><small>DISTANCE</small><strong id="distanceStat">—</strong></div><div><small>TIME</small><strong id="timeStat">—</strong></div><div><small>ASCENT*</small><strong id="ascentStat">—</strong></div><div><small>AVG HR</small><strong id="heartStat">—</strong></div></div><p class="caveat">* Ascent is estimated from recorded elevation and can be distorted by GPS noise. Terrain is illustrative; route and recorded elevation are data-derived.</p><div id="worldsPanel" class="worlds-drawer" hidden><div class="section-kicker">04 <span>CROSS-REPO 3D REUSE &amp; CONTRACT INSPECTOR</span></div><div id="worldsContent" class="worlds-grid"></div></div><div id="tutorialsPanel" class="worlds-drawer tutorials-drawer" hidden><div class="section-kicker">05 <span>INTERACTIVE TUTORIALS &amp; FEATURE ACADEMY (CLICK ANY MODULE TO RUN LIVE)</span></div><div id="tutorialsContent" class="tutorials-grid"></div></div></section>
-<aside class="panel insight"><div class="section-kicker">MOMENT ATLAS <span>03 / INSIGHTS</span></div><h2>The moments<br>inside the miles.</h2><p class="help">Deterministic kilometer splits, calculated from source coordinates and timestamps. Select a moment to jump there.</p><div id="moments" class="moments" aria-live="polite"><div class="emptyMoments">Load an activity to discover its story.</div></div><hr><div class="section-kicker">AT THIS POINT</div><div class="metricline"><span>Recorded elevation</span><strong id="liveElevation">—</strong></div><div class="metricline"><span>Estimated segment speed</span><strong id="liveSpeed">—</strong></div><div class="metricline"><span>Recorded heart rate</span><strong id="liveHR">—</strong></div><div class="metricline" id="liveGhostRow" hidden><span>Ghost time gap</span><strong id="liveGhostGap">—</strong></div><hr><div class="truthline"><span class="truth-dot"></span><p id="dataTruth">Every highlight requires data. We never invent heart rate, speed, elevation, or location observations.</p></div></aside>
-</main><section class="how" id="how"><div><p class="section-kicker">THE METHOD</p><h2>Truth underneath.<br><em>Wonder on top.</em></h2></div><div class="howgrid"><div><span>01</span><h3>Own the input</h3><p>Your imported file is processed in memory, not sent to a backend. Strava API access is deliberately not used in this version.</p></div><div><span>02</span><h3>Keep the measurement</h3><p>GPS-derived distance, source timestamps, elevation and optional HR remain distinguishable from decorative terrain.</p></div><div><span>03</span><h3>Reconstruct carefully</h3><p>Procedural nature, lighting and perspective are storytelling layers. This is a 3D route sculpture, not a surveyed digital twin.</p></div></div></section><footer><span>STRIDE / 0.2 MVP · PRIVATE-FIRST</span><span>Powered by your files, not your feed.</span></footer></div><script type="module" src="app.mjs"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071117">
+  <meta name="description" content="STRIDE · Private 3D Course Sculpture & Causal Moment Engine.">
+  <title>STRIDE · 3D Athlete Worlds</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#mainWorkspace">Skip to 3D stage</a>
+
+  <div class="spatial-shell" id="mainWorkspace" tabindex="-1">
+    <!-- LAYER 0: FULL-BLEED 3D COURSE SCULPTURE STAGE -->
+    <div class="canvas-wrap" id="sceneContainer">
+      <canvas id="scene" tabindex="0" aria-label="Interactive 3D course sculpture. Drag or use Arrow keys to orbit, plus or minus to zoom, Space to play or pause." role="application"></canvas>
+    </div>
+
+    <!-- LAYER 0: FLOATING TOP GLASS BAR -->
+    <header class="masthead">
+      <div class="brand">
+        <span class="brandmark" aria-hidden="true">S<span class="marktail">/</span></span>
+        <div class="brand-copy">
+          <strong>STRIDE</strong>
+          <h1 id="routeTitle">Fictional training route <span class="demoTag">SAMPLE</span></h1>
+        </div>
+      </div>
+
+      <nav class="modenav" aria-label="Experience mode">
+        <button type="button" class="modebtn active" data-mode="replay" aria-pressed="true">Replay</button>
+        <button type="button" class="modebtn" data-mode="cinema" aria-pressed="false">Cinema</button>
+        <button type="button" class="modebtn" data-mode="compare" aria-pressed="false">Compare</button>
+        <button type="button" class="modebtn" data-mode="worlds" aria-pressed="false">Worlds &amp; Reuse</button>
+        <button type="button" class="modebtn" data-mode="tutorials" aria-pressed="false">Tutorials</button>
+      </nav>
+
+      <div class="world-pills" role="group" aria-label="3D World Preset">
+        <button class="theme active" data-theme="volcanic" type="button" title="Lava Coast (Kona)"><span class="theme-swatch lava"></span><span>Kona</span></button>
+        <button class="theme" data-theme="canyon" type="button" title="Red Canyon (St. George)"><span class="theme-swatch rust"></span><span>St. George</span></button>
+        <button class="theme" data-theme="alpine" type="button" title="Alpine Morning (Nice)"><span class="theme-swatch pine"></span><span>Nice</span></button>
+      </div>
+
+      <div class="top-actions">
+        <label for="activityFile" class="glass-pill action-pill" id="uploadZone" title="Import GPX, TCX, FIT, or .stride.json (local in memory)">
+          <span>↗ Import</span>
+          <input type="file" id="activityFile" accept=".gpx,.tcx,.fit,.json,application/gpx+xml,application/json,application/octet-stream">
+        </label>
+        <button type="button" class="glass-pill" id="ghostSampleBtn" title="Race synchronized Ghost effort (+18s sample)">⇄ Ghost</button>
+        <button type="button" class="glass-pill" id="shareBtn" title="Export 700 m privacy-trimmed PNG">↗ Share PNG</button>
+        <button type="button" class="glass-pill" id="bundleBtn" title="Export redacted .stride.json story bundle">⇩ Bundle</button>
+        <button type="button" class="glass-pill drawer-toggle" id="labToggleBtn" aria-expanded="false" aria-controls="labDrawer">⚙ Lab &amp; Garage</button>
+      </div>
+    </header>
+
+    <!-- LAYER 1: SINGLE CONTEXTUAL FLOATING HUD (MAX 340PX) -->
+    <aside class="causal-hud" id="causalHud" aria-live="polite">
+      <div class="hud-top">
+        <span class="causal-kicker" id="causalHudKicker"><span class="live-dot"></span> <span id="worldLabel">VOLCANIC COAST</span></span>
+        <span class="hud-mode-tag" id="modeBadge">3D SCULPTURE</span>
+      </div>
+      <strong id="causalHudTitle">Km 1 · Ready to Replay</strong>
+      <small id="causalHudWhy">Click any Moment pill below or scrub the elevation profile to fly into that kilometer.</small>
+
+      <div class="hud-metrics">
+        <div class="hud-metric">
+          <strong id="liveSpeed">—</strong>
+          <span>SPEED</span>
+        </div>
+        <div class="hud-metric">
+          <strong id="liveElevation">—</strong>
+          <span>ELEV</span>
+        </div>
+        <div class="hud-metric">
+          <strong id="liveHR">—</strong>
+          <span>HEART RATE</span>
+        </div>
+        <div class="hud-metric">
+          <strong id="distanceStat">—</strong>
+          <span>COURSE</span>
+        </div>
+      </div>
+
+      <div class="hud-status-row">
+        <span id="sourceState" role="status">Fictional sample data. No personal information loaded.</span>
+      </div>
+    </aside>
+
+    <!-- FLOATING CAMERA CONTROLS (TOP RIGHT) -->
+    <div class="viewbtns" role="group" aria-label="3D Camera Controls">
+      <button id="cinemaBtn" type="button" aria-pressed="false" title="Toggle autonomous drone camera">◈ <span>Cinema</span></button>
+      <button id="followBtn" type="button" aria-pressed="false" title="Follow rider">◎ <span>Follow</span></button>
+      <button id="viewReset" type="button" title="Reset 3D camera">↺ <span>Reset</span></button>
+    </div>
+
+    <!-- GUIDED TOUR BANNER (FLOATING TOP-CENTER WHEN TUTORIAL ACTIVE) -->
+    <div id="tourBanner" class="tour-banner" hidden>
+      <div class="tour-head">
+        <span class="tour-step-badge" id="tourStepBadge">TUTORIAL 01 / 08</span>
+        <strong id="tourTitle">Bring Your Own Route</strong>
+        <div class="tour-nav">
+          <button type="button" id="tourPrevBtn">◀ Prev</button>
+          <button type="button" id="tourNextBtn">Next ▶</button>
+          <button type="button" id="tourCloseBtn" aria-label="Close guided tour">×</button>
+        </div>
+      </div>
+      <p id="tourBody">Import a GPX, TCX, FIT, or .stride.json file directly in memory.</p>
+      <small id="tourRule">Rule: Zero network upload · FIT CRC-16 verified</small>
+    </div>
+
+    <!-- LAYER 0: SINGLE FLOATING BOTTOM SCRUBBER & MOMENT DOCK -->
+    <section class="playback" aria-label="Timeline Scrubber and Moment Atlas">
+      <!-- Quick-Jump Moment Atlas Strip -->
+      <div id="moments" class="moments-strip" aria-label="Decisive Moments"></div>
+
+      <div class="transport">
+        <button id="play" type="button" aria-label="Pause activity replay">Ⅱ</button>
+        <div class="transport-readout">
+          <strong id="posDistance">0.00 km</strong>
+          <small id="posTime">0:00</small>
+        </div>
+        <div class="compare-pill" id="compareBanner" hidden>
+          <span class="ghost-dot"></span>
+          <span id="compareDeltaText">Ghost −0:00</span>
+        </div>
+
+        <div class="profile-inline">
+          <div class="profile-head">
+            <span id="activityDistance">11.1 KM</span>
+            <span id="profileRangeLabel">10m – 110m</span>
+          </div>
+          <canvas id="profileCanvas" height="46" aria-label="Interactive elevation and split contour. Click or drag to scrub route position."></canvas>
+          <input id="scrub" aria-label="Replay progress" type="range" min="0" max="1000" value="0" step="1">
+        </div>
+
+        <button class="speedBtn" id="speed" type="button" aria-label="Playback speed">1×</button>
+      </div>
+    </section>
+
+    <!-- LAYER 2: ON-DEMAND LAB, GARAGE & PROVENANCE DRAWER -->
+    <aside class="lab-drawer" id="labDrawer" aria-label="Lab, Garage and Telemetry Drawer">
+      <div class="drawer-header">
+        <div>
+          <span class="section-kicker">LAYER 02 · LAB &amp; GARAGE</span>
+          <h2>Ride Diagnosis &amp; Studio Controls</h2>
+        </div>
+        <button type="button" class="drawer-close" id="labCloseBtn" aria-label="Close Lab Drawer">×</button>
+      </div>
+
+      <p class="drawer-thesis" id="rideThesisText">Covered 11.1 km at 9.4 km/h avg; peaked in Km 1 and crested the steepest ramp in Km 5.</p>
+
+      <div class="stage-stats">
+        <div><small>TIME</small><strong id="timeStat">—</strong></div>
+        <div><small>ASCENT*</small><strong id="ascentStat">—</strong></div>
+        <div><small>AVG HR</small><strong id="heartStat">—</strong></div>
+        <div id="liveGhostRow" hidden><small>GHOST GAP</small><strong id="liveGhostGap">—</strong></div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="section-kicker">01 <span>GARAGE &amp; 3D SCENE</span></div>
+        <div class="drawer-grid">
+          <label class="secondary full">
+            <span>KONA.m Bike Avatar</span>
+            <select id="equipmentSelect" aria-label="Select KONA.m bicycle study">
+              <option value="canyon-cfr-2027">Speedmax CFR AXS (2027)</option>
+              <option value="canyon-slx-2027">Speedmax CF SLX 8 (2027)</option>
+              <option value="canyon-speedmax-cf-2011">Speedmax CF (2011)</option>
+              <option value="canyon-speedmax-three-2005">Speedmax Three (2005)</option>
+              <option value="">Runner / No Bike</option>
+            </select>
+          </label>
+          <button class="secondary full" id="propsToggleBtn" type="button" aria-pressed="true">
+            <span>Procedural 3D Studio Props</span>
+            <span id="propsCountBadge">24 props · ON</span>
+          </button>
+          <label for="photoInput" class="secondary full" style="position:relative;cursor:pointer">
+            <span>Pin local photo on 3D route</span>
+            <span id="photoCountBadge">0 photos</span>
+            <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" multiple style="position:absolute;opacity:0;inset:0;cursor:pointer">
+          </label>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <div class="section-kicker">02 <span>ROUTE, GHOST &amp; PRIVACY LAB</span></div>
+        <div class="drawer-grid">
+          <button class="secondary full" id="demoBtn" type="button"><span>Reset to Sample Coastal Loop</span><span>→</span></button>
+          <label for="compareFile" class="secondary full" style="position:relative;cursor:pointer">
+            <span>Import second file as Ghost</span>
+            <span>+</span>
+            <input type="file" id="compareFile" accept=".gpx,.tcx,.fit,.json,application/gpx+xml,application/json,application/octet-stream" style="position:absolute;opacity:0;inset:0;cursor:pointer">
+          </label>
+          <button type="button" id="redactPinBtn" class="secondary full">
+            <span>Pin 500 m privacy zone at playhead</span>
+            <span id="redactCountBadge">0 pins</span>
+          </button>
+          <button type="button" id="specBtn" class="secondary full">
+            <span>Worlds &amp; KONA.m Reuse Cards</span>
+            <span>◈</span>
+          </button>
+          <button type="button" id="tutorialLaunchBtn" class="secondary full">
+            <span>Interactive Tutorials &amp; Tour</span>
+            <span>8 steps →</span>
+          </button>
+        </div>
+      </div>
+
+      <div id="worldsPanel" class="worlds-drawer" hidden>
+        <div class="section-kicker">03 <span>WORLDS, GARAGE &amp; TELEMETRY CONTRACTS</span></div>
+        <div id="worldsContent" class="worlds-grid"></div>
+      </div>
+
+      <div id="tutorialsPanel" class="worlds-drawer tutorials-drawer" hidden>
+        <div class="section-kicker">04 <span>INTERACTIVE TUTORIALS (CLICK TO RUN LIVE)</span></div>
+        <div id="tutorialsContent" class="tutorials-grid"></div>
+      </div>
+
+      <section class="how" id="how">
+        <div class="section-kicker">THE METHOD · Truth underneath. Wonder on top.</div>
+        <p id="dataTruth">Original GPS positions and timestamps power the metrics. World terrain and lighting are illustrative. Zero cloud upload; Strava API is not used.</p>
+      </section>
+    </aside>
+  </div>
+
+  <script type="module" src="app.mjs"></script>
+</body>
+</html>

@@ -94,10 +94,11 @@ function setup(points,title,isDemo=false){
   if($('redactCountBadge'))$('redactCountBadge').textContent='0 pins';
   state.title=title;
   state.isDemo=isDemo;
-  state.progress=0;
+  state.progress=isDemo?0.22:0;
   state.playing=!reducedMotion;
   state.last=0;
   if ($('play')) $('play').textContent = state.playing ? 'Ⅱ' : '▶';
+  if ($('scrub')) $('scrub').value = Math.round(state.progress * 1000);
   const lat0=points.reduce((sum,p)=>sum+p.lat,0)/points.length,lon0=points.reduce((sum,p)=>sum+p.lon,0)/points.length;
   const cos=Math.cos(lat0*Math.PI/180);
   const local=points.map(p=>({x:(p.lon-lon0)*111320*cos,z:(p.lat-lat0)*111320}));
@@ -451,8 +452,8 @@ function perspective(p,w,h){
   const pz = p.z - focus.z * focusWeight;
   const cy=Math.cos(state.yaw),sy=Math.sin(state.yaw),cp=Math.cos(state.pitch),sp=Math.sin(state.pitch),
     rx=px*cy-pz*sy,rz=px*sy+pz*cy,ry=p.y*cp-rz*sp,depth=p.y*sp+rz*cp;
-  const scale=Math.min(w,h)*.037*state.zoom*(48/(48+depth));
-  return {x:w*.5+rx*scale,y:h*.58-ry*scale,depth,scale};
+  const scale=Math.min(w,h)*.027*state.zoom*(48/(48+depth));
+  return {x:w*.5+rx*scale,y:h*.49-ry*scale,depth,scale};
 }
 
 function drawProceduralProp(prop, pPalette, w, h){
@@ -1104,11 +1105,21 @@ const TUTORIAL_MODULES = [
   }
 ];
 
+function setDrawerOpen(open){
+  const drawer = $('labDrawer');
+  const toggle = $('labToggleBtn');
+  if(!drawer)return;
+  drawer.classList.toggle('open', Boolean(open));
+  if(toggle)toggle.setAttribute('aria-expanded', String(Boolean(open)));
+}
+
 function runTutorialStep(index){
   const idx = ((index % TUTORIAL_MODULES.length) + TUTORIAL_MODULES.length) % TUTORIAL_MODULES.length;
   state.tutorialStep = idx;
   const mod = TUTORIAL_MODULES[idx];
   mod.run();
+  // Show Lab Drawer on Step 01 (Academy Overview) and Step 08 (Privacy & Contracts); keep full-bleed 3D canvas unobstructed on Steps 02..07
+  setDrawerOpen(idx === 0 || idx === 7);
   const banner = $('tourBanner');
   if(banner){
     banner.hidden = false;
@@ -1153,12 +1164,12 @@ function setMode(mode){
   if($('cinemaBtn'))$('cinemaBtn').setAttribute('aria-pressed',String(state.cinema));
   if($('modeBadge')){
     $('modeBadge').textContent = {
-      replay:'PROCEDURAL SCENE · NOT SURVEYED',
-      cinema:'AUTONOMOUS DRONE ORBIT · ILLUSTRATIVE',
-      compare:'GHOST SYNCHRONIZED BY DISTANCE · LOCAL-ONLY',
-      worlds:'CROSS-REPO 3D REUSE & CONTRACT INSPECTOR',
-      tutorials:'INTERACTIVE TUTORIALS & FEATURE ACADEMY'
-    }[mode] || 'PROCEDURAL SCENE · NOT SURVEYED';
+      replay:'3D SCULPTURE',
+      cinema:'DRONE ORBIT',
+      compare:'GHOST COMPARE',
+      worlds:'WORLDS & GARAGE',
+      tutorials:'TUTORIALS'
+    }[mode] || '3D SCULPTURE';
   }
   for(const btn of document.querySelectorAll('.modebtn')){
     const active = btn.dataset.mode === mode;
@@ -1183,6 +1194,11 @@ function setMode(mode){
     } else {
       tp.hidden = true;
     }
+  }
+  if(mode === 'worlds' || mode === 'tutorials'){
+    setDrawerOpen(true);
+  } else if(mode === 'replay' || mode === 'cinema'){
+    setDrawerOpen(false);
   }
 }
 
@@ -1358,8 +1374,19 @@ if($('redactPinBtn')){
   });
 }
 
+if($('labToggleBtn')){
+  $('labToggleBtn').addEventListener('click',()=>{
+    const isOpen = $('labDrawer')?.classList.contains('open');
+    setDrawerOpen(!isOpen);
+  });
+}
+if($('labCloseBtn')){
+  $('labCloseBtn').addEventListener('click',()=>setDrawerOpen(false));
+}
+
 if($('specBtn')){
   $('specBtn').addEventListener('click',()=>{
+    setDrawerOpen(true);
     const wp=$('worldsPanel');
     if(wp){
       const nextHidden = !wp.hidden;
@@ -1385,6 +1412,7 @@ if($('tourNextBtn')){
 if($('tourCloseBtn')){
   $('tourCloseBtn').addEventListener('click',()=>{
     if($('tourBanner'))$('tourBanner').hidden=true;
+    setDrawerOpen(false);
     if(state.mode==='tutorials')setMode('replay');
   });
 }
