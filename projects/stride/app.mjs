@@ -1,4 +1,4 @@
-import {loadActivity, analyze, planPrivateShare, toActivitySpec, toMomentSpecs, compareActivities, buildElevationProfile, generateProceduralScenery, fmtTime, fmtDelta, haversine} from './core.mjs';
+import {loadActivity, analyze, planPrivateShare, toActivitySpec, toMomentSpecs, compareActivities, buildElevationProfile, generateProceduralScenery, matchLocalPhotosToRoute, toPortableStoryBundle, fmtTime, fmtDelta, haversine} from './core.mjs';
 
 const $ = id => document.getElementById(id);
 const canvas=$('scene'),ctx=canvas.getContext('2d',{alpha:false}),container=$('sceneContainer');
@@ -12,6 +12,8 @@ let state={
   scenery:[],
   showProps:true,
   redactZones:[],
+  photoPins:[],
+  equipmentRef:null,
   title:'Fictional training route',
   isDemo:true,
   ghostRows:null,
@@ -137,6 +139,27 @@ function renderMoments(){
   if(a.fastest)moments.push({label:'FASTEST KILOMETER',stat:fmtTime(a.fastest.seconds),info:`Kilometer ${a.fastest.km} · recorded time`,at:a.fastest.at});
   if(a.climb&&a.climb.ascent>0)moments.push({label:'STEEPEST 1 KM GAIN',stat:`+${Math.round(a.climb.ascent)} m`,info:`Kilometer ${a.climb.km} · raw elevation gain`,at:a.climb.at});
   if(a.slowest&&a.slowest.km!==a.fastest?.km)moments.push({label:'SLOWEST KILOMETER',stat:fmtTime(a.slowest.seconds),info:`Kilometer ${a.slowest.km} · recorded time`,at:a.slowest.at});
+  if(Array.isArray(a.lapTransitions)){
+    for(const tr of a.lapTransitions.slice(0,3)){
+      const label = tr.fromSport && tr.toSport && tr.fromSport !== tr.toSport
+        ? `TRANSITION · ${tr.fromSport.toUpperCase()} → ${tr.toSport.toUpperCase()}`
+        : `LAP ${tr.fromLap} → ${tr.lapIndex}`;
+      moments.push({
+        label,
+        stat:tr.seconds!=null?fmtTime(tr.seconds):`${(tr.distanceMeters/1000).toFixed(2)} km`,
+        info:`At ${(tr.at/1000).toFixed(2)} km · device lap boundary`,
+        at:tr.at
+      });
+    }
+  }
+  for(const pin of state.photoPins.slice(0,3)){
+    moments.push({
+      label:`PHOTO MEMORY · ${pin.name.toUpperCase().slice(0,18)}`,
+      stat:`${(pin.distanceMeters/1000).toFixed(2)} km`,
+      info:`Matched via ${pin.matchedBy.replace('_',' ')} · local-only`,
+      at:pin.distanceMeters
+    });
+  }
   if(state.comparison && state.comparison.splitComparisons.length){
     const biggestSwing = state.comparison.splitComparisons.reduce((best, cur) =>
       Math.abs(cur.deltaSeconds) > Math.abs(best.deltaSeconds) ? cur : best
@@ -424,6 +447,18 @@ function draw(){
   }
 
   if(!state.share){
+    if(state.photoPins && state.photoPins.length){
+      for(const pin of state.photoPins){
+        const pPos=perspective(atPosition(pin.progress),w,h);
+        ctx.beginPath();
+        ctx.rect(pPos.x-4.5,pPos.y-14,9,9);
+        ctx.fillStyle='#f4c59b';
+        ctx.fill();
+        ctx.strokeStyle='#0e2830';
+        ctx.lineWidth=1.5;
+        ctx.stroke();
+      }
+    }
     if(state.ghostGeo && state.ghostModel){
       const go=perspective(atPosition(state.progress, state.ghostModel.rows, state.ghostGeo),w,h);
       ctx.beginPath();
@@ -519,14 +554,14 @@ async function renderWorldsAndContracts(){
   const mount = $('worldsContent');
   if(!mount)return;
   mount.replaceChildren();
-  const spec = toActivitySpec(state.rows, { title: state.title, isDemo: state.isDemo });
+  const spec = toActivitySpec(state.rows, { title: state.title, isDemo: state.isDemo, equipmentRef: state.equipmentRef });
   const moments = toMomentSpecs(state.rows, { id: spec.id });
 
   const c1 = document.createElement('div');
   c1.className = 'world-card';
-  c1.innerHTML = `<strong>ActivitySpec v1 (${spec.algorithmVersion})</strong><span>Source class: ${spec.sourceClass} · Missingness tracked explicitly (never 0-filled).</span>`;
+  c1.innerHTML = `<strong>ActivitySpec v1 (${spec.algorithmVersion})</strong><span>Source class: ${spec.sourceClass} · Equipment: ${spec.equipmentRef || 'none'} · Missingness tracked explicitly.</span>`;
   const code1 = document.createElement('code');
-  code1.textContent = JSON.stringify({ summary: spec.summary, missingness: spec.missingness }, null, 2);
+  code1.textContent = JSON.stringify({ equipmentRef: spec.equipmentRef, summary: spec.summary, missingness: spec.missingness }, null, 2);
   c1.append(code1);
 
   const c2 = document.createElement('div');
@@ -627,6 +662,66 @@ if($('specBtn')){
       const nextHidden = !wp.hidden;
       wp.hidden = nextHidden;
       if(!nextHidden)renderWorldsAndContracts();
+    }
+  });
+}
+
+if($('equipmentSelect')){
+  $('equipmentSelect').addEventListener('change',e=>{
+    state.equipmentRef=e.target.value||null;
+    $('sourceState').textContent=state.equipmentRef
+      ? `Linked KONA.m bicycle study: ${state.equipmentRef} (read-only catalog reference).`
+      : 'Cleared KONA.m bicycle study reference.';
+    if(!$('worldsPanel')?.hidden)renderWorldsAndContracts();
+  });
+}
+
+if($('photoInput')){
+  $('photoInput').addEventListener('change',e=>{
+    const files=Array.from(e.target.files||[]);
+    if(!files.length||!state.rows.length)return;
+    const descriptors=files.map((f,idx)=>({
+      name:f.name,
+      timestampMs:f.lastModified,
+      progress:Math.min(0.95,Math.max(0.05,state.progress+idx*0.08))
+    }));
+    const pins=matchLocalPhotosToRoute(state.rows,descriptors,state.progress);
+    state.photoPins.push(...pins);
+    if($('photoCountBadge'))$('photoCountBadge').textContent=`${state.photoPins.length} photo${state.photoPins.length===1?'':'s'}`;
+    $('sourceState').textContent=`Pinned ${pins.length} local photo${pins.length===1?'':'s'} in memory (0 bytes uploaded).`;
+    renderMoments();
+    draw();
+    e.target.value='';
+  });
+}
+
+if($('bundleBtn')){
+  $('bundleBtn').addEventListener('click',()=>{
+    try{
+      const bundle=toPortableStoryBundle(state.rows,{
+        title:state.title,
+        isDemo:state.isDemo,
+        theme:state.theme,
+        equipmentRef:state.equipmentRef,
+        extraZones:state.redactZones,
+        trimMeters:700
+      });
+      if(!bundle.safeSegments.length){
+        $('sourceState').textContent='Story bundle blocked: no safe route segment remains after 700 m privacy redaction.';
+        $('sourceState').classList.add('error');
+        return;
+      }
+      const blob=new Blob([JSON.stringify(bundle,null,2)],{type:'application/json'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');
+      a.download='stride-story-bundle.stride.json';
+      a.href=url;
+      a.click();
+      setTimeout(()=>URL.revokeObjectURL(url),1000);
+      $('sourceState').textContent=`Exported redacted Story Bundle (${bundle.privacy.retainedPoints} safe pts, ${bundle.privacy.redactedPoints} redacted).`;
+    }catch(err){
+      $('sourceState').textContent='Could not export story bundle: '+err.message;
+      $('sourceState').classList.add('error');
     }
   });
 }

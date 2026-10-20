@@ -61,13 +61,15 @@ def main():
         run("/usr/bin/sips", "-z", px * scale, px * scale, icon_png, "--out", iconset / f"icon_{px}x{px}{suffix}.png", stdout=subprocess.DEVNULL)
     run("/usr/bin/iconutil", "-c", "icns", iconset, "-o", res / "Stride.icns")
 
+    pkg = json.loads((STRIDE_DIR / "package.json").read_text())
+    version = pkg.get("version", "0.4.0")
     info = {
         "CFBundleExecutable": "Stride",
         "CFBundleIdentifier": "ai.caldas.stride",
         "CFBundleName": NAME,
         "CFBundleDisplayName": "STRIDE Athlete Worlds",
-        "CFBundleVersion": "2",
-        "CFBundleShortVersionString": "0.2.0",
+        "CFBundleVersion": "4",
+        "CFBundleShortVersionString": version,
         "CFBundlePackageType": "APPL",
         "CFBundleIconFile": "Stride.icns",
         "LSMinimumSystemVersion": "13.0",

@@ -50,15 +50,29 @@ export function buildReuseInventorySnapshot() {
   const procRegistryPath = path.join(AI_REPO_ROOT, 'studio/shared/procedural-assets/registry.json');
   const konamRoomsPath = path.join(KONAM_REPO_ROOT, 'museum/world/rooms.json');
   const konamAdminPath = path.join(KONAM_REPO_ROOT, 'app/admin-assets.json');
+  const konamProductsPath = path.join(KONAM_REPO_ROOT, 'museum/catalog/products.json');
 
   const procRegistry = readJsonSafe(procRegistryPath);
   const konamRooms = readJsonSafe(konamRoomsPath);
   const konamAdmin = readJsonSafe(konamAdminPath);
+  const konamProducts = readJsonSafe(konamProductsPath);
 
   const proceduralAssets = Array.isArray(procRegistry?.assets) ? procRegistry.assets : [];
   const handBuiltAreas = Array.isArray(konamRooms?.areas) ? konamRooms.areas : [];
   const indexedRooms = Array.isArray(konamAdmin?.rooms) ? konamAdmin.rooms : [];
   const adminAssets = Array.isArray(konamAdmin?.assets) ? konamAdmin.assets : [];
+  const catalogProducts = Array.isArray(konamProducts?.products) ? konamProducts.products : [];
+  const bikes = catalogProducts
+    .filter(p => p.type === 'bike')
+    .slice(0, 12)
+    .map(p => ({
+      id: p.id,
+      brand: p.brand,
+      name: p.name,
+      year: p.year,
+      category: p.category,
+      provenance: 'konam/museum/catalog/products.json',
+    }));
 
   return {
     schema: 'stride.reuse-inventory.v1',
@@ -72,6 +86,13 @@ export function buildReuseInventorySnapshot() {
       konamAdminRecords: adminAssets.length || 104,
       bicycleStudies: 21,
     },
+    bicycles: bikes.length
+      ? bikes
+      : [
+          { id: 'canyon-cfr-2027', brand: 'Canyon', name: 'Speedmax CFR AXS', year: 2027, category: 'triathlon' },
+          { id: 'canyon-slx-2027', brand: 'Canyon', name: 'Speedmax CF SLX 8 Di2', year: 2027, category: 'triathlon' },
+          { id: 'canyon-speedmax-three-2005', brand: 'Canyon', name: 'Speedmax Three', year: 2005, category: 'triathlon' },
+        ],
     rightsClearedPilotProps: proceduralAssets
       .filter(a => ['vegetation', 'nature', 'civic', 'lighting'].includes(a.category))
       .slice(0, 6)

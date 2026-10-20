@@ -15,6 +15,8 @@ import {
   compareActivities,
   buildElevationProfile,
   generateProceduralScenery,
+  matchLocalPhotosToRoute,
+  toPortableStoryBundle,
   ALGORITHM_VERSION,
 } from '../core.mjs';
 
@@ -253,4 +255,48 @@ test('Cycle 0004: interactive elevation profile, procedural studio scenery, and 
   for (const idx of pinnedPlan.segments.flat()) {
     assert.ok(haversine(mid, pts[idx]) >= 500, 'no retained point falls inside the 500 m pinned redaction zone');
   }
+});
+
+test('Cycle 0005: multi-lap transitions, local photo pinning, KONA.m equipment ID, and portable .stride.json story bundle', () => {
+  const multiLapTcx = `<TrainingCenterDatabase><Activities><Activity Sport="Biking">
+    <Lap StartTime="2026-10-20T08:00:00Z"><Track>
+      <Trackpoint><Time>2026-10-20T08:00:00Z</Time><Position><LatitudeDegrees>59.350</LatitudeDegrees><LongitudeDegrees>17.850</LongitudeDegrees></Position><AltitudeMeters>15</AltitudeMeters></Trackpoint>
+      <Trackpoint><Time>2026-10-20T08:02:00Z</Time><Position><LatitudeDegrees>59.358</LatitudeDegrees><LongitudeDegrees>17.850</LongitudeDegrees></Position><AltitudeMeters>25</AltitudeMeters></Trackpoint>
+    </Track></Lap>
+    <Lap StartTime="2026-10-20T08:02:00Z"><Track>
+      <Trackpoint><Time>2026-10-20T08:04:00Z</Time><Position><LatitudeDegrees>59.366</LatitudeDegrees><LongitudeDegrees>17.850</LongitudeDegrees></Position><AltitudeMeters>30</AltitudeMeters></Trackpoint>
+      <Trackpoint><Time>2026-10-20T08:06:00Z</Time><Position><LatitudeDegrees>59.374</LatitudeDegrees><LongitudeDegrees>17.850</LongitudeDegrees></Position><AltitudeMeters>28</AltitudeMeters></Trackpoint>
+    </Track></Lap>
+  </Activity></Activities></TrainingCenterDatabase>`;
+  const rows = parseTCX(multiLapTcx);
+  const model = analyze(rows);
+  assert.equal(model.lapTransitions.length, 1);
+  assert.equal(model.lapTransitions[0].fromLap, 1);
+  assert.equal(model.lapTransitions[0].lapIndex, 2);
+
+  const moments = toMomentSpecs(rows, { id: 'tri-ride' });
+  assert.ok(moments.some(m => m.kind === 'lap_transition'), 'emits lap_transition moment spec');
+
+  // Local photo matching by timestamp and fallback progress
+  const tMidMs = Date.parse('2026-10-20T08:03:00Z');
+  const pins = matchLocalPhotosToRoute(rows, [
+    { name: 'climb-summit.jpg', timestampMs: tMidMs },
+    { name: 'finish-smile.jpg', timestampMs: 1200000000000, progress: 0.75 },
+  ]);
+  assert.equal(pins.length, 2);
+  assert.equal(pins[0].matchedBy, 'timestamp_interpolation');
+  assert.equal(pins[1].matchedBy, 'playhead_position');
+  assert.equal(pins[0].localOnly, true);
+
+  // Portable story bundle with KONA.m equipment reference
+  const bundle = toPortableStoryBundle(rows, {
+    title: 'Kona Queen K Brick',
+    equipmentRef: 'canyon-cfr-2027',
+    theme: 'volcanic',
+    trimMeters: 700,
+  });
+  assert.equal(bundle.schema, 'stride.story-bundle.v1');
+  assert.equal(bundle.equipmentRef, 'canyon-cfr-2027');
+  assert.equal(bundle.activity.equipmentRef, 'canyon-cfr-2027');
+  assert.ok(bundle.privacy.redactedPoints >= 2);
 });

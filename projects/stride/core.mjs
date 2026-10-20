@@ -1,7 +1,7 @@
 // STRIDE core v0.2: deterministic, local-only activity parsing, FIT CRC-16, versioned contracts, and route comparison.
 const R = 6371008.8, FIT_EPOCH = Date.UTC(1989,11,31)/1000;
 const finite = Number.isFinite;
-export const ALGORITHM_VERSION = 'stride-core-0.3.0';
+export const ALGORITHM_VERSION = 'stride-core-0.4.0';
 
 export const haversine=(a,b)=>{const q=Math.PI/180, dLat=(b.lat-a.lat)*q,dLon=(b.lon-a.lon)*q;
  const h=Math.sin(dLat/2)**2+Math.cos(a.lat*q)*Math.cos(b.lat*q)*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.min(1,Math.sqrt(h)));};
@@ -37,6 +37,8 @@ function normalize(rows){
     const cad=finite(row.cad)&&row.cad>=0&&row.cad<=300?row.cad:null;
     const pwr=finite(row.pwr)&&row.pwr>=0&&row.pwr<=3000?row.pwr:null;
     const next={lat,lon,t,ele,hr,cad,pwr};
+    if(finite(row.lap)&&row.lap>=1)next.lap=Math.floor(row.lap);
+    if(typeof row.sport==='string'&&row.sport)next.sport=row.sport.toLowerCase();
     if(out.length){
       const last=out[out.length-1];
       const d=haversine(last,next);
@@ -74,23 +76,54 @@ export function parseGPX(xml){
 
 export function parseTCX(xml){
   const points=[];
-  const re=/<(?:[\w-]+:)?Trackpoint\b[^>]*>([\s\S]*?)<\/(?:[\w-]+:)?Trackpoint>/gi;
-  let m;
-  while((m=re.exec(xml))!==null){
-    const body=m[1];
-    const hrBlock=content(body,'HeartRateBpm');
-    const hr=hrBlock!=null?(val(hrBlock,'Value')??Number(hrBlock)):val(body,'HeartRateBpm');
-    const cad=val(body,'Cadence')??val(body,'RunCadence');
-    const pwr=val(body,'Watts');
-    points.push({
-      lat:val(body,'LatitudeDegrees'),
-      lon:val(body,'LongitudeDegrees'),
-      t:time(content(body,'Time')),
-      ele:val(body,'AltitudeMeters'),
-      hr:finite(hr)?hr:null,
-      cad,
-      pwr
-    });
+  const lapRe=/<(?:[\w-]+:)?Lap\b([^>]*)>([\s\S]*?)<\/(?:[\w-]+:)?Lap>/gi;
+  const actSport=xml.match(/<(?:[\w-]+:)?Activity\b[^>]*\bSport\s*=\s*["']([^"']+)["']/i)?.[1]?.toLowerCase()||null;
+  let lapMatch,lapIdx=0;
+  while((lapMatch=lapRe.exec(xml))!==null){
+    lapIdx++;
+    const lapBody=lapMatch[2];
+    const re=/<(?:[\w-]+:)?Trackpoint\b[^>]*>([\s\S]*?)<\/(?:[\w-]+:)?Trackpoint>/gi;
+    let m;
+    while((m=re.exec(lapBody))!==null){
+      const body=m[1];
+      const hrBlock=content(body,'HeartRateBpm');
+      const hr=hrBlock!=null?(val(hrBlock,'Value')??Number(hrBlock)):val(body,'HeartRateBpm');
+      const cad=val(body,'Cadence')??val(body,'RunCadence');
+      const pwr=val(body,'Watts');
+      points.push({
+        lat:val(body,'LatitudeDegrees'),
+        lon:val(body,'LongitudeDegrees'),
+        t:time(content(body,'Time')),
+        ele:val(body,'AltitudeMeters'),
+        hr:finite(hr)?hr:null,
+        cad,
+        pwr,
+        lap:lapIdx,
+        sport:actSport
+      });
+    }
+  }
+  if(!points.length){
+    const re=/<(?:[\w-]+:)?Trackpoint\b[^>]*>([\s\S]*?)<\/(?:[\w-]+:)?Trackpoint>/gi;
+    let m;
+    while((m=re.exec(xml))!==null){
+      const body=m[1];
+      const hrBlock=content(body,'HeartRateBpm');
+      const hr=hrBlock!=null?(val(hrBlock,'Value')??Number(hrBlock)):val(body,'HeartRateBpm');
+      const cad=val(body,'Cadence')??val(body,'RunCadence');
+      const pwr=val(body,'Watts');
+      points.push({
+        lat:val(body,'LatitudeDegrees'),
+        lon:val(body,'LongitudeDegrees'),
+        t:time(content(body,'Time')),
+        ele:val(body,'AltitudeMeters'),
+        hr:finite(hr)?hr:null,
+        cad,
+        pwr,
+        lap:1,
+        sport:actSport
+      });
+    }
   }
   return normalize(points);
 }
@@ -155,7 +188,8 @@ export function parseFIT(buf){
     const fileCrc=dv.getUint16(end,true);
     if(fileCrc!==0 && fitCRC16(u8,0,end)!==fileCrc)throw Error('FIT file CRC mismatch');
   }
-  let off=head,lastTimestamp=null;
+  let off=head,lastTimestamp=null,currentLap=1,currentSport=null;
+  const FIT_SPORTS={0:'generic',1:'running',2:'cycling',5:'swimming',15:'transition'};
   const defs=new Map(),points=[];
   while(off<end){
     const h=dv.getUint8(off++);
@@ -198,6 +232,11 @@ export function parseFIT(buf){
       if(off+size>end)throw Error('FIT developer field truncated');
       off+=size;
     }
+    if(d.global===19 || d.global===18){
+      const sp=values.get(25);
+      if(finite(sp)&&FIT_SPORTS[sp])currentSport=FIT_SPORTS[sp];
+      if(d.global===19 && points.length)currentLap++;
+    }
     if(d.global===20){
       let ts=values.get(253);
       if(compressed){
@@ -218,7 +257,9 @@ export function parseFIT(buf){
           ele,
           hr:values.get(3)??null,
           cad:values.get(4)??null,
-          pwr:values.get(7)??null
+          pwr:values.get(7)??null,
+          lap:currentLap,
+          sport:currentSport
         });
       }
     }
@@ -300,6 +341,28 @@ export function analyze(points){
   const maxHR=hr.length?Math.max(...hr):null;
   const pwr=rows.map(x=>x.pwr).filter(x=>finite(x)&&x>=0&&x<=3000);
   const avgPower=pwr.length?pwr.reduce((a,b)=>a+b,0)/pwr.length:null;
+  const lapTransitions=[];
+  let prevLap=rows[0]?.lap??1,prevSport=rows[0]?.sport??null,lapStartDist=0,lapStartTime=rows[0]?.t??null;
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i];
+    const curLap=r.lap??prevLap,curSport=r.sport??prevSport;
+    if(curLap!==prevLap || (curSport&&prevSport&&curSport!==prevSport)){
+      lapTransitions.push({
+        lapIndex:curLap,
+        fromLap:prevLap,
+        fromSport:prevSport,
+        toSport:curSport,
+        startDistance:lapStartDist,
+        at:r.d,
+        distanceMeters:r.d-lapStartDist,
+        seconds:finite(r.t)&&finite(lapStartTime)&&r.t>=lapStartTime?r.t-lapStartTime:null
+      });
+      prevLap=curLap;
+      prevSport=curSport;
+      lapStartDist=r.d;
+      lapStartTime=r.t;
+    }
+  }
   return {
     rows,
     distance,
@@ -317,6 +380,7 @@ export function analyze(points){
     maxHR,
     avgPower,
     bins,
+    lapTransitions,
     algorithmVersion:ALGORITHM_VERSION
   };
 }
@@ -333,6 +397,7 @@ export function toActivitySpec(points, meta = {}) {
     title: meta.title || meta.fileName || 'Untitled activity',
     sourceClass,
     sourceFormat,
+    equipmentRef: meta.equipmentRef || null,
     rightsNotice: sourceClass === 'synthetic_sample'
       ? 'Fictional procedural sample route; no personal data.'
       : 'Local user-supplied file; processed in memory; Strava API not used.',
@@ -349,6 +414,7 @@ export function toActivitySpec(points, meta = {}) {
       avgHeartRateBpm: model.avgHR === null ? null : Math.round(model.avgHR * 10) / 10,
       maxHeartRateBpm: model.maxHR,
       avgPowerWatts: model.avgPower === null ? null : Math.round(model.avgPower * 10) / 10,
+      lapTransitionCount: model.lapTransitions.length,
     },
     missingness: {
       timestamps: model.duration === null,
@@ -424,7 +490,114 @@ export function toMomentSpecs(points, meta = {}) {
       complete: true,
     });
   }
+  for (const tr of model.lapTransitions) {
+    const sportChange = tr.fromSport && tr.toSport && tr.fromSport !== tr.toSport
+      ? `${tr.fromSport.toUpperCase()} → ${tr.toSport.toUpperCase()}`
+      : `LAP ${tr.fromLap} → ${tr.lapIndex}`;
+    moments.push({
+      schema: 'stride.moment.v1',
+      id: `${activityId}:lap-transition-${tr.lapIndex}`,
+      activityRef: activityId,
+      kind: 'lap_transition',
+      label: `TRANSITION · ${sportChange}`,
+      km: Math.max(1, Math.round((tr.at / 1000) * 10) / 10),
+      startDistanceMeters: Math.round(tr.startDistance * 10) / 10,
+      endDistanceMeters: Math.round(tr.at * 10) / 10,
+      metric: tr.seconds !== null ? 'lap_duration_s' : 'lap_distance_m',
+      value: tr.seconds !== null ? Math.round(tr.seconds * 100) / 100 : Math.round(tr.distanceMeters * 10) / 10,
+      formattedValue: tr.seconds !== null ? fmtTime(tr.seconds) : `${(tr.distanceMeters / 1000).toFixed(2)} km`,
+      units: tr.seconds !== null ? 's' : 'm',
+      fromSport: tr.fromSport,
+      toSport: tr.toSport,
+      algorithmVersion: ALGORITHM_VERSION,
+      provenance: 'device_lap_or_multisport_boundary',
+      complete: true,
+    });
+  }
   return moments;
+}
+
+// Match self-owned local photos to route coordinates in memory (zero network upload)
+export function matchLocalPhotosToRoute(points, photoDescriptors = [], fallbackProgress = 0.5) {
+  const model = analyze(points);
+  const rows = model.rows;
+  const total = Math.max(1, model.distance);
+  const tStart = rows.find(r => finite(r.t))?.t ?? null;
+  const tEnd = [...rows].reverse().find(r => finite(r.t))?.t ?? null;
+
+  const interpolateAtDist = targetD => {
+    let lo = 0, hi = rows.length - 1;
+    while (lo + 1 < hi) { const mid = (lo + hi) >> 1; if (rows[mid].d < targetD) lo = mid; else hi = mid; }
+    const a = rows[lo], b = rows[hi];
+    const f = Math.max(0, Math.min(1, (targetD - a.d) / Math.max(1e-9, b.d - a.d)));
+    return {
+      lat: a.lat + (b.lat - a.lat) * f,
+      lon: a.lon + (b.lon - a.lon) * f,
+      ele: finite(a.ele) && finite(b.ele) ? a.ele + (b.ele - a.ele) * f : (a.ele ?? b.ele ?? null),
+      t: finite(a.t) && finite(b.t) ? a.t + (b.t - a.t) * f : null,
+      d: targetD,
+      progress: targetD / total,
+    };
+  };
+
+  return photoDescriptors.map((photo, idx) => {
+    const tsSec = finite(photo.timestampMs) ? photo.timestampMs / 1000 : (finite(photo.timestampSeconds) ? photo.timestampSeconds : null);
+    let matchedBy = 'playhead_position';
+    let targetDist = Math.max(0, Math.min(1, finite(photo.progress) ? photo.progress : fallbackProgress)) * total;
+
+    if (finite(tsSec) && finite(tStart) && finite(tEnd) && tsSec >= tStart - 60 && tsSec <= tEnd + 60) {
+      matchedBy = 'timestamp_interpolation';
+      let lo = 0, hi = rows.length - 1;
+      while (lo + 1 < hi) {
+        const mid = (lo + hi) >> 1;
+        if ((rows[mid].t ?? tStart) < tsSec) lo = mid; else hi = mid;
+      }
+      const a = rows[lo], b = rows[hi];
+      const dt = Math.max(1e-9, (b.t ?? tsSec) - (a.t ?? tsSec));
+      const f = Math.max(0, Math.min(1, (tsSec - (a.t ?? tsSec)) / dt));
+      targetDist = a.d + (b.d - a.d) * f;
+    }
+
+    const pos = interpolateAtDist(targetDist);
+    return {
+      schema: 'stride.photo-pin.v1',
+      id: `photo-${idx + 1}`,
+      name: String(photo.name || `Photo ${idx + 1}`),
+      matchedBy,
+      distanceMeters: Math.round(pos.d * 10) / 10,
+      progress: Math.round(pos.progress * 10000) / 10000,
+      elevationMeters: pos.ele === null ? null : Math.round(pos.ele * 10) / 10,
+      localOnly: true,
+    };
+  });
+}
+
+// Build a portable, privacy-redacted Story Card & Scene Spec bundle (.stride.json)
+export function toPortableStoryBundle(points, meta = {}) {
+  const trimMeters = finite(meta.trimMeters) && meta.trimMeters >= 700 ? meta.trimMeters : 700;
+  const extraZones = Array.isArray(meta.extraZones) ? meta.extraZones : [];
+  const plan = planPrivateShare(points, trimMeters, extraZones);
+  const safeSegments = shareSafe(points, trimMeters, extraZones);
+  const spec = toActivitySpec(points, meta);
+  const moments = toMomentSpecs(points, { id: spec.id });
+  return {
+    schema: 'stride.story-bundle.v1',
+    exportedAtUtc: new Date().toISOString(),
+    algorithmVersion: ALGORITHM_VERSION,
+    worldPreset: meta.theme || 'volcanic',
+    equipmentRef: meta.equipmentRef || null,
+    privacy: {
+      trimMeters,
+      customRedactionZones: extraZones.length,
+      retainedPoints: plan.retainedPoints,
+      redactedPoints: plan.redactedPoints,
+      segmentCount: safeSegments.length,
+      notice: 'First/last 700m, endpoint return visits, and pinned redaction zones omitted. Route coordinates inside safe segments remain visible.',
+    },
+    activity: spec,
+    moments,
+    safeSegments,
+  };
 }
 
 // Deterministic course comparison (Ghost / Compare mode over same or overlapping route)
