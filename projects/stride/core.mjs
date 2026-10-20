@@ -539,6 +539,100 @@ export function toMomentSpecs(points, meta = {}) {
   return moments;
 }
 
+// Causal Moment Diagnosis Engine: answers "Where were the decisive moments of my effort and WHY did I gain or lose time there?"
+export function diagnoseMoments(points, ghostPoints = null) {
+  const model = analyze(points);
+  const totalDist = Math.max(1, model.distance);
+  const avgSpeedKmh = model.duration && model.duration > 0 ? (model.distance / model.duration) * 3.6 : null;
+  const avgHR = model.avgHR;
+  const comp = Array.isArray(ghostPoints) && ghostPoints.length >= 2 ? compareActivities(points, ghostPoints) : null;
+
+  const describeSplitWhy = (bin, role) => {
+    if (!bin) return null;
+    const speedKmh = bin.seconds > 0 ? (1000 / bin.seconds) * 3.6 : null;
+    const speedDeltaPct = speedKmh !== null && avgSpeedKmh ? Math.round(((speedKmh - avgSpeedKmh) / avgSpeedKmh) * 100) : null;
+    const netGradePct = Math.round(((bin.ascent - (bin.descent || 0)) / 1000) * 1000) / 10;
+    const climbGradePct = Math.round((bin.ascent / 1000) * 1000) / 10;
+    const hrDelta = bin.avgHR !== null && avgHR !== null ? Math.round(bin.avgHR - avgHR) : null;
+    const parts = [];
+    if (speedKmh !== null) {
+      parts.push(`${speedKmh.toFixed(1)} km/h${speedDeltaPct !== null ? ` (${speedDeltaPct >= 0 ? '+' : ''}${speedDeltaPct}% vs avg)` : ''}`);
+    }
+    if (role === 'climb' || bin.ascent >= 15) {
+      parts.push(`+${Math.round(bin.ascent)} m gain (+${climbGradePct}% climb grade)`);
+    } else if (bin.descent >= 12) {
+      parts.push(`−${Math.round(bin.descent)} m descent (${netGradePct}% net grade)`);
+    } else {
+      parts.push(`flat/rolling corridor (${netGradePct >= 0 ? '+' : ''}${netGradePct}% net)`);
+    }
+    if (bin.avgHR !== null) {
+      parts.push(`${Math.round(bin.avgHR)} bpm${hrDelta !== null ? ` (${hrDelta >= 0 ? '+' : ''}${hrDelta} bpm vs avg)` : ''}`);
+    }
+    const splitComp = comp?.splitComparisons?.find(s => s.km === bin.km);
+    if (splitComp) {
+      const gSign = splitComp.deltaSeconds > 0 ? `gained ${Math.round(splitComp.deltaSeconds)}s on Ghost` : `lost ${Math.abs(Math.round(splitComp.deltaSeconds))}s to Ghost`;
+      parts.push(gSign);
+    }
+    return {
+      km: bin.km,
+      startDistance: bin.startDistance,
+      endDistance: bin.at,
+      startProgress: bin.startDistance / totalDist,
+      endProgress: bin.at / totalDist,
+      focusProgress: ((bin.startDistance + bin.at) * 0.5) / totalDist,
+      speedKmh: speedKmh !== null ? Math.round(speedKmh * 10) / 10 : null,
+      speedDeltaPct,
+      climbGradePct,
+      avgHR: bin.avgHR !== null ? Math.round(bin.avgHR) : null,
+      why: `Km ${bin.km} · ` + parts.join(' · '),
+    };
+  };
+
+  const fastestDiag = describeSplitWhy(model.fastest, 'fastest');
+  const climbDiag = model.climb && model.climb.ascent > 0 ? describeSplitWhy(model.climb, 'climb') : null;
+  const slowestDiag = model.slowest && model.slowest.km !== model.fastest?.km ? describeSplitWhy(model.slowest, 'slowest') : null;
+
+  let ghostSwingDiag = null;
+  if (comp && comp.splitComparisons.length) {
+    const swing = comp.splitComparisons.reduce((best, cur) =>
+      Math.abs(cur.deltaSeconds) > Math.abs(best.deltaSeconds) ? cur : best
+    );
+    const bin = model.bins.find(b => b.km === swing.km);
+    const base = bin ? describeSplitWhy(bin, 'ghost') : null;
+    const youFaster = swing.deltaSeconds > 0;
+    ghostSwingDiag = {
+      km: swing.km,
+      deltaSeconds: swing.deltaSeconds,
+      startProgress: ((swing.km - 1) * 1000) / totalDist,
+      endProgress: (swing.km * 1000) / totalDist,
+      focusProgress: ((swing.km - 0.5) * 1000) / totalDist,
+      why: `Km ${swing.km} · Decisive Ghost swing (${youFaster ? 'you gained' : 'you lost'} ${Math.abs(Math.round(swing.deltaSeconds))}s)${base ? ' — ' + base.why.replace(/^Km \d+ · /, '') : ''}`,
+    };
+  }
+
+  // Overall Ride Thesis (1-sentence answer to "What happened on this effort?")
+  let thesis = `Covered ${(model.distance / 1000).toFixed(1)} km`;
+  if (avgSpeedKmh !== null) thesis += ` at ${avgSpeedKmh.toFixed(1)} km/h avg`;
+  if (fastestDiag) thesis += `; peaked in Km ${fastestDiag.km} (${fastestDiag.speedKmh} km/h)`;
+  if (climbDiag) thesis += ` and crested the steepest ramp in Km ${climbDiag.km} (+${Math.round(model.climb.ascent)} m, +${climbDiag.climbGradePct}% grade)`;
+  if (comp && comp.totalDurationDeltaSeconds !== null) {
+    const d = Math.round(comp.totalDurationDeltaSeconds);
+    thesis += d > 0 ? ` — finishing ${fmtTime(d)} ahead of Ghost.` : ` — finishing ${fmtTime(Math.abs(d))} behind Ghost.`;
+  } else {
+    thesis += '.';
+  }
+
+  return {
+    schema: 'stride.diagnosis.v1',
+    thesis,
+    avgSpeedKmh: avgSpeedKmh !== null ? Math.round(avgSpeedKmh * 10) / 10 : null,
+    fastest: fastestDiag,
+    climb: climbDiag,
+    slowest: slowestDiag,
+    ghostSwing: ghostSwingDiag,
+  };
+}
+
 // Match self-owned local photos to route coordinates in memory (zero network upload)
 export function matchLocalPhotosToRoute(points, photoDescriptors = [], fallbackProgress = 0.5) {
   const model = analyze(points);

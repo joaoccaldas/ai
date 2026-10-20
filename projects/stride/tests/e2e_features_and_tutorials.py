@@ -16,10 +16,13 @@ Tests:
 """
 import json
 import os
+import subprocess
+import time
 import urllib.request
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
+ROOT = Path(__file__).resolve().parents[1]
 CHROMIUM = os.environ.get(
     "STRIDE_CHROMIUM_PATH",
     "/Users/joao/Library/Caches/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-mac-arm64/chrome-headless-shell",
@@ -34,6 +37,17 @@ BASE_URL = os.environ.get("STRIDE_BASE_URL", "http://127.0.0.1:8864")
 
 
 def check_health():
+    try:
+        with urllib.request.urlopen(f"{BASE_URL}/health", timeout=1.5) as resp:
+            pass
+    except Exception:
+        subprocess.Popen(
+            ["node", str(ROOT / "server.mjs"), "--port", "8864"],
+            cwd=str(ROOT),
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        time.sleep(0.8)
     with urllib.request.urlopen(f"{BASE_URL}/health", timeout=3) as resp:
         data = json.loads(resp.read().decode("utf-8"))
         assert data.get("status") == "ok", f"Unexpected health: {data}"

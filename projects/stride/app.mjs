@@ -1,4 +1,4 @@
-import {loadActivity, parseStoryBundle, analyze, planPrivateShare, toActivitySpec, toMomentSpecs, compareActivities, buildElevationProfile, generateProceduralScenery, matchLocalPhotosToRoute, toPortableStoryBundle, fmtTime, fmtDelta, haversine} from './core.mjs';
+import {loadActivity, parseStoryBundle, analyze, diagnoseMoments, planPrivateShare, toActivitySpec, toMomentSpecs, compareActivities, buildElevationProfile, generateProceduralScenery, matchLocalPhotosToRoute, toPortableStoryBundle, fmtTime, fmtDelta, haversine} from './core.mjs';
 
 const $ = id => document.getElementById(id);
 const canvas=$('scene'),ctx=canvas.getContext('2d',{alpha:false}),container=$('sceneContainer');
@@ -8,12 +8,13 @@ const reducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(pre
 let state={
   rows:[],
   model:null,
+  diagnosis:null,
   profile:null,
   scenery:[],
   showProps:true,
   redactZones:[],
   photoPins:[],
-  equipmentRef:null,
+  equipmentRef:'canyon-cfr-2027',
   title:'Fictional training route',
   isDemo:true,
   ghostRows:null,
@@ -30,6 +31,11 @@ let state={
   yaw:.73,
   pitch:.85,
   zoom:1.0,
+  camFocus:{x:0,y:0,z:0},
+  flyTarget:null,
+  highlightRange:null,
+  activeMoment:null,
+  summitIndex:0,
   drag:null,
   profileDrag:false,
   last:0,
@@ -78,8 +84,13 @@ function setup(points,title,isDemo=false){
   const a=analyze(points);
   state.rows=a.rows;
   state.model=a;
+  state.diagnosis=diagnoseMoments(points,state.ghostRows);
   state.profile=buildElevationProfile(points,120);
   state.redactZones=[];
+  state.highlightRange=null;
+  state.activeMoment=null;
+  state.flyTarget=null;
+  state.camFocus={x:0,y:0,z:0};
   if($('redactCountBadge'))$('redactCountBadge').textContent='0 pins';
   state.title=title;
   state.isDemo=isDemo;
@@ -92,6 +103,11 @@ function setup(points,title,isDemo=false){
   const local=points.map(p=>({x:(p.lon-lon0)*111320*cos,z:(p.lat-lat0)*111320}));
   const range=Math.max(500,...local.map(p=>Math.max(Math.abs(p.x),Math.abs(p.z))));
   const min=a.minEle??0,max=a.maxEle??min;
+  let maxEleIdx = 0;
+  for(let i=1;i<points.length;i++){
+    if((points[i].ele??-Infinity)>(points[maxEleIdx].ele??-Infinity))maxEleIdx=i;
+  }
+  state.summitIndex=maxEleIdx;
   state.geo={
     lat0,lon0,range,min,max,
     points:local.map((p,i)=>({...p,x:p.x/range*13,z:p.z/range*13,y:finite(points[i].ele)?(points[i].ele-min)/Math.max(20,max-min)*3+.75:1}))
@@ -101,8 +117,12 @@ function setup(points,title,isDemo=false){
   if(state.ghostRows){
     state.comparison=compareActivities(state.rows,state.ghostRows);
     state.ghostGeo=projectPoints(state.ghostRows,state.geo,min,max);
+    state.diagnosis=diagnoseMoments(state.rows,state.ghostRows);
   }
   $('routeTitle').textContent=title+(isDemo?' (SAMPLE)':'');
+  if($('rideThesisText') && state.diagnosis?.thesis){
+    $('rideThesisText').textContent=state.diagnosis.thesis;
+  }
   $('sourceState').textContent=isDemo?'Fictional sample data. No personal information loaded.':`Opened ${points.length} valid GPS points in this device. No upload.`;
   $('sourceState').classList.remove('error');
   $('distanceStat').textContent=(a.distance/1000).toFixed(1)+' km';
@@ -126,6 +146,10 @@ function setupGhost(points, title){
   state.ghostTitle=title;
   state.comparison=compareActivities(state.rows,state.ghostRows);
   state.ghostGeo=projectPoints(state.ghostRows,state.geo,state.geo.min,state.geo.max);
+  state.diagnosis=diagnoseMoments(state.rows,state.ghostRows);
+  if($('rideThesisText') && state.diagnosis?.thesis){
+    $('rideThesisText').textContent=state.diagnosis.thesis;
+  }
   setMode('compare');
   $('sourceState').textContent=`Compare active: ${state.title} vs ${title} (${state.comparison.comparableCourse?'aligned course':'approximate distance index'}).`;
   $('sourceState').classList.remove('error');
@@ -133,31 +157,96 @@ function setupGhost(points, title){
   updateLive();
 }
 
+function flyToMoment(m){
+  const totalDist = Math.max(1, state.model?.distance || 1);
+  const startP = m.startDistance != null ? m.startDistance / totalDist : Math.max(0, (m.at - 800) / totalDist);
+  const endP = m.at / totalDist;
+  const focusP = (startP + endP) * 0.5;
+  state.progress = endP;
+  state.playing = false;
+  if($('play'))$('play').textContent='▶';
+  if($('scrub'))$('scrub').value=Math.round(state.progress*1000);
+  state.highlightRange = [Math.max(0, startP), Math.min(1, endP)];
+  state.activeMoment = m;
+  const focusPt = atPosition(focusP);
+  state.flyTarget = {
+    focus: { x: focusPt.x, y: focusPt.y, z: focusPt.z },
+    yaw: 0.95 + focusP * 0.65,
+    pitch: 0.68,
+    zoom: 1.32
+  };
+  if(reducedMotion){
+    state.camFocus = state.flyTarget.focus;
+    state.yaw = state.flyTarget.yaw;
+    state.pitch = state.flyTarget.pitch;
+    state.zoom = state.flyTarget.zoom;
+    state.flyTarget = null;
+  }
+  if($('causalHudTitle'))$('causalHudTitle').textContent = `${m.label} · ${m.stat}`;
+  if($('causalHudWhy'))$('causalHudWhy').textContent = m.why || m.info;
+  updateLive();
+  draw();
+}
+
 function renderMoments(){
   const a=state.model;
   if(!a)return;
+  const diag=state.diagnosis;
   const moments=[];
-  if(a.fastest)moments.push({label:'FASTEST KILOMETER',stat:fmtTime(a.fastest.seconds),info:`Kilometer ${a.fastest.km} · recorded time`,at:a.fastest.at});
-  if(a.climb&&a.climb.ascent>0)moments.push({label:'STEEPEST 1 KM GAIN',stat:`+${Math.round(a.climb.ascent)} m`,info:`Kilometer ${a.climb.km} · raw elevation gain`,at:a.climb.at});
-  if(a.slowest&&a.slowest.km!==a.fastest?.km)moments.push({label:'SLOWEST KILOMETER',stat:fmtTime(a.slowest.seconds),info:`Kilometer ${a.slowest.km} · recorded time`,at:a.slowest.at});
+  if(a.fastest){
+    moments.push({
+      label:'FASTEST KILOMETER',
+      stat:fmtTime(a.fastest.seconds),
+      info:diag?.fastest?.why || `Kilometer ${a.fastest.km} · recorded time`,
+      why:diag?.fastest?.why,
+      startDistance:a.fastest.startDistance,
+      at:a.fastest.at
+    });
+  }
+  if(a.climb&&a.climb.ascent>0){
+    moments.push({
+      label:'STEEPEST 1 KM GAIN',
+      stat:`+${Math.round(a.climb.ascent)} m`,
+      info:diag?.climb?.why || `Kilometer ${a.climb.km} · raw elevation gain`,
+      why:diag?.climb?.why,
+      startDistance:a.climb.startDistance,
+      at:a.climb.at
+    });
+  }
+  if(a.slowest&&a.slowest.km!==a.fastest?.km){
+    moments.push({
+      label:'SLOWEST KILOMETER',
+      stat:fmtTime(a.slowest.seconds),
+      info:diag?.slowest?.why || `Kilometer ${a.slowest.km} · recorded time`,
+      why:diag?.slowest?.why,
+      startDistance:a.slowest.startDistance,
+      at:a.slowest.at
+    });
+  }
   if(Array.isArray(a.lapTransitions)){
     for(const tr of a.lapTransitions.slice(0,3)){
       const label = tr.fromSport && tr.toSport && tr.fromSport !== tr.toSport
         ? `TRANSITION · ${tr.fromSport.toUpperCase()} → ${tr.toSport.toUpperCase()}`
         : `LAP ${tr.fromLap} → ${tr.lapIndex}`;
+      const whyText = `At ${(tr.at/1000).toFixed(2)} km · Completed Lap ${tr.fromLap} (${(tr.distanceMeters/1000).toFixed(1)} km${tr.seconds!=null?' in '+fmtTime(tr.seconds):''}) and entered ${tr.toSport||'Lap '+tr.lapIndex}.`;
       moments.push({
         label,
         stat:tr.seconds!=null?fmtTime(tr.seconds):`${(tr.distanceMeters/1000).toFixed(2)} km`,
-        info:`At ${(tr.at/1000).toFixed(2)} km · device lap boundary`,
+        info:whyText,
+        why:whyText,
+        startDistance:tr.startDistance,
         at:tr.at
       });
     }
   }
   for(const pin of state.photoPins.slice(0,3)){
+    const whyPhoto = `Pinned at ${(pin.distanceMeters/1000).toFixed(2)} km (${pin.elevationMeters!=null?pin.elevationMeters+' m ele · ':''}matched via ${pin.matchedBy.replace('_',' ')}) · 100% local in memory.`;
     moments.push({
       label:`PHOTO MEMORY · ${pin.name.toUpperCase().slice(0,18)}`,
       stat:`${(pin.distanceMeters/1000).toFixed(2)} km`,
-      info:`Matched via ${pin.matchedBy.replace('_',' ')} · local-only`,
+      info:whyPhoto,
+      why:whyPhoto,
+      startDistance:Math.max(0,pin.distanceMeters-400),
       at:pin.distanceMeters
     });
   }
@@ -165,10 +254,13 @@ function renderMoments(){
     const biggestSwing = state.comparison.splitComparisons.reduce((best, cur) =>
       Math.abs(cur.deltaSeconds) > Math.abs(best.deltaSeconds) ? cur : best
     );
+    const whyGhost = diag?.ghostSwing?.why || `Kilometer ${biggestSwing.km} · vs ${state.ghostTitle || 'Ghost'}`;
     moments.push({
       label:'LARGEST GHOST GAP SPLIT',
       stat:`${fmtDelta(biggestSwing.deltaSeconds)}s`,
-      info:`Kilometer ${biggestSwing.km} · vs ${state.ghostTitle || 'Ghost'}`,
+      info:whyGhost,
+      why:whyGhost,
+      startDistance:(biggestSwing.km-1)*1000,
       at:biggestSwing.km*1000
     });
   }
@@ -182,7 +274,7 @@ function renderMoments(){
   }
   for(const m of moments){
     const b=document.createElement('button');
-    b.className='moment';
+    b.className='moment'+(state.activeMoment?.label===m.label?' active':'');
     b.type='button';
     const l=document.createElement('span');
     l.className='m-top';
@@ -193,11 +285,9 @@ function renderMoments(){
     s.textContent=m.info;
     b.append(l,strong,s);
     b.addEventListener('click',()=>{
-      state.progress=m.at/Math.max(1,a.distance);
-      state.playing=false;
-      $('play').textContent='▶';
-      $('scrub').value=Math.round(state.progress*1000);
-      updateLive();
+      for(const el of mount.querySelectorAll('.moment'))el.classList.remove('active');
+      b.classList.add('active');
+      flyToMoment(m);
     });
     mount.append(b);
   }
@@ -236,13 +326,20 @@ function drawProfile(){
   const samples=prof.samples;
   if(!samples.length)return;
 
+  // Highlight active moment band on 2D profile
+  if(state.highlightRange){
+    const x0=state.highlightRange[0]*w, x1=state.highlightRange[1]*w;
+    pctx.fillStyle='#dbfa9422';
+    pctx.fillRect(x0,0,Math.max(3,x1-x0),h);
+  }
+
   // Draw kilometer split markers
   for(const sp of prof.splitMarkers){
     const sx=sp.progress*w;
     pctx.beginPath();
     pctx.moveTo(sx,0);
     pctx.lineTo(sx,h);
-    pctx.strokeStyle=sp.isFastest?'#dbfa9455':sp.isClimb?'#f4c59b55':'#ffffff14';
+    pctx.strokeStyle=sp.isFastest?'#dbfa9466':sp.isClimb?'#f4c59b66':'#ffffff16';
     pctx.lineWidth=sp.isFastest||sp.isClimb?1.5:1;
     pctx.stroke();
   }
@@ -285,16 +382,19 @@ function updateLive(){
   $('posTime').textContent=a.duration==null?'No recorded time':fmtTime(elapsed??0);
   $('liveElevation').textContent=point.ele==null?'Not recorded':Math.round(point.ele)+' m';
   const delta=point.t!=null&&next.t!=null?next.t-point.t:0;
-  const speed=delta>0?haversine(point,next)/delta*3.6:null;
+  const dSeg=haversine(point,next);
+  const speed=delta>0?dSeg/delta*3.6:null;
+  const grade=point.ele!=null&&next.ele!=null&&dSeg>1?((next.ele-point.ele)/dSeg)*100:null;
   $('liveSpeed').textContent=speed==null?'Not recorded':speed.toFixed(1)+' km/h';
   $('liveHR').textContent=point.hr==null?'Not recorded':Math.round(point.hr)+' bpm';
 
   const compareBanner=$('compareBanner'), liveGhostRow=$('liveGhostRow');
+  let gap = null;
   if(state.ghostModel && state.comparison){
     const gp=atPosition(state.progress, state.ghostModel.rows, state.ghostGeo);
     const gPoint=state.ghostModel.rows[gp.index];
     const gElapsed=gPoint?.t!=null&&state.ghostModel.rows[0]?.t!=null?gPoint.t-state.ghostModel.rows[0].t:null;
-    const gap=elapsed!=null&&gElapsed!=null?gElapsed-elapsed:null;
+    gap=elapsed!=null&&gElapsed!=null?gElapsed-elapsed:null;
     if(compareBanner){
       compareBanner.hidden=false;
       $('compareDeltaText').textContent=gap==null?'Ghost active':`Ghost ${fmtDelta(gap)}`;
@@ -307,6 +407,24 @@ function updateLive(){
     if(compareBanner)compareBanner.hidden=true;
     if(liveGhostRow)liveGhostRow.hidden=true;
   }
+
+  // Keep Causal HUD live if no specific moment card is pinned
+  if(!state.activeMoment && $('causalHudTitle') && $('causalHudWhy')){
+    const curKm = Math.max(1, Math.ceil((p.target || 1) / 1000));
+    const bin = a.bins?.find(b => b.km === curKm);
+    const isClimbKm = a.climb?.km === curKm && a.climb?.ascent > 0;
+    const isFastKm = a.fastest?.km === curKm;
+    const roleTag = isFastKm ? ' · FASTEST 1 KM CORRIDOR' : isClimbKm ? ' · STEEPEST 1 KM CLIMB' : '';
+    $('causalHudTitle').textContent = `Km ${curKm}${roleTag} · ${(p.target/1000).toFixed(2)} km`;
+    const parts = [];
+    if(speed!=null)parts.push(`${speed.toFixed(1)} km/h`);
+    if(grade!=null)parts.push(`${grade>=0?'+':''}${grade.toFixed(1)}% grade`);
+    if(point.ele!=null)parts.push(`${Math.round(point.ele)} m ele`);
+    if(point.hr!=null)parts.push(`${Math.round(point.hr)} bpm`);
+    if(gap!=null)parts.push(`Ghost ${fmtDelta(gap)}`);
+    if(bin)parts.push(`Split ${fmtTime(bin.seconds)}`);
+    $('causalHudWhy').textContent = parts.length ? parts.join(' · ') : (state.diagnosis?.thesis || 'Scrub route or select a Moment card to fly into that sector.');
+  }
   drawProfile();
 }
 
@@ -318,51 +436,245 @@ function terrain(x,z){
 }
 
 function perspective(p,w,h){
-  const focus = state.follow && state.geo && !state.share ? atPosition(state.progress) : {x:0,y:0,z:0};
-  const px = p.x - focus.x * 0.45;
-  const pz = p.z - focus.z * 0.45;
+  // Strictly preserve default projection geometry during privacy PNG export
+  if(state.share){
+    const cy=Math.cos(.73),sy=Math.sin(.73),cp=Math.cos(.85),sp=Math.sin(.85),
+      rx=p.x*cy-p.z*sy,rz=p.x*sy+p.z*cy,ry=p.y*cp-rz*sp,depth=p.y*sp+rz*cp;
+    const scale=Math.min(w,h)*.037*(48/(48+depth));
+    return {x:w*.5+rx*scale,y:h*.58-ry*scale,depth};
+  }
+  const focus = state.follow && state.geo
+    ? atPosition(state.progress)
+    : state.camFocus || {x:0,y:0,z:0};
+  const focusWeight = state.follow ? 0.55 : 0.42;
+  const px = p.x - focus.x * focusWeight;
+  const pz = p.z - focus.z * focusWeight;
   const cy=Math.cos(state.yaw),sy=Math.sin(state.yaw),cp=Math.cos(state.pitch),sp=Math.sin(state.pitch),
     rx=px*cy-pz*sy,rz=px*sy+pz*cy,ry=p.y*cp-rz*sp,depth=p.y*sp+rz*cp;
   const scale=Math.min(w,h)*.037*state.zoom*(48/(48+depth));
-  return {x:w*.5+rx*scale,y:h*.58-ry*scale,depth};
+  return {x:w*.5+rx*scale,y:h*.58-ry*scale,depth,scale};
 }
 
 function drawProceduralProp(prop, pPalette, w, h){
   const baseY = terrain(prop.x, prop.z);
-  const topY = baseY + (prop.builder === 'vegetation' ? 1.15 : prop.builder === 'nature' ? 0.95 : 0.85) * prop.scale;
+  const topY = baseY + (prop.builder === 'vegetation' ? 1.45 : prop.builder === 'nature' ? 1.25 : 1.05) * prop.scale;
   const b = perspective({x:prop.x, y:baseY, z:prop.z}, w, h);
   const t = perspective({x:prop.x, y:topY, z:prop.z}, w, h);
-  const rad = Math.max(2.2, 4.5 * prop.scale * state.zoom);
+  const rad = Math.max(3.2, 6.2 * prop.scale * state.zoom);
+
+  // Subtle ground shadow ellipse
+  ctx.beginPath();
+  ctx.ellipse(b.x, b.y + 1.5, rad * 1.15, rad * 0.42, 0, 0, Math.PI * 2);
+  ctx.fillStyle = '#050c1055';
+  ctx.fill();
+
   if (prop.builder === 'nature') {
-    // Spire / boulder polygon
+    // Multi-faceted 3D basalt / sandstone rock spire (lit + shaded faces)
     ctx.beginPath();
-    ctx.moveTo(b.x - rad * 1.1, b.y);
+    ctx.moveTo(b.x - rad * 1.25, b.y);
     ctx.lineTo(t.x, t.y);
-    ctx.lineTo(b.x + rad * 1.1, b.y);
+    ctx.lineTo(b.x + rad * 0.15, b.y + rad * 0.25);
+    ctx.closePath();
+    ctx.fillStyle = pPalette.propTop;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(b.x + rad * 0.15, b.y + rad * 0.25);
+    ctx.lineTo(t.x, t.y);
+    ctx.lineTo(b.x + rad * 1.25, b.y);
     ctx.closePath();
     ctx.fillStyle = pPalette.prop;
     ctx.fill();
   } else if (prop.builder === 'vegetation') {
-    // Trunk + canopy silhouette (colors strictly distinct from route #dafa94)
-    ctx.beginPath();
-    ctx.moveTo(b.x, b.y);
-    ctx.lineTo(t.x, t.y);
-    ctx.strokeStyle = pPalette.prop;
-    ctx.lineWidth = 1.6;
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(t.x, t.y, rad, 0, Math.PI * 2);
-    ctx.fillStyle = pPalette.propTop;
-    ctx.fill();
+    if (state.theme === 'alpine') {
+      // 3-tier Alpine Conifer silhouette
+      ctx.beginPath();
+      ctx.moveTo(b.x, b.y);
+      ctx.lineTo(t.x, t.y);
+      ctx.strokeStyle = '#2d1f18';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      for (let tier = 0; tier < 3; tier++) {
+        const frac = 0.28 + tier * 0.28;
+        const ty = b.y + (t.y - b.y) * frac;
+        const tw = rad * (1.25 - tier * 0.26);
+        ctx.beginPath();
+        ctx.moveTo(t.x - tw, ty + rad * 0.45);
+        ctx.lineTo(t.x, ty - rad * 0.55);
+        ctx.lineTo(t.x + tw, ty + rad * 0.45);
+        ctx.closePath();
+        ctx.fillStyle = tier % 2 === 0 ? pPalette.prop : pPalette.propTop;
+        ctx.fill();
+      }
+    } else {
+      // Curved Palm trunk + 5 radiating 3D fronds
+      ctx.beginPath();
+      ctx.moveTo(b.x, b.y);
+      ctx.quadraticCurveTo((b.x + t.x) * 0.5 + prop.side * 3, (b.y + t.y) * 0.5, t.x, t.y);
+      ctx.strokeStyle = '#5c4938';
+      ctx.lineWidth = 2.1;
+      ctx.stroke();
+      const angles = [-2.4, -1.6, -0.8, -0.1, 0.6];
+      for (const ang of angles) {
+        const fx = t.x + Math.cos(ang) * rad * 1.45;
+        const fy = t.y + Math.sin(ang) * rad * 0.95 + 2.5;
+        ctx.beginPath();
+        ctx.moveTo(t.x, t.y);
+        ctx.quadraticCurveTo((t.x + fx) * 0.5, t.y - rad * 0.45, fx, fy);
+        ctx.strokeStyle = pPalette.propTop;
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+      }
+    }
   } else {
-    // Beacon / marker post
+    // Course beacon post with glowing lantern cap
     ctx.beginPath();
     ctx.moveTo(b.x, b.y);
     ctx.lineTo(t.x, t.y);
     ctx.strokeStyle = pPalette.rim;
-    ctx.lineWidth = 1.4;
+    ctx.lineWidth = 1.7;
     ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(t.x, t.y, 2.6, 0, Math.PI * 2);
+    ctx.fillStyle = '#f4c59b';
+    ctx.fill();
   }
+}
+
+function drawCourseArch(pt, nextPt, label, color, w, h){
+  if(!pt)return;
+  const dx = (nextPt ? nextPt.x - pt.x : 0.2) || 0.2;
+  const dz = (nextPt ? nextPt.z - pt.z : 0.2) || 0.2;
+  const len = Math.hypot(dx, dz) || 1;
+  const nx = (-dz / len) * 0.72;
+  const nz = (dx / len) * 0.72;
+  const baseL = perspective({x: pt.x - nx, y: pt.y - 0.15, z: pt.z - nz}, w, h);
+  const baseR = perspective({x: pt.x + nx, y: pt.y - 0.15, z: pt.z + nz}, w, h);
+  const topL  = perspective({x: pt.x - nx, y: pt.y + 1.05, z: pt.z - nz}, w, h);
+  const topR  = perspective({x: pt.x + nx, y: pt.y + 1.05, z: pt.z + nz}, w, h);
+
+  ctx.beginPath();
+  ctx.moveTo(baseL.x, baseL.y);
+  ctx.lineTo(topL.x, topL.y);
+  ctx.lineTo(topR.x, topR.y);
+  ctx.lineTo(baseR.x, baseR.y);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2.2;
+  ctx.stroke();
+
+  const cx = (topL.x + topR.x) * 0.5;
+  const cy = (topL.y + topR.y) * 0.5 - 6;
+  ctx.font = '700 8.5px ui-sans-serif,system-ui';
+  const tw = ctx.measureText(label).width + 10;
+  ctx.fillStyle = '#08151ce0';
+  ctx.fillRect(cx - tw * 0.5, cy - 8, tw, 13);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1;
+  ctx.strokeRect(cx - tw * 0.5, cy - 8, tw, 13);
+  ctx.fillStyle = color;
+  ctx.textAlign = 'center';
+  ctx.fillText(label, cx, cy + 1.5);
+}
+
+function drawAthleteAvatar(pos, nextPos, row, pPalette, w, h){
+  const o = perspective(pos, w, h);
+  const n = perspective(nextPos || {x:pos.x+0.3, y:pos.y, z:pos.z+0.3}, w, h);
+  let tx = n.x - o.x, ty = n.y - o.y;
+  const tlen = Math.hypot(tx, ty) || 1;
+  tx /= tlen; ty /= tlen;
+  const scale = Math.max(0.85, Math.min(1.85, state.zoom * 1.1));
+  const isRunning = row?.sport === 'running' || state.equipmentRef === '';
+
+  // Ground aura halo
+  ctx.beginPath();
+  ctx.ellipse(o.x, o.y + 2, 14 * scale, 6 * scale, 0, 0, Math.PI * 2);
+  ctx.fillStyle = '#dbfa9433';
+  ctx.fill();
+
+  if (!isRunning) {
+    // Articulated 3D Aero Bicycle + Tucked Cyclist Avatar (KONA.m Speedmax study)
+    const wheelSep = 9.5 * scale;
+    const rearW = { x: o.x - tx * wheelSep, y: o.y - ty * wheelSep };
+    const frontW = { x: o.x + tx * wheelSep, y: o.y + ty * wheelSep };
+    const bb = { x: o.x - tx * 1.5 * scale, y: o.y - 2 * scale };
+    const seat = { x: rearW.x + tx * 3.5 * scale, y: rearW.y - 10.5 * scale };
+    const head = { x: frontW.x - tx * 3.0 * scale, y: frontW.y - 9.5 * scale };
+
+    // Rear disc/deep wheel & front aero wheel
+    for (const [idx, wh] of [rearW, frontW].entries()) {
+      ctx.beginPath();
+      ctx.arc(wh.x, wh.y, 5.2 * scale, 0, Math.PI * 2);
+      ctx.fillStyle = idx === 0 && state.equipmentRef?.includes('cfr') ? '#152930' : '#0b181eeb';
+      ctx.fill();
+      ctx.lineWidth = 2.1 * scale;
+      ctx.strokeStyle = '#e8f4ec';
+      ctx.stroke();
+    }
+
+    // Aero diamond frame
+    ctx.beginPath();
+    ctx.moveTo(rearW.x, rearW.y);
+    ctx.lineTo(seat.x, seat.y);
+    ctx.lineTo(head.x, head.y);
+    ctx.lineTo(bb.x, bb.y);
+    ctx.closePath();
+    ctx.moveTo(seat.x, seat.y);
+    ctx.lineTo(bb.x, bb.y);
+    ctx.moveTo(head.x, head.y);
+    ctx.lineTo(frontW.x, frontW.y);
+    ctx.strokeStyle = state.equipmentRef ? '#dbfa94' : pPalette.point;
+    ctx.lineWidth = 2.2 * scale;
+    ctx.stroke();
+
+    // Tucked rider torso + aero helmet
+    const shoulder = { x: head.x - tx * 1.5 * scale, y: head.y - 5.5 * scale };
+    ctx.beginPath();
+    ctx.moveTo(seat.x, seat.y);
+    ctx.lineTo(shoulder.x, shoulder.y);
+    ctx.lineTo(head.x + tx * 3.5 * scale, head.y - 1.5 * scale);
+    ctx.strokeStyle = '#f4c59b';
+    ctx.lineWidth = 2.8 * scale;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(shoulder.x + tx * 2.5 * scale, shoulder.y - 2.2 * scale, 3.2 * scale, 0, Math.PI * 2);
+    ctx.fillStyle = '#dbfa94';
+    ctx.fill();
+  } else {
+    // 3D Runner Avatar
+    const hip = { x: o.x, y: o.y - 7 * scale };
+    const chest = { x: o.x + tx * 2 * scale, y: o.y - 14 * scale };
+    ctx.beginPath();
+    ctx.moveTo(o.x - tx * 5 * scale, o.y);
+    ctx.lineTo(hip.x, hip.y);
+    ctx.lineTo(o.x + tx * 5 * scale, o.y - 2 * scale);
+    ctx.moveTo(hip.x, hip.y);
+    ctx.lineTo(chest.x, chest.y);
+    ctx.strokeStyle = '#f4c59b';
+    ctx.lineWidth = 2.6 * scale;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(chest.x + tx * 1.2 * scale, chest.y - 3.5 * scale, 3.2 * scale, 0, Math.PI * 2);
+    ctx.fillStyle = '#dbfa94';
+    ctx.fill();
+  }
+
+  // Floating 3D Telemetry Callout Pill above Athlete
+  const tagY = o.y - 26 * scale;
+  const bikeShort = state.equipmentRef ? state.equipmentRef.replace('canyon-','').toUpperCase() : (isRunning ? 'RUNNER' : 'ATHLETE');
+  const eleTxt = row?.ele != null ? `${Math.round(row.ele)}m` : '';
+  const hrTxt = row?.hr != null ? `${Math.round(row.hr)}bpm` : '';
+  const pillText = [bikeShort, eleTxt, hrTxt].filter(Boolean).join(' · ');
+  ctx.font = '700 9px ui-sans-serif,system-ui';
+  const pw = ctx.measureText(pillText).width + 12;
+  ctx.fillStyle = '#07141be6';
+  ctx.fillRect(o.x - pw * 0.5, tagY - 9, pw, 14);
+  ctx.strokeStyle = '#dbfa94aa';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(o.x - pw * 0.5, tagY - 9, pw, 14);
+  ctx.fillStyle = '#f2ffe3';
+  ctx.textAlign = 'center';
+  ctx.fillText(pillText, o.x, tagY + 1);
 }
 
 function draw(){
@@ -380,12 +692,23 @@ function draw(){
   ctx.fillStyle=g;
   ctx.fillRect(0,0,w,h);
 
-  const rects=[],n=20,world=34,step=world/n;
+  if(!state.share){
+    // Atmospheric Horizon Sun Glow (strictly warm amber/gold so it never matches route lime #dafa94)
+    const sunGrad = ctx.createRadialGradient(w * 0.76, h * 0.18, 8, w * 0.76, h * 0.18, Math.max(w, h) * 0.42);
+    sunGrad.addColorStop(0, '#f4c59b38');
+    sunGrad.addColorStop(0.45, '#bd8a6714');
+    sunGrad.addColorStop(1, '#00000000');
+    ctx.fillStyle = sunGrad;
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  const rects=[],n=state.share?20:24,world=34,step=world/n;
   for(let i=0;i<n;i++)for(let j=0;j<n;j++){
     const x=-world/2+i*step,z=-world/2+j*step;
     const v=[{x,z},{x:x+step,z},{x:x+step,z:z+step},{x,z:z+step}].map(q=>({x:q.x,y:terrain(q.x,q.z),z:q.z}));
     const zAvg=v.reduce((sum,a)=>sum+perspective(a,w,h).depth,0)/4;
-    rects.push({v,zAvg,i,j});
+    const yAvg=(v[0].y+v[1].y+v[2].y+v[3].y)*0.25;
+    rects.push({v,zAvg,yAvg,i,j});
   }
   rects.sort((a,b)=>b.zAvg-a.zAvg);
   for(const r of rects){
@@ -394,14 +717,15 @@ function draw(){
     ctx.moveTo(v[0].x,v[0].y);
     v.slice(1).forEach(a=>ctx.lineTo(a.x,a.y));
     ctx.closePath();
-    const light=Math.sin((r.i+r.j)*.66)*5;
+    const elevBoost = !state.share ? Math.round(Math.max(-8, Math.min(22, r.yAvg * 14))) : 0;
+    const light=Math.sin((r.i+r.j)*.66)*5 + elevBoost;
     ctx.fillStyle=shade(p.ground,light);
     ctx.fill();
-    ctx.strokeStyle='#c7d3ad08';
+    ctx.strokeStyle=!state.share && r.yAvg > 0.35 ? '#eac19e18' : '#c7d3ad0a';
     ctx.stroke();
   }
 
-  // Draw rights-cleared procedural studio props (omitted during privacy raster export for clean route verification)
+  // Draw rights-cleared procedural studio props (omitted during privacy raster export)
   if(!state.share && state.showProps && state.scenery.length){
     for(const prop of state.scenery){
       drawProceduralProp(prop, p, w, h);
@@ -413,6 +737,41 @@ function draw(){
   ctx.lineJoin='round';
   ctx.lineCap='round';
 
+  // Draw 3D Vertical Elevation Curtain & Kilometer Pillars beneath the route (when interactive)
+  if(!state.share && coords.length >= 2){
+    const baseDatumY = 0.15;
+    const totalPts = coords.length;
+    for(let i=0;i<totalPts-1;i++){
+      const c0 = coords[i], c1 = coords[i+1];
+      const top0 = perspective(c0, w, h), top1 = perspective(c1, w, h);
+      const bot0 = perspective({x:c0.x, y:baseDatumY, z:c0.z}, w, h);
+      const bot1 = perspective({x:c1.x, y:baseDatumY, z:c1.z}, w, h);
+      const frac = i / Math.max(1, totalPts - 1);
+      const inHighlight = state.highlightRange && frac >= state.highlightRange[0] && frac <= state.highlightRange[1];
+      const dy = c1.y - c0.y;
+      ctx.beginPath();
+      ctx.moveTo(top0.x, top0.y);
+      ctx.lineTo(top1.x, top1.y);
+      ctx.lineTo(bot1.x, bot1.y);
+      ctx.lineTo(bot0.x, bot0.y);
+      ctx.closePath();
+      ctx.fillStyle = inHighlight
+        ? '#f4c59b48'
+        : dy > 0.035
+        ? '#eac19e28'
+        : '#598d8424';
+      ctx.fill();
+      if(i % 10 === 0){
+        ctx.beginPath();
+        ctx.moveTo(top0.x, top0.y);
+        ctx.lineTo(bot0.x, bot0.y);
+        ctx.strokeStyle = inHighlight ? '#f4c59b66' : '#8ab4a228';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    }
+  }
+
   // Draw ghost comparison route when active and not exporting privacy PNG
   if(!state.share && state.ghostGeo && state.ghostGeo.length>=2){
     ctx.beginPath();
@@ -420,9 +779,9 @@ function draw(){
       const q=perspective(pt,w,h);
       if(idx===0)ctx.moveTo(q.x,q.y);else ctx.lineTo(q.x,q.y);
     });
-    ctx.strokeStyle='#7ce7ff66';
-    ctx.lineWidth=2.2;
-    ctx.setLineDash([5,4]);
+    ctx.strokeStyle='#7ce7ff88';
+    ctx.lineWidth=2.5;
+    ctx.setLineDash([6,4]);
     ctx.stroke();
     ctx.setLineDash([]);
   }
@@ -440,59 +799,84 @@ function draw(){
     ctx.lineWidth=6;
     ctx.stroke();
     ctx.strokeStyle=p.route;
-    ctx.lineWidth=3;
+    ctx.lineWidth=3.2;
     ctx.shadowColor=p.route;
     ctx.shadowBlur=14;
     ctx.stroke();
     ctx.shadowBlur=0;
   }
 
+  // Highlighted 1 km Active Moment Corridor Ribbon on the 3D Route
+  if(!state.share && state.highlightRange && coords.length >= 2){
+    const iStart = Math.max(0, Math.floor(state.highlightRange[0] * (coords.length - 1)));
+    const iEnd = Math.min(coords.length - 1, Math.ceil(state.highlightRange[1] * (coords.length - 1)));
+    if(iEnd > iStart){
+      ctx.beginPath();
+      for(let i=iStart;i<=iEnd;i++){
+        const q=perspective(coords[i],w,h);
+        if(i===iStart)ctx.moveTo(q.x,q.y);else ctx.lineTo(q.x,q.y);
+      }
+      ctx.strokeStyle='#f4c59b';
+      ctx.lineWidth=5.2;
+      ctx.shadowColor='#f4c59b';
+      ctx.shadowBlur=16;
+      ctx.stroke();
+      ctx.shadowBlur=0;
+    }
+  }
+
   if(!state.share){
+    // 3D Start, Summit, and Finish Course Portals
+    if(coords.length >= 4){
+      drawCourseArch(coords[0], coords[1], 'START', '#dbfa94', w, h);
+      drawCourseArch(coords.at(-1), coords.at(-2), 'FINISH', '#f4c59b', w, h);
+      if(state.summitIndex > 2 && state.summitIndex < coords.length - 3){
+        const sIdx = state.summitIndex;
+        const sEle = state.rows[sIdx]?.ele;
+        const sLabel = sEle != null ? `▲ SUMMIT ${Math.round(sEle)}M` : '▲ SUMMIT';
+        drawCourseArch(coords[sIdx], coords[sIdx + 1], sLabel, '#eac19e', w, h);
+      }
+    }
+
     if(state.photoPins && state.photoPins.length){
       for(const pin of state.photoPins){
         const pPos=perspective(atPosition(pin.progress),w,h);
         ctx.beginPath();
-        ctx.rect(pPos.x-4.5,pPos.y-14,9,9);
-        ctx.fillStyle='#f4c59b';
-        ctx.fill();
-        ctx.strokeStyle='#0e2830';
+        ctx.moveTo(pPos.x, pPos.y);
+        ctx.lineTo(pPos.x, pPos.y - 18);
+        ctx.strokeStyle='#f4c59b';
         ctx.lineWidth=1.5;
         ctx.stroke();
+        ctx.fillStyle='#10242be8';
+        ctx.fillRect(pPos.x-18,pPos.y-30,36,13);
+        ctx.strokeStyle='#f4c59b';
+        ctx.strokeRect(pPos.x-18,pPos.y-30,36,13);
+        ctx.fillStyle='#f4c59b';
+        ctx.font='700 8px ui-sans-serif,system-ui';
+        ctx.textAlign='center';
+        ctx.fillText('📸 PIN',pPos.x,pPos.y-21);
       }
     }
     if(state.ghostGeo && state.ghostModel){
       const go=perspective(atPosition(state.progress, state.ghostModel.rows, state.ghostGeo),w,h);
       ctx.beginPath();
-      ctx.arc(go.x,go.y,5.2,0,Math.PI*2);
+      ctx.arc(go.x,go.y,5.8,0,Math.PI*2);
       ctx.fillStyle=p.ghost;
       ctx.fill();
       ctx.lineWidth=2;
       ctx.strokeStyle='#081e26';
       ctx.stroke();
+      ctx.font='700 8.5px ui-sans-serif,system-ui';
+      ctx.fillStyle=p.ghost;
+      ctx.textAlign='center';
+      ctx.fillText('GHOST',go.x,go.y-10);
     }
-    const o=perspective(atPosition(state.progress),w,h);
-    ctx.beginPath();
-    ctx.arc(o.x,o.y,6.7,0,Math.PI*2);
-    ctx.fillStyle=p.point;
-    ctx.fill();
-    ctx.lineWidth=3;
-    ctx.strokeStyle='#0e2830';
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.arc(o.x,o.y,11,0,Math.PI*2);
-    ctx.strokeStyle=p.route+'65';
-    ctx.lineWidth=1.5;
-    ctx.stroke();
+
+    const curPos = atPosition(state.progress);
+    const nextPos = atPosition(Math.min(1, state.progress + 0.015));
+    const curRow = state.rows[curPos.index];
+    drawAthleteAvatar(curPos, nextPos, curRow, p, w, h);
   }
-  ctx.textAlign='left';
-  ctx.font='11px ui-sans-serif,system-ui';
-  ctx.fillStyle='#d9ede1d4';
-  const headerCaption = state.cinema
-    ? 'STRIDE / CINEMA DRONE RECONSTRUCTION'
-    : state.ghostModel
-    ? 'STRIDE / SYNCHRONIZED GHOST COMPARISON'
-    : 'STRIDE / PROCEDURAL ATHLETE WORLD';
-  ctx.fillText(headerCaption,18,25);
 }
 
 function shade(hex,n){
@@ -501,6 +885,19 @@ function shade(hex,n){
 }
 
 function frame(ts){
+  // Smooth camera Fly-To interpolation when a Moment or Tutorial is selected
+  if(state.flyTarget && !state.drag){
+    const lerp = 0.14;
+    state.yaw += (state.flyTarget.yaw - state.yaw) * lerp;
+    state.pitch += (state.flyTarget.pitch - state.pitch) * lerp;
+    state.zoom += (state.flyTarget.zoom - state.zoom) * lerp;
+    state.camFocus.x += (state.flyTarget.focus.x - state.camFocus.x) * lerp;
+    state.camFocus.y += (state.flyTarget.focus.y - state.camFocus.y) * lerp;
+    state.camFocus.z += (state.flyTarget.focus.z - state.camFocus.z) * lerp;
+    if(Math.abs(state.flyTarget.zoom - state.zoom) < 0.005 && Math.abs(state.flyTarget.yaw - state.yaw) < 0.005){
+      state.flyTarget = null;
+    }
+  }
   if(state.model&&state.playing){
     if(state.last){
       const dt=(ts-state.last)/1000;
@@ -596,10 +993,21 @@ const TUTORIAL_MODULES = [
     run: () => {
       state.playing = false;
       if ($('play')) $('play').textContent = '▶';
-      state.progress = 0.52;
-      $('scrub').value = '520';
-      updateLive();
-      $('sourceState').textContent = 'Tutorial 04 active: Scrubbed to peak climb on the 2D Elevation & Split Contour.';
+      const climbM = state.model?.climb;
+      if (climbM) {
+        flyToMoment({
+          label: 'STEEPEST 1 KM GAIN',
+          stat: `+${Math.round(climbM.ascent)} m`,
+          why: state.diagnosis?.climb?.why || `Km ${climbM.km} · steepest recorded climb`,
+          startDistance: climbM.startDistance,
+          at: climbM.at
+        });
+      } else {
+        state.progress = 0.52;
+        $('scrub').value = '520';
+        updateLive();
+      }
+      $('sourceState').textContent = 'Tutorial 04 active: Flew camera into Steepest 1 km Climb on 2D & 3D Elevation Curtain.';
     }
   },
   {
@@ -613,9 +1021,20 @@ const TUTORIAL_MODULES = [
       setupGhost(demo(0.11), 'Previous attempt (+18s sample)');
       state.playing = false;
       if ($('play')) $('play').textContent = '▶';
-      state.progress = 0.64;
-      $('scrub').value = '640';
-      updateLive();
+      const swing = state.diagnosis?.ghostSwing;
+      if (swing) {
+        flyToMoment({
+          label: 'LARGEST GHOST GAP SPLIT',
+          stat: `${fmtDelta(swing.deltaSeconds)}s`,
+          why: swing.why,
+          startDistance: (swing.km - 1) * 1000,
+          at: swing.km * 1000
+        });
+      } else {
+        state.progress = 0.64;
+        $('scrub').value = '640';
+        updateLive();
+      }
     }
   },
   {
@@ -774,37 +1193,89 @@ async function renderWorldsAndContracts(){
   const spec = toActivitySpec(state.rows, { title: state.title, isDemo: state.isDemo, equipmentRef: state.equipmentRef });
   const moments = toMomentSpecs(state.rows, { id: spec.id });
 
-  const c1 = document.createElement('div');
-  c1.className = 'world-card';
-  c1.innerHTML = `<strong>ActivitySpec v1 (${spec.algorithmVersion})</strong><span>Source class: ${spec.sourceClass} · Equipment: ${spec.equipmentRef || 'none'} · Missingness tracked explicitly.</span>`;
-  const code1 = document.createElement('code');
-  code1.textContent = JSON.stringify({ equipmentRef: spec.equipmentRef, summary: spec.summary, missingness: spec.missingness }, null, 2);
-  c1.append(code1);
+  const worldCards = [
+    {
+      id: 'volcanic',
+      title: 'WORLD 01 · VOLCANIC COAST (KONA)',
+      desc: 'Basalt lava fields, Queen K coastal palms, and warm tradewind horizon glow. Reuses Studio Kona terrain & atmosphere concepts.',
+      meta: '24 active procedural props · ai/studio/shared/procedural-assets'
+    },
+    {
+      id: 'canyon',
+      title: 'WORLD 02 · RED CANYON (ST. GEORGE)',
+      desc: 'Terraced sandstone buttes, Snow Canyon steep wall relief, and arid desert scrub clusters.',
+      meta: '24 active procedural props · ai/studio/shared/procedural-assets'
+    },
+    {
+      id: 'alpine',
+      title: 'WORLD 03 · ALPINE MORNING (NICE)',
+      desc: 'High-altitude granite ridges, 3-tier alpine conifers, and crisp Mediterranean col atmosphere.',
+      meta: '24 active procedural props · ai/studio/shared/procedural-assets'
+    }
+  ];
 
-  const c2 = document.createElement('div');
-  c2.className = 'world-card';
-  c2.innerHTML = `<strong>MomentSpec v1 (${moments.length} deterministic highlights)</strong><span>Every highlight carries provenance and completeness flags.</span>`;
-  const code2 = document.createElement('code');
-  code2.textContent = JSON.stringify(moments.map(m => ({ kind: m.kind, km: m.km, val: m.formattedValue, provenance: m.provenance })), null, 2);
-  c2.append(code2);
+  for (const w of worldCards) {
+    const card = document.createElement('div');
+    card.className = 'tutorial-card' + (state.theme === w.id ? ' active' : '');
+    card.innerHTML = `<strong>${w.title}</strong><span>${w.desc}</span><small>${w.meta}</small>`;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tutorial-run-btn';
+    btn.innerHTML = `<span>${state.theme === w.id ? 'Active in 3D Viewport' : 'Enter World in 3D →'}</span><span>◈</span>`;
+    btn.addEventListener('click', () => {
+      const tb = document.querySelector(`[data-theme="${w.id}"]`);
+      if (tb) tb.click();
+      renderWorldsAndContracts();
+    });
+    card.append(btn);
+    mount.append(card);
+  }
 
-  const c3 = document.createElement('div');
-  c3.className = 'world-card';
-  c3.innerHTML = `<strong>Verified 3D Studio &amp; KONA.m Inventory (${state.scenery.length} active props)</strong><span>66 procedural Blender assets (ai/studio) · 17 hand-built KONA.m rooms (36 indexed) · 21 bicycle studies · local read-only reuse.</span>`;
-  const code3 = document.createElement('code');
-  code3.textContent = state.reuseCatalog
-    ? JSON.stringify(state.reuseCatalog, null, 2)
-    : JSON.stringify({
-        proceduralAssets: 66,
-        activeSceneProps: state.scenery.slice(0, 3).map(s => ({ id: s.assetId, builder: s.builder })),
-        konamHandBuiltAreas: 17,
-        konamIndexedRooms: 36,
-        bicycleStudies: 21,
-        stravaApiStatus: 'HOLD (June 2026 policy)',
-      }, null, 2);
-  c3.append(code3);
+  const bikes = [
+    { id: 'canyon-cfr-2027', name: 'KONA.m · Speedmax CFR AXS (2027)', desc: 'Flagship aero triathlon superbike with rear disc wheel & integrated hydration.', meta: 'konam/museum/catalog/products.json · 1 of 21 studies' },
+    { id: 'canyon-slx-2027', name: 'KONA.m · Speedmax CF SLX 8 (2027)', desc: 'Deep-section aero carbon triathlon platform from the KONA.m bicycle atlas.', meta: 'konam/museum/catalog/products.json · 1 of 21 studies' },
+    { id: 'canyon-speedmax-cf-2011', name: 'KONA.m · Speedmax CF (2011)', desc: 'Historic Kona World Championship era carbon time-trial geometry.', meta: 'konam/museum/catalog/products.json · 1 of 21 studies' }
+  ];
 
-  mount.append(c1, c2, c3);
+  for (const b of bikes) {
+    const card = document.createElement('div');
+    card.className = 'tutorial-card' + (state.equipmentRef === b.id ? ' active' : '');
+    card.innerHTML = `<strong>${b.name}</strong><span>${b.desc}</span><small>${b.meta}</small>`;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tutorial-run-btn';
+    btn.innerHTML = `<span>${state.equipmentRef === b.id ? 'Equipped on 3D Avatar' : 'Equip Bike in 3D →'}</span><span>🚲</span>`;
+    btn.addEventListener('click', () => {
+      state.equipmentRef = b.id;
+      if ($('equipmentSelect')) $('equipmentSelect').value = b.id;
+      $('sourceState').textContent = `Equipped ${b.name} on 3D course avatar.`;
+      draw();
+      renderWorldsAndContracts();
+    });
+    card.append(btn);
+    mount.append(card);
+  }
+
+  const contractCard = document.createElement('div');
+  contractCard.className = 'world-card';
+  contractCard.style.gridColumn = '1 / -1';
+  contractCard.innerHTML = `<strong>Cross-App Telemetry Contracts (ActivitySpec v1 · MomentSpec v1 · ReuseInventory v1)</strong><span>Verified read-only bridge to 66 procedural Blender assets (ai/studio), 17 hand-built KONA.m rooms (36 indexed), and 21 bicycle studies.</span>`;
+  const details = document.createElement('details');
+  details.style.marginTop = '6px';
+  const summary = document.createElement('summary');
+  summary.style.cursor = 'pointer';
+  summary.style.color = 'var(--accent)';
+  summary.style.fontSize = '11px';
+  summary.textContent = 'Inspect Raw ActivitySpec v1 & MomentSpec v1 JSON Payloads';
+  const code = document.createElement('code');
+  code.textContent = JSON.stringify({
+    activitySpec: { schema: spec.schema, algorithmVersion: spec.algorithmVersion, equipmentRef: spec.equipmentRef, summary: spec.summary },
+    momentSpecs: moments.map(m => ({ kind: m.kind, km: m.km, val: m.formattedValue, provenance: m.provenance })),
+    reuseInventory: state.reuseCatalog?.counts || { proceduralAssets: 66, konamHandBuiltAreas: 17, konamIndexedRooms: 36, bicycleStudies: 21 }
+  }, null, 2);
+  details.append(summary, code);
+  contractCard.append(details);
+  mount.append(contractCard);
 }
 
 const file=$('activityFile');
@@ -1019,8 +1490,11 @@ $('speed').addEventListener('click',()=>{
 });
 $('viewReset').addEventListener('click',()=>{
   state.yaw=.73;state.pitch=.85;state.zoom=1;state.follow=false;state.cinema=false;
+  state.flyTarget=null;state.camFocus={x:0,y:0,z:0};state.highlightRange=null;state.activeMoment=null;
   $('followBtn').setAttribute('aria-pressed','false');
   if($('cinemaBtn'))$('cinemaBtn').setAttribute('aria-pressed','false');
+  updateLive();
+  draw();
 });
 $('followBtn').addEventListener('click',()=>{
   state.follow=!state.follow;

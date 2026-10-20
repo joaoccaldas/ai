@@ -7,6 +7,7 @@ import {
   parseStoryBundle,
   fitCRC16,
   analyze,
+  diagnoseMoments,
   haversine,
   shareSafe,
   planPrivateShare,
@@ -338,4 +339,9 @@ test('Cycle 0006: .stride.json round-trip re-import and automatic long-pause sto
 
   const loadedViaGeneric = loadActivity('ride.stride.json', jsonText);
   assert.equal(loadedViaGeneric.length, bundle.privacy.retainedPoints);
+
+  const diag = diagnoseMoments(pts);
+  assert.equal(diag.schema, 'stride.diagnosis.v1');
+  assert.ok(diag.thesis.includes('Covered'));
+  assert.ok(diag.fastest?.why.includes('km/h'));
 });
