@@ -1,4 +1,4 @@
-import {loadActivity, analyze, planPrivateShare, toActivitySpec, toMomentSpecs, compareActivities, buildElevationProfile, generateProceduralScenery, matchLocalPhotosToRoute, toPortableStoryBundle, fmtTime, fmtDelta, haversine} from './core.mjs';
+import {loadActivity, parseStoryBundle, analyze, planPrivateShare, toActivitySpec, toMomentSpecs, compareActivities, buildElevationProfile, generateProceduralScenery, matchLocalPhotosToRoute, toPortableStoryBundle, fmtTime, fmtDelta, haversine} from './core.mjs';
 
 const $ = id => document.getElementById(id);
 const canvas=$('scene'),ctx=canvas.getContext('2d',{alpha:false}),container=$('sceneContainer');
@@ -35,7 +35,8 @@ let state={
   last:0,
   share:false,
   sharePlan:null,
-  reuseCatalog:null
+  reuseCatalog:null,
+  tutorialStep:0
 };
 
 const palettes={
@@ -522,6 +523,211 @@ function frame(ts){
   requestAnimationFrame(frame);
 }
 
+function demoMultiLap(){
+  const pts=[];
+  const base=Date.UTC(2026,9,15,6,30)/1000;
+  for(let i=0;i<240;i++){
+    const lap = i < 120 ? 1 : 2;
+    const sport = i < 120 ? 'cycling' : 'running';
+    const t=(i%120)/119;
+    const lat=19.64+.045*t+.008*Math.sin(4*t);
+    const lon=-155.99+.042*t+.012*Math.cos(4*t);
+    const ele=12+95*Math.sin(Math.PI*t)**2;
+    pts.push({lat,lon,t:base+i*16,ele,hr:138+24*Math.sin(Math.PI*t),lap,sport});
+  }
+  return pts;
+}
+
+const TUTORIAL_MODULES = [
+  {
+    step: '01 / 08',
+    title: 'Bring Your Own Route (GPX · TCX · FIT · .stride.json)',
+    summary: 'Import activity files directly into browser/app memory. FIT files undergo 14-byte header + file CRC-16 verification, compressed timestamp reconstruction, and GPS spike filtering.',
+    rule: 'Data Truth: Zero cloud upload · Strava API is not used.',
+    actionLabel: 'Load Verified Coastal Sample →',
+    run: () => {
+      state.ghostRows = null; state.ghostModel = null; state.comparison = null;
+      setup(demo(), 'Coastal training loop', true);
+      state.progress = 0.12;
+      $('scrub').value = '120';
+      updateLive();
+    }
+  },
+  {
+    step: '02 / 08',
+    title: '3D Camera Orbit, Follow & Autonomous Cinema Drone',
+    summary: 'Drag or press Arrow keys to orbit pitch/yaw, +/- to zoom, ◎ Follow to track the rider, or ◈ Cinema to engage autonomous orbital drone reconstruction.',
+    rule: 'UX Rule: Respects prefers-reduced-motion and full keyboard navigation.',
+    actionLabel: 'Launch Cinema Drone Orbit →',
+    run: () => {
+      state.cinema = true;
+      state.follow = true;
+      state.playing = true;
+      state.speed = 2;
+      if ($('speed')) $('speed').textContent = '2×';
+      if ($('play')) $('play').textContent = 'Ⅱ';
+      if ($('cinemaBtn')) $('cinemaBtn').setAttribute('aria-pressed', 'true');
+      if ($('followBtn')) $('followBtn').setAttribute('aria-pressed', 'true');
+      $('sourceState').textContent = 'Tutorial 02 active: Autonomous Cinema Drone camera orbiting at 2× speed.';
+    }
+  },
+  {
+    step: '03 / 08',
+    title: 'Moment Atlas & Multi-Lap / Triathlon Transitions',
+    summary: 'STRIDE automatically extracts Fastest 1 km, Steepest 1 km Climb, Slowest 1 km, and Device Lap / Multisport Transitions (e.g. Cycling → Running). Click any card to jump there.',
+    rule: 'Data Truth: Every moment requires measured GPS & timestamp provenance.',
+    actionLabel: 'Load Multi-Lap Brick & Jump to Transition →',
+    run: () => {
+      setup(demoMultiLap(), 'Kona Brick (Bike → Run Transition)', true);
+      state.playing = false;
+      if ($('play')) $('play').textContent = '▶';
+      state.progress = 0.50;
+      $('scrub').value = '500';
+      updateLive();
+      $('sourceState').textContent = 'Tutorial 03 active: Loaded 2-lap Cycling → Running brick and jumped to T2 transition.';
+    }
+  },
+  {
+    step: '04 / 08',
+    title: 'Interactive 2D Elevation & Split Contour Scrubbing',
+    summary: 'The 2D Elevation Contour beneath the transport bar plots recorded elevation, kilometer split lines, fastest split (lime), and steepest climb (amber). Click or drag horizontally to scrub.',
+    rule: 'Data Truth: 0.75 m elevation hysteresis prevents GPS vertical noise inflation.',
+    actionLabel: 'Scrub to Summit Grade on Contour →',
+    run: () => {
+      state.playing = false;
+      if ($('play')) $('play').textContent = '▶';
+      state.progress = 0.52;
+      $('scrub').value = '520';
+      updateLive();
+      $('sourceState').textContent = 'Tutorial 04 active: Scrubbed to peak climb on the 2D Elevation & Split Contour.';
+    }
+  },
+  {
+    step: '05 / 08',
+    title: 'Synchronized Ghost Compare (stride.comparison.v1)',
+    summary: 'Load a second activity over the same course to race a cyan Ghost marker synchronized by distance, inspect live ahead/behind time delta, and jump to the Largest Ghost Gap Split.',
+    rule: 'Algorithm: Checks start corridor (<400 m) and 10-point spatial alignment (<500 m).',
+    actionLabel: 'Activate Ghost Compare (+18s Pace) →',
+    run: () => {
+      setup(demo(), 'Primary effort', true);
+      setupGhost(demo(0.11), 'Previous attempt (+18s sample)');
+      state.playing = false;
+      if ($('play')) $('play').textContent = '▶';
+      state.progress = 0.64;
+      $('scrub').value = '640';
+      updateLive();
+    }
+  },
+  {
+    step: '06 / 08',
+    title: 'World Presets, 3D Studio Scenery & KONA.m Bicycles',
+    summary: 'Switch between Lava Coast (Kona), Red Canyon (St. George), and Alpine Morning (Nice), toggle 24 procedural props from ai/studio, and bind a KONA.m canonical bicycle study.',
+    rule: 'Reuse Policy: Read-only catalog binding; zero duplicated asset stores.',
+    actionLabel: 'Apply Red Canyon + Speedmax CFR 2027 →',
+    run: () => {
+      const canyonBtn = document.querySelector('[data-theme="canyon"]');
+      if (canyonBtn) canyonBtn.click();
+      state.showProps = true;
+      if ($('propsToggleBtn')) $('propsToggleBtn').setAttribute('aria-pressed', 'true');
+      if ($('propsCountBadge')) $('propsCountBadge').textContent = `${state.scenery.length} props · ON`;
+      state.equipmentRef = 'canyon-cfr-2027';
+      if ($('equipmentSelect')) $('equipmentSelect').value = 'canyon-cfr-2027';
+      $('sourceState').textContent = 'Tutorial 06 active: Red Canyon (St. George) preset + 24 Studio props + Canyon Speedmax CFR (2027).';
+      draw();
+    }
+  },
+  {
+    step: '07 / 08',
+    title: 'Self-Owned Local Photo Memories in 3D',
+    summary: 'Pin local JPEG/PNG/WebP photos onto your 3D route in memory. STRIDE matches photo timestamps (or current playhead position) to exact route coordinates and adds Moment Atlas cards.',
+    rule: 'Privacy Rule: Photos stay 100% in local memory and are never uploaded.',
+    actionLabel: 'Pin 2 Demo Photo Memories on Route →',
+    run: () => {
+      if (!state.rows.length) ensureScene();
+      state.photoPins = matchLocalPhotosToRoute(state.rows, [
+        { name: 'QueenK_Lava_Lookout.jpg', progress: 0.34 },
+        { name: 'EnergyLab_Turnaround.jpg', progress: 0.71 }
+      ], 0.5);
+      if ($('photoCountBadge')) $('photoCountBadge').textContent = `${state.photoPins.length} photos`;
+      state.progress = 0.34;
+      $('scrub').value = '340';
+      renderMoments();
+      updateLive();
+      draw();
+      $('sourceState').textContent = 'Tutorial 07 active: Pinned 2 local photo beacons (QueenK_Lava_Lookout.jpg & EnergyLab_Turnaround.jpg) in memory.';
+    }
+  },
+  {
+    step: '08 / 08',
+    title: 'Privacy Redaction Pins, PNG & .stride.json Story Bundles',
+    summary: 'Every export trims the first/last 700 m AND all return visits near start/finish, plus any 500 m custom redaction pins. Closed short loops fail closed rather than leaking home coordinates.',
+    rule: 'Verified Gate: 0 leaked pixels across 1600×1024, 390×844, and 844×390.',
+    actionLabel: 'Drop 500 m Redaction Pin & Inspect Spec →',
+    run: () => {
+      if (!state.rows.length) ensureScene();
+      state.progress = 0.45;
+      $('scrub').value = '450';
+      const pos = atPosition(state.progress);
+      const pt = state.rows[pos.index];
+      if (pt) {
+        state.redactZones = [{ lat: pt.lat, lon: pt.lon, radiusMeters: 500 }];
+        if ($('redactCountBadge')) $('redactCountBadge').textContent = '1 pin';
+      }
+      const wp = $('worldsPanel');
+      if (wp) {
+        wp.hidden = false;
+        renderWorldsAndContracts();
+      }
+      updateLive();
+      draw();
+      $('sourceState').textContent = 'Tutorial 08 active: Pinned 500 m mid-route redaction zone and opened ActivitySpec v1 + StoryBundle inspector.';
+    }
+  }
+];
+
+function runTutorialStep(index){
+  const idx = ((index % TUTORIAL_MODULES.length) + TUTORIAL_MODULES.length) % TUTORIAL_MODULES.length;
+  state.tutorialStep = idx;
+  const mod = TUTORIAL_MODULES[idx];
+  mod.run();
+  const banner = $('tourBanner');
+  if(banner){
+    banner.hidden = false;
+    $('tourStepBadge').textContent = `TUTORIAL ${mod.step}`;
+    $('tourTitle').textContent = mod.title;
+    $('tourBody').textContent = mod.summary;
+    $('tourRule').textContent = mod.rule;
+  }
+  renderTutorials();
+}
+
+if(typeof window !== 'undefined'){
+  window.strideRunTutorial = runTutorialStep;
+}
+
+function renderTutorials(){
+  const mount = $('tutorialsContent');
+  if(!mount)return;
+  mount.replaceChildren();
+  TUTORIAL_MODULES.forEach((mod, idx) => {
+    const card = document.createElement('div');
+    card.className = 'tutorial-card' + (state.tutorialStep === idx ? ' active' : '');
+    const title = document.createElement('strong');
+    title.textContent = `${mod.step} · ${mod.title}`;
+    const desc = document.createElement('span');
+    desc.textContent = mod.summary;
+    const rule = document.createElement('small');
+    rule.textContent = mod.rule;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'tutorial-run-btn';
+    btn.innerHTML = `<span>${mod.actionLabel}</span><span>▶</span>`;
+    btn.addEventListener('click', () => runTutorialStep(idx));
+    card.append(title, desc, rule, btn);
+    mount.append(card);
+  });
+}
+
 function setMode(mode){
   state.mode=mode;
   state.cinema = mode === 'cinema';
@@ -531,7 +737,8 @@ function setMode(mode){
       replay:'PROCEDURAL SCENE · NOT SURVEYED',
       cinema:'AUTONOMOUS DRONE ORBIT · ILLUSTRATIVE',
       compare:'GHOST SYNCHRONIZED BY DISTANCE · LOCAL-ONLY',
-      worlds:'CROSS-REPO 3D REUSE & CONTRACT INSPECTOR'
+      worlds:'CROSS-REPO 3D REUSE & CONTRACT INSPECTOR',
+      tutorials:'INTERACTIVE TUTORIALS & FEATURE ACADEMY'
     }[mode] || 'PROCEDURAL SCENE · NOT SURVEYED';
   }
   for(const btn of document.querySelectorAll('.modebtn')){
@@ -546,6 +753,16 @@ function setMode(mode){
       renderWorldsAndContracts();
     } else {
       wp.hidden = true;
+    }
+  }
+  const tp = $('tutorialsPanel');
+  if(tp){
+    if(mode === 'tutorials'){
+      tp.hidden = false;
+      renderTutorials();
+      if($('tourBanner')?.hidden) runTutorialStep(state.tutorialStep || 0);
+    } else {
+      tp.hidden = true;
     }
   }
 }
@@ -596,8 +813,23 @@ file.addEventListener('change',async()=>{
   if(!f)return;
   try{
     if(f.size>16*1024*1024)throw Error('Maximum file size is 16 MB.');
-    const content=f.name.toLowerCase().endsWith('.fit')?await f.arrayBuffer():await f.text();
-    setup(loadActivity(f.name,content),f.name,false);
+    const lower=f.name.toLowerCase();
+    if(lower.endsWith('.stride.json')||lower.endsWith('.json')){
+      const bundle=parseStoryBundle(await f.text());
+      if(bundle.worldPreset){
+        const tb=document.querySelector(`[data-theme="${bundle.worldPreset}"]`);
+        if(tb)tb.click();
+      }
+      if(bundle.equipmentRef && $('equipmentSelect')){
+        state.equipmentRef=bundle.equipmentRef;
+        $('equipmentSelect').value=bundle.equipmentRef;
+      }
+      setup(bundle.points,bundle.title||f.name,false);
+      $('sourceState').textContent=`Restored redacted Story Bundle (${bundle.points.length} safe GPS points, preset: ${bundle.worldPreset}).`;
+    }else{
+      const content=lower.endsWith('.fit')?await f.arrayBuffer():await f.text();
+      setup(loadActivity(f.name,content),f.name,false);
+    }
   }catch(e){
     $('sourceState').textContent='Could not load activity: '+e.message;
     $('sourceState').classList.add('error');
@@ -663,6 +895,26 @@ if($('specBtn')){
       wp.hidden = nextHidden;
       if(!nextHidden)renderWorldsAndContracts();
     }
+  });
+}
+
+if($('tutorialLaunchBtn')){
+  $('tutorialLaunchBtn').addEventListener('click',()=>{
+    setMode('tutorials');
+    runTutorialStep(0);
+  });
+}
+
+if($('tourPrevBtn')){
+  $('tourPrevBtn').addEventListener('click',()=>runTutorialStep((state.tutorialStep||0)-1));
+}
+if($('tourNextBtn')){
+  $('tourNextBtn').addEventListener('click',()=>runTutorialStep((state.tutorialStep||0)+1));
+}
+if($('tourCloseBtn')){
+  $('tourCloseBtn').addEventListener('click',()=>{
+    if($('tourBanner'))$('tourBanner').hidden=true;
+    if(state.mode==='tutorials')setMode('replay');
   });
 }
 

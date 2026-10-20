@@ -96,14 +96,35 @@ final class StrideApp: NSObject, NSApplicationDelegate, WKNavigationDelegate, WK
     alert.runModal()
   }
 
+  func webView(
+    _ webView: WKWebView,
+    runOpenPanelWith parameters: WKOpenPanelParameters,
+    initiatedByFrame frame: WKFrameInfo,
+    completionHandler: @escaping ([URL]?) -> Void
+  ) {
+    let panel = NSOpenPanel()
+    panel.canChooseFiles = true
+    panel.canChooseDirectories = false
+    panel.allowsMultipleSelection = parameters.allowsMultipleSelection
+    panel.beginSheetModal(for: window) { response in
+      completionHandler(response == .OK ? panel.urls : nil)
+    }
+  }
+
   @objc func modeReplay() { web.evaluateJavaScript("document.querySelector('[data-mode=\"replay\"]')?.click()", completionHandler: nil) }
   @objc func modeCinema() { web.evaluateJavaScript("document.querySelector('[data-mode=\"cinema\"]')?.click()", completionHandler: nil) }
   @objc func modeCompare() { web.evaluateJavaScript("document.getElementById('ghostSampleBtn')?.click()", completionHandler: nil) }
   @objc func modeWorlds() { web.evaluateJavaScript("document.querySelector('[data-mode=\"worlds\"]')?.click()", completionHandler: nil) }
+  @objc func modeTutorials() { web.evaluateJavaScript("document.querySelector('[data-mode=\"tutorials\"]')?.click()", completionHandler: nil) }
   @objc func themeVolcanic() { web.evaluateJavaScript("document.querySelector('[data-theme=\"volcanic\"]')?.click()", completionHandler: nil) }
   @objc func themeCanyon() { web.evaluateJavaScript("document.querySelector('[data-theme=\"canyon\"]')?.click()", completionHandler: nil) }
   @objc func themeAlpine() { web.evaluateJavaScript("document.querySelector('[data-theme=\"alpine\"]')?.click()", completionHandler: nil) }
   @objc func exportSafePng() { web.evaluateJavaScript("document.getElementById('shareBtn')?.click()", completionHandler: nil) }
+  @objc func exportBundleJson() { web.evaluateJavaScript("document.getElementById('bundleBtn')?.click()", completionHandler: nil) }
+  @objc func runTutorial(_ sender: NSMenuItem) {
+    let step = sender.tag
+    web.evaluateJavaScript("document.querySelector('[data-mode=\"tutorials\"]')?.click(); window.strideRunTutorial && window.strideRunTutorial(\(step));", completionHandler: nil)
+  }
   @objc func reloadPage() { web.reload() }
 
   func buildMenu() {
@@ -124,13 +145,36 @@ final class StrideApp: NSObject, NSApplicationDelegate, WKNavigationDelegate, WK
     modeMenu.addItem(withTitle: "Cinema Drone Mode", action: #selector(modeCinema), keyEquivalent: "2")
     modeMenu.addItem(withTitle: "Ghost Compare Sample", action: #selector(modeCompare), keyEquivalent: "3")
     modeMenu.addItem(withTitle: "Worlds & Reuse Contracts", action: #selector(modeWorlds), keyEquivalent: "4")
+    modeMenu.addItem(withTitle: "Interactive Tutorials & Academy", action: #selector(modeTutorials), keyEquivalent: "t")
     modeMenu.addItem(.separator())
     modeMenu.addItem(withTitle: "Preset: Lava Coast (Kona)", action: #selector(themeVolcanic), keyEquivalent: "5")
     modeMenu.addItem(withTitle: "Preset: Red Canyon (St. George)", action: #selector(themeCanyon), keyEquivalent: "6")
     modeMenu.addItem(withTitle: "Preset: Alpine Morning (Nice)", action: #selector(themeAlpine), keyEquivalent: "7")
     modeMenu.addItem(.separator())
     modeMenu.addItem(withTitle: "Export Privacy-Trimmed PNG", action: #selector(exportSafePng), keyEquivalent: "e")
+    modeMenu.addItem(withTitle: "Export Redacted .stride.json Bundle", action: #selector(exportBundleJson), keyEquivalent: "s")
     modeItem.submenu = modeMenu
+
+    let tutItem = NSMenuItem()
+    main.addItem(tutItem)
+    let tutMenu = NSMenu(title: "Tutorials")
+    let titles = [
+      "01 · Bring Your Own Route (GPX/TCX/FIT/.stride.json)",
+      "02 · 3D Camera Orbit, Follow & Cinema Drone",
+      "03 · Moment Atlas & Multi-Lap Transitions",
+      "04 · 2D Elevation & Split Contour Scrubbing",
+      "05 · Synchronized Ghost Compare",
+      "06 · World Presets, Studio Props & KONA.m Bikes",
+      "07 · Self-Owned Local Photo Memories in 3D",
+      "08 · Privacy Redaction Pins & Story Export"
+    ]
+    for (idx, title) in titles.enumerated() {
+      let item = NSMenuItem(title: title, action: #selector(runTutorial(_:)), keyEquivalent: "")
+      item.tag = idx
+      tutMenu.addItem(item)
+    }
+    tutItem.submenu = tutMenu
+
     NSApp.mainMenu = main
   }
 

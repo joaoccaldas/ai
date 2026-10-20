@@ -267,18 +267,34 @@ export function parseFIT(buf){
   return normalize(points);
 }
 
+export function parseStoryBundle(text){
+  const obj=typeof text==='string'?JSON.parse(text):text;
+  if(!obj||obj.schema!=='stride.story-bundle.v1'||!Array.isArray(obj.safeSegments))throw Error('Invalid .stride.json story bundle schema');
+  const flat=obj.safeSegments.flat();
+  const points=normalize(flat);
+  return {
+    points,
+    title:obj.activity?.title||'Redacted Story Bundle',
+    worldPreset:obj.worldPreset||'volcanic',
+    equipmentRef:obj.equipmentRef||obj.activity?.equipmentRef||null,
+    privacy:obj.privacy||null
+  };
+}
+
 export function loadActivity(name,bytesOrText){
-  const ext=String(name||'').split('.').pop()?.toLowerCase();
+  const lower=String(name||'').toLowerCase();
+  const ext=lower.split('.').pop();
   if(ext==='fit')return parseFIT(bytesOrText);
   const text=String(bytesOrText);
+  if(lower.endsWith('.stride.json')||ext==='json'||text.trim().startsWith('{'))return parseStoryBundle(text).points;
   if(ext==='gpx'||/<(?:[\w-]+:)?gpx\b/i.test(text))return parseGPX(text);
   if(ext==='tcx'||/TrainingCenterDatabase/i.test(text))return parseTCX(text);
-  throw Error('Unsupported format: select .gpx, .tcx or .fit');
+  throw Error('Unsupported format: select .gpx, .tcx, .fit, or .stride.json');
 }
 
 export function analyze(points){
   let distance=0,ascent=0,descent=0,minEle=Infinity,maxEle=-Infinity,pausedSeconds=0,movingSeconds=0;
-  const rows=[];
+  const rows=[],stops=[];
   for(let i=0;i<points.length;i++){
     const p=points[i];
     if(i){
@@ -291,7 +307,12 @@ export function analyze(points){
       }
       if(finite(prev.t)&&finite(p.t)&&p.t>prev.t){
         const dt=p.t-prev.t;
-        if(dt>30 && d/dt<0.35)pausedSeconds+=dt;
+        if(dt>30 && d/dt<0.35){
+          pausedSeconds+=dt;
+          if(dt>=120){
+            stops.push({index:i,lat:p.lat,lon:p.lon,at:distance,durationSeconds:dt,radiusMeters:500});
+          }
+        }
         else movingSeconds+=dt;
       }
     }
@@ -381,6 +402,7 @@ export function analyze(points){
     avgPower,
     bins,
     lapTransitions,
+    stops,
     algorithmVersion:ALGORITHM_VERSION
   };
 }

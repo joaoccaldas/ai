@@ -4,6 +4,7 @@ import {
   parseGPX,
   parseTCX,
   parseFIT,
+  parseStoryBundle,
   fitCRC16,
   analyze,
   haversine,
@@ -299,4 +300,42 @@ test('Cycle 0005: multi-lap transitions, local photo pinning, KONA.m equipment I
   assert.equal(bundle.equipmentRef, 'canyon-cfr-2027');
   assert.equal(bundle.activity.equipmentRef, 'canyon-cfr-2027');
   assert.ok(bundle.privacy.redactedPoints >= 2);
+});
+
+test('Cycle 0006: .stride.json round-trip re-import and automatic long-pause stop detection', () => {
+  const baseT = Date.UTC(2026, 9, 20, 8, 0) / 1000;
+  const pts = [];
+  let curT = baseT, curLat = 59.350, curLon = 17.850;
+  for (let i = 0; i < 40; i++) {
+    // Introduce a 180-second stationary cafe stop at index 20
+    const stepT = i === 20 ? 180 : 25;
+    curT += stepT;
+    curLat += i === 20 ? 0.00001 : 0.0012;
+    curLon += i === 20 ? 0.00001 : 0.0005;
+    pts.push({
+      lat: curLat,
+      lon: curLon,
+      t: curT,
+      ele: 20 + i * 1.5,
+      hr: 142,
+    });
+  }
+  const model = analyze(pts);
+  assert.equal(model.stops.length, 1, 'detects 180s mid-route pause as a stop');
+  assert.equal(model.stops[0].durationSeconds, 180);
+
+  const bundle = toPortableStoryBundle(pts, {
+    title: 'Morning Espresso Ride',
+    theme: 'alpine',
+    equipmentRef: 'canyon-slx-2027',
+    trimMeters: 700,
+  });
+  const jsonText = JSON.stringify(bundle);
+  const parsed = parseStoryBundle(jsonText);
+  assert.equal(parsed.worldPreset, 'alpine');
+  assert.equal(parsed.equipmentRef, 'canyon-slx-2027');
+  assert.equal(parsed.points.length, bundle.privacy.retainedPoints);
+
+  const loadedViaGeneric = loadActivity('ride.stride.json', jsonText);
+  assert.equal(loadedViaGeneric.length, bundle.privacy.retainedPoints);
 });
