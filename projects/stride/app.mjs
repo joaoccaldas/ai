@@ -1,35 +1,599 @@
-import {loadActivity, analyze, planPrivateShare, fmtTime, haversine} from './core.mjs';
+import {loadActivity, analyze, planPrivateShare, toActivitySpec, toMomentSpecs, compareActivities, fmtTime, fmtDelta, haversine} from './core.mjs';
 
 const $ = id => document.getElementById(id);
 const canvas=$('scene'),ctx=canvas.getContext('2d',{alpha:false}),container=$('sceneContainer');
-let state={rows:[],model:null,theme:'volcanic',playing:true,follow:false,speed:1,progress:0,yaw:.73,pitch:.85,zoom:1.0,drag:null,last:0,share:false,sharePlan:null};
-const palettes={volcanic:{sky:'#182b32',back:'#426168',ground:'#293d40',rim:'#bd8a67',route:'#dafa94',point:'#f4c59b'},canyon:{sky:'#252d35',back:'#715c5b',ground:'#6c4744',rim:'#dfb58a',route:'#deffac',point:'#f6ce9f'},alpine:{sky:'#1c3842',back:'#56787a',ground:'#365554',rim:'#96b7a4',route:'#dafa94',point:'#fff5cb'}};
-function demo(){const pts=[];const base=Date.UTC(2026,9,1,7)/1000;for(let i=0;i<250;i++){const t=i/249,lat=36.4+.064*t+.009*Math.sin(3.4*t),lon=-112.1+.065*t+.016*Math.sin(6.6*t),ele=20+80*Math.sin(Math.PI*t)**2+14*Math.sin(6*Math.PI*t);pts.push({lat,lon,t:base+i*17,ele,hr:128+22*Math.sin(Math.PI*t)**2});}return pts;}
+const reducedMotion = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+
+let state={
+  rows:[],
+  model:null,
+  title:'Fictional training route',
+  isDemo:true,
+  ghostRows:null,
+  ghostModel:null,
+  ghostTitle:null,
+  comparison:null,
+  mode:'replay',
+  cinema:false,
+  theme:'volcanic',
+  playing:!reducedMotion,
+  follow:false,
+  speed:1,
+  progress:0,
+  yaw:.73,
+  pitch:.85,
+  zoom:1.0,
+  drag:null,
+  last:0,
+  share:false,
+  sharePlan:null,
+  reuseCatalog:null
+};
+
+const palettes={
+  volcanic:{sky:'#182b32',back:'#426168',ground:'#293d40',rim:'#bd8a67',route:'#dafa94',point:'#f4c59b',ghost:'#7ce7ff'},
+  canyon:{sky:'#252d35',back:'#715c5b',ground:'#6c4744',rim:'#dfb58a',route:'#deffac',point:'#f6ce9f',ghost:'#7ce7ff'},
+  alpine:{sky:'#1c3842',back:'#56787a',ground:'#365554',rim:'#96b7a4',route:'#dafa94',point:'#fff5cb',ghost:'#7ce7ff'}
+};
+
+function demo(paceOffset = 0){
+  const pts=[];
+  const base=Date.UTC(2026,9,1,7)/1000;
+  for(let i=0;i<250;i++){
+    const t=i/249,
+      lat=36.4+.064*t+.009*Math.sin(3.4*t),
+      lon=-112.1+.065*t+.016*Math.sin(6.6*t),
+      ele=20+80*Math.sin(Math.PI*t)**2+14*Math.sin(6*Math.PI*t);
+    const stepSec = 17 + paceOffset * (0.6 + 0.8 * Math.sin(Math.PI * t) ** 2);
+    pts.push({lat,lon,t:base+i*stepSec,ele,hr:128+22*Math.sin(Math.PI*t)**2});
+  }
+  return pts;
+}
+
 function ensureScene(){if(state.rows.length)return;setup(demo(),'Fictional training route',true)}
-function setup(points,title,isDemo=false){const a=analyze(points);state.rows=a.rows;state.model=a;state.progress=0;state.playing=true;state.last=0;const lat0=points.reduce((sum,p)=>sum+p.lat,0)/points.length,lon0=points.reduce((sum,p)=>sum+p.lon,0)/points.length;const cos=Math.cos(lat0*Math.PI/180);const local=points.map(p=>({x:(p.lon-lon0)*111320*cos,z:(p.lat-lat0)*111320}));const range=Math.max(500,...local.map(p=>Math.max(Math.abs(p.x),Math.abs(p.z))));const min=a.minEle??0,max=a.maxEle??min;
-state.geo={lat0,lon0,range,points:local.map((p,i)=>({...p,x:p.x/range*13,z:p.z/range*13,y:finite(points[i].ele)?(points[i].ele-min)/Math.max(20,max-min)*3+.75:1}))};
-$('routeTitle').textContent=title+(isDemo?' (SAMPLE)':'');$('sourceState').textContent=isDemo?'Fictional sample data. No personal information loaded.':`Opened ${points.length} valid GPS points in this device. No upload.`;$('sourceState').classList.remove('error');$('distanceStat').textContent=(a.distance/1000).toFixed(1)+' km';$('activityDistance').textContent=(a.distance/1000).toFixed(1)+' KM';$('timeStat').textContent=fmtTime(a.duration);$('ascentStat').textContent= a.minEle==null?'—':Math.round(a.ascent)+' m';$('heartStat').textContent=a.avgHR==null?'—':Math.round(a.avgHR)+' bpm';$('dataTruth').textContent='Original GPS positions and timestamps power the metrics. World terrain and lighting are illustrative.';
-const moments=[];if(a.fastest)moments.push({label:'FASTEST KILOMETER',stat:fmtTime(a.fastest.seconds),info:`Kilometer ${a.fastest.km} · recorded time`,at:a.fastest.at});if(a.climb&&a.climb.ascent>0)moments.push({label:'STEEPEST 1 KM GAIN',stat:`+${Math.round(a.climb.ascent)} m`,info:`Kilometer ${a.climb.km} · raw elevation gain`,at:a.climb.at});if(a.slowest&&a.slowest.km!==a.fastest?.km)moments.push({label:'SLOWEST KILOMETER',stat:fmtTime(a.slowest.seconds),info:`Kilometer ${a.slowest.km} · recorded time`,at:a.slowest.at});
-const mount=$('moments');mount.replaceChildren();if(!moments.length){const p=document.createElement('div');p.className='emptyMoments';p.textContent='This file has insufficient timestamps for kilometer splits. Replay still works.';mount.append(p);}for(const m of moments){const b=document.createElement('button');b.className='moment';b.type='button';const l=document.createElement('span');l.className='m-top';l.textContent=m.label;const strong=document.createElement('strong');strong.textContent=m.stat;const s=document.createElement('small');s.textContent=m.info;b.append(l,strong,s);b.addEventListener('click',()=>{state.progress=m.at/Math.max(1,a.distance);state.playing=false;$('play').textContent='▶';$('scrub').value=Math.round(state.progress*1000);updateLive();});mount.append(b);}updateLive();}
+
+function projectPoints(points, refGeo, minEle, maxEle){
+  const {lat0,lon0,range}=refGeo;
+  const cos=Math.cos(lat0*Math.PI/180);
+  return points.map(p=>{
+    const lx=(p.lon-lon0)*111320*cos, lz=(p.lat-lat0)*111320;
+    return {
+      x:lx/range*13,
+      z:lz/range*13,
+      y:finite(p.ele)?(p.ele-minEle)/Math.max(20,maxEle-minEle)*3+.75:1
+    };
+  });
+}
+
+function setup(points,title,isDemo=false){
+  const a=analyze(points);
+  state.rows=a.rows;
+  state.model=a;
+  state.title=title;
+  state.isDemo=isDemo;
+  state.progress=0;
+  state.playing=!reducedMotion;
+  state.last=0;
+  if ($('play')) $('play').textContent = state.playing ? 'Ⅱ' : '▶';
+  const lat0=points.reduce((sum,p)=>sum+p.lat,0)/points.length,lon0=points.reduce((sum,p)=>sum+p.lon,0)/points.length;
+  const cos=Math.cos(lat0*Math.PI/180);
+  const local=points.map(p=>({x:(p.lon-lon0)*111320*cos,z:(p.lat-lat0)*111320}));
+  const range=Math.max(500,...local.map(p=>Math.max(Math.abs(p.x),Math.abs(p.z))));
+  const min=a.minEle??0,max=a.maxEle??min;
+  state.geo={
+    lat0,lon0,range,min,max,
+    points:local.map((p,i)=>({...p,x:p.x/range*13,z:p.z/range*13,y:finite(points[i].ele)?(points[i].ele-min)/Math.max(20,max-min)*3+.75:1}))
+  };
+  if(state.ghostRows){
+    state.comparison=compareActivities(state.rows,state.ghostRows);
+    state.ghostGeo=projectPoints(state.ghostRows,state.geo,min,max);
+  }
+  $('routeTitle').textContent=title+(isDemo?' (SAMPLE)':'');
+  $('sourceState').textContent=isDemo?'Fictional sample data. No personal information loaded.':`Opened ${points.length} valid GPS points in this device. No upload.`;
+  $('sourceState').classList.remove('error');
+  $('distanceStat').textContent=(a.distance/1000).toFixed(1)+' km';
+  $('activityDistance').textContent=(a.distance/1000).toFixed(1)+' KM';
+  $('timeStat').textContent=fmtTime(a.duration);
+  $('ascentStat').textContent= a.minEle==null?'—':Math.round(a.ascent)+' m';
+  $('heartStat').textContent=a.avgHR==null?'—':Math.round(a.avgHR)+' bpm';
+  $('dataTruth').textContent='Original GPS positions and timestamps power the metrics. World terrain and lighting are illustrative.';
+  renderMoments();
+  updateLive();
+}
+
+function setupGhost(points, title){
+  if(!state.rows.length)ensureScene();
+  const g=analyze(points);
+  state.ghostRows=g.rows;
+  state.ghostModel=g;
+  state.ghostTitle=title;
+  state.comparison=compareActivities(state.rows,state.ghostRows);
+  state.ghostGeo=projectPoints(state.ghostRows,state.geo,state.geo.min,state.geo.max);
+  setMode('compare');
+  $('sourceState').textContent=`Compare active: ${state.title} vs ${title} (${state.comparison.comparableCourse?'aligned course':'approximate distance index'}).`;
+  $('sourceState').classList.remove('error');
+  renderMoments();
+  updateLive();
+}
+
+function renderMoments(){
+  const a=state.model;
+  if(!a)return;
+  const moments=[];
+  if(a.fastest)moments.push({label:'FASTEST KILOMETER',stat:fmtTime(a.fastest.seconds),info:`Kilometer ${a.fastest.km} · recorded time`,at:a.fastest.at});
+  if(a.climb&&a.climb.ascent>0)moments.push({label:'STEEPEST 1 KM GAIN',stat:`+${Math.round(a.climb.ascent)} m`,info:`Kilometer ${a.climb.km} · raw elevation gain`,at:a.climb.at});
+  if(a.slowest&&a.slowest.km!==a.fastest?.km)moments.push({label:'SLOWEST KILOMETER',stat:fmtTime(a.slowest.seconds),info:`Kilometer ${a.slowest.km} · recorded time`,at:a.slowest.at});
+  if(state.comparison && state.comparison.splitComparisons.length){
+    const biggestSwing = state.comparison.splitComparisons.reduce((best, cur) =>
+      Math.abs(cur.deltaSeconds) > Math.abs(best.deltaSeconds) ? cur : best
+    );
+    moments.push({
+      label:'LARGEST GHOST GAP SPLIT',
+      stat:`${fmtDelta(biggestSwing.deltaSeconds)}s`,
+      info:`Kilometer ${biggestSwing.km} · vs ${state.ghostTitle || 'Ghost'}`,
+      at:biggestSwing.km*1000
+    });
+  }
+  const mount=$('moments');
+  mount.replaceChildren();
+  if(!moments.length){
+    const p=document.createElement('div');
+    p.className='emptyMoments';
+    p.textContent='This file has insufficient timestamps for kilometer splits. Replay still works.';
+    mount.append(p);
+  }
+  for(const m of moments){
+    const b=document.createElement('button');
+    b.className='moment';
+    b.type='button';
+    const l=document.createElement('span');
+    l.className='m-top';
+    l.textContent=m.label;
+    const strong=document.createElement('strong');
+    strong.textContent=m.stat;
+    const s=document.createElement('small');
+    s.textContent=m.info;
+    b.append(l,strong,s);
+    b.addEventListener('click',()=>{
+      state.progress=m.at/Math.max(1,a.distance);
+      state.playing=false;
+      $('play').textContent='▶';
+      $('scrub').value=Math.round(state.progress*1000);
+      updateLive();
+    });
+    mount.append(b);
+  }
+}
+
 const finite=Number.isFinite;
-function atPosition(p){const geo=state.geo;if(!geo)return {x:0,y:0,z:0};const a=state.model.rows,target=Math.max(0,Math.min(1,p))*state.model.distance;let lo=0,hi=a.length-1;while(lo+1<hi){const k=(lo+hi)>>1;if(a[k].d<target)lo=k;else hi=k;}const d=Math.max(1e-6,a[hi].d-a[lo].d),t=Math.max(0,Math.min(1,(target-a[lo].d)/d));const g=geo.points;return {x:g[lo].x+(g[hi].x-g[lo].x)*t,y:g[lo].y+(g[hi].y-g[lo].y)*t,z:g[lo].z+(g[hi].z-g[lo].z)*t,index:lo,target};}
-function updateLive(){if(!state.model)return;const a=state.model,p=atPosition(state.progress),i=p.index,point=a.rows[i],next=a.rows[Math.min(i+1,a.rows.length-1)];$('posDistance').textContent=(p.target/1000).toFixed(2)+' km';$('posTime').textContent=a.duration==null?'No recorded time':fmtTime((point.t??a.rows[0].t??0)-(a.rows[0].t??point.t??0));$('liveElevation').textContent=point.ele==null?'Not recorded':Math.round(point.ele)+' m';const delta=point.t!=null&&next.t!=null?next.t-point.t:0;const speed=delta>0?haversine(point,next)/delta*3.6:null;$('liveSpeed').textContent=speed==null?'Not recorded':speed.toFixed(1)+' km/h';$('liveHR').textContent=point.hr==null?'Not recorded':Math.round(point.hr)+' bpm';}
-function terrain(x,z){let y=.09*Math.sin(x*.77+1)*Math.cos(z*.54-2)+.18*Math.sin(x*.25)*Math.cos(z*.38);if(state.theme==='canyon')y+=1.6*Math.exp(-((x+13)**2+(z-10)**2)/90)+1.4*Math.exp(-((x-13)**2+(z+10)**2)/130);if(state.theme==='alpine')y+=1.6*Math.exp(-((x+17)**2+(z-17)**2)/170)+1.9*Math.exp(-((x-17)**2+(z+17)**2)/100);return y-.25;}
-function perspective(p,w,h){const cy=Math.cos(state.yaw),sy=Math.sin(state.yaw),cp=Math.cos(state.pitch),sp=Math.sin(state.pitch),rx=p.x*cy-p.z*sy,rz=p.x*sy+p.z*cy,ry=p.y*cp-rz*sp,depth=p.y*sp+rz*cp;const scale=Math.min(w,h)*.037*state.zoom*(48/(48+depth));return {x:w*.5+rx*scale,y:h*.58-ry*scale,depth};}
-function draw(){const dpr=Math.min(2,window.devicePixelRatio||1),w=canvas.clientWidth,h=canvas.clientHeight;if(!w||!h)return;if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}ctx.setTransform(dpr,0,0,dpr,0,0);const p=palettes[state.theme];const g=ctx.createLinearGradient(0,0,0,h);g.addColorStop(0,p.sky);g.addColorStop(1,p.back);ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
-const rects=[],n=20,world=34,step=world/n;for(let i=0;i<n;i++)for(let j=0;j<n;j++){const x=-world/2+i*step,z=-world/2+j*step;const v=[{x,z},{x:x+step,z},{x:x+step,z:z+step},{x,z:z+step}].map(q=>({x:q.x,y:terrain(q.x,q.z),z:q.z}));const zAvg=v.reduce((sum,a)=>sum+perspective(a,w,h).depth,0)/4;rects.push({v,zAvg,i,j});}rects.sort((a,b)=>b.zAvg-a.zAvg);for(const r of rects){const v=r.v.map(a=>perspective(a,w,h));ctx.beginPath();ctx.moveTo(v[0].x,v[0].y);v.slice(1).forEach(a=>ctx.lineTo(a.x,a.y));ctx.closePath();const light=Math.sin((r.i+r.j)*.66)*5;ctx.fillStyle=shade(p.ground,light);ctx.fill();ctx.strokeStyle='#c7d3ad08';ctx.stroke();}
-if(!state.geo)return;const coords=state.geo.points;ctx.lineJoin='round';ctx.lineCap='round';const segments=state.share?(state.sharePlan?.segments||[]):[coords.map((_,i)=>i)];
-for(const indices of segments){if(indices.length<2)continue;ctx.beginPath();let first=true;for(const i of indices){const q=perspective(coords[i],w,h);if(first){ctx.moveTo(q.x,q.y);first=false}else ctx.lineTo(q.x,q.y);}
-ctx.strokeStyle='#060f16bd';ctx.lineWidth=6;ctx.stroke();ctx.strokeStyle=p.route;ctx.lineWidth=3;ctx.shadowColor=p.route;ctx.shadowBlur=14;ctx.stroke();ctx.shadowBlur=0;}
-if(!state.share){const o=perspective(atPosition(state.progress),w,h);ctx.beginPath();ctx.arc(o.x,o.y,6.7,0,Math.PI*2);ctx.fillStyle=p.point;ctx.fill();ctx.lineWidth=3;ctx.strokeStyle='#0e2830';ctx.stroke();ctx.beginPath();ctx.arc(o.x,o.y,11,0,Math.PI*2);ctx.strokeStyle=p.route+'65';ctx.lineWidth=1.5;ctx.stroke();}
-ctx.textAlign='left';ctx.font='11px ui-sans-serif,system-ui';ctx.fillStyle='#d9ede1d4';ctx.fillText('STRIDE / PROCEDURAL ATHLETE WORLD',18,25);}
-function shade(hex,n){const v=hex.slice(1).match(/../g).map(s=>Math.max(0,Math.min(255,parseInt(s,16)+n)));return `rgb(${v.join(',')})`}
-function frame(ts){if(state.model&&state.playing){if(state.last){const duration=Math.max(30,state.model.duration??Math.max(30,state.model.distance/2.6));state.progress=Math.min(1,state.progress+(ts-state.last)/1000/duration*state.speed*18);if(state.progress>=1){state.playing=false;$('play').textContent='▶';}$('scrub').value=Math.round(state.progress*1000);updateLive();}state.last=ts;}else state.last=ts;draw();requestAnimationFrame(frame)}
-const file=$('activityFile');file.addEventListener('change',async()=>{const f=file.files?.[0];if(!f)return;try{if(f.size>16*1024*1024)throw Error('Maximum file size is 16 MB.');const content=f.name.toLowerCase().endsWith('.fit')?await f.arrayBuffer():await f.text();setup(loadActivity(f.name,content),f.name,false);}catch(e){$('sourceState').textContent='Could not load activity: '+e.message;$('sourceState').classList.add('error');}file.value='';});
-$('demoBtn').addEventListener('click',()=>setup(demo(),'Fictional training route',true));$('play').addEventListener('click',()=>{state.playing=!state.playing;if(state.progress>=1&&state.playing)state.progress=0;$('play').textContent=state.playing?'Ⅱ':'▶';});$('scrub').addEventListener('input',e=>{state.progress=Number(e.target.value)/1000;state.playing=false;$('play').textContent='▶';updateLive();});$('speed').addEventListener('click',()=>{state.speed=state.speed===1?2:state.speed===2?4:1;$('speed').textContent=state.speed+'×';});$('viewReset').addEventListener('click',()=>{state.yaw=.73;state.pitch=.85;state.zoom=1;state.follow=false;$('followBtn').setAttribute('aria-pressed','false');});$('followBtn').addEventListener('click',()=>{state.follow=!state.follow;$('followBtn').setAttribute('aria-pressed',String(state.follow));});
-for(const b of document.querySelectorAll('[data-theme]'))b.addEventListener('click',()=>{state.theme=b.dataset.theme;for(const s of document.querySelectorAll('[data-theme]'))s.classList.toggle('active',s===b);$('worldLabel').textContent={volcanic:'VOLCANIC COAST',canyon:'RED CANYON',alpine:'ALPINE MORNING'}[state.theme]});
-canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);state.drag={x:e.clientX,y:e.clientY};});canvas.addEventListener('pointermove',e=>{if(!state.drag)return;state.yaw+=(e.clientX-state.drag.x)*.008;state.pitch=Math.max(.2,Math.min(1.35,state.pitch+(e.clientY-state.drag.y)*.006));state.drag={x:e.clientX,y:e.clientY}});canvas.addEventListener('pointerup',()=>state.drag=null);canvas.addEventListener('pointercancel',()=>state.drag=null);canvas.addEventListener('wheel',e=>{e.preventDefault();state.zoom=Math.max(.5,Math.min(2.7,state.zoom*Math.exp(-e.deltaY*.001)));},{passive:false});
-$('shareBtn').addEventListener('click',()=>{try{const plan=planPrivateShare(state.rows,700);if(!plan.segments.length){$('sourceState').textContent='Share export blocked: no safe continuous route remains after the 700 m endpoint and return-visit privacy zones.';$('sourceState').classList.add('error');return;}
-state.sharePlan=plan;state.share=true;draw();try{const a=document.createElement('a');a.download='stride-privacy-trimmed.png';a.href=canvas.toDataURL('image/png');a.click();}finally{state.share=false;state.sharePlan=null;draw();}
-}catch(e){$('sourceState').textContent='Could not export safely: '+e.message;$('sourceState').classList.add('error');}});
-ensureScene();requestAnimationFrame(frame);
+function atPosition(p, rows = state.model?.rows, geoPoints = state.geo?.points){
+  if(!rows||!geoPoints||!rows.length)return {x:0,y:0,z:0,index:0,target:0};
+  const totalDist=rows.at(-1).d;
+  const target=Math.max(0,Math.min(1,p))*totalDist;
+  let lo=0,hi=rows.length-1;
+  while(lo+1<hi){const k=(lo+hi)>>1;if(rows[k].d<target)lo=k;else hi=k;}
+  const d=Math.max(1e-6,rows[hi].d-rows[lo].d),t=Math.max(0,Math.min(1,(target-rows[lo].d)/d));
+  const g=geoPoints;
+  return {
+    x:g[lo].x+(g[hi].x-g[lo].x)*t,
+    y:g[lo].y+(g[hi].y-g[lo].y)*t,
+    z:g[lo].z+(g[hi].z-g[lo].z)*t,
+    index:lo,
+    target,
+    fraction:t
+  };
+}
+
+function updateLive(){
+  if(!state.model)return;
+  const a=state.model,p=atPosition(state.progress),i=p.index,point=a.rows[i],next=a.rows[Math.min(i+1,a.rows.length-1)];
+  $('posDistance').textContent=(p.target/1000).toFixed(2)+' km';
+  const elapsed=point.t!=null&&a.rows[0].t!=null?point.t-a.rows[0].t:null;
+  $('posTime').textContent=a.duration==null?'No recorded time':fmtTime(elapsed??0);
+  $('liveElevation').textContent=point.ele==null?'Not recorded':Math.round(point.ele)+' m';
+  const delta=point.t!=null&&next.t!=null?next.t-point.t:0;
+  const speed=delta>0?haversine(point,next)/delta*3.6:null;
+  $('liveSpeed').textContent=speed==null?'Not recorded':speed.toFixed(1)+' km/h';
+  $('liveHR').textContent=point.hr==null?'Not recorded':Math.round(point.hr)+' bpm';
+
+  const compareBanner=$('compareBanner'), liveGhostRow=$('liveGhostRow');
+  if(state.ghostModel && state.comparison){
+    const gp=atPosition(state.progress, state.ghostModel.rows, state.ghostGeo);
+    const gPoint=state.ghostModel.rows[gp.index];
+    const gElapsed=gPoint?.t!=null&&state.ghostModel.rows[0]?.t!=null?gPoint.t-state.ghostModel.rows[0].t:null;
+    const gap=elapsed!=null&&gElapsed!=null?gElapsed-elapsed:null;
+    if(compareBanner){
+      compareBanner.hidden=false;
+      $('compareDeltaText').textContent=gap==null?'Ghost active':`Ghost ${fmtDelta(gap)}`;
+    }
+    if(liveGhostRow){
+      liveGhostRow.hidden=false;
+      $('liveGhostGap').textContent=gap==null?'No timestamps':`${fmtDelta(gap)} (${gap>0?'you lead':'ghost leads'})`;
+    }
+  } else {
+    if(compareBanner)compareBanner.hidden=true;
+    if(liveGhostRow)liveGhostRow.hidden=true;
+  }
+}
+
+function terrain(x,z){
+  let y=.09*Math.sin(x*.77+1)*Math.cos(z*.54-2)+.18*Math.sin(x*.25)*Math.cos(z*.38);
+  if(state.theme==='canyon')y+=1.6*Math.exp(-((x+13)**2+(z-10)**2)/90)+1.4*Math.exp(-((x-13)**2+(z+10)**2)/130);
+  if(state.theme==='alpine')y+=1.6*Math.exp(-((x+17)**2+(z-17)**2)/170)+1.9*Math.exp(-((x-17)**2+(z+17)**2)/100);
+  return y-.25;
+}
+
+function perspective(p,w,h){
+  const focus = state.follow && state.geo && !state.share ? atPosition(state.progress) : {x:0,y:0,z:0};
+  const px = p.x - focus.x * 0.45;
+  const pz = p.z - focus.z * 0.45;
+  const cy=Math.cos(state.yaw),sy=Math.sin(state.yaw),cp=Math.cos(state.pitch),sp=Math.sin(state.pitch),
+    rx=px*cy-pz*sy,rz=px*sy+pz*cy,ry=p.y*cp-rz*sp,depth=p.y*sp+rz*cp;
+  const scale=Math.min(w,h)*.037*state.zoom*(48/(48+depth));
+  return {x:w*.5+rx*scale,y:h*.58-ry*scale,depth};
+}
+
+function draw(){
+  const dpr=Math.min(2,window.devicePixelRatio||1),w=canvas.clientWidth,h=canvas.clientHeight;
+  if(!w||!h)return;
+  if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){
+    canvas.width=Math.round(w*dpr);
+    canvas.height=Math.round(h*dpr);
+  }
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  const p=palettes[state.theme];
+  const g=ctx.createLinearGradient(0,0,0,h);
+  g.addColorStop(0,p.sky);
+  g.addColorStop(1,p.back);
+  ctx.fillStyle=g;
+  ctx.fillRect(0,0,w,h);
+
+  const rects=[],n=20,world=34,step=world/n;
+  for(let i=0;i<n;i++)for(let j=0;j<n;j++){
+    const x=-world/2+i*step,z=-world/2+j*step;
+    const v=[{x,z},{x:x+step,z},{x:x+step,z:z+step},{x,z:z+step}].map(q=>({x:q.x,y:terrain(q.x,q.z),z:q.z}));
+    const zAvg=v.reduce((sum,a)=>sum+perspective(a,w,h).depth,0)/4;
+    rects.push({v,zAvg,i,j});
+  }
+  rects.sort((a,b)=>b.zAvg-a.zAvg);
+  for(const r of rects){
+    const v=r.v.map(a=>perspective(a,w,h));
+    ctx.beginPath();
+    ctx.moveTo(v[0].x,v[0].y);
+    v.slice(1).forEach(a=>ctx.lineTo(a.x,a.y));
+    ctx.closePath();
+    const light=Math.sin((r.i+r.j)*.66)*5;
+    ctx.fillStyle=shade(p.ground,light);
+    ctx.fill();
+    ctx.strokeStyle='#c7d3ad08';
+    ctx.stroke();
+  }
+  if(!state.geo)return;
+  const coords=state.geo.points;
+  ctx.lineJoin='round';
+  ctx.lineCap='round';
+
+  // Draw ghost comparison route when active and not exporting privacy PNG
+  if(!state.share && state.ghostGeo && state.ghostGeo.length>=2){
+    ctx.beginPath();
+    state.ghostGeo.forEach((pt,idx)=>{
+      const q=perspective(pt,w,h);
+      if(idx===0)ctx.moveTo(q.x,q.y);else ctx.lineTo(q.x,q.y);
+    });
+    ctx.strokeStyle='#7ce7ff66';
+    ctx.lineWidth=2.2;
+    ctx.setLineDash([5,4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  const segments=state.share?(state.sharePlan?.segments||[]):[coords.map((_,i)=>i)];
+  for(const indices of segments){
+    if(indices.length<2)continue;
+    ctx.beginPath();
+    let first=true;
+    for(const i of indices){
+      const q=perspective(coords[i],w,h);
+      if(first){ctx.moveTo(q.x,q.y);first=false;}else ctx.lineTo(q.x,q.y);
+    }
+    ctx.strokeStyle='#060f16bd';
+    ctx.lineWidth=6;
+    ctx.stroke();
+    ctx.strokeStyle=p.route;
+    ctx.lineWidth=3;
+    ctx.shadowColor=p.route;
+    ctx.shadowBlur=14;
+    ctx.stroke();
+    ctx.shadowBlur=0;
+  }
+
+  if(!state.share){
+    if(state.ghostGeo && state.ghostModel){
+      const go=perspective(atPosition(state.progress, state.ghostModel.rows, state.ghostGeo),w,h);
+      ctx.beginPath();
+      ctx.arc(go.x,go.y,5.2,0,Math.PI*2);
+      ctx.fillStyle=p.ghost;
+      ctx.fill();
+      ctx.lineWidth=2;
+      ctx.strokeStyle='#081e26';
+      ctx.stroke();
+    }
+    const o=perspective(atPosition(state.progress),w,h);
+    ctx.beginPath();
+    ctx.arc(o.x,o.y,6.7,0,Math.PI*2);
+    ctx.fillStyle=p.point;
+    ctx.fill();
+    ctx.lineWidth=3;
+    ctx.strokeStyle='#0e2830';
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(o.x,o.y,11,0,Math.PI*2);
+    ctx.strokeStyle=p.route+'65';
+    ctx.lineWidth=1.5;
+    ctx.stroke();
+  }
+  ctx.textAlign='left';
+  ctx.font='11px ui-sans-serif,system-ui';
+  ctx.fillStyle='#d9ede1d4';
+  const headerCaption = state.cinema
+    ? 'STRIDE / CINEMA DRONE RECONSTRUCTION'
+    : state.ghostModel
+    ? 'STRIDE / SYNCHRONIZED GHOST COMPARISON'
+    : 'STRIDE / PROCEDURAL ATHLETE WORLD';
+  ctx.fillText(headerCaption,18,25);
+}
+
+function shade(hex,n){
+  const v=hex.slice(1).match(/../g).map(s=>Math.max(0,Math.min(255,parseInt(s,16)+n)));
+  return `rgb(${v.join(',')})`;
+}
+
+function frame(ts){
+  if(state.model&&state.playing){
+    if(state.last){
+      const dt=(ts-state.last)/1000;
+      const duration=Math.max(30,state.model.duration??Math.max(30,state.model.distance/2.6));
+      state.progress=Math.min(1,state.progress+dt/duration*state.speed*18);
+      if(state.cinema && !state.drag && !reducedMotion){
+        state.yaw += dt * 0.22;
+        state.pitch = 0.72 + 0.16 * Math.sin(state.progress * Math.PI * 2);
+      }
+      if(state.progress>=1){
+        state.playing=false;
+        $('play').textContent='▶';
+      }
+      $('scrub').value=Math.round(state.progress*1000);
+      updateLive();
+    }
+    state.last=ts;
+  } else state.last=ts;
+  draw();
+  requestAnimationFrame(frame);
+}
+
+function setMode(mode){
+  state.mode=mode;
+  state.cinema = mode === 'cinema';
+  if($('cinemaBtn'))$('cinemaBtn').setAttribute('aria-pressed',String(state.cinema));
+  if($('modeBadge')){
+    $('modeBadge').textContent = {
+      replay:'PROCEDURAL SCENE · NOT SURVEYED',
+      cinema:'AUTONOMOUS DRONE ORBIT · ILLUSTRATIVE',
+      compare:'GHOST SYNCHRONIZED BY DISTANCE · LOCAL-ONLY',
+      worlds:'CROSS-REPO 3D REUSE & CONTRACT INSPECTOR'
+    }[mode] || 'PROCEDURAL SCENE · NOT SURVEYED';
+  }
+  for(const btn of document.querySelectorAll('.modebtn')){
+    const active = btn.dataset.mode === mode;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  }
+  const wp = $('worldsPanel');
+  if(wp){
+    if(mode === 'worlds' && !wp.hidden === false){
+      wp.hidden = false;
+      renderWorldsAndContracts();
+    } else if(mode !== 'worlds'){
+      wp.hidden = true;
+    }
+  }
+}
+
+async function renderWorldsAndContracts(){
+  const mount = $('worldsContent');
+  if(!mount)return;
+  mount.replaceChildren();
+  const spec = toActivitySpec(state.rows, { title: state.title, isDemo: state.isDemo });
+  const moments = toMomentSpecs(state.rows, { id: spec.id });
+
+  const c1 = document.createElement('div');
+  c1.className = 'world-card';
+  c1.innerHTML = `<strong>ActivitySpec v1 (${spec.algorithmVersion})</strong><span>Source class: ${spec.sourceClass} · Missingness tracked explicitly (never 0-filled).</span>`;
+  const code1 = document.createElement('code');
+  code1.textContent = JSON.stringify({ summary: spec.summary, missingness: spec.missingness }, null, 2);
+  c1.append(code1);
+
+  const c2 = document.createElement('div');
+  c2.className = 'world-card';
+  c2.innerHTML = `<strong>MomentSpec v1 (${moments.length} deterministic highlights)</strong><span>Every highlight carries provenance and completeness flags.</span>`;
+  const code2 = document.createElement('code');
+  code2.textContent = JSON.stringify(moments.map(m => ({ kind: m.kind, km: m.km, val: m.formattedValue, provenance: m.provenance })), null, 2);
+  c2.append(code2);
+
+  const c3 = document.createElement('div');
+  c3.className = 'world-card';
+  c3.innerHTML = `<strong>Verified 3D Studio &amp; KONA.m Inventory</strong><span>66 procedural Blender assets (ai/studio) · 17 hand-built KONA.m rooms (36 indexed) · 21 bicycle studies · local read-only reuse.</span>`;
+  const code3 = document.createElement('code');
+  code3.textContent = state.reuseCatalog
+    ? JSON.stringify(state.reuseCatalog, null, 2)
+    : JSON.stringify({
+        proceduralAssets: 66,
+        konamHandBuiltAreas: 17,
+        konamIndexedRooms: 36,
+        bicycleStudies: 21,
+        stravaApiStatus: 'HOLD (June 2026 policy)',
+      }, null, 2);
+  c3.append(code3);
+
+  mount.append(c1, c2, c3);
+}
+
+const file=$('activityFile');
+file.addEventListener('change',async()=>{
+  const f=file.files?.[0];
+  if(!f)return;
+  try{
+    if(f.size>16*1024*1024)throw Error('Maximum file size is 16 MB.');
+    const content=f.name.toLowerCase().endsWith('.fit')?await f.arrayBuffer():await f.text();
+    setup(loadActivity(f.name,content),f.name,false);
+  }catch(e){
+    $('sourceState').textContent='Could not load activity: '+e.message;
+    $('sourceState').classList.add('error');
+  }
+  file.value='';
+});
+
+const compareInput=$('compareFile');
+if(compareInput){
+  compareInput.addEventListener('change',async()=>{
+    const f=compareInput.files?.[0];
+    if(!f)return;
+    try{
+      if(f.size>16*1024*1024)throw Error('Maximum file size is 16 MB.');
+      const content=f.name.toLowerCase().endsWith('.fit')?await f.arrayBuffer():await f.text();
+      setupGhost(loadActivity(f.name,content),f.name);
+    }catch(e){
+      $('sourceState').textContent='Could not load comparison file: '+e.message;
+      $('sourceState').classList.add('error');
+    }
+    compareInput.value='';
+  });
+}
+
+$('demoBtn').addEventListener('click',()=>{
+  state.ghostRows=null;state.ghostModel=null;state.comparison=null;
+  setup(demo(),'Fictional training route',true);
+});
+
+if($('ghostSampleBtn')){
+  $('ghostSampleBtn').addEventListener('click',()=>{
+    setupGhost(demo(0.11),'Previous attempt (+18s sample)');
+  });
+}
+
+if($('specBtn')){
+  $('specBtn').addEventListener('click',()=>{
+    const wp=$('worldsPanel');
+    if(wp){
+      const nextHidden = !wp.hidden;
+      wp.hidden = nextHidden;
+      if(!nextHidden)renderWorldsAndContracts();
+    }
+  });
+}
+
+$('play').addEventListener('click',()=>{
+  state.playing=!state.playing;
+  if(state.progress>=1&&state.playing)state.progress=0;
+  $('play').textContent=state.playing?'Ⅱ':'▶';
+});
+$('scrub').addEventListener('input',e=>{
+  state.progress=Number(e.target.value)/1000;
+  state.playing=false;
+  $('play').textContent='▶';
+  updateLive();
+});
+$('speed').addEventListener('click',()=>{
+  state.speed=state.speed===1?2:state.speed===2?4:1;
+  $('speed').textContent=state.speed+'×';
+});
+$('viewReset').addEventListener('click',()=>{
+  state.yaw=.73;state.pitch=.85;state.zoom=1;state.follow=false;state.cinema=false;
+  $('followBtn').setAttribute('aria-pressed','false');
+  if($('cinemaBtn'))$('cinemaBtn').setAttribute('aria-pressed','false');
+});
+$('followBtn').addEventListener('click',()=>{
+  state.follow=!state.follow;
+  $('followBtn').setAttribute('aria-pressed',String(state.follow));
+});
+if($('cinemaBtn')){
+  $('cinemaBtn').addEventListener('click',()=>{
+    state.cinema=!state.cinema;
+    $('cinemaBtn').setAttribute('aria-pressed',String(state.cinema));
+    if(state.cinema){state.playing=true;$('play').textContent='Ⅱ';}
+  });
+}
+
+for(const b of document.querySelectorAll('.modebtn')){
+  b.addEventListener('click',()=>setMode(b.dataset.mode));
+}
+
+for(const b of document.querySelectorAll('[data-theme]'))b.addEventListener('click',()=>{
+  state.theme=b.dataset.theme;
+  for(const s of document.querySelectorAll('[data-theme]'))s.classList.toggle('active',s===b);
+  $('worldLabel').textContent={volcanic:'VOLCANIC COAST',canyon:'RED CANYON',alpine:'ALPINE MORNING'}[state.theme];
+});
+
+canvas.addEventListener('pointerdown',e=>{canvas.setPointerCapture(e.pointerId);state.drag={x:e.clientX,y:e.clientY};});
+canvas.addEventListener('pointermove',e=>{
+  if(!state.drag)return;
+  state.yaw+=(e.clientX-state.drag.x)*.008;
+  state.pitch=Math.max(.2,Math.min(1.35,state.pitch+(e.clientY-state.drag.y)*.006));
+  state.drag={x:e.clientX,y:e.clientY};
+});
+canvas.addEventListener('pointerup',()=>state.drag=null);
+canvas.addEventListener('pointercancel',()=>state.drag=null);
+canvas.addEventListener('wheel',e=>{
+  e.preventDefault();
+  state.zoom=Math.max(.5,Math.min(2.7,state.zoom*Math.exp(-e.deltaY*.001)));
+},{passive:false});
+
+// P1 Accessible Keyboard Navigation on 3D Canvas
+canvas.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'){e.preventDefault();state.yaw-=.08;draw();}
+  else if(e.key==='ArrowRight'){e.preventDefault();state.yaw+=.08;draw();}
+  else if(e.key==='ArrowUp'){e.preventDefault();state.pitch=Math.min(1.35,state.pitch+.06);draw();}
+  else if(e.key==='ArrowDown'){e.preventDefault();state.pitch=Math.max(.2,state.pitch-.06);draw();}
+  else if(e.key==='+'||e.key==='='){e.preventDefault();state.zoom=Math.min(2.7,state.zoom*1.1);draw();}
+  else if(e.key==='-'||e.key==='_'){e.preventDefault();state.zoom=Math.max(.5,state.zoom/1.1);draw();}
+  else if(e.key===' '){e.preventDefault();$('play').click();}
+  else if(e.key==='r'||e.key==='R'){e.preventDefault();$('viewReset').click();}
+});
+
+$('shareBtn').addEventListener('click',()=>{
+  try{
+    const plan=planPrivateShare(state.rows,700);
+    if(!plan.segments.length){
+      $('sourceState').textContent='Share export blocked: no safe continuous route remains after the 700 m endpoint and return-visit privacy zones.';
+      $('sourceState').classList.add('error');
+      return;
+    }
+    state.sharePlan=plan;
+    state.share=true;
+    draw();
+    try{
+      const a=document.createElement('a');
+      a.download='stride-privacy-trimmed.png';
+      a.href=canvas.toDataURL('image/png');
+      a.click();
+    }finally{
+      state.share=false;
+      state.sharePlan=null;
+      draw();
+    }
+  }catch(e){
+    $('sourceState').textContent='Could not export safely: '+e.message;
+    $('sourceState').classList.add('error');
+  }
+});
+
+// Optional local loopback catalog probe (only when running inside native STRIDE.app on 127.0.0.1)
+if (typeof location !== 'undefined' && (location.hostname === '127.0.0.1' || location.hostname === 'localhost')) {
+  fetch('/api/catalog', { cache: 'no-store' })
+    .then(r => (r.ok ? r.json() : null))
+    .then(data => { if (data) state.reuseCatalog = data; })
+    .catch(() => {});
+}
+
+ensureScene();
+requestAnimationFrame(frame);
