@@ -72,7 +72,7 @@ def comparison(output,baseline,views=None):
         panels.append(f'<section id="{name}" aria-labelledby="h-{name}"><h2 id="h-{name}">{title}</h2><div class="pair">{before}<figure><img src="{name}.png?v={actual[:16]}" alt="Actual candidate {html.escape(title)}"><figcaption>Candidate · actual Cycles render</figcaption></figure></div></section>')
         rows.append(f'<tr><td>{title}</td><td>{receipt["width"]} × {receipt["height"]}</td><td>{receipt["seconds_render"]:.2f} s</td><td><a href="{name}.png.receipt.json">Receipt</a></td></tr>')
     page='''<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Living Threshold · before and after</title><style>
+<title>Living Threshold · before and after</title><link rel="icon" href="data:,"><style>
 :root{font:16px/1.5 system-ui,sans-serif;color:#25362e;background:#f3f1e9}*{box-sizing:border-box}body{max-width:1480px;margin:auto;padding:40px 32px}h1{font-size:clamp(36px,6vw,76px);letter-spacing:-.055em;line-height:1.03;margin:16px 0}h2{font-size:24px;letter-spacing:-.025em;margin:0 0 16px}p{max-width:760px;color:#586258}small,.eyebrow{font-size:12px;letter-spacing:.13em;text-transform:uppercase}nav{display:flex;flex-wrap:wrap;gap:8px;margin:28px 0 40px}a{color:inherit;text-underline-offset:4px}nav a{padding:8px 14px;border:1px solid #abb6a8;border-radius:100px;text-decoration:none}section{scroll-margin-top:24px;margin:0 0 48px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}figure{margin:0;min-width:0;background:#e3e4d9}img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:#d9dfdb}figcaption{padding:10px 12px;font-size:13px}.note{display:grid;align-content:center;padding:28px;background:#e7e7dc;color:#687361}details{border-top:1px solid #bbc1b4;padding-top:16px}summary{cursor:pointer;font-weight:600}table{border-collapse:collapse;width:100%;font-size:14px}td,th{text-align:left;padding:10px 4px;border-bottom:1px solid #d4d7ca}footer{margin-top:32px;font-size:13px;max-width:850px;color:#667060}@media(max-width:700px){body{padding:24px 16px}.pair{grid-template-columns:1fr}nav{margin-bottom:28px}.note{min-height:100px}td,th{font-size:12px}section{margin-bottom:32px}}
 </style><header><div class="eyebrow">Living Threshold · visual study · 21 October 2026</div><h1>A market for daily life.</h1><p>More tactile stalls, a quieter aisle, and a small exhibit that makes the structural idea visible. Compare actual renders at the same cameras.</p><small>Design candidate · competition approval pending</small></header>
 <nav aria-label="Compare views"><a href="#market">Market</a><a href="#arrival">Arrival</a><a href="#plaza">Plaza</a><a href="#method">Structural idea</a></nav>'''
@@ -92,6 +92,13 @@ def comparison(output,baseline,views=None):
         page=page.replace('href="RESEARCH.json"','href="../RESEARCH.json"')
     if (output/'A1-alpha.svg').is_file():
         page=page.replace('</nav>','<a href="A1-alpha.svg">Working A1</a></nav>')
+    plan=output/'landscape/civic-plan.svg'
+    if plan.is_file():
+        prep=json.loads((output/'candidate.blend.receipt.json').read_text())
+        expected=prep['architecture_coordination']['civic_landscape']['plan_sha256']
+        if hashlib.sha256(plan.read_bytes()).hexdigest()!=expected:
+            raise ValueError('Civic plan differs from the rendered candidate receipt')
+        page=page.replace('</nav>','<a href="landscape/civic-plan.svg">Civic plan</a></nav>')
     if baseline_info.is_file():
         shutil.copy2(baseline_info,base/baseline_info.name)
         page=page.replace('</details>','<p><a href="baseline/baseline-sources.json">View-specific baseline sources</a></p></details>')

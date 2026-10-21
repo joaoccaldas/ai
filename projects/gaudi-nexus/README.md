@@ -4,6 +4,12 @@ Evidence-driven computational architecture entry for the 2026 AI × Gaudí compe
 
 ## Current visual study — 21 October 2026
 
+The [completion audit](docs/COMPETITION_COMPLETION_AUDIT.md) maps 111 asset,
+material, analysis, motion, interaction and delivery families to the brief,
+existing sources and remaining work. Gaudí is not finalized. The new civic
+landscape study adds four gardens and checked approaches; source-bound render
+comparisons and the foliage experiment are documented below.
+
 The existing two-level municipal-context candidate now has a reviewed visual study on
 `polish/gaudi-civic-visual-20261021`: metre-scale materials, removable stall
 identity/shade components, a quieter foreground, proposed soffit baffles and a

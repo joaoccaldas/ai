@@ -267,5 +267,23 @@
     "jury_score": null,
     "independent_approval": false,
     "working_board": "output/civic-visual-20261021/refinement-v2/A1-alpha.svg"
+  },
+  "completion_scope_2026_10_21": {
+    "audit": "docs/COMPETITION_COMPLETION_AUDIT.md",
+    "scope_families": 111,
+    "status": "NOT_FINALIZED",
+    "latest_civic_runs": [
+      39548145040,
+      39548829623
+    ],
+    "known_major_gaps": [
+      "Programme fit-out and net areas",
+      "Plaza/building edge reconciliation",
+      "Detailed context and final hero",
+      "Resolved bay and culture sequence",
+      "Final anonymous A1 and independent review"
+    ],
+    "research": "Three-seed static foliage coverage reproduction; no production LOD substitution or FPS claim",
+    "jury_score": null
   }
 }

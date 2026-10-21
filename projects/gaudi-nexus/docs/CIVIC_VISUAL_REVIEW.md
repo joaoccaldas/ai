@@ -194,3 +194,92 @@ The optional stall A4 still needs its proposed transformation, service interface
 and accessible approach resolved; these new identities do not implement that
 larger transformable stall contract. Promote only reviewed derivatives, with
 rights and independent owner/visual gates explicit.
+
+## Whole-proposal audit and civic landscape follow-up
+
+The [completion audit](COMPETITION_COMPLETION_AUDIT.md) maps 111 families of
+assets, finishes, analysis, motion, interaction and release work to the real
+competition brief. The project is not finalized. The main remaining work is
+programme fit-out and net area, plaza/building edge reconciliation, a resolved
+architectural bay, a complete culture-room sequence and the final context hero.
+The optional animations/walk-through do not replace those design tasks.
+
+The original six small beds are retained but hidden behind a new civic study:
+four larger gardens, twelve proposed mature oak instances, four community
+tables from the existing builder and twenty-four cafe-chair components. Three
+4.8 m approaches connect the daily-market, culture and visitor branches.
+The first culture endpoint was functionally wrong beside a kitchen wall; the
+final source places it at the open western civic bay, with a local-coordinate
+guard. This does not certify the complete public route or upper-floor access.
+
+[First run 39548145040](https://github.com/joaoccaldas/ai/actions/runs/39548145040)
+rendered actual arrival and plaza views at source commit `5c9a168`. Both image
+receipts share candidate SHA
+`33bfc46f608d1bb7b9ee6457a6cda7a273c3fb043b0d070b06dbdf0e6b2306c5`.
+Arrival took 88.98 s; plaza 71.17 s. The improved garden/route hierarchy is visible,
+but the wrong approach and missing chairs were retained as a rejected intermediate.
+The arrival still cannot carry a final hero because the simplified municipal
+context dominates. No missing cathedral sculpture is invented.
+
+[Final plaza run 39548829623](https://github.com/joaoccaldas/ai/actions/runs/39548829623)
+uses commit `757e93a`, candidate SHA
+`9f39bb47adf584168ee72908b862b057e6c4f118ac7565c5bb8f0302f93f0ce1`.
+The actual 960 × 600 PNG took 72.33 s and has SHA
+`1a3aff3f5de022c09e8823d8ebb4a6f07786b84bced9150c703f055779b568ee`.
+This final run renders only the plaza; the prior arrival is not relabelled as
+a V4 image. All 2,090 incoming source signatures remain preserved.
+
+New fixture support checks cover 81,552 actual mesh vertices and 372 route
+samples. Minimum fixture-to-route-edge clearance is 4.636 m. The new canopy
+envelopes retain at least 14.359 m to the F3 axis, compared with the existing
+7 m corridor threshold. The planting ellipse proxy is 422.54 m², not a shade
+or permeability metric. Original geometry and source files are retained.
+
+**Pixel decision:** the corrected approach and furnished tables are retained as
+measured progress. The scene remains schematic: four isolated oval gardens,
+broad route ribbons, generic context and unresolved edges are not a finished
+landscape or winning-quality hero. More decorative objects would not resolve
+those issues. No independent visual/device acceptance or canonical promotion.
+
+Review artifacts beneath `output/civic-visual-20261021/`:
+
+- `plaza-v4/remote/review.html`: actual V1 versus V4 plaza, matching camera,
+  source/profile and verified PNG hashes; source-bound civic plan linked.
+- `plaza-v4/remote/landscape/civic-plan.svg`: geometry plan with explicitly
+  schematic canopy circles; not a Blender render.
+- `plaza-v4/RESEARCH.json`: exact scene/image/landscape checks and limits.
+- `plaza-v3/inventory-reuse.json`: private scoped catalog denominator and
+  forty-seven rehashed occurrences across twenty-four relevant families;
+  no current-tree/global rights or quality acceptance implied.
+
+The two new remote jobs consume 3m48s and 2m21s of conservative full-run wall
+time. Earlier eight pilot runs total 55m15s, so combined use is 61m24s within
+the recorded 65-minute allowance. No Mac image render or new paid host.
+
+## Foliage research reproduced on Gaudí source trees
+
+The existing vegetation builder now offers an opt-in stable leaf budget and
+coverage compensation. Its default hero geometry remains unchanged. Consuming
+the original random sequence is essential: shortening the loop alone changes
+later leaf clusters, making a matched LOD comparison unreliable.
+
+`check_vegetation.py` measures three seeds and top/front/diagonal views with
+160 × 160 geometry rays each. The predeclared maximum absolute sky-share
+change is 0.05 and minimum leaf-triangle reduction is 70%. All three seeds
+pass: 60,900 → 15,120 leaf triangles, a 75.17% reduction. Maximum coverage
+change is 0.005195 (0.52 percentage points); plain thinning reaches 0.181094
+(18.11 points). Branch meshes remain identical.
+
+The representative full/compensated GLBs are 4,972,644 / 1,250,364 bytes and
+both have zero Khronos errors/warnings. Raw results, source hashes, derivative
+hashes and rejected plain-thinning control are preserved under
+`canopy-lod-research/`. Binary ray coverage is not transparent leaf response,
+appearance equivalence, moving-LOD quality or measured FPS. The rendered
+landscape keeps the original full-detail meshes. Runtime distance bands,
+material parity and target-device checks remain separate.
+
+The programme inventory now reports effective collection/view-layer visibility.
+A child object's `hide_render=False` did not mean the older teaching kitchen
+was visible beneath its hidden programme collection. A Blender fixture verifies
+hidden ancestors, a second visible collection link and the object's own render
+flag. This naming inventory still cannot prove full room-fit-out completeness.

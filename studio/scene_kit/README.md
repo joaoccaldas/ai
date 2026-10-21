@@ -107,3 +107,26 @@ because it can reveal a spatial conflict hidden in an attractive distant view;
 it is not proof that the geometry is accepted.
 
 `check_export.py -- /path/to/fixture.glb` verifies object material overrides, shared mesh reuse, source preservation and restored selection without rendering. Modified or shape-key meshes export separately; repeated unmodified meshes with identical material assignments share one mesh.
+
+## Civic landscape and canopy research
+
+The Gaudí coordinator composes the existing `planted_island`, `holm_oak`,
+`community_table` and cafe-chair component. It checks actual emitted fixture
+vertices over the source plaza, route ribbons and a conservative new-canopy
+F3 envelope. A destination name is not evidence of an entrance: the first
+culture approach ended beside a kitchen wall and was changed to the open civic
+bay, with a local-coordinate guard. A whole-route walking/access audit remains.
+
+`check_vegetation.py -- NEW_PRIVATE_DIRECTORY` compares full foliage, thinning
+and a stable leaf subset scaled by the square root of the original/retained
+count. It consumes the original RNG sequence so later clusters do not change;
+branch meshes remain identical. Three seeds and three ray-projected views
+showed 75.17% fewer leaf triangles with at most 0.52 percentage points of sky
+coverage change. These are geometric ray hits, not transparent-leaf appearance,
+frame-time or moving-LOD acceptance. The default hero output remains unchanged.
+Both generated GLBs passed Khronos validation. See the project
+`docs/COMPETITION_COMPLETION_AUDIT.md`; retain controls and failed variants.
+
+Programme inventories must include collection/view-layer render visibility.
+`hide_render=False` on an object does not make it visible beneath a hidden
+superseded programme collection. Naming alone cannot close room-fit-out gates.

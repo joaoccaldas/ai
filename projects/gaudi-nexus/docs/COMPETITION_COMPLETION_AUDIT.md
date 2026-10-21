@@ -317,18 +317,21 @@ visitor branches. The planting ellipse proxy is 422.54 m²; this is not a shade,
 permeability or biodiversity metric. Original source geometry/transforms stay
 intact and superseded landscape proposals remain hidden and recoverable.
 
-Local geometry checked 78,288 fixture vertices against the source plaza and
+Local geometry checked 81,552 fixture vertices against the source plaza and
 372 route support samples. Minimum new fixture-to-route-edge clearance is
 4.64 m. A conservative 6.5 m canopy-radius envelope leaves at least 14.36 m
 to the F3 axis, beyond the existing 7 m corridor threshold. This checks new
 landscape additions, not every inherited context obstruction or a complete
 pedestrian/body sweep. Tables now have six reused chairs each; detailed access remains open.
 
-Remote run and visual decision are recorded in `CIVIC_VISUAL_REVIEW.md` after
-the actual PNGs are inspected. The first remote job is capped at eight minutes; a second plaza-only correction
+The actual remote images are now inspected. The plaza and furniture read
+more clearly, but the four elliptical islands and broad material ribbons still
+look schematic. The candidate is retained as progress and rejected as a final
+competition image. Exact runs and hashes are in `CIVIC_VISUAL_REVIEW.md`. The first remote job is capped at eight minutes; a second plaza-only correction
 is capped at four minutes. The eight earlier pilot runs used 55m15s of
 conservative wall time; the first new run used 3m48s, leaving 5m57s
-before the final four-minute cap within the recorded 65-minute allowance. No Mac Blender image render, paid
+before the final four-minute cap. That final run used 2m21s; combined
+conservative wall time is 61m24s, within the recorded 65-minute allowance. No Mac Blender image render, paid
 host, budget increase, canonical promotion or competition upload is involved.
 
 Replay the bounded research without a render:
