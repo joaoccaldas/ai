@@ -74,7 +74,7 @@ Those are fixture-material validation exports. The separate final authored packa
 incoming non-camera signatures and passes sampled clearances for the three old
 views plus the new detail view. No Mac Blender image render was invoked.
 
-The existing project/release tests pass (26 project tests plus four release-gate
+The existing project/release tests pass (29 project tests plus four release-gate
 tests after the stricter-size regression). The source contract validator passes.
 The release audit still rejects unapproved site identity, hero/board/rights and
 other open evidence. A missing realism-playbook path was reconciled against the
@@ -94,9 +94,9 @@ The new method display is physically present but too dark against its background
 It is rejected as a final exhibit image despite passing pixel range.
 
 V1 render seconds: arrival 90.70, market 199.57, plaza 71.73, method 241.96.
-These are one-run observations, not a benchmark or claimed speedup. The new
-market costs more than the preserved baseline; quality changes do not establish
-render efficiency. Raw V1 frames and the successful run remain preserved.
+These are one-run observations, not a benchmark or claimed speedup. Elapsed time was higher for the new
+market in this run; runner hardware/variance were not controlled, and these
+quality changes do not establish render efficiency. Raw V1 frames and the successful run remain preserved.
 
 Pixel inspection also found hard rectangular brown floor marks. Source-native
 ray probes identify `WetPatch_1` / `WetPaving`, superseded wet-scene props left
@@ -105,6 +105,70 @@ It adds actual ceiling-mounted accent lights to the method exhibit, keeping the
 sun, exposure and camera fixed. V2 is a bounded market/display rerender; the V1
 wide views must not be silently relabelled as V2 final-scene evidence.
 
+
+## V2 decision and A1 alpha
+
+[Run 39544165538](https://github.com/joaoccaldas/ai/actions/runs/39544165538)
+succeeded with the bounded market/display pair. Both actual PNGs were inspected
+and their hashes verified against the same prepared scene:
+`9a4835304914fbd8a61f53df190ea2214aa8b10cd86e25e022c63674b5066c4b`.
+Market render time was 200.02 s; display 241.43 s. These are individual observed
+runs, not a performance benchmark.
+
+**Retain V2 as the next visual study.** The market has continuous dry paving with
+the hard rectangular marks removed. The display's timber arch, hanging weights
+and caption are more legible under its actual mounted lights. The upper screen
+and rail background still competes with the thin model. This is a useful
+improvement, not final exhibit or competition acceptance. The complete V1 and
+rejected dark display remain preserved.
+
+Local study directory: `output/civic-visual-20261021/`. Start at
+`refinement-v2/review.html`: its market comparison uses the preserved V6 source,
+and its display comparison uses rejected V1, with per-view source labels and
+receipts. Current images are both V2. URLs include their image hashes so a copied
+historical file's older modification date cannot conceal a changed baseline in
+a browser cache. Desktop and phone checks decode every image, show no horizontal
+overflow and return 200 for every evidence/board link.
+
+`refinement-v2/A1-alpha.svg` is a real A1-size working layout, using both V2
+renders and a ground plan/market section derived from that exact V2 blend. The
+generator rejects different-scene drawing/render receipts and changed image
+hashes. The alpha was rasterized in the browser and visually inspected. It is
+explicitly a **working SVG**, not a final submission JPEG: primary context hero,
+plaza-edge reconciliation, final rights/independent review and participant number
+remain open. No personal name or studio logo was added. The master renders
+remain unretouched; browser rasterization assembles the page and does not invoke
+Blender rendering on this Mac.
+
+Both authored component GLBs from the actual V2 output pass Khronos validation
+with zero errors and warnings. Floor-centred anchors and inspector directions
+are present; procedural materials remain declared PBR approximations. The
+source review is [draft PR #115](https://github.com/joaoccaldas/ai/pull/115),
+stacked on the existing visual-development branch, with no main merge.
+
+## CI, comparison integrity and learning
+
+The first real contract run failed because its clean Python environment lacked
+Pillow; both the existing submission audit and the new comparison tests import
+it. The workflow now explicitly installs Pillow 13.0.0. The current official
+[release notes](https://pillow.readthedocs.io/en/stable/releasenotes/13.0.0.html)
+were checked, and all 29 tests pass in an isolated Python 3.12 environment with
+that pin. The four release-gate tests pass separately. The replacement contract
+CI run passed; final head checks are recorded in the delivery receipt.
+
+The comparison builder rejects changed image hashes and mismatched camera/profile
+fields. Selected-view mode avoids dead links to unrendered views. The V1 page
+was checked at 1440 and 390 px: every PNG decodes, evidence links return 200 and
+there is no horizontal overflow. V2 gets its own page and labels; V1 context
+frames remain distinct.
+
+The actual emitted polygon, rather than its name, is checked for the declared
+load rule. Authored delivery assets are separate from fixture-material geometry
+exports. Export copies receive the inverse anchor transform while the source
+object remains unchanged. A local packaging attempt also exposed a repeated
+whole-scene signature call inside the per-object comparison; that own process
+was stopped and the snapshot was hoisted to one call before the successful
+repeat. No original source or image was changed by that failed attempt.
 
 ## Drawing-led finding: plaza edge fit remains open
 

@@ -40,7 +40,8 @@
         "Rev18 F3 sightline workflow 37568295670: 9/9 target-window rays reached 00_SITE_MUNICIPAL_IMPORTED first; 0 non-municipal blockers.",
         "Rev18 authoritative shadow workflow 37568571128: 54 rays across 6 Barcelona sun vectors; 0 non-municipal shadow blockers on the 9 F3-visible municipal receiver points."
       ],
-      "blocker": "Official 1:1000 topography/levels + tree/street-furniture cross-check remain externally blocked by Open Data BCN hCaptcha, followed by explicit SITE_TRUTH_V1 promotion. F3 sightline and representative seasonal shadow obstruction tests are now closed."
+      "blocker": "Explicit municipal-scene lineage promotion and visual/context reconciliation remain open. Current organizer FAQ permits a flat-site assumption; topographic survey is optional context for this conceptual competition, not a prerequisite.",
+      "historical_blocker_before_2026_10_21": "Official 1:1000 topography/levels + tree/street-furniture cross-check remain externally blocked by Open Data BCN hCaptcha, followed by explicit SITE_TRUTH_V1 promotion. F3 sightline and representative seasonal shadow obstruction tests are now closed."
     },
     {
       "id": 2,
@@ -80,7 +81,7 @@
         "config/requirements.json",
         "config/requirement_matrix_v0_1.json",
         "config/primary_scheme_dimensions_v0_1.json",
-        "config/program_audit_v1.json — kitchens + 8 admin workstations now scene-backed"
+        "config/program_audit_v1.json \u2014 kitchens + 8 admin workstations now scene-backed"
       ]
     },
     {
@@ -120,14 +121,14 @@
         "docs/BAY_PERFORMANCE_V0_1.md",
         "docs/SOLAR_BASELINE_001.md",
         "output/final10/barcelona_solar_baseline_v1.json",
-        "Rev18 geometry shadow diagnostic: 6 representative Barcelona sun vectors × 9 authoritative municipal receiver points; 0 non-municipal blockers. This is not annual simulation."
+        "Rev18 geometry shadow diagnostic: 6 representative Barcelona sun vectors \u00d7 9 authoritative municipal receiver points; 0 non-municipal blockers. This is not annual simulation."
       ]
     },
     {
       "id": 6,
       "name": "Material/construction reality",
       "weight_pct": 10,
-      "status": "ADVANCED_PIPELINE_VISUAL_APPROVAL_PENDING",
+      "status": "VISUAL_STUDY_MARKET_AND_EXHIBIT_IMPROVED_ACCEPTANCE_PENDING",
       "why": "Final realism now depends more on assemblies, contact and material response than on object count.",
       "done_when": [
         "hero-frame materials use final PBR definitions",
@@ -139,7 +140,8 @@
       "evidence": [
         "docs/MATERIAL_SYSTEM_V0_1.md",
         "docs/PRIMARY_BAY_V0_3.md",
-        "2026-10-06 branch work: CC0 PBR base texture provenance for stone/paving/vault tiles (commit 1aa83326); trencadis and stone relief passes (6b31850b, c864e630); catenary canopy/DOF and lighting refinements (202c49bb, e7832045); procedural market props with per-asset metadata (d20a39b4, aec0eb16)."
+        "2026-10-06 branch work: CC0 PBR base texture provenance for stone/paving/vault tiles (commit 1aa83326); trencadis and stone relief passes (6b31850b, c864e630); catenary canopy/DOF and lighting refinements (202c49bb, e7832045); procedural market props with per-asset metadata (d20a39b4, aec0eb16).",
+        "2026-10-21: actual V1/V2 Linux Cycles renders at unchanged cameras show improved market detail, dry-floor cleanup and a source-lit interpretation exhibit; agent-reviewed candidates, not independent approval. See docs/CIVIC_VISUAL_REVIEW.md."
       ],
       "blocker": "Verify the material/assembly improvements in the final authoritative-context scene and hero pixels; repo implementation alone is not visual approval."
     },
@@ -168,7 +170,8 @@
         "2026-10-06 live Rev16 audit confirms A_HERO_MUNICIPAL_F3 is the active 32 mm camera at (-15,42,1.56).",
         "640x360 Workbench composition proof rendered as operation gaudi-r16-f3-workbench-20261006 / artifact fa5c862226fdc934f48eee4efe37140d.",
         "640x360 Eevee review timed out at 300 s; no final material/light visual approval.",
-        "Rev18 F3 sightline diagnostic: central and 3x3 target-window rays reach authoritative municipal geometry first; 0/9 non-municipal blockers."
+        "Rev18 F3 sightline diagnostic: central and 3x3 target-window rays reach authoritative municipal geometry first; 0/9 non-municipal blockers.",
+        "2026-10-21: V1 arrival retains municipal massing and proposal; unchanged camera comparison is largely unchanged visually. No final >=9/10 hero score or acceptance is asserted."
       ],
       "blocker": "First integrate/promote authoritative municipal context, then establish a faster photoreal review path, render F3, visually inspect pixels and pass the >=9/10 gate."
     },
@@ -176,7 +179,7 @@
       "id": 8,
       "name": "A1 jury board",
       "weight_pct": 12,
-      "status": "STORYBOARD_DEFINED_FINAL_ASSETS_MISSING",
+      "status": "ALPHA_LAYOUT_ASSEMBLED_CONTEXT_HERO_AND_FINAL_APPROVALS_OPEN",
       "why": "The board controls whether judges can perceive the other 90 points.",
       "done_when": [
         "one dominant hero",
@@ -190,7 +193,8 @@
       ],
       "evidence": [
         "visuals/A1_STORYBOARD.md",
-        "config/requirements.json"
+        "config/requirements.json",
+        "2026-10-21: A1 working SVG assembled from V2 same-scene renders and geometry-derived ground plan/section, hash-checked by the review generator. Context hero, edge fit, final JPEG, identifier and approvals remain open."
       ]
     },
     {
@@ -249,6 +253,19 @@
       50,
       58
     ],
-    "note": "Readiness ranges are an evidence-based project-management judgment, not an official jury score. The remaining work is disproportionately concentrated in site truth, final visual communication, and validated engineering/environmental proof."
+    "note": "Readiness ranges are an evidence-based project-management judgment, not an official jury score. The remaining work is disproportionately concentrated in site truth, final visual communication, and validated engineering/environmental proof.",
+    "new_work_note": "Historical readiness estimates retained; this visual iteration does not recompute them or establish a jury score.",
+    "estimate_status": "Historical estimate retained; not recalculated on 21 October."
+  },
+  "visual_progress_2026_10_21": {
+    "source_review": "docs/CIVIC_VISUAL_REVIEW.md",
+    "runs": [
+      39542668513,
+      39544165538
+    ],
+    "status": "MARKET_AND_EXHIBIT_STUDY_IMPROVED_FINAL_GATES_OPEN",
+    "jury_score": null,
+    "independent_approval": false,
+    "working_board": "output/civic-visual-20261021/refinement-v2/A1-alpha.svg"
   }
 }

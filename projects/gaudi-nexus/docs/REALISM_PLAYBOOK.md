@@ -31,6 +31,8 @@ that do not explain daily use or the construction system.
 2. Prepare derived geometry without rendering on this Mac. Preserve all original
    geometry/transforms and files; check the same source signatures, required
    assets, real floor contacts, programme areas and sampled camera clearances.
+   Compute one whole-scene signature snapshot per validation stage, then compare
+   its mapping; do not recompute it inside every per-object comparison.
 3. Use the existing approved Linux Actions renderer, one process at a time,
    within its bounded budget. It verifies the prepared receipt and rejects
    invented cathedral enrichment. No paid provider or local-render fallback is

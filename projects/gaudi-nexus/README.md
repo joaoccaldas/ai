@@ -4,7 +4,7 @@ Evidence-driven computational architecture entry for the 2026 AI × Gaudí compe
 
 ## Current visual study — 21 October 2026
 
-The existing two-level municipal-context candidate is being refined on
+The existing two-level municipal-context candidate now has a reviewed visual study on
 `polish/gaudi-civic-visual-20261021`: metre-scale materials, removable stall
 identity/shade components, a quieter foreground, proposed soffit baffles and a
 physical load/inversion exhibit. All original context geometry and baseline
