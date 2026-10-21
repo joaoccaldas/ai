@@ -1,0 +1,2116 @@
+{
+  "label": "before",
+  "base": "http://127.0.0.1:8765/site",
+  "capturedAt": "2026-10-21T11:35:49.215Z",
+  "viewports": [
+    {
+      "name": "390x844",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "768x1024",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "name": "1440x900",
+      "width": 1440,
+      "height": 900
+    }
+  ],
+  "pageCount": 28,
+  "pages": [
+    {
+      "file": "altered-states.html",
+      "requested": "http://127.0.0.1:8765/site/altered-states.html",
+      "finalUrl": "http://127.0.0.1:8765/site/altered-states.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Altered States · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 10,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Browse library",
+            "href": "library.html"
+          },
+          {
+            "text": "Gods & spirits",
+            "href": "gods.html"
+          },
+          {
+            "text": "Belief systems",
+            "href": "belief-systems.html"
+          },
+          {
+            "text": "Rituals",
+            "href": "rituals.html"
+          },
+          {
+            "text": "Altered states",
+            "href": "altered-states.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/altered-states-390x844.jpg",
+          "overflowX": 276,
+          "scrollWidth": 666,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/altered-states-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/altered-states-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 276
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "automation-pulse.html",
+      "requested": "http://127.0.0.1:8765/site/automation-pulse.html",
+      "finalUrl": "http://127.0.0.1:8765/site/automation-pulse.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Automation Pulse · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": false,
+        "links": []
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/automation-pulse-390x844.jpg",
+          "overflowX": 61,
+          "scrollWidth": 451,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/automation-pulse-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/automation-pulse-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 61
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "belief-systems.html",
+      "requested": "http://127.0.0.1:8765/site/belief-systems.html",
+      "finalUrl": "http://127.0.0.1:8765/site/belief-systems.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Belief Systems · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 10,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Browse library",
+            "href": "library.html"
+          },
+          {
+            "text": "Gods & spirits",
+            "href": "gods.html"
+          },
+          {
+            "text": "Belief systems",
+            "href": "belief-systems.html"
+          },
+          {
+            "text": "Rituals",
+            "href": "rituals.html"
+          },
+          {
+            "text": "Altered states",
+            "href": "altered-states.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/belief-systems-390x844.jpg",
+          "overflowX": 397,
+          "scrollWidth": 787,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/belief-systems-768x1024.jpg",
+          "overflowX": 112,
+          "scrollWidth": 880,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/belief-systems-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 397
+        },
+        {
+          "viewport": "768x1024",
+          "overflowX": 112
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "cognition.html",
+      "requested": "http://127.0.0.1:8765/site/cognition.html",
+      "finalUrl": "http://127.0.0.1:8765/site/cognition.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Cognition & Experience · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 7,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Research hub",
+            "href": "research.html"
+          },
+          {
+            "text": "Sources & review",
+            "href": "sources-v1.html"
+          },
+          {
+            "text": "Research health",
+            "href": "research-health.html"
+          },
+          {
+            "text": "Automation",
+            "href": "automation-pulse.html"
+          },
+          {
+            "text": "DRH source",
+            "href": "drh.html"
+          },
+          {
+            "text": "Pulotu source",
+            "href": "religion-decomposition.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/cognition-390x844.jpg",
+          "overflowX": 302,
+          "scrollWidth": 692,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/cognition-768x1024.jpg",
+          "overflowX": 17,
+          "scrollWidth": 785,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/cognition-1440x900.jpg",
+          "overflowX": 79,
+          "scrollWidth": 1519,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 302
+        },
+        {
+          "viewport": "768x1024",
+          "overflowX": 17
+        },
+        {
+          "viewport": "1440x900",
+          "overflowX": 79
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "compare.html",
+      "requested": "http://127.0.0.1:8765/site/compare.html",
+      "finalUrl": "http://127.0.0.1:8765/site/compare.html?a=GOD-ODIN&b=GOD-ZEUS",
+      "redirected": true,
+      "navError": null,
+      "title": "Compare · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": "NOEMA",
+        "visibleCount": 5,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "Atlas",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Analyze",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/compare-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/compare-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/compare-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "concept.html",
+      "requested": "http://127.0.0.1:8765/site/concept.html",
+      "finalUrl": "http://127.0.0.1:8765/site/concept.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Afterlife · Concept · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 9,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Explore all",
+            "href": "explore.html"
+          },
+          {
+            "text": "Concept hubs",
+            "href": "concept.html?term=afterlife"
+          },
+          {
+            "text": "Gods & spirits",
+            "href": "gods.html"
+          },
+          {
+            "text": "Belief systems",
+            "href": "belief-systems.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/concept-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/concept-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/concept-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "dashboard-v1.html",
+      "requested": "http://127.0.0.1:8765/site/dashboard-v1.html",
+      "finalUrl": "http://127.0.0.1:8765/site/dashboard-v1.html",
+      "redirected": false,
+      "navError": null,
+      "title": "NOEMA Research OS",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": false,
+        "links": []
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/dashboard-v1-390x844.jpg",
+          "overflowX": 67,
+          "scrollWidth": 457,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/dashboard-v1-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/dashboard-v1-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 67
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [
+        "TypeError: Cannot set properties of null (setting 'innerHTML')"
+      ],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "deep-time-compare.html",
+      "requested": "http://127.0.0.1:8765/site/deep-time-compare.html",
+      "finalUrl": "http://127.0.0.1:8765/site/deep-time-compare.html",
+      "redirected": false,
+      "navError": null,
+      "title": "NOEMA Deep Time Compare",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": false,
+        "links": []
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/deep-time-compare-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/deep-time-compare-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/deep-time-compare-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "deep-time.html",
+      "requested": "http://127.0.0.1:8765/site/deep-time.html",
+      "finalUrl": "http://127.0.0.1:8765/site/deep-time.html",
+      "redirected": false,
+      "navError": null,
+      "title": "NOEMA Deep Time",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": false,
+        "links": []
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/deep-time-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/deep-time-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/deep-time-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "drh.html",
+      "requested": "http://127.0.0.1:8765/site/drh.html",
+      "finalUrl": "http://127.0.0.1:8765/site/drh.html",
+      "redirected": false,
+      "navError": null,
+      "title": "DRH Explorer · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 7,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Research hub",
+            "href": "research.html"
+          },
+          {
+            "text": "Sources & review",
+            "href": "sources-v1.html"
+          },
+          {
+            "text": "Research health",
+            "href": "research-health.html"
+          },
+          {
+            "text": "Automation",
+            "href": "automation-pulse.html"
+          },
+          {
+            "text": "DRH source",
+            "href": "drh.html"
+          },
+          {
+            "text": "Pulotu source",
+            "href": "religion-decomposition.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/drh-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/drh-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/drh-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "entity.html",
+      "requested": "http://127.0.0.1:8765/site/entity.html",
+      "finalUrl": "http://127.0.0.1:8765/site/entity.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Entity · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": "Primary navigation",
+        "visibleCount": 5,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "Atlas",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Analyze",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/entity-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/entity-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/entity-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "explore.html",
+      "requested": "http://127.0.0.1:8765/site/explore.html",
+      "finalUrl": "http://127.0.0.1:8765/site/explore.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Explore · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": "NOEMA",
+        "visibleCount": 5,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "Atlas",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Analyze",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/explore-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/explore-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/explore-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "gods.html",
+      "requested": "http://127.0.0.1:8765/site/gods.html",
+      "finalUrl": "http://127.0.0.1:8765/site/gods.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Gods & Spirits · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 10,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Browse library",
+            "href": "library.html"
+          },
+          {
+            "text": "Gods & spirits",
+            "href": "gods.html"
+          },
+          {
+            "text": "Belief systems",
+            "href": "belief-systems.html"
+          },
+          {
+            "text": "Rituals",
+            "href": "rituals.html"
+          },
+          {
+            "text": "Altered states",
+            "href": "altered-states.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/gods-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/gods-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/gods-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "history.html",
+      "requested": "http://127.0.0.1:8765/site/history.html",
+      "finalUrl": "http://127.0.0.1:8765/site/history.html",
+      "redirected": false,
+      "navError": null,
+      "title": "History & Change · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": "NOEMA",
+        "visibleCount": 5,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "Atlas",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Analyze",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/history-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/history-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/history-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "human-meaning-atlas.html",
+      "requested": "http://127.0.0.1:8765/site/human-meaning-atlas.html",
+      "finalUrl": "http://127.0.0.1:8765/site/human-meaning-atlas.html",
+      "redirected": false,
+      "navError": null,
+      "title": "NOEMA Human Meaning Atlas",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": false,
+        "links": []
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/human-meaning-atlas-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/human-meaning-atlas-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/human-meaning-atlas-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "index.html",
+      "requested": "http://127.0.0.1:8765/site/index.html",
+      "finalUrl": "http://127.0.0.1:8765/site/observatory.html",
+      "redirected": true,
+      "navError": null,
+      "title": "Civilization Observatory V7 · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": "Primary",
+        "visibleCount": 6,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "Atlas",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Compare",
+            "href": "compare.html"
+          },
+          {
+            "text": "Patterns",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Review",
+            "href": "review.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/index-390x844.jpg",
+          "overflowX": 62,
+          "scrollWidth": 452,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/index-768x1024.jpg",
+          "overflowX": 109,
+          "scrollWidth": 877,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/index-1440x900.jpg",
+          "overflowX": 114,
+          "scrollWidth": 1554,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 62
+        },
+        {
+          "viewport": "768x1024",
+          "overflowX": 109
+        },
+        {
+          "viewport": "1440x900",
+          "overflowX": 114
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [
+        "ReferenceError: THREE is not defined"
+      ],
+      "failedRequests": [
+        {
+          "url": "https://www.artic.edu/iiif/2/cb1cbcaa-c788-3327-357e-3e4656659341/full/843,/0/default.jpg",
+          "error": "net::ERR_ABORTED"
+        },
+        {
+          "url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js",
+          "error": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://www.artic.edu/iiif/2/a472b104-a418-2b81-4772-788ce16ec99e/full/843,/0/default.jpg",
+          "error": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://www.artic.edu/iiif/2/11d352ec-dc80-ab36-bac3-6aa690a34017/full/843,/0/default.jpg",
+          "error": "net::ERR_BLOCKED_BY_ORB"
+        }
+      ],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "library.html",
+      "requested": "http://127.0.0.1:8765/site/library.html",
+      "finalUrl": "http://127.0.0.1:8765/site/library.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Library · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": "NOEMA",
+        "visibleCount": 5,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "Atlas",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Analyze",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/library-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/library-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/library-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "lineages.html",
+      "requested": "http://127.0.0.1:8765/site/lineages.html",
+      "finalUrl": "http://127.0.0.1:8765/site/lineages.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Relationship Atlas · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 9,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Relationship graph",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Pattern lab",
+            "href": "patterns.html"
+          },
+          {
+            "text": "Compare",
+            "href": "compare.html"
+          },
+          {
+            "text": "Simulations",
+            "href": "simulations.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/lineages-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/lineages-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/lineages-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "observatory-v6.html",
+      "requested": "http://127.0.0.1:8765/site/observatory-v6.html",
+      "finalUrl": "http://127.0.0.1:8765/site/observatory-v6.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Civilization Observatory V6 · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": "Primary",
+        "visibleCount": 6,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "Atlas",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Compare",
+            "href": "compare.html"
+          },
+          {
+            "text": "Patterns",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Review",
+            "href": "review.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/observatory-v6-390x844.jpg",
+          "overflowX": 70,
+          "scrollWidth": 460,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/observatory-v6-768x1024.jpg",
+          "overflowX": 104,
+          "scrollWidth": 872,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/observatory-v6-1440x900.jpg",
+          "overflowX": 94,
+          "scrollWidth": 1534,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 70
+        },
+        {
+          "viewport": "768x1024",
+          "overflowX": 104
+        },
+        {
+          "viewport": "1440x900",
+          "overflowX": 94
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [
+        "ReferenceError: THREE is not defined"
+      ],
+      "failedRequests": [
+        {
+          "url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js",
+          "error": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://www.artic.edu/iiif/2/a472b104-a418-2b81-4772-788ce16ec99e/full/843,/0/default.jpg",
+          "error": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://www.artic.edu/iiif/2/11d352ec-dc80-ab36-bac3-6aa690a34017/full/843,/0/default.jpg",
+          "error": "net::ERR_BLOCKED_BY_ORB"
+        }
+      ],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "observatory.html",
+      "requested": "http://127.0.0.1:8765/site/observatory.html",
+      "finalUrl": "http://127.0.0.1:8765/site/observatory.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Civilization Observatory V7 · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": "Primary",
+        "visibleCount": 6,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "Atlas",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Compare",
+            "href": "compare.html"
+          },
+          {
+            "text": "Patterns",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Review",
+            "href": "review.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/observatory-390x844.jpg",
+          "overflowX": 75,
+          "scrollWidth": 465,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/observatory-768x1024.jpg",
+          "overflowX": 121,
+          "scrollWidth": 889,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/observatory-1440x900.jpg",
+          "overflowX": 119,
+          "scrollWidth": 1559,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 75
+        },
+        {
+          "viewport": "768x1024",
+          "overflowX": 121
+        },
+        {
+          "viewport": "1440x900",
+          "overflowX": 119
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [
+        "ReferenceError: THREE is not defined"
+      ],
+      "failedRequests": [
+        {
+          "url": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.min.js",
+          "error": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://www.artic.edu/iiif/2/a472b104-a418-2b81-4772-788ce16ec99e/full/843,/0/default.jpg",
+          "error": "net::ERR_BLOCKED_BY_ORB"
+        },
+        {
+          "url": "https://www.artic.edu/iiif/2/11d352ec-dc80-ab36-bac3-6aa690a34017/full/843,/0/default.jpg",
+          "error": "net::ERR_BLOCKED_BY_ORB"
+        }
+      ],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "patterns.html",
+      "requested": "http://127.0.0.1:8765/site/patterns.html",
+      "finalUrl": "http://127.0.0.1:8765/site/patterns.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Patterns · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 9,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Relationship graph",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Pattern lab",
+            "href": "patterns.html"
+          },
+          {
+            "text": "Compare",
+            "href": "compare.html"
+          },
+          {
+            "text": "Simulations",
+            "href": "simulations.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/patterns-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/patterns-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/patterns-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "religion-decomposition.html",
+      "requested": "http://127.0.0.1:8765/site/religion-decomposition.html",
+      "finalUrl": "http://127.0.0.1:8765/site/religion-decomposition.html",
+      "redirected": false,
+      "navError": null,
+      "title": "NOEMA Religion Decomposition",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 0,
+        "links": []
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/religion-decomposition-390x844.jpg",
+          "overflowX": 72,
+          "scrollWidth": 462,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/religion-decomposition-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/religion-decomposition-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 72
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "research-health.html",
+      "requested": "http://127.0.0.1:8765/site/research-health.html",
+      "finalUrl": "http://127.0.0.1:8765/site/research-health.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Research Health · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 7,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Research hub",
+            "href": "research.html"
+          },
+          {
+            "text": "Sources & review",
+            "href": "sources-v1.html"
+          },
+          {
+            "text": "Research health",
+            "href": "research-health.html"
+          },
+          {
+            "text": "Automation",
+            "href": "automation-pulse.html"
+          },
+          {
+            "text": "DRH source",
+            "href": "drh.html"
+          },
+          {
+            "text": "Pulotu source",
+            "href": "religion-decomposition.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/research-health-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/research-health-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/research-health-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "research.html",
+      "requested": "http://127.0.0.1:8765/site/research.html",
+      "finalUrl": "http://127.0.0.1:8765/site/research.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Research · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": "NOEMA",
+        "visibleCount": 5,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "Atlas",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Analyze",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/research-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/research-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/research-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "review.html",
+      "requested": "http://127.0.0.1:8765/site/review.html",
+      "finalUrl": "http://127.0.0.1:8765/site/review.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Review Queue · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": false,
+        "links": []
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/review-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/review-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/review-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "rituals.html",
+      "requested": "http://127.0.0.1:8765/site/rituals.html",
+      "finalUrl": "http://127.0.0.1:8765/site/rituals.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Rituals · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 10,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Browse library",
+            "href": "library.html"
+          },
+          {
+            "text": "Gods & spirits",
+            "href": "gods.html"
+          },
+          {
+            "text": "Belief systems",
+            "href": "belief-systems.html"
+          },
+          {
+            "text": "Rituals",
+            "href": "rituals.html"
+          },
+          {
+            "text": "Altered states",
+            "href": "altered-states.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/rituals-390x844.jpg",
+          "overflowX": 276,
+          "scrollWidth": 666,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/rituals-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/rituals-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 276
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "simulations.html",
+      "requested": "http://127.0.0.1:8765/site/simulations.html",
+      "finalUrl": "http://127.0.0.1:8765/site/simulations.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Simulations · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 9,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Relationship graph",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Pattern lab",
+            "href": "patterns.html"
+          },
+          {
+            "text": "Compare",
+            "href": "compare.html"
+          },
+          {
+            "text": "Simulations",
+            "href": "simulations.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/simulations-390x844.jpg",
+          "overflowX": 0,
+          "scrollWidth": 390,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/simulations-768x1024.jpg",
+          "overflowX": 0,
+          "scrollWidth": 768,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/simulations-1440x900.jpg",
+          "overflowX": 0,
+          "scrollWidth": 1440,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    },
+    {
+      "file": "sources-v1.html",
+      "requested": "http://127.0.0.1:8765/site/sources-v1.html",
+      "finalUrl": "http://127.0.0.1:8765/site/sources-v1.html",
+      "redirected": false,
+      "navError": null,
+      "title": "Sources · NOEMA",
+      "refresh": null,
+      "canonical": null,
+      "nav": {
+        "present": true,
+        "ariaLabel": null,
+        "visibleCount": 7,
+        "links": [
+          {
+            "text": "Explore",
+            "href": "explore.html"
+          },
+          {
+            "text": "World",
+            "href": "human-meaning-atlas.html"
+          },
+          {
+            "text": "Connections",
+            "href": "lineages.html"
+          },
+          {
+            "text": "Library",
+            "href": "library.html"
+          },
+          {
+            "text": "Research",
+            "href": "research.html"
+          },
+          {
+            "text": "Research hub",
+            "href": "research.html"
+          },
+          {
+            "text": "Sources & review",
+            "href": "sources-v1.html"
+          },
+          {
+            "text": "Research health",
+            "href": "research-health.html"
+          },
+          {
+            "text": "Automation",
+            "href": "automation-pulse.html"
+          },
+          {
+            "text": "DRH source",
+            "href": "drh.html"
+          },
+          {
+            "text": "Pulotu source",
+            "href": "religion-decomposition.html"
+          }
+        ]
+      },
+      "shots": [
+        {
+          "viewport": "390x844",
+          "file": "screenshots/sources-v1-390x844.jpg",
+          "overflowX": 146,
+          "scrollWidth": 536,
+          "clientWidth": 390
+        },
+        {
+          "viewport": "768x1024",
+          "file": "screenshots/sources-v1-768x1024.jpg",
+          "overflowX": 186,
+          "scrollWidth": 954,
+          "clientWidth": 768
+        },
+        {
+          "viewport": "1440x900",
+          "file": "screenshots/sources-v1-1440x900.jpg",
+          "overflowX": 119,
+          "scrollWidth": 1559,
+          "clientWidth": 1440
+        }
+      ],
+      "horizontalOverflow": [
+        {
+          "viewport": "390x844",
+          "overflowX": 146
+        },
+        {
+          "viewport": "768x1024",
+          "overflowX": 186
+        },
+        {
+          "viewport": "1440x900",
+          "overflowX": 119
+        }
+      ],
+      "consoleErrors": [],
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "brokenNavLinks": []
+    }
+  ]
+}
