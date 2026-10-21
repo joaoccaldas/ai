@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install image-audit test dependency
+        run: python -m pip install --disable-pip-version-check Pillow==13.0.0
       - name: Validate project contract
         run: python scripts/validate_project.py
       - name: Regenerate M0 outputs
