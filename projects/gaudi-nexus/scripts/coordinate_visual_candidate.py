@@ -23,6 +23,7 @@ from studio.scene_kit.export import export_glb
 
 p=argparse.ArgumentParser()
 p.add_argument('prototype');p.add_argument('output')
+p.add_argument('--realism-study',action='store_true')
 a=p.parse_args(sys.argv[sys.argv.index('--')+1:])
 source=Path(bpy.data.filepath);before=snapshots()
 prep=json.loads(Path(str(source)+'.receipt.json').read_text())
@@ -217,6 +218,10 @@ for bar in ('Hard','Civic'):
 
 from coordinate_civic_landscape import apply as apply_civic_landscape
 civic_landscape=apply_civic_landscape(coll,wood,steel,stone,Path(a.output).resolve().parent/'landscape')
+realism=None
+if a.realism_study:
+    from coordinate_realism import apply as apply_realism
+    realism=apply_realism(coll,anchor)
 
 # Actual stair sample headroom against imported slabs and roof, including landings.
 bpy.context.view_layer.update();headroom=[]
@@ -260,6 +265,7 @@ assert all(_post_export.get(n)==h for n,h in before.items())
 bpy.ops.wm.save_as_mainfile(filepath=str(out))
 prep.update(candidate_sha256=hashlib.sha256(out.read_bytes()).hexdigest())
 prep['architecture_coordination']={'status':'COORDINATED_DESIGN_CANDIDATE_NOT_CANONICAL',
+    'realism_study':realism,
     'civic_landscape':civic_landscape,
     'finished_ground_datum_m':ground_datum,'ground_separation_from_plaza_m':.005,
     'prototype_sha256':coord['blend_sha256'],'programme_category_areas_m2':coord['programme_category_areas_m2'],

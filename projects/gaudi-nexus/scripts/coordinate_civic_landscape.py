@@ -153,11 +153,19 @@ def apply(collection,wood,steel,stone,output):
     def xy(p):return (610+p[0]*6,470-p[1]*6)
     svg=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000"><rect width="1200" height="1000" fill="#f4f2ea"/>',
          '<g font-family="sans-serif" fill="#263b32"><text x="55" y="45" font-size="27">Living Threshold / civic landscape study</text>',
-         '<text x="55" y="73" font-size="15">Scene geometry plan · schematic canopy circles · not a final competition image</text></g>']
+         '<text x="55" y="73" font-size="15">Scene footprint envelopes and routes · schematic canopies · not a final competition image</text></g>']
     def polygon(points,color):
         return '<polygon points="'+' '.join(f'{x:.2f},{y:.2f}' for x,y in points)+f'" fill="{color}"/>'
     svg.append(polygon([xy(plaza.matrix_world@v.co) for v in plaza.data.vertices],'#dedbd0'))
     for obj in (paths,*[o for o in new if o.name.startswith(('CivicGarden_','CivicTable_'))]):
+        if obj.name.startswith('CivicGarden_'):
+            # A plan needs a readable footprint, not thousands of projected
+            # herb blades. Preserve the real mesh's projected envelope.
+            from mathutils.geometry import convex_hull_2d
+            points=list({tuple(round(c,5) for c in xy(obj.matrix_world@v.co)) for v in obj.data.vertices})
+            hull=convex_hull_2d([Vector(p) for p in points])
+            svg.append(polygon([points[i] for i in hull],'#a4a58c'))
+            continue
         for face in obj.data.polygons:
             if face.normal.z>.4:
                 color=('#a4a58c' if obj.name.startswith('CivicGarden') else '#ad8b61')
