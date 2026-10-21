@@ -82,7 +82,8 @@ def comparison(output,baseline,views=None):
             if name not in views:
                 import re
                 page=re.sub(r'<a href="#'+name+r'">[^<]+</a>','',page)
-        page=page.replace('Before · preserved V6','Before · prior candidate').replace('same cameras.','same cameras. This page covers the selected refinement views only.')
+        if not labels:page=page.replace('Before · preserved V6','Before · prior candidate')
+        page=page.replace('same cameras.','same cameras. This page covers the selected refinement views only.')
     if not (output/'RESEARCH.json').is_file() and (output.parent/'RESEARCH.json').is_file():
         page=page.replace('href="RESEARCH.json"','href="../RESEARCH.json"')
     if (output/'A1-alpha.svg').is_file():
