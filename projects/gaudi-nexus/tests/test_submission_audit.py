@@ -30,5 +30,9 @@ class SubmissionAudit(unittest.TestCase):
         issues=module.inspect(path,15,participant_number='123')['issues']
         self.assertIn('filename must contain only the participant order number',issues)
         self.assertTrue(any('metadata' in x for x in issues))
+    def test_working_cap_rejects_board_between_conflicting_official_limits(self):
+        path=self.root/'123.jpg';Image.new('RGB',(594,841)).save(path)
+        with path.open('ab') as stream:stream.write(b'\0'*(10_500_000-path.stat().st_size))
+        self.assertIn('file exceeds 10 MB',module.audit(path,participant_number='123')['boards']['A1']['issues'])
 
 if __name__=='__main__':unittest.main()

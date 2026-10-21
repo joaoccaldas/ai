@@ -1,0 +1,132 @@
+# Civic visual review
+
+21 October 2026. Agent-authored design-development review; no independent jury,
+owner, physical-device or construction acceptance.
+
+## Reuse decision and requirements
+
+Extend `studio/scene_kit/market.py`, `materials.py` and the existing Gaudí
+`coordinate_visual_candidate.py` / remote-render workflow. Keep the municipal
+source `2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875`,
+the 2,090 prepared non-camera object signatures and the three baseline cameras.
+No parallel renderer, prop library or public website was created.
+
+Hub discovery/preflight was consulted; selected evidence was fetched before use:
+`628d206caf7f9642e7f46575fbaefb07f39c4cafb7704bc1ce2e28f6790a30cb`
+(remote pipeline lead),
+`78e022c9418ab81fa490994b7a67673c68d401261fdc0d55a61a0224fee2e301`
+(historical V3 pixel failure), and
+`f975cd56a48c1e965532d47b9d25724342492b7d616b4f6c9cee72e6547c2b7b`
+(existing stalls/crates). Historical reports were checked against current code,
+V6 artifacts and newly generated geometry rather than treated as instructions.
+The selected shared components are already implemented; no new package or paid
+service is needed. The company 3D lookup failed validation on unrelated records;
+this coverage gap was preserved, with no silent fallback. The selected research
+intake distinguishes parabolic equal-horizontal-load models from catenaries,
+portable PBR approximations from procedural Cycles materials, and measurements
+from quality acceptance.
+
+The [current organizer FAQ](https://archademy.ai/faq/) permits a flat-site
+assumption and excludes planning codes/slopes/subsurface infrastructure from the
+conceptual competition. The obsolete topography prerequisite was removed from
+the current source manifest and retained as a superseded historical blocker.
+This does not promote the separate municipal scene or certify construction.
+The FAQ states a 10 MB A1 cap while the homepage/earlier brief state 15 MB;
+the submission auditor now enforces the stricter 10 MB working cap. Original
+requirements remain preserved alongside the dated clarification. The homepage
+still lists 16 December 2026, 23:59 GMT-7. Final participant-area checks remain.
+
+## Design changes and purpose
+
+| Change | Why it serves the brief | Remaining limit |
+| --- | --- | --- |
+| Metre-scale stone, timber and linen; lime soffit | Make durable civic materials and human scale legible | Procedural response; not a physical material sample |
+| Removable stall shade/signboard and protective front ribs | Distinguish traders, tame the repeated empty frames, express replaceable equipment | Designed cosine shade; not simulated cloth; named traders are hypothetical |
+| Proposed timber soffit baffles | Give the flat lower floor an inhabitable ceiling rhythm | No acoustic performance is claimed |
+| Fewer close illustrative figures and less orange pendant light | Keep the market and its aisle as the subject | Entourage remains schematic |
+| Equal-point-load polygon and inverted compression display | Fit out the interpretation programme with a teachable Gaudí-related rule | Not historical Sagrada geometry, a catenary, or building structural approval |
+
+The 20 fitted stalls, 3.2 m aisle, two independent teaching layouts, eight admin
+workstations, area allocation and upper-floor/stair geometry are retained.
+The new accessories stay within their 2.5 × 2.4 m stall footprint. The display
+is located in the upper Civic interpretation zone, with an additional detail
+camera. Existing arrival/market/plaza cameras, lenses and source geometry remain.
+
+## Baseline, candidate and validation
+
+Baseline: actual V6 run **38057112692**, candidate blend
+`418b504b328c107d707b47101918d7cb8813913123272c455dd735d76bb13f55`.
+Its arrival, market and plaza PNGs and adjacent receipts were downloaded and
+inspected. Current study: `output/civic-visual-20261021/RESEARCH.json` and its
+remote subfolder. Candidate remote run:
+[39542668513](https://github.com/joaoccaldas/ai/actions/runs/39542668513).
+
+Before image review, the declared hypothesis is that material scale, stall
+identity, ceiling rhythm and a quieter foreground improve the same market view.
+The expected winner is the candidate market; `prediction.matched` remains unset
+until actual pixels are assessed. No arbitrary jury score is assigned.
+
+Executed local checks: six meaningful new mesh/behavior checks, including both
+customer orientations, actual emitted-cable equal-load equilibrium, positive
+polygon areas, deterministic geometry, invalid parameter rejection and local-anchor export without source movement. The two
+new GLBs are 27,484 and 53,764 bytes; both have zero Khronos errors and warnings.
+Those are fixture-material validation exports. The separate final authored package retains the actual palette and sign geometry (75,500-byte identity and 54,928-byte table); both authored GLBs also pass with zero errors/warnings and carry explicit inspector directions. All portable materials remain constant PBR approximations. Geometry preparation preserves all 2,090
+incoming non-camera signatures and passes sampled clearances for the three old
+views plus the new detail view. No Mac Blender image render was invoked.
+
+The existing project/release tests pass (26 project tests plus four release-gate
+tests after the stricter-size regression). The source contract validator passes.
+The release audit still rejects unapproved site identity, hero/board/rights and
+other open evidence. A missing realism-playbook path was reconciled against the
+historical file in another worktree and replaced with current guidance; old
+shader-enrichment suggestions are not authority to bypass current guards.
+
+## First real pixel review and refinement
+
+Remote run 39542668513 completed successfully. All four PNG hashes match their
+receipts and the same prepared scene `d3c97de524c5510de4fbd4321759bac4c0f81a16817e032dab04b6e78629e5eb`.
+All three baseline camera matrices/lenses were also compared directly between
+Blender files, not inferred only from captions. The market is a clear
+agent-judged improvement: coherent ceiling rhythm, identifiable traders, tactile
+fronts and paving, with reduced foreground distraction. The arrival is largely
+unchanged; the simplified cathedral remains the dominant realism limitation.
+The new method display is physically present but too dark against its background.
+It is rejected as a final exhibit image despite passing pixel range.
+
+V1 render seconds: arrival 90.70, market 199.57, plaza 71.73, method 241.96.
+These are one-run observations, not a benchmark or claimed speedup. The new
+market costs more than the preserved baseline; quality changes do not establish
+render efficiency. Raw V1 frames and the successful run remain preserved.
+
+Pixel inspection also found hard rectangular brown floor marks. Source-native
+ray probes identify `WetPatch_1` / `WetPaving`, superseded wet-scene props left
+above the new dry floor. The V2 source retains these originals but hides them.
+It adds actual ceiling-mounted accent lights to the method exhibit, keeping the
+sun, exposure and camera fixed. V2 is a bounded market/display rerender; the V1
+wide views must not be silently relabelled as V2 final-scene evidence.
+
+
+## Drawing-led finding: plaza edge fit remains open
+
+The new geometry-derived projections expose a useful problem that the distant
+arrival render conceals. A 10 × 5 sample grid across each actual ground slab
+finds one Hard point and four Civic points outside the current plaza surface.
+The sampled coordinates are retained in `plaza-contact-sample.json`. This is
+source-surface evidence, not a municipal legal-boundary determination. The
+candidate therefore must not claim fully resolved plaza fit. Moving both bars
+inward without checking the protected F3 corridor, stair cores and programme
+would trade one problem for another; reconcile the exact edge/core geometry in
+its owning coordination source before promotion. Original sources are retained.
+The review drawings include actual kitchens/fixtures and equipment sections,
+with schematic planting symbols explicitly labelled.
+
+## Next competition work
+
+The actual full-plaza plan, section, one dominant hero and compact AI
+option/rejection/evidence diagram remain the A1 priorities. The basic municipal
+massing cannot provide sculptural cathedral realism. Keep that source limit
+visible, and do not fill it with invented geometry or an unrelated photograph.
+The optional stall A4 still needs its proposed transformation, service interface
+and accessible approach resolved; these new identities do not implement that
+larger transformable stall contract. Promote only reviewed derivatives, with
+rights and independent owner/visual gates explicit.

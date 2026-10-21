@@ -2,7 +2,7 @@
 import hashlib,json,math,sys
 from pathlib import Path
 import bpy
-from mathutils import Vector
+from mathutils import Vector,Matrix
 
 ROOT=Path(__file__).resolve().parents[2];sys.path.insert(0,str(ROOT))
 from studio.scene_kit.market import stall,stall_identity,funicular_table
@@ -48,6 +48,17 @@ for name,objects in [('stall-identity',[assets[1]]),('funicular-table',[model])]
     record=export_glb(out/(name+'.glb'),objects)
     record.update(id=objects[0]['asset_id'],anchor='floor_centre',units='metres',source_axes='Z up',export_axes='Y up')
     records.append(record)
+# A placed room object must export at its declared local anchor without moving
+# its source. Check the GLB node transform as well as the source matrix.
+import struct
+model.matrix_world=Matrix.Translation(Vector((12,7,3)));original=model.matrix_world.copy()
+anchor_file=out/'anchor-check.glb'
+export_glb(anchor_file,[model],world_to_asset=original.inverted())
+assert model.matrix_world==original
+raw=anchor_file.read_bytes();length=struct.unpack_from('<I',raw,12)[0]
+document=json.loads(raw[20:20+length])
+assert all(sum(abs(v) for v in n.get('translation',[0,0,0]))<1e-6 for n in document['nodes'])
+checks.append('placed_asset_exports_at_local_anchor_without_moving_source')
 report={'status':'GEOMETRY_CHECKS_PASS_VISUAL_REVIEW_PENDING','checks':checks,'assets':records,
     'source_sha256':hashlib.sha256((Path(__file__).parent/'market.py').read_bytes()).hexdigest(),
     'blender':bpy.app.version_string,'render_invocations':0,

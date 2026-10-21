@@ -19,6 +19,7 @@ from studio.scene_kit.materials import surface
 from studio.scene_kit.market import stall,produce_display,stall_identity,funicular_table
 from studio.scene_kit.entourage import person
 from studio.scene_kit.visibility import render_geometry,camera_clearance
+from studio.scene_kit.export import export_glb
 
 p=argparse.ArgumentParser()
 p.add_argument('prototype');p.add_argument('output')
@@ -34,7 +35,7 @@ for name in ('ARCHITECTURE','MARKET','21_PROGRAM_REQUIRED'):
 prefixes=('F_','C_Crate','B_Basket','Br_','SF_','FH_','HG_','H_','PendantLamp_',
           'PendantLight_','Citizen_','VIS_MarketCitizen_','SunMarker_','HeroWashLine_',
           'MarketThresholdInlay_','PaveX_','PaveY_','TraderA_','BuyerA_','ResidentOlder_',
-          'Parent_','Child_','Cyclist_','VisitorA_','VisitorB_','HeroVendor')
+          'Parent_','Child_','Cyclist_','VisitorA_','VisitorB_','HeroVendor','WetPatch_')
 for obj in bpy.context.scene.objects:
     if obj.name.startswith(prefixes):obj.hide_render=True;hidden.append(obj.name)
 with bpy.data.libraries.load(str(prototype),link=False) as (src,dst):
@@ -151,6 +152,23 @@ model.matrix_world=transforms['Civic']@Matrix.Translation(Vector((-7,0,4.5)))
 identity_assets.append(model)
 label('CoordInterpretationCaption','LOAD  /  INVERT  /  BUILD',
     model.matrix_world@Matrix.Translation(Vector((0,-.556,.94)))@Matrix.Rotation(math.pi/2,4,'X'),.075)
+# Pixel review found the first display too dark against the upper screens.
+# Mount actual accent fixtures beneath the declared parabolic roof; keep the
+# sun/exposure/camera fixed. This is artistic lighting, not measured illuminance.
+fixture=MeshBuilder()
+for i,x in enumerate((-7.65,-6.35)):
+    y=-1.4;roof_z=8.3+1.35*(1-(y/4.5)**2)
+    fixture.tube([(x,y,roof_z-.02),(x,y,9.10)],[.012,.012],0,8)
+    fixture.ellipsoid((x,y,9.06),(.075,.075,.055),0,6,12)
+    light_data=bpy.data.lights.new(f'CoordMethodSpot_{i}','SPOT')
+    light_data.energy=240;light_data.color=(1,.92,.80);light_data.shadow_soft_size=.10
+    light_data.spot_size=math.radians(58);light_data.spot_blend=.60
+    light=bpy.data.objects.new(light_data.name,light_data);coll.objects.link(light)
+    light.location=transforms['Civic']@Vector((x,y,8.99))
+    target=transforms['Civic']@Vector((-7+(x+7)*.5,0,5.95))
+    light.rotation_euler=(target-light.location).to_track_quat('-Z','Y').to_euler()
+mount=fixture.object('CoordMethodCeilingFixtures',coll,[dark],False)
+mount.matrix_world=transforms['Civic']
 # Additional detail view is separate from the unchanged baseline cameras.
 cd=bpy.data.cameras.new('METHOD_DETAIL');cd.lens=44;cd.clip_end=1500
 cam=bpy.data.objects.new('METHOD_DETAIL',cd);coll.objects.link(cam)
@@ -222,6 +240,20 @@ with render_geometry(bpy.context.scene) as dg:
 assert all(r['status']=='PASS_SAMPLED_CLEARANCE' for r in clearance),clearance
 after=snapshots();assert all(after.get(n)==h for n,h in before.items())
 out=Path(a.output).resolve();out.parent.mkdir(parents=True,exist_ok=True)
+asset_dir=out.parent/'authored-assets';asset_dir.mkdir(exist_ok=True)
+asset_records=[]
+for asset_id,objects,transform in [
+    ('market/removable-shade-and-identity/v1',identity_assets[:2],identity_assets[0].matrix_world.inverted()),
+    (model['asset_id'],[model],model.matrix_world.inverted())]:
+    filename='stall-identity.glb' if asset_id.startswith('market/') else 'funicular-table.glb'
+    record=export_glb(asset_dir/filename,objects,world_to_asset=transform)
+    record.update(id=asset_id,file=filename,anchor='floor_centre',source_units='metres',source_axes='Z up',export_axes='Y up')
+    asset_records.append(record)
+(asset_dir/'manifest.json').write_text(json.dumps({'status':'AUTHORED_MATERIAL_PBR_APPROXIMATION_CANDIDATES',
+    'assets':asset_records,'render_invocations':0,'source_candidate':'../'+out.name,
+    'limits':['Procedural texture detail is not baked; review the actual destination.']},indent=2)+'\n')
+_post_export=snapshots()
+assert all(_post_export.get(n)==h for n,h in before.items())
 bpy.ops.wm.save_as_mainfile(filepath=str(out))
 prep.update(candidate_sha256=hashlib.sha256(out.read_bytes()).hexdigest())
 prep['architecture_coordination']={'status':'COORDINATED_DESIGN_CANDIDATE_NOT_CANONICAL',
@@ -231,10 +263,11 @@ prep['architecture_coordination']={'status':'COORDINATED_DESIGN_CANDIDATE_NOT_CA
     'certified_gfa_m2':None,'kitchens':kitchens,'administration_desks':desks,'fitted_stalls':20,
     'minimum_sampled_stair_headroom_m':min(headroom),'camera_clearance':clearance,
     'prepared_source_signatures_preserved':len(before),'hidden_superseded_objects':hidden,
-    'visual_refinement':{'version':'2026-10-21-market-v1','stall_identities':20,
+    'visual_refinement':{'version':'2026-10-21-market-v2','stall_identities':20,
         'method_display':model['asset_id'],'changes':['metre-scale mineral/timber/fabric surfaces',
         'removable shade and English stall signs','slatted counter protection',
-        'market soffit baffles','foreground illustrative figures reduced','equal-point-load interpretation table'],
+        'market soffit baffles','foreground illustrative figures reduced','equal-point-load interpretation table',
+        'source-mounted display accent lighting','superseded rectangular wet patches retained but hidden'],
         'baseline_cameras_unchanged':True,'new_detail_camera':'METHOD_DETAIL',
         'limits':['No acoustic, hygienic, structural or accessibility approval.',
                   'Municipal massing remains low-detail; no invented cathedral detail.']},

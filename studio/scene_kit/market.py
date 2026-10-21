@@ -95,6 +95,7 @@ def stall_identity(name, collection, materials, width=2.5, depth=2.4, front=1):
     obj['asset_id']='market/removable-shade-and-identity/v1'
     obj['footprint_m']=[width,depth];obj['anchor']='floor_centre'
     obj['customer_front_local_y']=front
+    obj['inspection_direction']=[0,0,-front]  # glTF axes: source +Y -> -Z
     obj['representation']='design-development; cosine shade, not cloth simulation'
     return obj
 
@@ -131,6 +132,7 @@ def funicular_table(name, collection, materials):
     obj=m.object(name,collection,materials,False)
     obj['asset_id']='interpretation/equal-point-load-funicular-table/v1'
     obj['anchor']='floor_centre';obj['footprint_m']=[2.5,1.1]
+    obj['inspection_direction']=[0,0,1]
     obj['model']='discrete equal vertical loads at equal horizontal spacing'
     obj['funicular_cable_vertex_range']=[cable_start,cable_start+13*8]
     obj['funicular_ring_vertices']=8

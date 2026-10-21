@@ -25,7 +25,7 @@ offline render is not a mobile performance pass.
 | vegetation | seeded holm oak, branch hierarchy, leaf variation, shared instances | visual botanical approximation, hero/low detail choices |
 | entourage | civic figures with tapered limbs, shoes, hair, bags | architectural entourage, not scanned people |
 | lighting | solar direction, daylight, Metal/CPU Cycles presets | location/date/time/UTC offset explicit |
-| market | open serving frames, cabinets, shelves, fittings | dimensions and front orientation explicit |
+| market | serving frames, cabinets, shelves, removable shade/signboard and an equal-point-load teaching table | floor-centred metres; customer front and declared load model explicit |
 | landscape | seeded herbs, lavender, stone curbs, timber seating | proposed planting; caller checks placement and circulation |
 | collision | separate low-poly static trunk, seat and stall profiles | suggested friction/restitution; engine integration remains caller responsibility |
 | visibility | sampled camera clearance with render visibility and restored viewport state | catches near obstructions; does not prove the entire composition is clear |
@@ -82,5 +82,28 @@ the generator's self-report.
 
 Blender 5.2.2 uses Principled `Anisotropic`, sky `MULTIPLE_SCATTERING`, and
 `aerosol_density` names; probe the installed node API before porting an older script.
+
+## Market detail and local-anchor exports
+
+`check_market.py -- NEW_OUTPUT` checks the actual new meshes: footprint bounds
+for both serving orientations, finite/positive-area faces, deterministic geometry,
+invalid parameters, emitted hanging-polygon equilibrium and a placed-object
+export that returns to its local anchor without moving its source. It never
+renders. The polygon uses equal vertical point loads at equal horizontal spacing;
+do not describe it as a catenary or as verified building/historical geometry.
+
+`export_glb(..., world_to_asset=anchor.matrix_world.inverted())` transforms only
+the temporary export copies. Pass the exact component anchor, not an assumed
+world origin. Named serving orientation is recorded in glTF axes for the shared
+inspector. Export geometry checks can use fixture materials; reusable delivery
+assets must also retain the actual authored palette. The Gaudí coordinator now
+exports its authored components separately and retains the source signatures.
+Both exports remain constant PBR approximations until procedural textures are
+baked and reviewed in their destination.
+
+See `projects/gaudi-nexus/docs/CIVIC_VISUAL_REVIEW.md` for the matched-camera
+study, source limitations and new plaza-edge finding. A readable plan is useful
+because it can reveal a spatial conflict hidden in an attractive distant view;
+it is not proof that the geometry is accepted.
 
 `check_export.py -- /path/to/fixture.glb` verifies object material overrides, shared mesh reuse, source preservation and restored selection without rendering. Modified or shape-key meshes export separately; repeated unmodified meshes with identical material assignments share one mesh.

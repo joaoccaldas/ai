@@ -5,6 +5,12 @@ on:
     branches: [codex/gaudi-visual-quality-20261005]
     paths: ['.github/workflows/gaudi-remote-visual-pilot.yml']
   workflow_dispatch:
+    inputs:
+      focus:
+        description: 'Render all views or the bounded market/display refinement'
+        type: choice
+        options: [all, market-method]
+        default: all
 
 permissions:
   contents: read
@@ -21,6 +27,7 @@ jobs:
     env:
       SOURCE_SHA: 2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875
       PILOT_DIR: projects/gaudi-nexus/output/remote-pilot
+      REVIEW_FOCUS: ${{ inputs.focus }}
     steps:
       - uses: actions/checkout@v4
       - name: Retrieve the pinned municipal survey artifact
@@ -63,6 +70,7 @@ jobs:
         run: |
           blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/scripts/inspect_program_geometry.py -- "$PILOT_DIR/program-geometry.json" > "$PILOT_DIR/program-audit.log" 2>&1
       - name: Render arrival candidate on the remote runner
+        if: inputs.focus != 'market-method'
         run: |
           set -o pipefail
           timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- HERO_ARRIVAL "$PILOT_DIR/arrival.png" --width 960 --height 720 --samples 32 2>&1 | tee "$PILOT_DIR/arrival.log"
@@ -71,13 +79,14 @@ jobs:
           set -o pipefail
           timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- MARKET_AISLE "$PILOT_DIR/market.png" --width 960 --height 600 --samples 40 2>&1 | tee "$PILOT_DIR/market.log"
       - name: Render plaza from the same prepared scene
+        if: inputs.focus != 'market-method'
         run: |
           set -o pipefail
           timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- PLAZA_OBLIQUE "$PILOT_DIR/plaza.png" --width 960 --height 600 --samples 24 2>&1 | tee "$PILOT_DIR/plaza.log"
       - name: Render the structural interpretation display
         run: |
           set -o pipefail
-          timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- METHOD_DETAIL "$PILOT_DIR/method.png" --width 960 --height 720 --samples 40 2>&1 | tee "$PILOT_DIR/method.log"
+          timeout 6m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- METHOD_DETAIL "$PILOT_DIR/method.png" --width 960 --height 720 --samples 40 2>&1 | tee "$PILOT_DIR/method.log"
       - name: Check all views share one source and candidate
         run: |
           python3 - <<'PY'
@@ -85,11 +94,12 @@ jobs:
           from pathlib import Path
           root=Path(os.environ['PILOT_DIR'])
           prep=json.loads((root/'candidate.blend.receipt.json').read_text())
-          for name in ['arrival','market','plaza','method']:
+          views=['market','method'] if os.environ.get('REVIEW_FOCUS')=='market-method' else ['arrival','market','plaza','method']
+          for name in views:
               r=json.loads((root/(name+'.png.receipt.json')).read_text())
               assert r['source_sha256']==os.environ['SOURCE_SHA']
               assert r['candidate_sha256']==prep['candidate_sha256'] and r['candidate_unchanged']
-          (root/'pilot-completion.json').write_text(json.dumps({'status':'TECHNICAL_PILOT_COMPLETE_VISUAL_REVIEW_PENDING','views':4,'source_sha256':os.environ['SOURCE_SHA'],'candidate_sha256':prep['candidate_sha256']},indent=2))
+          (root/'pilot-completion.json').write_text(json.dumps({'status':'TECHNICAL_PILOT_COMPLETE_VISUAL_REVIEW_PENDING','views':len(views),'view_names':views,'source_sha256':os.environ['SOURCE_SHA'],'candidate_sha256':prep['candidate_sha256']},indent=2))
           PY
       - name: Preserve images, source receipts and failure logs
         if: always()

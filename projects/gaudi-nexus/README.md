@@ -2,7 +2,25 @@
 
 Evidence-driven computational architecture entry for the 2026 AI × Gaudí competition.
 
-## Current status — 2026-10-06
+## Current visual study — 21 October 2026
+
+The existing two-level municipal-context candidate is being refined on
+`polish/gaudi-civic-visual-20261021`: metre-scale materials, removable stall
+identity/shade components, a quieter foreground, proposed soffit baffles and a
+physical load/inversion exhibit. All original context geometry and baseline
+cameras are preserved. See `docs/CIVIC_VISUAL_REVIEW.md` for exact sources,
+comparisons, validation and unresolved quality decisions. No candidate is
+competition-approved from a build or pixel-health check alone.
+
+The current [organizer FAQ](https://archademy.ai/faq/) permits a flat site and
+excludes planning/building-code/subsurface constraints from this conceptual
+competition. Survey work is therefore optional reference, not a prerequisite for
+visual development. Actual construction claims remain separate. A1 file limits
+conflict (FAQ 10 MB; homepage/earlier brief 15 MB); the working delivery cap is
+10 MB, retaining both source statements for final verification. The homepage
+currently gives 16 December, 23:59 GMT-7. No registration or submission was made.
+
+## Historical status — 2026-10-06
 
 **Primary scheme:** Living Threshold A+  
 **Live 3D Jutsu scene:** Rev 16 — 1,601 objects / 1,500 meshes  
