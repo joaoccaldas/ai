@@ -215,6 +215,9 @@ for bar in ('Hard','Civic'):
     o=fins.object(bar+'_CoordCeramicScreens',coll,ceramics,False);o.matrix_world=transforms[bar]
     o=services.object(bar+'_CoordGutters',coll,[steel],False);o.matrix_world=transforms[bar]
 
+from coordinate_civic_landscape import apply as apply_civic_landscape
+civic_landscape=apply_civic_landscape(coll,wood,steel,stone,Path(a.output).resolve().parent/'landscape')
+
 # Actual stair sample headroom against imported slabs and roof, including landings.
 bpy.context.view_layer.update();headroom=[]
 for core in coord['cores']:
@@ -257,6 +260,7 @@ assert all(_post_export.get(n)==h for n,h in before.items())
 bpy.ops.wm.save_as_mainfile(filepath=str(out))
 prep.update(candidate_sha256=hashlib.sha256(out.read_bytes()).hexdigest())
 prep['architecture_coordination']={'status':'COORDINATED_DESIGN_CANDIDATE_NOT_CANONICAL',
+    'civic_landscape':civic_landscape,
     'finished_ground_datum_m':ground_datum,'ground_separation_from_plaza_m':.005,
     'prototype_sha256':coord['blend_sha256'],'programme_category_areas_m2':coord['programme_category_areas_m2'],
     'programme_split_pct':coord['programme_split_pct'],'measured_slab_surface_m2':coord['measured_horizontal_slab_area_m2'],

@@ -7,9 +7,9 @@ on:
   workflow_dispatch:
     inputs:
       focus:
-        description: 'Render all views or the bounded market/display refinement'
+        description: 'Bounded review: all views, market/display, or plaza/arrival'
         type: choice
-        options: [all, market-method]
+        options: [all, market-method, plaza-arrival]
         default: all
 
 permissions:
@@ -23,7 +23,7 @@ concurrency:
 jobs:
   pilot:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: ${{ inputs.focus == 'plaza-arrival' && 8 || 20 }}
     env:
       SOURCE_SHA: 2cef25d126a17cd653422d778367c73561093972fc8eace190114b80a7584875
       PILOT_DIR: projects/gaudi-nexus/output/remote-pilot
@@ -75,6 +75,7 @@ jobs:
           set -o pipefail
           timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- HERO_ARRIVAL "$PILOT_DIR/arrival.png" --width 960 --height 720 --samples 32 2>&1 | tee "$PILOT_DIR/arrival.log"
       - name: Render market from the same prepared scene
+        if: inputs.focus != 'plaza-arrival'
         run: |
           set -o pipefail
           timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- MARKET_AISLE "$PILOT_DIR/market.png" --width 960 --height 600 --samples 40 2>&1 | tee "$PILOT_DIR/market.log"
@@ -84,6 +85,7 @@ jobs:
           set -o pipefail
           timeout 5m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- PLAZA_OBLIQUE "$PILOT_DIR/plaza.png" --width 960 --height 600 --samples 24 2>&1 | tee "$PILOT_DIR/plaza.log"
       - name: Render the structural interpretation display
+        if: inputs.focus != 'plaza-arrival'
         run: |
           set -o pipefail
           timeout 6m blender -b "$PILOT_DIR/candidate.blend" --python-exit-code 1 --python projects/gaudi-nexus/render/render_remote_view.py -- METHOD_DETAIL "$PILOT_DIR/method.png" --width 960 --height 720 --samples 40 2>&1 | tee "$PILOT_DIR/method.log"
@@ -94,7 +96,8 @@ jobs:
           from pathlib import Path
           root=Path(os.environ['PILOT_DIR'])
           prep=json.loads((root/'candidate.blend.receipt.json').read_text())
-          views=['market','method'] if os.environ.get('REVIEW_FOCUS')=='market-method' else ['arrival','market','plaza','method']
+          focus=os.environ.get('REVIEW_FOCUS')
+          views={'market-method':['market','method'],'plaza-arrival':['arrival','plaza']}.get(focus,['arrival','market','plaza','method'])
           for name in views:
               r=json.loads((root/(name+'.png.receipt.json')).read_text())
               assert r['source_sha256']==os.environ['SOURCE_SHA']

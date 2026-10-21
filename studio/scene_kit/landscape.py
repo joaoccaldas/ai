@@ -7,26 +7,30 @@ import random
 from .geometry import MeshBuilder
 
 
-def planted_island(name, collection, materials, seed=910, length=8, width=3):
+def planted_island(name, collection, materials, seed=910, length=8, width=3,
+                   seat_slats=38, tufts=220, grounded=False):
     """One batched mesh: stone curb, soil, slatted seating, herbs and lavender.
 
     Material order: stone, soil, wood, steel, green, silver-green, lavender.
     Ground-contact origin; caller places and rotates the component.
     """
+    if min(length,width)<=0 or seat_slats<2 or tufts<0:
+        raise ValueError('Positive planting dimensions and at least two seat slats required')
     rng=random.Random(seed);m=MeshBuilder();a=length/2;b=width/2
+    base=0 if grounded else .04
     # Low retaining curb, discretised ellipse with outward faces.
     count=96
     for i in range(count):
         t=i*math.tau/count;u=(i+1)*math.tau/count
         p=(a*math.cos(t),b*math.sin(t));q=(a*math.cos(u),b*math.sin(u))
         po=((a+.12)*math.cos(t),(b+.12)*math.sin(t));qo=((a+.12)*math.cos(u),(b+.12)*math.sin(u))
-        m.face([(*p,.04),(*q,.04),(*q,.18),(*p,.18)],0)
-        m.face([(*qo,.04),(*po,.04),(*po,.18),(*qo,.18)],0)
+        m.face([(*p,base),(*q,base),(*q,.18),(*p,.18)],0)
+        m.face([(*qo,base),(*po,base),(*po,.18),(*qo,.18)],0)
         m.face([(*p,.18),(*q,.18),(*qo,.18),(*po,.18)],0)
         m.face([(0,0,.10),(*p,.10),(*q,.10)],1)
     # Independent replaceable timber slats, 460 mm seat height, 550 mm depth.
-    for i in range(38):
-        t=math.pi*.10+i*math.pi*.8/37
+    for i in range(seat_slats):
+        t=math.pi*.10+i*math.pi*.8/(seat_slats-1)
         n=(math.cos(t),math.sin(t));center=((a+.43)*n[0],(b+.43)*n[1],.435)
         tangent=(-math.sin(t),math.cos(t));radial=n
         for z in [.41,.46]:
@@ -35,9 +39,9 @@ def planted_island(name, collection, materials, seed=910, length=8, width=3):
             else:bottom=corners
         m.face(top,2);m.face(bottom[::-1],2)
         for j in range(4):m.face([bottom[j],bottom[(j+1)%4],top[(j+1)%4],top[j]],2)
-        if i%6==0:m.tube([(center[0],center[1],.04),(center[0],center[1],.41)],[.024,.024],3,6)
+        if i%6==0:m.tube([(center[0],center[1],base),(center[0],center[1],.41)],[.024,.024],3,6)
     # Several blade lengths and hues avoid a single flat green mound.
-    for i in range(220):
+    for i in range(tufts):
         t=rng.random()*math.tau;r=math.sqrt(rng.random())*.88
         x=a*r*math.cos(t);y=b*r*math.sin(t)
         for j in range(7):
