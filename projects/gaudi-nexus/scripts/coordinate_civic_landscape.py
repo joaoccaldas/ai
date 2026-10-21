@@ -20,7 +20,8 @@ GROVES=[('Neighbourhood garden',(-22,-22),18,7),
         ('Quiet garden',(37,16),18,7),
         ('Culture garden',(18,34),18,7)]
 ROUTES=[('Daily market',[(0,-47),(-1,-5),(-33,24)],4.8),
-        ('Culture walk',[(-1,-5),(-9,48)],4.8),
+        # Approach the open western civic bay, not the rear teaching-kitchen wall.
+        ('Culture approach',[(-1,-5),(-19.4,37.3)],4.8),
         ('Visitor connection',[(58,0),(-1,-5)],4.8)]
 
 
@@ -47,6 +48,17 @@ def apply(collection,wood,steel,stone,output):
     plaza=bpy.data.objects['Plaza'];inverse=plaza.matrix_world.inverted()
     floor=max((plaza.matrix_world@v.co).z for v in plaza.data.vertices)
     angle=math.radians(44.14);records=[];new=[];tree_instances=[]
+    # Reuse the chair component of the existing cafe family. Six chairs leave
+    # both table ends free for approach; a full accessibility review is separate.
+    import sys,bmesh
+    sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'studio/shared/procedural-assets'))
+    from procassets.public_realm import community_table
+    from procassets.furniture import chair_parts
+    bw,bi=bmesh.new(),bmesh.new();chair_parts(bw,bi)
+    chair_meshes=[]
+    for bm,mat,suffix in ((bw,wood,'wood'),(bi,steel,'steel')):
+        mesh=bpy.data.meshes.new('CivicChair_'+suffix);bm.to_mesh(mesh);bm.free()
+        mesh.materials.append(mat);chair_meshes.append(mesh)
     for i,(title,center,length,width) in enumerate(GROVES):
         tf=Matrix.Translation(Vector((*center,floor)))@Matrix.Rotation(angle,4,'Z')
         bed=planted_island(f'CivicGarden_{i}',collection,[stone,soil,wood,steel,*plants],
@@ -60,17 +72,23 @@ def apply(collection,wood,steel,stone,output):
             tree_instances.extend(objects);new.extend(objects)
         # Compose the maintained community-table builder rather than another
         # furniture library; no dimensions or safety certification are implied.
-        import sys
-        sys.path.insert(0,str(Path(__file__).resolve().parents[3]/'studio/shared/procedural-assets'))
-        from procassets.public_realm import community_table
         bm=community_table(L=3.6,d=.9,h=.76)
         mesh=bpy.data.meshes.new(f'CivicTableMesh_{i}');bm.to_mesh(mesh);bm.free()
         mesh.materials.append(wood);mesh.materials.append(steel)
         ob=bpy.data.objects.new(f'CivicTable_{i}',mesh);collection.objects.link(ob)
         ob.matrix_world=tf@Matrix.Translation(Vector((0,-width/2-2,0)))
         ob['asset_id']='community_table';ob['anchor']='base_centre';new.append(ob)
+        for side in (-1,1):
+            for x in (-1.2,0,1.2):
+                ct=ob.matrix_world@Matrix.Translation(Vector((x,side*.95,0)))@Matrix.Rotation(math.pi if side==1 else 0,4,'Z')
+                for mesh in chair_meshes:
+                    chair=bpy.data.objects.new(f'CivicChair_{i}_{side}_{x}_{mesh.name}',mesh)
+                    collection.objects.link(chair);chair.matrix_world=ct
+                    chair['source_builder']='procassets.furniture.chair_parts'
+                    chair['representation']='cafe chair component reused for civic table study'
+                    new.append(chair)
         records.append({'title':title,'center_m':list(center),'planting_length_width_m':[length,width],
-                        'proposed_trees':3,'community_tables':1,'seat_height_m':.46})
+                        'proposed_trees':3,'community_tables':1,'loose_chairs':6,'seat_height_m':.46})
     bpy.context.view_layer.update()
     # Test actual emitted geometry, including table edges and bench slats.
     checked=0;min_route=float('inf');min_f3=float('inf')
@@ -113,23 +131,29 @@ def apply(collection,wood,steel,stone,output):
     paths=m.object('CivicFlushRouteStudy',collection,[pathmat],False);new.append(paths)
     # Readable public-space programme: leave one open, deliberately unfilled
     # assembly area. It is kept free of new fixtures, not counted as occupancy.
-    report={'status':'PLAZA_DESIGN_STUDY_NOT_FINAL','groves':records,
+    # Check the approach against the actual proposed kitchen geometry, not a
+    # destination name. West civic bay is outside the two kitchen enclosures.
+    civic_tf=bpy.data.objects['Civic_CoordFloor_L0'].matrix_world
+    local=civic_tf.inverted()@Vector((*ROUTES[1][1][-1],floor))
+    assert -16<local.x<-9 and -6.2<local.y<-5
+    report={'status':'PLAZA_DESIGN_STUDY_NOT_FINAL','version':'civic-gardens-v4','groves':records,
         'routes':[{'purpose':n,'points_m':p,'width_m':w} for n,p,w in ROUTES],
         'new_trees':12,'planting_area_ellipse_proxy_m2':sum(math.pi*l*w/4 for _,_,l,w in GROVES),
         'footprint_vertices_checked':checked,'route_support_samples':route_samples,
         'minimum_fixture_clearance_to_route_edge_m':min_route,
         'minimum_new_canopy_clearance_to_F3_axis_m':min_f3,
+        'culture_approach_local_m':list(local),'culture_approach_outside_kitchen_wall':True,
         'source_geometry_preserved':True,'hidden_superseded_proposals':hidden,
         'render_invocations':0,'limits':['Four gardens and proposed mature trees, not surveyed existing trees.',
         'Source plaza polygon is not a legal boundary; inherited building-edge conflicts remain.',
         'Routes are material ribbons; 2 mm offset is not a tested full-world portable clearance.',
         'No annual shade, irrigation, drainage, species, root-volume or accessibility acceptance.',
-        'Tables need loose chairs and accessible approach/detail; no seating capacity asserted.']}
+        'Tables have six reused chairs and free ends; accessible approach/detail remains unapproved.']}
     # A direct geometry projection: intentionally labelled as a plan, not render.
     def xy(p):return (610+p[0]*6,470-p[1]*6)
     svg=['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1000"><rect width="1200" height="1000" fill="#f4f2ea"/>',
          '<g font-family="sans-serif" fill="#263b32"><text x="55" y="45" font-size="27">Living Threshold / civic landscape study</text>',
-         '<text x="55" y="73" font-size="15">Actual scene projection · proposed gardens and circulation · not a final competition image</text></g>']
+         '<text x="55" y="73" font-size="15">Scene geometry plan · schematic canopy circles · not a final competition image</text></g>']
     def polygon(points,color):
         return '<polygon points="'+' '.join(f'{x:.2f},{y:.2f}' for x,y in points)+f'" fill="{color}"/>'
     svg.append(polygon([xy(plaza.matrix_world@v.co) for v in plaza.data.vertices],'#dedbd0'))

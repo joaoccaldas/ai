@@ -84,6 +84,10 @@ def comparison(output,baseline,views=None):
                 page=re.sub(r'<a href="#'+name+r'">[^<]+</a>','',page)
         if not labels:page=page.replace('Before · preserved V6','Before · prior candidate')
         page=page.replace('same cameras.','same cameras. This page covers the selected refinement views only.')
+        if 'plaza' in views and 'market' not in views:
+            page=page.replace('A market for daily life.','Gardens for civic life.')
+            page=page.replace('More tactile stalls, a quieter aisle, and a small exhibit that makes the structural idea visible.',
+                'Four planted gathering areas, reused community furniture and clear approaches organise the shared plaza.')
     if not (output/'RESEARCH.json').is_file() and (output.parent/'RESEARCH.json').is_file():
         page=page.replace('href="RESEARCH.json"','href="../RESEARCH.json"')
     if (output/'A1-alpha.svg').is_file():

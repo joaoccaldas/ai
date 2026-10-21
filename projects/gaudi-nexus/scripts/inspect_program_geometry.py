@@ -8,6 +8,16 @@ from mathutils import Vector
 source=bpy.data.filepath
 sha=hashlib.sha256(open(source,'rb').read()).hexdigest()
 inventory=[]
+# An object's own flag is insufficient: an entire earlier programme collection
+# can be hidden while every child object says hide_render=False. Union visible
+# collection paths across enabled view layers, including multiply-linked objects.
+render_collection_objects=set()
+def collect_render_objects(layer,inherited_hidden=False):
+    hidden=inherited_hidden or layer.exclude or layer.collection.hide_render
+    if not hidden:render_collection_objects.update(o.name for o in layer.collection.objects)
+    for child in layer.children:collect_render_objects(child,hidden)
+for layer in bpy.context.scene.view_layers:
+    if layer.use:collect_render_objects(layer.layer_collection)
 for o in bpy.context.scene.objects:
     if o.type!='MESH':continue
     pts=[o.matrix_world@Vector(c) for c in o.bound_box]
@@ -15,7 +25,8 @@ for o in bpy.context.scene.objects:
         'dimensions_m':[round(float(v),4) for v in o.dimensions],
         'polygons':len(o.data.polygons),'collections':[c.name for c in o.users_collection],
         'programme_tags':{k:o[k] for k in o.keys() if k in ('capacity_people','area_m2','gfa_m2','floor','storey','level','program','programme')},
-        'hidden_render':o.hide_render}
+        'hidden_render':o.hide_render,
+        'effective_hidden_render':o.hide_render or o.name not in render_collection_objects}
     inventory.append(record)
 find=lambda pattern:[r for r in inventory if re.search(pattern,r['name'],re.I)]
 roofs=find(r'^(Hard|Civic)_Roof$')
@@ -26,7 +37,8 @@ report={'status':'DESIGN_DEVELOPMENT_NOT_BRIEF_CLOSURE','source_sha256':sha,'uni
     'kitchen_candidates':find('TeachingKitchen'),'admin_candidates':find('AdminWorkstation'),
     'municipal_context':find(r'^geometry_0$'),
     'limits':['Naming inventory does not prove absence of unnamed floors or access geometry.','Capacity tags do not prove equipment clearances, occupancy or egress.','Municipal alignment remains a comparison artifact pending site reconciliation.'],
-    'mesh_inventory':inventory,'render_invocations':0}
+    'mesh_inventory':inventory,'render_invocations':0,
+    'visibility_basis':'Object flags plus render-enabled collection/view-layer paths; not camera-ray visibility or dependency-graph instance census.'}
 report['source_unchanged']=hashlib.sha256(open(source,'rb').read()).hexdigest()==sha
 out=sys.argv[sys.argv.index('--')+1]
 os.makedirs(os.path.dirname(os.path.abspath(out)),exist_ok=True)
