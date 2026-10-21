@@ -285,5 +285,19 @@
     ],
     "research": "Three-seed static foliage coverage reproduction; no production LOD substitution or FPS claim",
     "jury_score": null
+  },
+  "weather_and_realism_2026_10_21": {
+    "status": "BOUNDED_DESIGN_STUDY_NOT_FINAL",
+    "research": "docs/REALISM_AND_WEATHER_RESEARCH_2026-10-21.md",
+    "implementation": "scripts/prepare_weather_study.py",
+    "runtime": "Existing Caldas Spatial Studio inspector; source PR #96; separate review candidate, not canonical world",
+    "material_render_run": 39550349585,
+    "material_finish_decision": "REJECT_BROWN_REPETITIVE_PAVING_RETAIN_UV_AND_PACKING_PIPELINE",
+    "weather": "Seeded synthetic scenarios, assumed foliage response, explicit roof-water balance and illustrative wet appearance",
+    "limits": [
+      "No weather/structure/drainage prediction or safety certification.",
+      "Municipal context omitted from weather derivative.",
+      "No final visual or competition acceptance."
+    ]
   }
 }

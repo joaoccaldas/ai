@@ -132,3 +132,5 @@ No competition-facing claim becomes authoritative unless the brief, evidence, sp
 - `docs/STATUS_2026-10-06_TRUTH_SYNC.md`
 - `docs/OFFICIAL_BRIEF_AUDIT_2026-10-04.md`
 - `visuals/A1_STORYBOARD.md`
+
+Current realism, weather and hybrid presentation research: [21 October analysis](docs/REALISM_AND_WEATHER_RESEARCH_2026-10-21.md). Includes the rejected material finish, physical assumptions and remaining design priorities.
