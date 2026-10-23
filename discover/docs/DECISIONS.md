@@ -12,9 +12,9 @@ Learn through intrinsic curiosity: authored immersive experiences combine French
 | Lingopie | Interactive TV subtitles, looping and pronunciation | We don't compete on a licensed video catalog. Users choose dialogue and explore authored story worlds. |
 | LingQ | Interest-based reading/listening, vocabulary collection | ONDA connects each discovery to a location, character, and narrative goal. |
 | Speak | AI conversation, adaptive practice | V1 relies on deterministic and reviewed content; open-ended AI tutors are a separate safety/product decision. |
-| Mondly VR / Immerse | Situational immersive practice | Phone browser as baseline; no VR hardware. |
+| Mondly VR / Immerse | Situational immersive practice | Phone browser as baseline; no VR hardware. |\n| Unfold (iOS, Paul Hangas) | Rotate, pinch and unfold 3D shapes to learn by direct manipulation | V1 supports 3D clue picking, but **does not yet offer equally rich direct manipulation**. Make that an explicit V2 gate. |\n| Nativik | Explore named objects in a 3D kid-oriented world and practice with an AI companion | Not novel to label objects in a 3D world. Adult narrative depth, rigorous recall and dual-subject mastery remain the hypotheses to validate. |\n| FabuLingua | Story-based vocabulary, guided speaking and games | Use deliberate recurring characters and delay-based recall, not mere story packaging. |
 
-Source URLs: https://help.lingopie.com/support/solutions/articles/150000076263-how-to-use-video-features-on-lingopie- ; https://www.lingq.com ; https://www.speak.com ; https://pubmed.ncbi.nlm.nih.gov/41567469/ ; https://doi.org/10.1111/bjet.13603 . These sources should be rechecked before any comparative marketing.
+Source URLs: https://help.lingopie.com/support/solutions/articles/150000076263-how-to-use-video-features-on-lingopie- ; https://www.lingq.com ; https://www.speak.com ; https://pubmed.ncbi.nlm.nih.gov/41567469/ ; https://doi.org/10.1111/bjet.13603 ; https://apps.apple.com/us/app/unfold/id557099803 ; https://nativik.com/ ; https://www.fabulingua.com/ . These sources should be rechecked before any comparative marketing.
 
 ## Canonical reuse
 
@@ -54,3 +54,7 @@ The existing `joaoccaldas/ai` repo is public, serves Github Pages, and contains 
 4. Add optional sync only after identity/privacy and RLS boundaries are designed; do not put secrets in client source.
 5. Instrument privacy-preserving aggregate usage only with an explicit notice/consent and impact rationale.
 6. Evaluate licensed educational video later, after source rights and terms verified.
+
+## Unfold-inspired V2 design gate (not yet built)
+
+The relevant Unfold lesson is *direct manipulation teaches*. Require: orbit/pinch/tap controls tested on mobile, physical clue artifacts with appropriate affordances, camera focus transitions that teach French spatial terms, and an explicit 2D/keyboard equivalent. Avoid copying the children's aesthetic or making extra 3D interaction mandatory for learning. Prioritize an object-focused interaction pilot against the current DOM-button flow and measure delayed recall, frustration, completion and GPU cost.
