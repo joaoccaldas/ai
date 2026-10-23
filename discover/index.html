@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#091719"><meta name="description" content="ONDA Discover — learn French by entering stories, exploring places and solving real challenges.">
+  <meta property="og:title" content="ONDA Discover · French"><meta property="og:description" content="Don't study a language. Live a story.">
+  <title>ONDA Discover · French</title><link rel="icon" type="image/svg+xml" href="./assets/icon.svg"><link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+ <a class="skip" href="#main">Skip to lesson</a>
+ <div class="app-shell" id="app">
+  <header class="topbar">
+   <a class="logo" href="#home" aria-label="ONDA Discover home"><svg viewBox="0 0 50 36" aria-hidden="true"><path d="M3 22c7-14 14-14 21 0s14 14 23 0" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></svg><span><strong>onda</strong><small>DISCOVER</small></span></a>
+   <nav class="topnav" aria-label="Primary navigation"><button data-tab="home" class="selected" aria-current="page">Explore</button><button data-tab="story">Story</button><button data-tab="review">My words <span id="duePill" class="pill" hidden>0</span></button><button data-tab="progress">Journey</button></nav>
+   <div class="user-actions"><button id="langBtn" class="small-btn" aria-label="Change explanation language">EN</button><button id="audioBtn" class="small-btn" aria-label="Toggle sound" aria-pressed="true">♪</button><button id="qualityBtn" class="small-btn" aria-label="Toggle graphics mode">3D</button></div>
+  </header>
+  <main id="main" tabindex="-1">
+   <section id="homeView" class="view home-view">
+    <div class="home-hero"><div class="home-copy"><div class="eyebrow"><span class="eyedot"></span> YOUR NEXT STORY STARTS HERE</div><h1>Don't study<br>a language.<br><em>Live a story.</em></h1><p>French becomes natural when it belongs to a world you want to explore. Step inside, listen closely, make choices, remember what matters.</p><div class="hero-actions"><button class="primary" id="startBtn">Enter your story <span aria-hidden="true">↗</span></button><span class="subtle">French · A1–B1 · Free to explore</span></div></div><div class="hero-art" aria-hidden="true"><span class="art-halo"></span><span class="art-caption">PARIS, AFTER HOURS · 21:14</span></div></div>
+    <div class="library-heading"><div><span class="section-index">01 / 03</span><h2>Pick a world worth getting lost in.</h2></div><p>Every place is a different way to speak.</p></div>
+    <div class="world-grid" id="worldGrid"></div>
+    <footer class="home-foot"><span>ONDA.AI / LEARNING LAB</span><span>Curiosity is your curriculum.</span><span>MADE FOR REAL PEOPLE</span></footer>
+   </section>
+   <section id="storyView" class="view story-view" hidden>
+    <div class="experience"><div class="scene-stage" id="sceneStage"><div class="stage-photo" id="stagePhoto"></div><canvas id="scene3d" aria-label="Optional interactive 3D environment. Objects also appear as accessible buttons below."></canvas><div class="stage-vignette"></div><div class="scene-meta"><span id="sceneClock">21:14</span><span class="scene-separator">/</span><span id="sceneLocation">PARIS · LE MUSÉE</span></div><div class="stage-bottom"><div class="chapter-title"><span class="eyebrow" id="chapterKicker">ACT I · THE ARRIVAL</span><h2 id="chapterTitle">Une nuit au musée</h2><p id="chapterNarration"></p></div><div class="stage-ornament" aria-hidden="true">✳</div></div><div id="sceneHotspots" class="scene-hotspots" aria-label="Things to investigate"></div><div class="scene-instruction" id="sceneInstruction">Select an object to investigate</div><div class="scene-quality" id="sceneQuality" role="status">Cinematic mode · ready</div></div>
+    <aside class="story-panel"><div class="story-progress"><button class="back-text" id="backToWorlds">← All worlds</button><span id="chapterCounter">01 / 03</span><div class="progress-track"><div id="progressLine"></div></div></div><div id="interactionPanel" class="interaction-panel" aria-live="polite"></div><div class="story-nav"><button id="previousBtn" class="secondary">← Previous scene</button><button id="nextBtn" class="primary" disabled>Continue →</button></div></aside></div>
+   </section>
+   <section id="reviewView" class="view utility-view" hidden><div class="utility-header"><span class="eyebrow">THE MEMORY STUDIO</span><h1>Make it <em>yours.</em></h1><p>Words you've met in a real story, revisited when they're worth remembering.</p></div><div id="reviewContent"></div></section>
+   <section id="progressView" class="view utility-view" hidden><div class="utility-header"><span class="eyebrow">YOUR JOURNEY</span><h1>Small discoveries.<br><em>Lasting connections.</em></h1><p>Progress reflects what you've completed and reviewed. No invented fluency scores.</p></div><div id="progressContent"></div></section>
+  </main>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <dialog id="welcomeDialog" class="onboarding"><form method="dialog" id="welcomeForm"><div class="welcome-art" aria-hidden="true"></div><div class="welcome-copy"><span class="eyebrow">BONJOUR · WELCOME TO ONDA</span><h2>What if French felt <em>like a discovery?</em></h2><p>You don't need to know much. Just be curious. We'll start with the story and give you tools as you need them.</p><fieldset><legend>Explanations in</legend><label><input name="language" type="radio" value="en" checked> English</label><label><input name="language" type="radio" value="pt"> Português</label></fieldset><fieldset><legend>Where are you with French?</legend><label><input name="level" type="radio" value="A1" checked> New here</label><label><input name="level" type="radio" value="A2"> Some basics</label><label><input name="level" type="radio" value="B1"> Conversational</label></fieldset><button class="primary" id="welcomeGo" type="submit">Begin exploring ↗</button><small>Private by default: your progress stays in this browser. No account needed.</small></div></form></dialog>
+ </div>
+ <script type="module" src="./app.js"></script>
+</body>
+</html>
