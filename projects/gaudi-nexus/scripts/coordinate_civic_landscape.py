@@ -184,3 +184,72 @@ def apply(collection,wood,steel,stone,output):
     report['plan_sha256']=hashlib.sha256(drawing.read_bytes()).hexdigest()
     (output/'landscape-receipt.json').write_text(json.dumps(report,indent=2)+'\n')
     return report
+
+
+def detail_weather_landscape(root):
+    """A source-bound optional construction-detail study, no new renderer.
+
+    Reuse the maintained planting/mesh builders. Stone aprons have real joints,
+    a declared 4 mm presentation top offset and 60 mm depth, not a certified
+    pavement/drainage build-up. Originals remain hidden outside the export root.
+    """
+    collection=root.users_collection[0];plaza=next(o for o in root.children if o.name.startswith('Plaza.'))
+    inverse=plaza.matrix_world.inverted();floor=max((plaza.matrix_world@v.co).z for v in plaza.data.vertices)
+    records=[];hidden=[];checked=0;all_pavers=[];minimum_clearance=float('inf')
+    colors=[(.43*f,.42*f,.385*f) for f in (.96,.99,1.02,1.04)]
+    stones=[surface('CivicApronStone_'+str(i),c,.84)[0] for i,c in enumerate(colors)]
+    for i,(title,center,length,width) in enumerate(GROVES):
+        original=next(o for o in root.children if o.name.startswith(f'CivicGarden_{i}.'))
+        tf=original.matrix_world.copy();mats=[s.material for s in original.material_slots]
+        detailed=planted_island(f'CivicGarden_{i}_detail',collection,mats,seed=1200+i,
+            length=length,width=width,seat_slats=110,tufts=500,grounded=True,backed=True)
+        detailed.parent=root;detailed.matrix_world=tf
+        for v in detailed.data.vertices:
+            p=tf@v.co
+            if not plaza.ray_cast(inverse@Vector((p.x,p.y,floor+20)),Vector((0,0,-1)))[0]:
+                raise ValueError('Detailed garden outside source plaza: '+title)
+            checked+=1
+            for _,points,w in ROUTES:
+                for a,b in zip(points,points[1:]):minimum_clearance=min(minimum_clearance,segment_distance((p.x,p.y),a,b)-w/2)
+        if minimum_clearance<.25:raise ValueError('Detailed seating enters circulation route')
+        original.parent=None;original.hide_render=True;original.hide_set(True);hidden.append(original.name)
+        mesh=MeshBuilder();nx=math.ceil((length+2.4)/1.2);ny=6;kept=0;clipped=0
+        for row in range(ny):
+            for col in range(nx):
+                x=(col-(nx-1)/2)*1.2;y=-width/2-2+(row-(ny-1)/2)*.6
+                corners=[tf@Vector((x+dx,y+dy,0)) for dx in (-.6,.6) for dy in (-.3,.3)]
+                if not all(plaza.ray_cast(inverse@Vector((p.x,p.y,floor+20)),Vector((0,0,-1)))[0] for p in corners):
+                    clipped+=1;continue
+                # Small deterministic tone differences; no repeated bitmap noise.
+                material=(col*13+row*7+i*3)%len(stones)
+                mesh.box((x,y,-.026),(1.196,.596,.060),material);kept+=1
+        pavers=mesh.object(f'CivicStoneApron_{i}',collection,stones,False);pavers.parent=root;pavers.matrix_world=tf
+        bevel=pavers.modifiers.new('ApronEdgeChamfer','BEVEL');bevel.width=.002;bevel.segments=1
+        bevel.limit_method='ANGLE';pavers['weather_role']='exposed_paving';pavers['joint_width_m']=.004
+        pavers['representation']='Proposed large-format stone; 4mm presentation top offset, not accessibility/drainage acceptance'
+        all_pavers.append(pavers)
+        # Align the reused furniture with the new finished apron top. This is a
+        # declared local proposal change, not an original source transform edit.
+        moved=[]
+        for o in root.children:
+            if o.name.startswith((f'CivicTable_{i}.',f'CivicChair_{i}_')):
+                o.location.z+=.004;moved.append(o.name)
+        records.append({'garden':title,'paver_cells':kept,'boundary_cells_omitted':clipped,
+            'tile_m':[1.196,.596,.060],'module_m':[1.2,.6],'joints_m':.004,
+            'top_offset_m':.004,'furniture_raised_m':.004,'furniture_objects':moved,
+            'backed_seat_height_m':.46,'back_rail_top_m':.905,'back_post_top_m':.92})
+    bpy.context.view_layer.update();evaluated=0
+    for o in all_pavers:
+        mesh=o.evaluated_get(bpy.context.evaluated_depsgraph_get()).to_mesh()
+        try:
+            mesh.calc_loop_triangles();evaluated+=len(mesh.loop_triangles)
+            assert all(f.area>1e-10 for f in mesh.polygons)
+        finally:o.evaluated_get(bpy.context.evaluated_depsgraph_get()).to_mesh_clear()
+    assert evaluated<=60000
+    return {'status':'CONSTRUCTION_DETAIL_STUDY_NOT_FINAL','gardens':records,
+        'paving_triangles_evaluated':evaluated,'garden_vertices_checked':checked,
+        'minimum_seating_clearance_to_route_edge_m':minimum_clearance,
+        'retained_hidden_gardens':hidden,'geometry_only':True,
+        'limits':['Assumed construction geometry, not ergonomic, accessibility, drainage or structural certification.',
+                  'Four local stone aprons, not a completed whole-plaza pavement specification.',
+                  'Weather remains an assumed illustrative model; no material calibration.']}

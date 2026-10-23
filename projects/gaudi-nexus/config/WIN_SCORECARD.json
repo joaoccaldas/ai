@@ -299,5 +299,16 @@
       "Municipal context omitted from weather derivative.",
       "No final visual or competition acceptance."
     ]
+  },
+  "garden_detail_2026_10_23": {
+    "status": "BOUNDED_GEOMETRY_AND_BROWSER_STUDY_NOT_FINAL",
+    "source_review": "docs/CIVIC_VISUAL_REVIEW.md",
+    "implementation": "scripts/prepare_weather_study.py --landscape-detail",
+    "asset_source": "studio/scene_kit/landscape.py / landscape/mediterranean-seating-island",
+    "evidence": "output/portfolio-evidence-20261023/review.html (private, not shipped)",
+    "research_id": "Atlas RESEARCH.json/e31-gaudi-garden-construction-detail",
+    "independent_approval": false,
+    "jury_score": null,
+    "note": "Uncalibrated win estimates in the separate untracked data/WIN_SCORECARD.json were withdrawn; this config remains authority."
   }
 }

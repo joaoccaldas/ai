@@ -118,6 +118,14 @@ garden.rotation_euler=(Vector((-22,-22,3))-garden.location).to_track_quat('-Z','
 for block in [*(o.data for o in root.children if o.data),*palette.values(),*bpy.data.images]:
     for k in list(block.keys()):del block[k]
 bpy.context.view_layer.update()
+detail=None
+if '--landscape-detail' in sys.argv:
+    import os
+    _scripts_dir = os.path.dirname(os.path.abspath(__file__))
+    if _scripts_dir not in sys.path:
+        sys.path.insert(0, _scripts_dir)
+    from coordinate_civic_landscape import detail_weather_landscape
+    detail=detail_weather_landscape(root)
 # A real geometry plan is the light default. Fit the entire selected plaza and
 # roof envelopes below the heading; retain earlier reviewed drawings unchanged.
 from mathutils import Vector
@@ -145,7 +153,7 @@ record={'schemaVersion':1,'status':'WEATHER_DESIGN_STUDY_NOT_FINAL','sourceSha25
  'derivativeSha256':hashlib.sha256(out.read_bytes()).hexdigest(),'selectedObjects':selected,
  'canopies':leaf_count,'leafTrianglesPerTree':15120,'recipe':recipe,'sourceSaved':False,'renderInvocations':0,
  'planSha256':hashlib.sha256((out.parent/'plan.svg').read_bytes()).hexdigest(),
- 'unusedProceduralUvLayersOmittedOnCopies':unused_uv,
+ 'unusedProceduralUvLayersOmittedOnCopies':unused_uv,'landscapeDetail':detail,
  'limits':['No surveyed municipal context in this derivative.','Neutral paving is a proposed design variant, not exact product imagery.',
  'Source procedural detail becomes base PBR; reviewed roof maps retain UVs.','Coverage-compensated leaves need destination visual review.',
  'Illustrative foliage motion and wet appearance; assumed physical properties, no CFD, drainage or safety certification.']}

@@ -2,7 +2,13 @@
 
 Evidence-driven computational architecture entry for the 2026 AI × Gaudí competition.
 
-## Current visual study — 21 October 2026
+## Current visual study — 23 October 2026
+
+The [latest review](docs/CIVIC_VISUAL_REVIEW.md#23-october-closeout-garden-detail-and-real-portfolio-evidence)
+adds source-checked backed seating and stone aprons, three rebuilt supporting
+props with corrected glTF inspection directions, native identity readback and a
+private evidence handoff. Visual and competition acceptance remain open. The
+older visual work below remains preserved.
 
 The [completion audit](docs/COMPETITION_COMPLETION_AUDIT.md) maps 111 asset,
 material, analysis, motion, interaction and delivery families to the brief,

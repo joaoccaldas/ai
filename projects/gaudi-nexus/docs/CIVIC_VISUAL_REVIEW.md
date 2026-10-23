@@ -283,3 +283,126 @@ A child object's `hide_render=False` did not mean the older teaching kitchen
 was visible beneath its hidden programme collection. A Blender fixture verifies
 hidden ancestors, a second visible collection link and the object's own render
 flag. This naming inventory still cannot prove full room-fit-out completeness.
+
+
+## 23 October closeout: garden detail and real portfolio evidence
+
+This extends the existing garden/weather study. It is a private design candidate,
+not a final scene, public portfolio release or completed asset-to-film run.
+Source-native identities and the existing Atlas `RESEARCH.json` remain authoritative;
+this iteration is `e31-gaudi-garden-construction-detail` there.
+
+**Reuse/extend:** current `landscape.py`, `coordinate_civic_landscape.py`,
+`prepare_weather_study.py`, the existing procedural registry/batch exporter,
+Atlas inspector and native index. Hub lead
+`66580c808310a645f77eeb18d292f867428323b5542e5f556fa9a40b252c3992`
+was fetched and checked against current files. Its historical PASS report did not
+prove visual or physical acceptance. The newer paving module was inspected but
+not used as a drainage assembly: its decorative strip overlays uncut tiles.
+No parallel renderer, asset catalog or approval system was added.
+
+[Measured, 2026-10-23] The optional `backed=True` island preserves default geometry
+exactly against committed source `074d33d`. New slats follow equal ellipse arc
+spacing and the true ellipse normal. Slat and back-rail face orientation was
+corrected before acceptance. `check_landscape.py` checks 437 timber solids,
+positive face areas, ground/top bounds, invalid dimensions and exact deterministic
+repetition. Seat-centre spacing max/min is 1.000145; post tops are 0.92 m.
+This is geometry evidence, not ergonomic or accessibility certification.
+
+The four source-positioned gardens now have 420 stone cells with 4 mm joints,
+2 mm chamfers and a declared 4 mm presentation top offset. Furniture follows that
+finished level. Added evaluated paving is 18,480 triangles; 89,312 garden vertices
+are inside the authored plaza; minimum seating clearance to the declared route
+edge is 4.642 m. Earlier beds remain hidden outside the export root. Source file
+SHA-256 `404704ae392ddd5ae01646b6eaf715e91c5b0eb7013a14e7aae8be627c4b7d79`
+was rechecked unchanged. Across V6/V7, 179 unchanged non-garden nodes retain exact
+local transforms and mesh attributes/indices; the replaced beds and explicitly
+raised furniture are excluded from that comparison.
+
+The first V7 attempt failed on a sibling import. Its log is retained; explicit
+script-directory resolution fixed the next build. All artifacts are private under
+`output/civic-visual-20261021/landscape-v7-fixed/`. Original GLB: 50,893,788 bytes,
+zero Khronos errors/warnings. Preserved transport: 27,092,544 bytes with exact
+decoded geometry/images, SHA-256
+`84214f6ff888ab6cb5167dcdda4b32c180c23a78c5ff743ca4b7a13aa2b7eba8`.
+It costs 623,664 bytes more than V6. The overview complete-frame observation was
+517 calls / 833,736 triangles versus 501 / 798,040. One local 30-frame CPU-submit
+sample is not a GPU, FPS, speedup or physical-phone benchmark.
+
+**Actual visual decision [Opinion]:** identical Garden/Overview cameras, seed 42,
+paused clear weather, Three r186, 1440×1000 DOM viewport, 1100×560 canvas, DPR 1.
+Backrests make seating more legible; stone joints contribute little at that wide
+view. Retain a modest supporting detail improvement. Reject the wide plaza as a
+final hero: it remains sparse, flat and disconnected from complete context.
+Preserve V6 and both captures; no claim of a universally superior final scene.
+
+### Three existing recipes rebuilt and inspected
+
+| Existing ID | Triangles | Corrected GLB bytes | Intended role / review limit |
+| --- | ---: | ---: | --- |
+| `shade_pergola_biophilic` | 916 | 57,928 | Supporting shade structure; planar foliage and joinery still crude |
+| `water_scupper_kusaritoi` | 572 | 25,304 | Rain-chain study; connections, cup continuity and capacity unvalidated |
+| `market_goods_bread_crate` | 456 | 24,160 | Market supporting prop; coarse loaves and absent crust detail |
+
+All three original and corrected GLBs validate with zero errors/warnings.
+The source recipes mistakenly used Blender-axis inspection directions; the viewer
+expects glTF Y-up. Only the three directions were converted `(x,y,z) → (x,z,-y)`.
+Binary geometry/material chunks and all other JSON fields compare unchanged.
+Original underside captures and exports are retained. The corrected views expose
+the actual useful face but do not make these hero-quality assets. A controlled
+bread default, quarter-turn and detail series records exact keyboard steps.
+
+Current definitions are preexisting uncommitted work alongside other asset work.
+The three-direction patch and exact source hashes are retained privately; do not
+claim surrounding recipes were committed or accepted by this iteration. Native
+Atlas index readback resolves all three current hashes and procedural IDs. Its
+additional historical pointers/unavailable roots remain explicit coverage gaps.
+The missing previous Atlas worktree was not reconstructed over originals: an
+isolated occurrence of existing commit `df98846` hosts this review.
+
+### Existing guardrails applied to actual outputs
+
+Pinned Kona PR #148 `a880318e` and #149 `b4669a59` passed nine synthetic Node tests
+locally. Video Studio PR #3 `45375b52` passed six synthetic Python tests. Source
+was inspected before execution. The receipt tool hashed 15 explicitly selected
+real bread source/output/evidence files, retaining `approval=false` and rights
+not performed. A labelled Gaudí-to-Kona policy compatibility probe remains blocked;
+it is not canonical Kona-manifest validation, reviewer authorization or a new
+asset schema. The tool does not establish reference integrity or licence clearance
+by itself.
+
+The real staged handoff contains the bread GLB, three actual screenshots and a
+private manifest. Video Studio's audit returns `blocked/private-manifest`, exit 1,
+as expected. This tests the boundary on real staged artifacts, not an actual
+Video Studio public build or render job. Film rendering, cancel/retry, playback
+and independent acceptance remain untested. Human/Quest sessions remain paused.
+
+[Measured] Local regressions: 39 Gaudí Python checks; 204 Atlas Node checks;
+338 Atlas Python passes with three skips; both new-asset Blender suites; focused
+garden checks; inspector build; original/transport geometry readback. Desktop and
+390×844 layouts show no horizontal overflow; the phone starts without a canvas or
+model request. Shower replay yields 162 L incident / 137.7 L collected at 60 s under
+the same explicit assumptions; 12 canopies move, six exterior materials respond,
+and plan advancement submits zero additional 3D frames. Close removes all canvases
+and panels. Browser console observation: zero errors/warnings. Previous limits on
+real background-tab signalling remain; this run does not close that gate.
+
+**Confidence:** existing seven-dimension 0–4 minimum rubric, rehashed exact bytes:
+technical confidence 2/4 (indicative); full acceptance confidence 0/4 because
+independent human/device evidence is missing. This is evidence maturity, not
+object quality or a winning probability. The untracked `data/WIN_SCORECARD.json`
+was found claiming 96.8% win probability and unmeasured shading/flow performance.
+Its original is preserved privately and those estimates were withdrawn/marked
+unverified locally. `config/WIN_SCORECARD.json` remains the canonical authority.
+Its older estimates remain historical and were not recomputed.
+
+Private review entry: `output/portfolio-evidence-20261023/review.html`.
+Receipts include `SOURCE_STATE.json`, `scene-readback.json`, `index-readback.json`,
+`bread-evidence-receipt.json`, `bread-evidence-gate.json`, `handoff-boundary.json`
+and `confidence.json`. No raw assets or private receipts belong in a Git push.
+
+Next useful production: resolve a connected plaza/market composition, refine one
+supporting asset at its intended distance, and use the existing source-bound
+remote Cycles pipeline for its final comparison. No new Mac Blender image render
+or remote-budget extension occurred. Source, technical validation, independent
+review, physical performance, public release and competition success stay separate.
