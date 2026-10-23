@@ -51,7 +51,7 @@ src/engine.mjs                  deterministic pure reducer, compatibility, money
 src/main.mjs                    DOM adapter, local persistence, safe sharing
 sw.js                           same-origin service-worker caching
 assets/icon.svg                 brand icon
-tests/engine.test.mjs            29 zero-dependency engine tests
+tests/engine.test.mjs            30 zero-dependency engine tests
 tests/dom_smoke.test.mjs         4 DOM adapter smoke tests
 tests/browser_verify.py         real-browser test script (requires permitted Chromium)
 scripts_bundle.py               deterministic self-contained deployment artifact
