@@ -13,7 +13,10 @@ async def advance(page,goal):
       for(let i=0;i<goal;i++){
         const l=LEVELS[s.level];
         if(l.buy)s=transition(s,{type:'BUY',id:l.buy});
-        for(const id of Object.values(l.required))s=transition(s,{type:'INSTALL',id});
+        for(const [slot,id] of Object.entries(l.required)){
+          if(s.installed[slot])s=transition(s,{type:'REMOVE',slot});
+          s=transition(s,{type:'INSTALL',id});
+        }
         s=transition(s,{type:'POWER'});
         s=transition(s,{type:'NEXT_LEVEL'});
       }
