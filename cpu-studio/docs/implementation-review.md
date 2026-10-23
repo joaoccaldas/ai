@@ -1,3 +1,5 @@
+> This file records the initial **v0.2 baseline audit**, preserved for provenance. For the current 38-test v0.2.1 release, remote first-build QA and GitHub deployment gate, see [release-gate.md](release-gate.md).
+
 # Engineering review and verified evidence (October 23, 2026)
 
 ## Verified in this session
