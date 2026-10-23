@@ -1,0 +1,13 @@
+{
+  "name": "cpu-studio",
+  "version": "0.2.1",
+  "private": true,
+  "type": "module",
+  "description": "Mobile-first computer-building game across five historically grounded eras",
+  "scripts": {
+    "start": "python3 -m http.server 4173",
+    "test": "node --test tests/*.test.mjs",
+    "build": "python3 scripts_bundle.py",
+    "check": "npm test && node --check src/main.mjs && node --check src/engine.mjs && node --check src/catalog.mjs && npm run build"
+  }
+}
