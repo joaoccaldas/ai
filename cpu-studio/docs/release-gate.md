@@ -2,7 +2,7 @@
 
 ## Release classification
 
-**GO for a public *educational beta* under `joaoccaldas/ai/cpu-studio/`, subject to verification that GitHub Pages serves all assets successfully. NO-GO for a production multiplayer game, child-directed monetization, unrestricted trading, or claims of validated learning/retention.**
+**GO for a public *educational beta* at `https://joaoccaldas.github.io/ai/cpu-studio/`, verified after GitHub Pages publication on 23 October 2026. NO-GO for a production multiplayer game, child-directed monetization, unrestricted trading, or claims of validated learning/retention.**
 
 This is a small static site with no registration, public chat, cross-device inventory, remote telemetry, or payments. This sharply limits its online privacy and fraud exposure. It is **not** an independent security, accessibility or child-safeguarding certification.
 
@@ -36,6 +36,13 @@ This is a small static site with no registration, public chat, cross-device inve
 | Security/privacy | 4 for current static scope | No login, analytics, PII collection, payment or player marketplace | Vulnerability scans, child-safety review before wider functionality |
 | Funding evidence | 2 | Playable example, disciplined pilots and clear boundary | Observed learning, D1/D7 behavior, cohort size, GTM/cost and expert validation |
 
+## Publication evidence (independently checked)
+
+- Source: [`joaoccaldas/ai/cpu-studio`](https://github.com/joaoccaldas/ai/tree/main/cpu-studio), merged via [PR #119](https://github.com/joaoccaldas/ai/pull/119), first release SHA `9bd9e1419774977ea31c0e81108a516f1af7233a`.
+- Main-branch [CI tests passed](https://github.com/joaoccaldas/ai/actions/runs/39991792130); [GitHub Pages deployment passed](https://github.com/joaoccaldas/ai/actions/runs/39991788189); [legacy Pages verification passed](https://github.com/joaoccaldas/ai/actions/runs/39991792529).
+- Live-browser [verification session](https://agent.tinyfish.ai/runs/d7406680-7731-4af1-8a90-99ec6c6e20ae): public URL returned HTTP 200 without login; styles and modules rendered; first 1975 CPU/RAM/front-panel install successfully booted; first completion paid 65 CR +45 XP; Shop, Museum, Club and return navigation preserved state. No critical overlap was observed on the browser's **desktop viewport**.
+- **Not verified:** 320/375/390/428px layout, Safari, real Android touch, all levels end-to-end through the public host. CI verifies 38 test cases, including the deterministic ten-level run, but this is not equivalent to real mobile user testing.
+
 ## Production rollout gate
 
 - [x] Isolated app path, no root app overwrite
@@ -45,7 +52,7 @@ This is a small static site with no registration, public chat, cross-device inve
 - [x] Self-hosted runtime, no external assets
 - [x] Existing public preview first-time flow independently verified (v0.2)
 - [x] Data/safety feature boundary stated in product
-- [ ] GitHub Pages published and public HTTP/assets independently verified on **v0.2.1**
+- [x] GitHub Pages published and public HTTP/assets independently verified on **v0.2.1**
 - [ ] iOS Safari + Android Chrome physical touch tests
 - [ ] 320/375/390/428 responsive screenshots and keyboard/reader review
 - [ ] Guardian-consented 20–30 learner usability/knowledge pilot

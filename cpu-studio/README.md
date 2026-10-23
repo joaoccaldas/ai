@@ -62,6 +62,6 @@ No external fonts, JS libraries, images or CDNs in the runtime. The state-machin
 
 ## Repository and launch status
 
-This directory is designed to be published at `https://joaoccaldas.github.io/ai/cpu-studio/`. The verified public deployment, Git commit and release gate are documented in `docs/release-gate.md` after publication. This version has 33 passing engine/DOM smoke tests. A live browser agent verified the preceding v0.2 public Vercel preview, but **390px/iOS/Android visual QA for v0.2.1 is not yet verified**.
+**Public educational beta:** [Play CPU Studio on GitHub Pages](https://joaoccaldas.github.io/ai/cpu-studio/). Published through [PR #119](https://github.com/joaoccaldas/ai/pull/119) and verified with a real desktop browser: first build, rewards, and navigation all passed. The v0.2.1 code passed **38 automated tests** (30 engine, 4 DOM and 4 static checks), with GitHub Actions CI and Pages publishing passing on `main`. Full responsive 320–428px testing and real iOS/Android device QA remain **not yet verified**. See [`docs/release-gate.md`](docs/release-gate.md) for evidence and limitations.
 
 Start with [`docs/product-prd.md`](docs/product-prd.md), [`docs/game-economy-and-social.md`](docs/game-economy-and-social.md), and [`docs/pilot-plan.md`](docs/pilot-plan.md) when pitching or deciding what to build next.
