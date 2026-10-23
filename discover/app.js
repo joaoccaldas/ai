@@ -69,7 +69,7 @@ function renderInteraction(){const target=$('interactionPanel');if(!chapter)retu
     <form id="listenForm"><label class="section-counter" for="listenInput">MISSING WORD</label><div class="answer-row"><input id="listenInput" autocomplete="off" spellcheck="false" aria-label="Missing French word" placeholder="Type in French" required><button class="primary" type="submit">Check ↗</button></div></form>
     <div class="object-list" style="margin-top:14px"><button class="object-cta" id="voiceBtn">◖ Mic · dictate</button><button class="object-cta" id="hintBtn">Need a hint?</button></div>
     ${listenFeedback?`<p class="feedback ${listenFeedback.startsWith('Not quite')?'bad':''}">${escape(listenFeedback)}</p>`:''}
-    <p class="microcopy">Dictation uses your browser’s speech recognition if available. It checks the words recognized, not your accent.</p></div>`;
+    <p class="microcopy">Dictation uses your browser’s speech recognition if available. It checks recognized words, not your accent. Your browser or speech provider may process your audio.</p></div>`;
  }else{
    target.innerHTML=`<div class="panel-section"><span class="section-counter">SCENE COMPLETE · WELL DONE</span><h3>You moved the story forward.</h3><p class="explain">${escape(chapter.context)}</p><div class="dialogue-card"><span class="speaker">ONE PHRASE TO KEEP</span><blockquote lang="fr">“${escape(chapter.listen)}”</blockquote><button class="audio-control" data-speak="${escape(chapter.listen)}">◖♪ Hear it again</button></div><p class="microcopy">Your discoveries have entered your review collection. Return later to strengthen recall.</p><button class="secondary" id="seeWords">Review the words you found ↗</button></div>`;
  }
