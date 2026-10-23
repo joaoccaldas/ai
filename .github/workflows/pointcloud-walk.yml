@@ -1,0 +1,25 @@
+name: Pointcloud Walk smoke check
+on:
+  pull_request:
+    paths:
+      - 'pointcloud-walk-005/**'
+      - '.github/workflows/pointcloud-walk.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'pointcloud-walk-005/**'
+      - '.github/workflows/pointcloud-walk.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify self-contained viewer
+        run: node pointcloud-walk-005/test/smoke.mjs
