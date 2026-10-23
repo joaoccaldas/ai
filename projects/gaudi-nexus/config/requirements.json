@@ -1,9 +1,9 @@
 {
   "version": 2,
   "status": "OFFICIAL_BRIEF_AUDITED_2026-10-04",
-  "competition": "AI × Gaudí / The Gaudí Nexus",
+  "competition": "AI \u00d7 Gaud\u00ed / The Gaud\u00ed Nexus",
   "official_brief": {
-    "source": "Fundación Antoni Gaudí / Archademy",
+    "source": "Fundaci\u00f3n Antoni Gaud\u00ed / Archademy",
     "url": "https://fundacionantoniogaudi.org/concurso_arq_2026/GxAI_BRIEFING_ES.pdf",
     "audited_utc": "2026-10-04T19:13:00Z"
   },
@@ -49,15 +49,15 @@
   },
   "site": {
     "city": "Barcelona",
-    "area": "Plaça de la Sagrada Família / Passion façade side",
-    "coordinates_dms": "41°24'13.0\"N 2°10'24.0\"E",
+    "area": "Pla\u00e7a de la Sagrada Fam\u00edlia / Passion fa\u00e7ade side",
+    "coordinates_dms": "41\u00b024'13.0\"N 2\u00b010'24.0\"E",
     "block_side_m": 113.3,
     "chamfer_description": "four 20 m chamfers per official brief",
     "streets": [
       "Mallorca",
-      "Provença",
+      "Proven\u00e7a",
       "Sardenya",
-      "Sicília"
+      "Sic\u00edlia"
     ],
     "full_plaza_reconfiguration_required": true,
     "preserve_sagrada_visual_primacy": true
@@ -98,5 +98,17 @@
     "ai_use_encouraged": true,
     "participant_responsible_for_tool_terms_and_third_party_rights": true,
     "submission_must_reflect_original_creative_direction_and_decision_making": true
+  },
+  "organizer_clarifications_2026_10_21": {
+    "sources": [
+      "https://archademy.ai/faq/",
+      "https://archademy.ai/",
+      "https://fundacionantoniogaudi.org/concurso_arq_2026/GxAI_BRIEFING_EN.pdf"
+    ],
+    "competition_scope": "Conceptual competition; planning codes, ground slopes and subsurface infrastructure are outside scope. Flat-site assumption is permitted by the current FAQ.",
+    "a1_limit_conflict": "FAQ says 10 MB; homepage and earlier audited brief say 15 MB. Preserve the original audited rule above; use the stricter working cap until final participant-area verification.",
+    "working_a1_max_file_mb": 10,
+    "anonymity": "Order number only; no personal names or studio logos on submission boards.",
+    "deadline_rechecked": "December 16, 2026, 23:59 GMT-7 on current homepage. Recheck before upload."
   }
 }

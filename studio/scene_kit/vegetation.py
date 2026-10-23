@@ -9,7 +9,10 @@ from mathutils import Vector
 from .geometry import MeshBuilder
 
 
-def holm_oak(name,collection,bark,leaves,seed=1,detail='hero'):
+def holm_oak(name,collection,bark,leaves,seed=1,detail='hero',leaf_budget=None,
+             coverage_compensation=False):
+    if leaf_budget is not None and (not isinstance(leaf_budget,int) or not 1<=leaf_budget<=145):
+        raise ValueError('leaf_budget must be an integer from 1 to 145')
     rng=random.Random(seed);wood=MeshBuilder();leaf=MeshBuilder()
     trunk=[(0,0,0),(.09,-.02,1.2),(.03,.1,2.3),(.15,.08,3.2)]
     wood.tube(trunk,[.23,.19,.145,.1],sides=12)
@@ -30,8 +33,14 @@ def holm_oak(name,collection,bark,leaves,seed=1,detail='hero'):
                 wood.tube([tip,branch],[.007,.002],sides=5)
                 clusters.append(branch)
     count=145 if detail=='hero' else 35
+    # Consume the same source RNG sequence, retaining a stable subset in every
+    # cluster. Branches and all surviving leaf centres stay identical. Merely
+    # reducing the loop count changes later clusters and makes an unfair LOD.
+    if leaf_budget is not None:count=145
+    selected={int(k*count/leaf_budget) for k in range(leaf_budget)} if leaf_budget else set(range(count))
+    scale=math.sqrt(count/len(selected)) if coverage_compensation else 1
     for center in clusters:
-        for _ in range(count):
+        for index in range(count):
             # Ellipsoid cloud, biased toward twig tips, with actual individual leaves.
             p=center+Vector((rng.gauss(0,.36),rng.gauss(0,.36),rng.gauss(0,.27)))
             a=rng.uniform(0,math.tau);tilt=rng.uniform(-.65,.65)
@@ -39,12 +48,17 @@ def holm_oak(name,collection,bark,leaves,seed=1,detail='hero'):
             v=Vector((-math.sin(a),math.cos(a),0))*rng.uniform(.022,.035)
             ridge=Vector((0,0,.012))
             mi=rng.choices(range(len(leaves)),[5,4,2,1][:len(leaves)])[0]
+            if index not in selected:continue
+            u*=scale;v*=scale;ridge*=scale
             leaf.face([p-u,p-v,p+ridge],mi);leaf.face([p-u,p+ridge,p+v],mi)
             leaf.face([p+u,p+ridge,p-v],mi);leaf.face([p+u,p+v,p+ridge],mi)
     w=wood.object(name+'_wood',collection,[bark]);l=leaf.object(name+'_leaves',collection,leaves)
     for obj in [w,l]:
         obj['asset_id']='vegetation/holm-oak/'+detail+'/'+str(seed)
         obj['seed']=seed;obj['lod']=detail;obj['botanical_accuracy']='visual approximation'
+        if leaf_budget is not None:
+            obj['leaf_budget_per_cluster']=leaf_budget
+            obj['coverage_compensation']=coverage_compensation
     return w,l
 
 

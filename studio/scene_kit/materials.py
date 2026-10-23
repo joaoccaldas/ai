@@ -110,9 +110,10 @@ def glaze(name, anchor):
     return mat
 
 
-def timber(name, anchor):
+def timber(name, anchor, use_uv=False):
     mat,bs=surface(name,(.28,.16,.075),.5)
-    vec=coordinates(mat,anchor)
+    vec=(mat.node_tree.nodes.new('ShaderNodeTexCoord').outputs['UV']
+         if use_uv else coordinates(mat,anchor))
     m=mat.node_tree.nodes.new('ShaderNodeVectorMath');m.operation='MULTIPLY'
     mat.node_tree.links.new(vec,m.inputs[0]);m.inputs[1].default_value=(2,34,34)
     mat.node_tree.links.new(ramp(mat,noise(mat,m.outputs[0],1),(.16,.075,.03),(.39,.24,.11)),bs.inputs['Base Color'])

@@ -4,7 +4,7 @@ import json
 import bpy
 
 
-def export_glb(path,objects):
+def export_glb(path,objects,world_to_asset=None):
     """Bake modifiers/curves to temporary copies; preserve shared meshes when possible.
 
     Procedural texture graphs are intentionally reduced to constant PBR factors.
@@ -44,7 +44,7 @@ def export_glb(path,objects):
                     mesh.materials[i]=materials[source_mat.name]
                 meshes[key]=mesh
             obj=bpy.data.objects.new(src.name,meshes[key]);temp.objects.link(obj)
-            obj.matrix_world=src.matrix_world.copy()
+            obj.matrix_world=(world_to_asset@src.matrix_world if world_to_asset is not None else src.matrix_world.copy())
             for k in src.keys():obj[k]=src[k]
             obj['source_object_name']=src.name
             copies.append(obj)

@@ -14,13 +14,16 @@ sys.path.insert(0,str(ROOT.parents[1]))
 sys.path.insert(0,str(ROOT/'scripts'))
 from build_visual_world import snapshots
 from studio.scene_kit.geometry import MeshBuilder
+from studio.scene_kit import materials as M
 from studio.scene_kit.materials import surface
-from studio.scene_kit.market import stall,produce_display
+from studio.scene_kit.market import stall,produce_display,stall_identity,funicular_table
 from studio.scene_kit.entourage import person
 from studio.scene_kit.visibility import render_geometry,camera_clearance
+from studio.scene_kit.export import export_glb
 
 p=argparse.ArgumentParser()
 p.add_argument('prototype');p.add_argument('output')
+p.add_argument('--realism-study',action='store_true')
 a=p.parse_args(sys.argv[sys.argv.index('--')+1:])
 source=Path(bpy.data.filepath);before=snapshots()
 prep=json.loads(Path(str(source)+'.receipt.json').read_text())
@@ -33,7 +36,7 @@ for name in ('ARCHITECTURE','MARKET','21_PROGRAM_REQUIRED'):
 prefixes=('F_','C_Crate','B_Basket','Br_','SF_','FH_','HG_','H_','PendantLamp_',
           'PendantLight_','Citizen_','VIS_MarketCitizen_','SunMarker_','HeroWashLine_',
           'MarketThresholdInlay_','PaveX_','PaveY_','TraderA_','BuyerA_','ResidentOlder_',
-          'Parent_','Child_','Cyclist_','VisitorA_','VisitorB_','HeroVendor')
+          'Parent_','Child_','Cyclist_','VisitorA_','VisitorB_','HeroVendor','WetPatch_')
 for obj in bpy.context.scene.objects:
     if obj.name.startswith(prefixes):obj.hide_render=True;hidden.append(obj.name)
 with bpy.data.libraries.load(str(prototype),link=False) as (src,dst):
@@ -48,14 +51,23 @@ ground_datum=max((plaza.matrix_world@v.co).z for v in plaza.data.vertices)+.005
 for obj in coll.objects:
     matrix=obj.matrix_world.copy();matrix.translation.z+=ground_datum
     obj.matrix_world=matrix
-stone=surface('CoordWarmMineral',(.50,.45,.36),.75)[0]
-wood=surface('CoordOak',(.25,.15,.075),.60)[0]
+anchor=bpy.data.objects.new('CoordMaterialMetres',None);coll.objects.link(anchor)
+stone=M.mineral('CoordWarmMineral',anchor,(.56,.53,.46),2.5,.76)
+wood=M.timber('CoordOak',anchor)
+floor=M.paving('CoordMarketStone',anchor)
+soffit=M.mineral('CoordLimeSoffit',anchor,(.70,.67,.59),3,.87)
+linen=M.fabric('CoordShadeLinen',anchor,(.73,.68,.54))
+enamel=surface('CoordMarketEnamel',(.045,.11,.095),.36)[0]
 steel=surface('CoordBrushedSteel',(.24,.26,.26),.30,.8)[0]
 dark=surface('CoordDarkFittings',(.045,.05,.04),.63)[0]
 tile=surface('CoordTerracottaRoof',(.38,.17,.075),.66)[0]
 for obj in coll.objects:
     if 'CoordRoof' in obj.name:
         obj.material_slots[0].link='OBJECT';obj.material_slots[0].material=tile
+    elif 'CoordFloor_L0' in obj.name and obj.material_slots:
+        obj.material_slots[0].link='OBJECT';obj.material_slots[0].material=floor
+    elif 'CoordFloor_L1' in obj.name and obj.material_slots:
+        obj.material_slots[0].link='OBJECT';obj.material_slots[0].material=soffit
     elif obj.material_slots:
         obj.material_slots[0].link='OBJECT';obj.material_slots[0].material=stone
     if 'CoordStallFootprint' in obj.name:obj.hide_render=True
@@ -101,8 +113,16 @@ for y in (-.2,2.4):
         desks.append({'center_local_m':[x,y,4.5],'desk_footprint_m':[2.2,1.1]})
 
 # Twenty fitted stalls reuse the shared kit; a 3.2 m aisle stays clear of fittings.
-fruit=[wood,*[surface('CoordFruit_'+str(i),c,.55)[0] for i,c in enumerate(
+fruit=[wood,*[M.mineral('CoordFruit_'+str(i),anchor,c,150,.52) for i,c in enumerate(
     ((.55,.15,.02),(.45,.04,.02),(.15,.25,.055)))]]
+identity_assets=[]
+def label(name,body,transform,size=.10):
+    font=bpy.data.curves.new(name,'FONT');font.body=body; font.size=size
+    font.align_x='CENTER';font.align_y='CENTER';font.extrude=.0005
+    ob=bpy.data.objects.new(name,font);coll.objects.link(ob)
+    ob.matrix_world=transform;font.materials.append(linen)
+    ob['representation']='proposed English wayfinding; no real trader identity'
+    return ob
 for n,fp in enumerate(coord['stall_footprints']):
     x0,y0,x1,y1=fp['local_xy_m'];x=(x0+x1)/2;y=(y0+y1)/2
     front=1 if y<0 else -1
@@ -110,13 +130,58 @@ for n,fp in enumerate(coord['stall_footprints']):
     o.matrix_world=transforms['Hard']@Matrix.Translation(Vector((x,y,0)))
     produce=produce_display(f'CoordProduce_{n+1:02}',coll,fruit,front=front,seed=600+n)
     produce.matrix_world=o.matrix_world.copy()
+    identity=stall_identity(f'CoordIdentity_{n+1:02}',coll,[linen,wood,dark,enamel],front=front)
+    identity.matrix_world=o.matrix_world.copy();identity_assets.append(identity)
+    word=('FRUIT','GREENS','PANTRY','BAKERY','HARVEST')[n%5]
+    sign=label(f'CoordStallSign_{n+1:02}',f'{n+1:02}  /  {word}',
+        o.matrix_world@Matrix.Translation(Vector((0,front*1.162,1.88)))@
+        Matrix.Rotation(math.pi if front==1 else 0,4,'Z')@Matrix.Rotation(math.pi/2,4,'X'))
+    identity_assets.append(sign)
+
+# Repairable timber baffles meet the real underside; the clear aisle is retained.
+# They are a proposed acoustic treatment, with no absorption/performance claim.
+ceiling=MeshBuilder()
+for x in [(-10.8+j*.15) for j in range(198)]:
+    for y in (-2.8,2.8):ceiling.box((x,y,4.18),(.045,2.2,.08),0)
+o=ceiling.object('CoordMarketSoffitBaffles',coll,[wood],False);o.matrix_world=transforms['Hard']
+o['representation']='proposed removable baffles; acoustic performance unmeasured'
+
+# The interpretation zone teaches a load rule through a small physical model.
+brass=surface('CoordMethodBrass',(.45,.31,.10),.30,.7)[0]
+model=funicular_table('CoordInterpretationFunicular',coll,[wood,dark,brass,tile])
+model.matrix_world=transforms['Civic']@Matrix.Translation(Vector((-7,0,4.5)))
+identity_assets.append(model)
+label('CoordInterpretationCaption','LOAD  /  INVERT  /  BUILD',
+    model.matrix_world@Matrix.Translation(Vector((0,-.556,.94)))@Matrix.Rotation(math.pi/2,4,'X'),.075)
+# Pixel review found the first display too dark against the upper screens.
+# Mount actual accent fixtures beneath the declared parabolic roof; keep the
+# sun/exposure/camera fixed. This is artistic lighting, not measured illuminance.
+fixture=MeshBuilder()
+for i,x in enumerate((-7.65,-6.35)):
+    y=-1.4;roof_z=8.3+1.35*(1-(y/4.5)**2)
+    fixture.tube([(x,y,roof_z-.02),(x,y,9.10)],[.012,.012],0,8)
+    fixture.ellipsoid((x,y,9.06),(.075,.075,.055),0,6,12)
+    light_data=bpy.data.lights.new(f'CoordMethodSpot_{i}','SPOT')
+    light_data.energy=240;light_data.color=(1,.92,.80);light_data.shadow_soft_size=.10
+    light_data.spot_size=math.radians(58);light_data.spot_blend=.60
+    light=bpy.data.objects.new(light_data.name,light_data);coll.objects.link(light)
+    light.location=transforms['Civic']@Vector((x,y,8.99))
+    target=transforms['Civic']@Vector((-7+(x+7)*.5,0,5.95))
+    light.rotation_euler=(target-light.location).to_track_quat('-Z','Y').to_euler()
+mount=fixture.object('CoordMethodCeilingFixtures',coll,[dark],False)
+mount.matrix_world=transforms['Civic']
+# Additional detail view is separate from the unchanged baseline cameras.
+cd=bpy.data.cameras.new('METHOD_DETAIL');cd.lens=44;cd.clip_end=1500
+cam=bpy.data.objects.new('METHOD_DETAIL',cd);coll.objects.link(cam)
+cam.location=transforms['Civic']@Vector((-10,-3.2,6.06))
+cam.rotation_euler=(transforms['Civic']@Vector((-7,0,5.8))-cam.location).to_track_quat('-Z','Y').to_euler()
 
 # Shared, restrained entourage; foreground aisle is kept free of close-up faces.
 skin=surface('CoordSkin',(.45,.30,.22),.65)[0]
 hair=surface('CoordHair',(.055,.04,.028),.70)[0]
 shoes=surface('CoordShoes',(.04,.04,.045),.65)[0]
 people=[]
-for i,(x,y) in enumerate([(x,y) for x in (-4,2,8,12) for y in (-1.15,1.15)]):
+for i,(x,y) in enumerate([(x,y) for x in (2,8,12) for y in (-1.15,1.15)]):
     coat=surface('CoordCoat_'+str(i),[(.12,.16,.17),(.35,.30,.23),(.22,.27,.20)][i%3],.8)[0]
     o=person(f'CoordMarketPerson_{i}',coll,[skin,coat,dark,shoes,hair,wood],(0,0,0),seed=800+i)
     o.matrix_world=transforms['Hard']@Matrix.Translation(Vector((x,y,-.004)))@Matrix.Rotation(0 if y<0 else math.pi,4,'Z')
@@ -129,7 +194,7 @@ for i,x in enumerate((-8,-3,2,7,12)):
     m=MeshBuilder();m.tube([(x,0,4.22),(x,0,3.20)],[.008,.008],0)
     m.ellipsoid((x,0,3.15),(.16,.16,.055),1)
     o=m.object(f'CoordPendant_{i}',coll,[dark,bulb]);o.matrix_world=transforms['Hard']
-    ld=bpy.data.lights.new(f'CoordPendantLight_{i}','POINT');ld.energy=110;ld.color=(1,.76,.51);ld.shadow_soft_size=.12
+    ld=bpy.data.lights.new(f'CoordPendantLight_{i}','POINT');ld.energy=90;ld.color=(1,.86,.68);ld.shadow_soft_size=.16
     light=bpy.data.objects.new(ld.name,ld);coll.objects.link(light);light.location=transforms['Hard']@Vector((x,0,3.07))
 
 # Replaceable ceramic shading on upper edges; a separate service gutter/pipe kit.
@@ -150,6 +215,13 @@ for bar in ('Hard','Civic'):
         for x in (-20,20):services.tube([(x,side*4.65,.15),(x,side*4.65,8.3)],[.04,.04],0,8)
     o=fins.object(bar+'_CoordCeramicScreens',coll,ceramics,False);o.matrix_world=transforms[bar]
     o=services.object(bar+'_CoordGutters',coll,[steel],False);o.matrix_world=transforms[bar]
+
+from coordinate_civic_landscape import apply as apply_civic_landscape
+civic_landscape=apply_civic_landscape(coll,wood,steel,stone,Path(a.output).resolve().parent/'landscape')
+realism=None
+if a.realism_study:
+    from coordinate_realism import apply as apply_realism
+    realism=apply_realism(coll,anchor)
 
 # Actual stair sample headroom against imported slabs and roof, including landings.
 bpy.context.view_layer.update();headroom=[]
@@ -172,19 +244,43 @@ for core in coord['cores']:
         headroom.append(hit.z-pos.z)
 with render_geometry(bpy.context.scene) as dg:
     clearance=[camera_clearance(bpy.context.scene,bpy.data.objects[n],dg) for n in
-               ('HERO_ARRIVAL','MARKET_AISLE','PLAZA_OBLIQUE')]
+               ('HERO_ARRIVAL','MARKET_AISLE','PLAZA_OBLIQUE','METHOD_DETAIL')]
 assert all(r['status']=='PASS_SAMPLED_CLEARANCE' for r in clearance),clearance
 after=snapshots();assert all(after.get(n)==h for n,h in before.items())
 out=Path(a.output).resolve();out.parent.mkdir(parents=True,exist_ok=True)
+asset_dir=out.parent/'authored-assets';asset_dir.mkdir(exist_ok=True)
+asset_records=[]
+for asset_id,objects,transform in [
+    ('market/removable-shade-and-identity/v1',identity_assets[:2],identity_assets[0].matrix_world.inverted()),
+    (model['asset_id'],[model],model.matrix_world.inverted())]:
+    filename='stall-identity.glb' if asset_id.startswith('market/') else 'funicular-table.glb'
+    record=export_glb(asset_dir/filename,objects,world_to_asset=transform)
+    record.update(id=asset_id,file=filename,anchor='floor_centre',source_units='metres',source_axes='Z up',export_axes='Y up')
+    asset_records.append(record)
+(asset_dir/'manifest.json').write_text(json.dumps({'status':'AUTHORED_MATERIAL_PBR_APPROXIMATION_CANDIDATES',
+    'assets':asset_records,'render_invocations':0,'source_candidate':'../'+out.name,
+    'limits':['Procedural texture detail is not baked; review the actual destination.']},indent=2)+'\n')
+_post_export=snapshots()
+assert all(_post_export.get(n)==h for n,h in before.items())
 bpy.ops.wm.save_as_mainfile(filepath=str(out))
 prep.update(candidate_sha256=hashlib.sha256(out.read_bytes()).hexdigest())
 prep['architecture_coordination']={'status':'COORDINATED_DESIGN_CANDIDATE_NOT_CANONICAL',
+    'realism_study':realism,
+    'civic_landscape':civic_landscape,
     'finished_ground_datum_m':ground_datum,'ground_separation_from_plaza_m':.005,
     'prototype_sha256':coord['blend_sha256'],'programme_category_areas_m2':coord['programme_category_areas_m2'],
     'programme_split_pct':coord['programme_split_pct'],'measured_slab_surface_m2':coord['measured_horizontal_slab_area_m2'],
     'certified_gfa_m2':None,'kitchens':kitchens,'administration_desks':desks,'fitted_stalls':20,
     'minimum_sampled_stair_headroom_m':min(headroom),'camera_clearance':clearance,
     'prepared_source_signatures_preserved':len(before),'hidden_superseded_objects':hidden,
+    'visual_refinement':{'version':'2026-10-21-market-v2','stall_identities':20,
+        'method_display':model['asset_id'],'changes':['metre-scale mineral/timber/fabric surfaces',
+        'removable shade and English stall signs','slatted counter protection',
+        'market soffit baffles','foreground illustrative figures reduced','equal-point-load interpretation table',
+        'source-mounted display accent lighting','superseded rectangular wet patches retained but hidden'],
+        'baseline_cameras_unchanged':True,'new_detail_camera':'METHOD_DETAIL',
+        'limits':['No acoustic, hygienic, structural or accessibility approval.',
+                  'Municipal massing remains low-detail; no invented cathedral detail.']},
     'render_invocations':0,'limits':['Gross programme allocation includes circulation; net areas pending.',
     'Kitchen positions are spatial reservations, not certified occupancy or equipment/fire/exhaust compliance.',
     'Lift shafts remain reservations, not installed lifts.','Structure, access, egress and municipal sightline promotion remain unverified.']}

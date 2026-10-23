@@ -35,8 +35,7 @@
     "promotion_blockers": [
       "authoritative municipal context is not present in the live Jutsu scene; integrate verified context before final hero/context output",
       "live Rev16 binary is not yet checksum-pinned in the canonical manifest",
-      "municipal 1:1000 topography/levels/trees/furniture still require ingestion/cross-check",
-      "Passion-façade sightline and shadow studies must be recomputed in the canonical site-truth scene",
+      "Passion-fa\u00e7ade sightline and shadow studies must be recomputed in the canonical site-truth scene",
       "proxy Sagrada/context must be retired from competition-facing renders",
       "engineer-grade structural validation remains open",
       "annual environmental validation remains open",
@@ -380,5 +379,10 @@
       },
       "interpretation": "Across six representative Barcelona sun vectors and nine F3-visible authoritative municipal receiver points, no non-municipal scene geometry blocks the sun. This is seasonal geometric shadow evidence, not annual daylight or thermal certification."
     }
+  },
+  "competition_scope_clarification_2026_10_21": {
+    "source": "https://archademy.ai/faq/",
+    "superseded_historical_blocker": "municipal 1:1000 topography/levels/trees/furniture still require ingestion/cross-check",
+    "decision": "Topographic survey is optional context for this conceptual competition; flat-site assumption is allowed. Tree/furniture positions remain labelled design proposals unless surveyed. Other source identity, municipal alignment, sightline, visual and release gates remain open."
   }
 }

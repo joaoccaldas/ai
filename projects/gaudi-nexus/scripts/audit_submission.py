@@ -46,7 +46,11 @@ def inspect(path, max_mb, dimensions=(594,841), participant_number=None):
 
 
 def audit(a1, a4=None, participant_number=None):
-    boards={'A1':inspect(a1,15,(594,841),participant_number)}
+    # Current organizer FAQ conflicts with the homepage/older brief (10 vs 15).
+    # Honour the stricter working cap without erasing the original audited rule.
+    requirements=json.loads((Path(__file__).resolve().parents[1]/'config/requirements.json').read_text())
+    cap=requirements.get('organizer_clarifications_2026_10_21',{}).get('working_a1_max_file_mb',10)
+    boards={'A1':inspect(a1,cap,(594,841),participant_number)}
     if a4: boards['A4']=inspect(a4,10,(210,297),participant_number)
     return {'boards':boards,'automatedChecksPassed':not any(v['issues'] for v in boards.values()),
             'submissionReady':False,

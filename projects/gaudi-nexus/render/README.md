@@ -1,3 +1,24 @@
+# Gaudí source-bound render workflow
+
+Current guidance: `../docs/REALISM_PLAYBOOK.md`, `../docs/CIVIC_VISUAL_REVIEW.md`
+and `../docs/COMPETITION_COMPLETION_AUDIT.md`. The Linux pilot workflow owns
+actual rendering. Mac Blender use is geometry/inspection/export only. Source
+and candidate receipts are mandatory; no shader-invented cathedral detail.
+
+The optional realism study uses six reviewed 2k CC0 maps for our paving and
+roof, authored UVs/tangent normals, member-aligned timber and small edge bevels.
+`fetch_textures.py --ids concrete_pavers_02 clay_roof_tiles_02 --lock
+textures-reviewed-20261021.json` extends the existing download path with exact
+map identity checks. It does not replace the municipal model. Packed source
+images are checked by `../scripts/check_realism_materials.py`.
+
+The notes below are historical. Their old source paths, timing estimates,
+`ENRICH_SAGRADA` suggestion and Mac invocation are not current instructions.
+The current guard rejects Mac image rendering and the competition workflow
+rejects invented context enrichment.
+
+## Historical pipeline notes
+
 # Gaudí Nexus render pipeline (derived render copy)
 
 `build.py` assembles and renders a camera from a **derived local copy** of the Rev17 aligned municipal comparison build. It never edits canonical geometry and no `.blend` is committed.

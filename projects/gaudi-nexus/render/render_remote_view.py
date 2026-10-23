@@ -8,7 +8,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[3]))
 from studio.scene_kit.render_checks import image_health
 
 p=argparse.ArgumentParser()
-p.add_argument('camera',choices=['HERO_F3','MARKET_WIDE','AERIAL','HERO_ARRIVAL','MARKET_AISLE','PLAZA_OBLIQUE'])
+p.add_argument('camera',choices=['HERO_F3','MARKET_WIDE','AERIAL','HERO_ARRIVAL','MARKET_AISLE','PLAZA_OBLIQUE','METHOD_DETAIL'])
 p.add_argument('output')
 p.add_argument('--samples',type=int,default=32)
 p.add_argument('--width',type=int,default=960)
@@ -39,8 +39,15 @@ receipt={'status':'REMOTE_PILOT_NOT_COMPETITION_APPROVED','source_sha256':prep['
     'hour_CEST':prep['hour_CEST'],'date':prep['date'],'solar_altitude_deg':prep['solar_altitude_deg'],
     'solar_azimuth_deg':prep['solar_azimuth_deg'],'width':a.width,'height':a.height,'max_samples':a.samples,
     'blender_version':bpy.app.version_string,'device':'CPU','view_transform':sc.view_settings.view_transform,
+    'exposure':sc.view_settings.exposure,'adaptive_threshold':sc.cycles.adaptive_threshold,
+    'denoising':sc.cycles.use_denoising,'max_bounces':sc.cycles.max_bounces,
+    'light_tree':sc.cycles.use_light_tree,'cpu_count':os.cpu_count(),
     'seconds_render':round(render_seconds,2),'pixel_health':health,'render_sha256':hashlib.sha256(out.read_bytes()).hexdigest(),
-    'refinement_version':prep.get('refinement',{}).get('version'),'postprocess':'none','invented_cathedral_shader':False,'weather':'design-development haze, no observed-weather claim',
+    'refinement_version':prep.get('refinement',{}).get('version'),
+    'coordination_refinement':prep.get('architecture_coordination',{}).get('visual_refinement'),
+    'realism_study':prep.get('architecture_coordination',{}).get('realism_study'),
+    'postprocess':'none','invented_cathedral_shader':False,
+    'weather':(prep.get('architecture_coordination',{}).get('realism_study') or {}).get('weather','design-development haze, no observed-weather claim'),
     'limits':['Procedural people are illustrative.','Programme GFA and accessibility remain unverified.','Municipal site alignment is not yet promoted.']}
 Path(str(out)+'.receipt.json').write_text(json.dumps(receipt,indent=2)+'\n')
 print(json.dumps(receipt))
