@@ -39,3 +39,6 @@ mirroring the festival's six emotional beats:
 - [Three.js](https://threejs.org/) r160 vendored locally in `vendor/` (no CDN dependency)
 - Graceful fallbacks: content stays fully readable even if WebGL is unavailable,
   and the experience honours `prefers-reduced-motion`
+
+- **`/pointcloud-walk-005/`** — *Pointcloud Walk 005*, a mobile-first, offline-capable interactive procedural point-cloud tunnel walk (self-contained 2D projection of 3D point data). Inspired by a user-supplied visual reference; not the original scan.
+  → https://joaoccaldas.github.io/ai/pointcloud-walk-005/
