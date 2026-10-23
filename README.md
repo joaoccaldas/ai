@@ -4,6 +4,8 @@ GitHub Pages site with several experiences:
 
 - **`/`** — AI-native finance presentation (Joao Caldas · FP&A Director, Nordics)
   → https://joaoccaldas.github.io/ai/
+- **`/cpu-studio/`** — *CPU Studio*, a mobile-first retro educational game: build ten computers across five eras, earn credits, troubleshoot hardware and collect historic machines (offline beta, no live P2P trading).
+  → https://joaoccaldas.github.io/ai/cpu-studio/
 - **`/belong/`** — *Belong*, an immersive scroll-driven 3D reimagining of
   [The Belong Festival](https://thebelongfestival.com/)
   → https://joaoccaldas.github.io/ai/belong/

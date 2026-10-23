@@ -1,0 +1,10 @@
+{
+  "name": "CPU Studio · Build through time",
+  "short_name": "CPU Studio",
+  "description": "An interactive history of computers. Build, learn and collect.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ece6d7",
+  "theme_color": "#ece6d7",
+  "icons": [{"src":"./assets/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any"}]
+}

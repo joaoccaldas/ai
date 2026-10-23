@@ -1,0 +1,26 @@
+name: CPU Studio test and build
+on:
+  pull_request:
+    paths:
+      - 'cpu-studio/**'
+      - '.github/workflows/cpu-studio-ci.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'cpu-studio/**'
+      - '.github/workflows/cpu-studio-ci.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Static game engine, PWA and bundle checks
+        working-directory: cpu-studio
+        run: npm run check

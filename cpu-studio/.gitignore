@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+node_modules/
+evidence/*.png
+evidence/browser-report.json
+.DS_Store

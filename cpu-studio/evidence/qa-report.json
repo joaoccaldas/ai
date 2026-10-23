@@ -1,0 +1,8 @@
+{
+  "version":"0.2.1",
+  "date":"2026-10-23",
+  "engineering":{"node_tests_passed":38,"node_tests_failed":0,"syntax_checks":"passed","bundle":"generated","local_assets":"checked","no_runtime_dependencies":true},
+  "remote_browser_v0_2":{"status":"verified on prior preview, not v0.2.1","first_1975_boot":"passed","shop_and_museum":"passed","no_login":"passed","notes":["small text/wrapping","installed-part ownership unclear"]},
+  "browser_v0_2_1":{"status":"not yet verified","reason":"Managed local Chromium refuses localhost navigation with ERR_BLOCKED_BY_ADMINISTRATOR","native_phone_device":"not tested"},
+  "scope_limitations":["no authenticated players","no real player trades","no backend or analytics","not cycle-accurate emulation","no learning-outcome or retention data","no external security audit"]
+}
