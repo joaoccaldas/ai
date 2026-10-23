@@ -33,7 +33,7 @@ After merge into `joaoccaldas/ai` (GitHub Pages from main), expected path: `http
 
 `npm run check`
 
-Run Chromium Playwright UI smoke tests against `http://localhost:8800/discover/` and record desktop/mobile screenshots. Test 3D loading only against the published repository with real assets and network access. 
+Automated Node verification: 12/12 tests passing on 23 October 2026. Remote browser QA: public Vercel preview loads, onboarding works and the gallery lesson is visible; full interactive completion and mobile screenshot/performance testing remain open. Local Playwright could not navigate due an environment-level `ERR_BLOCKED_BY_ADMINISTRATOR`, not counted as passing. Test 3D loading against the published repository with real assets and network access. 
 
 ## Source assets and provenance
 
