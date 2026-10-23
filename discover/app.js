@@ -6,7 +6,8 @@ const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>'
 let state=freshState();try{state=hydrate(JSON.parse(localStorage.getItem(STORE_KEY)));}catch{}
 state=markVisit(state);
 let tab='home',chapter=null,step='explore',inspected=null,answerIndex=null,wrongAnswer=false,listenFeedback='',reviewQueue=[],reviewCard=null,reviewFlipped=false;
-let sceneWorld=null,sceneLoading=false,toastTimer=null,currentWorldMode=null;
+let sceneWorld=null,sceneLoading=false,toastTimer=null,renderedChapterId=null,sceneEpoch=0;
+function stop3D(){sceneEpoch++;if(sceneWorld){sceneWorld.dispose();sceneWorld=null;}renderedChapterId=null;}
 const meaning=item=>state.language==='pt'?item.pt:item.en;
 const label=(en,pt)=>state.language==='pt'?pt:en;
 function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state));}catch{notify('Saving blocked by browser settings. Progress lasts for this session.');}}
@@ -17,7 +18,7 @@ function speak(text){if(!state.settings.sound){notify('Sound is turned off. Enab
  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='fr-FR';u.rate=.86;u.pitch=1;
  const voices=speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang.toLowerCase().startsWith('fr'))||null;speechSynthesis.speak(u);
 }
-function tabTo(t){if(!ui[t])t='home';tab=t;for(const [k,el] of Object.entries(ui))el.hidden=k!==t;
+function tabTo(t){if(!ui[t])t='home';if(t!=='story'&&sceneWorld)stop3D();if(t!=='story'&&sceneLoading)sceneEpoch++;tab=t;for(const [k,el] of Object.entries(ui))el.hidden=k!==t;
  for(const b of document.querySelectorAll('[data-tab]')){const sel=b.dataset.tab===t;b.classList.toggle('selected',sel);if(sel)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');}
  if(t==='home')renderHome();if(t==='story')renderScene();if(t==='review')renderReview();if(t==='progress')renderProgress();refreshHeader();location.hash=t==='home'?'home':t;
 }
@@ -26,10 +27,12 @@ function renderHome(){const cards=WORLDS.map((w,i)=>{const cs=CHAPTERS_BY_WORLD[
  return `<button class="world-card" data-world="${w.id}" aria-label="Explore ${escape(w.title)}, ${done} of ${cs.length} chapters completed"><span class="cover" style="background-image:url('${w.art}')"></span><span class="veil"></span><span class="world-num">${w.eyebrow}</span><span class="time-pill">${w.minutes} MIN</span><span class="info"><span class="eyebrow">${w.tag}</span><h3>${w.title}</h3><p>${w.sub}</p><span class="arrow">${done===cs.length?'REVISIT':'ENTER THIS WORLD'} <span aria-hidden="true">↗</span></span>${done?`<span class="world-complete"> · ${done}/${cs.length} chapters</span>`:''}</span></button>`}).join('');$('worldGrid').innerHTML=cards;}
 function selectWorld(id){const world=sceneFor(id);state.activeWorld=world.id;const cs=CHAPTERS_BY_WORLD[world.id];state.activeChapter=nextUnfinished(cs,state.completed);save();beginChapter(state.activeChapter);tabTo('story');}
 function beginChapter(id){chapter=CHAPTER_BY_ID[id]||CHAPTERS[0];state.activeWorld=chapter.world;state.activeChapter=chapter.id;step='explore';inspected=null;answerIndex=null;wrongAnswer=false;listenFeedback='';save();}
-async function ensure3D(){if(!chapter||tab!=='story'||state.settings.quality==='2d'){$('scene3d').style.display='none';$('sceneQuality').textContent='Illustrated mode · 2D';return;}
- $('scene3d').style.display='block';if(sceneWorld){if(currentWorldMode!==chapter.world){currentWorldMode=chapter.world;await sceneWorld.setChapter(chapter);}return;}
- if(sceneLoading)return;sceneLoading=true;$('sceneQuality').textContent='Preparing 3D world…';try{const mod=await import('./world.js');sceneWorld=await mod.createWorld($('scene3d'),{onPick:id=>inspect(id),onStatus:s=>{$('sceneQuality').textContent=s;}});
- if(sceneWorld){currentWorldMode=chapter.world;await sceneWorld.setChapter(chapter);}else{$('scene3d').style.display='none';}}
+async function ensure3D(){if(!chapter||tab!=='story'||state.settings.quality==='2d'){if(sceneWorld)stop3D();$('scene3d').style.display='none';$('sceneQuality').textContent='Illustrated mode · 2D';return;}
+ $('scene3d').style.display='block';if(sceneWorld){if(renderedChapterId!==chapter.id){renderedChapterId=chapter.id;await sceneWorld.setChapter(chapter);}return;}
+ if(sceneLoading)return;sceneLoading=true;const epoch=sceneEpoch;$('sceneQuality').textContent='Preparing 3D world…';try{const mod=await import('./world.js');if(epoch!==sceneEpoch||tab!=='story')return;
+ const created=await mod.createWorld($('scene3d'),{onPick:id=>inspect(id),onStatus:s=>{$('sceneQuality').textContent=s;}});
+ if(epoch!==sceneEpoch||tab!=='story'||state.settings.quality==='2d'){created?.dispose();return;}sceneWorld=created;
+ if(sceneWorld){renderedChapterId=chapter.id;await sceneWorld.setChapter(chapter);}else{$('scene3d').style.display='none';}}
  catch(e){$('sceneQuality').textContent='Illustrated mode · 3D unavailable';$('scene3d').style.display='none';}finally{sceneLoading=false;}
 }
 function progressIndex(){return chapterSet().findIndex(c=>c.id===chapter.id);}
@@ -39,7 +42,7 @@ function renderScene(){if(!chapter)beginChapter(state.activeChapter);const w=sce
  $('chapterKicker').textContent=`ACT ${String(idx+1).padStart(2,'0')} · ${w.tag}`;$('chapterTitle').textContent=chapter.french;$('chapterNarration').textContent=chapter.intro;
  $('chapterCounter').textContent=`${String(idx+1).padStart(2,'0')} / ${String(cs.length).padStart(2,'0')}`;
  $('progressLine').style.width=`${Math.round(((idx+(step==='done'?1:0))/cs.length)*100)}%`;
- $('sceneHotspots').innerHTML=chapter.objects.map(item=>`<button class="hotspot ${state.words[`${chapter.id}:${item.id}`]?'seen':''}" data-inspect="${item.id}"><span class="spot"></span>${escape(item.fr)}</button>`).join('');
+ $('sceneHotspots').innerHTML=chapter.objects.map(item=>`<button id="hotspot-${chapter.id}-${item.id}" class="hotspot ${state.words[`${chapter.id}:${item.id}`]?'seen':''}" data-inspect="${item.id}" aria-label="Inspect ${escape(item.fr)}" aria-pressed="${Boolean(state.words[`${chapter.id}:${item.id}`])}"><span class="spot"></span>${escape(item.fr)}</button>`).join('');
  $('sceneInstruction').textContent=step==='explore'?'TAP A CLUE · DISCOVER ITS MEANING':step==='dialogue'?'MAKE YOUR CHOICE · SPEAK FRENCH':'LISTEN · REMEMBER · RESPOND';
  $('previousBtn').disabled=idx===0;$('nextBtn').disabled=step!=='done';$('nextBtn').textContent=idx===cs.length-1?'World complete →':'Next chapter →';
  renderInteraction();ensure3D();refreshHeader();
