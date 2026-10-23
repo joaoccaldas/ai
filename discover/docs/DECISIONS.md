@@ -41,7 +41,9 @@ The existing `joaoccaldas/ai` repo is public, serves Github Pages, and contains 
 - Node syntax of all shipped JS files: **PASS**.
 - Pure learning-domain unit tests: **7/7 PASS** (content invariants, normalization, discovery, review scheduling, hydration, streak, progression).
 - Static resource path/repo source audit: **PASS for source references** (published rendering not yet verified).
-- Chromium Playwright screenshot and interactive browser run: **BLOCKED BY TEST INFRASTRUCTURE** (`ERR_BLOCKED_BY_ADMINISTRATOR` for http, file, data); not counted as pass. UI testing on an ordinary browser is required before production rollout.
+- Local Chromium Playwright screenshot and interactive browser run: **BLOCKED BY TEST INFRASTRUCTURE** (`ERR_BLOCKED_BY_ADMINISTRATOR` for http, file, data); not counted as pass.
+- Remote browser QA (TinyFish, 23 Oct 2026): **PARTIAL PASS**. Public preview opened without authentication, onboarding completed, three world cards and museum dialogue/clue buttons rendered, all three artwork images loaded, and no obvious browser errors. Full dialogue → typed recall → completion and Journey/My Words flows were **not completed** within the remote session. No mobile screenshot or WebGL frame metrics were recorded.
+- Hotspot buttons received explicit IDs, labels and pressed-state semantics after remote QA. 3D scene markers now rebuild on chapter changes, and WebGL scene cleans up on navigation away from the lesson.
 - Published WebGL performance, live 3D scene acceptance, and cross-device QA: **NOT YET VERIFIED**.
 
 ## Next release gates
