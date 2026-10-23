@@ -1,6 +1,6 @@
 # CPU Studio: Build Through Time | Funding Memo | 23 October 2026
 
-**Stage:** playable, dependency-free vertical slice. No publicly verified deployment or real-user traction as of this document. **Company context:** candidate educational gaming product for onda.ai (organizational/repository ownership not yet established in GitHub).
+**Stage:** playable, dependency-free vertical slice. **Historical investor draft as of pre-GitHub deployment; see release-gate.md for current publishing status.** No publicly verified deployment or real-user traction as of this document. **Company context:** candidate educational gaming product for onda.ai (organizational/repository ownership not yet established in GitHub).
 
 ## 30-second pitch
 
