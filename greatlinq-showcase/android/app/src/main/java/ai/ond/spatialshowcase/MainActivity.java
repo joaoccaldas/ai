@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
@@ -92,12 +91,7 @@ public final class MainActivity extends Activity {
                     "if(a.hostname==='joaoccaldas.github.io'){e.preventDefault();" +
                     "window.location.assign(a.href);}},true);", null);
             }
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                if (request.isForMainFrame()) {
-                    android.util.Log.e("OndaShowcase", "Main document failed: " + error.getErrorCode());
-                }
-            }
+
         });
         webView.loadUrl(HOME);
     }
