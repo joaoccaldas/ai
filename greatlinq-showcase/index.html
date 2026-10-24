@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#F7F8F5">
+  <meta name="description" content="An invitation to explore original 3D worlds, objects, and possible collaborations. An independent ond.ai concept showcase prepared for Greatlinq.">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>ond.ai | Worlds worth exploring · Greatlinq concept preview</title>
+  <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="icon" href="./mark.svg" type="image/svg+xml">
+  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to portfolio</a>
+  <div class="ambient ambient-1" aria-hidden="true"></div><div class="ambient ambient-2" aria-hidden="true"></div>
+  <header class="topbar" id="topbar">
+    <button type="button" class="wordmark" data-action="home" aria-label="ond.ai, return to welcome">
+      <svg class="brand-mark" viewBox="0 0 56 24" fill="none" aria-hidden="true"><defs><linearGradient id="wave" x1="0" y1="12" x2="56" y2="12" gradientUnits="userSpaceOnUse"><stop stop-color="#EBD7AF"/><stop offset=".48" stop-color="#A783E9"/><stop offset="1" stop-color="#5242EF"/></linearGradient></defs><path d="M3 14C12 14 12 4 21 4c9 0 10 16 19 16 6 0 9-7 13-9" stroke="url(#wave)" stroke-width="4.2" stroke-linecap="round"/></svg>
+      <span>ond<span class="dot">.</span>ai</span>
+    </button>
+    <nav class="topnav" aria-label="Main navigation" id="topnav">
+      <button data-view="overview" class="navlink active">Overview</button>
+      <button data-view="worlds" class="navlink">Worlds</button>
+      <button data-view="objects" class="navlink">Objects</button>
+      <button data-view="materials" class="navlink">Transform</button>
+      <button data-view="concepts" class="navlink">Possibilities</button>
+    </nav>
+    <div class="header-actions"><span class="guest-label"><span class="live-dot"></span> Curated preview</span><button type="button" class="tour-cta" id="tourTopBtn">Take a tour <span aria-hidden="true">↗</span></button><button type="button" id="menuBtn" class="menu-btn" aria-label="Open navigation" aria-expanded="false">☰</button></div>
+  </header>
+  <main id="main" tabindex="-1">
+    <div class="route-line"><span class="line-start">AN OND.AI SPATIAL COLLECTION</span><span class="line-end">EXPLORING POSSIBILITIES WITH GREATLINQ <span class="star">✳</span></span></div>
+    <div id="screen" class="screen" aria-live="polite"></div>
+  </main>
+  <footer class="footer" id="footer"><span>ond.ai / Spatial Studio</span><span>Independent concept preview · Not a Greatlinq product or integration</span><button id="footerTourBtn" type="button">Restart introduction ↑</button></footer>
+
+  <div id="tourBar" class="tourbar" hidden aria-label="Guided tour controls">
+    <div class="tourbar-top"><span id="tourEyebrow" class="mini-eyebrow">THE JOURNEY</span><span id="tourClock">00:00 / 03:00</span></div>
+    <div class="tourbar-main"><div class="guide-text"><span class="guide-orb" aria-hidden="true"><i></i></span><div><b id="guideHeading">Welcome to the collection</b><p id="guideBody">The tour will advance automatically. Explore any feature whenever you like.</p></div></div><div class="tour-actions"><button type="button" id="tourPrev" aria-label="Previous stop" title="Previous stop">←</button><button type="button" id="tourPlay" aria-label="Pause tour" title="Pause or play">Ⅱ</button><button type="button" id="tourNext" aria-label="Next stop" title="Next stop">→</button><button type="button" id="tourStop" title="Exit guided tour">Exit</button></div></div>
+    <div class="progress-track"><div class="progress-fill" id="tourProgress"></div></div>
+  </div>
+
+  <div id="welcome" class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
+    <div class="welcome-art" aria-hidden="true"><div class="art-photo"></div><div class="orbital orbital-one"></div><div class="orbital orbital-two"></div><div class="art-label">A COLLECTION OF POSSIBILITIES · 2026</div></div>
+    <div class="welcome-panel">
+      <div class="welcome-header"><span class="overline"><span class="sparkle">✳</span> A PRIVATE INVITATION</span><span class="edition">001 / GREATLINQ EDITION</span></div>
+      <h1 id="welcomeTitle">Ideas are better<br>when you can <em>enter them.</em></h1>
+      <p class="welcome-lead">A curated journey through existing 3D worlds, crafted objects and what we might make possible together.</p>
+      <div class="welcome-question">How would you like to explore?</div>
+      <div class="entry-choices">
+        <button type="button" id="guidedChoice" class="entry-card chosen"><span class="choice-icon">▷</span><span class="entry-card-content"><b>Show me around</b><small>An automatic visual tour, at your pace</small></span><span class="choice-arrow">↗</span></button>
+        <button type="button" id="freeChoice" class="entry-card"><span class="choice-icon">✣</span><span class="entry-card-content"><b>Let me explore</b><small>Open the collection, no guide needed</small></span><span class="choice-arrow">↗</span></button>
+      </div>
+      <div class="tour-options" id="tourOptions"><span class="options-title">Choose your journey</span><div class="option-pills" role="group" aria-label="Tour length"><button class="option-pill" data-length="short"><b>The Spark</b><span>1½ min</span></button><button class="option-pill selected" data-length="medium"><b>The Journey</b><span>3 min</span></button><button class="option-pill" data-length="long"><b>The Expedition</b><span>7 min</span></button></div></div>
+      <button type="button" id="beginBtn" class="begin-btn"><span id="beginText">Begin the journey</span><span aria-hidden="true">↗</span></button>
+      <p class="welcome-note">You can pause, skip, interact with the scenes or switch to free exploration anytime. No sign-in.</p>
+    </div>
+    <div class="welcome-bottom"><span>DESIGNED TO BE EXPLORED</span><span>ond.ai · One company. Many worlds.</span></div>
+  </div>
+  <noscript><div class="noscript">JavaScript is required for the interactive showcase. Examples are available separately at <a href="https://joaoccaldas.github.io/konam/">KONA.m</a> and <a href="https://joaoccaldas.github.io/bellagio/worlds/vegas/">Bellagio.</a></div></noscript>
+</body>
+</html>
