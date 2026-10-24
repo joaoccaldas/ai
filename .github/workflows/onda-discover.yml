@@ -1,0 +1,35 @@
+name: ONDA Discover · learning quality
+
+on:
+  pull_request:
+    paths:
+      - 'discover/**'
+      - '.github/workflows/onda-discover.yml'
+  push:
+    branches:
+      - 'feat/onda-discover-french-v1-20261023'
+    paths:
+      - 'discover/**'
+      - '.github/workflows/onda-discover.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  learning-and-contracts:
+    name: Check authored lessons and source contracts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    defaults:
+      run:
+        working-directory: discover
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run tests and syntax checks
+        run: npm run check
