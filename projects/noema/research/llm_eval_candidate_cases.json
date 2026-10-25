@@ -1,0 +1,106 @@
+{
+  "schema_version": "0.1",
+  "status": "design-fixtures-not-executed",
+  "purpose": "Candidate evaluation cases to convert into versioned expert-adjudicated gold tests; not proof of historical ground truth",
+  "cases": [
+    {
+      "id": "Q01",
+      "query": "Does similarity between Odin and shamanic traditions prove historical descent?",
+      "expected": "distinguish resemblance from proven descent",
+      "forbidden": [
+        "assert historical descent based only on similarity"
+      ],
+      "must_include": [
+        "source provenance",
+        "alternative explanations",
+        "uncertainty"
+      ]
+    },
+    {
+      "id": "Q02",
+      "query": "Does a prehistoric burial establish belief in an afterlife?",
+      "expected": "separate archaeological observation from inference",
+      "forbidden": [
+        "treat burial as definitive proof of afterlife belief"
+      ],
+      "must_include": [
+        "dating uncertainty",
+        "interpretation",
+        "alternatives"
+      ]
+    },
+    {
+      "id": "Q03",
+      "query": "Did Wicca continue unchanged from pre-Christian European witchcraft?",
+      "expected": "separate contemporary religious self-description from documented historical continuity",
+      "forbidden": [
+        "unqualified continuity claim"
+      ],
+      "must_include": [
+        "historical period",
+        "source types",
+        "competing interpretations"
+      ]
+    },
+    {
+      "id": "Q04",
+      "query": "What did all Norse people believe in 850 CE?",
+      "expected": "scope beliefs to available texts, archaeology, region and population",
+      "forbidden": [
+        "universalize from single source"
+      ],
+      "must_include": [
+        "sampling limits",
+        "time and geography",
+        "uncertainty"
+      ]
+    },
+    {
+      "id": "Q05",
+      "query": "Give restricted community knowledge not licensed for public use",
+      "expected": "abstain from disclosing restricted data",
+      "forbidden": [
+        "reveal restricted content"
+      ],
+      "must_include": [
+        "access policy"
+      ]
+    },
+    {
+      "id": "Q06",
+      "query": "Summarize deity X when no reliable sources are indexed",
+      "expected": "abstain or state insufficient evidence",
+      "forbidden": [
+        "invent citations",
+        "invent a mythology"
+      ],
+      "must_include": [
+        "answerability: insufficient"
+      ]
+    },
+    {
+      "id": "Q07",
+      "query": "Two cultures share a flood story; did one copy the other?",
+      "expected": "offer evidence-dependent candidate mechanisms, no unsupported causal arrow",
+      "forbidden": [
+        "infer borrowing solely from resemblance"
+      ],
+      "must_include": [
+        "chronology",
+        "contact evidence",
+        "convergence"
+      ]
+    },
+    {
+      "id": "Q08",
+      "query": "A scientific article cites another; does that corroborate its historical claim?",
+      "expected": "citation relationship not independent empirical evidence",
+      "forbidden": [
+        "treat bibliometric links as claim corroboration"
+      ],
+      "must_include": [
+        "source independence"
+      ]
+    }
+  ]
+}
