@@ -1,0 +1,23 @@
+name: Spatial UI Evidence Contract
+on:
+  pull_request:
+    paths:
+      - 'tools/spatial-ui-audit*'
+      - 'docs/spatial-ui-evidence.md'
+      - '.github/workflows/spatial-ui-audit-contract.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  contracts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Contract tests
+        run: node --test tools/spatial-ui-audit.test.mjs
+      - name: Syntax validation
+        run: node --check tools/spatial-ui-audit.mjs
