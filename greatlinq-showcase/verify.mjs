@@ -27,6 +27,14 @@ assert.ok(profile.longBio && profile.longBio.length > 80, 'longBio missing');
 assert.ok(profile.shortBio && profile.shortBio.includes('FP&A'), 'shortBio missing');
 assert.equal(profile.portrait, 'img/about/joao.png');
 assert.ok(read('index.html').includes('id="about"'));
+const html = read('index.html');
+assert.match(html, /name="viewport" content="width=device-width, initial-scale=1/);
+const css = read('app.css');
+assert.ok(!css.includes('padding-top:20vh'), 'clipped enter padding-top:20vh must stay gone');
+assert.ok(css.includes('html.deck #enter .enter-layout{ min-height:0; }'), 'phone enter must be able to scroll to the headline');
+const build = JSON.parse(read('build.json'));
+assert.equal(build.audienceLocked, true);
+assert.equal(build.defaultAudience, 'internal');
 assert.ok(read('app.js').includes("fetch('./profile.json'"));
 
 const sources = ['index.html', 'app.js', 'hero-gl.js', 'v2/lantern/index.html', 'v2/lantern/lantern.js', 'v2/hybrid/index.html', 'v2/flagship/index.html'];

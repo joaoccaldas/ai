@@ -16,7 +16,10 @@
 }
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth; background:var(--bg)}
+html{
+  scroll-behavior:smooth; background:var(--bg);
+  -webkit-text-size-adjust:100%; text-size-adjust:100%;
+}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 
 body{
@@ -295,8 +298,6 @@ h3{margin:0 0 6px; font-size:var(--fs-h3); line-height:1.3; font-weight:600}
 .card:hover, .feat-card:hover{transform:translateY(-2px)}
 
 @media (max-width:960px){
-  .enter-layout{grid-template-columns:1fr; align-items:end; padding-top:20vh}
-  .hero-gl-wrap{width:100%; height:38vh; justify-self:stretch}
   .caps{grid-template-columns:repeat(2, 1fr)}
   .feat-grid, .pilot-row, .grid{grid-template-columns:1fr 1fr}
 }
@@ -787,3 +788,67 @@ html.deck #main > .chapter.is-active{
 .about-surf-quiet .about-surf-media{ min-height:180px; max-height:220px; border-radius:18px; }
 .about-surf-quiet .about-surf-media img{ min-height:180px; max-height:220px; object-fit:cover; }
 .about-band .about-brand{ display:none; }
+
+/*
+  Phone and short viewports. The cinematic two-column enter scene is only for
+  a wide, tall window. Below that, bottom-aligning a too-tall grid
+  (align-items:end plus a 20vh top pad and a vh-sized lantern) overflowed upward
+  without growing scrollHeight, so the headline was clipped and the card sat
+  on the remaining copy. Stack in normal flow instead: readable type, a
+  full-width lantern, and a chapter that can scroll to the top.
+*/
+@media (max-width:1099px), (max-height:679px){
+  #enter.stage{ display:block; }
+  html.deck #enter.stage{ overflow-x:hidden; overflow-y:auto; }
+  html.deck #enter .enter-layout{ min-height:0; }
+  #enter .enter-layout{
+    display:flex; flex-direction:column; align-items:stretch; justify-content:flex-start;
+    gap:22px; min-height:0; height:auto;
+    padding:28px 48px 8px 20px; box-sizing:border-box;
+  }
+  #enter .enter-layout .stage-body{
+    width:100%; max-width:40rem; padding:0;
+  }
+  #enter .display{ font-size:clamp(34px, 8.6vw, 46px); }
+  #enter .lede, #enter .stake{
+    font-size:17px; line-height:1.45; max-width:40ch;
+  }
+  #enter .story-beats{
+    flex-wrap:wrap; gap:12px 18px; margin-top:18px;
+  }
+  #enter .hero-gl-wrap{
+    width:100%; max-width:none; justify-self:stretch; flex:0 0 auto;
+    height:clamp(220px, 32vh, 300px); aspect-ratio:auto;
+  }
+  #enter .stage-meta{
+    position:static; display:block; width:fit-content;
+    max-width:calc(100% - 40px); margin:18px 20px 28px;
+    right:auto; bottom:auto; white-space:normal;
+  }
+}
+@media (max-height:520px){
+  #enter .enter-layout{ gap:16px; padding:16px 48px 4px 16px; }
+  #enter .display{ font-size:clamp(28px, 4.6vw, 34px); line-height:1.15; }
+  #enter .lede, #enter .stake{ font-size:16px; }
+  #enter .lede{ margin-bottom:10px; }
+  #enter .stake{ margin-top:8px; }
+  #enter .story-beats{ margin-top:10px; }
+  #enter .hero-gl-wrap{ height:220px; }
+  #enter .stage-meta{ margin:12px 16px 16px; }
+}
+/* Landscape phones are wide enough for two columns and too short to stack.
+   Keep the card beside the copy, top-aligned, so neither one is clipped. */
+@media (max-height:520px) and (min-width:700px){
+  #enter .enter-layout{
+    display:grid; grid-template-columns:minmax(0,1.2fr) minmax(200px,.8fr);
+    align-items:start; justify-content:stretch;
+    gap:20px; padding:14px 48px 8px 16px;
+  }
+  #enter .hero-gl-wrap{
+    width:100%; height:min(268px, calc(100dvh - 122px)); max-height:none;
+  }
+  #enter .display{ font-size:30px; margin-bottom:8px; }
+  #enter .stage-body .lede{ max-width:36ch; margin-bottom:8px; }
+  #enter .stake{ margin-top:6px; }
+  #enter .story-beats{ margin-top:6px; }
+}
