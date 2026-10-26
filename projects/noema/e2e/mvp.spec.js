@@ -139,6 +139,21 @@ test('home search groups Odin into topics, traditions, and sources', async ({ pa
   expect(box?.width ?? 0).toBeLessThanOrEqual(390);
 });
 
+test('Odin journey shows a rights-labelled reference image below the denominator', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('journey.html?id=odin-seidr', { waitUntil: 'domcontentloaded' });
+  const fig = page.locator('#journeyFigure');
+  await expect(fig).toBeVisible();
+  await expect(fig.locator('img')).toHaveAttribute('src', /odin-gehrts-1888\.jpg/);
+  await expect(fig).toContainText('Public domain');
+  await expect(fig).toContainText('not evidence');
+  await expect(fig).toContainText('REFERENCE_ONLY_NOT_EVIDENCE');
+  const figBox = await fig.boundingBox();
+  const denomBox = await page.locator('#denominator').boundingBox();
+  expect(figBox.y).toBeGreaterThan(denomBox.y + denomBox.height - 1);
+  await expect(page.locator('#journeyLead')).toBeVisible();
+});
+
 test('denominator leads on Explore, the Odin journey, Compare, and Connections', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
 

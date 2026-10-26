@@ -8,6 +8,14 @@ body.nm-app>#appNav{margin:0;width:100%;max-width:100%;box-sizing:border-box}
 .nm-journey .nm-denom b{font-size:1.05rem}
 .nm-fold{margin:8px 0 0}
 .nm-fold>summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
+.nm-scroll-accent{position:sticky;top:64px;height:2px;background:var(--nm-accent);transform:scaleX(0);transform-origin:left center;z-index:5}
+.nm-figure{margin:4px 0 0;display:grid;gap:8px;max-width:420px}
+.nm-figure figcaption{display:grid;gap:4px;font-size:13px;line-height:1.4;color:var(--nm-muted)}
+.nm-figure figcaption b{color:var(--nm-ink);font-family:var(--nm-serif);font-size:1.2rem;font-weight:500}
+.nm-figure img{width:100%;height:auto;border-radius:16px;background:#e7dfd2;display:block}
+.nm-tick,.nm-source{cursor:pointer}
+.nm-tick.is-focus,.nm-source.is-focus{background:rgba(141,59,50,.08);box-shadow:inset 3px 0 0 var(--nm-accent)}
+@media(prefers-reduced-motion:reduce){.nm-scroll-accent{display:none}}
 .nm-kicker{color:var(--nm-accent);letter-spacing:.14em;text-transform:uppercase;font-size:12px;margin:0 0 6px}
 .nm-status{display:inline-flex;align-items:center;min-height:32px;padding:0 10px;border-radius:999px;border:1px solid var(--nm-line);font-size:12px}
 .nm-answer,.nm-block{background:var(--nm-ivory-2);border:1px solid var(--nm-line);border-radius:16px;padding:16px}

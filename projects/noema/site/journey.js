@@ -54,14 +54,14 @@
     for (const e of entities) {
       for (const s of e.sources || []) {
         const href = s.url ? `<a href="${esc(s.url)}">${esc(s.url)}</a>` : '<span>No URL stored</span>';
-        items.push(`<li><b>${esc(e.id)}</b> · tier ${esc(s.tier || 'not stored')} · profile_status ${esc(e.profile_status || 'not stored')} · note “${esc(s.note || '')}” · locator ${href}</li>`);
+        items.push(`<li class="nm-source" tabindex="0"><b>${esc(e.id)}</b> · tier ${esc(s.tier || 'not stored')} · profile_status ${esc(e.profile_status || 'not stored')} · note “${esc(s.note || '')}” · locator ${href}</li>`);
       }
     }
     for (const m of media) {
-      items.push(`<li><b>${esc(m.provider_title || m.entity_id)}</b> · evidence_status ${esc(m.evidence_status || 'not stored')} · rights ${esc(m.rights || 'not stored')} · display_gate ${esc(m.display_gate || 'not stored')} · locator <a href="${esc(m.provider_page_url)}">${esc(m.provider_page_url)}</a><br>${esc(m.epistemic_note || '')}</li>`);
+      items.push(`<li class="nm-source" tabindex="0"><b>${esc(m.provider_title || m.entity_id)}</b> · evidence_status ${esc(m.evidence_status || 'not stored')} · rights ${esc(m.rights || 'not stored')} · display_gate ${esc(m.display_gate || 'not stored')} · locator <a href="${esc(m.provider_page_url)}">${esc(m.provider_page_url)}</a><br>${esc(m.epistemic_note || '')}</li>`);
     }
     for (const m of reviewed) {
-      items.push(`<li><b>${esc(m.title)}</b> · media_id ${esc(m.media_id)} · media_class ${esc(m.media_class)} · evidence_status ${esc(m.evidence_status)} · rights_status ${esc(m.rights_status || 'not stored')} · locator <a href="${esc(m.source_page_url)}">${esc(m.source_page_url)}</a></li>`);
+      items.push(`<li class="nm-source" tabindex="0"><b>${esc(m.title)}</b> · media_id ${esc(m.media_id)} · media_class ${esc(m.media_class)} · evidence_status ${esc(m.evidence_status)} · rights_status ${esc(m.rights_status || 'not stored')} · locator <a href="${esc(m.source_page_url)}">${esc(m.source_page_url)}</a></li>`);
     }
     return items.length ? `<ul>${items.join('')}</ul>` : gap('Original sources', 'No source locator is stored for the records on this journey.');
   }
@@ -181,6 +181,95 @@
     return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   }
 
+  function remoteOk(url) {
+    return !!url && !/artic\.edu/i.test(url);
+  }
+
+  function figureHtml(v) {
+    return `<figure id="journeyFigure" class="nm-figure">
+      <figcaption>
+        <b>${esc(v.title)}</b>
+        <span>${esc(v.credit)} · ${esc(v.license)}</span>
+        <span>${esc(v.klass)} · ${esc(v.status)}. Reference imagery, not evidence of the catalog records above.</span>
+        <span>${esc(v.note || '')}</span>
+        <a href="${esc(v.href)}">Source and rights</a>
+      </figcaption>
+      <img src="${esc(v.src)}" width="${Number(v.w)}" height="${Number(v.h)}" alt="" loading="lazy" decoding="async">
+    </figure>`;
+  }
+
+  function figureFor(reviewed, media) {
+    const gehrts = (reviewed || []).find(m => m.media_id === 'MEDIA-ODIN-GEHRTS-001');
+    if (gehrts) {
+      return figureHtml({
+        src: 'media/odin-gehrts-1888.jpg', w: 480, h: 732,
+        title: gehrts.title,
+        credit: gehrts.creator_or_photographer || 'Johannes Gehrts',
+        license: gehrts.license,
+        klass: gehrts.media_class,
+        status: gehrts.evidence_status,
+        note: gehrts.description,
+        href: gehrts.source_page_url
+      });
+    }
+    const other = (reviewed || []).find(m => remoteOk(m.image_url));
+    if (other) {
+      return figureHtml({
+        src: other.image_url, w: 960, h: 640,
+        title: other.title,
+        credit: other.creator_or_photographer || other.collection || '',
+        license: other.license,
+        klass: other.media_class,
+        status: other.evidence_status,
+        note: other.description,
+        href: other.source_page_url
+      });
+    }
+    const mus = (media || []).find(m => remoteOk(m.image_url) && (m.rights === 'CC0' || m.rights === 'PUBLIC_DOMAIN'));
+    if (!mus) return '';
+    return figureHtml({
+      src: mus.image_url, w: 843, h: 640,
+      title: mus.provider_title,
+      credit: [mus.creator, mus.date_display].filter(Boolean).join(' · '),
+      license: mus.rights,
+      klass: mus.display_class,
+      status: mus.evidence_status,
+      note: mus.epistemic_note,
+      href: mus.provider_page_url
+    });
+  }
+
+  function bindFocus(scope) {
+    scope.querySelectorAll('.nm-tick, .nm-source').forEach(el => {
+      const toggle = event => {
+        if (event.target.closest('a')) return;
+        el.classList.toggle('is-focus');
+      };
+      el.addEventListener('click', toggle);
+      el.addEventListener('keydown', event => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        el.classList.toggle('is-focus');
+      });
+    });
+  }
+
+  function bindAccent() {
+    const bar = document.querySelector('.nm-scroll-accent');
+    if (!bar) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      bar.hidden = true;
+      return;
+    }
+    const paint = () => {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      bar.style.transform = `scaleX(${p})`;
+    };
+    window.addEventListener('scroll', paint, { passive: true });
+    paint();
+  }
+
   async function render() {
     const params = new URLSearchParams(location.search);
     const id = params.get('id') || 'odin-seidr';
@@ -238,6 +327,8 @@
     for (const m of reviewed) timeline.push(['Later interpretation', m.collection || 'date not stored as its own field', `${m.title}. media_class ${m.media_class}. evidence_status ${m.evidence_status}. ${m.description}`]);
     if (!media.length && !(journey.reviewed_media_ids || []).length) timeline.push(['Later interpretation', 'Gap', 'No museum or reviewed-media id is configured, and no later-interpretation date was found on the focus records.']);
 
+    const visual = document.getElementById('journeyVisual');
+    if (visual) visual.innerHTML = figureFor(reviewed, media);
     const related = (journey.related_ids || []).map(rid => (pack.journeys || []).find(j => j.id === rid)).filter(Boolean);
     const answer = [
       focus.map(describe).join('') || gap('Plain-language answer', 'No focus entity id from this journey was found in belief-catalog-v1.json.'),
@@ -263,7 +354,7 @@
       <section class="nm-block" id="timeline"><h2>Timeline</h2>
         <p>Event date, source date, and later interpretation stay in separate rows. A reference range is not an event date.</p>
         <div class="nm-scroll"><table class="nm-table"><tr><th>Row kind</th><th>Date as stored</th><th>What the record says</th></tr>
-        ${timeline.map(([k, d, t]) => `<tr><th>${esc(k)}</th><td>${esc(d)}</td><td>${esc(t)}</td></tr>`).join('')}
+        ${timeline.map(([k, d, t]) => `<tr class="nm-tick" tabindex="0"><th>${esc(k)}</th><td>${esc(d)}</td><td>${esc(t)}</td></tr>`).join('')}
         </table></div>
       </section>
       <section class="nm-block" id="comparison"><h2>Cross-cultural comparison</h2>
@@ -279,6 +370,7 @@
         <ul>${related.map(j => `<li><a href="journey.html?id=${encodeURIComponent(j.id)}">${esc(j.question)}</a> <span class="nm-status">${esc(j.progress)}</span></li>`).join('')}</ul>
         <p><a href="explore.html?q=${encodeURIComponent(journey.title)}">Search this title in Explore</a></p>
       </section>`;
+    bindFocus(rest);
     indexPromise = get('./search-index-v18.json');
     const findings = document.getElementById('indexFindings');
     if (findings) findings.innerHTML = `<h2>Search-index check</h2>${gap('Compact search index', 'Still loading. Absence checks are not finished.')}`;
@@ -292,6 +384,7 @@
     }
   }
 
+  bindAccent();
   render().catch(err => {
     const rest = document.getElementById('journeyRest') || root;
     rest.innerHTML = gap('Journey data', `Could not load the files this page reads: ${err.message}`);

@@ -68,6 +68,31 @@ body.home-v4 .clarity-prompts a,body.home-v4 .nm-journeys a{
   min-height:44px;padding:0 12px;display:inline-flex;align-items:center;text-decoration:none;font-size:14px
 }
 body.home-v4 .nm-journeys{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+body.home-v4 .clarity-hero{position:relative}
+body.home-v4 .clarity-hero:before{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  left:0;right:0;top:0;height:460px;
+  background:
+    radial-gradient(ellipse at 88% 0%, rgba(141,59,50,.16), transparent 58%),
+    radial-gradient(ellipse at 8% 70%, rgba(70,90,78,.10), transparent 52%);
+}
+body.home-v4 .clarity-hero>*{position:relative;z-index:1}
+body.home-v4 .nm-journeys a.nm-flag{
+  display:flex;gap:10px;align-items:center;flex:1 1 100%;width:100%;
+  padding:6px 8px;border-radius:16px;text-decoration:none;color:inherit;
+  background:var(--nm-ivory-2);border:1px solid var(--nm-line);min-height:96px
+}
+body.home-v4 .nm-journeys a.nm-flag img{width:64px;height:84px;object-fit:cover;object-position:top;border-radius:10px;background:#e7dfd2;flex:none}
+body.home-v4 .nm-journeys a.nm-flag b{display:block;font-family:var(--nm-serif);font-size:1.05rem;font-weight:500;color:var(--nm-ink)}
+body.home-v4 .nm-journeys a.nm-flag small{display:block;color:var(--nm-muted);font-size:12px;line-height:1.35;margin-top:3px}
+body.home-v4 .nm-herofig{margin:0;display:grid;gap:8px}
+body.home-v4 .nm-herofig img{width:100%;height:auto;max-height:460px;object-fit:cover;object-position:top;border-radius:16px;background:#e7dfd2;display:block}
+body.home-v4 .nm-herofig figcaption{font-size:13px;line-height:1.4;color:var(--nm-muted)}
+body.home-v4 .nm-herofig figcaption b{display:block;color:var(--nm-ink);font-family:var(--nm-serif);font-size:1.05rem;font-weight:500}
+.nm-rowthumb{display:flex;gap:10px;align-items:flex-start;margin:0 0 8px}
+.nm-rowthumb img{width:56px;height:72px;object-fit:cover;object-position:top;border-radius:8px;background:rgba(244,239,230,.08);flex:none}
+.nm-rowthumb figcaption{font-size:12px;line-height:1.35}
+.nm-empty{padding:16px;border:1px dashed rgba(244,239,230,.28);border-radius:16px}
 body.home-v4 .nm-note{color:var(--nm-muted);font-size:13px;margin:14px 0 0;max-width:62ch}
 body.home-v4 .clarity-feature,body.home-v4 .clarity-action,body.home-v4 .clarity-step,body.home-v4 .clarity-live article,body.home-v4 .clarity-topics a,body.home-v4 .clarity-research-door,body.home-v4 .home-world-links a{
   background:var(--nm-ivory-2);border-color:var(--nm-line);color:var(--nm-ink)
