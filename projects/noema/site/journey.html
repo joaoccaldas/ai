@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Journey · NOEMA</title>
+<meta name="description" content="A source-bounded NOEMA journey. Shown fields keep the status stored on their records. Missing data stays visible.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="noema-mvp.css">
+<link rel="stylesheet" href="journey.css">
+</head>
+<body class="home-v4">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="home-shell">
+<header class="home-top">
+<a class="home-logo" href="index.html">NOEMA</a>
+<button class="nm-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+<nav id="primary-nav" class="home-nav" aria-label="Primary">
+<a href="index.html">Home</a>
+<a href="explore.html">Explore</a>
+<a href="human-meaning-atlas.html">Atlas</a>
+<a href="lineages.html">Connections</a>
+<a href="research.html">Research</a>
+</nav>
+</header>
+<main id="main">
+<article id="journey" class="nm-journey" aria-live="polite">Loading journey from existing records…</article>
+</main>
+<footer class="clarity-footer"><span>NOEMA · a journey shows stored fields and explicit gaps.</span><span><a href="explore.html">Explore</a> · <a href="library.html">Library</a></span></footer>
+</div>
+<script src="journey.js" defer></script>
+<script src="noema-nav.js" defer></script>
+</body>
+</html>

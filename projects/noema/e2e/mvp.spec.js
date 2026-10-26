@@ -83,3 +83,58 @@ for (const file of P0) {
     expect(errors, errors.join('\n')).toEqual([]);
   });
 }
+
+const LEGACY = [
+  'altered-states.html',
+  'belief-systems.html',
+  'rituals.html',
+  'cognition.html',
+  'sources-v1.html',
+  'automation-pulse.html',
+  'religion-decomposition.html',
+  'dashboard-v1.html',
+  'observatory-v6.html',
+  'journey.html?id=odin-seidr',
+];
+
+for (const file of LEGACY) {
+  test(`${file} has no horizontal overflow at 390px and no console errors`, async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', err => errors.push(String(err)));
+    page.on('console', msg => {
+      if (msg.type() === 'error') errors.push(msg.text());
+    });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto(file, { waitUntil: 'domcontentloaded' });
+    await page.waitForTimeout(file.startsWith('journey') ? 1500 : 900);
+    const overflow = await page.evaluate(() => Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - document.documentElement.clientWidth);
+    expect(overflow, `${file} overflow ${overflow}; ${errors.join(' | ')}`).toBeLessThanOrEqual(1);
+    expect(errors, errors.join('\n')).toEqual([]);
+  });
+}
+
+test('Odin journey shows a source locator and the seiðr gap', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('journey.html?id=odin-seidr', { waitUntil: 'domcontentloaded' });
+  const source = page.locator('#sources a[href="https://www.britannica.com/topic/Odin-Norse-deity"]');
+  await expect(source).toBeVisible();
+  await expect(page.locator('#sources')).toContainText('REFERENCE_ONLY');
+  await expect(page.locator('#indexFindings')).toContainText('seiðr');
+  await expect(page.locator('#timeline')).toContainText('Event date');
+  await expect(page.locator('#timeline')).toContainText('broad_reference_range');
+});
+
+test('home search groups Odin into topics, traditions, and sources', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('index.html', { waitUntil: 'domcontentloaded' });
+  await page.locator('#homeQ').fill('Odin');
+  const results = page.locator('#homeResults');
+  await expect(results).toBeVisible();
+  await expect(results).toContainText('Topics');
+  await expect(results).toContainText('Traditions');
+  await expect(results).toContainText('Sources');
+  await expect(results.locator('a[href="journey.html?id=odin-seidr"]').first()).toBeVisible();
+  await expect(results.locator('a[href*="britannica.com/topic/Odin"]')).toBeVisible();
+  const box = await results.boundingBox();
+  expect(box?.width ?? 0).toBeLessThanOrEqual(390);
+});

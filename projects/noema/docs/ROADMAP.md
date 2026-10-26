@@ -1,6 +1,6 @@
 # NOEMA commercial roadmap
 
-Last updated: 2026-10-21
+Last updated: 2026-10-26
 
 NOEMA is an evidence-first discovery product for human belief, spirituality, ritual, and reports of the unexplained. It is built on comparative-religion datasets, a 17-dimension ontology, source provenance, and candidate correlations. Similarity generates a question, never a conclusion.
 
@@ -68,7 +68,15 @@ Ship only after the product is usable and honest under the same checks a buyer w
 
 ## Where this tree sits
 
-G0 and the front door of G1 are in progress in the MVP branch: the redirect loop is gone, primary navigation is shared, and the observatory no longer throws when WebGL is unavailable. G2 journeys are linked as starting points, not certified paths. G3 denominators already exist inside Connections and Compare and are not yet the first thing a new visitor reads. G4 performance and a full accessibility audit are not yet measured.
+Checked 2026-10-26 on branch `cursor/noema-mobile-mvp-8193`. Evidence is lab-only (Playwright and a mobile Lighthouse run against the local static server). Nothing here is a field Core Web Vitals measurement.
+
+| Gate | Status | Evidence |
+| --- | --- | --- |
+| G0 Ground truth | Partly met | Journey copy is assembled from `belief-catalog-v1.json`, the compact search index, museum media, and reviewed media. `profile_status`, `evidence_status`, and candidate labels are rendered as stored. seiðr, event date, and the encyclopedia source date are visible gaps. Playwright: `Odin journey shows a source locator and the seiðr gap`. |
+| G1 Product clarity | Partly met | Home is not a redirect. Primary nav is Home, Explore, Atlas, Connections, Research. User-facing legacy pages load that nav. `dashboard-v1.html` and `observatory-v6.html` stay out of the primary five, per [audit/PAGE_DISPOSITION.md](audit/PAGE_DISPOSITION.md). Playwright covers P0 and those legacy URLs for 390px overflow and console errors. |
+| G2 Trusted discovery | Partly met | Odin opens from the Home flagship card, Home search, and Explore results for Odin (`journey.html?id=odin-seidr`) and shows a Britannica locator with `REFERENCE_ONLY`. The other four journeys render only records that exist and are marked `IN_PROGRESS`. Candidate misread rate is still not measured. |
+| G3 Understandable insights | Not met as a product gate | Compare and Connections still show `n` in the current pattern and compare views. The journey comparison quotes the catalog similarity rule and does not add a probability. A first-time visitor is not yet led by a denominator on every pattern surface. |
+| G4 Release certification | Partly met in the lab | Mobile Lighthouse numbers are in [audit/lighthouse-mobile.md](audit/lighthouse-mobile.md). Skip link, focus, and the primary label are in the MVP checks. A full accessibility audit and field INP are still open. Three.js on the observatory loads only after “Open the 3D view”. |
 
 ## KPI scorecard
 
@@ -79,12 +87,12 @@ These are proposals for what to instrument. No baseline has been measured in pro
 | Home stays on Home | 0 meta refreshes | G1 | Addressed in this MVP; re-check in CI |
 | P0 overflow at 390px | 0 pages | G1 | Covered by Playwright |
 | P0 console errors | 0 | G1 | Covered by Playwright |
-| Flagship journey completion | Visitor reaches a sourced record or an explicit empty state | G2 | Not measured |
+| Flagship journey completion | Visitor reaches a sourced record or an explicit empty state | G2 | Odin path covered by Playwright. Four scaffolds are explicit in-progress states. |
 | Candidate misread rate | Share of sessions that treat a candidate as a conclusion, from moderated review | G2–G3 | Not measured |
-| Provenance visible | 100% of claim-like statements in the journey show a source or an explicit gap | G2 | Not measured |
-| Insight with denominator | 100% of public pattern rows show `n` and a caveat | G3 | Present in current pattern JSON; not certified in the UI |
-| LCP / INP / CLS | ≤ 2.5s / ≤ 200ms / ≤ 0.1 | G4 | Not measured |
-| Accessibility blockers | 0 critical issues on P0 | G4 | Not audited beyond skip link, focus, and labels |
+| Provenance visible | 100% of claim-like statements in the journey show a source or an explicit gap | G2 | Odin journey shows the Britannica locator, `REFERENCE_ONLY`, and gaps where a field is absent. Not certified for every page. |
+| Insight with denominator | 100% of public pattern rows show `n` and a caveat | G3 | Present in current pattern JSON; not certified as the first thing on every pattern view |
+| LCP / INP / CLS | ≤ 2.5s / ≤ 200ms / ≤ 0.1 | G4 | Lab Lighthouse only. See [audit/lighthouse-mobile.md](audit/lighthouse-mobile.md). INP was not collected. |
+| Accessibility blockers | 0 critical issues on P0 | G4 | Lighthouse accessibility scores are in the same lab note. Not a manual audit. |
 
 ## Deliberately deferred
 
@@ -92,7 +100,7 @@ These are proposals for what to instrument. No baseline has been measured in pro
 - Any price, seat, or API quota. See the proposal below; it is not a launched offer.
 - Promoting candidates into approved claims, probabilities, or origin stories.
 - Phylogenetic comparative models, covariance-aware spatial models, and a contact network. Those stay on the research roadmap until they exist as models.
-- Rewriting every legacy research page into the new visual system. P0 is first.
+- Rewriting every legacy research page into the new visual system. Shared nav and overflow fixes now cover the linked legacy pages. `dashboard-v1.html` and `observatory-v6.html` are still separate surfaces.
 - Deleting superseded HTML. See [audit/PAGE_DISPOSITION.md](audit/PAGE_DISPOSITION.md).
 - Replacing the observatory’s remote Three.js build with a vendored runtime. The page already remains usable when that script fails.
 

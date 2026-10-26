@@ -16,6 +16,7 @@
     'rituals.html': 'explore',
     'altered-states.html': 'explore',
     'entity.html': 'explore',
+    'journey.html': 'explore',
     'human-meaning-atlas.html': 'atlas',
     'deep-time.html': 'atlas',
     'history.html': 'atlas',
