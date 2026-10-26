@@ -22,35 +22,46 @@ const seed = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0;
   t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
   return ((t ^ t >>> 14) >>> 0) / 4294967296; };
 
+/* Helioforge — fictional cloud-AI portfolio. Reporting currency is EUR.
+   Regions bill in USD, EUR, JPY and BRL; weights are the synthetic sales mix.
+   fx* is local currency per 1 EUR. */
+export const PORTFOLIO = 'Helioforge';
+export const GROUP = 'Global';
+
 export const MARKETS = [
-  { id:'SE', name:'Sweden',  ccy:'SEK', fxPY:11.42, fxAct:11.06, fxOpen:11.15, w:0.36 },
-  { id:'DK', name:'Denmark', ccy:'DKK', fxPY:7.46,  fxAct:7.46,  fxOpen:7.46,  w:0.22 },
-  { id:'FI', name:'Finland', ccy:'EUR', fxPY:1.00,  fxAct:1.00,  fxOpen:1.00,  w:0.20 },
-  { id:'NO', name:'Norway',  ccy:'NOK', fxPY:11.55, fxAct:11.88, fxOpen:11.80, w:0.22 }
+  { id:'NA', name:'North America', ccy:'USD', fxPY:1.08, fxAct:1.04, fxOpen:1.07, w:0.44 },
+  { id:'EU', name:'Europe',        ccy:'EUR', fxPY:1.00, fxAct:1.00, fxOpen:1.00, w:0.28 },
+  { id:'AP', name:'Asia Pacific',  ccy:'JPY', fxPY:158,  fxAct:164,  fxOpen:161,  w:0.18 },
+  { id:'LA', name:'Latin America', ccy:'BRL', fxPY:5.70, fxAct:6.05, fxOpen:5.95, w:0.10 }
 ];
 
 /* elas — own-price elasticity of demand (Δunits% per Δprice%). Negative by
-   definition; big-ticket built-in appliances are less elastic than small
-   domestic appliances, which face more shelf competition. Applied to open
-   months so a price move carries a realistic volume response. */
+   definition. Multi-year model-hosting commits are stickier than usage packs
+   and developer eval seats, which switch more easily. Applied to open months
+   so a price move carries a realistic volume response.
+   cogK scales class COGS: usage and eval carry more hosting cost than
+   dedicated platform seats. price is a gross EUR-equivalent plan unit. */
 export const BUS = [
-  { id:'LAU', name:'Laundry',       price:1180, vol:1.00, elas:-0.80,
-    seas:[.95,.92,.98,1.00,1.02,.95,.86,.93,1.05,1.06,1.16,1.12] },
-  { id:'COO', name:'Cooking',       price:1450, vol:0.78, elas:-0.70,
-    seas:[.86,.84,.92,.95,.98,.92,.80,.88,1.06,1.14,1.38,1.27] },
-  { id:'REF', name:'Refrigeration', price:1320, vol:0.72, elas:-0.75,
-    seas:[.90,.88,.95,1.00,1.08,1.14,1.05,.98,.96,.98,1.14,.94] },
-  { id:'DIS', name:'Dishwashing',   price:980,  vol:0.86, elas:-0.95,
-    seas:[.94,.92,.99,1.02,1.00,.94,.84,.92,1.06,1.08,1.18,1.11] },
-  { id:'SDA', name:'SDA',           price:395,  vol:2.60, elas:-1.30,
-    seas:[1.12,1.02,1.00,.98,.94,.86,.78,.88,1.00,1.06,1.28,1.18] }
+  { id:'INF', name:'Inference API', price:1200, vol:1.80, elas:-1.05, cogK:1.15,
+    seas:[.98,.96,1.02,.99,1.00,1.04,.94,.92,1.03,1.04,1.06,1.02] },
+  { id:'APP', name:'App Platform',  price:2600, vol:0.70, elas:-0.55, cogK:0.85,
+    seas:[1.08,.96,1.06,.97,.98,1.04,.90,.88,1.00,1.02,1.06,1.05] },
+  { id:'AGT', name:'Agent Runtime', price:9400, vol:0.28, elas:-0.75, cogK:0.95,
+    seas:[.94,.92,1.04,.96,.98,1.08,.86,.88,1.02,1.06,1.12,1.14] },
+  { id:'HST', name:'Model Hosting', price:39000, vol:0.09, elas:-0.45, cogK:0.80,
+    seas:[.90,.88,1.02,.94,.98,1.16,.84,.86,1.04,1.08,1.14,1.16] },
+  { id:'EVL', name:'Eval & Data',   price:780,  vol:1.10, elas:-1.25, cogK:1.35,
+    seas:[1.14,1.02,.98,.96,.94,.90,.84,.88,1.08,1.02,1.10,1.14] }
 ];
 export const ELAS = Object.fromEntries(BUS.map(b => [b.id, b.elas]));
 
+/* Commercial tiers. pm is an ASP multiplier; cog is COGS as a share of gross
+   ASP before the business-unit cogK. Software COGS is hosting and support,
+   not a retail bill of materials. */
 export const CLASSES = [
-  { id:'Silver',   pm:0.70, cog:0.665, col:'#B9BCB6' },
-  { id:'Gold',     pm:1.00, cog:0.600, col:'#B08A3E' },
-  { id:'Platinum', pm:1.52, cog:0.515, col:'#1C1B1A' }
+  { id:'Core',  pm:0.72, cog:0.34, col:'#B9BCB6' },
+  { id:'Plus',  pm:1.00, cog:0.22, col:'#B08A3E' },
+  { id:'Scale', pm:1.65, cog:0.15, col:'#1C1B1A' }
 ];
 
 export const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -85,9 +96,9 @@ function buildSkus(r) {
         name: `${bu.name} ${cls.id} ${String.fromCharCode(65 + j)}`,
         bu: bu.id, cls: cls.id,
         basePrice: bu.price * cls.pm * (0.86 + r() * 0.28),
-        baseCogsR: cls.cog * (0.96 + r() * 0.08),
-        baseDisc: 0.09 + r() * 0.10,                 // total gross-to-net deduction
-        rebShare: 0.24 + r() * 0.22,                 // of that, the off-invoice portion
+        baseCogsR: Math.min(0.72, cls.cog * (bu.cogK ?? 1) * (0.96 + r() * 0.08)),
+        baseDisc: 0.03 + r() * 0.07,                 // commit discount / marketplace fee
+        rebShare: 0.18 + r() * 0.16,                 // of that, credits and usage true-ups
         vol: bu.vol * (0.55 + r() * 0.95) / n * 10,
         trend: 0.955 + r() * 0.13,
         mapped: r() > 0.035                          // masterdata gaps, on purpose
@@ -108,7 +119,9 @@ export function generateAll() {
       const bu = BUS.find(b => b.id === s.bu);
       const localFx = m.ccy === 'EUR' ? 1 : m.fxPY;
       const mktPrice = s.basePrice * (0.93 + r() * 0.15) * localFx;
-      const mktVol   = s.vol * m.w * (0.80 + r() * 0.45) * 140;
+      // Volume scalar is chosen so the current-year book sits near the 2026
+      // long-term plan (about €140m), not a separate retail-sized history.
+      const mktVol   = s.vol * m.w * (0.80 + r() * 0.45) * 90;
 
       for (let i = 0; i < N_MONTHS; i++) {
         const y = yearOf(i), mo = monthOf(i);        // 0 … HIST_YEARS, year over year

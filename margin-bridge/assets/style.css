@@ -295,12 +295,12 @@ a.mark{text-decoration:none;color:inherit;cursor:pointer}
 .nav button.lt:hover{color:var(--bad)}
 .nav button.lt.on{border-color:var(--brass);color:var(--brass)}
 .scrollx{overflow-x:auto}
-table.mfp{min-width:820px}
-table.mfp th.plan,table.mfp td:nth-child(n){}
+table.ltp{min-width:820px}
+table.ltp th.plan,table.ltp td:nth-child(n){}
 th.plan{color:var(--brass)}
 th.budget{color:var(--ink)}
 .yk{display:inline-block;margin-left:4px;font-size:8px;color:var(--steel);vertical-align:super}
-table.grid.mfp td .cellin,table.grid td .cellin{min-width:48px}
+table.grid.ltp td .cellin,table.grid td .cellin{min-width:48px}
 table.tree td .dot,td.rowlab .dot{flex:none}
 
 /* --------------------------------- print ------------------------------- */

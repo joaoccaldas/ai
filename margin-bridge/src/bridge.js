@@ -107,7 +107,7 @@ export function bridge(base, comp, measure = 'gm') {
     { id:'mix',    lab:'Mix',       v:mix,       grp:'Mix'       },
     { id:'price',  lab:'Price',     v:price,     grp:'Pricing'   },
     { id:'disc',   lab:'Discount',  v:disc,      grp:'Pricing'   },
-    { id:'reb',    lab:'Rebate',    v:reb,       grp:'Pricing'   },
+    { id:'reb',    lab:'Credits',   v:reb,       grp:'Pricing'   },
     ...(measure === 'gm' ? [{ id:'cogs', lab:'COGS', v:cogs, grp:'Cost' }] : []),
     { id:'life',   lab:'Lifecycle', v:lifecycle, grp:'Lifecycle' },
     { id:'fx',     lab:'FX',        v:fx,        grp:'FX'        }

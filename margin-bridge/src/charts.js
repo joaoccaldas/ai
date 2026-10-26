@@ -364,7 +364,7 @@ export function buBubble(host, { pts }, height = 232) {
 }
 
 /* --------------------- long-term plan: multi-year line ------------------- */
-export function mfpLine(host, { labels, series, splitAt, band, height = 250, fmt = eur }) {
+export function ltpLine(host, { labels, series, splitAt, band, height = 250, fmt = eur }) {
   clear(host);
   const W = Math.max(460, host.clientWidth || 780), H = height;
   const s = svg(W, H); host.appendChild(s);

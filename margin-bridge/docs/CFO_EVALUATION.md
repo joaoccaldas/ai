@@ -2,7 +2,7 @@
 
 ## Decision
 
-**Approve as a controlled Nordic FP&A pilot. Do not yet treat it as a production planning system or system of record.**
+**Approve as a controlled Helioforge FP&A pilot. Do not yet treat it as a production planning system or system of record.**
 
 The model is materially stronger than a dashboard mock-up. It has a coherent driver engine, version separation, an auditable override hierarchy, exact price-volume-mix reconciliation, uncertainty analysis and useful exports. It is suitable for validating financial definitions, workflow and decision usefulness with a small finance team.
 
@@ -11,7 +11,7 @@ The model is materially stronger than a dashboard mock-up. It has a coherent dri
 - Actual, Budget and Forecast coexist without overwriting each other.
 - Closed months are immutable; only open months respond to assumptions.
 - Forecasts inherit seasonality from prior-year same-month history.
-- Assumptions resolve by specificity: SKU, Market × BU, BU, Market, Nordics.
+- Assumptions resolve by specificity: SKU, Region × product line, product line, region, Global.
 - Product-margin and net-sales bridges reconcile with no residual.
 - FX is isolated rather than contaminating price and cost.
 - Historical volatility, block-correlated scenario ranges and Monte Carlo probability are visible.
@@ -23,7 +23,7 @@ The model is materially stronger than a dashboard mock-up. It has a coherent dri
 These were implemented and are in the committed code and tests — not aspirational.
 
 1. **The engine was committed.** The prior scaffold shipped `index.html` loading `src/app.js`, but `src/` and `test/` had never been committed, so the page 404'd on its own engine. All eight modules and the tests are now in the branch, and a new `test/static.test.js` fails the build if `index.html` ever again references a file that is not on disk.
-2. **Premiumisation is now exactly unit-neutral** within each Market × BU × month — a reallocation of units between classes, not a per-class scaling. Drift is 0.0e+0%, asserted in the engine test. The earlier build drifted ~0.3% and the doc had claimed a fix that was not in the code.
+2. **Premiumisation is now exactly unit-neutral** within each Region × product line × month — a reallocation of units between tiers, not a per-tier scaling. Drift is 0.0e+0%, asserted in the engine test. The earlier build drifted ~0.3% and the doc had claimed a fix that was not in the code.
 3. **Gross-to-net was split** into on-invoice discount and off-invoice rebate/returns, carried as two fact fields and walked as two separate bridge buckets.
 4. **Price elasticity** was added as a per-BU dial, so a price move carries a realistic volume response instead of dropping straight to margin.
 5. **A lifecycle bucket** was added: launches and delists are separated out of Mix, and volume/mix/price/rate effects are measured on continuing SKUs only.

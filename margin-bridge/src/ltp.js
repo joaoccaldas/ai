@@ -1,19 +1,23 @@
 /* ============================================================================
-   mfp.js — long-term plan (LTP) for a Nordic appliance portfolio.
+   ltp.js — Helioforge long-term plan.
 
-   An annual planning model that sits above the monthly margin engine. It starts
-   from real history, projects the plan horizon, and breaks the top line down two
-   ways that must always reconcile:
+   Helioforge is a fictional cloud-AI company. This annual planning model sits
+   above the monthly margin engine. It starts from synthetic history, projects
+   the plan horizon, and breaks the top line down two ways that must always
+   reconcile:
 
-       Nordics  =  Σ sales channels  =  Σ (channel × business unit)
+       Global  =  Σ go-to-market channels  =  Σ (channel × product line)
 
-   Everything is built top-down from Nordics net sales × a channel mix × a BU
-   mix, so a parent is always the exact sum of its children. Future years are
-   prepopulated from the trend and are fully overwritable — growth, margin,
-   price, channel mix and BU mix are all assumptions the planner owns.
+   Everything is built top-down from Global net sales × a channel mix × a
+   product-line mix, so a parent is always the exact sum of its children.
+   Future years are prepopulated from the trend and are fully overwritable —
+   growth, margin, price, channel mix and product-line mix are assumptions
+   the planner owns.
 
    Metrics carried per cell: net sales (external, EUR), product margin (EUR),
-   product-margin %, and volume (units, derived from net sales ÷ ASP).
+   product-margin %, and plan units (net sales ÷ ASP). A plan unit is a
+   commercial commit — usage pack, seat-year, workspace or endpoint — not a
+   single physical item. Figures are synthetic.
    ========================================================================== */
 
 import { BUS } from './data.js';
@@ -23,15 +27,15 @@ export const ACTUAL_YEARS = [2022, 2023, 2024, 2025];
 export const BUD_YEAR   = 2026;                 // budget year, with actual YTD
 export const YTD_MONTH  = 7;                     // 2026 actuals through July
 export const PLAN_YEARS = [2027, 2028, 2029, 2030, 2031];
-export const MFP_YEARS  = [...ACTUAL_YEARS, BUD_YEAR, ...PLAN_YEARS];
+export const LTP_YEARS  = [...ACTUAL_YEARS, BUD_YEAR, ...PLAN_YEARS];
 export const BASE_YEAR  = BUD_YEAR;              // plan is launched off the 2026 budget
 
 export const CHANNELS = [
-  { id:'ERT', name:'ERT',              long:'Electro retail trade',   col:'#2F5D50' },
-  { id:'KRT', name:'KRT',              long:'Kitchen retail trade',   col:'#B08A3E' },
-  { id:'DP',  name:'Direct Projects',  long:'Project & contract',     col:'#3f6d8a' },
-  { id:'D2C', name:'D2C',              long:'Direct to consumer',     col:'#9E1B1B' },
-  { id:'CS',  name:'Customer Service', long:'Service, parts & care',  col:'#8a6d3f' }
+  { id:'ENT', name:'Enterprise',  long:'Named-account direct',  col:'#2F5D50' },
+  { id:'SLF', name:'Self-serve',  long:'Product-led sign-up',   col:'#9E1B1B' },
+  { id:'PTR', name:'Partners',    long:'SI & reseller',         col:'#3f6d8a' },
+  { id:'MKT', name:'Marketplace', long:'Cloud marketplace',     col:'#B08A3E' },
+  { id:'SVC', name:'Services',    long:'Success & delivery',    col:'#8a6d3f' }
 ];
 export const CH_IDS = CHANNELS.map(c => c.id);
 
@@ -41,22 +45,24 @@ const seed = a => () => { a |= 0; a = a + 0x6D2B79F5 | 0;
   t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
   return ((t ^ t >>> 14) >>> 0) / 4294967296; };
 
-const TOTAL_2022 = 148e6;                         // Nordics net sales, external
-const CH_SHARE_22 = { ERT:.34, KRT:.23, DP:.17, D2C:.14, CS:.12 };
-const CH_GROWTH   = { ERT:.005, KRT:.03, DP:.07, D2C:.14, CS:.05 };  // ns CAGR by channel
-const CH_PM       = { ERT:.27, KRT:.31, DP:.29, D2C:.38, CS:.42 };   // product-margin rate
-const BU_SHARE = {                                 // BU split within each channel (Σ=1)
-  ERT:{ LAU:.26, COO:.22, REF:.22, DIS:.16, SDA:.14 },
-  KRT:{ LAU:.18, COO:.34, REF:.24, DIS:.18, SDA:.06 },
-  DP: { LAU:.14, COO:.30, REF:.28, DIS:.22, SDA:.06 },
-  D2C:{ LAU:.18, COO:.14, REF:.14, DIS:.14, SDA:.40 },
-  CS: { LAU:.22, COO:.22, REF:.20, DIS:.18, SDA:.18 }
+const TOTAL_2022 = 72e6;                          // Global net sales, external EUR
+const CH_SHARE_22 = { ENT:.40, SLF:.24, PTR:.14, MKT:.12, SVC:.10 };
+const CH_GROWTH   = { ENT:.14, SLF:.26, PTR:.16, MKT:.20, SVC:.06 }; // ns CAGR by channel
+const CH_PM       = { ENT:.74, SLF:.82, PTR:.68, MKT:.70, SVC:.42 }; // product-margin rate
+const BU_SHARE = {                                 // product-line split within each channel (Σ=1)
+  ENT:{ INF:.22, APP:.26, AGT:.24, HST:.20, EVL:.08 },
+  SLF:{ INF:.40, APP:.22, AGT:.14, HST:.04, EVL:.20 },
+  PTR:{ INF:.18, APP:.30, AGT:.22, HST:.18, EVL:.12 },
+  MKT:{ INF:.36, APP:.24, AGT:.16, HST:.10, EVL:.14 },
+  SVC:{ INF:.12, APP:.18, AGT:.28, HST:.30, EVL:.12 }
 };
-const ASP = { LAU:1180, COO:1450, REF:1320, DIS:980, SDA:395 };      // net €/unit, 2022
-const PRICE_CAGR = 0.02;
+const ASP = { INF:1100, APP:2400, AGT:8600, HST:36000, EVL:720 };    // net €/plan unit, 2022
+const PRICE_CAGR = 0.03;
 
-/* Month seasonality for spreading an annual plan to a budget (appliance shape). */
-export const SEAS = [.082,.078,.086,.088,.090,.083,.070,.078,.090,.092,.084,.079];
+/* Month weights for spreading an annual plan to a budget. SaaS shape:
+   quarter-end closes, a mild summer dip, and a December enterprise flush.
+   The twelve weights sum to 1. */
+export const SEAS = [.080,.076,.088,.078,.080,.086,.074,.072,.082,.086,.090,.108];
 
 /** Build the historical actuals, the 2026 budget and the 2026 YTD actual. */
 export function buildHistory() {
@@ -126,13 +132,13 @@ function defaultChShare(baseShare, y) {
 
 /* ------------------------------- projection ------------------------------- */
 /**
- * @param mfpState { growth:{y:%}, pm:{y:%}, price:{y:%}, nsAbs:{y:€},
+ * @param ltpState { growth:{y:%}, pm:{y:%}, price:{y:%}, nsAbs:{y:€},
  *                   chShare:{y:{ch:%}}, buShare:{ch:{bu:%}} }  — all optional overrides
  * @returns { years:{y:{byChBu, tot, ch}}, base, defaults, editable flags }
  */
-export function project(hist, mfpState = {}) {
+export function project(hist, ltpState = {}) {
   const { H, bud } = hist;
-  const ov = { mode:'total', growth:{}, pm:{}, price:{}, nsAbs:{}, buGrowth:{}, chShare:{}, buShare:{}, ...mfpState };
+  const ov = { mode:'total', growth:{}, pm:{}, price:{}, nsAbs:{}, buGrowth:{}, chShare:{}, buShare:{}, ...ltpState };
 
   // --- actual + budget years, straight from history ---
   const years = {};
@@ -232,7 +238,7 @@ export function project(hist, mfpState = {}) {
   return { years, base, defaults, histCagr };
 }
 
-/* Convenience: pull a Nordics-total series across all years for one metric. */
-export const totalSeries = (proj, key) => MFP_YEARS.map(y => proj.years[y].tot[key]);
+/* Convenience: pull a Global-total series across all years for one metric. */
+export const totalSeries = (proj, key) => LTP_YEARS.map(y => proj.years[y].tot[key]);
 export const isActual = y => y <= BUD_YEAR;
 export const yearKind = y => ACTUAL_YEARS.includes(y) ? 'actual' : y === BUD_YEAR ? 'budget' : 'plan';

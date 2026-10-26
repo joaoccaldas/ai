@@ -17,11 +17,11 @@ export const DRIVERS = [
   { id:'growth',  name:'Volume growth',    unit:'%',  min:-20, max:20, step:.5,  lvl:true  },
   { id:'price',   name:'Price',            unit:'%',  min:-10, max:15, step:.25, lvl:true  },
   { id:'disc',    name:'On-invoice disc.', unit:'pp', min:-6,  max:8,  step:.25, lvl:true  },
-  { id:'rebate',  name:'Rebate & returns', unit:'pp', min:-5,  max:6,  step:.25, lvl:true  },
+  { id:'rebate',  name:'Credits & true-ups', unit:'pp', min:-5,  max:6,  step:.25, lvl:true  },
   { id:'cogs',    name:'COGS per unit',    unit:'%',  min:-12, max:18, step:.25, lvl:true  },
-  { id:'premium', name:'Shift to Platinum',unit:'pp', min:-8,  max:12, step:.5,  lvl:true  },
-  { id:'fxSE',    name:'SEK vs EUR',       unit:'%',  min:-15, max:15, step:.5,  lvl:false },
-  { id:'fxNO',    name:'NOK vs EUR',       unit:'%',  min:-15, max:15, step:.5,  lvl:false }
+  { id:'premium', name:'Shift to Scale',   unit:'pp', min:-8,  max:12, step:.5,  lvl:true  },
+  { id:'fxNA',    name:'USD vs EUR',       unit:'%',  min:-15, max:15, step:.5,  lvl:false },
+  { id:'fxAP',    name:'JPY vs EUR',       unit:'%',  min:-15, max:15, step:.5,  lvl:false }
 ];
 export const LEVELLED = DRIVERS.filter(d => d.lvl).map(d => d.id);
 
@@ -82,8 +82,8 @@ export function fxOf(state, k, i) {
   if (!isCY(i)) return f.py;
   let r = i <= state.cursor ? f.act : f.open;
   if (i > state.cursor) {                       // only open months can be re-planned
-    if (k === 'SE') r = r / (1 + val(state,'fxSE',{}) / 100);
-    if (k === 'NO') r = r / (1 + val(state,'fxNO',{}) / 100);
+    if (k === 'NA') r = r / (1 + val(state,'fxNA',{}) / 100);
+    if (k === 'AP') r = r / (1 + val(state,'fxAP',{}) / 100);
   }
   return r;
 }
@@ -162,20 +162,20 @@ export function buildForecast(FACTS, H, state) {
 
     const gk = `${f.k}|${f.bu}|${monthOf(f.i)}`;
     const G = groups[gk] ??= { pm: val(state,'premium',{ k:f.k, bu:f.bu }) / 100,
-                               cls: { Silver:{q:0,rows:[]}, Gold:{q:0,rows:[]}, Platinum:{q:0,rows:[]} } };
+                               cls: { Core:{q:0,rows:[]}, Plus:{q:0,rows:[]}, Scale:{q:0,rows:[]} } };
     const c = G.cls[f.cls]; if (c) { c.q += units; c.rows.push(row); }
   }
 
   /* Pass 2 — premiumisation as an exact reallocation. Move a fixed number of
-     units out of Silver into Platinum within each group; the group total never
+     units out of Core into Scale within each group; the group total never
      changes, so premiumisation is unit-neutral to the last decimal (it changes
      only the margin-rate mix, which is the whole point). Premium is a portfolio
      lever, resolved at Market × BU — SKU-level premium overrides don't apply. */
   for (const gk in groups) {
     const G = groups[gk];
     if (!G.pm) continue;
-    const S = G.cls.Silver, P = G.cls.Platinum, T = S.q + G.cls.Gold.q + P.q;
-    let move = G.pm * T;                         // + shifts Silver → Platinum
+    const S = G.cls.Core, P = G.cls.Scale, T = S.q + G.cls.Plus.q + P.q;
+    let move = G.pm * T;                         // + shifts Core → Scale
     if (move > 0) move = Math.min(move, S.q, P.q > 0 ? Infinity : 0);
     else          move = -Math.min(-move, P.q, S.q > 0 ? Infinity : 0);
     if (S.q > 0 && move) { const fS = (S.q - move) / S.q; for (const r of S.rows) r.units *= fS; }
@@ -223,24 +223,24 @@ export function byMonth(rows, pred) {
 /* --------------------------- operating costs → EBIT ----------------------
    Product margin is where the fact table stops. To reach EBIT we layer the
    below-the-line operating costs the P&L actually carries, as a share of net
-   sales and — deliberately — different by business unit: small domestic
-   appliances spend far more on advertising and promotion than built-in
-   laundry, so business-unit mix moves EBIT, not just product margin. Rates are
+   sales and — deliberately — different by product line: Eval & Data spends
+   more on acquisition than Model Hosting, and Agent Runtime is still in
+   investment mode, so mix moves EBIT, not just product margin. Rates are
    the same across versions, so variance flows from what actually changed
    (volume, mix, price, cost), not from re-planning overhead.                */
 export const OPEX = {
-  //            A&P     selling logistics SG&A    D&A
-  LAU: { anp:.074, sell:.049, logi:.045, sga:.055, da:.019 },
-  COO: { anp:.070, sell:.048, logi:.051, sga:.055, da:.021 },
-  REF: { anp:.072, sell:.050, logi:.056, sga:.056, da:.020 },
-  DIS: { anp:.078, sell:.049, logi:.045, sga:.055, da:.018 },
-  SDA: { anp:.115, sell:.061, logi:.038, sga:.061, da:.012 }   // SDA: heavy A&P, thin margin
+  //            demand  sales   cloud   R&D+G&A  D&A
+  INF: { anp:.08, sell:.14, logi:.012, sga:.18, da:.04 },
+  APP: { anp:.11, sell:.20, logi:.008, sga:.15, da:.03 },
+  AGT: { anp:.13, sell:.22, logi:.008, sga:.18, da:.035 },
+  HST: { anp:.05, sell:.16, logi:.015, sga:.14, da:.06 },
+  EVL: { anp:.16, sell:.18, logi:.008, sga:.16, da:.02 }   // eval: heavy acquisition
 };
 export const OPEX_LINES = [
-  { key:'anp',  name:'Advertising & promotion' },
-  { key:'sell', name:'Selling & commercial' },
-  { key:'logi', name:'Logistics & distribution' },
-  { key:'sga',  name:'SG&A / overhead' },
+  { key:'anp',  name:'Demand gen & brand' },
+  { key:'sell', name:'Sales & success' },
+  { key:'logi', name:'Cloud delivery' },
+  { key:'sga',  name:'R&D & G&A' },
   { key:'da',   name:'Depreciation & amortisation' }
 ];
 

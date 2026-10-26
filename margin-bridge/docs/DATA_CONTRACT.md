@@ -6,15 +6,15 @@ Replace the mock generator in `src/data.js` with a controlled extract that suppl
 
 | Field | Meaning |
 |---|---|
-| `k` | Market code: SE, DK, FI, NO |
+| `k` | Region code: NA, EU, AP, LA |
 | `s` | Stable canonical SKU identifier |
-| `bu` | Business unit |
-| `cls` | Silver, Gold or Platinum |
+| `bu` | Product line |
+| `cls` | Core, Plus or Scale |
 | `i` | Model month index |
 | `units` | Units |
 | `aspG` | Gross ASP per unit in local currency |
 | `discR` | On-invoice discount rate, 0–1 |
-| `rebR` | Off-invoice rebate + returns rate, 0–1 |
+| `rebR` | Off-invoice credits and usage true-up rate, 0–1 |
 | `cogsU` | COGS per unit in local currency |
 | `mapped` | Master-data mapping status |
 
