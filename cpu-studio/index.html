@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+ <meta name="theme-color" content="#ece5d3" />
+ <meta name="description" content="Build, repair and collect real computer designs across five eras, from 1975 to today. A mobile-first learning adventure." />
+ <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; font-src 'self'; base-uri 'self'; object-src 'none'; form-action 'self';" />
+ <meta property="og:title" content="CPU Studio · Build through time" />
+ <meta property="og:description" content="Five eras. Ten builds. One little workshop that changes history." />
+ <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
+ <link rel="manifest" href="./manifest.webmanifest" />
+ <link rel="stylesheet" href="./styles.css" />
+ <title>CPU Studio · Build through time</title>
+ <script type="module" src="./src/main.mjs"></script>
+</head>
+<body data-era="kit">
+ <div class="app-shell">
+   <header class="topbar">
+     <a class="brand" href="./" aria-label="CPU Studio home"><span class="brand-cpu" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="brand-copy">CPU<span>STUDIO</span><small>THE COMPUTER TIME MACHINE</small></span></a>
+     <div class="wallet" aria-label="Player account"><span class="coin-icon">◈</span><b id="wallet-value">35</b><span class="wallet-label">CR</span></div>
+     <button class="help-button" data-action="help" title="How the game works" aria-label="Help and game information">?</button>
+   </header>
+   <section class="timeline" aria-label="Computer history eras"><div class="timeline-label"><span>TIME TRAVEL</span><span id="timeline-note">01 / 10 MISSIONS</span></div><div id="eras" class="era-track"></div></section>
+   <main id="main" class="main" aria-live="off"><div class="loading">INITIALIZING WORKSHOP...</div></main>
+   <nav class="tabs" aria-label="Main game navigation">
+      <button type="button" data-tab="build" class="tab active" aria-current="page"><span class="tab-glyph">▣</span><span>BUILD</span></button>
+      <button type="button" data-tab="shop" class="tab"><span class="tab-glyph">⌑</span><span>SHOP</span></button>
+      <button type="button" data-tab="collection" class="tab"><span class="tab-glyph">▤</span><span>MUSEUM</span></button>
+      <button type="button" data-tab="club" class="tab"><span class="tab-glyph">✧</span><span>CLUB</span></button>
+   </nav>
+   <div id="toast" class="toast" role="status" aria-live="polite"></div>
+ </div>
+ <dialog id="help-dialog" class="help-dialog" aria-labelledby="help-title">
+   <div class="dialog-top"><b id="help-title">WORKSHOP MANUAL</b><button data-action="close-help" aria-label="Close help">✕</button></div>
+   <p>Start in 1975. Tap parts to install them. Test your build with POWER. Every completed mission pays credits, earns XP and unlocks the next historical era.</p>
+   <p>Need a missing part? Visit SHOP. Explore completed machines in MUSEUM. CLUB lets you share read-only computer blueprints and barter with fictional museum collectors.</p>
+   <p><b>Accuracy:</b> These are specific, historically plausible teaching configurations. The game is not an electrical engineering simulator. Early boards and wired infrastructure are simplified; later levels add power, cooling and compatibility rules.</p>
+   <p><b>Privacy:</b> This preview uses device-only local storage. No public chat, online accounts, real money, paid loot boxes or actual player-to-player trades.</p>
+   <p><b>Release:</b> v0.2.1 · 23 October 2026 · Educational beta. Game progress stays on this device.</p>
+   <button class="text-danger" type="button" data-action="reset">RESET SAVED GAME</button>
+   <button class="close-dialog" type="button" data-action="close-help">BACK TO WORKSHOP</button>
+ </dialog>
+</body>
+</html>
