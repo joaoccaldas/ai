@@ -13,6 +13,11 @@ body.nm-app>#appNav{margin:0;width:100%;max-width:100%;box-sizing:border-box}
 .nm-figure figcaption{display:grid;gap:4px;font-size:13px;line-height:1.4;color:var(--nm-muted)}
 .nm-figure figcaption b{color:var(--nm-ink);font-family:var(--nm-serif);font-size:1.2rem;font-weight:500}
 .nm-figure img{width:100%;height:auto;border-radius:16px;background:#e7dfd2;display:block}
+.nm-figure.is-hero .nm-plate-frame{overflow:hidden;border-radius:16px;aspect-ratio:var(--ar);background:#e7dfd2}
+.nm-figure.is-hero img{height:118%;max-height:none;object-fit:cover;border-radius:0}
+.nm-plate-row{display:flex;gap:10px;overflow-x:auto;max-width:100%;scroll-snap-type:x mandatory;padding-bottom:8px;margin-top:8px}
+.nm-plate-row .nm-figure{flex:0 0 min(78%,280px);scroll-snap-align:start;max-width:78%}
+@media(prefers-reduced-motion:reduce){.nm-figure.is-hero img{transform:none !important;height:auto}}
 .nm-tick,.nm-source{cursor:pointer}
 .nm-tick.is-focus,.nm-source.is-focus{background:rgba(141,59,50,.08);box-shadow:inset 3px 0 0 var(--nm-accent)}
 @media(prefers-reduced-motion:reduce){.nm-scroll-accent{display:none}}

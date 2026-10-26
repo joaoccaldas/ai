@@ -148,6 +148,10 @@
   }
 
   function leadText(focus, journey) {
+    if (!focus.length) {
+      const terms = (journey.absence_terms || []).join(', ') || 'this subject';
+      return `No catalog entity is stored for ${terms}. The focus list is empty. Candidate rows that name the subject stay candidates. A stored resemblance is not causation or common origin.`;
+    }
     const lines = focus.slice(0, 2).map(e => {
       const kind = e.kind || 'kind not stored';
       const status = e.profile_status || 'not stored';
@@ -159,7 +163,10 @@
     });
     const term = (journey.absence_terms || [])[0];
     if (term) lines.push(`No stored field on these focus records contains ${term}. That is a gap, not a finding that the subject is unrelated.`);
-    else if (!lines.length) lines.push('No focus entity id from this journey was found in the catalog.');
+    if (journey.id === 'gods-pantheon') {
+      const statuses = [...new Set(focus.map(e => e.profile_status || 'not stored'))].join(', ');
+      lines.push(`${focus.length} deity records are in focus. Each stored profile_status on those records is ${statuses}. Shared labels are comparison aids only. Resemblance is not causation or common origin.`);
+    }
     return lines.join(' ');
   }
 
@@ -185,8 +192,25 @@
     return !!url && !/artic\.edu/i.test(url);
   }
 
-  function figureHtml(v) {
-    return `<figure id="journeyFigure" class="nm-figure">
+  const LOCAL_MEDIA = {
+    'MEDIA-ODIN-GEHRTS-001': ['media/odin-gehrts-1888.jpg', 480, 732],
+    'MEDIA-WITCH-DURER-001': ['media/witch-durer-1500.jpg', 640, 1018],
+    'MEDIA-WITCH-BALDUNG-001': ['media/witch-baldung-sabbath.jpg', 640, 932],
+    'MEDIA-ZEUS-HYPSISTOS-DION-001': ['media/zeus-hypsistos.jpg', 640, 960],
+    'MEDIA-OSIRIS-LOUVRE-001': ['media/osiris-louvre.jpg', 640, 960]
+  };
+  const LOCAL_ENTITY = {
+    'GOD-ISIS': ['media/isis-horus.jpg', 640, 948],
+    'GOD-SHIVA': ['media/shiva-nataraja.jpg', 640, 800]
+  };
+
+  function figureHtml(v, hero) {
+    const id = hero ? ' id="journeyFigure"' : '';
+    const frame = hero
+      ? `<div class="nm-plate-frame" style="--ar:${Number(v.w)}/${Number(v.h)}">`
+      : '';
+    const frameEnd = hero ? '</div>' : '';
+    return `<figure${id} class="nm-figure${hero ? ' is-hero' : ''}">
       <figcaption>
         <b>${esc(v.title)}</b>
         <span>${esc(v.credit)} · ${esc(v.license)}</span>
@@ -194,49 +218,67 @@
         <span>${esc(v.note || '')}</span>
         <a href="${esc(v.href)}">Source and rights</a>
       </figcaption>
-      <img src="${esc(v.src)}" width="${Number(v.w)}" height="${Number(v.h)}" alt="" loading="lazy" decoding="async">
+      ${frame}<img src="${esc(v.src)}" width="${Number(v.w)}" height="${Number(v.h)}" alt="" loading="lazy" decoding="async">${frameEnd}
     </figure>`;
   }
 
-  function figureFor(reviewed, media) {
-    const gehrts = (reviewed || []).find(m => m.media_id === 'MEDIA-ODIN-GEHRTS-001');
-    if (gehrts) {
-      return figureHtml({
-        src: 'media/odin-gehrts-1888.jpg', w: 480, h: 732,
-        title: gehrts.title,
-        credit: gehrts.creator_or_photographer || 'Johannes Gehrts',
-        license: gehrts.license,
-        klass: gehrts.media_class,
-        status: gehrts.evidence_status,
-        note: gehrts.description,
-        href: gehrts.source_page_url
-      });
+  function plateFromReviewed(item) {
+    if (!item) return null;
+    const local = LOCAL_MEDIA[item.media_id];
+    const src = local ? local[0] : (remoteOk(item.image_url) ? item.image_url : '');
+    if (!src) return null;
+    return {
+      src, w: local ? local[1] : 960, h: local ? local[2] : 640,
+      entityId: item.entity_id || '',
+      title: item.title,
+      credit: item.creator_or_photographer || item.collection || '',
+      license: item.license,
+      klass: item.media_class,
+      status: item.evidence_status,
+      note: item.description,
+      href: item.source_page_url
+    };
+  }
+
+  function plateFromMuseum(rec) {
+    if (!rec || !remoteOk(rec.image_url) || !['CC0', 'PUBLIC_DOMAIN'].includes(rec.rights)) return null;
+    const local = LOCAL_ENTITY[rec.entity_id];
+    return {
+      src: local ? local[0] : rec.image_url,
+      w: local ? local[1] : 843,
+      h: local ? local[2] : 640,
+      entityId: rec.entity_id,
+      title: rec.provider_title,
+      credit: [rec.creator, rec.date_display, rec.provider].filter(Boolean).join(' · '),
+      license: rec.rights,
+      klass: rec.display_class,
+      status: rec.evidence_status,
+      note: rec.epistemic_note,
+      href: rec.provider_page_url
+    };
+  }
+
+  function figuresHtml(reviewed, museumRows, journey) {
+    const plates = [];
+    const seen = new Set();
+    for (const id of journey.reviewed_media_ids || []) {
+      const plate = plateFromReviewed((reviewed || []).find(m => m.media_id === id));
+      if (!plate) continue;
+      plates.push(plate);
+      if (plate.entityId) seen.add(plate.entityId);
     }
-    const other = (reviewed || []).find(m => remoteOk(m.image_url));
-    if (other) {
-      return figureHtml({
-        src: other.image_url, w: 960, h: 640,
-        title: other.title,
-        credit: other.creator_or_photographer || other.collection || '',
-        license: other.license,
-        klass: other.media_class,
-        status: other.evidence_status,
-        note: other.description,
-        href: other.source_page_url
-      });
+    for (const rec of museumRows || []) {
+      if (seen.has(rec.entity_id)) continue;
+      const plate = plateFromMuseum(rec);
+      if (!plate) continue;
+      plates.push(plate);
+      seen.add(rec.entity_id);
     }
-    const mus = (media || []).find(m => remoteOk(m.image_url) && (m.rights === 'CC0' || m.rights === 'PUBLIC_DOMAIN'));
-    if (!mus) return '';
-    return figureHtml({
-      src: mus.image_url, w: 843, h: 640,
-      title: mus.provider_title,
-      credit: [mus.creator, mus.date_display].filter(Boolean).join(' · '),
-      license: mus.rights,
-      klass: mus.display_class,
-      status: mus.evidence_status,
-      note: mus.epistemic_note,
-      href: mus.provider_page_url
-    });
+    if (!plates.length) return '';
+    const [hero, ...rest] = plates;
+    const row = rest.length ? `<div class="nm-plate-row" aria-label="More reference plates">${rest.map(p => figureHtml(p, false)).join('')}</div>` : '';
+    const know = `<details class="nm-fold"><summary>How these images are used</summary><p>Each plate is reference imagery. It is not a source locator and not evidence for a catalog claim, a date, or a historical relationship. Resemblance between pictures is not causation.</p></details>`;
+    return figureHtml(hero, true) + row + know;
   }
 
   function bindFocus(scope) {
@@ -265,6 +307,11 @@
       const max = document.documentElement.scrollHeight - window.innerHeight;
       const p = max > 0 ? Math.min(1, window.scrollY / max) : 0;
       bar.style.transform = `scaleX(${p})`;
+      const img = document.querySelector('#journeyFigure img');
+      if (!img) return;
+      const r = img.getBoundingClientRect();
+      const shift = Math.max(-18, Math.min(18, (window.innerHeight / 2 - (r.top + r.height / 2)) / 28));
+      img.style.transform = `translateY(${shift}px)`;
     };
     window.addEventListener('scroll', paint, { passive: true });
     paint();
@@ -328,7 +375,8 @@
     if (!media.length && !(journey.reviewed_media_ids || []).length) timeline.push(['Later interpretation', 'Gap', 'No museum or reviewed-media id is configured, and no later-interpretation date was found on the focus records.']);
 
     const visual = document.getElementById('journeyVisual');
-    if (visual) visual.innerHTML = figureFor(reviewed, media);
+    const museumForFocus = (mediaDoc.records || []).filter(r => (journey.focus_ids || []).includes(r.entity_id));
+    if (visual) visual.innerHTML = figuresHtml(reviewed, museumForFocus, journey);
     const related = (journey.related_ids || []).map(rid => (pack.journeys || []).find(j => j.id === rid)).filter(Boolean);
     const answer = [
       focus.map(describe).join('') || gap('Plain-language answer', 'No focus entity id from this journey was found in belief-catalog-v1.json.'),

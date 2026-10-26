@@ -154,6 +154,60 @@ test('Odin journey shows a rights-labelled reference image below the denominator
   await expect(page.locator('#journeyLead')).toBeVisible();
 });
 
+async function expectPlateBelowDenom(page, id, src) {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto(`journey.html?id=${id}`, { waitUntil: 'domcontentloaded' });
+  const fig = page.locator('#journeyFigure');
+  await expect(fig).toBeVisible();
+  await expect(fig.locator('img')).toHaveAttribute('src', src);
+  await expect(fig).toContainText(/CC0|Public domain/);
+  await expect(fig).toContainText('not evidence');
+  const figBox = await fig.boundingBox();
+  const denomBox = await page.locator('#denominator').boundingBox();
+  expect(figBox.y).toBeGreaterThan(denomBox.y + denomBox.height - 1);
+  await expect(page.locator('#journeyLead')).toBeVisible();
+  await expect(page.locator('#denominator')).toContainText('26');
+}
+
+test('witches journey shows a rights-labelled reference image below the denominator', async ({ page }) => {
+  await expectPlateBelowDenom(page, 'wicca-witchcraft', /witch-durer-1500\.jpg/);
+  await expect(page.locator('#journeyLead')).toContainText('No catalog entity is stored');
+  await expect(page.locator('#candidates')).toContainText('Forbidden conclusion');
+  await expect(page.locator('#denominator')).toContainText('UNKNOWN is not false');
+});
+
+test('gods journey shows a rights-labelled reference image below the denominator', async ({ page }) => {
+  await expectPlateBelowDenom(page, 'gods-pantheon', /zeus-hypsistos\.jpg/);
+  await expect(page.locator('#journeyLead')).toContainText('REFERENCE_ONLY');
+  await expect(page.locator('#journeyLead')).toContainText('Resemblance is not causation');
+  await expect(page.locator('#sources')).toContainText('britannica.com/topic/Zeus');
+  await expect(page.locator('#timeline')).toContainText('Event date');
+});
+
+test('home chips for witches and gods show reference images', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('index.html', { waitUntil: 'domcontentloaded' });
+  const witches = page.locator('a.nm-flag[href="journey.html?id=wicca-witchcraft"]');
+  const gods = page.locator('a.nm-flag[href="journey.html?id=gods-pantheon"]');
+  await expect(witches.locator('img')).toHaveAttribute('src', /witch-durer-1500\.jpg/);
+  await expect(witches).toContainText('not evidence');
+  await expect(gods.locator('img')).toHaveAttribute('src', /zeus-hypsistos\.jpg/);
+  await expect(gods).toContainText('not evidence');
+});
+
+test('explore shows a rights-cleared thumb for a witch query and a god query', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('explore.html?q=witch', { waitUntil: 'domcontentloaded' });
+  const bridge = page.locator('#conceptBridge');
+  await expect(bridge.locator('img')).toHaveAttribute('src', /witch-durer-1500\.jpg/);
+  await expect(bridge).toContainText('not evidence');
+  await expect(bridge).toContainText('CC0');
+  await page.goto('explore.html?q=Zeus', { waitUntil: 'domcontentloaded' });
+  const card = page.locator('#results article', { hasText: 'Zeus' }).first();
+  await expect(card.locator('img')).toHaveAttribute('src', /zeus-hypsistos\.jpg/);
+  await expect(card).toContainText('not evidence');
+});
+
 test('denominator leads on Explore, the Odin journey, Compare, and Connections', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
 

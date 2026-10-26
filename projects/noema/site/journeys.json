@@ -15,7 +15,7 @@
       "drh_ids": [],
       "scan_dimension_value": "",
       "candidate_match": "",
-      "related_ids": ["wicca-witchcraft", "ancestors-spirits", "shamanism-altered", "unexplained-experiences"]
+      "related_ids": ["wicca-witchcraft", "gods-pantheon", "ancestors-spirits", "shamanism-altered", "unexplained-experiences"]
     },
     {
       "id": "wicca-witchcraft",
@@ -25,12 +25,27 @@
       "focus_ids": [],
       "compare_ids": [],
       "media_entity_id": "",
-      "reviewed_media_ids": [],
+      "reviewed_media_ids": ["MEDIA-WITCH-DURER-001", "MEDIA-WITCH-BALDUNG-001"],
       "absence_terms": ["wicca", "witch", "witchcraft"],
       "drh_ids": [],
       "scan_dimension_value": "",
       "candidate_match": "witch",
-      "related_ids": ["odin-seidr", "unexplained-experiences", "ancestors-spirits", "shamanism-altered"]
+      "related_ids": ["gods-pantheon", "odin-seidr", "unexplained-experiences", "ancestors-spirits", "shamanism-altered"]
+    },
+    {
+      "id": "gods-pantheon",
+      "title": "Gods in the reference catalog",
+      "question": "Which deities does the reference catalog store, and what do those records leave out?",
+      "progress": "POPULATED_FROM_EXISTING_RECORDS",
+      "focus_ids": ["GOD-ZEUS", "GOD-OSIRIS", "GOD-ATHENA", "GOD-ISIS", "GOD-ODIN", "GOD-THOR", "GOD-RA", "GOD-SHIVA", "GOD-AMATERASU", "GOD-QUETZALCOATL", "GOD-INTI"],
+      "compare_ids": ["GOD-ZEUS", "GOD-OSIRIS"],
+      "media_entity_id": "",
+      "reviewed_media_ids": ["MEDIA-ZEUS-HYPSISTOS-DION-001", "MEDIA-OSIRIS-LOUVRE-001", "MEDIA-ODIN-GEHRTS-001"],
+      "absence_terms": [],
+      "drh_ids": [],
+      "scan_dimension_value": "DEITY",
+      "candidate_match": "",
+      "related_ids": ["odin-seidr", "wicca-witchcraft", "ancestors-spirits"]
     },
     {
       "id": "ancestors-spirits",
