@@ -13,7 +13,7 @@ body.nm-app>#appNav{margin:0;width:100%;max-width:100%;box-sizing:border-box}
 .nm-label{display:block;margin:0 0 6px;color:var(--nm-accent);letter-spacing:.16em;text-transform:uppercase;font-size:11px}
 .nm-quiet{color:var(--nm-muted);font-size:14px}
 body.home-v4 .nm-journey .nm-denom{margin:0;padding:0;border:0;border-radius:0;background:transparent;color:inherit}
-.nm-journey .nm-denom b{font-size:1.28rem;max-width:36ch;line-height:1.2}
+.nm-journey .nm-denom b{font-size:1.08rem;max-width:40ch;line-height:1.35;font-weight:500}
 .nm-journey .nm-denom p{max-width:42ch;font-size:.98rem;line-height:1.4}
 .nm-fold{margin:14px 0 0;border-top:1px solid var(--nm-line);padding-top:4px}
 .nm-fold>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-size:15px}
@@ -23,7 +23,8 @@ body.home-v4 .nm-journey .nm-denom{margin:0;padding:0;border:0;border-radius:0;b
 .nm-figure figcaption{display:grid;gap:4px;font-size:13px;line-height:1.45;color:var(--nm-muted);max-width:42ch}
 .nm-figure figcaption b{color:var(--nm-ink);font-family:var(--nm-serif);font-size:1.25rem;font-weight:500}
 .nm-figure img{width:100%;height:auto;border-radius:18px;background:#e7dfd2;display:block}
-.nm-figure.is-hero .nm-plate-frame{overflow:hidden;border-radius:20px;aspect-ratio:3/4;max-height:58vh;background:#e4d9c8;box-shadow:0 24px 50px rgba(28,25,21,.12)}
+.nm-figure.is-hero .nm-plate-frame{position:relative;overflow:hidden;border-radius:20px;aspect-ratio:3/4;max-height:58vh;background:#e4d9c8;box-shadow:0 24px 50px rgba(28,25,21,.12)}
+.nm-plate-mark{position:absolute;left:0;right:0;top:0;margin:0;padding:12px 14px 28px;background:linear-gradient(rgba(16,12,10,.68), transparent);color:#f6f1e8;font-style:normal;font-size:12px;letter-spacing:.01em}
 .nm-figure.is-hero img{height:118%;max-height:none;object-fit:cover;object-position:center top;border-radius:0}
 .nm-figure.is-focus .nm-plate-frame{aspect-ratio:auto;max-height:none}
 .nm-figure.is-focus img{height:auto !important;transform:none !important;object-fit:contain}
@@ -40,6 +41,14 @@ body.home-v4 .nm-journey .nm-denom{margin:0;padding:0;border:0;border-radius:0;b
 .nm-kicker{color:var(--nm-muted);letter-spacing:.18em;text-transform:uppercase;font-size:11px;margin:0}
 .nm-block{background:transparent;border:0;border-top:1px solid var(--nm-line);border-radius:0;padding:22px 0 0}
 .nm-block p,.nm-block li{line-height:1.55}
+.nm-roll{list-style:none;margin:0;padding:0;display:grid}
+.nm-roll li{display:grid;gap:2px;padding:14px 0;border-top:1px solid var(--nm-line)}
+.nm-roll b{font-family:var(--nm-serif);font-size:1.45rem;font-weight:500}
+.nm-roll span{color:var(--nm-muted);font-size:14px;line-height:1.4}
+.nm-fields{display:grid;gap:10px;margin:8px 0 4px}
+.nm-fields div{display:grid;grid-template-columns:minmax(6.5rem,8rem) minmax(0,1fr);gap:8px}
+.nm-fields dt{color:var(--nm-muted);font-size:13px}
+.nm-fields dd{margin:0}
 .nm-record{padding:4px 0 14px;border-bottom:1px solid var(--nm-line)}
 .nm-record:last-child{border-bottom:0}
 .nm-record p{margin:6px 0}

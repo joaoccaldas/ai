@@ -22,7 +22,7 @@
       }
       const featureHref=featured.id==='GOD-ODIN'?'journey.html?id=odin-seidr':`entity.html?id=${encodeURIComponent(featured.id)}`;
       const srcN=(featured.sources||[]).length;
-      const have=srcN?`One encyclopedia page names ${esc(featured.name)}, in a catalog of ${entities.length}. The page identifies the name. It does not prove a history.`:`No source of its own is stored for ${esc(featured.name)}. That is a gap, not a no. The catalog holds ${entities.length} entries.`;
+      const have=srcN?`One encyclopedia page names ${esc(featured.name)}. The page identifies the name. It does not prove a history.`:`No source of its own is stored for ${esc(featured.name)}. That is a gap, not a no.`;
       $('#homeVisual').innerHTML=`<div class="clarity-feature-card" data-profile-status="${esc(featured.profile_status||'')}"><div class="clarity-feature-media">${img}</div><div class="clarity-feature-copy"><p class="nm-label">Open a chapter</p><h3>${esc(featured.name)}</h3>${aliases?`<p class="aliases">Also called ${esc(aliases)}.</p>`:''}<p>${have}</p><div class="clarity-role-list">${roles.map(r=>`<span>${esc(pretty(r))}</span>`).join('')}</div><a href="${featureHref}">Read ${esc(featured.name)}</a></div></div>`;
     }
     const rows=patterns(pat).slice(0,4);

@@ -48,12 +48,6 @@
     return KIND[kind] || humanCode(kind) || 'record';
   }
 
-  function statusPhrase(s) {
-    if (s === 'REFERENCE_ONLY') return 'a reference sketch: a name we can point to, not a proved history';
-    if (!s) return 'a status that was not written down';
-    return humanCode(s);
-  }
-
   function linkLabel(url, name) {
     try {
       const u = new URL(url);
@@ -76,21 +70,6 @@
     return naturalList(terms, 'or') || 'this subject';
   }
 
-  function describe(e) {
-    const lines = [`${e.name} (${e.id}) is stored as kind ${e.kind || 'not stored'} with profile_status ${e.profile_status || 'not stored'}.`];
-    lines.push((e.aliases || []).length ? `Aliases stored: ${(e.aliases || []).join(', ')}.` : `No aliases field is stored on ${e.id}.`);
-    if ((e.traditions || []).length) lines.push(`Tradition ids stored: ${e.traditions.join(', ')}.`);
-    if ((e.regions || []).length) lines.push(`Regions stored: ${e.regions.join(', ')}.`);
-    if ((e.roles || []).length) lines.push(`Role tags stored: ${e.roles.join(', ')}. These are catalog tags on this record, not a separate finding.`);
-    if (e.time) lines.push(`Time field stored on ${e.id}: start_ce ${e.time.start_ce}, end_ce ${e.time.end_ce}, precision ${e.time.precision}.`);
-    const dims = Object.entries(e.dimensions || {});
-    if (dims.length) lines.push(`Dimension codes stored: ${dims.map(([k, vals]) => `${k}: ${(vals || []).join(', ')}`).join(' | ')}.`);
-    else lines.push(`No dimensions object is stored on ${e.id}.`);
-    if ((e.related_entities || []).length) lines.push(`Related entity ids stored: ${e.related_entities.join(', ')}.`);
-    if (!(e.sources || []).length) lines.push(`No sources array is stored on ${e.id}.`);
-    return `<p>${lines.map(esc).join(' ')}</p>`;
-  }
-
   function hasEventDate(e) {
     return e.event_date != null || e.events != null || e.event != null;
   }
@@ -99,64 +78,64 @@
     return byId.get(id)?.name || id;
   }
 
+  function fieldList(e) {
+    const rows = [
+      ['Kind', kindWord(e.kind)],
+      ['On file', e.profile_status === 'REFERENCE_ONLY' ? 'reference only' : (humanCode(e.profile_status) || 'not written')],
+      ['Also called', (e.aliases || []).join(', ') || 'none written'],
+      ['Places', (e.regions || []).join(', ') || 'none written'],
+      ['Roles', (e.roles || []).join(', ') || 'none written']
+    ];
+    if (e.time) rows.push(['Span', `${e.time.start_ce}–${e.time.end_ce}, a ${humanCode(e.time.precision)}`]);
+    const dims = Object.entries(e.dimensions || {});
+    if (dims.length) rows.push(['Themes', dims.map(([k, vals]) => `${dimLabel(k)}: ${(vals || []).map(humanCode).join(', ')}`).join('. ')]);
+    return `<dl class="nm-fields">${rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`;
+  }
+
   function recordCard(e, byId) {
-    const aliases = (e.aliases || []).length ? ` Also called ${e.aliases.join(', ')}.` : '';
-    const regions = (e.regions || []).length ? ` Placed in ${e.regions.join(' and ')}.` : '';
-    const roles = (e.roles || []).length ? ` Roles written on the record: ${e.roles.join(', ')}.` : '';
+    const bits = [];
+    if ((e.aliases || []).length) bits.push(`Also called ${naturalList(e.aliases)}.`);
+    if ((e.regions || []).length) bits.push(`Placed in ${naturalList(e.regions)}.`);
     const trads = (e.traditions || []).map(id => nameOf(byId, id));
-    const trad = trads.length ? ` Tied to ${trads.join(' and ')}.` : '';
-    let time = '';
-    if (e.time) time = ` The record gives a span of ${e.time.start_ce}–${e.time.end_ce}, a ${humanCode(e.time.precision)}, not the date of an event.`;
+    if (trads.length) bits.push(`Tied to ${naturalList(trads)}.`);
+    if ((e.roles || []).length) bits.push(`Written roles: ${naturalList(e.roles)}.`);
+    if (e.time) bits.push(`A span of ${e.time.start_ce}–${e.time.end_ce}, not the date of an event.`);
     const pages = e.sources || [];
     const src = pages.length
       ? pages.map(s => `<a href="${esc(s.url || '#')}">${esc(linkLabel(s.url, e.name))}</a>`).join(' ')
-      : '<span>No source of its own is stored.</span>';
-    const srcLine = pages.length
-      ? `${pages.length === 1 ? 'One encyclopedia page' : `${pages.length} encyclopedia pages`} ${pages.length === 1 ? 'names' : 'name'} this record.`
-      : `${e.name} has no source of its own.`;
+      : 'No page of its own.';
     return `<article class="nm-record" tabindex="0" data-id="${esc(e.id)}" data-profile-status="${esc(e.profile_status || '')}">
       <h3>${esc(e.name)}</h3>
-      <p>${esc(e.name)} is listed as a ${esc(kindWord(e.kind))}.${esc(aliases)}${esc(regions)}${esc(trad)}${esc(roles)}${esc(time)} It is ${esc(statusPhrase(e.profile_status))}.</p>
-      <p>${esc(srcLine)} ${src}</p>
-      <details class="nm-fold"><summary>Exact fields</summary>${describe(e)}</details>
+      <p>${esc(bits.join(' ') || `${e.name} is listed as a ${kindWord(e.kind)}.`)}</p>
+      <p>${src}</p>
+      <details class="nm-fold"><summary>The fields on file</summary>${fieldList(e)}</details>
     </article>`;
   }
 
-  function sourceRows(entities) {
-    const rows = [];
-    for (const e of entities) {
-      const sources = e.sources || [];
-      if (!sources.length) {
-        rows.push({ kind: 'Date of the source', when: 'Not stored', what: `${e.name} has no source of its own, so no date is stored.` });
-        continue;
-      }
-      for (const s of sources) {
-        const date = s.date || s.year || s.published || s.accessed || null;
-        if (!date) rows.push({ kind: 'Date of the source', when: 'Not stored', what: `The page for ${e.name} has no date on the record.` });
-        else rows.push({ kind: 'Date of the source', when: String(date), what: `${e.name}. ${s.note || ''}`.trim() });
-      }
-    }
-    return rows;
+  function recordSection(focus, byId) {
+    if (!focus.length) return gap('The records', 'No catalog entry was found for this chapter.');
+    if (focus.length <= 4) return focus.map(e => recordCard(e, byId)).join('');
+    const roll = focus.map(e => {
+      const place = (e.regions || [])[0] || '';
+      const role = (e.roles || []).slice(0, 3).join(', ');
+      return `<li><b>${esc(e.name)}</b><span>${esc([place, role].filter(Boolean).join(' · '))}</span></li>`;
+    }).join('');
+    return `<ul class="nm-roll">${roll}</ul><details class="nm-fold"><summary>Read each name</summary>${focus.map(e => recordCard(e, byId)).join('')}</details>`;
   }
 
-  function sourceList(entities, media, reviewed) {
+  function sourceList(entities) {
     const items = [];
     for (const e of entities) {
       for (const s of e.sources || []) {
         const href = s.url ? `<a href="${esc(s.url)}">${esc(linkLabel(s.url, e.name))}</a>` : '<span>No page stored</span>';
-        items.push(`<li class="nm-source" tabindex="0" data-profile-status="${esc(e.profile_status || '')}" data-tier="${esc(s.tier || '')}"><b>${esc(e.name)}</b><p>${esc(statusPhrase(e.profile_status))}. ${esc(s.note || 'Reference page.')}</p>${href}</li>`);
+        items.push(`<li class="nm-source" tabindex="0" data-profile-status="${esc(e.profile_status || '')}" data-tier="${esc(s.tier || '')}">${href}<span>${esc(s.note || 'A reference page.')}</span></li>`);
       }
       if (!(e.sources || []).length) {
-        items.push(`<li class="nm-source" tabindex="0" data-profile-status="${esc(e.profile_status || '')}"><b>${esc(e.name)}</b><p>No source of its own is stored. That is a gap, not a verdict.</p></li>`);
+        items.push(`<li class="nm-source" tabindex="0" data-profile-status="${esc(e.profile_status || '')}"><b>${esc(e.name)}</b><span>No page of its own.</span></li>`);
       }
     }
-    for (const m of media) {
-      items.push(`<li class="nm-source" tabindex="0" data-evidence-status="${esc(m.evidence_status || '')}"><b>${esc(m.provider_title || m.entity_name || 'Picture')}</b><p>Reference art — not evidence. ${esc(m.rights || '')}.</p><a href="${esc(m.provider_page_url)}">Source and rights</a></li>`);
-    }
-    for (const m of reviewed) {
-      items.push(`<li class="nm-source" tabindex="0" data-evidence-status="${esc(m.evidence_status || '')}" data-media-id="${esc(m.media_id || '')}"><b>${esc(m.title)}</b><p>Reference art — not evidence. ${esc(m.license || '')}.</p><a href="${esc(m.source_page_url)}">Source and rights</a></li>`);
-    }
-    return items.length ? `<ul class="nm-sources">${items.join('')}</ul>` : gap('Sources', 'No page is stored for the records in this chapter.');
+    const intro = `<p data-profile-status="REFERENCE_ONLY">A reference sketch: a page that names someone, not a proved history.</p>`;
+    return items.length ? `${intro}<ul class="nm-sources">${items.join('')}</ul>` : gap('Sources', 'No page is stored for the records in this chapter.');
   }
 
   function compareTable(pair, withLine) {
@@ -175,9 +154,9 @@
     }).join('');
     const uncoded = keys.filter(k => !(a.dimensions?.[k] || []).length || !(b.dimensions?.[k] || []).length).length;
     const sharedWords = shared.map(humanCode);
-    return `<p><b>${shared.length} shared ${shared.length === 1 ? 'label' : 'labels'} across ${keys.length} themes.</b> ${uncoded} of ${keys.length} rows are blank on at least one side. A blank is not a no.</p>
-      <p>On both records: ${sharedWords.length ? esc(sharedWords.join(', ')) : 'nothing'}.</p>
-      <div class="nm-scroll"><table class="nm-table">${head}${body}</table></div>
+    const sharedLine = sharedWords.length ? naturalList(sharedWords) : 'no written label';
+    return `<p>${esc(a.name)} and ${esc(b.name)} share ${esc(sharedLine)}. ${uncoded} of ${keys.length} themes are blank on at least one side. A blank is not a no.</p>
+      <details class="nm-fold"><summary>The labels, line by line</summary><div class="nm-scroll"><table class="nm-table">${head}${body}</table></div></details>
       <p><a href="compare.html?a=${encodeURIComponent(a.id)}&b=${encodeURIComponent(b.id)}">Compare ${esc(a.name)} and ${esc(b.name)}</a></p>
       ${withLine ? '<p class="nm-quiet">Resemblance is not causation.</p>' : ''}`;
   }
@@ -247,11 +226,13 @@
     if (focus.some(e => (e.sources || []).some(s => !(s.date || s.year || s.published || s.accessed)))) missing.push('no date on those pages');
     if (noSource.length === 1) missing.push(`${noSource[0].name} has no source of its own`);
     else if (noSource.length) missing.push(`${noSource.map(e => e.name).join(' and ')} have no source of their own`);
-    const pageWord = encyclopedia ? (locators === 1 ? 'encyclopedia page' : 'encyclopedia pages') : (locators === 1 ? 'written reference' : 'written references');
-    const recordWord = focus.length === 1 ? 'record' : 'records';
-    const have = focus.length
-      ? `${locators} ${pageWord}, on ${focus.length} ${recordWord}, in a catalog of ${n}.`
-      : `No record to open, in a catalog of ${n}.`;
+    const withPages = focus.filter(e => (e.sources || []).length).map(e => e.name);
+    const without = focus.filter(e => !(e.sources || []).length).map(e => e.name);
+    let have;
+    if (!focus.length) have = `No name for this subject. The shelf holds ${n} other names.`;
+    else if (focus.length > 4 && encyclopedia) have = `A name and a page for each. They sit among ${n} names.`;
+    else if (!withPages.length) have = `No encyclopedia page on these records. The catalog holds ${n} names.`;
+    else have = `Encyclopedia pages for ${naturalList(withPages)}. The catalog holds ${n} names.`;
     const missingText = missing.length ? missing.map(s => `${sentence(s).replace(/\.$/, '')}.`).join(' ') : 'Nothing empty showed up on these records.';
     return { have, missingText, locators, focus: focus.length, catalog: n };
   }
@@ -277,10 +258,32 @@
     return lines.join(' ');
   }
 
-  function catalogShare(catalog, focus) {
+  function catalogShare(catalog) {
     const entities = catalog.entities || [];
     const withSources = entities.filter(e => (e.sources || []).length).length;
-    return `${withSources} of ${entities.length} catalog entries have a source of their own. The file that holds them is marked ${humanCode(catalog.status || 'not stored')}.`;
+    const mark = catalog.status === 'REFERENCE_PROFILE_UNREVIEWED'
+      ? 'The catalog file has not been reviewed as history.'
+      : `The file is marked ${humanCode(catalog.status || 'not stored')}.`;
+    return `${withSources} of ${entities.length} names have a page of their own. ${mark}`;
+  }
+
+  function timelineHtml(focus, reviewed, media) {
+    const noEvent = !focus.length || !focus.some(hasEventDate);
+    const spans = focus.filter(e => e.time).map(e => {
+      const attr = e.time.precision ? ` data-precision="${esc(e.time.precision)}"` : '';
+      return `<span${attr}>${esc(e.name)} is placed around ${esc(String(e.time.start_ce))}–${esc(String(e.time.end_ce))}</span>`;
+    });
+    const undated = focus.some(e => (e.sources || []).some(s => !(s.date || s.year || s.published || s.accessed)));
+    const pics = (reviewed || []).length + (media || []).length;
+    const bits = [];
+    bits.push(noEvent ? 'No dated event is stored.' : 'A dated event is stored.');
+    if (spans.length === 1) bits.push(`A span, not a dated event: ${spans[0]}.`);
+    else if (spans.length) bits.push(`Spans, not dated events: ${spans.join('; ')}.`);
+    if (undated) bits.push('The pages have no date of their own.');
+    if (!focus.length) bits.push('With no catalog entry, there is no date to put on a line.');
+    if (pics === 1) bits.push('The picture above is later art, not a catalog date.');
+    else if (pics) bits.push('The pictures above are later art, not catalog dates.');
+    return `<p>${bits.join(' ')}</p>`;
   }
 
   function scanBlocks(value, catalog, focus) {
@@ -322,7 +325,8 @@
   function figureHtml(v, hero) {
     const id = hero ? ' id="journeyFigure"' : '';
     const frame = hero ? `<div class="nm-plate-frame" style="--ar:${Number(v.w)}/${Number(v.h)}">` : '';
-    const frameEnd = hero ? '</div>' : '';
+    const mark = hero ? `<em class="nm-plate-mark">${esc(v.license)} · Reference art — not evidence.</em>` : '';
+    const frameEnd = hero ? `${mark}</div>` : '';
     return `<figure${id} class="nm-figure${hero ? ' is-hero' : ''}" tabindex="0" data-evidence-status="${esc(v.status || '')}" data-license="${esc(v.license || '')}">
       ${frame}<img src="${esc(v.src)}" width="${Number(v.w)}" height="${Number(v.h)}" alt="" loading="lazy" decoding="async">${frameEnd}
       <figcaption>
@@ -483,59 +487,37 @@
     }
     const showResemblance = journey.id !== 'gods-pantheon' && pair.length < 2;
 
-    const timeline = [];
-    if (!focus.some(hasEventDate)) timeline.push({ kind: 'Dated event', when: 'Not stored', what: 'No record here stores a dated event.' });
-    for (const e of focus) {
-      if (!e.time) continue;
-      timeline.push({
-        kind: 'A span, not a dated event',
-        when: `${e.time.start_ce}–${e.time.end_ce}`,
-        what: `${e.name} calls this a ${humanCode(e.time.precision)}. It is not the date of an event.`,
-        precision: e.time.precision || ''
-      });
-    }
-    timeline.push(...sourceRows(focus));
-    for (const m of reviewed) {
-      timeline.push({ kind: 'A later picture', when: 'Not a catalog date', what: `${m.title}. ${m.description || ''} Reference art — not evidence.` });
-    }
-    for (const m of media) {
-      timeline.push({ kind: 'A later picture', when: m.date_display || 'Not a catalog date', what: `${m.provider_title || m.entity_name || 'Picture'}. ${m.epistemic_note || ''} Reference art — not evidence.` });
-    }
-
     const visual = document.getElementById('journeyVisual');
     const museumForFocus = (mediaDoc.records || []).filter(r => (journey.focus_ids || []).includes(r.entity_id));
     if (visual) visual.innerHTML = figuresHtml(reviewed, museumForFocus, journey, showResemblance);
 
     const related = (journey.related_ids || []).map(rid => (pack.journeys || []).find(j => j.id === rid)).filter(Boolean);
-    const records = focus.map(e => recordCard(e, byId)).join('')
-      || gap('The records', 'No catalog entry was found for this chapter.');
     const exact = missingFocus.map(fid => gap(fid, 'That id is not in the catalog.')).join('') + scanBlocks(journey.scan_dimension_value, catalog, focus);
 
     const index = { epistemic_note: '' };
     rest.innerHTML = `
       <section class="nm-block" id="records">
-        <p class="nm-label">The records</p>
-        <h2>What is actually written</h2>
-        ${records}
+        <p class="nm-label">Written down</p>
+        <h2>The names</h2>
+        ${recordSection(focus, byId)}
       </section>
       <section class="nm-block" id="comparison">
-        <p class="nm-label">Side by side</p>
-        <h2>What the labels share</h2>
+        <p class="nm-label">Beside each other</p>
+        <h2>Where they meet</h2>
         ${compareTable(pair, journey.id !== 'gods-pantheon')}
       </section>
       <section class="nm-block" id="sources">
-        <p class="nm-label">Sources</p>
-        <h2>Where a reader can go next</h2>
-        ${sourceList(focus, media, reviewed)}
+        <p class="nm-label">Reading</p>
+        <h2>Pages you can open</h2>
+        ${sourceList(focus)}
       </section>
       <section class="nm-block" id="timeline">
         <p class="nm-label">Time</p>
-        <h2>What kind of date this is</h2>
-        <p>A dated event, the date of a source, and a later picture stay on separate lines. A range is not an event.</p>
-        <ol class="nm-time">${timeline.map(r => `<li class="nm-tick" tabindex="0"${r.precision ? ` data-precision="${esc(r.precision)}"` : ''}><b>${esc(r.kind)}</b><span>${esc(r.when)}</span><p>${esc(r.what)}</p></li>`).join('')}</ol>
+        <h2>Dates, and what they are not</h2>
+        ${timelineHtml(focus, reviewed, media)}
       </section>
       <section class="nm-block" id="indexFindings">
-        <p class="nm-label">A search</p>
+        <p class="nm-label">The gap</p>
         <h2>What we looked for</h2>
         <p id="indexNote">${esc(index.epistemic_note)}</p>
       </section>
@@ -546,7 +528,7 @@
       </section>
       <details class="nm-fold nm-how" id="how">
         <summary>How we know</summary>
-        <p>${journey.progress === 'POPULATED_FROM_EXISTING_RECORDS' ? 'Drawn from records already on file. Empty fields are gaps in those records.' : 'In progress. Only records that already exist are shown.'} ${esc(catalogShare(catalog, focus))}</p>
+        <p>${journey.progress === 'POPULATED_FROM_EXISTING_RECORDS' ? 'Drawn from records already on file. Empty fields are gaps in those records.' : 'In progress. Only records that already exist are shown.'} ${esc(catalogShare(catalog))}</p>
         <p>The catalog file says these limits, in its own words:</p>
         <ul>${rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
         <div class="nm-exact">${exact}</div>
