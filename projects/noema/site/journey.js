@@ -133,7 +133,6 @@
 
   function denomHtml(journey, catalog, focus) {
     const entities = catalog.entities || [];
-    const withSources = entities.filter(e => (e.sources || []).length).length;
     const locators = focus.flatMap(e => (e.sources || []).map(s => ({ id: e.id, tier: s.tier || 'not stored' })));
     const noSource = focus.filter(e => !(e.sources || []).length).map(e => e.id);
     const rules = catalog.rules || [];
@@ -144,13 +143,31 @@
     if (focus.length && !focus.some(hasEventDate)) missing.push('no event date');
     if (focus.some(e => (e.sources || []).some(s => !(s.date || s.year || s.published || s.accessed)))) missing.push('no source date on a stored locator');
     if (noSource.length) missing.push(`${noSource.join(', ')} has no sources array`);
-    const absence = (journey.absence_terms || []).length
-      ? `Configured absence terms (${journey.absence_terms.join(', ')}) are checked after the compact index loads. A miss is a gap, not a finding that the subject is unrelated.`
-      : 'This journey lists no absence terms.';
-    const statuses = [...new Set(focus.map(e => e.profile_status || 'not stored'))];
     return `<b>${locators.length} source locator${locators.length === 1 ? '' : 's'} on ${focus.length} focus record${focus.length === 1 ? '' : 's'}, in a reference catalog of ${entities.length} entities.</b>
-      <p>${locators.length ? locators.map(s => `${esc(s.id)} stores tier ${esc(s.tier)}.`).join(' ') : 'No focus record stores a sources array.'} ${noSource.length ? `${esc(noSource.join(', '))} stores no sources array.` : ''} ${withSources} of ${entities.length} catalog entities store a sources array. profile_status on the focus records: ${esc(statuses.join(', ') || 'none loaded')}. Catalog status stored on belief-catalog-v1.json: ${esc(catalog.status || 'not stored')}.</p>
-      <p>Missing from these records: ${esc(missing.join('; ') || 'no empty field was detected on the stored focus records')}. ${esc(absence)} ${esc(unknown)} ${esc(similarity)}</p>`;
+      <p>Missing: ${esc(missing.join('; ') || 'no empty field was detected on the stored focus records')}. ${esc(unknown)} ${esc(similarity)}</p>`;
+  }
+
+  function leadText(focus, journey) {
+    const lines = focus.slice(0, 2).map(e => {
+      const kind = e.kind || 'kind not stored';
+      const status = e.profile_status || 'not stored';
+      const aliases = (e.aliases || []).length ? `, aliases ${e.aliases.join(', ')}` : '';
+      const srcN = (e.sources || []).length;
+      const src = srcN ? `, with ${srcN} source locator${srcN === 1 ? '' : 's'}` : ', and has no sources array';
+      const time = e.time ? `, time ${e.time.start_ce}–${e.time.end_ce} (${e.time.precision}, not an event date)` : '';
+      return `${e.name} (${e.id}) is stored as ${kind}, profile_status ${status}${aliases}${time}${src}.`;
+    });
+    const term = (journey.absence_terms || [])[0];
+    if (term) lines.push(`No stored field on these focus records contains ${term}. That is a gap, not a finding that the subject is unrelated.`);
+    else if (!lines.length) lines.push('No focus entity id from this journey was found in the catalog.');
+    return lines.join(' ');
+  }
+
+  function catalogShare(catalog, focus) {
+    const entities = catalog.entities || [];
+    const withSources = entities.filter(e => (e.sources || []).length).length;
+    const statuses = [...new Set(focus.map(e => e.profile_status || 'not stored'))];
+    return `${withSources} of ${entities.length} catalog entities store a sources array. profile_status on the focus records: ${statuses.join(', ') || 'none loaded'}. Catalog status stored on belief-catalog-v1.json: ${catalog.status || 'not stored'}.`;
   }
 
   function scanBlocks(value, catalog) {
@@ -202,6 +219,11 @@
         && denomEl.textContent.includes(`catalog of ${ (catalog.entities || []).length } entities`);
       if (!countsMatch) denomEl.innerHTML = denom;
     }
+    const leadEl = document.getElementById('journeyLead');
+    if (leadEl) {
+      const lead = leadText(focus, journey);
+      if (leadEl.textContent.trim() !== lead.trim()) leadEl.textContent = lead;
+    }
     const progress = journey.progress === 'POPULATED_FROM_EXISTING_RECORDS'
       ? 'Populated from existing records. Empty fields below are gaps in those records.'
       : 'In progress. Only records that already exist are shown.';
@@ -232,10 +254,12 @@
     rest.innerHTML = `
       <p><span class="nm-status">${esc(journey.progress)}</span></p>
       <p>${esc(progress)} <span id="indexNote">${esc(index.epistemic_note)}</span></p>
+      <details class="nm-fold"><summary>Stored fields, in full</summary>
       <section class="nm-answer" id="answer"><h2>Short answer from stored fields</h2>${answer}
         <p>Catalog rules stored with these records:</p>
         <ul>${rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
       </section>
+      </details>
       <section class="nm-block" id="timeline"><h2>Timeline</h2>
         <p>Event date, source date, and later interpretation stay in separate rows. A reference range is not an event date.</p>
         <div class="nm-scroll"><table class="nm-table"><tr><th>Row kind</th><th>Date as stored</th><th>What the record says</th></tr>
@@ -244,6 +268,7 @@
       </section>
       <section class="nm-block" id="comparison"><h2>Cross-cultural comparison</h2>
         ${compareTable(pair)}
+        <p>${esc(catalogShare(catalog, focus))}</p>
         <p>${esc(rules.find(r => r.toLowerCase().includes('similarity')) || 'No similarity rule was stored on the catalog.')}</p>
       </section>
       <section class="nm-block" id="sources"><h2>Original sources</h2>${sourceList(focus, media, reviewed)}</section>

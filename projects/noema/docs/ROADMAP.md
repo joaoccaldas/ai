@@ -94,6 +94,14 @@ Ship only after the product is usable and honest under the same checks a buyer w
 
 Checked 2026-10-26 on branch `cursor/noema-mobile-mvp-8193`. Evidence is lab-only (Playwright and a mobile Lighthouse run against the local static server). Nothing here is a field Core Web Vitals measurement.
 
+### Noise cut on the phone
+
+Collapsed, not deleted. The strings and links stay in the HTML.
+
+- **Home.** The hero definition is the one visible explanation. “Three ways into the same knowledge graph” and “What NOEMA does” (identify, decompose, compare, test) are closed disclosures because they repeated that definition. “Need the machinery?” is a closed disclosure. Search and the flagship journey links, including Odin, lead the first screen.
+- **Odin journey.** The first screen is the question, three sentences from stored fields, and the denominator (source locators on the focus records, catalog size, missing dates, “UNKNOWN is not false”). The long field dump is behind “Stored fields, in full”. Timeline, comparison, and sources stay on the page below that line. The catalog sources-array count and `belief-catalog-v1.json` status stay in the comparison section.
+- **Explore.** The denominator and the search box lead. Examples, Map / Compare / Analyze, filters, result stats, and “How to read a result” sit in one closed disclosure. The mast paragraph is hidden under 767px.
+
 | Gate | Status | Evidence |
 | --- | --- | --- |
 | G0 Ground truth | Partly met | Journey copy is assembled from `belief-catalog-v1.json`, the compact search index, museum media, and reviewed media. `profile_status`, `evidence_status`, and candidate labels are rendered as stored. seiðr, event date, and the encyclopedia source date are visible gaps. Playwright: `Odin journey shows a source locator and the seiðr gap`. |
