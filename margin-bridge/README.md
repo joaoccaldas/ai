@@ -1,13 +1,14 @@
 # Margin Bridge
 
-Driver-based forecasting and price–volume–mix decomposition for a multi-market,
-multi-business-unit portfolio. Runs entirely in the browser. No build step, no
+Driver-based forecasting and price–volume–mix decomposition for a multi-region,
+multi-product-line portfolio. Runs entirely in the browser. No build step, no
 backend, no chart library.
 
-Built against a Nordic appliance shape: **4 markets** (Sweden, Denmark, Finland,
-Norway), **5 business units** (Laundry, Cooking, Refrigeration, Dishwashing, SDA),
-**10–15 SKUs each** at three price points (Silver / Gold / Platinum), modelled in
-local currency and consolidated in EUR.
+Built against **Helioforge**, a fictional cloud-AI company: **4 regions** (North
+America, Europe, Asia Pacific, Latin America), **5 product lines** (Inference API,
+App Platform, Agent Runtime, Model Hosting, Eval & Data), **10–15 SKUs each** at
+three tiers (Core / Plus / Scale), modelled in local currency and consolidated in EUR.
+Every figure is synthetic.
 
 ```
 npm start           # python3 -m http.server 8080
@@ -21,19 +22,20 @@ walkthrough of how the forecast and budget are built; the model itself lives at
 
 The model has two areas. The **monthly margin engine** — **History**, **Plan**,
 **Cockpit**, **P&L** (volume to EBIT, by full year / quarter / month, with an EBIT
-bridge and a Nordics→market→BU→SKU consolidation drill-down), **Mix**,
+bridge and a Global→region→product-line→SKU consolidation drill-down), **Mix**,
 **Sensitivity** and **Report**. And the **long-term plan** —
 
-- **Long-term plan (LTP)** — the Nordic appliance long-term plan. Four years of actuals, the 2026
+- **Long-term plan (LTP)** — the Helioforge long-term plan. Four years of actuals, the 2026
   budget (actual through July) and a five-year plan (2027–2031) you own: net
-  sales, product margin, margin % and volume, with **editable future years** and
-  a breakdown by **sales channel** (ERT, KRT, Direct Projects, D2C, Customer
-  Service) and by **business unit**, each with adjustable mix. You can plan
-  **top-down** (one total that breaks down by mix) or **by business unit** (a
-  growth rate per BU that aggregates up and allocates to channels from history).
-  Everything consolidates — Nordics = Σ channels = Σ (channel × BU) — every year.
-- **Budget 2027** — the long-term plan's 2027 slice spread to months, with a page
-  per sales channel showing the monthly budget by business unit that ties back to
+  sales, product margin, margin % and plan units, with **editable future years** and
+  a breakdown by **go-to-market channel** (Enterprise, Self-serve, Partners, Marketplace,
+  Services) and by **product line**, each with adjustable mix. You can plan
+  **top-down** (one total that breaks down by mix) or **by product line** (a
+  growth rate per line that aggregates up and allocates to channels from history).
+  Everything consolidates — Global = Σ channels = Σ (channel × product line) — every year.
+- **Budget 2027** — the long-term plan's 2027 slice spread to months on a software
+  seasonality curve (quarter-end closes, a mild summer dip, a December enterprise flush),
+  with a page per channel showing the monthly budget by product line that ties back to
   the long-term plan.
 - **Validate & reconcile** — the integrity checks (consolidation, no negatives,
   margin and growth in bounds) plus the top-down/bottom-up loop: flex each
@@ -68,7 +70,7 @@ The contract is one flat fact table:
 |---|---|
 | `k` | market id |
 | `s` | SKU code |
-| `bu`, `cls` | business unit, marketing class — attributes of the SKU, not dimensions |
+| `bu`, `cls` | product line, commercial tier — attributes of the SKU, not dimensions |
 | `i` | month index, 0–11 prior year, 12–23 current year |
 | `units` | volume |
 | `aspG` | gross ASP per unit, **local currency** |
@@ -143,20 +145,20 @@ rebR   = last 3 closed months' weighted rebate + (rebateΔ × ramp)
 cogsU  = last 3 closed months' weighted COGS × (1 + cogsInflation × ramp)
 ```
 
-Then premiumisation runs as a second pass: within each Market × BU × month it
-moves a fixed number of units out of Silver into Platinum (or the reverse), so
+Then premiumisation runs as a second pass: within each Region × product line × month it
+moves a fixed number of units out of Core into Scale (or the reverse), so
 the group volume is unchanged to the last decimal and only the margin-rate mix
 shifts. It is a reallocation, not a scaling — premiumisation is exactly
 units-neutral.
 
-- **Anchoring to the same month last year** carries seasonality for free. Cooking
-  peaks in November, SDA in January; nobody has to type a seasonal index.
+- **Anchoring to the same month last year** carries seasonality for free. Agent Runtime
+  peaks in December, Eval & Data in January; nobody has to type a seasonal index.
 - **`driftFactor`** = `1 + (YTD actual / YTD prior year − 1) × carry`. The `carry`
   dial (0–100%) is the judgement call every forecast cycle actually argues about:
   *does the year-to-date gap persist to December, or does the year revert to last
   year's shape?* Making it an explicit dial beats burying it in a formula.
-- **Price elasticity** pulls volume against a price move, by business unit —
-  laundry is stickier than small appliances. The dial runs 0 (ignore) to 1.5; at
+- **Price elasticity** pulls volume against a price move, by product line —
+  model hosting is stickier than eval seats. The dial runs 0 (ignore) to 1.5; at
   0 a price rise drops straight to margin, which always flatters the plan.
 - **`ramp`** phases price and cost changes in over three months, because price
   decisions do not land in full on day one.
@@ -172,20 +174,20 @@ empty.
 Three levels, one resolution rule:
 
 ```
-SKU  →  Market × BU  →  BU  →  Market  →  Nordics
+SKU  →  Region × product line  →  Product line  →  Region  →  Global
 ```
 
 Most specific wins. Only overrides are stored; everything else inherits.
 
 | Level | Page | What it is for |
 |---|---|---|
-| **Portfolio** | sliders | The MD's number. One move, whole Nordics. |
-| **Market × BU** | 4×5 editable grid | The working level. ~20 cells, one owner each. |
+| **Portfolio** | sliders | The planning lead's number. One move, whole of Global. |
+| **Region × product line** | 4×5 editable grid | The working level. ~20 cells, one owner each. |
 | **SKU** | filterable table | Exceptions only: a launch, a delist, a competitor price move. |
 
 Why hybrid rather than pure top-down or pure bottom-up: several hundred
 market-SKU combinations is too many for anyone to plan and defend. One number is too coarse
-to be credible in front of commercial. **Market × BU is roughly 20 cells, which
+to be credible in front of commercial. **Region × product line is roughly 20 cells, which
 is the level at which a named human can own each one.** SKU sits underneath for
 the handful of things per quarter that are genuinely known.
 
@@ -287,7 +289,7 @@ walk by market.
 | Scenario compare strip | **Holding options side by side.** Snapshot the current adjustments, then compare each saved scenario's margin, band and P(≥ budget) against the live one. |
 | Interactive **P&L** to EBIT | **The whole statement.** Volume → gross sales → net sales → product margin → operating costs → EBIT, by full year / quarter / month, with variance vs budget and prior year and favourable/unfavourable colouring. |
 | **EBIT bridge** | **The full variance walk.** Base EBIT to forecast EBIT through the product-margin buckets and then each operating-cost line — ΔEBIT = Δ product margin − Δ opex, reconciled to the cent. |
-| **Consolidation drill-down** | **Totals that tie out.** Nordics → market → BU → SKU, every level the exact sum of the one beneath (built from shared leaves, proven in the tests and shown by a consolidation seal). Click any row to open it. |
+| **Consolidation drill-down** | **Totals that tie out.** Global → region → product line → SKU, every level the exact sum of the one beneath (built from shared leaves, proven in the tests and shown by a consolidation seal). Click any row to open it. |
 | **Mix** decomposition + visuals | **BU mix vs profitability.** Splits the blended-margin move into a mix effect and a rate effect, with a net-sales share bar, a per-BU contribution chart (mix vs rate, in points) and a share-vs-margin bubble landscape sized by net sales. |
 | KPI strip with split sparklines | Orientation. Solid to the cut-off, dashed after. |
 | Trajectory + risk band | Where the year is going, and how confidently. |
@@ -295,7 +297,7 @@ walk by market.
 | Tornado | **Where to spend attention.** Ordered by each driver's own sigma, not by an arbitrary ±10%. |
 | Price/margin scatter with observed band | **Assumption validation.** A forecast price outside the range ever actually achieved gets ringed in red. |
 | Class mix area | Is the portfolio premiumising or drifting down? |
-| Market × BU heatmap | Where to act. |
+| Region × product-line heatmap | Where to act. |
 | Variance table, closed vs open | **What is still fixable**, which is a different question from what went wrong. |
 
 ---
@@ -306,7 +308,7 @@ walk by market.
 |---|---|
 | **PowerPoint** | 4 slides. The bridge goes in as a **native editable stacked bar chart**, not a picture — whoever receives the deck can change it. Loads `pptxgenjs` on demand from CDN. |
 | **PDF** | Print stylesheet + `window.print()`. No dependency, no drift between screen and paper. |
-| **CSV · by SKU / by BU** | Fact extract at the chosen grain, all three versions, EUR, semicolon-delimited with BOM so Excel opens it correctly in a Nordic locale. |
+| **CSV · by SKU / by product line** | Fact extract at the chosen grain, all three versions, EUR, semicolon-delimited with BOM so Excel opens it where the list separator is a semicolon. |
 | **CSV · assumptions** | The assumption register: every override, its level, its scope, plus cursor, carry, ramp, ρ and k. |
 
 CSV periods are emitted as load-ready `YYYY-MM`, and prior-year facts appear once
@@ -329,11 +331,11 @@ A seven-minute run that does not require anything to be pre-cooked:
    Click back to **Jun**.
 2. **Portfolio slider — Price +2%.** Go to Cockpit. The price bucket moves; the
    seal still reads zero. Point at the seal.
-3. **Grid tab.** Set Cooking × Sweden volume to −8. Only that cell turns red;
-   everything else stays grey and inherited. Back to Cockpit, focus **Sweden** —
-   the volume bucket moved. Focus **Denmark** — it did not.
-4. **Click the FX bucket.** The market split appears underneath. "Norway is
-   two-thirds of the FX drag."
+3. **Grid tab.** Set App Platform × North America volume to −8. Only that cell turns red;
+   everything else stays grey and inherited. Back to Cockpit, focus **North America** —
+   the volume bucket moved. Focus **Europe** — it did not.
+4. **Click the FX bucket.** The region split appears underneath. North America (USD)
+   and Asia Pacific (JPY) are the open-month translation levers; Europe is already in EUR.
 5. **Downside preset.** The whole page flips red at once, P(≥ budget) drops to
    0%, and the seal still reads zero. That is the moment people believe the
    model.
@@ -356,7 +358,7 @@ app.html              the model: shell + nav
 assets/style.css      tokens, layout, print rules
 src/
   data.js             dimensions, calendar, actuals, budget, FX  ← swap this for real data
-  mfp.js              long-term plan: annual channel×BU history + editable projection
+  ltp.js              long-term plan: annual channel×BU history + editable projection
   model.js            calendar split, driver inheritance, forecast build, opex→EBIT, aggregation
   bridge.js           PVM decomposition + reconciliation + drill + movers
   risk.js             historical sigma, gradients, scenario bands, Monte Carlo
@@ -406,7 +408,7 @@ in-session scenario compare, a product-margin lever isolation, **a landing-page
 method walkthrough, an interactive P&L from volume to EBIT with quarter/month
 granularity and variance vs budget and prior year, a business-unit mix
 decomposition (mix effect vs rate effect) with a contribution chart and a
-share-vs-margin bubble, an EBIT bridge, and a Nordics → market → BU → SKU
+share-vs-margin bubble, an EBIT bridge, and a Global → region → product line → SKU
 consolidation drill-down where every level provably sums to its parent**.
 
 ---

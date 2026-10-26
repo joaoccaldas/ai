@@ -8,7 +8,7 @@ Agree metric definitions, FX policy, product hierarchy, materiality, version nam
 
 Load one market and one BU, reconcile to SAP/SAC and run the model in parallel for one cycle. Keep all writes out of production.
 
-## Phase 2: Nordic commercial model
+## Phase 2: Multi-region commercial model
 
 Add all markets and BUs, formal FC snapshots, comments, approvals, scenario storage and native XLSX templates.
 

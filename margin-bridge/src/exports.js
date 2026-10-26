@@ -181,7 +181,7 @@ export async function exportPptx(ctx) {
   s = p.addSlide(); shell(s, meta.eyebrow, 'Where the variance sits');
   const head = [{ text:'Business unit', options:{ bold:true } },
     ...MARKETS.map(m => ({ text:m.name, options:{ bold:true, align:'right' } })),
-    { text:'Nordics', options:{ bold:true, align:'right' } }];
+    { text:'Global', options:{ bold:true, align:'right' } }];
   const body = bus.map(r => [{ text:r.name },
     ...r.cells.map(v => ({ text:spp(v), options:{ align:'right',
       color: v >= 0 ? GREEN : RED } }))]);

@@ -40,7 +40,7 @@ import { isCY, monthOf, CY_START } from './data.js';
 
 /* Which block each driver belongs to, for the correlation structure. */
 export const BLOCK = { growth:'demand', price:'demand', disc:'demand', rebate:'demand',
-                       premium:'demand', cogs:'macro', fxSE:'macro', fxNO:'macro' };
+                       premium:'demand', cogs:'macro', fxNA:'macro', fxAP:'macro' };
 /** Pairwise correlation: ρ within a block, ρ·cross across blocks, 1 on the diagonal. */
 export const corrOf = (a, b, rho, cross = 0.4) =>
   a === b ? 1 : (BLOCK[a] === BLOCK[b] ? rho : rho * cross);
@@ -78,8 +78,8 @@ export function sigmas(FACTS, horizon = 6) {
     // class-share and FX are not on the per-SKU fact; documented annual vols
     // scaled to the open-month horizon by the √time rule.
     premium: 2.2 * Math.sqrt(h/12),
-    fxSE:    4.8 * Math.sqrt(h/12),
-    fxNO:    5.4 * Math.sqrt(h/12)
+    fxNA:    6.5 * Math.sqrt(h/12),
+    fxAP:    8.0 * Math.sqrt(h/12)
   };
   s.disc   = Math.max(0.2, s.disc);
   s.rebate = Math.max(0.2, s.rebate);
@@ -87,7 +87,7 @@ export function sigmas(FACTS, horizon = 6) {
 }
 
 /* Sign convention: which direction of each driver is GOOD for margin. */
-export const FAVOURABLE = { growth:+1, price:+1, disc:-1, rebate:-1, cogs:-1, premium:+1, fxSE:+1, fxNO:+1 };
+export const FAVOURABLE = { growth:+1, price:+1, disc:-1, rebate:-1, cogs:-1, premium:+1, fxNA:+1, fxAP:+1 };
 
 /* ------------------------------ 2. gradients ----------------------------- */
 /** @param evalFn (overrideMap) => margin in EUR */

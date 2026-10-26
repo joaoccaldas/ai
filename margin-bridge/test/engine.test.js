@@ -56,15 +56,15 @@ const S2 = { ...newState(), ov: { [ovKey('all','ALL','price')]: 3 } };
 const FC2 = buildForecast(FACTS, summarise(FACTS, S2.cursor), S2).filter(r => isCY(r.i));
 ok(agg(FC2).gm > agg(FC).gm, 'portfolio +3% price raises margin');
 
-const S3 = { ...newState(), ov: { [ovKey('mkt','SE','price')]: 3 } };
+const S3 = { ...newState(), ov: { [ovKey('mkt','NA','price')]: 3 } };
 const FC3 = buildForecast(FACTS, summarise(FACTS, S3.cursor), S3).filter(r => isCY(r.i));
-ok(agg(FC3, r=>r.k==='SE').gm > agg(FC, r=>r.k==='SE').gm, 'market override lifts Sweden');
-ok(Math.abs(agg(FC3, r=>r.k==='DK').gm - agg(FC, r=>r.k==='DK').gm) < 1, 'market override leaves Denmark untouched');
+ok(agg(FC3, r=>r.k==='NA').gm > agg(FC, r=>r.k==='NA').gm, 'region override lifts North America');
+ok(Math.abs(agg(FC3, r=>r.k==='EU').gm - agg(FC, r=>r.k==='EU').gm) < 1, 'region override leaves Europe untouched');
 
-const S4 = { ...newState(), ov: { [ovKey('all','ALL','price')]: 3, [ovKey('bu','SDA','price')]: 0 } };
+const S4 = { ...newState(), ov: { [ovKey('all','ALL','price')]: 3, [ovKey('bu','EVL','price')]: 0 } };
 const FC4 = buildForecast(FACTS, summarise(FACTS, S4.cursor), S4).filter(r => isCY(r.i));
-ok(Math.abs(agg(FC4, r=>r.bu==='SDA').gm - agg(FC, r=>r.bu==='SDA').gm) < 1, 'BU override beats portfolio (SDA held flat)');
-ok(agg(FC4, r=>r.bu==='LAU').gm > agg(FC, r=>r.bu==='LAU').gm, 'other BUs still inherit portfolio price');
+ok(Math.abs(agg(FC4, r=>r.bu==='EVL').gm - agg(FC, r=>r.bu==='EVL').gm) < 1, 'product-line override beats portfolio (Eval & Data held flat)');
+ok(agg(FC4, r=>r.bu==='APP').gm > agg(FC, r=>r.bu==='APP').gm, 'other product lines still inherit portfolio price');
 
 // mix must be EXACTLY units-neutral now (reallocation, not scaling)
 const S5 = { ...newState(), ov: { [ovKey('all','ALL','premium')]: 3 } };
@@ -105,42 +105,41 @@ const buSum  = BUS.reduce((s, b) => s + pnlFromLeaves(L, o => o.bu === b.id).ebi
 let skuSum = 0;
 for (const m of MARKETS) for (const b of BUS)
   skuSum += pnlFromLeaves(L, o => o.k === m.id && o.bu === b.id).ebit;
-ok(Math.abs(root.ebit - mktSum) < 1, `Nordics EBIT = Σ markets (${eur(root.ebit)} vs ${eur(mktSum)})`);
-ok(Math.abs(root.ebit - buSum) < 1, 'Nordics EBIT = Σ business units');
-ok(Math.abs(root.ebit - skuSum) < 1, 'Nordics EBIT = Σ market×BU cells');
+ok(Math.abs(root.ebit - mktSum) < 1, `Global EBIT = Σ regions (${eur(root.ebit)} vs ${eur(mktSum)})`);
+ok(Math.abs(root.ebit - buSum) < 1, 'Global EBIT = Σ product lines');
+ok(Math.abs(root.ebit - skuSum) < 1, 'Global EBIT = Σ region×product-line cells');
 ok(Math.abs(root.ebit - pl.ebit) < 1, 'leaf consolidation matches the direct P&L');
 
 // Long-term plan: every year consolidates, and overrides flow through
-import { buildHistory, project, MFP_YEARS, PLAN_YEARS, CH_IDS } from '../src/mfp.js';
+import { buildHistory, project, LTP_YEARS, PLAN_YEARS, CH_IDS } from '../src/ltp.js';
 const hist = buildHistory();
 const proj = project(hist, {});
-let mfpBad = 0;
-for (const y of MFP_YEARS) {
+let ltpBad = 0;
+for (const y of LTP_YEARS) {
   const Y = proj.years[y];
   const chSum = CH_IDS.reduce((s, c) => s + Y.ch[c].ns, 0);
   const cellSum = CH_IDS.reduce((s, c) => s + BUS.reduce((a, b) => a + Y.byChBu[c][b.id].ns, 0), 0);
-  if (Math.abs(chSum - Y.tot.ns) > 1 || Math.abs(cellSum - Y.tot.ns) > 1) mfpBad++;
+  if (Math.abs(chSum - Y.tot.ns) > 1 || Math.abs(cellSum - Y.tot.ns) > 1) ltpBad++;
 }
-ok(mfpBad === 0, 'LTP: Nordics = Σ channels = Σ (channel×BU) for all ten years');
+ok(ltpBad === 0, 'LTP: Global = Σ channels = Σ (channel×product line) for all ten years');
 ok(proj.years[2031].tot.ns > proj.years[2022].tot.ns, 'LTP: plan grows the top line to 2031');
-const projUp = project(hist, { growth: { 2027: 12 } });
+const projUp = project(hist, { growth: { 2027: 28 } });
 ok(projUp.years[2027].tot.ns > proj.years[2027].tot.ns, 'LTP: a growth override lifts that plan year');
 // BU-growth planning mode consolidates and responds to per-BU growth
 const projBu = project(hist, { mode:'bu' });
 let buBad = 0;
-for (const y of MFP_YEARS) { const Y = projBu.years[y];
+for (const y of LTP_YEARS) { const Y = projBu.years[y];
   const cs = CH_IDS.reduce((s,c)=>s+Y.ch[c].ns,0);
   if (Math.abs(cs - Y.tot.ns) > 1) buBad++; }
-ok(buBad === 0, 'LTP BU-mode: still consolidates to Nordics every year');
-const buLAU = BUS.find(b=>b.id==='LAU').id;
-const projBuG = project(hist, { mode:'bu', buGrowth:{ 2027:{ LAU: 15 } } });
-const lau27 = CH_IDS.reduce((s,c)=>s+projBuG.years[2027].byChBu[c].LAU.ns,0);
-const lau27base = CH_IDS.reduce((s,c)=>s+projBu.years[2027].byChBu[c].LAU.ns,0);
-ok(lau27 > lau27base, 'LTP BU-mode: a per-BU growth override lifts that BU');
+ok(buBad === 0, 'LTP product-line mode: still consolidates to Global every year');
+const projBuG = project(hist, { mode:'bu', buGrowth:{ 2027:{ HST: 40 } } });
+const hst27 = CH_IDS.reduce((s,c)=>s+projBuG.years[2027].byChBu[c].HST.ns,0);
+const hst27base = CH_IDS.reduce((s,c)=>s+projBu.years[2027].byChBu[c].HST.ns,0);
+ok(hst27 > hst27base, 'LTP product-line mode: a per-line growth override lifts that line');
 
-const projMix = project(hist, { chShare: { 2027: { D2C: 30 } } });
-const d2cDef = proj.years[2027].ch.D2C.ns / proj.years[2027].tot.ns;
-const d2cOv  = projMix.years[2027].ch.D2C.ns / projMix.years[2027].tot.ns;
+const projMix = project(hist, { chShare: { 2027: { SLF: 50 } } });
+const d2cDef = proj.years[2027].ch.SLF.ns / proj.years[2027].tot.ns;
+const d2cOv  = projMix.years[2027].ch.SLF.ns / projMix.years[2027].tot.ns;
 ok(d2cOv > d2cDef && Math.abs(CH_IDS.reduce((s,c)=>s+projMix.years[2027].ch[c].ns,0) - projMix.years[2027].tot.ns) < 1,
    'LTP: a channel-mix override reweights and still consolidates');
 
