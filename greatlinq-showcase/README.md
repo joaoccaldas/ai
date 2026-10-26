@@ -33,9 +33,12 @@ From `v2/lantern/` and `v2/hybrid/`, Three.js is `../../vendor/three@0.170.0/...
 
 In-site `v2/` links still open in this tab (`Enter live`). Other catalog links stay external.
 
+## Inventory
+
+`img/inventory/` holds the internal stills (75 files from the Mac inventory packs). Catalog rows that use them are `external: false`, so they show when the header audience is Internal. The default audience is external.
+
 ## Not in this publish
 
-- **`img/inventory/`** — packs `03-inventory.tgz` and `04-inventory.tgz` were not in the export. Those stills belong to internal catalog rows (`external: false`). The default audience is external, so the public page does not request them. Switching the header to Internal shows those cards without thumbnails until the packs are added.
 - **`v2/hybrid/media/arch-film.mp4`** — not in the vendor/lantern pack. Hybrid keeps the night still (`arch-night.jpg`) and then opens the live arch.
 
 ## Android

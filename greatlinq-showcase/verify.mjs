@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -70,10 +70,13 @@ const media = [
 ];
 for (const rel of media) assert.ok(statSync(join(root, rel)).size > 1000, rel);
 
+const catalog = JSON.parse(read('catalog.json'));
+const inventoryRefs = [...new Set(catalog.items.map(i => i.image).filter(img => typeof img === 'string' && img.startsWith('img/inventory/')))];
+assert.ok(inventoryRefs.length >= 50, 'catalog lost its inventory image refs');
+for (const rel of inventoryRefs) assert.ok(existsSync(join(root, rel)), `missing inventory still ${rel}`);
+
 const omitted = [];
 if (!existsSync(join(root, 'v2/hybrid/media/arch-film.mp4'))) omitted.push('v2/hybrid/media/arch-film.mp4');
-if (!existsSync(join(root, 'img/inventory'))) omitted.push('img/inventory/');
-else if (readdirSync(join(root, 'img/inventory')).length === 0) omitted.push('img/inventory/ (empty)');
 
 console.log(JSON.stringify({
   passed: true,
