@@ -1,0 +1,69 @@
+{
+  "bundleId": "ai.caldas.noema.mac",
+  "bundlePath": "~/Applications/NOEMA.app",
+  "checks": [
+    {
+      "detail": {
+        "flagImage": 640,
+        "flags": 3,
+        "h1": "Understand what humans believe, and how beliefs connect.",
+        "state": "DRH cohort 926 profiles \u00b7 1,569 unknown or ambiguous cells excluded, not treated as absence \u00b7 386 pairs tested \u00b7 Pulotu cohort 137 profiles \u00b7 0 pairs tested \u00b7 1,063 comparable profiles in the federation \u00b7 research preview",
+        "title": "NOEMA \u00b7 Religion, Ritual & Belief, Decomposed"
+      },
+      "name": "home",
+      "ok": true
+    },
+    {
+      "detail": {
+        "hidden": false,
+        "hits": 5,
+        "text": "Search metadata only. Matching, co-occurrence and semantic proximity are not evidence of historical relationship, descent, diffusion or causation.\nTopics\nOdin and Norse magic (sei\u00f0r)\nPOPULATED_FROM_EXISTING_RECORDS \u00b7 What does the reference catalog record about Odin, and is sei\u00f0r in the data?\nOdin\nDEITY \u00b7 REFERENCE_ONLY \u00b7 REFERENCE\nTraditions\nPre-Christian Norse religion\nBELIEF_SYSTEM \u00b7 REFERENCE_ONLY \u00b7 REFERENCE \u00b7 SYS-NORSE\nSources\nOdin \u00b7 ENCYCLOPEDIA_REFERENCE\nprofile_status REFERENCE_ONLY \u00b7 Reference profile. \u00b7 https://www.britannica.com/topic/Odin-Norse-deity\nOpen the full Explore list\n"
+      },
+      "name": "home-search",
+      "ok": true
+    },
+    {
+      "detail": {
+        "cards": 3,
+        "count": "1 matches",
+        "path": "/site/explore.html",
+        "q": "Odin",
+        "text": "\nOdin on his throne with ravens and wolves \u00b7 Public domain / Public Domain Mark 1.0 \u00b7 REFERENCE_ONLY_NOT_EVIDENCE. Reference imagery, not evidence.\nDeityREFERENCE\nOdinOpen the Odin journey\n\u00d3\u00f0inn \u00b7 Woden \u00b7 Wotan\nWisdom \u00b7 Poetry \u00b7 Magic \u00b7 War \u2014 Scandinavia \u00b7 Germanic Europe\n\nOntology Agency\nKnowledge Authority\nDeath Afterlife\nmatch 32\n"
+      },
+      "name": "explore-chip",
+      "ok": true
+    },
+    {
+      "detail": {
+        "caption": "Witch riding on a goat\nAlbrecht D\u00fcrer (1471\u20131528) \u00b7 CC0\nMODERN_HISTORICAL_INTERPRETATION \u00b7 REFERENCE_ONLY_NOT_EVIDENCE. Reference imagery, not evidence of the catalog records above.\nAlbrecht D\u00fcrer engraving named on the Commons file as about 1500\u20131501. National Gallery of Art open-access donation, file NGA 6674. The print depicts a witch. It is not a NOEMA catalog entity and not evidence that the catalog records witchcraft.\nSource and rights\n\n",
+        "naturalWidth": 640,
+        "question": "What does the current NOEMA data record about Wicca or witchcraft?",
+        "rights": true
+      },
+      "name": "witches-journey",
+      "ok": true
+    },
+    {
+      "detail": {
+        "caption": "Cult Statue of Zeus Hypsistos, Enthroned\nOphelia2; ancient sculptor unknown \u00b7 Public domain\nHISTORICAL_REPRESENTATION \u00b7 REFERENCE_ONLY_NOT_EVIDENCE. Reference imagery, not evidence of the catalog records above.\nRoman Imperial-era cult statue identified by the Archaeological Museum of Dion / Wikimedia Commons record as Zeus Hypsistos. Used here only as historical iconographic reference.\nSource and rights\n\n",
+        "naturalWidth": 640,
+        "question": "Which deities does the reference catalog store, and what do those records leave out?",
+        "rights": true
+      },
+      "name": "gods-journey",
+      "ok": true
+    }
+  ],
+  "missing": [],
+  "ok": true,
+  "pageErrors": [],
+  "port": 55566,
+  "screenshots": [
+    "projects/noema/mac/evidence/home.png",
+    "projects/noema/mac/evidence/home-search.png",
+    "projects/noema/mac/evidence/explore.png",
+    "projects/noema/mac/evidence/witches.png",
+    "projects/noema/mac/evidence/gods.png"
+  ],
+  "installedApp": "~/Applications/NOEMA.app"
+}

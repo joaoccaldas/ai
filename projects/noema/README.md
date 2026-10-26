@@ -67,6 +67,18 @@ See `docs/INGESTION_ANALYSIS_V2.md` and `docs/ANALYSIS_V3_AUDIT_2026-09-10.md` f
 
 `site/observatory.html` is the flagship immersive research surface. Evidence-bearing geographic marks must come from source-bounded coordinates; atmosphere and reference imagery are visually distinct from evidence. Production data must pass publication and rights gates.
 
+### macOS app
+
+Native shell for this site. Source `projects/noema/mac`. Bundle id `ai.caldas.noema.mac`. Version 1.0.0.
+
+- Purpose: a macOS window for the same pages, including Home, Explore, and the Odin, witches, and gods journeys.
+- Authority: the bundled site and reference files remain the content. The app does not create catalog evidence.
+- Owner and lifecycle: part of NOEMA, draft companion, rebuilt from the site tree. It does not auto-update.
+- Privacy: serves only `127.0.0.1` from files inside the app bundle. External source links open in the browser.
+- Dependencies: the site uses `fetch()`, so the shell runs a loopback static server instead of `file://`.
+- Validation: `projects/noema/mac/build.sh`, then `open ~/Applications/NOEMA.app`.
+- Registration: this section is the source declaration. Hub index readback was not confirmed for this shell.
+
 ## Automation
 
 - `NOEMA CI` — tests changes under `projects/noema/**`
