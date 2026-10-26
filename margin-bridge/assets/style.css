@@ -289,7 +289,7 @@ a.mark{text-decoration:none;color:inherit;cursor:pointer}
 .saverow .search{flex:1;min-width:240px;padding:9px 12px;border:1px solid var(--rule);border-radius:2px;
   font-family:"IBM Plex Sans",sans-serif;font-size:13px;background:var(--paper)}
 
-/* ------------------------------ MFP / budget --------------------------- */
+/* ------------------------ long-term plan / budget ----------------------- */
 .navsep{width:1px;height:18px;background:var(--rule);margin:0 4px}
 .nav button.lt{color:var(--brass);border-color:transparent}
 .nav button.lt:hover{color:var(--bad)}

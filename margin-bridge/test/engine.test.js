@@ -110,7 +110,7 @@ ok(Math.abs(root.ebit - buSum) < 1, 'Nordics EBIT = Σ business units');
 ok(Math.abs(root.ebit - skuSum) < 1, 'Nordics EBIT = Σ market×BU cells');
 ok(Math.abs(root.ebit - pl.ebit) < 1, 'leaf consolidation matches the direct P&L');
 
-// MFP long-term plan: every year consolidates, and overrides flow through
+// Long-term plan: every year consolidates, and overrides flow through
 import { buildHistory, project, MFP_YEARS, PLAN_YEARS, CH_IDS } from '../src/mfp.js';
 const hist = buildHistory();
 const proj = project(hist, {});
@@ -121,28 +121,28 @@ for (const y of MFP_YEARS) {
   const cellSum = CH_IDS.reduce((s, c) => s + BUS.reduce((a, b) => a + Y.byChBu[c][b.id].ns, 0), 0);
   if (Math.abs(chSum - Y.tot.ns) > 1 || Math.abs(cellSum - Y.tot.ns) > 1) mfpBad++;
 }
-ok(mfpBad === 0, 'MFP: Nordics = Σ channels = Σ (channel×BU) for all ten years');
-ok(proj.years[2031].tot.ns > proj.years[2022].tot.ns, 'MFP: plan grows the top line to 2031');
+ok(mfpBad === 0, 'LTP: Nordics = Σ channels = Σ (channel×BU) for all ten years');
+ok(proj.years[2031].tot.ns > proj.years[2022].tot.ns, 'LTP: plan grows the top line to 2031');
 const projUp = project(hist, { growth: { 2027: 12 } });
-ok(projUp.years[2027].tot.ns > proj.years[2027].tot.ns, 'MFP: a growth override lifts that plan year');
+ok(projUp.years[2027].tot.ns > proj.years[2027].tot.ns, 'LTP: a growth override lifts that plan year');
 // BU-growth planning mode consolidates and responds to per-BU growth
 const projBu = project(hist, { mode:'bu' });
 let buBad = 0;
 for (const y of MFP_YEARS) { const Y = projBu.years[y];
   const cs = CH_IDS.reduce((s,c)=>s+Y.ch[c].ns,0);
   if (Math.abs(cs - Y.tot.ns) > 1) buBad++; }
-ok(buBad === 0, 'MFP BU-mode: still consolidates to Nordics every year');
+ok(buBad === 0, 'LTP BU-mode: still consolidates to Nordics every year');
 const buLAU = BUS.find(b=>b.id==='LAU').id;
 const projBuG = project(hist, { mode:'bu', buGrowth:{ 2027:{ LAU: 15 } } });
 const lau27 = CH_IDS.reduce((s,c)=>s+projBuG.years[2027].byChBu[c].LAU.ns,0);
 const lau27base = CH_IDS.reduce((s,c)=>s+projBu.years[2027].byChBu[c].LAU.ns,0);
-ok(lau27 > lau27base, 'MFP BU-mode: a per-BU growth override lifts that BU');
+ok(lau27 > lau27base, 'LTP BU-mode: a per-BU growth override lifts that BU');
 
 const projMix = project(hist, { chShare: { 2027: { D2C: 30 } } });
 const d2cDef = proj.years[2027].ch.D2C.ns / proj.years[2027].tot.ns;
 const d2cOv  = projMix.years[2027].ch.D2C.ns / projMix.years[2027].tot.ns;
 ok(d2cOv > d2cDef && Math.abs(CH_IDS.reduce((s,c)=>s+projMix.years[2027].ch[c].ns,0) - projMix.years[2027].tot.ns) < 1,
-   'MFP: a channel-mix override reweights and still consolidates');
+   'LTP: a channel-mix override reweights and still consolidates');
 
 // risk
 const SIG = sigmas(FACTS);

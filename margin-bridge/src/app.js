@@ -30,7 +30,7 @@ const S = {
   rho: 0.35, k: 1.28
 };
 const SCEN = [];         // saved scenarios for compare (in-memory session store)
-const HIST = buildHistory();   // MFP history is deterministic; build once
+const HIST = buildHistory();   // long-term plan history is deterministic; build once
 S.mfp = { mode:'total', growth:{}, pm:{}, price:{}, nsAbs:{}, buGrowth:{}, chShare:{}, buShare:{},
           budAdj:{}, planYear:2027, budCh:'ALL' };
 
@@ -215,7 +215,7 @@ function compute() {
   const mixData = { rows:mixRows, mixEff, rateEff, crossEff,
     blendedF: agg(FC).rate, blendedB: agg(mixBase).rate, cmp:S.cmp };
 
-  /* ---- MFP: long-term plan (annual, channel × BU, 2022–2031) ---- */
+  /* ---- Long-term plan (annual, channel × BU, 2022–2031) ---- */
   const mfp = project(HIST, S.mfp);
 
   /* Budget 2027 = the plan's 2027 slice, flexed by the owner's bottom-up channel
@@ -259,7 +259,7 @@ function compute() {
     const raw = CH_IDS.reduce((s,c)=> s + (ov[c]!=null?ov[c]:mfp.defaults.chShare[y][c]*100), 0);
     return Math.abs(raw - 100) < 8; });
   const validation = { checks: [
-    chk('MFP consolidates — Nordics = Σ channels = Σ (channel × BU), all years', consOk),
+    chk('Long-term plan consolidates — Nordics = Σ channels = Σ (channel × BU), all years', consOk),
     chk('No negative net sales in any plan year or channel', !anyNeg),
     warn('Plan product-margin % stays within 15–55%', !pmOut),
     warn('Plan net-sales growth stays within −15%…+30% a year', !grOut),
@@ -273,7 +273,7 @@ function compute() {
   validation.warn = validation.checks.filter(c=>c.status==='warn').length;
   validation.fail = validation.checks.filter(c=>c.status==='fail').length;
 
-  /* ---- MFP scenarios & sensitivity: stress the plan drivers, read 2031 ---- */
+  /* ---- Long-term plan scenarios & sensitivity: stress the plan drivers, read 2031 ---- */
   const buMode = S.mfp.mode === 'bu';
   const effG = y => S.mfp.growth[y] != null ? S.mfp.growth[y] : mfp.defaults.growth[y]*100;
   const effPm = y => S.mfp.pm[y] != null ? S.mfp.pm[y] : mfp.defaults.pm[y]*100;
@@ -567,7 +567,7 @@ const A = {
         br: ctx.br, kpi: ctx.kpi, sc: ctx.sc, mc: ctx.mc,
         mkts: MARKETS, bus: BUS.map((b, i) => ({ name:b.name, cells:ctx.heatData.cells[i] })),
         meta: {
-          eyebrow:'Miele Nordics · FP&A',
+          eyebrow:'Nordic appliance portfolio · FP&A',
           footer:`Margin Bridge · actuals through ${label(S.cursor)} · ρ=${S.rho} · k=${S.k}σ · EUR`,
           bridgeTitle: ctx.bridgeTitle,
           bridgeNote:'Volume at base-period mix and unit margin. Mix is the remainder within '
@@ -576,7 +576,7 @@ const A = {
           fromLab: ctx.fromLab, toLab: ctx.toLab,
           narrative: ctx.narrative.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim(),
           assumptions: ctx.assumptions,
-          fileName: `Miele-Nordics-Margin-Bridge-${label(S.cursor).replace(' ','-')}.pptx`
+          fileName: `Nordic-Appliance-Margin-Bridge-${label(S.cursor).replace(' ','-')}.pptx`
         }
       });
     } catch (e) {
@@ -602,7 +602,7 @@ function go() {
     b.classList.toggle('on', b.dataset.p === S.page));
   const ver = document.getElementById('version');
   if (ver) ver.innerHTML = S.build === 'budget'
-    ? `<b>Budget 2027</b><span>full year · from MFP</span>`
+    ? `<b>Budget 2027</b><span>full year · from LTP</span>`
     : `<b>Forecast ’26</b><span>actuals + rest of year</span>`;
   document.getElementById('cutlabel').textContent = 'actuals through ' + label(S.cursor);
   const stat = document.getElementById('status');

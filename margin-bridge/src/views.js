@@ -797,7 +797,7 @@ export function renderSensitivity(root, ctx, A) {
   ch.tornadoChart(tc, torn, 220);
 }
 
-/* ===================== PAGE — MFP · LONG-TERM PLAN ======================= */
+/* ===================== PAGE — LONG-TERM PLAN (LTP) ======================= */
 const CH_COL  = Object.fromEntries(CHANNELS.map(c => [c.id, c.col]));
 const CH_NAME = Object.fromEntries(CHANNELS.map(c => [c.id, c.name]));
 const em = v => (Math.abs(v) >= 1e6 ? '€' + (v/1e6).toFixed(1) + 'm' : '€' + Math.round(v/1e3) + 'k');
@@ -813,7 +813,7 @@ export function renderMfp(root, ctx, A) {
   const hd = h('section', 'panel');
   const ns31 = Y(2031).tot.ns, ns26 = Y(BUD_YEAR).tot.ns;
   const cagr = Math.pow(ns31/ns26, 1/5) - 1;
-  hd.appendChild(h('div', 'phead', `<h2>Miele Financial Plan · long term</h2>
+  hd.appendChild(h('div', 'phead', `<h2>Nordic appliance long-term plan</h2>
     <p>Four years of actuals, the ${BUD_YEAR} budget (actual through ${MONTH_NAMES[YTD_MONTH-1]}),
        and a five-year plan you own. Future years are prepopulated from the trend and are fully
        overwritable — everything below consolidates: <b>Nordics = Σ channels = Σ (channel × BU)</b>.
@@ -1014,7 +1014,7 @@ export function renderMfp(root, ctx, A) {
     A.mfpBuShare(e.target.dataset.bch, e.target.dataset.bu, v==='' ? null : parseFloat(v)); });
 }
 
-/* ===================== PAGE — BUDGET 2027 (from MFP) ==================== */
+/* ===================== PAGE — BUDGET 2027 (from the long-term plan) ====== */
 export function renderBudget(root, ctx, A) {
   root.innerHTML = '';
   const M = ctx.mfp, st = ctx.mfpState, Y27 = ctx.budget2027;   // owner-adjusted 2027 build
@@ -1029,7 +1029,7 @@ export function renderBudget(root, ctx, A) {
   const intro = h('section','panel');
   intro.appendChild(h('div','phead',`<h2>Budget 2027 · ${cur==='ALL'?'all channels':CHANNELS.find(c=>c.id===cur).long}</h2>
     <p>Prepopulated from the long-term plan's 2027 slice, spread to months by the appliance seasonality
-       curve. This is the working budget — channel by BU by month, tying back to the MFP.</p>`));
+       curve. This is the working budget — channel by BU by month, tying back to the long-term plan.</p>`));
   root.appendChild(intro);
 
   if (cur === 'ALL') {
@@ -1122,7 +1122,7 @@ export function renderBuild(root, ctx, A) {
     `Prepopulated from the 2027 slice of the long-term plan — <b>${em2(M.years[2027].tot.ns)}</b> net
      sales — and spread to months by the seasonality curve. You refine the channel and BU mix and the
      monthly shape; it always ties back to the plan.`,
-    ['Starts from the MFP, not a blank sheet', 'Channel × BU × month, full year',
+    ['Starts from the long-term plan, not a blank sheet', 'Channel × BU × month, full year',
      'Reconciles up to the Nordics plan target'],
     'Build the 2027 budget →', 'budget'));
   cards.appendChild(card('forecast', 'Rest of year · bottom-up', 'Forecast the current year',
@@ -1175,8 +1175,8 @@ export function renderTutorial(root, ctx, A) {
   root.appendChild(fs);
 
   const steps = [
-    ['①', 'Start with the long-term plan', 'mfp', 'Open MFP · Long-term',
-      `Begin at the destination: the five-year Miele Financial Plan. Four years of actuals and the 2026
+    ['①', 'Start with the long-term plan', 'mfp', 'Open long-term plan',
+      `Begin at the destination: the five-year Nordic appliance long-term plan. Four years of actuals and the 2026
        budget prepopulate 2027–2031, which you overwrite — net sales growth, price, margin — then break
        the top line down by <b>sales channel</b> (ERT, KRT, Direct Projects, D2C, Customer Service) and by
        <b>business unit</b>, adjusting each mix. Nordics = Σ channels = Σ (channel × BU), every year.`],

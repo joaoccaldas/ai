@@ -363,7 +363,7 @@ export function buBubble(host, { pts }, height = 232) {
   return s;
 }
 
-/* --------------------------- MFP: multi-year line ------------------------ */
+/* --------------------- long-term plan: multi-year line ------------------- */
 export function mfpLine(host, { labels, series, splitAt, band, height = 250, fmt = eur }) {
   clear(host);
   const W = Math.max(460, host.clientWidth || 780), H = height;
@@ -400,7 +400,7 @@ export function mfpLine(host, { labels, series, splitAt, band, height = 250, fmt
   return s;
 }
 
-/* --------------------- MFP: swing bars (plan tornado) -------------------- */
+/* ---------------- long-term plan: swing bars (plan tornado) -------------- */
 export function swingBars(host, rows, height = 170) {
   clear(host);
   const W = Math.max(420, host.clientWidth || 700), H = height;
@@ -426,7 +426,7 @@ export function swingBars(host, rows, height = 170) {
   return s;
 }
 
-/* ------------------------- MFP: stacked columns -------------------------- */
+/* -------------------- long-term plan: stacked columns -------------------- */
 export function stackCols(host, { labels, keys, series, cols, names, height = 240, pct = false, splitAt = null }) {
   clear(host);
   const W = Math.max(420, host.clientWidth || 720), H = height;
