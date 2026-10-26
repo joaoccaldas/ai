@@ -5,7 +5,7 @@
     {
       "id": "odin-seidr",
       "title": "Odin and Norse magic (seiðr)",
-      "question": "What does the reference catalog record about Odin, and is seiðr in the data?",
+      "question": "What is written about Odin — and is seiðr there?",
       "progress": "POPULATED_FROM_EXISTING_RECORDS",
       "focus_ids": ["GOD-ODIN", "SYS-NORSE", "GOD-THOR"],
       "compare_ids": ["GOD-ODIN", "GOD-THOR"],
@@ -20,7 +20,7 @@
     {
       "id": "wicca-witchcraft",
       "title": "Wicca and witchcraft",
-      "question": "What does the current NOEMA data record about Wicca or witchcraft?",
+      "question": "What do we have on Wicca and witchcraft?",
       "progress": "IN_PROGRESS",
       "focus_ids": [],
       "compare_ids": [],
@@ -35,7 +35,7 @@
     {
       "id": "gods-pantheon",
       "title": "Gods in the reference catalog",
-      "question": "Which deities does the reference catalog store, and what do those records leave out?",
+      "question": "Which gods are on the shelf, and what is missing?",
       "progress": "POPULATED_FROM_EXISTING_RECORDS",
       "focus_ids": ["GOD-ZEUS", "GOD-OSIRIS", "GOD-ATHENA", "GOD-ISIS", "GOD-ODIN", "GOD-THOR", "GOD-RA", "GOD-SHIVA", "GOD-AMATERASU", "GOD-QUETZALCOATL", "GOD-INTI"],
       "compare_ids": ["GOD-ZEUS", "GOD-OSIRIS"],
@@ -50,7 +50,7 @@
     {
       "id": "ancestors-spirits",
       "title": "Ancestors and spirits",
-      "question": "Which existing records code ancestor relations or ancestor agency?",
+      "question": "Where do ancestors show up in the records we have?",
       "progress": "IN_PROGRESS",
       "focus_ids": ["CON-ANCESTOR-RELATION"],
       "compare_ids": [],
@@ -65,7 +65,7 @@
     {
       "id": "shamanism-altered",
       "title": "Shamanism, nature, and altered states",
-      "question": "Which existing records use shamanic, trance, or ayahuasca codes, and where is a single shamanism entity missing?",
+      "question": "Where do trance, shamanic practice, and ayahuasca show up — and where is a single shamanism entry missing?",
       "progress": "IN_PROGRESS",
       "focus_ids": ["RIT-TRANCE-HEALING", "SYS-AMAZON-AYAHUASCA", "SUB-AYAHUASCA"],
       "compare_ids": ["RIT-TRANCE-HEALING", "SYS-AMAZON-AYAHUASCA"],
@@ -80,7 +80,7 @@
     {
       "id": "unexplained-experiences",
       "title": "Unexplained experiences",
-      "question": "What candidate mechanism records exist, and what are they forbidden to conclude?",
+      "question": "Which open questions are on file, and what are they not allowed to conclude?",
       "progress": "IN_PROGRESS",
       "focus_ids": [],
       "compare_ids": [],

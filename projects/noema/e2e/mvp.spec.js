@@ -113,15 +113,18 @@ for (const file of LEGACY) {
   });
 }
 
-test('Odin journey shows a source locator and the seiðr gap', async ({ page }) => {
+test('Odin journey shows a source and the seiðr gap', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('journey.html?id=odin-seidr', { waitUntil: 'domcontentloaded' });
   const source = page.locator('#sources a[href="https://www.britannica.com/topic/Odin-Norse-deity"]');
   await expect(source).toBeVisible();
-  await expect(page.locator('#sources')).toContainText('REFERENCE_ONLY');
+  await expect(page.locator('#sources [data-profile-status="REFERENCE_ONLY"]').first()).toBeAttached();
+  await expect(page.locator('#sources')).toContainText('reference sketch');
   await expect(page.locator('#indexFindings')).toContainText('seiðr');
-  await expect(page.locator('#timeline')).toContainText('Event date');
-  await expect(page.locator('#timeline')).toContainText('broad_reference_range');
+  await expect(page.locator('#timeline')).toContainText('dated event');
+  await expect(page.locator('#timeline [data-precision="broad_reference_range"]')).toContainText('500');
+  await expect(page.locator('#denominator')).toContainText("What we have so far");
+  await expect(page.locator('#denominator')).toContainText("What we don't know yet");
 });
 
 test('home search groups Odin into topics, traditions, and sources', async ({ page }) => {
@@ -147,7 +150,7 @@ test('Odin journey shows a rights-labelled reference image below the denominator
   await expect(fig.locator('img')).toHaveAttribute('src', /odin-gehrts-1888\.jpg/);
   await expect(fig).toContainText('Public domain');
   await expect(fig).toContainText('not evidence');
-  await expect(fig).toContainText('REFERENCE_ONLY_NOT_EVIDENCE');
+  await expect(fig).toHaveAttribute('data-evidence-status', 'REFERENCE_ONLY_NOT_EVIDENCE');
   const figBox = await fig.boundingBox();
   const denomBox = await page.locator('#denominator').boundingBox();
   expect(figBox.y).toBeGreaterThan(denomBox.y + denomBox.height - 1);
@@ -171,17 +174,18 @@ async function expectPlateBelowDenom(page, id, src) {
 
 test('witches journey shows a rights-labelled reference image below the denominator', async ({ page }) => {
   await expectPlateBelowDenom(page, 'wicca-witchcraft', /witch-durer-1500\.jpg/);
-  await expect(page.locator('#journeyLead')).toContainText('No catalog entity is stored');
-  await expect(page.locator('#candidates')).toContainText('Forbidden conclusion');
-  await expect(page.locator('#denominator')).toContainText('UNKNOWN is not false');
+  await expect(page.locator('#journeyLead')).toContainText('No catalog entry is stored');
+  await expect(page.locator('#candidates')).toContainText('We must not conclude');
+  await expect(page.locator('#denominator')).toContainText('not the same as false');
+  await expect(page.locator('#denominator')).toHaveAttribute('data-rule', 'UNKNOWN is not false');
 });
 
 test('gods journey shows a rights-labelled reference image below the denominator', async ({ page }) => {
   await expectPlateBelowDenom(page, 'gods-pantheon', /zeus-hypsistos\.jpg/);
-  await expect(page.locator('#journeyLead')).toContainText('REFERENCE_ONLY');
+  await expect(page.locator('#journeyLead')).toHaveAttribute('data-profile-status', 'REFERENCE_ONLY');
   await expect(page.locator('#journeyLead')).toContainText('Resemblance is not causation');
-  await expect(page.locator('#sources')).toContainText('britannica.com/topic/Zeus');
-  await expect(page.locator('#timeline')).toContainText('Event date');
+  await expect(page.locator('#sources a[href*="britannica.com/topic/Zeus"]')).toBeVisible();
+  await expect(page.locator('#timeline')).toContainText('dated event');
 });
 
 test('home chips for witches and gods show reference images', async ({ page }) => {
@@ -223,9 +227,10 @@ test('denominator leads on Explore, the Odin journey, Compare, and Connections',
   await page.goto('journey.html?id=odin-seidr', { waitUntil: 'domcontentloaded' });
   const denom = page.locator('#denominator');
   await expect(denom).toBeVisible();
-  await expect(denom).toContainText('source locator');
+  await expect(denom).toContainText('What we have so far');
   await expect(denom).toContainText('26');
-  await expect(denom).toContainText('UNKNOWN is not false');
+  await expect(denom).toContainText('not the same as false');
+  await expect(denom).toHaveAttribute('data-locators', '2');
   await expect(page.locator('#comparison')).toBeVisible();
   const denomBox = await denom.boundingBox();
   const cmpBox = await page.locator('#comparison').boundingBox();
