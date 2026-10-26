@@ -64,7 +64,8 @@ body.home-v4 .nm-journey .nm-denom{margin:0;padding:0;border:0;border-radius:0;b
 .nm-sources{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .nm-source{padding:2px 0 12px;border-bottom:1px solid var(--nm-line)}
 .nm-next{list-style:none;margin:0;padding:0;display:grid}
-.nm-next a{display:flex;align-items:center;min-height:48px;text-decoration:none;border-top:1px solid var(--nm-line)}
+.nm-next a{display:grid;align-content:center;gap:2px;min-height:48px;padding:10px 0;text-decoration:none;border-top:1px solid var(--nm-line)}
+.nm-next small{color:var(--nm-muted);font-size:13px;line-height:1.35}
 .nm-exact{margin-top:8px;color:var(--nm-muted);font-size:14px}
 .nm-table{width:100%;border-collapse:collapse;font-size:14px}
 .nm-table th,.nm-table td{text-align:left;vertical-align:top;padding:10px 8px 10px 0;border-top:1px solid var(--nm-line);overflow-wrap:anywhere}

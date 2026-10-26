@@ -95,6 +95,9 @@ const LEGACY = [
   'dashboard-v1.html',
   'observatory-v6.html',
   'journey.html?id=odin-seidr',
+  'journey.html?id=ancestors-spirits',
+  'journey.html?id=shamanism-altered',
+  'journey.html?id=unexplained-experiences',
 ];
 
 for (const file of LEGACY) {
@@ -248,4 +251,107 @@ test('denominator leads on Explore, the Odin journey, Compare, and Connections',
   await expect(conn).toContainText('sources');
   const connBox = await conn.boundingBox();
   expect(connBox.y).toBeLessThan(844);
+});
+
+test('home shelf row links the working set in human language', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('index.html', { waitUntil: 'domcontentloaded' });
+  const shelf = page.locator('#onShelf');
+  await expect(shelf).toBeVisible();
+  await expect(shelf).toContainText("What's on the shelf");
+  await expect(shelf).toContainText('Resemblance is not causation');
+  const links = [
+    ['human-meaning-atlas.html', 'Atlas'],
+    ['compare.html', 'Compare'],
+    ['observatory.html', 'Observatory'],
+    ['deep-time.html', 'Deep Time'],
+    ['research.html', 'Research and methods'],
+    ['drh.html', 'Religious history'],
+    ['religion-decomposition.html', 'Austronesian beliefs'],
+  ];
+  for (const [href, label] of links) {
+    const link = shelf.locator(`a[href="${href}"]`);
+    await expect(link).toBeVisible();
+    await expect(link).toContainText(label);
+    const box = await link.boundingBox();
+    expect(box?.height ?? 0, label).toBeGreaterThanOrEqual(44);
+  }
+  await expect(shelf).toContainText('A blank is not a no');
+  await expect(shelf).not.toContainText(/verified/i);
+  const buried = await shelf.evaluate(el => !!el.closest('details'));
+  expect(buried).toBe(false);
+});
+
+test('explore shows honest plates for the three thin chapters', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('explore.html', { waitUntil: 'domcontentloaded' });
+  const thin = page.locator('#exploreThin');
+  await expect(thin).toBeVisible();
+  for (const id of ['ancestors-spirits', 'shamanism-altered', 'unexplained-experiences']) {
+    const plate = thin.locator(`a[href="journey.html?id=${id}"]`);
+    await expect(plate).toBeVisible();
+    await expect(plate).toContainText('What we have');
+    await expect(plate).toContainText("What we don't know");
+    await expect(plate.locator('img')).toHaveCount(0);
+  }
+  await expect(thin).toContainText('ancestor relations');
+  await expect(thin).toContainText('shamanism');
+  await expect(thin).toContainText('unexplained');
+});
+
+test('explore search still opens religious history and Austronesian records', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('explore.html?q=Korean%20shamanism', { waitUntil: 'domcontentloaded' });
+  const card = page.locator('#results article', { hasText: 'Korean shamanism' }).first();
+  await expect(card).toBeVisible();
+  await expect(card.locator('a.title')).toHaveAttribute('href', /drh\.html\?q=/);
+  await page.goto('explore.html?q=Puyuma', { waitUntil: 'domcontentloaded' });
+  const pulotu = page.locator('#results article', { hasText: 'Puyuma' }).first();
+  await expect(pulotu).toBeVisible();
+  await expect(pulotu.locator('a.title')).toHaveAttribute('href', /religion-decomposition\.html\?q=Puyuma/);
+  await expect(pulotu).toContainText('Austronesian');
+});
+
+test('ancestors chapter names the limit and does not invent a picture', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('journey.html?id=ancestors-spirits', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#journeyLead')).toContainText('Ancestor relations');
+  await expect(page.locator('#journeyLead')).toContainText('No page of its own');
+  await expect(page.locator('#journeyLead')).toContainText('Resemblance is not causation');
+  await expect(page.locator('#denominator')).toContainText('What we have so far');
+  await expect(page.locator('#denominator')).toContainText("What we don't know yet");
+  await expect(page.locator('#denominator')).toContainText('not the same as false');
+  await expect(page.locator('#journeyFigure')).toHaveCount(0);
+  await expect(page.locator('#indexFindings')).toContainText('Osiris');
+  await expect(page.locator('#related a[href="drh.html"]')).toBeVisible();
+  await expect(page.locator('#related')).toContainText('Religious history');
+  const text = await page.locator('#journey').innerText();
+  expect(text.split('Resemblance is not causation').length - 1).toBe(1);
+});
+
+test('shamanism chapter uses the records on file and no fake picture', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('journey.html?id=shamanism-altered', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#journeyLead')).toContainText('Ayahuasca');
+  await expect(page.locator('#journeyLead')).toContainText('None of them is a single entry named shamanism');
+  await expect(page.locator('#journeyFigure')).toHaveCount(0);
+  await expect(page.locator('#indexFindings')).toContainText('Korean shamanism');
+  await expect(page.locator('#indexFindings a[href*="drh.html?q="]').first()).toBeVisible();
+  await expect(page.locator('#comparison')).toContainText('Resemblance is not causation');
+  await expect(page.locator('#timeline')).not.toContainText('null');
+  await expect(page.locator('#timeline')).toContainText('multiple traditions not single origin');
+  const text = await page.locator('#journey').innerText();
+  expect(text.split('Resemblance is not causation').length - 1).toBe(1);
+});
+
+test('unexplained chapter stays a question', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('journey.html?id=unexplained-experiences', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#journeyLead')).toContainText('No catalog entry is stored');
+  await expect(page.locator('#journeyLead')).toContainText('unexplained');
+  await expect(page.locator('#denominator')).toContainText('not the same as false');
+  await expect(page.locator('#candidates')).toContainText('We must not conclude');
+  await expect(page.locator('#journeyFigure')).toHaveCount(0);
+  await expect(page.locator('#indexFindings')).toContainText('unexplained');
+  await expect(page.locator('#related a[href="research.html"]')).toBeVisible();
 });

@@ -225,7 +225,7 @@
     if (focus.length && !focus.some(hasEventDate)) missing.push('no dated event');
     if (focus.some(e => (e.sources || []).some(s => !(s.date || s.year || s.published || s.accessed)))) missing.push('no date on those pages');
     if (noSource.length === 1) missing.push(`${noSource[0].name} has no source of its own`);
-    else if (noSource.length) missing.push(`${noSource.map(e => e.name).join(' and ')} have no source of their own`);
+    else if (noSource.length) missing.push(`${naturalList(noSource.map(e => e.name))} have no source of their own`);
     const withPages = focus.filter(e => (e.sources || []).length).map(e => e.name);
     const without = focus.filter(e => !(e.sources || []).length).map(e => e.name);
     let have;
@@ -241,13 +241,30 @@
     return `<span class="nm-label">What we have so far</span><b>${esc(model.have)}</b><p><span class="nm-label">What we don't know yet</span> ${esc(model.missingText)} What we have not recorded is not the same as false.</p>`;
   }
 
-  function leadText(focus, journey) {
+  function exactTitle(catalog, word) {
+    const needle = word.toLowerCase();
+    return (catalog.entities || []).some(e => String(e.name || '').toLowerCase() === needle || (e.aliases || []).some(a => String(a).toLowerCase() === needle));
+  }
+
+  function leadText(focus, journey, catalog) {
     if (!focus.length) {
       return `No catalog entry is stored for ${termList(journey.absence_terms)}. Anything that names the subject stays a question, not a finding.`;
     }
     if (journey.id === 'gods-pantheon') {
       const shown = focus.slice(0, 2).map(e => e.name).join(' and ');
       return `${focus.length} deities are named here, including ${shown}. Each record is a reference sketch: a name and an encyclopedia page, not a proved history. Resemblance is not causation.`;
+    }
+    if (journey.id === 'ancestors-spirits') {
+      const first = focus[0];
+      const aliases = (first.aliases || []).length ? ` Also called ${naturalList(first.aliases)}.` : '';
+      return `${first.name} is in the catalog as an ${kindWord(first.kind)}.${aliases} No page of its own is stored, and no reference picture is on file. Other records that use the same label are listed below. Resemblance is not causation.`;
+    }
+    if (journey.id === 'shamanism-altered') {
+      const names = naturalList(focus.map(e => e.name));
+      const missing = exactTitle(catalog, 'shamanism')
+        ? 'One of these records is titled shamanism.'
+        : 'None of them is a single entry named shamanism.';
+      return `${names} are on file. ${missing} No reference picture is stored.`;
     }
     const first = focus[0];
     const aliases = (first.aliases || []).length ? `, also called ${naturalList(first.aliases)}` : '';
@@ -269,16 +286,18 @@
 
   function timelineHtml(focus, reviewed, media) {
     const noEvent = !focus.length || !focus.some(hasEventDate);
-    const spans = focus.filter(e => e.time).map(e => {
+    const spans = focus.filter(e => e.time && e.time.start_ce != null && e.time.end_ce != null).map(e => {
       const attr = e.time.precision ? ` data-precision="${esc(e.time.precision)}"` : '';
       return `<span${attr}>${esc(e.name)} is placed around ${esc(String(e.time.start_ce))}–${esc(String(e.time.end_ce))}</span>`;
     });
+    const openSpans = focus.filter(e => e.time && (e.time.start_ce == null || e.time.end_ce == null));
     const undated = focus.some(e => (e.sources || []).some(s => !(s.date || s.year || s.published || s.accessed)));
     const pics = (reviewed || []).length + (media || []).length;
     const bits = [];
     bits.push(noEvent ? 'No dated event is stored.' : 'A dated event is stored.');
     if (spans.length === 1) bits.push(`A span, not a dated event: ${spans[0]}.`);
     else if (spans.length) bits.push(`Spans, not dated events: ${spans.join('; ')}.`);
+    if (openSpans.length) bits.push(openSpans.map(e => `${esc(e.name)} is marked ${esc(humanCode(e.time.precision || 'without a year'))}, with no start or end year.`).join(' '));
     if (undated) bits.push('The pages have no date of their own.');
     if (!focus.length) bits.push('With no catalog entry, there is no date to put on a line.');
     if (pics === 1) bits.push('The picture above is later art, not a catalog date.');
@@ -414,6 +433,19 @@
     });
   }
 
+  function shelfLinks() {
+    const rows = [
+      ['human-meaning-atlas.html', 'Atlas', 'Where and when dated evidence is mapped.'],
+      ['compare.html', 'Compare', 'Two records, side by side.'],
+      ['observatory.html', 'Observatory', 'Optional. A guided look. This chapter does not depend on it.'],
+      ['deep-time.html', 'Deep Time', 'What was found before anyone called it religion.'],
+      ['research.html', 'Research and methods', 'The files, the review queue, and the notes on what is missing.'],
+      ['drh.html', 'Religious history', 'Expert-coded entries, each tied to a time and a place.'],
+      ['religion-decomposition.html', 'Austronesian beliefs', 'Pulotu societies, taken apart. A shared piece is not a common origin.']
+    ];
+    return rows.map(([href, title, note]) => `<li><a href="${href}"><b>${esc(title)}</b><small>${esc(note)}</small></a></li>`).join('');
+  }
+
   function bindAccent() {
     const bar = document.querySelector('.nm-scroll-accent');
     const wash = document.querySelector('.nm-atmosphere');
@@ -479,7 +511,7 @@
       denomEl.dataset.rule = 'UNKNOWN is not false';
     }
     const leadEl = document.getElementById('journeyLead');
-    const lead = leadText(focus, journey);
+    const lead = leadText(focus, journey, catalog);
     if (leadEl) {
       leadEl.textContent = lead;
       if (focus.length && focus.every(e => e.profile_status === 'REFERENCE_ONLY')) leadEl.dataset.profileStatus = 'REFERENCE_ONLY';
@@ -492,7 +524,9 @@
     if (visual) visual.innerHTML = figuresHtml(reviewed, museumForFocus, journey, showResemblance);
 
     const related = (journey.related_ids || []).map(rid => (pack.journeys || []).find(j => j.id === rid)).filter(Boolean);
-    const exact = missingFocus.map(fid => gap(fid, 'That id is not in the catalog.')).join('') + scanBlocks(journey.scan_dimension_value, catalog, focus);
+    const thinChapter = ['ancestors-spirits', 'shamanism-altered', 'unexplained-experiences'].includes(journey.id);
+    const scan = scanBlocks(journey.scan_dimension_value, catalog, focus);
+    const exact = missingFocus.map(fid => gap(fid, 'That id is not in the catalog.')).join('') + (thinChapter ? '' : scan);
 
     const index = { epistemic_note: '' };
     rest.innerHTML = `
@@ -520,6 +554,7 @@
         <p class="nm-label">The gap</p>
         <h2>What we looked for</h2>
         <p id="indexNote">${esc(index.epistemic_note)}</p>
+        ${thinChapter ? scan : ''}
       </section>
       <section class="nm-block" id="candidates">
         <p class="nm-label">Still open</p>
@@ -537,6 +572,8 @@
         <p class="nm-label">Continue</p>
         <h2>Other chapters</h2>
         <ul class="nm-next">${related.map(j => `<li><a href="journey.html?id=${encodeURIComponent(j.id)}" data-progress="${esc(j.progress || '')}">${esc(j.title)}</a></li>`).join('')}</ul>
+        <h2>Also on the shelf</h2>
+        <ul class="nm-next">${shelfLinks()}</ul>
         <p><a href="explore.html?q=${encodeURIComponent(journey.title)}">Search this in Explore</a></p>
       </section>`;
     bindFocus(root);
@@ -548,7 +585,7 @@
       if (note) note.dataset.epistemicNote = loaded.epistemic_note || '';
       const body = `${absenceReport(journey.absence_terms, catalog, loaded) || ''}${drhBlocks(journey.drh_ids, loaded) || ''}`;
       if (findings && body) findings.insertAdjacentHTML('beforeend', body);
-      else if (findings) findings.insertAdjacentHTML('beforeend', gap('Nothing extra to check', 'This chapter did not ask the index for a missing word.'));
+      else if (findings && !(thinChapter && scan)) findings.insertAdjacentHTML('beforeend', gap('Nothing extra to check', 'This chapter did not ask the index for a missing word.'));
     } catch (err) {
       if (findings) findings.insertAdjacentHTML('beforeend', gap('Search index', err.message));
     }
