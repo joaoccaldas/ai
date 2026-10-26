@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Journey · NOEMA</title>
+<meta name="description" content="A source-bounded NOEMA journey. Shown fields keep the status stored on their records. Missing data stays visible.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="noema-mvp.css">
+<link rel="stylesheet" href="journey.css">
+</head>
+<body class="home-v4">
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="home-shell">
+<header class="home-top">
+<a class="home-logo" href="index.html">NOEMA</a>
+<button class="nm-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">Menu</button>
+<nav id="primary-nav" class="home-nav" aria-label="Primary">
+<a href="index.html">Home</a>
+<a href="explore.html">Explore</a>
+<a href="human-meaning-atlas.html">Atlas</a>
+<a href="lineages.html">Connections</a>
+<a href="research.html">Research</a>
+</nav>
+</header>
+<main id="main">
+<article id="journey" class="nm-journey">
+<div class="nm-scroll-accent" aria-hidden="true"></div>
+<p class="nm-kicker">Journey</p>
+<h1 id="journeyQuestion">What does the reference catalog record about Odin, and is seiðr in the data?</h1>
+<p id="journeyLead" class="nm-lead">Odin (GOD-ODIN) is stored as DEITY, profile_status REFERENCE_ONLY, aliases Óðinn, Woden, Wotan, with 1 source locator. Pre-Christian Norse religion (SYS-NORSE) is stored as BELIEF_SYSTEM, profile_status REFERENCE_ONLY, aliases Old Norse religion, Norse paganism, time 500–1200 (broad_reference_range, not an event date), and has no sources array. No stored field on these focus records contains seiðr. That is a gap, not a finding that the subject is unrelated.</p>
+<section id="denominator" class="nm-denom">
+<b>2 source locators on 3 focus records, in a reference catalog of 26 entities.</b>
+<p>Missing: no event date; no source date on a stored locator; SYS-NORSE has no sources array. UNKNOWN is not false. Similarity tags are comparison aids only; they do not imply descent or common origin.</p>
+</section>
+<div id="journeyVisual"></div>
+<div id="journeyRest" aria-live="polite"></div>
+<script>
+(function () {
+  var id = new URLSearchParams(location.search).get('id') || 'odin-seidr';
+  var pack = {
+    'wicca-witchcraft': {
+      title: 'Wicca and witchcraft',
+      q: 'What does the current NOEMA data record about Wicca or witchcraft?',
+      lead: 'No catalog entity is stored for wicca, witch, witchcraft. The focus list is empty. Candidate rows that name the subject stay candidates. A stored resemblance is not causation or common origin.',
+      denom: '<b>0 source locators on 0 focus records, in a reference catalog of 26 entities.</b><p>Missing: no focus record was found in the catalog. UNKNOWN is not false. Similarity tags are comparison aids only; they do not imply descent or common origin.</p>'
+    },
+    'gods-pantheon': {
+      title: 'Gods in the reference catalog',
+      q: 'Which deities does the reference catalog store, and what do those records leave out?',
+      lead: 'Zeus (GOD-ZEUS) is stored as DEITY, profile_status REFERENCE_ONLY, aliases Zeús, Jupiter as Roman counterpart, with 1 source locator. Osiris (GOD-OSIRIS) is stored as DEITY, profile_status REFERENCE_ONLY, with 1 source locator. 11 deity records are in focus. Each stored profile_status on those records is REFERENCE_ONLY. Shared labels are comparison aids only. Resemblance is not causation or common origin.',
+      denom: '<b>11 source locators on 11 focus records, in a reference catalog of 26 entities.</b><p>Missing: no event date; no source date on a stored locator. UNKNOWN is not false. Similarity tags are comparison aids only; they do not imply descent or common origin.</p>'
+    }
+  };
+  var row = pack[id];
+  if (!row) return;
+  document.title = row.title + ' · NOEMA';
+  document.getElementById('journeyQuestion').textContent = row.q;
+  document.getElementById('journeyLead').textContent = row.lead;
+  document.getElementById('denominator').innerHTML = row.denom;
+})();
+</script>
+</article>
+</main>
+<footer class="clarity-footer"><span>NOEMA · a journey shows stored fields and explicit gaps.</span><span><a href="explore.html">Explore</a> · <a href="library.html">Library</a></span></footer>
+</div>
+<script src="journey.js" defer></script>
+<script src="noema-nav.js" defer></script>
+</body>
+</html>

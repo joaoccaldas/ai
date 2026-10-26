@@ -1,0 +1,56 @@
+html,body{overflow-x:clip;max-width:100%}
+.nm-journey{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;padding:8px 0 8px;min-width:0;max-width:100%}
+.nm-block,.nm-answer,.nm-scroll{min-width:0;max-width:100%}
+body.nm-app>#appNav{margin:0;width:100%;max-width:100%;box-sizing:border-box}
+.nm-journey h1{font-size:clamp(1.7rem,7vw,3.2rem);line-height:1.05;max-width:36ch}
+.nm-lead{margin:0;line-height:1.45;font-size:1.02rem}
+.nm-journey .nm-denom{margin:0}
+.nm-journey .nm-denom b{font-size:1.05rem}
+.nm-fold{margin:8px 0 0}
+.nm-fold>summary{cursor:pointer;min-height:44px;display:flex;align-items:center}
+.nm-scroll-accent{position:sticky;top:64px;height:2px;background:var(--nm-accent);transform:scaleX(0);transform-origin:left center;z-index:5}
+.nm-figure{margin:4px 0 0;display:grid;gap:8px;max-width:420px}
+.nm-figure figcaption{display:grid;gap:4px;font-size:13px;line-height:1.4;color:var(--nm-muted)}
+.nm-figure figcaption b{color:var(--nm-ink);font-family:var(--nm-serif);font-size:1.2rem;font-weight:500}
+.nm-figure img{width:100%;height:auto;border-radius:16px;background:#e7dfd2;display:block}
+.nm-figure.is-hero .nm-plate-frame{overflow:hidden;border-radius:16px;aspect-ratio:var(--ar);background:#e7dfd2}
+.nm-figure.is-hero img{height:118%;max-height:none;object-fit:cover;border-radius:0}
+.nm-plate-row{display:flex;gap:10px;overflow-x:auto;max-width:100%;scroll-snap-type:x mandatory;padding-bottom:8px;margin-top:8px}
+.nm-plate-row .nm-figure{flex:0 0 min(78%,280px);scroll-snap-align:start;max-width:78%}
+@media(prefers-reduced-motion:reduce){.nm-figure.is-hero img{transform:none !important;height:auto}}
+.nm-tick,.nm-source{cursor:pointer}
+.nm-tick.is-focus,.nm-source.is-focus{background:rgba(141,59,50,.08);box-shadow:inset 3px 0 0 var(--nm-accent)}
+@media(prefers-reduced-motion:reduce){.nm-scroll-accent{display:none}}
+.nm-kicker{color:var(--nm-accent);letter-spacing:.14em;text-transform:uppercase;font-size:12px;margin:0 0 6px}
+.nm-status{display:inline-flex;align-items:center;min-height:32px;padding:0 10px;border-radius:999px;border:1px solid var(--nm-line);font-size:12px}
+.nm-answer,.nm-block{background:var(--nm-ivory-2);border:1px solid var(--nm-line);border-radius:16px;padding:16px}
+.nm-answer p,.nm-block p,.nm-block li{line-height:1.55}
+.nm-gap{border-left:3px solid var(--nm-accent);padding:8px 12px;margin:8px 0;background:rgba(141,59,50,.06)}
+.nm-gap b{display:block}
+.nm-table{width:100%;border-collapse:collapse;font-size:14px}
+.nm-table th,.nm-table td{text-align:left;vertical-align:top;padding:8px 6px;border-top:1px solid var(--nm-line);overflow-wrap:anywhere}
+.nm-scroll{overflow-x:auto;max-width:100%}
+.nm-journey a,.nm-journey li,.nm-hit,.nm-hit small{color:var(--nm-accent);overflow-wrap:anywhere}
+.nm-hit,.nm-hit small{color:inherit}
+.nm-results{margin:14px 0 0;display:grid;gap:14px}
+.nm-results[hidden]{display:none}
+.nm-group h3{font-family:var(--nm-serif);font-size:1.15rem;margin:0 0 8px}
+.nm-hit{display:block;padding:12px 14px;margin:0 0 8px;border:1px solid var(--nm-line);border-radius:12px;text-decoration:none;color:inherit;background:var(--nm-ivory-2);min-height:44px}
+.nm-hit b{display:block}
+.nm-hit small{display:block;color:var(--nm-muted);margin-top:4px;line-height:1.4}
+body.nm-app .hero,body.nm-app .panel,body.nm-app .card,body.nm-app main,body.nm-app .shell{min-width:0;max-width:100%}
+body.nm-app .filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));min-width:0;max-width:100%}
+body.nm-app .filters select,body.nm-app select{width:100%;max-width:100%;min-width:0}
+.chip-row,body.nm-app .chip-row{display:flex;flex-wrap:wrap;gap:6px;max-width:100%}
+body.nm-app .research-grid,body.nm-app .grid,body.nm-app .grid.two{min-width:0}
+body.nm-app a,body.nm-app p,body.nm-app small{overflow-wrap:anywhere}
+body.nm-app .shell{max-width:min(1600px,100%);overflow-x:clip}
+body.nm-app .wb-nav{width:100%;max-width:100%;overflow-x:auto}
+@media(max-width:767px){
+  body.nm-app .hero,body.nm-app .research-grid,body.nm-app .grid,body.nm-app .grid.two{grid-template-columns:1fr}
+  .os .topbar,.pulsepage .topbar{grid-template-columns:minmax(0,1fr)}
+  .os .search,.pulsepage .search,.os .search input,.pulsepage .search input{min-width:0;max-width:100%;width:100%}
+  .os .livepill,.pulsepage .livepill{justify-self:start;white-space:normal;max-width:100%}
+  .os .hero h1,.pulsepage .pulsehero h1{font-size:clamp(2rem,12vw,3.2rem)}
+}
+#openWebgl{min-height:44px;margin-top:8px}

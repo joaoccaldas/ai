@@ -79,7 +79,7 @@ jobs:
           for phrase in [
               'Understand what humans believe, and how beliefs connect.',
               'evidence-backed atlas and comparison engine for religion, ritual, mythology and spiritual practice',
-              'href="explore.html">Explore','href="human-meaning-atlas.html">Atlas','href="lineages.html">Analyze',
+              'href="explore.html">Explore','href="human-meaning-atlas.html">Atlas','href="lineages.html">Connections',
               'href="library.html">Library','href="research.html">Research','What is NOEMA?',
               '01 · LOOK UP','02 · COMPARE','03 · TRACE PATTERNS',
               '01 · IDENTIFY','02 · DECOMPOSE','03 · COMPARE','04 · TEST','home-v2.js'

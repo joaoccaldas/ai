@@ -56,6 +56,38 @@
       "rights_status": "SOURCE_VERIFIED",
       "identity_status": "SOURCE_VERIFIED",
       "evidence_status": "REFERENCE_ONLY_NOT_EVIDENCE"
+    },
+    {
+      "media_id": "MEDIA-WITCH-DURER-001",
+      "entity_id": "",
+      "entity_name": "",
+      "media_class": "MODERN_HISTORICAL_INTERPRETATION",
+      "title": "Witch riding on a goat",
+      "description": "Albrecht Dürer engraving named on the Commons file as about 1500–1501. National Gallery of Art open-access donation, file NGA 6674. The print depicts a witch. It is not a NOEMA catalog entity and not evidence that the catalog records witchcraft.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Albrecht_D%C3%BCrer%2C_Witch_Riding_on_a_Goat%2C_c._1500-1501%2C_NGA_6674.jpg",
+      "source_page_url": "https://commons.wikimedia.org/wiki/File:Albrecht_D%C3%BCrer,_Witch_Riding_on_a_Goat,_c._1500-1501,_NGA_6674.jpg",
+      "collection": "National Gallery of Art open-access file on Wikimedia Commons (NGA 6674)",
+      "creator_or_photographer": "Albrecht Dürer (1471–1528)",
+      "license": "CC0",
+      "rights_status": "SOURCE_VERIFIED",
+      "identity_status": "SOURCE_VERIFIED",
+      "evidence_status": "REFERENCE_ONLY_NOT_EVIDENCE"
+    },
+    {
+      "media_id": "MEDIA-WITCH-BALDUNG-001",
+      "entity_id": "",
+      "entity_name": "",
+      "media_class": "MODERN_HISTORICAL_INTERPRETATION",
+      "title": "Witches' Sabbath",
+      "description": "Hans Baldung woodcut identified by the Commons file title as a witches' sabbath. Early modern interpretive image. Not a NOEMA catalog entity and not evidence that the catalog records witchcraft.",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Hans_Baldung_-_Witches_Sabbath_-_WGA01221.jpg",
+      "source_page_url": "https://commons.wikimedia.org/wiki/File:Hans_Baldung_-_Witches_Sabbath_-_WGA01221.jpg",
+      "collection": "Wikimedia Commons, Web Gallery of Art file WGA01221",
+      "creator_or_photographer": "Hans Baldung (1484–1545)",
+      "license": "Public domain",
+      "rights_status": "SOURCE_VERIFIED",
+      "identity_status": "SOURCE_VERIFIED",
+      "evidence_status": "REFERENCE_ONLY_NOT_EVIDENCE"
     }
   ]
 }
