@@ -1,0 +1,413 @@
+{
+  "name": "João Caldas",
+  "headline": "One curious mind.\nA few different lives.",
+  "intro": "Brazil, Sweden, Switzerland. Hacked computers, chased waves, ran Ironmans, then spent two decades making finance make sense in messy businesses. Now I’m wiring that curiosity back into AI, design and interactive worlds.",
+  "career": "20+ years across finance, financial planning, senior leadership and board-level work, alongside experience in marketing, sales and demand planning.",
+  "now": "Over the last four years, AI has brought my early builder’s curiosity back into focus. After retiring from amateur triathlon, I’m bringing that energy into experiments with finance, design and interactive worlds.",
+  "basis": "Life story provided by João. Employer history and responsibilities from his career CV; current Miele role and speaking appearances linked to public sources. Short descriptions summarise the work; they do not claim measured business results.",
+  "chapters": [
+    {
+      "id": "code",
+      "period": "The early years",
+      "title": "The hacker chapter.",
+      "text": "My first short career was as a hacker. Computers were something to take apart, understand and experiment with—a curiosity that stayed with me after my focus moved elsewhere.",
+      "carry": "What carries forward: a builder’s curiosity.",
+      "href": "#projects",
+      "link": "See what I’m building now",
+      "image": "img/about/chapter-code.jpg"
+    },
+    {
+      "id": "sport",
+      "period": "From the early 2000s",
+      "title": "Then the ocean took over.",
+      "text": "Surfing pulled my attention away from computers in the early 2000s. Later came amateur triathlon: Ironman 70.3 and full-distance races in different countries, alongside my business career. The friendships and people I met matter as much to me as the finish lines. I have retired from racing; the curiosity stays.",
+      "carry": "What carries forward: practice, patience and feedback.",
+      "href": "#worlds",
+      "link": "Explore the worlds shaped by sport",
+      "image": "img/about/chapter-sport.jpg"
+    },
+    {
+      "id": "business",
+      "period": "20+ years in business",
+      "title": "The other kind of endurance.",
+      "text": "Finance and financial planning, senior leadership and board-level work, with experience across marketing, sales and demand planning. Different functions, connected decisions—and the need to understand the whole business.",
+      "carry": "What carries forward: commercial context and a disciplined approach to decisions.",
+      "href": "#uses",
+      "link": "Explore the business applications",
+      "image": "img/about/chapter-business.jpg"
+    },
+    {
+      "id": "ai",
+      "period": "The current chapter",
+      "title": "Now, connect the dots.",
+      "text": "Living across Brazil, Sweden and Switzerland, working in different businesses, racing, surfing and meeting people gave me a lot of different ways to look at the same problem. Music, art and the unexpected belong in that mix too. AI now gives me a way to turn those connections into things people can try.",
+      "carry": "What carries forward: all of it.",
+      "href": "#overview",
+      "link": "Step into the current work",
+      "image": "img/about/chapter-ai.jpg"
+    }
+  ],
+  "headlineRole": "Cluster FP&A Director · CFO · Finance Director",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/joaoccaldas",
+      "icon": "code"
+    },
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/joaocaldas/",
+      "icon": "people"
+    },
+    {
+      "label": "Email",
+      "url": "mailto:joaoccaldas@gmail.com",
+      "icon": "mail"
+    }
+  ],
+  "careerTimeline": [
+    {
+      "id": "aiesec",
+      "period": "Jun 2007 – Jun 2008",
+      "company": "AIESEC Sweden",
+      "role": "Director",
+      "place": "Stockholm",
+      "challenge": "Lead people before you have a playbook.",
+      "text": "First real seat of responsibility — vision, team energy and delivery when everything still felt like an experiment.",
+      "details": [
+        "Built and ran a student leadership chapter in Stockholm.",
+        "Learned that culture and clarity beat hierarchy."
+      ],
+      "tags": [
+        "Leadership",
+        "Start from zero",
+        "Stockholm"
+      ],
+      "brand": "aiesec",
+      "thumbnail": "img/about/aiesec.svg",
+      "thumbnailAlt": "AIESEC Sweden logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "smg",
+      "period": "Jun 2008 – Jan 2009",
+      "company": "SMG Worldwide",
+      "role": "Senior Sales Executive",
+      "place": "Stockholm",
+      "challenge": "Close deals when the story still needs work.",
+      "text": "Commercial pressure, live customers, and the lesson that finance only matters if someone actually buys.",
+      "details": [
+        "Front-line sales before the move into planning.",
+        "Kept the human side of revenue in view forever after."
+      ],
+      "tags": [
+        "Sales",
+        "Commercial grit"
+      ],
+      "brand": "smg",
+      "thumbnail": "img/about/smg.svg",
+      "thumbnailAlt": "SMG Worldwide logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "sensaytion",
+      "period": "Apr – Jun 2009",
+      "company": "Sensaytion AB",
+      "role": "Sales Manager",
+      "place": "Stockholm",
+      "challenge": "Ship side-by-side with studying.",
+      "text": "A short, intense sales stretch beside university — proof that curiosity and hustle can share a calendar.",
+      "details": [
+        "Part-time sales leadership alongside studies.",
+        "Kept one foot in commerce while finishing the academic chapter."
+      ],
+      "tags": [
+        "Hustle",
+        "Studies + work"
+      ],
+      "brand": "sensaytion",
+      "thumbnail": "img/about/sensaytion.svg",
+      "thumbnailAlt": "Sensaytion AB logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "gibraltar",
+      "period": "Jan – Oct 2010",
+      "company": "Gibraltar Foundation",
+      "role": "Financial Analyst · M&A",
+      "place": "Stockholm",
+      "challenge": "Put a number on something that doesn’t want one.",
+      "text": "Company research and valuation under uncertainty — where judgment starts to matter as much as the model.",
+      "details": [
+        "Valued acquisition targets and pressure-tested assumptions.",
+        "First deep dive into how deals actually get reasoned through."
+      ],
+      "tags": [
+        "M&A",
+        "Valuation",
+        "Judgment"
+      ],
+      "brand": "gibraltar",
+      "thumbnail": "img/about/gibraltar.svg",
+      "thumbnailAlt": "Gibraltar Foundation logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "kraft",
+      "period": "Nov 2010 – Mar 2012",
+      "company": "Kraft Foods",
+      "role": "Financial Planning & Systems Analyst",
+      "place": "Zurich",
+      "challenge": "One Europe, many ledgers — make them speak.",
+      "text": "Cadbury integration noise, Hyperion rollout, and the grind of turning scattered European reports into one shared truth.",
+      "details": [
+        "Led the European Hyperion reporting implementation.",
+        "Kept financial data coherent through the Cadbury integration.",
+        "Zurich base — first corporate systems chapter at scale."
+      ],
+      "tags": [
+        "Hyperion",
+        "Integration",
+        "Europe"
+      ],
+      "brand": "kraft",
+      "thumbnail": "img/about/kraft.svg",
+      "thumbnailAlt": "Kraft Foods logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "mondelez-global",
+      "period": "Mar 2012 – Mar 2013",
+      "company": "Mondelēz International",
+      "role": "Financial Analyst · Global Coffee",
+      "place": "Zurich",
+      "challenge": "Make a global coffee P&L actually readable.",
+      "text": "Brand scorecards, central marketing spend, and leaders who needed the story of coffee — not another dump of rows.",
+      "details": [
+        "Global brand reporting and central marketing costs.",
+        "Monthly coffee scorecards leaders could actually use.",
+        "Bridged category finance with brand storytelling."
+      ],
+      "tags": [
+        "Global coffee",
+        "Scorecards",
+        "Brand spend"
+      ],
+      "brand": "mondelez",
+      "thumbnail": "img/about/mondelez.png",
+      "thumbnailAlt": "Mondelēz International logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "mondelez-nordic",
+      "period": "Apr 2013 – Dec 2014",
+      "company": "Mondelēz Sweden",
+      "role": "Senior Nordic FP&A Analyst",
+      "place": "Stockholm",
+      "challenge": "Prove which launch, price or contract creates value.",
+      "text": "Partnered sales and marketing on Away from Home Beverages and Gum & Candy — Gevalia, Tassimo, Stimorol, Trident, O’boy.",
+      "details": [
+        "Pricing, promotions and customer-contract economics.",
+        "Made trade-offs visible before the campaign shipped.",
+        "Nordic partnering, not just reporting."
+      ],
+      "tags": [
+        "Pricing",
+        "Trade spend",
+        "Nordics"
+      ],
+      "brand": "mondelez",
+      "thumbnail": "img/about/mondelez.png",
+      "thumbnailAlt": "Mondelēz Sweden logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "kao",
+      "period": "Jan 2015 – Aug 2016",
+      "company": "Kao Corporation",
+      "role": "FP&A Manager Nordics",
+      "place": "Stockholm",
+      "challenge": "Three businesses, four countries — one decision frame.",
+      "text": "Business partner to Nordic leadership: plans, prices and investments that had to compare cleanly across the portfolio.",
+      "details": [
+        "Built reporting models leaders trusted in the room.",
+        "Supported investment cases with comparable assumptions.",
+        "Translated Japanese-group cadence into Nordic operating reality."
+      ],
+      "tags": [
+        "Portfolio FP&A",
+        "Investment cases",
+        "Nordics"
+      ],
+      "brand": "kao",
+      "thumbnail": "img/about/kao.png",
+      "thumbnailAlt": "Kao Corporation logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "fox",
+      "period": "Jan 2017 – Jul 2018",
+      "company": "20th Century Fox",
+      "role": "FP&A Manager Nordics",
+      "place": "Stockholm",
+      "challenge": "Forecasts that disagree — and partners who still need one number.",
+      "text": "Stitched inconsistent systems across Fox and Nordic distribution partners (Warner Bros, Paramount) so customer profitability and forecasts could be argued from the same page.",
+      "details": [
+        "Entertainment planning with multi-studio distribution complexity.",
+        "Made partner economics legible without pretending systems were clean.",
+        "Partners named as work context — not sponsors of this site."
+      ],
+      "tags": [
+        "Entertainment",
+        "Partner economics",
+        "Forecasting"
+      ],
+      "brand": "fox",
+      "thumbnail": "img/about/fox.svg",
+      "thumbnailAlt": "20th Century Fox logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "lavazza",
+      "period": "Aug 2018 – Apr 2021",
+      "company": "Lavazza Sweden",
+      "role": "Finance & Operations Manager",
+      "place": "Stockholm",
+      "challenge": "Finance that stops at the spreadsheet can’t move coffee.",
+      "text": "Owned the conversation across finance, customer service, supply chain and logistics for Sweden and Finland — planning and investment in the same room as operations.",
+      "details": [
+        "Led customer service, supply chain, logistics and financial control.",
+        "Cross-border planning Sweden ↔ Finland.",
+        "Where ops friction became a finance problem — and got treated as one."
+      ],
+      "tags": [
+        "Ops + finance",
+        "Supply chain",
+        "Nordics"
+      ],
+      "brand": "lavazza",
+      "thumbnail": "img/about/lavazza.png",
+      "thumbnailAlt": "Lavazza Sweden logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "dyson",
+      "period": "May 2021 – 2024",
+      "company": "Dyson Nordics",
+      "role": "Senior Finance Manager → Head of Finance",
+      "place": "Stockholm",
+      "challenge": "Stores, web, stock and CapEx — one Nordic story.",
+      "text": "Grew from Senior Finance Manager into Head of Finance Nordics: four entities, retail + ecommerce, inventory and investment under one leadership seat.",
+      "details": [
+        "Senior Finance Manager · May 2021 – Mar 2023.",
+        "Head of Finance Nordics · from Mar 2023.",
+        "Financial responsibility across four Nordic entities.",
+        "Connected commercial plans to stock and investment reality."
+      ],
+      "tags": [
+        "Retail + ecom",
+        "Nordic leadership",
+        "Four entities"
+      ],
+      "brand": "dyson",
+      "thumbnail": "img/about/dyson.svg",
+      "thumbnailAlt": "Dyson Nordics logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    },
+    {
+      "id": "miele",
+      "period": "Current chapter",
+      "company": "Miele Nordics",
+      "role": "Cluster FP&A Director",
+      "place": "Nordics",
+      "challenge": "Make planning useful while AI enters the building.",
+      "text": "Steering Nordic FP&A so the plan stays a decision tool — and helping teams take first steps with AI without drowning in tools.",
+      "details": [
+        "Cluster FP&A Director for the Nordics.",
+        "Public speaker with FP&A Trends on AI in finance.",
+        "Still allergic to dashboards nobody opens."
+      ],
+      "tags": [
+        "FP&A leadership",
+        "AI in finance",
+        "Nordics"
+      ],
+      "brand": "miele",
+      "thumbnail": "img/about/miele.svg",
+      "thumbnailAlt": "Miele Nordics logo",
+      "sourceUrl": "",
+      "sourceLabel": "",
+      "basis": "Career CV + speaker bio; challenge lines are narrative framing of documented responsibilities, not measured KPI claims."
+    }
+  ],
+  "timelineNote": "Roles and dates from my CV and speaker biography. Company logos mark employers — not sponsors. At Fox, Warner Bros and Paramount were distribution partners.",
+  "speaking": [
+    {
+      "id": "webinar",
+      "date": "05 NOV 2025",
+      "kind": "WEBINAR",
+      "title": "First steps with AI in finance.",
+      "officialTitle": "First Steps into AI in FP&A: Getting Started Without Getting Overwhelmed",
+      "text": "How do you begin without getting overwhelmed? A panel conversation with FP&A Trends.",
+      "url": "https://fpa-trends.com/webinars/digital-emea-fpa-circle-first-steps-ai-fpa-getting-started-without-getting-overwhelmed",
+      "action": "Webinar & recording",
+      "note": "Recording available through the organiser; registration required.",
+      "thumbnail": "/profile-media/fpa-trends.png",
+      "thumbnailAlt": "FP&A Trends · organiser logo",
+      "thumbnailLabel": "Organiser"
+    },
+    {
+      "id": "world-finance",
+      "date": "2026 · STOCKHOLM",
+      "kind": "ON STAGE",
+      "title": "What if the past stops being a useful map?",
+      "officialTitle": "Forecasting in the AI Gap: Why Finance Must Stop Copying the Past",
+      "text": "A World Finance Forum panel with Carl Stiller, moderated by Brooke Wauchope.",
+      "url": "https://www.linkedin.com/posts/brooke-wauchope-67286374_on-thursday-i-had-the-great-honour-of-chairing-activity-7466735503095173120-oK8w",
+      "action": "See the event recap",
+      "note": "Public event recap confirms the panel and topic.",
+      "thumbnail": "/profile-media/joao.png",
+      "thumbnailAlt": "João Caldas · published speaker portrait",
+      "thumbnailLabel": "Speaker portrait"
+    }
+  ],
+  "portrait": "img/about/joao.png",
+  "portraitAlt": "João Caldas",
+  "speakerPortrait": "img/about/joao.png",
+  "speakerPortraitAlt": "João Caldas · FP&A Trends speaker portrait",
+  "logo": "img/about/onda-logo.png",
+  "logoAlt": "onda",
+  "mark": "img/about/ondai-mark.svg",
+  "surfingImage": "img/about/surfing.jpg",
+  "surfingImageAlt": "Fun cave · surfboards, bike trainer and endurance gear",
+  "surfingNote": "Surfing took over in the early 2000s. Later came amateur Ironman 70.3 and full-distance races beside the day job. That racing chapter is closed; the ocean and the Fun Cave (boards on the wall, bike on the trainer) still aren’t.",
+  "longBio": "I collect hard problems: integrations that won’t reconcile, partners that don’t share systems, launches that look great until pricing hits reality, and plans nobody trusts by month three. The through-line is making the numbers useful in the room — then building the next thing when curiosity pulls harder than the last title.",
+  "shortBio": "20+ years across FP&A, systems, ops and Nordic leadership — Kraft → Mondelēz → Kao → Fox → Lavazza → Dyson → Miele — with sales and M&A chapters before that.",
+  "firstPerson": "Brazil, Sweden, Switzerland. Hacked computers, chased waves, ran Ironmans, then spent two decades making finance make sense in messy businesses. Now I’m wiring that curiosity back into AI, design and interactive worlds.",
+  "interests": "Surfing · music · art · travel · friendships · AI experiments · design & interactive worlds",
+  "expertise": "AI consulting; AI architecture; finance; strategy; operations.",
+  "currentRole": "Cluster FP&A Director · Miele Nordics",
+  "instagramPortrait": "img/about/joao-instagram.png"
+}

@@ -1,38 +1,43 @@
-# ond.ai / Greatlinq Spatial Showcase — review candidate
+# ond.ai Spatial Studio — Greatlinq demo
 
-A **self-contained visitor-only web presentation** adapted from the editorial selection in the private *Spatial Studio / A Living Atlas* catalog. This is a **new static demonstration**, not a mirror of the private Atlas and not a replacement for the canonical production apps. No private snapshot, inventory, research notebook, pipeline, asset validation report, IP diligence, or internal network URL is shipped.
+The public page at [joaoccaldas.github.io/ai/greatlinq-showcase](https://joaoccaldas.github.io/ai/greatlinq-showcase/) is the ond.ai Greatlinq Demo.app site: the chaptered studio (Enter, Live, Featured, Worlds, Concepts, Objects, About, Next) plus the flagship, lantern, and hybrid pieces under `v2/`.
+
+About João is `profile.json`, copied unchanged from the Mac demo (name, long bio, career, portraits).
 
 ## Run locally
 
+From the repository root:
+
 ```bash
 python3 -m http.server 8065
-# Open http://localhost:8065/
+# http://127.0.0.1:8065/greatlinq-showcase/
 ```
 
-## Visitor journeys
+`node verify.mjs` checks that the bio is present and that lantern, flagship, and vendor files resolve.
 
-- **Show me around**: Automatic guided tour. The Spark (90 seconds), The Journey (3 minutes), The Expedition (7 minutes). A single declarative list of timed stops changes app pages and selected scenes/models/concepts. Pause, resume, skip forward/back, exit.
-- **Let me explore**: Manual navigation among Overview, Worlds, Objects, Transform and Possibilities, with a final Pilot Ideas page.
-- **Live source work**: Approved-for-selection *public* repository assets and links from `joaoccaldas/konam`, `joaoccaldas/studio-kona`, `joaoccaldas/bellagio` and `joaoccaldas/ai`. Assets are loaded from their public GitHub CDN and should be individually license-reviewed before any public promotion.
-- **Actual 3D viewer**: GLTFLoader / Three.js loads publicly committed GLB files with orbit and auto-rotation. When offline, unsupported or blocked, the original public preview image stays visible. No recreated asset binary is added to this bundle.
-- **Greatlinq concepts**: Intelligent product showroom, shared architecture review and industrial training, explicitly labelled *future collaboration*, not built Greatlinq integrations. The industrial pump illustration is an original explanatory schematic, **not the private semantic pump GLB**.
+## Paths
 
-## External publication is **not approved**
+The Mac app served this folder’s parent as the site root, so the studio used absolute URLs such as `/greatlinq-showcase/v2/...` and `/vendor/three@0.170.0/...`. GitHub Pages publishes the repo at `/ai/`, so those URLs would miss the prefix.
 
-The ond.ai governance charter reserves brand, rights and publication approval to the founder. This is a review artifact. Do not send to Greatlinq, attach it to an unrestricted public host, announce an endorsed partnership or merge without the owner's affirmative review. The design follows proposed ond.ai typography and colors, whose adoption remains pending.
+They are relative to this folder instead:
 
-## Origin and boundaries
+| Mac demo | Published file |
+| --- | --- |
+| `/greatlinq-showcase/mark.svg` | `mark.svg` |
+| `/greatlinq-showcase/v2/flagship/` | `v2/flagship/` |
+| `/greatlinq-showcase/v2/lantern/?embed=1` | `v2/lantern/?embed=1` |
+| `/greatlinq-showcase/v2/hybrid/` | `v2/hybrid/` |
+| `/vendor/three@0.170.0/...` | `vendor/three@0.170.0/...` |
 
-- Original private editorial source: `joaoccaldas/nonamecompany/apps/spatial-studio/ROOM_COLLECTIONS.json` and `PROJECT_STORIES.json` (read only). Only author-curated summaries made it into this standalone code; originals are never queried by the visitor.
-- Visual sources are individually named public GitHub paths in `app.js`. No native models from private infrastructure are exported.
-- Greatlinq’s own website (`greatlinq.com/about-virtual-reality`) describes T.2 avatar-led 3D meetings/training. Third-party performance and interoperability claims are not independently verified.
-- Proposed shared scenarios are UI storytelling only. No synchronous avatars, voice AI, Unreal/T.2 adapter, e-commerce, CRM, production authentication, headset certification or deployment validation is represented as working.
-- Independent KONA / Canyon / Bellagio brand or city-inspired concept illustrations do **not** imply affiliation with brand owners or Greatlinq. Always clear source and image rights prior to external use. Published versions of scenes may differ from current local work.
+From `v2/lantern/` and `v2/hybrid/`, Three.js is `../../vendor/three@0.170.0/...` (module import map and the lantern Draco decoder). The Mac lantern and hybrid pages pointed that import map at jsDelivr; the published pages use the vendored r170 build that shipped with the demo.
 
-## Quality acceptance checks
+In-site `v2/` links still open in this tab (`Enter live`). Other catalog links stay external.
 
-Run `node verify.mjs`. Check browser at **390, 768 and 1440 px**, and perform a user journey. Tour must advance through features, not just captions. Verify linked source permissions, asset availability, visual quality, safe statuses, disabled third-party integration, reduced motion and correct text before publication. Since `raw.githubusercontent.com` and the Three.js CDN are required for models, test actual connectivity. Never treat a synthetic browser pass or a code-only check as release authorization.
+## Not in this publish
 
-## Next governance gate
+- **`img/inventory/`** — packs `03-inventory.tgz` and `04-inventory.tgz` were not in the export. Those stills belong to internal catalog rows (`external: false`). The default audience is external, so the public page does not request them. Switching the header to Internal shows those cards without thumbnails until the packs are added.
+- **`v2/hybrid/media/arch-film.mp4`** — not in the vendor/lantern pack. Hybrid keeps the night still (`arch-night.jpg`) and then opens the live arch.
 
-Owner reviews curation, brand, proposed claims and third-party asset rights. Greatlinq must confirm its own SDK/asset interface and ability to run a bounded pilot before shared session capabilities can be presented as integrated. Deployment should be separate from the private Atlas, with preview access controls as appropriate.
+## Android
+
+The old evaluation APK wrapped the previous catalog, not this demo. See [ANDROID.md](ANDROID.md).

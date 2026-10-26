@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#05080f">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>ond.ai | Spatial Studio · Lantern</title>
+  <link rel="icon" href="../../mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../hybrid/hybrid.css">
+  <link rel="stylesheet" href="./lantern.css">
+  <script type="importmap">{"imports":{"three":"../../vendor/three@0.170.0/build/three.module.js","three/addons/":"../../vendor/three@0.170.0/examples/jsm/"}}</script>
+  <script>
+    window.__fallback = function (why) {
+      var embed = document.documentElement.classList.contains('embed');
+      try { parent.postMessage({ type: 'ondai-live-fallback', why: why || 'fallback' }, '*'); } catch (e) {}
+      var l = document.getElementById('status'); if (!l || window.__ready) return; l.dataset.reason = why;
+      if (embed) {
+        l.textContent = 'Still · open full live to drag and light';
+        l.classList.add('soft'); l.hidden = false;
+        var film = document.getElementById('film');
+        if (film) { film.hidden = false; film.style.opacity = '1'; }
+        var gl = document.getElementById('gl'); if (gl) gl.style.opacity = '0';
+      } else {
+        l.innerHTML = 'Live 3D needs WebGL, which this browser or network is not providing. <a href="../../">Open the collection</a>';
+        l.hidden = false;
+      }
+    };
+    setTimeout(function () { if (!window.__ready) window.__fallback('timeout'); }, 12000);
+  </script>
+  <script>if (/[?&]embed=1/.test(location.search)) document.documentElement.classList.add('embed');</script>
+  <script type="module" src="./lantern.js"></script>
+</head>
+<body>
+  <main class="frame">
+    <header class="bar"><span class="brand">ond.ai <span>Spatial Studio</span></span><span class="chapter" id="chapter">Rendered film</span></header>
+    <div class="stage" id="stage">
+      <video id="film" muted playsinline preload="auto" poster="./media/lantern-unlit.jpg" aria-label="Rendered film: approaching a fluted porcelain lantern"></video>
+      <canvas id="gl" tabindex="0" aria-label="Live 3D porcelain lantern. Drag, or use arrow keys to orbit; plus and minus to zoom."></canvas>
+      <img id="ref" alt="Blender Cycles render of the lit lantern, for comparison" hidden>
+      <p class="status" id="status" role="status" hidden></p>
+      <div class="hint" id="hint" hidden>Drag to turn it · then bring up the light</div>
+    </div>
+    <footer class="bar bar-bottom">
+      <p class="caption" id="caption" aria-live="polite"></p>
+      <div class="light" id="lightRow" hidden>
+        <label for="light">Light</label>
+        <input type="range" id="light" min="0" max="100" value="0" step="1" aria-valuetext="off">
+        <button type="button" id="compare" aria-pressed="false" hidden>Compare with Cycles</button>
+        <span class="ghost" id="ghost" hidden aria-live="polite">Participant 2 · illustrative</span>
+      </div>
+      <div class="controls">
+        <span class="method" id="method">Blender Cycles render · original parametric geometry</span>
+        <button type="button" id="skip">Skip to live</button>
+        <button type="button" id="replay" hidden>Replay film</button>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

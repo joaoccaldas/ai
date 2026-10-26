@@ -1,0 +1,2698 @@
+{
+  "source": {
+    "stories": "eb0df92b7a991ec9ad99749a0fd1f4c35454e71ba836c386eabe0ea5b77b746c",
+    "collections": "b90f6e27f9787c3b9af43a66d866c52ec67be48207df74d0b785a1d523d1b8f1"
+  },
+  "counts": {
+    "worlds": 18,
+    "concepts": 29,
+    "games": 5,
+    "library": 18,
+    "studios": 14,
+    "assets": 28,
+    "textures": 3,
+    "projects": 16
+  },
+  "items": [
+    {
+      "id": "tropical-psychedelic-island",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Psychedelic Tropical Island",
+      "subtitle": "Daylight lagoon · bioluminescent nocturne",
+      "description": "A procedural island cove with palms, glowing mushrooms, crystals and a basalt arch. Toggle between a daylight lagoon and a psychedelic nocturne.",
+      "status": "Concept prototype · not yet realistic",
+      "category": null,
+      "project": "tropical-island",
+      "image": "img/worlds-tropical-psychedelic-island.jpg",
+      "url": null,
+      "rights": "Original · concept, not yet realistic",
+      "external": true,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ]
+    },
+    {
+      "id": "studio",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Studio / AI",
+      "subtitle": "Five wings. One walkable collection.",
+      "description": "Visit the museum behind the portfolio. Objects, artworks and website concepts share an atrium, with paths between different kinds of work.",
+      "status": "Current local experience",
+      "category": null,
+      "project": "ai",
+      "image": "img/worlds-studio.jpg",
+      "url": null,
+      "rights": "Original",
+      "external": true,
+      "useCases": [
+        "vr",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "bellagio",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Bellagio",
+      "subtitle": "Las Vegas / architecture & atmosphere",
+      "description": "Move from the lake and fountains to the Strip, interiors and an imagined penthouse. A place study that connects scale, light and a visitor’s journey.",
+      "status": "Published experience",
+      "category": null,
+      "project": "bellagio",
+      "image": "img/worlds-bellagio.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/vegas/",
+      "rights": "Internal · trademarked landmark and satellite-derived terrain",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ]
+    },
+    {
+      "id": "konam",
+      "section": "worlds",
+      "kind": "World",
+      "title": "KONA.m",
+      "subtitle": "A museum of speed, identity & equipment",
+      "description": "Enter the bicycle collection, explore themed galleries and discover how an athlete, an object or a race can become a place.",
+      "status": "Published experience",
+      "category": null,
+      "project": "konam",
+      "image": "img/worlds-konam.jpg",
+      "url": "https://joaoccaldas.github.io/konam/",
+      "rights": "Internal · third-party brands and generated sculpture",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "vr"
+      ]
+    },
+    {
+      "id": "island",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Kona Island",
+      "subtitle": "Hawaiʻi / an explorable race destination",
+      "description": "A living island built around movement and discovery. Walk, ride and follow the journey through a place connected to endurance sport.",
+      "status": "Current local playable world",
+      "category": null,
+      "project": "studio-kona",
+      "image": "img/worlds-island.jpg",
+      "url": "https://joaoccaldas.github.io/studio-kona/",
+      "rights": "Internal · terrain rights open",
+      "external": false,
+      "useCases": [
+        "vr",
+        "gaming"
+      ]
+    },
+    {
+      "id": "gaudi",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Gaudí / Living Threshold",
+      "subtitle": "Civic space, markets & arrival",
+      "description": "See how an architectural idea connects arrival, public space and everyday use. A coordinated proposal for exploring form at the scale of a place.",
+      "status": "Interactive scene study",
+      "category": null,
+      "project": "gaudi",
+      "image": "img/worlds-gaudi.jpg",
+      "url": null,
+      "rights": "Internal · anonymous competition entry until judging",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ]
+    },
+    {
+      "id": "sokai",
+      "section": "worlds",
+      "kind": "World",
+      "title": "SŌKAI",
+      "subtitle": "A ritual of memory & craft",
+      "description": "An intimate object world centred on a katana. Draw it, inspect its parts and follow the story of its making.",
+      "status": "Published object experience",
+      "category": null,
+      "project": "ai",
+      "image": "img/worlds-sokai.jpg",
+      "url": "https://joaoccaldas.github.io/ai/studio/sokai/",
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "vr",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "st-george",
+      "section": "worlds",
+      "kind": "World",
+      "title": "St. George",
+      "subtitle": "Utah / race geography in 3D",
+      "description": "Explore the terrain around the 2022 St. George race: Sand Hollow, Snow Canyon, Red Hills and the town.",
+      "status": "Local terrain candidate",
+      "category": null,
+      "project": "bellagio",
+      "image": "img/worlds-st-george.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/st-george/",
+      "rights": "Internal · real-place terrain data",
+      "external": false,
+      "useCases": [
+        "world-sims",
+        "vr"
+      ]
+    },
+    {
+      "id": "nor-world",
+      "section": "worlds",
+      "kind": "World",
+      "title": "NOR / Kona Winter",
+      "subtitle": "NOR / Norwegian Engine",
+      "description": "Give an athlete’s equipment, milestones and methods a place of their own. The visitor discovers a person through the objects and spaces that shaped their work.",
+      "status": "Recovered room experience",
+      "category": "Athletes",
+      "project": "konam",
+      "image": "img/worlds-nor-world.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html",
+      "rights": "Internal · athlete and brand concept",
+      "external": false,
+      "useCases": [
+        "vr",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "beast-world",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Beast Cave",
+      "subtitle": "Beast Cave / athlete identity",
+      "description": "A more expressive athlete space: identity first, with equipment and performance becoming part of the atmosphere. One collection can support very different personalities.",
+      "status": "Recovered room experience",
+      "category": "Athletes",
+      "project": "konam",
+      "image": "img/worlds-beast-world.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html",
+      "rights": "Internal · athlete and brand concept",
+      "external": false,
+      "useCases": [
+        "vr",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "breitling-world",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Breitling × KONA",
+      "subtitle": "Breitling × KONA / Finish-Line Atelier",
+      "description": "Explore endurance and time through a lava hall centred on a monumental chronograph. Six edition studies connect the object to the occasion that gives it meaning.",
+      "status": "Recovered room experience",
+      "category": "Brands",
+      "project": "canyonmuseum",
+      "image": "img/worlds-breitling-world.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html",
+      "rights": "Internal · Breitling trademark",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "vr"
+      ]
+    },
+    {
+      "id": "belong",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Belong",
+      "subtitle": "A desert journey / an independent festival concept",
+      "description": "Scroll from daylight into night. Change the palette, try the sound, and follow the original festival website concept.",
+      "status": "Independent website concept",
+      "category": "Web experience",
+      "project": "belong",
+      "image": "img/worlds-belong.jpg",
+      "url": "https://joaoccaldas.github.io/ai/belong/",
+      "rights": "Review · client concept",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ]
+    },
+    {
+      "id": "noema-world",
+      "section": "worlds",
+      "kind": "World",
+      "title": "NOEMA / Human Meaning Atlas",
+      "subtitle": "Move through place, time and evidence.",
+      "description": "A globe and time lens connect archaeological observations to their sources. Coverage, uncertain geography and interpretation stay distinct.",
+      "status": "Working research prototype · human review pending",
+      "category": null,
+      "project": "noema",
+      "image": "img/worlds-noema-world.jpg",
+      "url": "https://joaoccaldas.github.io/ai/projects/noema/site/human-meaning-atlas.html",
+      "rights": "Original",
+      "external": true,
+      "useCases": [
+        "world-sims",
+        "vr"
+      ]
+    },
+    {
+      "id": "material-study-warm",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Warm gallery",
+      "subtitle": "Same objects · a different setting",
+      "description": "Reusable objects, quieter finishes and a small courtyard. Compare the light, viewpoints and mirror.",
+      "status": "Private room experiment",
+      "category": "Room studies",
+      "project": "gaudi",
+      "image": "img/worlds-material-study-warm.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "material-study-charcoal",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Charcoal gallery",
+      "subtitle": "Same objects · a different setting",
+      "description": "Reusable objects, quieter finishes and a small courtyard. Compare the light, viewpoints and mirror.",
+      "status": "Private room experiment",
+      "category": "Room studies",
+      "project": "gaudi",
+      "image": "img/worlds-material-study-charcoal.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "furniture-day",
+      "section": "worlds",
+      "kind": "World",
+      "title": "A room for your day",
+      "subtitle": "Living · Dining · Gallery",
+      "description": "Six original design directions in a larger room, using the same furniture and source assets.",
+      "status": "Furniture & interiors study",
+      "category": "Interiors",
+      "project": "gaudi",
+      "image": "img/worlds-furniture-day.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "nice",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Nice",
+      "subtitle": "Coast to mountain · a terrain study",
+      "description": "Orbit the Côte d’Azur and travel between coastal landmarks and inland villages.",
+      "status": "Local terrain candidate",
+      "category": null,
+      "project": "bellagio",
+      "image": "img/worlds-bellagio.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/nice/",
+      "rights": "Internal · real-place terrain data",
+      "external": false,
+      "capture": true,
+      "imageNote": "Poster from Bellagio world sibling until Nice capture exists",
+      "useCases": [
+        "world-sims",
+        "vr"
+      ]
+    },
+    {
+      "id": "luxor",
+      "section": "worlds",
+      "kind": "World",
+      "title": "Luxor",
+      "subtitle": "Black glass · desert light",
+      "description": "Enter the existing Luxor pyramid, Sphinx and obelisk study inside the Las Vegas world.",
+      "status": "Local architectural candidate",
+      "category": null,
+      "project": "bellagio",
+      "image": "img/worlds-bellagio.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/vegas/#Luxor%20pyramid",
+      "rights": "Internal · trademarked landmark",
+      "external": false,
+      "capture": true,
+      "imageNote": "Poster from Bellagio world sibling until Luxor capture exists",
+      "useCases": [
+        "vr",
+        "world-sims"
+      ]
+    },
+    {
+      "id": "nor",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "NOR / Kona Winter",
+      "subtitle": "NOR / Norwegian Engine",
+      "description": "Give an athlete’s equipment, milestones and methods a place of their own. The visitor discovers a person through the objects and spaces that shaped their work.",
+      "status": "Recovered room experience",
+      "category": "Athletes",
+      "project": "konam",
+      "image": "img/concepts-nor.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html",
+      "rights": "Internal · athlete and brand concept",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "beast",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "Beast Cave",
+      "subtitle": "Beast Cave / athlete identity",
+      "description": "A more expressive athlete space: identity first, with equipment and performance becoming part of the atmosphere. One collection can support very different personalities.",
+      "status": "Recovered room experience",
+      "category": "Athletes",
+      "project": "konam",
+      "image": "img/concepts-beast.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html",
+      "rights": "Internal · athlete and brand concept",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "canyon",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "Canyon / Speedmax Museum",
+      "subtitle": "Canyon / a museum of bicycles",
+      "description": "Make engineering something people can explore. A curated collection connects product detail, design evolution and the stories of the riders who used it.",
+      "status": "Existing museum experience",
+      "category": "Brands",
+      "project": "konam",
+      "image": "img/concepts-canyon.jpg",
+      "url": "https://joaoccaldas.github.io/konam/",
+      "rights": "Internal · Canyon trademark",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "breitling",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "Breitling × KONA",
+      "subtitle": "Breitling × KONA / Finish-Line Atelier",
+      "description": "Explore endurance and time through a lava hall centred on a monumental chronograph. Six edition studies connect the object to the occasion that gives it meaning.",
+      "status": "Recovered room experience",
+      "category": "Brands",
+      "project": "canyonmuseum",
+      "image": "img/concepts-breitling.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html",
+      "rights": "Internal · Breitling trademark",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "kona-museum",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "KONA / Event Museum",
+      "subtitle": "Kona / the event museum",
+      "description": "Bring course, champions and equipment into one place. Visitors can explore before the race and return afterwards to understand its history.",
+      "status": "Existing event collection",
+      "category": "Events",
+      "project": "konam",
+      "image": "img/concepts-kona-museum.jpg",
+      "url": "https://joaoccaldas.github.io/konam/",
+      "rights": "Internal · event and athlete brands",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "trek",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "Trek / Heritage Study",
+      "subtitle": "Trek / heritage prototype",
+      "description": "Start with the Equinox 9: turn the model, separate its parts and inspect the evidence behind its reconstruction. This is the first working study in a wider story about the evolution of triathlon bikes.",
+      "status": "Working heritage prototype",
+      "category": "Brands",
+      "project": "trek-tri-museum",
+      "image": "img/concepts-trek.jpg",
+      "url": null,
+      "rights": "Internal · Trek trademark",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "sintra-ai",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "Sintra AI / Workflow Library",
+      "subtitle": "A place to find a useful next step.",
+      "description": "A bilingual portal connects tools, prompts, learning material and automation blueprints. Browse the original workflow guides.",
+      "status": "Working knowledge portal",
+      "category": null,
+      "project": "sintra-ai",
+      "image": "img/concepts-sintra-ai.jpg",
+      "url": "https://joaoccaldas.github.io/sintra-ai/automate/",
+      "rights": "Original",
+      "external": true,
+      "useCases": [
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "web-design",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "Web Design",
+      "subtitle": "From a clear page to an immersive world",
+      "description": "A range of real work: an organised workflow library, interactive finance and research tools, product experiences and explorable worlds.",
+      "status": "Existing pages, tools and spatial concepts",
+      "category": "Web design",
+      "project": "ai",
+      "image": "img/concepts-web-design.jpg",
+      "url": null,
+      "rights": "Original",
+      "external": true,
+      "useCases": [
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "discovery-lab",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "Mix & Explore",
+      "subtitle": "Lilla Forskaren × Caldas / an independent concept",
+      "description": "A sketch that pairs a calm discovery game with the studio’s walkable worlds: each discovery could open a small place of its own.",
+      "status": "Independent concept page",
+      "category": "Web design",
+      "project": "caldaspace",
+      "image": "img/concepts-discovery-lab.jpg",
+      "url": null,
+      "rights": "Original",
+      "external": true,
+      "useCases": [
+        "world-sims",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "norseman",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "Fjord to Summit",
+      "subtitle": "Norseman / a training room",
+      "description": "A training hall between two real places: the Hardangerfjord through one wall, Gaustatoppen through the other. A cold pool, a climbing bike, an incline run and the course profile in stone show how you prepare for a race that starts with a ferry jump and ends on a mountain.",
+      "status": "Review room experience",
+      "category": "Events",
+      "project": "konam",
+      "image": "img/concepts-norseman.jpg",
+      "url": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html",
+      "rights": "Internal · event brand",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "furniture-day",
+      "section": "concepts",
+      "kind": "Room concept",
+      "title": "A room for your day",
+      "subtitle": "Living · Dining · Gallery",
+      "description": "Six original design directions in a larger room, using the same furniture and source assets.",
+      "status": "Furniture & interiors study",
+      "category": "Interiors",
+      "project": "gaudi",
+      "image": "img/concepts-furniture-day.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "blockscreate",
+      "section": "games",
+      "kind": "Playable",
+      "title": "Blockscreate",
+      "subtitle": "Build a world. Follow deep time.",
+      "description": "A sandbox journey through different ages: gather, build, survive and grow a settlement. The environment becomes a way to learn through play.",
+      "status": "Published game",
+      "category": null,
+      "project": "blockscreate",
+      "image": "img/games-blockscreate.jpg",
+      "url": "https://joaoccaldas.github.io/blockscreate/",
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "gaming",
+        "vr"
+      ]
+    },
+    {
+      "id": "bloxyrivals",
+      "section": "games",
+      "kind": "Playable",
+      "title": "Bloxy Rivals",
+      "subtitle": "Action, movement & competition",
+      "description": "An action-game experiment built for the browser. Explore the relationship between a clear play loop, a readable world and responsive controls.",
+      "status": "Published prototype",
+      "category": null,
+      "project": "bloxyrivals",
+      "image": "img/games-bloxyrivals.jpg",
+      "url": "https://joaoccaldas.github.io/bloxyrivals/",
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "gaming"
+      ]
+    },
+    {
+      "id": "kona-play",
+      "section": "games",
+      "kind": "Playable",
+      "title": "Explore Kona",
+      "subtitle": "Walk. Ride. Discover.",
+      "description": "The playable side of the island: movement, collection and discovery turn a destination into an experience.",
+      "status": "Current local playable world",
+      "category": null,
+      "project": "studio-kona",
+      "image": "img/games-kona-play.jpg",
+      "url": "https://joaoccaldas.github.io/studio-kona/",
+      "rights": "Internal · terrain rights open",
+      "external": false,
+      "useCases": [
+        "gaming",
+        "vr"
+      ]
+    },
+    {
+      "id": "noema-lab",
+      "section": "games",
+      "kind": "Playable",
+      "title": "NOEMA / Pattern Lab",
+      "subtitle": "A pattern—or a coincidence?",
+      "description": "Choose two recorded features and compare their overlap with repeated random shuffles. The model tells you what it holds fixed and what it cannot establish.",
+      "status": "Working simulation prototype",
+      "category": null,
+      "project": "noema",
+      "image": "img/games-noema-lab.jpg",
+      "url": "https://joaoccaldas.github.io/ai/projects/noema/site/simulations.html",
+      "rights": "Original",
+      "external": true,
+      "useCases": [
+        "world-sims",
+        "gaming"
+      ]
+    },
+    {
+      "id": "caldaspace",
+      "section": "games",
+      "kind": "Playable",
+      "title": "CaldaSpace / Transit Lab",
+      "subtitle": "A small experiment in learning through play.",
+      "description": "Regenerate a simulated brightness curve, move a cursor and look for the dip left by a planet crossing a star.",
+      "status": "Small learning prototype",
+      "category": null,
+      "project": "caldaspace",
+      "image": "img/games-caldaspace.jpg",
+      "url": "https://joaoccaldas.github.io/nasa-space-dashboard/#play",
+      "rights": "Original",
+      "external": true,
+      "useCases": [
+        "world-sims",
+        "gaming"
+      ]
+    },
+    {
+      "id": "stained-glass",
+      "section": "library",
+      "kind": "Object",
+      "title": "Stained Glass",
+      "subtitle": "Speedmax CFR · Sanctuary edition",
+      "description": "Engineering becomes a canvas. Follow the flowing colour across the frame, then move closer to the carbon, cockpit and drivetrain.",
+      "status": null,
+      "category": "Bicycles",
+      "project": "ai",
+      "image": "img/library-stained-glass.jpg",
+      "url": null,
+      "rights": "Internal · Canyon trademark",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "cfr",
+      "section": "library",
+      "kind": "Object",
+      "title": "Speedmax CFR",
+      "subtitle": "The contemporary collection",
+      "description": "A detailed study of the modern triathlon bicycle. Turn it in the light and explore how aerodynamic surfaces, storage and componentry fit together.",
+      "status": null,
+      "category": "Bicycles",
+      "project": "konam",
+      "image": "img/library-cfr.jpg",
+      "url": null,
+      "rights": "Internal · Canyon trademark",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "slx",
+      "section": "library",
+      "kind": "Object",
+      "title": "Speedmax CF SLX",
+      "subtitle": "A second expression of speed",
+      "description": "A distinct bicycle model from the Canyon collection. A shared viewing language makes differences in form easier to understand.",
+      "status": null,
+      "category": "Bicycles",
+      "project": "konam",
+      "image": "img/library-slx.jpg",
+      "url": null,
+      "rights": "Internal · Canyon trademark",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "sokai-katana",
+      "section": "library",
+      "kind": "Object",
+      "title": "SŌKAI / Katana",
+      "subtitle": "An object from the memory vault",
+      "description": "A carefully authored katana, drawn from the original SŌKAI experience. Inspect the blade, handle and scabbard as one sculptural object.",
+      "status": null,
+      "category": "Objects",
+      "project": "ai",
+      "image": "img/library-sokai-katana.jpg",
+      "url": "https://joaoccaldas.github.io/ai/studio/sokai/",
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "gaudi-seating",
+      "section": "library",
+      "kind": "Object",
+      "title": "The planted bench",
+      "subtitle": "Gaudí Nexus · scene assembly",
+      "description": "A planted bench explores how planting and seating can share a small footprint.",
+      "status": null,
+      "category": "Objects",
+      "project": "gaudi",
+      "image": "img/library-gaudi-seating.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "gaudi-market-bay",
+      "section": "library",
+      "kind": "Object",
+      "title": "A place to trade",
+      "subtitle": "Gaudí Nexus · scene assembly",
+      "description": "A repeatable timber bay gives a market its own places to sell and meet.",
+      "status": null,
+      "category": "Objects",
+      "project": "gaudi",
+      "image": "img/library-gaudi-market-bay.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "gaudi-produce",
+      "section": "library",
+      "kind": "Object",
+      "title": "The market, in miniature",
+      "subtitle": "Gaudí Nexus · scene assembly",
+      "description": "Produce arranged in supported crates makes a market display easy to reuse.",
+      "status": null,
+      "category": "Objects",
+      "project": "gaudi",
+      "image": "img/library-gaudi-produce.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "kit-wall-mirror",
+      "section": "library",
+      "kind": "Object",
+      "title": "Moulded wall mirror",
+      "subtitle": "Environment kit · gilt",
+      "description": "An ogee moulding swept with true mitres, worn gilt and a bevelled glass edge. Generated by code, reusable in any room.",
+      "status": null,
+      "category": "Environment kit",
+      "project": "gaudi",
+      "image": "img/library-kit-wall-mirror.jpg",
+      "url": null,
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "kit-floor-mirror",
+      "section": "library",
+      "kind": "Object",
+      "title": "Arched floor mirror",
+      "subtitle": "Environment kit · oak",
+      "description": "The same moulding round an arched head, in oak, leaning on its strut.",
+      "status": null,
+      "category": "Environment kit",
+      "project": "gaudi",
+      "image": "img/library-kit-floor-mirror.jpg",
+      "url": null,
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "kit-basin",
+      "section": "library",
+      "kind": "Object",
+      "title": "Stone reflecting basin",
+      "subtitle": "Environment kit · limestone & water",
+      "description": "Turned limestone with a still water surface kept separate, so any world can swap in a live reflection.",
+      "status": null,
+      "category": "Environment kit",
+      "project": "gaudi",
+      "image": "img/library-kit-basin.jpg",
+      "url": null,
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "kit-cloud",
+      "section": "library",
+      "kind": "Object",
+      "title": "Stylised cumulus",
+      "subtitle": "Environment kit · sky",
+      "description": "A seeded cloud for distant sky layers. Stylised on purpose: real skies come from shaders.",
+      "status": null,
+      "category": "Environment kit",
+      "project": "gaudi",
+      "image": "img/library-kit-cloud.jpg",
+      "url": null,
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "gaudi-chair-study",
+      "section": "library",
+      "kind": "Object",
+      "title": "Warm oak reading chair",
+      "subtitle": "Gaudí Atelier · furniture study",
+      "description": "Sculpted oak frame and woven cushion assembly authored for the 9.6 × 7.2 m Gaudí interior study.",
+      "status": null,
+      "category": "Objects",
+      "project": "gaudi",
+      "image": "img/library-gaudi-chair-study.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "gaudi-sofa-study",
+      "section": "library",
+      "kind": "Object",
+      "title": "Atelier three-seat sofa",
+      "subtitle": "Gaudí Atelier · furniture study",
+      "description": "Low-profile timber and linen lounge sofa with separated cushions and frame sub-meshes for finish testing.",
+      "status": null,
+      "category": "Objects",
+      "project": "gaudi",
+      "image": "img/library-gaudi-sofa-study.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "gaudi-table-study",
+      "section": "library",
+      "kind": "Object",
+      "title": "Joinery dining & study table",
+      "subtitle": "Gaudí Atelier · furniture study",
+      "description": "Lightweight architectural table (161 KB) with bevelled rails and honest timber grain alignment.",
+      "status": null,
+      "category": "Objects",
+      "project": "gaudi",
+      "image": "img/library-gaudi-table-study.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "gaudi-shelf-study",
+      "section": "library",
+      "kind": "Object",
+      "title": "Modular architectural shelving",
+      "subtitle": "Gaudí Atelier · furniture study",
+      "description": "Open timber bay shelving unit designed to divide room zones while keeping sightlines open.",
+      "status": null,
+      "category": "Objects",
+      "project": "gaudi",
+      "image": "img/library-gaudi-shelf-study.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "gaudi-holm-oak",
+      "section": "library",
+      "kind": "Object",
+      "title": "Mediterranean holm oak",
+      "subtitle": "Gaudí Nexus · botanical kit",
+      "description": "Room-budget Mediterranean holm oak (Quercus ilex) with sculpted trunk bark and layered canopy clusters.",
+      "status": null,
+      "category": "Environment kit",
+      "project": "gaudi",
+      "image": "img/library-gaudi-holm-oak.jpg",
+      "url": null,
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "kit-basin-fluted",
+      "section": "library",
+      "kind": "Object",
+      "title": "Fluted limestone basin",
+      "subtitle": "Environment kit · detail study",
+      "description": "Carved fluted limestone rim paired with an isolated water disc for real-time planar or environment reflection.",
+      "status": null,
+      "category": "Environment kit",
+      "project": "gaudi",
+      "image": "img/library-kit-basin-fluted.jpg",
+      "url": null,
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "kit-globe-stand",
+      "section": "library",
+      "kind": "Object",
+      "title": "Terrestrial globe on brass stand",
+      "subtitle": "Environment kit · reading study",
+      "description": "Receipted study prop with turned timber base, meridian ring and sphere for library and study tables.",
+      "status": null,
+      "category": "Environment kit",
+      "project": "gaudi",
+      "image": "img/library-kit-globe-stand.jpg",
+      "url": null,
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "room-kona-room-hall",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "The Queen K Hall",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-hall.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-pier",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Kona by Year",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-pier.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-kona",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Kona Champions",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-kona.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-sanctuary",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "The Sanctuary",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-sanctuary.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-hween",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Lava Night",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-hween.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-nike-running",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Nike Running Lab",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-nike-running.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-breitling",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Breitling · Endurance Pro",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-breitling.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-nave",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "The Gallery Nave",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-nave.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-bay-las-vegas",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Las Vegas",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-bay-las-vegas.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-bay-kona",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Kona",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-bay-kona.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-room-horror",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Horror",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-room-horror.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-room-alien",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Alien",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-room-alien.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-room-zombie",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Zombie",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-room-zombie.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-wing-against-the-clock",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Against the Clock",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-wing-against-the-clock.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-wing-kona-light",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Kona Light",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-wing-kona-light.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-atlas-against-the-clock-hour",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "The Hour",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-atlas-against-the-clock-hour.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-atlas-against-the-clock-mono",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Monocoque",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-atlas-against-the-clock-mono.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "room-kona-room-atlas-against-the-clock-tri",
+      "section": "concepts",
+      "kind": "Room",
+      "category": "Museum rooms",
+      "title": "Long course",
+      "subtitle": "KONA",
+      "description": "An existing room in the KONA museum.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/room-kona-room-atlas-against-the-clock-tri.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "meeting-rooms",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit native-room"
+    },
+    {
+      "id": "studio-konam",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "KONA.m",
+      "subtitle": "Studio project",
+      "description": "KONA brings race identity, equipment and place together—from a close look at a bike to a room built around an athlete.",
+      "status": "MEASURED · OK",
+      "project": "konam",
+      "image": "img/inventory/studio-konam.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "vr"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-canyonmuseum",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "Canyon Museum",
+      "subtitle": "Studio project",
+      "description": "Canyon Museum uses editable bicycle reconstructions and themed rooms to tell the evolution of performance design.",
+      "status": "MEASURED · LOW-RES",
+      "project": "canyonmuseum",
+      "image": "img/inventory/studio-canyonmuseum.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-ai",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "Studio / AI",
+      "subtitle": "Studio project",
+      "description": "Studio/AI pairs readable case studies with a walkable museum, arranging work as objects, rooms and connected ideas.",
+      "status": "MEASURED · OK",
+      "project": "ai",
+      "image": "img/inventory/studio-ai.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "vr"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-gaudi",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "Gaudí Nexus",
+      "subtitle": "Studio project",
+      "description": "Gaudí Nexus places architectural proposals, human-scale views and coordinated geometry in the same conversation.",
+      "status": "MEASURED · OK",
+      "project": "gaudi",
+      "image": "img/inventory/studio-gaudi.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-bellagio",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "Bellagio / Luxor",
+      "subtitle": "Studio project",
+      "description": "Reconstruction scenes, authored interiors and world presentation.",
+      "status": "MEASURED · OK",
+      "project": "bellagio",
+      "image": "img/inventory/studio-bellagio.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-studio-kona",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "Kona Island",
+      "subtitle": "Studio project",
+      "description": "Kona Island explores walking, riding, collecting and discovering stories around an event destination.",
+      "status": "MEASURED · OK",
+      "project": "studio-kona",
+      "image": "img/inventory/studio-studio-kona.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "gaming",
+        "vr"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-video-studio",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "Caldas Video Studio",
+      "subtitle": "Studio project",
+      "description": "Production timelines, media, original scores and source-linked delivery tools.",
+      "status": "MEASURED · OK",
+      "project": "video-studio",
+      "image": "img/inventory/studio-video-studio.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "vr"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-sokai",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "SŌKAI",
+      "subtitle": "Studio project",
+      "description": "SŌKAI uses a katana and memory-vault setting to explore identity, ritual and spatial storytelling.",
+      "status": "MEASURED · LOW-RES",
+      "project": "sokai",
+      "image": "img/inventory/studio-sokai.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "vr",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-belong",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "Belong",
+      "subtitle": "Studio project",
+      "description": "An independent festival website concept: scroll through a desert from day to night.",
+      "status": "MEASURED · OK",
+      "project": "belong",
+      "image": "img/inventory/studio-belong.jpg",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-noema",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "NOEMA",
+      "subtitle": "Studio project",
+      "description": "Explore research questions without turning patterns into unsupported conclusions.",
+      "status": "MEASURED · OK",
+      "project": "noema",
+      "image": "img/inventory/studio-noema.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "world-sims"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-sintra-ai",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "Sintra AI",
+      "subtitle": "Studio project",
+      "description": "Explore AI tools, prompts and workflow guides in one bilingual portal.",
+      "status": "MEASURED · OK",
+      "project": "sintra-ai",
+      "image": "img/inventory/studio-sintra-ai.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-caldaspace",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "CaldaSpace",
+      "subtitle": "Studio project",
+      "description": "Learn about space through sourced discoveries and a simulated transit challenge.",
+      "status": "MEASURED · OK",
+      "project": "caldaspace",
+      "image": "img/inventory/studio-caldaspace.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "world-sims",
+        "gaming"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-fpa-monitor",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "FP&A Metric Monitor",
+      "subtitle": "Studio project",
+      "description": "Turn a small set of finance rules into a clear list of things to review.",
+      "status": "MEASURED · OK",
+      "project": "fpa-monitor",
+      "image": "img/inventory/studio-fpa-monitor.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "studio-tropical-island",
+      "section": "studios",
+      "kind": "Studio",
+      "title": "Psychedelic Tropical Island",
+      "subtitle": "Studio project",
+      "description": "A procedural psychedelic tropical island (Daylight / Nocturne variants) generated in Blender: a concept prototype on the way to a Meta Quest VR world.",
+      "status": "MEASURED · OK",
+      "project": "tropical-island",
+      "image": "img/inventory/studio-tropical-island.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "asset-file-8928c3b82d2633f78f89bc9a",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "nature model",
+      "title": "platane s19 lod0",
+      "subtitle": "gaudi",
+      "description": "platane s19 lod0",
+      "status": "MEASURED · thumb OK",
+      "project": "gaudi",
+      "image": "img/inventory/asset-file-8928c3b82d2633f78f89bc9a.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "world-sims"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-8928c3b82d2633f78f89bc9a",
+      "assetPath": "projects/gaudi-nexus/output/nature-assets-2026-10-18/batch-1/platane_s19_lod0.glb"
+    },
+    {
+      "id": "asset-file-d18a2fa9d97eef5a3a685273",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "nature model",
+      "title": "platane s31 lod0",
+      "subtitle": "gaudi",
+      "description": "platane s31 lod0",
+      "status": "MEASURED · thumb OK",
+      "project": "gaudi",
+      "image": "img/inventory/asset-file-d18a2fa9d97eef5a3a685273.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "world-sims"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-d18a2fa9d97eef5a3a685273",
+      "assetPath": "projects/gaudi-nexus/output/nature-assets-2026-10-18/batch-1/platane_s31_lod0.glb"
+    },
+    {
+      "id": "asset-file-92e5daf2cc05948f21e128b8",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "nature model",
+      "title": "platane s7 lod0",
+      "subtitle": "gaudi",
+      "description": "platane s7 lod0",
+      "status": "MEASURED · thumb OK",
+      "project": "gaudi",
+      "image": "img/inventory/asset-file-92e5daf2cc05948f21e128b8.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "world-sims"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-92e5daf2cc05948f21e128b8",
+      "assetPath": "projects/gaudi-nexus/output/nature-assets-2026-10-18/batch-1/platane_s7_lod0.glb"
+    },
+    {
+      "id": "asset-file-6cf321fff17313994d2aade9",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "featured asset",
+      "title": "sokai katana exhibit",
+      "subtitle": "ai",
+      "description": "sokai katana exhibit",
+      "status": "MEASURED · thumb OK",
+      "project": "ai",
+      "image": "img/inventory/asset-file-6cf321fff17313994d2aade9.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-6cf321fff17313994d2aade9",
+      "assetPath": "sokai-katana-exhibit.glb"
+    },
+    {
+      "id": "asset-file-2a5954e3e36fc71db99b0403",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "featured asset",
+      "title": "gaudi coordinated v3 web",
+      "subtitle": "gaudi",
+      "description": "gaudi coordinated v3 web",
+      "status": "MEASURED · thumb OK",
+      "project": "gaudi",
+      "image": "img/inventory/asset-file-2a5954e3e36fc71db99b0403.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-2a5954e3e36fc71db99b0403",
+      "assetPath": "gaudi-coordinated-v3-web.glb"
+    },
+    {
+      "id": "asset-file-980c8ee41d78e4c586d8b593",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "featured asset",
+      "title": "kona island runtime lod v2",
+      "subtitle": "studio-kona",
+      "description": "kona island runtime lod v2",
+      "status": "MEASURED · thumb OK",
+      "project": "studio-kona",
+      "image": "img/inventory/asset-file-980c8ee41d78e4c586d8b593.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-980c8ee41d78e4c586d8b593",
+      "assetPath": "kona-island-runtime-lod-v2.glb"
+    },
+    {
+      "id": "asset-canyon-speedmax-three-2005",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "Speedmax Three",
+      "subtitle": "konam",
+      "description": "An independent bicycle reconstruction in its original Bike Studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-canyon-speedmax-three-2005.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-225295ff9a2953f19fc08b73",
+      "assetPath": null
+    },
+    {
+      "id": "asset-canyon-speedmax-2007",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "SpeedMax 3.0",
+      "subtitle": "konam",
+      "description": "An independent bicycle reconstruction in its original Bike Studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-canyon-speedmax-2007.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-9f76ae8576ba712f8000487f",
+      "assetPath": null
+    },
+    {
+      "id": "asset-canyon-speedmax-al-2011",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "Speedmax AL 9.0",
+      "subtitle": "konam",
+      "description": "An independent bicycle reconstruction in its original Bike Studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-canyon-speedmax-al-2011.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-9ef6bc3039bfb6f8b53af507",
+      "assetPath": null
+    },
+    {
+      "id": "asset-canyon-speedmax-cf-2011",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "Speedmax CF 9.0 Pro",
+      "subtitle": "konam",
+      "description": "An independent bicycle reconstruction in its original Bike Studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-canyon-speedmax-cf-2011.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-51cf000245dca6f47e605d4c",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-merckx-hour-1972",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "Eddy Merckx Hour bike",
+      "subtitle": "konam",
+      "description": "Rebuilt from photos. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-merckx-hour-1972.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-2da42fd1f30b5443d26d98ef",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-type-funny-1980s",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "Funny bike",
+      "subtitle": "konam",
+      "description": "Type study. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-type-funny-1980s.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-67a8e4d4e50bde0d72740df1",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-type-aerobar-1989",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "Road bike with clip-on aero bars",
+      "subtitle": "konam",
+      "description": "Type study. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-type-aerobar-1989.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-308cf5188604dc184d5f9a72",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-lotus-108-1992",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "Lotus Type 108",
+      "subtitle": "konam",
+      "description": "Rebuilt from photos. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-lotus-108-1992.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-9a662a4567b69d66c9e5340e",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-obree-riverside",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "Graeme Obree's bikes",
+      "subtitle": "konam",
+      "description": "Rebuilt from photos. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-obree-riverside.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-631ac1b81b3856e65e89eda9",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-type-lowpro-650c",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "bike",
+      "title": "Low-profile triathlon bike, 650c",
+      "subtitle": "konam",
+      "description": "Type study. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-type-lowpro-650c.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-968d2d1a9086b30010051bde",
+      "assetPath": null
+    },
+    {
+      "id": "asset-canyon-speedmax-three-2005",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Speedmax Three",
+      "subtitle": "konam",
+      "description": "An independent bicycle reconstruction in its original Bike Studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-canyon-speedmax-three-2005.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-225295ff9a2953f19fc08b73",
+      "assetPath": null
+    },
+    {
+      "id": "asset-canyon-speedmax-2007",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "SpeedMax 3.0",
+      "subtitle": "konam",
+      "description": "An independent bicycle reconstruction in its original Bike Studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-canyon-speedmax-2007.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-9f76ae8576ba712f8000487f",
+      "assetPath": null
+    },
+    {
+      "id": "asset-canyon-speedmax-al-2011",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Speedmax AL 9.0",
+      "subtitle": "konam",
+      "description": "An independent bicycle reconstruction in its original Bike Studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-canyon-speedmax-al-2011.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-9ef6bc3039bfb6f8b53af507",
+      "assetPath": null
+    },
+    {
+      "id": "asset-canyon-speedmax-cf-2011",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Speedmax CF 9.0 Pro",
+      "subtitle": "konam",
+      "description": "An independent bicycle reconstruction in its original Bike Studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-canyon-speedmax-cf-2011.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-51cf000245dca6f47e605d4c",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-merckx-hour-1972",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Eddy Merckx Hour bike",
+      "subtitle": "konam",
+      "description": "Rebuilt from photos. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-merckx-hour-1972.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-2da42fd1f30b5443d26d98ef",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-type-funny-1980s",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Funny bike",
+      "subtitle": "konam",
+      "description": "Type study. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-type-funny-1980s.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-67a8e4d4e50bde0d72740df1",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-type-aerobar-1989",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Road bike with clip-on aero bars",
+      "subtitle": "konam",
+      "description": "Type study. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-type-aerobar-1989.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-308cf5188604dc184d5f9a72",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-lotus-108-1992",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Lotus Type 108",
+      "subtitle": "konam",
+      "description": "Rebuilt from photos. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-lotus-108-1992.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-9a662a4567b69d66c9e5340e",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-obree-riverside",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Graeme Obree's bikes",
+      "subtitle": "konam",
+      "description": "Rebuilt from photos. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-obree-riverside.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-631ac1b81b3856e65e89eda9",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-type-lowpro-650c",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Low-profile triathlon bike, 650c",
+      "subtitle": "konam",
+      "description": "Type study. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-type-lowpro-650c.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-968d2d1a9086b30010051bde",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-type-pursuit",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Track pursuit bike",
+      "subtitle": "konam",
+      "description": "Type study. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-type-pursuit.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-36b1dbcd16bc36d1710d7df5",
+      "assetPath": null
+    },
+    {
+      "id": "asset-atlas-alu-tri-2005",
+      "section": "assets",
+      "kind": "Asset",
+      "category": "library object",
+      "title": "Aluminium triathlon bike",
+      "subtitle": "konam",
+      "description": "Rebuilt from photos. Opens on this bike in the shared KONA paint studio.",
+      "status": "MEASURED · thumb OK",
+      "project": "konam",
+      "image": "img/inventory/asset-atlas-alu-tri-2005.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit",
+      "previewId": "file-29d9e6db823ebdcc861b013c",
+      "assetPath": null
+    },
+    {
+      "id": "tex-nike-room",
+      "section": "textures",
+      "kind": "Texture",
+      "title": "Running · Material Lab",
+      "subtitle": "world",
+      "description": "MEASURED material/texture preview (REVIEW).",
+      "status": "MEASURED · REVIEW",
+      "image": "img/inventory/tex-nike-room.png",
+      "url": null,
+      "rights": "Internal · Spatial inventory",
+      "external": false,
+      "useCases": [
+        "objects",
+        "brand-rooms"
+      ],
+      "measured": true,
+      "source": "preview-cache+audit"
+    },
+    {
+      "id": "tex-ref-material-study-warm",
+      "section": "textures",
+      "kind": "Material study",
+      "title": "Warm gallery",
+      "subtitle": "Gallery materials",
+      "description": "Reusable objects, quieter finishes and a small courtyard. Compare the light, viewpoints and mirror.",
+      "status": "MEASURED · worlds catalog",
+      "image": "img/worlds-material-study-warm.jpg",
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "catalog worlds"
+    },
+    {
+      "id": "tex-ref-material-study-charcoal",
+      "section": "textures",
+      "kind": "Material study",
+      "title": "Charcoal gallery",
+      "subtitle": "Gallery materials",
+      "description": "Reusable objects, quieter finishes and a small courtyard. Compare the light, viewpoints and mirror.",
+      "status": "MEASURED · worlds catalog",
+      "image": "img/worlds-material-study-charcoal.jpg",
+      "rights": "Internal · competition project study",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ],
+      "measured": true,
+      "source": "catalog worlds"
+    }
+  ],
+  "projects": [
+    {
+      "id": "konam",
+      "headline": "There’s more to this bike than a spec sheet.",
+      "audience": "For people who make bikes, race them or love them.",
+      "problem": "A product page can tell you the parts. We want to give you a reason to look closer.",
+      "promise": "KONA brings race identity, equipment and place together—from a close look at a bike to a room built around an athlete.",
+      "status": "Evolving consumer product · spatial prototypes",
+      "formats": [
+        "Web",
+        "Android",
+        "3D"
+      ],
+      "rights": "Internal · third-party brands and generated sculpture",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "vr"
+      ]
+    },
+    {
+      "id": "performance-os",
+      "headline": "What helps me come back stronger?",
+      "audience": "For people trying to make sense of their training.",
+      "problem": "Different watches and apps hold different pieces of the same person’s story. Keeping them together becomes another job.",
+      "promise": "Performance OS connects records from different sources to explore training, recovery and personal context, with an Android companion and a web app.",
+      "status": "Personal trial · preparing for a comeback race",
+      "formats": [
+        "App",
+        "Android",
+        "Web"
+      ],
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "ai",
+      "headline": "A museum for the things we make.",
+      "audience": "For people with a body of work to share.",
+      "problem": "The work is scattered across files and links. We’re giving people a place to find it.",
+      "promise": "Studio/AI pairs readable case studies with a walkable museum, arranging work as objects, rooms and connected ideas.",
+      "status": "Working gallery experiment · concept archive",
+      "formats": [
+        "Web",
+        "3D"
+      ],
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "vr"
+      ]
+    },
+    {
+      "id": "gaudi",
+      "headline": "A plaza for everyday life.",
+      "audience": "For people shaping a place together.",
+      "problem": "A plan can be hard to picture if you do not read drawings for a living.",
+      "promise": "Gaudí’s constructive thinking, AI-assisted exploration and a real Barcelona site meet in one competition proposal.",
+      "status": "Architectural design studies · consolidated viewing",
+      "formats": [
+        "3D"
+      ],
+      "rights": "Internal · anonymous competition entry until judging",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "studio-kona",
+      "headline": "What if arriving in Kona was part of the game?",
+      "audience": "For racers, visitors and the people welcoming them.",
+      "problem": "A map can get you there. We want to play with the feeling of being there.",
+      "promise": "Kona Island explores walking, riding, collecting and discovering stories around an event destination.",
+      "status": "Playable world prototype · local and cloud variants",
+      "formats": [
+        "Game",
+        "3D"
+      ],
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "gaming",
+        "vr"
+      ]
+    },
+    {
+      "id": "sokai",
+      "headline": "Follow one object into another world.",
+      "audience": "For people who tell stories through objects.",
+      "problem": "An object means more when you can discover the world around it.",
+      "promise": "SŌKAI uses a katana and memory-vault setting to explore identity, ritual and spatial storytelling.",
+      "status": "Authored concept scene",
+      "formats": [
+        "3D"
+      ],
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "vr",
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "canyonmuseum",
+      "headline": "See what changed from one bike to the next.",
+      "audience": "For people curious about the design of a bicycle.",
+      "problem": "A list of parts does not show you how a bicycle changed over time.",
+      "promise": "Canyon Museum uses editable bicycle reconstructions and themed rooms to tell the evolution of performance design.",
+      "status": "Heritage collection · reconstruction studies",
+      "formats": [
+        "3D",
+        "Web"
+      ],
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "trek-tri-museum",
+      "headline": "Start with one bike. Follow its history.",
+      "audience": "For people curious about how these bikes came to be.",
+      "problem": "Pictures and notes can be hard to piece together. The first bike gives us a place to start looking closely.",
+      "promise": "The Trek study connects primary-source research with a part-aware 3D exhibit, starting with an Equinox 9 heritage prototype.",
+      "status": "Working heritage prototype · wider museum in development",
+      "formats": [
+        "3D",
+        "Web"
+      ],
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "brand-rooms",
+        "meeting-rooms"
+      ]
+    },
+    {
+      "id": "belong",
+      "headline": "A little of the feeling, before you arrive.",
+      "audience": "An independent concept inspired by The Belong Festival.",
+      "problem": "A festival listing can explain the programme without conveying how it might feel to be there.",
+      "promise": "Scroll through a desert from daylight to night, changing the palette and sound along the way.",
+      "status": "Interactive website concept",
+      "formats": [
+        "Web",
+        "3D"
+      ],
+      "rights": "Review · client concept",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ]
+    },
+    {
+      "id": "noema",
+      "headline": "NOEMA / Human Meaning Atlas",
+      "audience": "Research exploration · education · maps of evidence",
+      "problem": "Research spread across papers is hard to explore across both place and time.",
+      "promise": "A globe and time lens connect archaeological observations to their sources. Coverage, uncertain geography and interpretation stay distinct.",
+      "status": "Working research prototype · human review pending",
+      "formats": [
+        "Web",
+        "Simulation"
+      ],
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "world-sims"
+      ]
+    },
+    {
+      "id": "sintra-ai",
+      "headline": "Sintra AI / From curiosity to practice",
+      "audience": "AI learning · workflow discovery · knowledge portals",
+      "problem": "AI tools and advice are scattered; finding a useful next step takes work.",
+      "promise": "A bilingual portal connects tools, prompts, learning material and automation blueprints. Browse the original workflow guides.",
+      "status": "Working knowledge portal",
+      "formats": [
+        "Web"
+      ],
+      "rights": "Original",
+      "external": true,
+      "useCases": [
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "caldaspace",
+      "headline": "CaldaSpace / A small science lesson",
+      "audience": "Science learning · accessible simulations · space discovery",
+      "problem": "A chart of starlight means more when you can try finding the planet yourself.",
+      "promise": "A simple simulated starlight game: a supporting example of learning through play.",
+      "status": "Supporting learning prototype",
+      "formats": [
+        "Web",
+        "Simulation"
+      ],
+      "rights": "Original",
+      "external": true,
+      "useCases": [
+        "world-sims",
+        "gaming"
+      ]
+    },
+    {
+      "id": "fpa-monitor",
+      "headline": "What deserves a closer look?",
+      "audience": "For teams reviewing a table of financial metrics.",
+      "problem": "A useful warning can get lost in a spreadsheet.",
+      "promise": "Three clear threshold rules turn example metrics into a small review list.",
+      "status": "Source-reviewed prototype · synthetic portfolio demonstration",
+      "formats": null,
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "automation-lab",
+      "headline": "Let the work keep its trail.",
+      "audience": "For teams bringing scattered records into a useful answer.",
+      "problem": "Finding the right source, checking the numbers and explaining the result take time.",
+      "promise": "FP&A research, reporting connections and source tracking inform how we build tools for finance, training and a growing 3D collection.",
+      "status": "Research prototypes · integration experiments",
+      "formats": [
+        "Automation",
+        "Research"
+      ],
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "brand-rooms"
+      ]
+    },
+    {
+      "id": "bellagio",
+      "headline": "Walk a Las Vegas landmark from the lake to the penthouse.",
+      "audience": "For people who need to feel a place, not just see plans of it.",
+      "problem": "Pictures and plans are hard to turn into a sense of being in a place.",
+      "promise": "Bellagio connects the lake and fountains, the Strip, sixteen interiors and an imagined penthouse in one walkable world.",
+      "status": "Published experience",
+      "formats": [
+        "3D",
+        "Web"
+      ],
+      "rights": "Internal · trademarked landmark and satellite-derived terrain",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ]
+    },
+    {
+      "id": "tropical-island",
+      "headline": "A psychedelic island, honestly rated.",
+      "audience": "For people building immersive worlds and VR.",
+      "problem": "Generated worlds pass validators long before they look like real places.",
+      "promise": "A procedural tropical island with daylight and nocturne variants, tested as the first step toward a Meta Quest VR world.",
+      "status": "Concept prototype · not yet realistic",
+      "formats": [
+        "3D"
+      ],
+      "rights": "Review · provenance to document",
+      "external": false,
+      "useCases": [
+        "vr",
+        "world-sims"
+      ]
+    }
+  ],
+  "missing_images": [],
+  "useCaseDefs": [
+    {
+      "id": "meeting-rooms",
+      "label": "Meeting rooms",
+      "blurb": "Spatial spaces you walk into and brief from.",
+      "relates": "spatial meetings · collab rooms"
+    },
+    {
+      "id": "objects",
+      "label": "Objects & kits",
+      "blurb": "Placeable models for rooms and pipelines.",
+      "relates": "glTF · FBX · LOD kits · T.2 import"
+    },
+    {
+      "id": "brand-rooms",
+      "label": "Brand & product rooms",
+      "blurb": "One idea per room — museum, athlete, heritage.",
+      "relates": "Showrooms · configurators · flagship"
+    },
+    {
+      "id": "vr",
+      "label": "VR & immersive",
+      "blurb": "Headset-ready and walkable worlds for presence.",
+      "relates": "Quest · WebXR · immersive review"
+    },
+    {
+      "id": "world-sims",
+      "label": "World simulations",
+      "blurb": "Terrain, evidence maps and science sims.",
+      "relates": "Digital twins · training · education"
+    },
+    {
+      "id": "gaming",
+      "label": "Gaming",
+      "blurb": "Playable loops: walk, ride, compete, build.",
+      "relates": "Games · destinations · live ops demos"
+    }
+  ],
+  "inventoryExtra": {
+    "missing": {
+      "textures_dedicated_gallery": "No full texture atlas in inventory — material labs + gallery studies only.",
+      "kona_canonical_rooms_thumbs": "28 kona-canonical-room rows lack thumbnail fields in ITEMS.csv.",
+      "cloud_scenes_thumbs": "14 cloud-scene rows lack thumbnails.",
+      "preview_cache_coverage": "326 local preview PNGs indexed; 92 audit rows matched."
+    },
+    "source": "THUMBNAIL_AUDIT + CaldasSpatialStudio/previews cache (image only)",
+    "generated": "2026-10-26",
+    "counts": {
+      "studios": 14,
+      "assets": 28,
+      "textures": 3,
+      "extra_rooms": 18
+    }
+  }
+}
