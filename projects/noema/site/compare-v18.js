@@ -64,7 +64,9 @@ function render(){
 
   const ac=new Set(allComponents(a)),bc=new Set(allComponents(b));
   const shared=[...ac].filter(x=>bc.has(x));
-  $('#compareSummary').innerHTML=`<div class="stats"><div class="stat"><b>${shared.length}</b><span>shared components</span></div><div class="stat"><b>${ac.size}</b><span>${esc(a.name)}</span></div><div class="stat"><b>${bc.size}</b><span>${esc(b.name)}</span></div><div class="stat"><b>${uniq([...ac,...bc]).length}</b><span>combined</span></div></div><div class="notice" style="margin-top:10px"><strong>Descriptive overlap only.</strong> Shared coding does not establish equivalent meaning, descent, diffusion, contact or causation. Unknown / uncoded is not absence.</div>`;
+  const counts=state.projection?.counts||{};
+  const uncoded=dims.filter(d=>!(a.dimensions?.[d]||[]).length||!(b.dimensions?.[d]||[]).length).length;
+  $('#compareSummary').innerHTML=`<section id="compareDenom" class="nm-denom"><b>2 of ${Number(counts.comparable_records||0).toLocaleString()} profiles with coded dimensions, in a projection of ${Number(counts.records||0).toLocaleString()} profiles.</b><p>This comparison projection stores no source locators. Source count for ${esc(a.name)} and ${esc(b.name)} is a gap on this page. Open each profile for the reference trail. ${uncoded} of ${dims.length} dimension rows are uncoded on at least one side. Unknown / uncoded is not absence.</p></section><div class="stats"><div class="stat"><b>${shared.length}</b><span>shared components, after the denominator</span></div><div class="stat"><b>${ac.size}</b><span>${esc(a.name)}</span></div><div class="stat"><b>${bc.size}</b><span>${esc(b.name)}</span></div><div class="stat"><b>${uniq([...ac,...bc]).length}</b><span>combined</span></div></div><div class="notice" style="margin-top:10px"><strong>Descriptive overlap only.</strong> Shared coding does not establish equivalent meaning, descent, diffusion, contact or causation. Unknown / uncoded is not absence.</div>`;
 
   const url=new URL(location.href);
   url.searchParams.set('a',a.id);url.searchParams.set('b',b.id);

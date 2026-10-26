@@ -80,7 +80,9 @@
       const bv = (b.dimensions?.[k] || []).join(', ') || 'not coded on this record';
       return `<tr><th>${esc(k)}</th><td>${esc(av)}</td><td>${esc(bv)}</td></tr>`;
     }).join('');
-    return `<p>Shared dimension values stored on both records: ${shared.length ? esc(shared.join(', ')) : 'none'}.</p>
+    const uncoded = keys.filter(k => !(a.dimensions?.[k] || []).length || !(b.dimensions?.[k] || []).length).length;
+    return `<p><b>${shared.length} shared dimension value${shared.length === 1 ? '' : 's'} across ${keys.length} dimension codes on these two records.</b> ${esc(a.id)} stores ${Object.keys(a.dimensions || {}).length} dimension codes. ${esc(b.id)} stores ${Object.keys(b.dimensions || {}).length}. ${uncoded} of ${keys.length} rows are uncoded on at least one record. Uncoded is not absence. This pair is not a share of the pattern-screen cohort.</p>
+      <p>Shared dimension values stored on both records: ${shared.length ? esc(shared.join(', ')) : 'none'}.</p>
       <div class="nm-scroll"><table class="nm-table">${head}${body}</table></div>
       <p>Open the same pair in Compare: <a href="compare.html?a=${encodeURIComponent(a.id)}&b=${encodeURIComponent(b.id)}">${esc(a.id)} and ${esc(b.id)}</a>.</p>`;
   }
@@ -129,6 +131,28 @@
     }).join('');
   }
 
+  function denomHtml(journey, catalog, focus) {
+    const entities = catalog.entities || [];
+    const withSources = entities.filter(e => (e.sources || []).length).length;
+    const locators = focus.flatMap(e => (e.sources || []).map(s => ({ id: e.id, tier: s.tier || 'not stored' })));
+    const noSource = focus.filter(e => !(e.sources || []).length).map(e => e.id);
+    const rules = catalog.rules || [];
+    const similarity = rules.find(r => r.toLowerCase().includes('similarity')) || 'Similarity tags are comparison aids only; they do not imply descent or common origin.';
+    const unknown = rules.find(r => r.toLowerCase().includes('unknown')) || 'UNKNOWN is not false.';
+    const missing = [];
+    if (!focus.length) missing.push('no focus record was found in the catalog');
+    if (focus.length && !focus.some(hasEventDate)) missing.push('no event date');
+    if (focus.some(e => (e.sources || []).some(s => !(s.date || s.year || s.published || s.accessed)))) missing.push('no source date on a stored locator');
+    if (noSource.length) missing.push(`${noSource.join(', ')} has no sources array`);
+    const absence = (journey.absence_terms || []).length
+      ? `Configured absence terms (${journey.absence_terms.join(', ')}) are checked after the compact index loads. A miss is a gap, not a finding that the subject is unrelated.`
+      : 'This journey lists no absence terms.';
+    const statuses = [...new Set(focus.map(e => e.profile_status || 'not stored'))];
+    return `<b>${locators.length} source locator${locators.length === 1 ? '' : 's'} on ${focus.length} focus record${focus.length === 1 ? '' : 's'}, in a reference catalog of ${entities.length} entities.</b>
+      <p>${locators.length ? locators.map(s => `${esc(s.id)} stores tier ${esc(s.tier)}.`).join(' ') : 'No focus record stores a sources array.'} ${noSource.length ? `${esc(noSource.join(', '))} stores no sources array.` : ''} ${withSources} of ${entities.length} catalog entities store a sources array. profile_status on the focus records: ${esc(statuses.join(', ') || 'none loaded')}. Catalog status stored on belief-catalog-v1.json: ${esc(catalog.status || 'not stored')}.</p>
+      <p>Missing from these records: ${esc(missing.join('; ') || 'no empty field was detected on the stored focus records')}. ${esc(absence)} ${esc(unknown)} ${esc(similarity)}</p>`;
+  }
+
   function scanBlocks(value, catalog) {
     if (!value) return '';
     const hits = (catalog.entities || []).filter(e => JSON.stringify(e.dimensions || {}).includes(value));
@@ -136,9 +160,14 @@
     return `<ul>${hits.map(e => `<li><a href="entity.html?id=${encodeURIComponent(e.id)}">${esc(e.name)}</a> (${esc(e.id)}) · ${esc(e.profile_status || 'status not stored')}</li>`).join('')}</ul>`;
   }
 
+  function afterPaint() {
+    return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  }
+
   async function render() {
     const params = new URLSearchParams(location.search);
     const id = params.get('id') || 'odin-seidr';
+    await afterPaint();
     const [pack, catalog, mediaDoc, reviewedDoc, hypotheses, pubmed, ontology] = await Promise.all([
       get('./journeys.json'),
       get('../data/reference/belief-catalog-v1.json'),
@@ -150,11 +179,15 @@
     ]);
     let indexPromise = null;
     const journey = (pack.journeys || []).find(j => j.id === id);
+    const rest = document.getElementById('journeyRest') || root;
+    const questionEl = document.getElementById('journeyQuestion');
+    const denomEl = document.getElementById('denominator');
     if (!journey) {
-      root.innerHTML = gap('Journey', `No journey id “${id}” is listed in journeys.json.`);
+      rest.innerHTML = gap('Journey', `No journey id “${id}” is listed in journeys.json.`);
       return;
     }
     document.title = `${journey.title} · NOEMA`;
+    if (questionEl && questionEl.textContent !== journey.question) questionEl.textContent = journey.question;
     const byId = new Map((catalog.entities || []).map(e => [e.id, e]));
     const focus = (journey.focus_ids || []).map(fid => byId.get(fid)).filter(Boolean);
     const missingFocus = (journey.focus_ids || []).filter(fid => !byId.has(fid));
@@ -163,6 +196,12 @@
     const reviewed = (reviewedDoc.items || []).filter(r => (journey.reviewed_media_ids || []).includes(r.media_id));
     const index = { records: [], epistemic_note: 'Compact search index is still loading. Absence checks update when it arrives.' };
     const rules = catalog.rules || [];
+    const denom = denomHtml(journey, catalog, focus);
+    if (denomEl) {
+      const countsMatch = denomEl.textContent.includes(`${focus.flatMap(e => e.sources || []).length} source`)
+        && denomEl.textContent.includes(`catalog of ${ (catalog.entities || []).length } entities`);
+      if (!countsMatch) denomEl.innerHTML = denom;
+    }
     const progress = journey.progress === 'POPULATED_FROM_EXISTING_RECORDS'
       ? 'Populated from existing records. Empty fields below are gaps in those records.'
       : 'In progress. Only records that already exist are shown.';
@@ -190,11 +229,9 @@
     for (const m of reviewed) contested.push(`<p><b>${esc(m.media_id)}</b> · media_class ${esc(m.media_class)} · evidence_status ${esc(m.evidence_status)}. Stored description: ${esc(m.description)}</p>`);
     for (const m of media) if (m.epistemic_note) contested.push(`<p><b>${esc(m.entity_id)} museum record</b> · evidence_status ${esc(m.evidence_status)}. Stored epistemic note: ${esc(m.epistemic_note)}</p>`);
 
-    root.innerHTML = `
-      <p class="nm-kicker">Journey</p>
-      <h1>${esc(journey.question)}</h1>
+    rest.innerHTML = `
       <p><span class="nm-status">${esc(journey.progress)}</span></p>
-      <p>${esc(progress)} Catalog status stored on belief-catalog-v1.json: ${esc(catalog.status || 'not stored')}. <span id="indexNote">${esc(index.epistemic_note)}</span></p>
+      <p>${esc(progress)} <span id="indexNote">${esc(index.epistemic_note)}</span></p>
       <section class="nm-answer" id="answer"><h2>Short answer from stored fields</h2>${answer}
         <p>Catalog rules stored with these records:</p>
         <ul>${rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
@@ -231,6 +268,7 @@
   }
 
   render().catch(err => {
-    root.innerHTML = gap('Journey data', `Could not load the files this page reads: ${err.message}`);
+    const rest = document.getElementById('journeyRest') || root;
+    rest.innerHTML = gap('Journey data', `Could not load the files this page reads: ${err.message}`);
   });
 })();

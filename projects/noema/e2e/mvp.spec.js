@@ -138,3 +138,40 @@ test('home search groups Odin into topics, traditions, and sources', async ({ pa
   const box = await results.boundingBox();
   expect(box?.width ?? 0).toBeLessThanOrEqual(390);
 });
+
+test('denominator leads on Explore, the Odin journey, Compare, and Connections', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  await page.goto('explore.html', { waitUntil: 'domcontentloaded' });
+  const explore = page.locator('#exploreDenom');
+  await expect(explore).toBeVisible();
+  await expect(explore).toContainText('not evidence');
+  const exploreBox = await explore.boundingBox();
+  const exploreH1 = await page.locator('h1').boundingBox();
+  expect(exploreBox.y).toBeGreaterThan(exploreH1.y);
+  expect(exploreBox.y).toBeLessThan(844);
+
+  await page.goto('journey.html?id=odin-seidr', { waitUntil: 'domcontentloaded' });
+  const denom = page.locator('#denominator');
+  await expect(denom).toBeVisible();
+  await expect(denom).toContainText('source locator');
+  await expect(denom).toContainText('26');
+  await expect(denom).toContainText('UNKNOWN is not false');
+  await expect(page.locator('#comparison')).toBeVisible();
+  const denomBox = await denom.boundingBox();
+  const cmpBox = await page.locator('#comparison').boundingBox();
+  expect(denomBox.y).toBeLessThan(cmpBox.y);
+
+  await page.goto('compare.html?a=GOD-ODIN&b=GOD-THOR', { waitUntil: 'domcontentloaded' });
+  const compare = page.locator('#compareDenom');
+  await expect(compare).toBeVisible();
+  await expect(compare).toContainText('coded dimensions');
+  await expect(compare).toContainText('Unknown / uncoded is not absence');
+
+  await page.goto('lineages.html', { waitUntil: 'domcontentloaded' });
+  const conn = page.locator('#connectionDenom');
+  await expect(conn).toContainText('excluded');
+  await expect(conn).toContainText('sources');
+  const connBox = await conn.boundingBox();
+  expect(connBox.y).toBeLessThan(844);
+});
