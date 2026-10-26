@@ -24,7 +24,7 @@ The model has two areas. The **monthly margin engine** — **History**, **Plan**
 bridge and a Nordics→market→BU→SKU consolidation drill-down), **Mix**,
 **Sensitivity** and **Report**. And the **long-term plan** —
 
-- **MFP · Long-term** — the Miele Financial Plan. Four years of actuals, the 2026
+- **Long-term plan (LTP)** — the Nordic appliance long-term plan. Four years of actuals, the 2026
   budget (actual through July) and a five-year plan (2027–2031) you own: net
   sales, product margin, margin % and volume, with **editable future years** and
   a breakdown by **sales channel** (ERT, KRT, Direct Projects, D2C, Customer
@@ -34,12 +34,12 @@ bridge and a Nordics→market→BU→SKU consolidation drill-down), **Mix**,
   Everything consolidates — Nordics = Σ channels = Σ (channel × BU) — every year.
 - **Budget 2027** — the long-term plan's 2027 slice spread to months, with a page
   per sales channel showing the monthly budget by business unit that ties back to
-  the MFP.
+  the long-term plan.
 - **Validate & reconcile** — the integrity checks (consolidation, no negatives,
   margin and growth in bounds) plus the top-down/bottom-up loop: flex each
   channel's budget against the plan, see the gap, and **roll the committed
   budget back up into the plan** so 2028–2031 re-plan off the new base.
-- **Plan risk** (on the MFP) — a scenario band around 2031 product margin from
+- **Plan risk** (on the long-term plan) — a scenario band around 2031 product margin from
   the plan drivers (growth, margin, mix) combined in quadrature, a Monte-Carlo
   P10–P90 and P(≥ trend), and a tornado ranking which lever moves the plan most.
 - **Versions** — save the plan and its assumptions as named cases (Base, Upside,

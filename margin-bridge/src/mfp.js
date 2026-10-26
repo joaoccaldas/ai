@@ -1,5 +1,5 @@
 /* ============================================================================
-   mfp.js — Miele Financial Plan, long term.
+   mfp.js — long-term plan (LTP) for a Nordic appliance portfolio.
 
    An annual planning model that sits above the monthly margin engine. It starts
    from real history, projects the plan horizon, and breaks the top line down two
