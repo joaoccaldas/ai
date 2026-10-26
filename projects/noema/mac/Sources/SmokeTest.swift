@@ -165,7 +165,7 @@ enum SmokeTest {
         let report: [String: Any] = [
             "ok": ok,
             "bundleId": Bundle.main.bundleIdentifier ?? "",
-            "bundlePath": Bundle.main.bundlePath,
+            "bundlePath": publishedBundlePath(),
             "port": model.server?.port ?? 0,
             "missing": model.server?.recentMissing() ?? [],
             "checks": checks,
@@ -176,6 +176,17 @@ enum SmokeTest {
             try? data.write(to: output.appendingPathComponent("report.json"))
         }
         exit(ok ? 0 : 1)
+    }
+
+    /// Report paths must not include the account name. `~/Applications/NOEMA.app`
+    /// is the installed location; anything else is only the bundle filename.
+    private static func publishedBundlePath() -> String {
+        let resolved = URL(fileURLWithPath: Bundle.main.bundlePath).resolvingSymlinksInPath().path
+        let home = FileManager.default.homeDirectoryForCurrentUser.resolvingSymlinksInPath().path
+        if resolved == home || resolved.hasPrefix(home + "/") {
+            return "~" + String(resolved.dropFirst(home.count))
+        }
+        return URL(fileURLWithPath: resolved).lastPathComponent
     }
 
     private static func check(_ name: String, _ result: WaitResult) -> [String: Any] {
@@ -268,7 +279,7 @@ enum SmokeTest {
         guard let chosen else { return nil }
         let url = output.appendingPathComponent("\(name).png")
         guard writePNG(chosen, to: url) else { return nil }
-        return url.path
+        return url.lastPathComponent
     }
 
     private static func snapshot(_ webView: WKWebView) async -> NSImage? {

@@ -1,6 +1,6 @@
 {
   "bundleId": "ai.caldas.noema.mac",
-  "bundlePath": "/Users/joao/Applications/NOEMA.app",
+  "bundlePath": "~/Applications/NOEMA.app",
   "checks": [
     {
       "detail": {
@@ -59,11 +59,11 @@
   "pageErrors": [],
   "port": 55566,
   "screenshots": [
-    "/Users/joao/Developer/ai/projects/noema/mac/evidence/home.png",
-    "/Users/joao/Developer/ai/projects/noema/mac/evidence/home-search.png",
-    "/Users/joao/Developer/ai/projects/noema/mac/evidence/explore.png",
-    "/Users/joao/Developer/ai/projects/noema/mac/evidence/witches.png",
-    "/Users/joao/Developer/ai/projects/noema/mac/evidence/gods.png"
+    "projects/noema/mac/evidence/home.png",
+    "projects/noema/mac/evidence/home-search.png",
+    "projects/noema/mac/evidence/explore.png",
+    "projects/noema/mac/evidence/witches.png",
+    "projects/noema/mac/evidence/gods.png"
   ],
-  "installedApp": "/Users/joao/Applications/NOEMA.app"
+  "installedApp": "~/Applications/NOEMA.app"
 }
