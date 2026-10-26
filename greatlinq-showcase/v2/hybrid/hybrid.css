@@ -1,0 +1,24 @@
+/* Hybrid stage: a fixed 16:9 frame so the live camera reproduces the Cycles framing exactly. */
+:root{--bar:#05080f;--text:#F3F5F8;--muted:#B7C0CE;--focus:#8FB4FF}
+*{box-sizing:border-box}[hidden]{display:none!important}
+html,body{margin:0;height:100%;background:var(--bar);color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+button,a{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.frame{position:fixed;inset:0;display:grid;grid-template-rows:auto 1fr auto}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px max(20px,env(safe-area-inset-left)) 14px max(20px,env(safe-area-inset-right));min-height:56px}
+.bar-bottom{flex-direction:column;align-items:stretch;gap:12px;padding-bottom:max(16px,env(safe-area-inset-bottom))}
+.brand{font-weight:650;font-size:15px;letter-spacing:-.01em}.brand span{font-weight:450;color:var(--muted);margin-left:6px}
+.chapter{font-size:12px;letter-spacing:.12em;color:var(--muted)}
+.stage{position:relative;align-self:center;justify-self:center;width:min(100vw,calc((100vh - 200px) * 16 / 9));aspect-ratio:16/9;background:#000;overflow:hidden}
+.stage>video,.stage>img,.stage>canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+canvas{opacity:0;transition:opacity .25s linear;touch-action:none}canvas.live{opacity:1}
+video,img{transition:opacity .25s linear}.gone{opacity:0}
+.status{position:absolute;inset:0;margin:0;display:grid;place-items:center;text-align:center;padding:24px;background:rgba(5,8,15,.86);line-height:1.6}
+.status a{display:inline-block;margin-left:6px;min-height:44px;line-height:44px;padding:0 14px;border:1px solid rgba(243,245,248,.4);border-radius:9px;text-decoration:none}
+.hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);padding:9px 14px;border-radius:999px;background:rgba(5,8,15,.72);font-size:13px;white-space:nowrap}
+.caption{margin:0;min-height:36px;font-weight:600;font-size:28px;line-height:36px;letter-spacing:-.01em}
+.caption em{font-family:"EB Garamond",Georgia,serif;font-style:italic;font-weight:400}
+.controls{display:flex;align-items:center;gap:10px}.method{flex:1;font-size:12px;color:var(--muted)}
+.controls button{min-height:44px;padding:0 16px;border-radius:9px;border:1px solid rgba(243,245,248,.28);background:transparent;cursor:pointer}
+@media (min-width:900px) and (orientation:landscape){.caption{font-size:40px;line-height:48px}.bar-bottom{flex-direction:row;align-items:center}.method{flex:0 0 auto}}
+@media (prefers-reduced-motion:reduce){canvas,video,img{transition:none}}

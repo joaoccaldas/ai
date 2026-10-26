@@ -16,6 +16,10 @@ GitHub Pages site with several experiences:
   of [wepartner.se](https://www.wepartner.se) with an AI · automation · machine
   learning differentiator. See [`wepartner/README.md`](wepartner/README.md).
   → https://joaoccaldas.github.io/ai/wepartner/
+- **`/greatlinq-showcase/`** — ond.ai Spatial Studio, the Greatlinq Demo.app
+  cinematic site (flagship, lantern, hybrid, and João’s About). See
+  [`greatlinq-showcase/README.md`](greatlinq-showcase/README.md).
+  → https://joaoccaldas.github.io/ai/greatlinq-showcase/
 
 A golden portal in the corner of the home page links into the Belong experience.
 

@@ -2,63 +2,321 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#F7F8F5">
-  <meta name="description" content="An invitation to explore original 3D worlds, objects, and possible collaborations. An independent ond.ai concept showcase prepared for Greatlinq.">
-  <meta name="robots" content="noindex,nofollow,noarchive">
-  <title>ond.ai | Worlds worth exploring · Greatlinq concept preview</title>
-  <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
-  <link rel="stylesheet" href="./styles.css">
-  <link rel="icon" href="./mark.svg" type="image/svg+xml">
-  <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
-  <script type="module" src="./app.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ond.ai · Spatial Studio</title>
+  <link rel="icon" href="mark.svg" type="image/svg+xml">
+  <link rel="preload" href="./fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="v2/flagship/media/world-dawn.jpg" as="image">
+  <link rel="stylesheet" href="./app.css">
+    <script type="module" src="./app.js"></script>
 </head>
-<body>
-  <a class="skip" href="#main">Skip to portfolio</a>
-  <div class="ambient ambient-1" aria-hidden="true"></div><div class="ambient ambient-2" aria-hidden="true"></div>
-  <header class="topbar" id="topbar">
-    <button type="button" class="wordmark" data-action="home" aria-label="ond.ai, return to welcome">
-      <svg class="brand-mark" viewBox="0 0 56 24" fill="none" aria-hidden="true"><defs><linearGradient id="wave" x1="0" y1="12" x2="56" y2="12" gradientUnits="userSpaceOnUse"><stop stop-color="#EBD7AF"/><stop offset=".48" stop-color="#A783E9"/><stop offset="1" stop-color="#5242EF"/></linearGradient></defs><path d="M3 14C12 14 12 4 21 4c9 0 10 16 19 16 6 0 9-7 13-9" stroke="url(#wave)" stroke-width="4.2" stroke-linecap="round"/></svg>
-      <span>ond<span class="dot">.</span>ai</span>
-    </button>
-    <nav class="topnav" aria-label="Main navigation" id="topnav">
-      <button data-view="overview" class="navlink active">Overview</button>
-      <button data-view="worlds" class="navlink">Worlds</button>
-      <button data-view="objects" class="navlink">Objects</button>
-      <button data-view="materials" class="navlink">Transform</button>
-      <button data-view="concepts" class="navlink">Possibilities</button>
+<body data-audience="internal">
+  <a class="skiplink" href="#main">Skip to content</a>
+
+  <div class="progress" id="storyProgress" aria-hidden="true"><span id="storyFill"></span></div>
+  <nav class="deck-rail" id="deckRail" aria-label="Chapters"></nav>
+  <p class="deck-hint" id="deckHint" hidden>Scroll inside · PageDown for next</p>
+  <header class="top" id="top">
+    <a class="brand" href="#enter" aria-label="ond.ai Spatial Studio">
+      <img src="mark.svg" width="24" height="24" alt="">
+      <span class="brand-name">ond.ai</span>
+      <span class="brand-sub">Spatial Studio</span>
+    </a>
+    <nav class="nav" aria-label="Chapters">
+      <a href="#enter">Enter</a>
+      <a href="#live">Live</a>
+      <a href="#featured">Featured</a>
+      <a href="#worlds">Worlds</a>
+      <a href="#concepts">Concepts</a>
+      <a href="#objects">Objects</a>
+      <a href="#about">About</a>
+      <a href="#next">Next</a>
     </nav>
-    <div class="header-actions"><span class="guest-label"><span class="live-dot"></span> Curated preview</span><button type="button" class="tour-cta" id="tourTopBtn">Take a tour <span aria-hidden="true">↗</span></button><button type="button" id="menuBtn" class="menu-btn" aria-label="Open navigation" aria-expanded="false">☰</button></div>
+    <button type="button" class="ghost" id="audToggle" aria-pressed="false" title="Audience">Internal</button>
   </header>
-  <main id="main" tabindex="-1">
-    <div class="route-line"><span class="line-start">AN OND.AI SPATIAL COLLECTION</span><span class="line-end">EXPLORING POSSIBILITIES WITH GREATLINQ <span class="star">✳</span></span></div>
-    <div id="screen" class="screen" aria-live="polite"></div>
-  </main>
-  <footer class="footer" id="footer"><span>ond.ai / Spatial Studio</span><span>Independent concept preview · Not a Greatlinq product or integration</span><button id="footerTourBtn" type="button">Restart introduction ↑</button></footer>
 
-  <div id="tourBar" class="tourbar" hidden aria-label="Guided tour controls">
-    <div class="tourbar-top"><span id="tourEyebrow" class="mini-eyebrow">THE JOURNEY</span><span id="tourClock">00:00 / 03:00</span></div>
-    <div class="tourbar-main"><div class="guide-text"><span class="guide-orb" aria-hidden="true"><i></i></span><div><b id="guideHeading">Welcome to the collection</b><p id="guideBody">The tour will advance automatically. Explore any feature whenever you like.</p></div></div><div class="tour-actions"><button type="button" id="tourPrev" aria-label="Previous stop" title="Previous stop">←</button><button type="button" id="tourPlay" aria-label="Pause tour" title="Pause or play">Ⅱ</button><button type="button" id="tourNext" aria-label="Next stop" title="Next stop">→</button><button type="button" id="tourStop" title="Exit guided tour">Exit</button></div></div>
-    <div class="progress-track"><div class="progress-fill" id="tourProgress"></div></div>
-  </div>
-
-  <div id="welcome" class="welcome" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle">
-    <div class="welcome-art" aria-hidden="true"><div class="art-photo"></div><div class="orbital orbital-one"></div><div class="orbital orbital-two"></div><div class="art-label">A COLLECTION OF POSSIBILITIES · 2026</div></div>
-    <div class="welcome-panel">
-      <div class="welcome-header"><span class="overline"><span class="sparkle">✳</span> A PRIVATE INVITATION</span><span class="edition">001 / GREATLINQ EDITION</span></div>
-      <h1 id="welcomeTitle">Ideas are better<br>when you can <em>enter them.</em></h1>
-      <p class="welcome-lead">A curated journey through existing 3D worlds, crafted objects and what we might make possible together.</p>
-      <div class="welcome-question">How would you like to explore?</div>
-      <div class="entry-choices">
-        <button type="button" id="guidedChoice" class="entry-card chosen"><span class="choice-icon">▷</span><span class="entry-card-content"><b>Show me around</b><small>An automatic visual tour, at your pace</small></span><span class="choice-arrow">↗</span></button>
-        <button type="button" id="freeChoice" class="entry-card"><span class="choice-icon">✣</span><span class="entry-card-content"><b>Let me explore</b><small>Open the collection, no guide needed</small></span><span class="choice-arrow">↗</span></button>
+  <main id="main">
+    <!-- 01 Enter -->
+    <section class="chapter stage" id="enter" aria-labelledby="enterTitle">
+      <video id="openFilm" class="stage-bg" muted playsinline loop preload="auto" poster="v2/flagship/media/world-dawn.jpg" aria-hidden="true"></video>
+      <div class="stage-veil" aria-hidden="true"></div>
+      <div class="enter-layout">
+        <div class="stage-body">
+          <p class="eyebrow light">Flagship portfolio</p>
+          <h1 id="enterTitle" class="display light reveal">Walk the work.<br>Brief from it.</h1>
+          <p class="lede light reveal d1">Film, stills and live WebGL from the same authored scenes — meeting rooms, VR worlds and placeable kits.</p>
+          <p class="stake light reveal d1">One shared room. One object you brief from. A decision you can leave with.</p>
+          <div class="actions reveal d2">
+            <a class="btn primary" href="v2/flagship/">Enter the world</a>
+            <a class="btn ghost-light" href="#live" data-chapter="live">Light the lantern</a>
+          </div>
+          <ul class="story-beats reveal d3" aria-label="Story">
+            <li><b>01</b> Place</li>
+            <li><b>02</b> Object</li>
+            <li><b>03</b> Together</li>
+          </ul>
+        </div>
+        <div class="hero-gl-wrap reveal d2">
+          <img class="hero-gl-fallback" src="v2/lantern/media/lantern-lit.jpg" alt="" id="heroFallback">
+          <iframe id="heroGlFrame" class="hero-gl-frame" title="Live WebGL lantern" data-src="v2/lantern/?embed=1" allow="fullscreen"></iframe>
+          <canvas id="heroGl" class="hero-gl" hidden aria-hidden="true"></canvas>
+          <p class="hero-gl-caption">Live Three.js · drag to turn · same model as the film</p>
+        </div>
       </div>
-      <div class="tour-options" id="tourOptions"><span class="options-title">Choose your journey</span><div class="option-pills" role="group" aria-label="Tour length"><button class="option-pill" data-length="short"><b>The Spark</b><span>1½ min</span></button><button class="option-pill selected" data-length="medium"><b>The Journey</b><span>3 min</span></button><button class="option-pill" data-length="long"><b>The Expedition</b><span>7 min</span></button></div></div>
-      <button type="button" id="beginBtn" class="begin-btn"><span id="beginText">Begin the journey</span><span aria-hidden="true">↗</span></button>
-      <p class="welcome-note">You can pause, skip, interact with the scenes or switch to free exploration anytime. No sign-in.</p>
+      <p class="stage-meta">Film draft · Blender EEVEE · original geometry · WebGL accent</p>
+    </section>
+
+    <!-- 02 Live -->
+    <section class="chapter stage stage-live" id="live" aria-labelledby="liveTitle">
+      <div class="live-frame" id="liveFrame">
+        <img class="live-poster" id="livePoster" src="v2/lantern/media/lantern-lit.jpg" alt="">
+        <div class="live-veil" aria-hidden="true"></div>
+        <iframe id="liveGlFrame" title="Live porcelain lantern" data-src="v2/lantern/?embed=1" allow="fullscreen"></iframe>
+        <p class="live-badge" id="liveBadge">Live Three.js · drag to turn</p>
+      </div>
+      <div class="stage-body side">
+        <p class="eyebrow light">Interactive</p>
+        <h2 id="liveTitle" class="display-sm light">Same lantern as the film. Light it.</h2>
+        <p class="lede light" id="liveLede">Drag to turn · scroll to glow · 463 KB · no install.</p>
+        <div class="actions">
+          <a class="btn primary" href="v2/lantern/">Open full live</a>
+          <a class="btn ghost-light" href="v2/hybrid/">Open hybrid arch</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 03 Featured -->
+    <section class="chapter band" id="featured" aria-labelledby="featTitle">
+      <div class="wrap">
+        <header class="chapter-head">
+          <p class="eyebrow">Featured · openable</p>
+          <h2 id="featTitle">Immersive pieces you can enter.</h2>
+          <p class="measure">Start here. A short list of flagship rooms — not the full catalog.</p>
+        </header>
+        <div class="feat-row" id="gridFeatured" aria-label="Featured experiences"></div>
+      </div>
+    </section>
+
+    <!-- 04 Worlds — horizontal catalog lane (not a mega dump) -->
+    <section class="chapter band sand" id="worlds" aria-labelledby="worldsTitle">
+      <div class="wrap">
+        <header class="chapter-head">
+          <p class="eyebrow">Worlds · play</p>
+          <h2 id="worldsTitle">Enterable spaces.</h2>
+          <p class="measure">Full worlds and a few playables — swipe the lane. Gaudí stays out of this external cut.</p>
+        </header>
+        <div class="carousel catalog-lane" id="worldsCarousel" data-lane="worlds">
+          <div class="carousel-track" id="gridWorlds" tabindex="0" aria-label="Worlds catalog"></div>
+          <div class="carousel-ui">
+            <button type="button" class="carousel-btn" id="worldsPrev" aria-label="Previous world">‹</button>
+            <div class="carousel-dots" id="worldsDots"></div>
+            <button type="button" class="carousel-btn" id="worldsNext" aria-label="Next world">›</button>
+          </div>
+        </div>
+        <p class="caption" id="worldsCount"></p>
+      </div>
+    </section>
+
+    <!-- 05 Concepts — horizontal catalog lane -->
+    <section class="chapter band" id="concepts" aria-labelledby="conceptsTitle">
+      <div class="wrap">
+        <header class="chapter-head">
+          <p class="eyebrow">Concepts · rooms</p>
+          <h2 id="conceptsTitle">Rooms and studies.</h2>
+          <p class="measure">Room concepts and studies — browse the lane, open what fits the brief.</p>
+        </header>
+        <div class="carousel catalog-lane" id="conceptsCarousel" data-lane="concepts">
+          <div class="carousel-track" id="gridConcepts" tabindex="0" aria-label="Concepts catalog"></div>
+          <div class="carousel-ui">
+            <button type="button" class="carousel-btn" id="conceptsPrev" aria-label="Previous concept">‹</button>
+            <div class="carousel-dots" id="conceptsDots"></div>
+            <button type="button" class="carousel-btn" id="conceptsNext" aria-label="Next concept">›</button>
+          </div>
+        </div>
+        <p class="caption" id="conceptsCount"></p>
+      </div>
+    </section>
+
+    <!-- 06 Objects -->
+    <section class="chapter band" id="objects" aria-labelledby="objTitle">
+      <div class="wrap">
+        <header class="chapter-head">
+          <p class="eyebrow">Objects · kits</p>
+          <h2 id="objTitle">Ready to place.</h2>
+          <p class="measure">glTF-ready models for rooms and engines. Filter the library — not an empty shelf.</p>
+          <div class="filters chips" id="chips" role="group" aria-label="Filter objects"></div>
+        </header>
+        <div class="grid dense" id="gridObjects"></div>
+        <p class="caption" id="objCount"></p>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="chapter band about-band" id="about" aria-labelledby="aboutTitle">
+      <div class="about-cinema" aria-hidden="true">
+        <img src="img/about/ocean-dawn.jpg" alt="">
+        <div class="about-cinema-veil"></div>
+      </div>
+      <div class="wrap about-wrap">
+        <header class="chapter-head about-head">
+          <p class="eyebrow">The person</p>
+          <h2 id="aboutTitle" class="display">João Caldas.<br><em>Curiosity travels.</em></h2>
+          <p class="lede ink" id="aboutRole">FP&amp;A Director, Miele Nordics</p>
+        </header>
+
+        <div class="about-hero about-hero-slim">
+          <figure class="about-portrait">
+            <img id="aboutPortrait" src="img/about/joao.png" alt="João Caldas" width="420" height="520">
+          </figure>
+          <div class="about-copy">
+            <p class="about-why measure" id="aboutWhy">Built brand rooms and live objects for teams that brief in space — from global CPG to the next spatial meeting.</p>
+            <p class="about-first" id="aboutFirst">Brazil, Sweden, Switzerland. Computers, waves, boardrooms and finish lines.</p>
+            <p class="measure" id="aboutShort"></p>
+            <div class="actions" id="aboutLinks"></div>
+            <div class="actions" style="margin-top:12px">
+              <a class="btn primary" href="#next" data-chapter="next">See what happens next</a>
+            </div>
+          </div>
+        </div>
+
+        <details class="about-career-disclosure" id="aboutCareerDisclosure">
+          <summary>Career journey</summary>
+          <div class="about-career-body">
+            <p class="measure" id="aboutLong" hidden></p>
+            <article class="about-surf about-surf-quiet" aria-label="Life outside work">
+              <figure class="about-surf-media">
+                <img id="aboutSurfImg" src="img/about/surfing.jpg" alt="" loading="lazy">
+              </figure>
+            </article>
+            <section class="about-chapters" aria-label="Life chapters" id="aboutChapters"></section>
+            <section class="career-room" aria-label="Career timeline">
+              <header class="career-head">
+                <p class="eyebrow">LinkedIn · companies &amp; roles</p>
+                <h3 class="display-sm">The long <em>way here.</em></h3>
+                <div class="career-logo-strip" id="careerLogoStrip" aria-hidden="true"></div>
+                <button type="button" class="btn ghost" id="careerPlay" aria-pressed="false">▷ Play the journey</button>
+              </header>
+              <div class="career-rail" role="list" id="careerRail" aria-label="Companies"></div>
+              <article class="career-focus" aria-live="polite">
+                <div class="career-focus-top">
+                  <span class="career-logo" id="careerLogo" hidden></span>
+                  <div>
+                    <p class="eyebrow" id="careerPeriod"></p>
+                    <h3 id="careerCompany"></h3>
+                    <p class="career-role" id="careerRole"></p>
+                    <p class="career-place" id="careerPlace"></p>
+                  </div>
+                  <span class="career-count" id="careerCount"></span>
+                </div>
+                <p class="career-challenge" id="careerChallenge" hidden></p>
+                <p class="career-story" id="careerText"></p>
+                <ul class="career-details" id="careerDetails"></ul>
+                <div class="career-tags" id="careerTags"></div>
+              </article>
+              <div class="career-nav">
+                <label class="career-jump">
+                  <span class="sr-only">Choose a company</span>
+                  <select id="careerJump" aria-label="Choose a company"></select>
+                </label>
+                <div class="career-turn">
+                  <button type="button" class="btn ghost" id="careerPrev" aria-label="Previous">←</button>
+                  <button type="button" class="btn ghost" id="careerNext" aria-label="Next">→</button>
+                </div>
+              </div>
+              <details class="career-note">
+                <summary>About this timeline</summary>
+                <p id="careerNote"></p>
+              </details>
+            </section>
+            <section class="about-speaking" aria-label="Talks" id="aboutSpeaking"></section>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- Next -->
+    <section class="chapter band ink" id="next" aria-labelledby="nextTitle">
+      <div class="wrap">
+        <aside class="pilot-shortlist" id="pilotShortlist" hidden>
+          <div class="pilot-shortlist-head">
+            <p class="eyebrow light">Pilot shortlist</p>
+            <span id="pilotShortlistCount" class="short-count">0 / 3</span>
+          </div>
+          <ul id="pilotShortlistList"></ul>
+        </aside>
+        <header class="chapter-head">
+          <p class="eyebrow light">What happens next</p>
+          <h2 id="nextTitle" class="display light">Put this work in a real room.</h2>
+          <p class="measure light">Place → Object → Together. Import path · room · object · decision in one session — report only what we measure.</p>
+        </header>
+        <ul class="measured-strip" aria-label="Measured">
+          <li><span class="ms-dot" aria-hidden="true"></span>Live WebGL</li>
+          <li><span class="ms-dot" aria-hidden="true"></span>Exportable place</li>
+          <li><span class="ms-dot" aria-hidden="true"></span>Shared spatial meeting</li>
+        </ul>
+        <div class="pilot-row">
+          <article class="pilot-card">
+            <a href="v2/flagship/#place"><img src="v2/flagship/media/world-dawn.jpg" alt="" loading="lazy"></a>
+            <p class="kicker">01 · Place</p>
+            <h3>The meeting has a room</h3>
+            <p>Threshold: five arches over water — a room they can import once the path is set.</p>
+          </article>
+          <article class="pilot-card">
+            <a href="v2/lantern/"><img src="v2/flagship/media/portfolio-lantern.jpg" alt="" loading="lazy"></a>
+            <p class="kicker">02 · Object</p>
+            <h3>The object you brief from</h3>
+            <p>Same lantern as the film — light it in the meeting, not in a slide.</p>
+          </article>
+          <article class="pilot-card">
+            <a href="v2/flagship/#together"><img src="v2/flagship/media/portfolio-arch.jpg" alt="" loading="lazy"></a>
+            <p class="kicker">03 · Together</p>
+            <h3>Walk, then decide</h3>
+            <p>Walk once, brief once, decide in the room — one place + one object in a shared spatial meeting.</p>
+          </article>
+        </div>
+        <div class="actions" style="margin-top:32px">
+          <a class="btn primary" href="v2/flagship/">Open the pilot room</a>
+          <a class="btn ghost-ink" href="mailto:joaoccaldas@gmail.com?subject=30-min%20spatial%20walkthrough&amp;body=Hi%20Jo%C3%A3o%2C%0A%0AI%27d%20like%20to%20book%20a%2030-minute%20walkthrough%20of%20the%20pilot%20room%20(place%20%2B%20object%20%2B%20together).%0A%0A">Book a 30-min walkthrough</a>
+          <a class="btn ghost-ink" href="#about">About João</a>
+          <button type="button" class="btn ghost-ink" id="again">Restart</button>
+        </div>
+      </div>
+    </section>
+</main>
+
+  <dialog class="detail" id="detail" aria-labelledby="dTitle">
+    <img id="dImg" alt="">
+    <div class="d-body">
+      <p class="eyebrow" id="dKind"></p>
+      <h3 id="dTitle"></h3>
+      <p id="dText"></p>
+      <dl>
+        <div><dt>Status</dt><dd id="dStatus"></dd></div>
+        <div><dt>Rights</dt><dd id="dRights"></dd></div>
+        <div id="dAudWrap"><dt>Audience</dt><dd id="dAudience"></dd></div>
+      </dl>
+      <div class="actions">
+        <a class="btn primary" id="dOpen" target="_blank" rel="noopener">Open experience</a>
+        <button type="button" class="btn ghost" id="dShortlist" aria-pressed="false">Add to pilot shortlist</button>
+        <button type="button" class="btn ghost" id="dClose">Close</button>
+      </div>
     </div>
-    <div class="welcome-bottom"><span>DESIGNED TO BE EXPLORED</span><span>ond.ai · One company. Many worlds.</span></div>
+  </dialog>
+
+  <div class="onboard" id="onboard" hidden>
+    <div class="ob-card">
+      <p class="eyebrow">ond.ai · Spatial Studio</p>
+      <h2 class="display">Enter Spatial Studio.</h2>
+      <p class="measure">Internal keeps works-in-progress. External shows cleared pieces only. Short path jumps to Featured.</p>
+      <fieldset class="choice"><legend>Audience</legend>
+        <label><input type="radio" name="aud" value="internal" checked><span><b>Internal</b>Full catalog</span></label>
+        <label><input type="radio" name="aud" value="external"><span><b>External</b>Cleared only</span></label>
+      </fieldset>
+      <div class="actions lengths">
+        <button type="button" class="btn primary" data-len="free" id="obPrimary">Enter studio</button>
+        <button type="button" class="btn ghost" data-len="short">1‑min path</button>
+      </div>
+    </div>
   </div>
-  <noscript><div class="noscript">JavaScript is required for the interactive showcase. Examples are available separately at <a href="https://joaoccaldas.github.io/konam/">KONA.m</a> and <a href="https://joaoccaldas.github.io/bellagio/worlds/vegas/">Bellagio.</a></div></noscript>
 </body>
 </html>

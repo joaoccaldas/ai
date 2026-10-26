@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#05080f">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>ond.ai | Rooms worth meeting in</title>
+  <link rel="icon" href="../../mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./flagship.css">
+  <script type="module" src="./flagship.js"></script>
+</head>
+<body>
+  <a class="skiplink" href="#place">Skip to the first chapter</a>
+  <header class="top">
+    <span class="brand">ond.ai <span>Spatial Studio</span></span>
+    <nav class="dots" aria-label="Chapters">
+      <a href="#place" data-n="01">Place</a><a href="#object" data-n="02">Object</a><a href="#together" data-n="03">Together</a><a href="#teach" data-n="04">Why it glows</a><a href="#portfolio" data-n="05">Portfolio</a><a href="#pilot" data-n="06">Pilot</a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="ch hero" id="hero" aria-labelledby="heroTitle">
+      <img class="bg kenburns" src="./media/world-blue.jpg" alt="Five porcelain arches over a reflecting pool at blue hour, rendered in Blender Cycles">
+      <video class="bg" id="heroFilm" muted playsinline loop preload="none" poster="./media/world-blue.jpg" aria-hidden="true" hidden></video>
+      <div class="copy">
+        <p class="eyebrow">A proposal for Greatlinq T.2</p>
+        <h1 id="heroTitle">Rooms worth <em>meeting in.</em></h1>
+        <p class="lede">Original 3D places and objects, made once for film and for live use. Six short chapters, about two minutes.</p>
+        <div class="actions"><a class="primary" href="#place">Begin</a><a class="ghostbtn" href="#pilot">Jump to the pilot</a></div>
+        <p class="howto">Scroll, swipe or use the arrow keys. Every image is labelled <b>rendered</b> or <b>live</b>.</p>
+      </div>
+      <span class="label" id="heroLabel">Rendered · Blender Cycles</span>
+    </section>
+
+    <section class="ch" id="place" aria-labelledby="placeTitle">
+      <figure class="media evening">
+        <img class="bg" id="dawn" src="./media/world-dawn.jpg" alt="The same arches at dawn">
+        <img class="bg" id="blue" src="./media/world-blue.jpg" alt="The same arches at blue hour, light lines on">
+        <video class="bg" id="placeFilm" playsinline preload="none" poster="./media/world-dawn.jpg" hidden aria-label="Film: the same place from dawn to blue hour, 15 seconds"></video>
+        <span class="label">Rendered · Blender Cycles · same geometry, two times of day</span>
+      </figure>
+      <div class="copy">
+        <p class="eyebrow">01 · A place</p>
+        <h2 id="placeTitle">Your meeting has <em>a place.</em></h2>
+        <p>Five porcelain arches over still water, built in Blender and lit by a simulated sky. Drag to move from dawn to blue hour.</p>
+        <div class="filmrow"><button type="button" class="ghostbtn" id="playPlace">Play the film · 15 s</button></div>
+        <label class="slider"><span>Dawn</span><input type="range" id="evening" min="0" max="100" value="0" aria-label="Time of day, dawn to blue hour"><span>Blue hour</span></label>
+        <p class="for"><b>For T.2</b> Premium rooms authored once and exported to your pipeline (FBX or glTF, LODs, baked light). Proposed.</p>
+      </div>
+    </section>
+
+    <section class="ch" id="object" aria-labelledby="objectTitle">
+      <figure class="media live"><iframe title="Live porcelain lantern" data-src="../lantern/?embed=1" loading="lazy" allow="fullscreen"></iframe>
+        <span class="label">Live · three.js in your browser · 463 KB</span></figure>
+      <div class="copy">
+        <p class="eyebrow">02 · An object</p>
+        <h2 id="objectTitle">Something in it <em>worth touching.</em></h2>
+        <p>A rendered approach, then the same lantern is yours to handle. Bring up the light: it glows only where the porcelain is thin.</p>
+        <p class="for"><b>For T.2</b> Interactive objects inside a room: light, material, configuration. Proposed.</p>
+      </div>
+    </section>
+
+    <section class="ch" id="together" aria-labelledby="togetherTitle">
+      <figure class="media live"><iframe title="Live lantern with an illustrative second participant" data-src="../lantern/?embed=1&amp;together=1&amp;resume=live" loading="lazy"></iframe>
+        <span class="label">Live · second participant is simulated</span></figure>
+      <div class="copy">
+        <p class="eyebrow">03 · Together</p>
+        <h2 id="togetherTitle">Changed <em>together.</em></h2>
+        <p>In a shared room, one person's change is everyone's. Here a second participant is simulated, so you can see the idea. Take the slider and it gives way.</p>
+        <p class="for honest"><b>Illustrative</b> Not a Greatlinq feature. A T.2 integration is proposed, not built.</p>
+      </div>
+    </section>
+
+    <section class="ch" id="teach" aria-labelledby="teachTitle">
+      <figure class="media diagram"><img src="./media/lantern-section.svg" alt="Cross-section of the lantern wall: 2.2 millimetres in each valley, 12.6 on each ridge; light passes the thin valleys">
+</figure>
+      <div class="copy">
+        <p class="eyebrow">04 · Why it glows</p>
+        <h2 id="teachTitle">Make the invisible <em>understandable.</em></h2>
+        <p>The wall is 2.2 mm in each valley and 12.6 mm on each ridge. Light passes the thin parts and the thick ones hold it back. The same model draws this diagram, renders the film and drives the live glow.</p>
+        <p class="for"><b>For T.2</b> Objects your AI avatars can explain: sections, parts, steps. Next: a mechanism that opens into its parts.</p>
+      </div>
+    </section>
+
+    <section class="ch portfolio" id="portfolio" aria-labelledby="portTitle">
+      <div class="copy wide">
+        <p class="eyebrow">05 · Portfolio</p>
+        <h2 id="portTitle">Made by ond.ai, <em>so far.</em></h2>
+        <p>Original work with no third-party rights in it, shown here for review. Each card says how it was made.</p>
+        <ul class="cards">
+          <li><img src="./media/portfolio-world.jpg" alt="" loading="lazy"><b>The Threshold</b><span>Place · Blender Cycles stills, EEVEE film draft</span><a href="#place">See chapter 01</a></li>
+          <li><img src="./media/portfolio-lantern.jpg" alt="" loading="lazy"><b>Lantern</b><span>Object · Cycles render + live three.js, 463 KB</span><a href="../lantern/">Open live</a></li>
+          <li><img src="./media/portfolio-arch.jpg" alt="" loading="lazy"><b>Ribbed arch</b><span>Object · Cycles render with a hidden cut to live 3D</span><a href="../hybrid/">Open live</a></li>
+          <li><img src="./media/portfolio-sculpture.jpg" alt="" loading="lazy"><b>Studio sculpture</b><span>Video Studio · procedural Cycles shot</span></li>
+        </ul>
+        <div class="internal" id="internal" hidden>
+          <p class="for honest"><b>Internal review only</b> Not for Greatlinq or any external audience until rights are cleared. Links open the earlier collection.</p>
+          <ul class="held">
+            <li><b>Bellagio worlds</b><span>Held: trademarked resort; satellite-derived ground imagery.</span></li>
+            <li><b>KONA.m museum</b><span>Held: sculptures generated with third-party AI services; terrain rights open.</span></li>
+            <li><b>Speedmax bike</b><span>Held: Canyon and DT Swiss marks; athlete name in a concept image.</span></li>
+            <li><b>Sea Glass Wave · Basalt Airfoil</b><span>Held: provenance not yet documented.</span></li>
+          </ul>
+          <a class="ghostbtn" href="../../">Open the earlier collection</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch pilot" id="pilot" aria-labelledby="pilotTitle">
+      <div class="copy wide">
+        <p class="eyebrow">06 · Pilot · Greatlinq T.2</p>
+        <h2 id="pilotTitle">Put Threshold and the lantern <em>in a real meeting.</em></h2>
+        <p>You already walked the place and lit the object. The pilot is to land <b>one room + one interactive object</b> in a Greatlinq T.2 meeting space in four to six weeks — then measure only what we can prove.</p>
+        <ol class="measures">
+          <li><b>Import</b> time into T.2, and developer hours saved vs hand rebuild</li>
+          <li><b>Load</b> time and frame rate on your client, against your budget</li>
+          <li><b>Interaction</b>: who uses the object, and for how long</li>
+          <li><b>Understanding</b>: five questions, before and after</li>
+          <li><b>Weight</b>: total bytes against your current rooms</li>
+        </ol>
+        <p class="need"><b>From Greatlinq</b> T.2 import spec (format, engine version, budgets, interaction API), one test meeting room, and a review with the people who ship rooms.</p>
+        <p class="for honest"><b>Honest</b> Proposed for T.2 — not a Greatlinq product or shipped integration. Every chapter you saw is original ond.ai work running locally in this demo.</p>
+        <div class="actions"><a class="primary" href="#hero" id="again">Watch again</a><a class="ghostbtn" href="../lantern/">Open the live lantern</a><a class="ghostbtn" href="../hybrid/">Open the hybrid</a></div>
+        <small>ond.ai Spatial Studio · independent concept preview for Greatlinq</small>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
