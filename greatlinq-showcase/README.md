@@ -35,7 +35,7 @@ In-site `v2/` links still open in this tab (`Enter live`). Other catalog links s
 
 ## Inventory
 
-`img/inventory/` holds the internal stills (75 files from the Mac inventory packs). Catalog rows that use them are `external: false`, so they show when the header audience is Internal. The default audience is external.
+`img/inventory/` holds the internal stills (75 files from the Mac inventory packs). Catalog rows that use them are `external: false`. The page is locked to the internal audience, same as the Mac Demo.app, so those stills are in the full view and the audience toggle stays hidden.
 
 ## Not in this publish
 

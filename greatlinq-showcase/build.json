@@ -1,5 +1,5 @@
 {
-  "variant": "external",
-  "audienceLocked": false,
-  "defaultAudience": "external"
+  "variant": "internal",
+  "audienceLocked": true,
+  "defaultAudience": "internal"
 }
