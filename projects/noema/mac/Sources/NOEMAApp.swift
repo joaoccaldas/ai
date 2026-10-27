@@ -8,8 +8,10 @@ struct NOEMAApp: App {
         Window("NOEMA", id: "noema") {
             ContentView()
                 .environmentObject(model)
+                .preferredColorScheme(.light)
                 .frame(minWidth: 860, minHeight: 640)
         }
+        .windowToolbarStyle(.unified(showsTitle: false))
         .defaultSize(width: 1180, height: 860)
         .commands {
             CommandMenu("Go") {
