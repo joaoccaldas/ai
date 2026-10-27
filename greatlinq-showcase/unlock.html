@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Opening KONA · ond.ai Spatial Studio</title>
+  <style>
+    body{margin:0;min-height:100dvh;display:grid;place-items:center;background:#0C1728;color:#F4F7FB;font:16px/1.55 Inter,system-ui,sans-serif;padding:24px}
+    main{max-width:460px;text-align:center}
+    h1{font-size:22px;margin:0 0 8px;letter-spacing:-.01em}
+    p{margin:8px 0;color:#C5CDD9}
+    .sp{width:30px;height:30px;margin:0 auto 18px;border-radius:50%;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;animation:s 1s linear infinite}
+    @keyframes s{to{transform:rotate(360deg)}}
+    @media (prefers-reduced-motion:reduce){.sp{animation-duration:3s}}
+    a{color:#CFE0FF} small{color:#9FB0CC}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="sp" aria-hidden="true" id="sp"></div>
+    <h1 id="t">Opening KONA…</h1>
+    <p id="m">Unlocking every bike and room for this demo, then taking you there.</p>
+    <p><small id="s">Demo mode raises your KONA level in this browser only. <a href="?restore=1">Restore my progress</a></small></p>
+  </main>
+  <script type="module">
+    import { unlockKona, restoreKona, isKona, KONA_ORIGIN } from './kona-unlock.js';
+    const q = new URLSearchParams(location.search), to = q.get('to');
+    const set = (t, m) => { document.getElementById('t').textContent = t; document.getElementById('m').textContent = m; document.getElementById('sp').hidden = true; };
+    if (q.get('restore')) { restoreKona(); set('Progress restored', 'Your previous KONA progress is back. Demo unlock is off.'); }
+    else if (to && (isKona(to) || to.startsWith(KONA_ORIGIN + '/'))) { unlockKona(); location.replace(to); }
+    else if (to) set('Link not allowed', 'This page only opens KONA pages on joaoccaldas.github.io.');
+    else { unlockKona(); set('KONA unlocked for this demo', 'All bikes and rooms are open in this browser. You can close this tab.'); }
+  </script>
+</body>
+</html>

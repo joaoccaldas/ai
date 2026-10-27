@@ -1,0 +1,597 @@
+{
+ "version": 1,
+ "note": "Single source of truth: item id -> destination. Validate with tools/check-links.mjs.",
+ "projects": {
+  "ai": "https://joaoccaldas.github.io/ai/",
+  "konam": "https://joaoccaldas.github.io/konam/",
+  "studio-kona": "https://joaoccaldas.github.io/studio-kona/web/public/",
+  "noema": "https://joaoccaldas.github.io/ai/projects/noema/site/human-meaning-atlas.html",
+  "sintra-ai": "https://joaoccaldas.github.io/sintra-ai/automate/",
+  "caldaspace": "https://joaoccaldas.github.io/nasa-space-dashboard/",
+  "bellagio": "https://joaoccaldas.github.io/bellagio/worlds/vegas/",
+  "trek-tri-museum": "https://joaoccaldas.github.io/canyonmuseum/",
+  "canyonmuseum": "https://joaoccaldas.github.io/canyonmuseum/",
+  "sokai": "https://joaoccaldas.github.io/ai/studio/sokai/",
+  "belong": "https://joaoccaldas.github.io/ai/belong/",
+  "blockscreate": "https://joaoccaldas.github.io/blockscreate/"
+ },
+ "items": {
+  "threshold": {
+   "to": "v2/flagship/",
+   "type": "local"
+  },
+  "lantern": {
+   "to": "v2/lantern/",
+   "type": "local"
+  },
+  "arch": {
+   "to": "v2/hybrid/",
+   "type": "local"
+  },
+  "arch-world": {
+   "to": "v2/hybrid/",
+   "type": "local",
+   "aliasOf": "arch"
+  },
+  "tropical-psychedelic-island": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "studio": {
+   "to": "https://joaoccaldas.github.io/ai/",
+   "type": "project"
+  },
+  "bellagio": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/vegas/",
+   "type": "project"
+  },
+  "konam": {
+   "to": "https://joaoccaldas.github.io/konam/",
+   "type": "project"
+  },
+  "island": {
+   "to": "https://joaoccaldas.github.io/studio-kona/web/public/",
+   "type": "project"
+  },
+  "gaudi": {
+   "to": "https://joaoccaldas.github.io/ai/",
+   "type": "project"
+  },
+  "sokai": {
+   "to": "https://joaoccaldas.github.io/ai/studio/sokai/",
+   "type": "project",
+   "weight": "heavy",
+   "note": "13 MB page"
+  },
+  "st-george": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/st-george/",
+   "type": "project"
+  },
+  "nor-world": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html?reviewRoom=nor3-winter",
+   "type": "room",
+   "weight": "heavy",
+   "aliasOf": "nor"
+  },
+  "beast-world": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html?reviewRoom=beast-cave",
+   "type": "room",
+   "weight": "heavy",
+   "aliasOf": "beast"
+  },
+  "breitling-world": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html?reviewRoom=breitling-kona",
+   "type": "room",
+   "weight": "heavy",
+   "aliasOf": "breitling"
+  },
+  "belong": {
+   "to": "https://joaoccaldas.github.io/ai/belong/",
+   "type": "project"
+  },
+  "noema-world": {
+   "to": "https://joaoccaldas.github.io/ai/projects/noema/site/human-meaning-atlas.html",
+   "type": "page"
+  },
+  "material-study-warm": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "material-study-charcoal": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "furniture-day": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "nice": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/nice/",
+   "type": "project"
+  },
+  "luxor": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/vegas/#Luxor%20pyramid",
+   "type": "project"
+  },
+  "nor": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html?reviewRoom=nor3-winter",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "beast": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html?reviewRoom=beast-cave",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "canyon": {
+   "to": "https://joaoccaldas.github.io/konam/Canyon_Collection.html",
+   "type": "page"
+  },
+  "breitling": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html?reviewRoom=breitling-kona",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "kona-museum": {
+   "to": "https://joaoccaldas.github.io/konam/",
+   "type": "project"
+  },
+  "trek": {
+   "to": "https://joaoccaldas.github.io/canyonmuseum/",
+   "type": "project"
+  },
+  "sintra-ai": {
+   "to": "https://joaoccaldas.github.io/sintra-ai/automate/",
+   "type": "project"
+  },
+  "web-design": {
+   "to": "https://joaoccaldas.github.io/ai/",
+   "type": "project"
+  },
+  "discovery-lab": {
+   "to": "https://joaoccaldas.github.io/nasa-space-dashboard/",
+   "type": "project"
+  },
+  "norseman": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated room link yet; the only target is the generic Kona landing"
+  },
+  "furniture-day-room": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "blockscreate": {
+   "to": "https://joaoccaldas.github.io/blockscreate/",
+   "type": "project"
+  },
+  "bloxyrivals": {
+   "to": "https://joaoccaldas.github.io/bloxyrivals/",
+   "type": "project"
+  },
+  "kona-play": {
+   "to": "https://joaoccaldas.github.io/studio-kona/web/public/",
+   "type": "project"
+  },
+  "noema-lab": {
+   "to": "https://joaoccaldas.github.io/ai/projects/noema/site/simulations.html",
+   "type": "page"
+  },
+  "caldaspace": {
+   "to": "https://joaoccaldas.github.io/nasa-space-dashboard/#play",
+   "type": "project"
+  },
+  "stained-glass": {
+   "to": "https://joaoccaldas.github.io/ai/",
+   "type": "project"
+  },
+  "cfr": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=canyon-cfr-2027",
+   "type": "studio",
+   "weight": "light"
+  },
+  "slx": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=canyon-slx-2027",
+   "type": "studio",
+   "weight": "light"
+  },
+  "sokai-katana": {
+   "to": "https://joaoccaldas.github.io/ai/studio/sokai/",
+   "type": "project",
+   "weight": "heavy",
+   "note": "13 MB page"
+  },
+  "gaudi-seating": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "gaudi-market-bay": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "gaudi-produce": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "kit-wall-mirror": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "kit-floor-mirror": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "kit-basin": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "kit-cloud": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "gaudi-chair-study": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "gaudi-sofa-study": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "gaudi-table-study": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "gaudi-shelf-study": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "gaudi-holm-oak": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "kit-basin-fluted": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "kit-globe-stand": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "room-kona-room-hall": {
+   "to": "https://joaoccaldas.github.io/konam/?room=hall",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-pier": {
+   "to": "https://joaoccaldas.github.io/konam/?room=pier",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-kona": {
+   "to": "https://joaoccaldas.github.io/konam/?room=kona",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-sanctuary": {
+   "to": "https://joaoccaldas.github.io/konam/?room=sanctuary",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-hween": {
+   "to": "https://joaoccaldas.github.io/konam/?room=hween",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-nike-running": {
+   "to": "https://joaoccaldas.github.io/konam/?room=nike-running",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-breitling": {
+   "to": "https://joaoccaldas.github.io/konam/",
+   "type": "project"
+  },
+  "room-kona-room-nave": {
+   "to": "https://joaoccaldas.github.io/konam/?room=nave",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-bay-las-vegas": {
+   "to": "https://joaoccaldas.github.io/konam/?room=bay-las-vegas",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-bay-kona": {
+   "to": "https://joaoccaldas.github.io/konam/?room=bay-kona",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-room-horror": {
+   "to": "https://joaoccaldas.github.io/konam/?room=room-horror",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-room-alien": {
+   "to": "https://joaoccaldas.github.io/konam/?room=room-alien",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-room-zombie": {
+   "to": "https://joaoccaldas.github.io/konam/?room=room-zombie",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-wing-against-the-clock": {
+   "to": "https://joaoccaldas.github.io/konam/?room=wing-against-the-clock",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-wing-kona-light": {
+   "to": "https://joaoccaldas.github.io/konam/?room=wing-kona-light",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-atlas-against-the-clock-hour": {
+   "to": "https://joaoccaldas.github.io/konam/?room=atlas-against-the-clock-hour",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-atlas-against-the-clock-mono": {
+   "to": "https://joaoccaldas.github.io/konam/?room=atlas-against-the-clock-mono",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "room-kona-room-atlas-against-the-clock-tri": {
+   "to": "https://joaoccaldas.github.io/konam/?room=atlas-against-the-clock-tri",
+   "type": "room",
+   "weight": "heavy"
+  },
+  "studio-konam": {
+   "to": "https://joaoccaldas.github.io/konam/",
+   "type": "project"
+  },
+  "studio-canyonmuseum": {
+   "to": "https://joaoccaldas.github.io/canyonmuseum/",
+   "type": "project"
+  },
+  "studio-ai": {
+   "to": "https://joaoccaldas.github.io/ai/",
+   "type": "project"
+  },
+  "studio-gaudi": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "studio-bellagio": {
+   "to": "https://joaoccaldas.github.io/bellagio/worlds/vegas/",
+   "type": "project"
+  },
+  "studio-studio-kona": {
+   "to": "https://joaoccaldas.github.io/studio-kona/web/public/",
+   "type": "project"
+  },
+  "studio-video-studio": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "studio-sokai": {
+   "to": "https://joaoccaldas.github.io/ai/studio/sokai/",
+   "type": "project",
+   "weight": "heavy",
+   "note": "13 MB page"
+  },
+  "studio-belong": {
+   "to": "https://joaoccaldas.github.io/ai/belong/",
+   "type": "project"
+  },
+  "studio-noema": {
+   "to": "https://joaoccaldas.github.io/ai/projects/noema/site/human-meaning-atlas.html",
+   "type": "page",
+   "aliasOf": "noema-world"
+  },
+  "studio-sintra-ai": {
+   "to": "https://joaoccaldas.github.io/sintra-ai/automate/",
+   "type": "project"
+  },
+  "studio-caldaspace": {
+   "to": "https://joaoccaldas.github.io/nasa-space-dashboard/",
+   "type": "project"
+  },
+  "studio-fpa-monitor": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "studio-tropical-island": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "asset-file-8928c3b82d2633f78f89bc9a": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "asset-file-d18a2fa9d97eef5a3a685273": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "asset-file-92e5daf2cc05948f21e128b8": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "asset-file-6cf321fff17313994d2aade9": {
+   "to": "https://joaoccaldas.github.io/ai/",
+   "type": "project"
+  },
+  "asset-file-2a5954e3e36fc71db99b0403": {
+   "to": null,
+   "type": "none",
+   "why": "no dedicated page; opens detail only"
+  },
+  "asset-file-980c8ee41d78e4c586d8b593": {
+   "to": "https://joaoccaldas.github.io/studio-kona/web/public/",
+   "type": "project"
+  },
+  "asset-canyon-speedmax-three-2005": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=canyon-speedmax-three-2005",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-canyon-speedmax-2007": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=canyon-speedmax-2007",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-canyon-speedmax-al-2011": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=canyon-speedmax-al-2011",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-canyon-speedmax-cf-2011": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=canyon-speedmax-cf-2011",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-atlas-merckx-hour-1972": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=atlas-merckx-hour-1972",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-atlas-type-funny-1980s": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=atlas-type-funny-1980s",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-atlas-type-aerobar-1989": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=atlas-type-aerobar-1989",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-atlas-lotus-108-1992": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=atlas-lotus-108-1992",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-atlas-obree-riverside": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=atlas-obree-riverside",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-atlas-type-lowpro-650c": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=atlas-type-lowpro-650c",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-atlas-type-pursuit": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=atlas-type-pursuit",
+   "type": "studio",
+   "weight": "light"
+  },
+  "asset-atlas-alu-tri-2005": {
+   "to": "https://joaoccaldas.github.io/konam/Studio.html?p=atlas-alu-tri-2005",
+   "type": "studio",
+   "weight": "light"
+  },
+  "tex-nike-room": {
+   "to": null,
+   "type": "none",
+   "why": "no destination"
+  },
+  "tex-ref-material-study-warm": {
+   "to": null,
+   "type": "none",
+   "why": "no destination"
+  },
+  "tex-ref-material-study-charcoal": {
+   "to": null,
+   "type": "none",
+   "why": "no destination"
+  }
+ },
+ "areas": [
+  "atlas-against-the-clock-hour",
+  "atlas-against-the-clock-mono",
+  "atlas-against-the-clock-tri",
+  "bay-kona",
+  "bay-las-vegas",
+  "hall",
+  "hween",
+  "kona",
+  "nave",
+  "nike-running",
+  "pier",
+  "room-alien",
+  "room-horror",
+  "room-zombie",
+  "sanctuary",
+  "wing-against-the-clock",
+  "wing-kona-light"
+ ],
+ "allowedTitleDuplicates": [
+  "a room for your day",
+  "beast cave",
+  "belong",
+  "breitling × kona",
+  "charcoal gallery",
+  "kona island",
+  "kona.m",
+  "nor / kona winter",
+  "psychedelic tropical island",
+  "studio / ai",
+  "sōkai",
+  "warm gallery"
+ ],
+ "sharedDestinations": [
+  "https://joaoccaldas.github.io/bellagio/worlds/st-george/",
+  "https://joaoccaldas.github.io/bellagio/worlds/vegas/kona-rooms/index.html",
+  "https://joaoccaldas.github.io/bellagio/worlds/nice/",
+  "https://joaoccaldas.github.io/bellagio/worlds/vegas/#Luxor%20pyramid",
+  "https://joaoccaldas.github.io/bloxyrivals/",
+  "https://joaoccaldas.github.io/nasa-space-dashboard/#play"
+ ],
+ "studioPieces": [
+  "atlas-alu-tri-2005",
+  "atlas-lotus-108-1992",
+  "atlas-merckx-hour-1972",
+  "atlas-obree-riverside",
+  "atlas-type-aerobar-1989",
+  "atlas-type-funny-1980s",
+  "atlas-type-lowpro-650c",
+  "atlas-type-pursuit",
+  "canyon-cfr-2027",
+  "canyon-slx-2027",
+  "canyon-speedmax-2007",
+  "canyon-speedmax-al-2011",
+  "canyon-speedmax-cf-2011",
+  "canyon-speedmax-three-2005"
+ ],
+ "reviewRooms": [
+  "nor3-winter",
+  "beast-cave",
+  "breitling-kona"
+ ]
+}
