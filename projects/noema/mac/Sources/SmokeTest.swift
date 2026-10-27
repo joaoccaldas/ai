@@ -144,12 +144,13 @@ enum SmokeTest {
       const image = figure ? figure.querySelector('img') : null;
       if (image) image.loading = 'eager';
       const caption = figure ? figure.innerText : '';
+      const status = figure ? (figure.getAttribute('data-evidence-status') || '') : '';
       const question = document.getElementById('journeyQuestion');
       return {
         question: question ? question.textContent : '',
         caption: caption,
         naturalWidth: image ? image.naturalWidth : 0,
-        rights: /REFERENCE_ONLY_NOT_EVIDENCE/.test(caption) && /not evidence/i.test(caption)
+        rights: status === 'REFERENCE_ONLY_NOT_EVIDENCE' && /reference art/i.test(caption) && /not evidence/i.test(caption)
       };
     })()
     """

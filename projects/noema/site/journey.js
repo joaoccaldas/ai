@@ -302,7 +302,22 @@
     if (!focus.length) bits.push('With no catalog entry, there is no date to put on a line.');
     if (pics === 1) bits.push('The picture above is later art, not a catalog date.');
     else if (pics) bits.push('The pictures above are later art, not catalog dates.');
-    return `<p>${bits.join(' ')}</p>`;
+    const paragraph = `<p>${bits.join(' ')}</p>`;
+    const placed = focus.filter(e => e.time && e.time.start_ce != null && e.time.end_ce != null && Number.isFinite(Number(e.time.start_ce)) && Number.isFinite(Number(e.time.end_ce)));
+    if (!placed.length) return `${paragraph}<p class="nm-rail-empty">Nothing dated is on file to place on a line.</p>`;
+    const starts = placed.map(e => Number(e.time.start_ce));
+    const ends = placed.map(e => Number(e.time.end_ce));
+    const min = Math.min(...starts);
+    const max = Math.max(...ends);
+    const span = Math.max(1, max - min);
+    const rails = placed.map(e => {
+      const a = Number(e.time.start_ce);
+      const b = Number(e.time.end_ce);
+      const left = ((a - min) / span) * 100;
+      const width = Math.max(6, Math.min(100 - left, ((b - a) / span) * 100));
+      return `<li class="nm-tick" tabindex="0"><b>${esc(e.name)}</b><span class="nm-rail-track" aria-hidden="true"><i style="left:${left.toFixed(1)}%;width:${Math.min(100, width).toFixed(1)}%"></i></span><span class="nm-rail-years">${esc(String(a))}–${esc(String(b))}. A span on file, not a dated event.</span></li>`;
+    }).join('');
+    return `${paragraph}<ol class="nm-rail" aria-label="Spans written on these records">${rails}</ol><p class="nm-quiet">The line uses only the years already written on these records.</p>`;
   }
 
   function scanBlocks(value, catalog, focus) {
@@ -413,16 +428,74 @@
     if (!plates.length) return '';
     const [hero, ...rest] = plates;
     const row = rest.length ? `<div class="nm-plate-row" aria-label="More reference plates">${rest.map(p => figureHtml(p, false)).join('')}</div>` : '';
+    const controls = rest.length ? `<div class="nm-plate-controls"><button type="button" class="nm-plate-prev">Previous picture</button><button type="button" class="nm-plate-next">Next picture</button></div>` : '';
     const line = showResemblance ? '<p class="nm-quiet">Resemblance is not causation.</p>' : '';
     const know = `<details class="nm-fold"><summary>How these pictures are used</summary><p>Each plate is a picture someone else made. It is not proof of a catalog record, a date, or a historical link. ${showResemblance ? 'Resemblance is not causation.' : 'Looking alike, in paint or in a label, is not a shared origin.'}</p></details>`;
-    return figureHtml(hero, true) + row + line + know;
+    return figureHtml(hero, true) + `<button type="button" class="nm-see">See the whole picture</button>` + controls + row + line + know;
+  }
+
+  function syncSee(scope) {
+    const see = scope.querySelector('.nm-see');
+    const fig = scope.querySelector('#journeyFigure');
+    if (!see || !fig) return;
+    see.textContent = fig.classList.contains('is-focus') ? 'Show the crop' : 'See the whole picture';
+  }
+
+  function bindPlates(scope) {
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const row = scope.querySelector('.nm-plate-row');
+    const prev = scope.querySelector('.nm-plate-prev');
+    const next = scope.querySelector('.nm-plate-next');
+    const step = () => Math.max(160, Math.round((row ? row.clientWidth : 240) * 0.72));
+    if (row && prev && next) {
+      prev.addEventListener('click', () => row.scrollBy({ left: -step(), behavior: reduce ? 'auto' : 'smooth' }));
+      next.addEventListener('click', () => row.scrollBy({ left: step(), behavior: reduce ? 'auto' : 'smooth' }));
+    }
+    const see = scope.querySelector('.nm-see');
+    const fig = scope.querySelector('#journeyFigure');
+    if (see && fig) {
+      see.addEventListener('click', event => {
+        event.stopPropagation();
+        fig.classList.toggle('is-focus');
+        syncSee(scope);
+      });
+    }
+    syncSee(scope);
+  }
+
+  function bindBeats(scope) {
+    const links = [...scope.querySelectorAll('.nm-beats a')];
+    if (!links.length) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    links.forEach(a => {
+      a.addEventListener('click', event => {
+        const el = scope.querySelector(a.getAttribute('href'));
+        if (!el) return;
+        event.preventDefault();
+        el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        links.forEach(link => link.classList.toggle('is-current', link === a));
+      });
+    });
+    if (!('IntersectionObserver' in window)) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const id = '#' + entry.target.id;
+        links.forEach(a => a.classList.toggle('is-current', a.getAttribute('href') === id));
+      });
+    }, { rootMargin: '-30% 0px -55% 0px', threshold: 0.01 });
+    links.forEach(a => {
+      const el = scope.querySelector(a.getAttribute('href'));
+      if (el) obs.observe(el);
+    });
   }
 
   function bindFocus(scope) {
     scope.querySelectorAll('.nm-tick, .nm-source, .nm-record, .nm-figure').forEach(el => {
       const toggle = event => {
-        if (event.target.closest('a, summary, details')) return;
+        if (event.target.closest('a, summary, details, button')) return;
         el.classList.toggle('is-focus');
+        if (el.id === 'journeyFigure') syncSee(scope);
       };
       el.addEventListener('click', toggle);
       el.addEventListener('keydown', event => {
@@ -521,7 +594,14 @@
 
     const visual = document.getElementById('journeyVisual');
     const museumForFocus = (mediaDoc.records || []).filter(r => (journey.focus_ids || []).includes(r.entity_id));
-    if (visual) visual.innerHTML = figuresHtml(reviewed, museumForFocus, journey, showResemblance);
+    if (visual) {
+      const plates = figuresHtml(reviewed, museumForFocus, journey, showResemblance);
+      const thin = !focus.length
+        ? `<p class="nm-thin-note"><b>This chapter is thin.</b> No catalog name is stored for it. ${plates ? 'The picture is reference art — not a finding.' : 'No picture is stored, and none is added here.'}</p>`
+        : '';
+      const empty = plates ? '' : `<p class="nm-thin-note" id="journeyEmpty"><b>No picture on file.</b> This chapter does not add one.</p>`;
+      visual.innerHTML = thin + (plates || empty);
+    }
 
     const related = (journey.related_ids || []).map(rid => (pack.journeys || []).find(j => j.id === rid)).filter(Boolean);
     const thinChapter = ['ancestors-spirits', 'shamanism-altered', 'unexplained-experiences'].includes(journey.id);
@@ -529,7 +609,8 @@
     const exact = missingFocus.map(fid => gap(fid, 'That id is not in the catalog.')).join('') + (thinChapter ? '' : scan);
 
     const index = { epistemic_note: '' };
-    rest.innerHTML = `
+    const beats = `<nav class="nm-beats" aria-label="In this chapter"><a href="#records">The names</a><a href="#comparison">Side by side</a><a href="#sources">Pages</a><a href="#timeline">Time</a><a href="#indexFindings">The gap</a></nav><button type="button" class="nm-continue">Continue</button>`;
+    rest.innerHTML = beats + `
       <section class="nm-block" id="records">
         <p class="nm-label">Written down</p>
         <h2>The names</h2>
@@ -577,6 +658,16 @@
         <p><a href="explore.html?q=${encodeURIComponent(journey.title)}">Search this in Explore</a></p>
       </section>`;
     bindFocus(root);
+    bindPlates(root);
+    bindBeats(root);
+    bindContinue(root);
+    if (window.noemaRememberChapter) {
+      window.noemaRememberChapter({
+        href: 'journey.html?id=' + encodeURIComponent(journey.id),
+        title: journey.title,
+        question: journey.question
+      });
+    }
     const findings = document.getElementById('indexFindings');
     try {
       const loaded = await get('./search-index-v18.json');
@@ -589,6 +680,40 @@
     } catch (err) {
       if (findings) findings.insertAdjacentHTML('beforeend', gap('Search index', err.message));
     }
+    if (window.noemaRestoreScroll) window.noemaRestoreScroll();
+  }
+
+  function bindContinue(scope) {
+    const button = scope.querySelector('.nm-continue');
+    if (!button) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stops = [
+      ['#records', 'Continue to the names'],
+      ['#comparison', 'Continue to what sits beside them'],
+      ['#sources', 'Continue to the pages'],
+      ['#timeline', 'Continue to time'],
+      ['#indexFindings', 'Continue to the gap'],
+      ['#candidates', 'Continue to what stays open'],
+      ['#related', 'Continue to other chapters']
+    ];
+    const nextStop = () => {
+      const y = window.scrollY + 96;
+      return stops
+        .map(([id, text]) => ({ el: scope.querySelector(id), text }))
+        .find(row => row.el && row.el.offsetTop > y) || null;
+    };
+    const label = () => {
+      const next = nextStop();
+      button.textContent = next ? next.text : 'You are at the end of what is on file';
+      return next;
+    };
+    label();
+    window.addEventListener('scroll', () => label(), { passive: true });
+    button.addEventListener('click', () => {
+      const next = label();
+      if (!next || !next.el) return;
+      next.el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
   }
 
   bindAccent();

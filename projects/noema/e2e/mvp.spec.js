@@ -215,6 +215,65 @@ test('explore shows a rights-cleared thumb for a witch query and a god query', a
   await expect(card).toContainText('not evidence');
 });
 
+test('home uses the storyteller porcelain field', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('index.html', { waitUntil: 'domcontentloaded' });
+  const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  expect(bg).toBe('rgb(247, 248, 245)');
+  await expect(page.locator('h1')).toContainText('Understand what humans believe');
+});
+
+test('home search moves with the keyboard and can be resumed', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('index.html', { waitUntil: 'domcontentloaded' });
+  const input = page.locator('#homeQ');
+  await input.fill('Odin');
+  await expect(page.locator('#homeResults')).toContainText('to open');
+  await input.press('ArrowDown');
+  await expect(page.locator('#homeResults a.is-active')).toBeFocused();
+  await input.press('Enter');
+  await page.goto('index.html');
+  await input.click();
+  await expect(page.locator('#recentSearches')).toContainText('Odin');
+});
+
+test('home offers the chapter left open in this session', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('journey.html?id=odin-seidr', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('nav.nm-beats')).toBeVisible();
+  await page.goto('index.html');
+  const cont = page.locator('#continueReading');
+  await expect(cont).toBeVisible();
+  await expect(cont).toContainText('Odin');
+  await expect(cont.locator('a')).toHaveAttribute('href', /journey\.html\?id=odin-seidr/);
+});
+
+test('Odin chapter paces the reading without adding a claim', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('journey.html?id=odin-seidr', { waitUntil: 'domcontentloaded' });
+  const beats = page.locator('nav.nm-beats');
+  await expect(beats.getByRole('link', { name: 'The names' })).toBeVisible();
+  await expect(page.getByRole('button', { name: /Continue/ })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'See the whole picture' })).toBeVisible();
+  await page.getByRole('button', { name: 'See the whole picture' }).click();
+  await expect(page.locator('#journeyFigure')).toHaveClass(/is-focus/);
+  await expect(page.locator('#timeline .nm-rail')).toContainText('500');
+  await expect(page.locator('#timeline')).toContainText('dated event');
+  await beats.getByRole('link', { name: 'The gap' }).click();
+  await expect(page.locator('#indexFindings')).toBeInViewport();
+});
+
+test('a thin chapter says so, and Explore can jump to chapters still thin', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('journey.html?id=wicca-witchcraft', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('.nm-thin-note')).toContainText('This chapter is thin');
+  await expect(page.locator('#journeyLead')).toContainText('No catalog entry is stored');
+  await page.goto('explore.html');
+  await page.getByRole('button', { name: 'Chapters still thin' }).click();
+  await expect(page.locator('#exploreThin')).toBeInViewport();
+  await expect(page.locator('#exploreThin')).toContainText('No picture is stored');
+});
+
 test('denominator leads on Explore, the Odin journey, Compare, and Connections', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
 
