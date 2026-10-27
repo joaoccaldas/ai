@@ -1,0 +1,36 @@
+name: Gaudi Evidence Gate
+on:
+  pull_request:
+    paths:
+      - 'projects/gaudi-nexus/**'
+      - '.github/workflows/gaudi-evidence-gate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Test release gate contracts
+        run: python3 -m unittest discover -s projects/gaudi-nexus -p 'test_gaudi_release_gate.py' -v
+      - name: Inspect actual source authority (expected block while unfinished)
+        run: |
+          set +e
+          python3 projects/gaudi-nexus/gaudi_release_gate.py --output /tmp/gaudi-audit.json
+          code=$?
+          set -e
+          cat /tmp/gaudi-audit.json
+          python3 -c 'import json; d=json.load(open("/tmp/gaudi-audit.json")); assert "ready" in d and "findings" in d'
+          if [ "$code" -ne 0 ] && [ "$code" -ne 2 ]; then exit "$code"; fi
+      - name: Upload blocker evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gaudi-evidence-audit
+          path: /tmp/gaudi-audit.json
+          if-no-files-found: warn
