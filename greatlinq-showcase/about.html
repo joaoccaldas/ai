@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0C1728">
+  <title>João Caldas · About · ond.ai Spatial Studio</title>
+  <meta name="description" content="João Caldas — curiosity that travels: finance, AI, design and interactive worlds. Life chapters, a 12-role career journey and talks.">
+  <link rel="preload" href="./fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./app.css">
+  <link rel="stylesheet" href="./about.css">
+</head>
+<body class="ab">
+  <a class="skiplink" href="#story">Skip to the story</a>
+
+  <header class="ab-top" id="abTop">
+    <a class="ab-back" href="./#enter" aria-label="Back to ond.ai Spatial Studio, main page"><span aria-hidden="true">←</span><span class="ab-back-t">ond.ai</span></a>
+    <nav class="ab-nav" aria-label="On this page">
+      <a href="#story">Story</a><a href="#life">Life chapters</a><a href="#journey">Career journey</a><a href="#outside">Outside work</a><a href="#talks">Talks</a>
+    </nav>
+    <a class="btn primary ab-cta-top" href="mailto:joaoccaldas@gmail.com?subject=30-min%20spatial%20walkthrough&amp;body=Hi%20Jo%C3%A3o%2C%0A%0AI%27d%20like%20to%20book%20a%2030-minute%20walkthrough%20of%20the%20pilot%20room%20(place%20%2B%20object%20%2B%20together).%0A%0A">Book a walkthrough</a>
+  </header>
+
+  <main id="main">
+    <section class="ab-hero" aria-labelledby="abName">
+      <div class="ab-hero-bg" aria-hidden="true"><img src="img/about/ocean-dawn.jpg" alt=""><span></span></div>
+      <div class="ab-wrap ab-hero-grid">
+        <div class="ab-hero-copy">
+          <p class="eyebrow light">The person</p>
+          <h1 id="abName" class="ab-name">João Caldas.<br><em>Curiosity travels.</em></h1>
+          <p class="ab-role" id="abRole"></p>
+          <p class="ab-intro" id="abIntro"></p>
+          <div class="actions" id="abLinks"></div>
+        </div>
+        <figure class="ab-portrait">
+          <img id="abPortrait" src="img/about/joao.png" alt="João Caldas" width="420" height="520">
+        </figure>
+      </div>
+      <dl class="ab-stats ab-wrap" id="abStats" aria-label="At a glance"></dl>
+    </section>
+
+    <section class="ab-sec" id="story" aria-labelledby="storyT">
+      <div class="ab-wrap ab-two">
+        <header><p class="eyebrow">The short version</p><h2 id="storyT" class="ab-h2">One curious mind.<br><em>A few different lives.</em></h2></header>
+        <div class="ab-prose" id="abProse"></div>
+      </div>
+      <div class="ab-wrap ab-chips" id="abChips" aria-label="Expertise and interests"></div>
+    </section>
+
+    <section class="ab-sec ab-sand" id="life" aria-labelledby="lifeT">
+      <div class="ab-wrap">
+        <header class="ab-head"><p class="eyebrow">Four chapters</p><h2 id="lifeT" class="ab-h2">What carries <em>forward.</em></h2></header>
+        <div class="ab-life" id="abLife"></div>
+      </div>
+    </section>
+
+    <section class="ab-sec" id="journey" aria-labelledby="journeyT">
+      <div class="ab-wrap">
+        <header class="ab-head"><p class="eyebrow">Companies &amp; roles</p><h2 id="journeyT" class="ab-h2">The long <em>way here.</em></h2>
+          <p class="ab-sub" id="abJourneySub"></p></header>
+        <ol class="ab-timeline" id="abTimeline"></ol>
+        <details class="ab-note"><summary>About this timeline</summary><p id="abNote"></p></details>
+      </div>
+    </section>
+
+    <section class="ab-outside" id="outside" aria-labelledby="outT">
+      <img id="abSurf" src="img/about/surfing.jpg" alt="" loading="lazy">
+      <div class="ab-outside-veil" aria-hidden="true"></div>
+      <div class="ab-wrap ab-outside-copy">
+        <p class="eyebrow light">Outside work</p>
+        <h2 id="outT" class="ab-h2 light">Boards on the wall,<br><em>bike on the trainer.</em></h2>
+        <p class="ab-lead light" id="abSurfNote"></p>
+        <p class="ab-small light" id="abInterests"></p>
+      </div>
+    </section>
+
+    <section class="ab-sec" id="talks" aria-labelledby="talksT">
+      <div class="ab-wrap">
+        <header class="ab-head"><p class="eyebrow">Talks &amp; appearances</p><h2 id="talksT" class="ab-h2">Out loud, <em>in public.</em></h2></header>
+        <div class="ab-talks" id="abTalks"></div>
+      </div>
+    </section>
+
+    <section class="ab-close" aria-labelledby="closeT">
+      <div class="ab-wrap">
+        <h2 id="closeT" class="ab-h2 light">Put this work in <em>a real room.</em></h2>
+        <p class="ab-lead light">One shared room, one object you brief from, a decision you can leave with.</p>
+        <div class="actions">
+          <a class="btn primary" id="abPilot" href="v2/flagship/">Open the pilot room</a>
+          <a class="btn ghost-ink" href="mailto:joaoccaldas@gmail.com?subject=30-min%20spatial%20walkthrough&amp;body=Hi%20Jo%C3%A3o%2C%0A%0AI%27d%20like%20to%20book%20a%2030-minute%20walkthrough%20of%20the%20pilot%20room%20(place%20%2B%20object%20%2B%20together).%0A%0A">Book a 30-min walkthrough</a>
+          <a class="btn ghost-ink" href="./#enter">Back to the studio</a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="ab-foot"><div class="ab-wrap"><p id="abBasis"></p></div></footer>
+  <script src="./about.js" type="module"></script>
+</body>
+</html>

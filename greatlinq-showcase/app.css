@@ -852,3 +852,194 @@ html.deck #main > .chapter.is-active{
   #enter .stake{ margin-top:6px; }
   #enter .story-beats{ margin-top:6px; }
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   Polish layer · 2026-10-27 — immersion, legibility, phone portrait
+   + landscape. Appended last so it overrides; originals in _orig/.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Safe areas (notched phones in landscape) */
+.top{ padding-left:max(var(--pad), env(safe-area-inset-left)); padding-right:max(var(--pad), env(safe-area-inset-right)); }
+
+/* Glass header that goes dark over the cinematic chapters */
+.top{ transition:background .4s ease, color .4s ease, border-color .4s ease; }
+html.deck:has(#enter.is-active, #live.is-active, #next.is-active) .top{
+  background:rgba(8,14,26,.56); color:#F4F7FB;
+  border-bottom-color:rgba(255,255,255,.1);
+  backdrop-filter:blur(22px) saturate(1.4);
+}
+html.deck:has(#enter.is-active, #live.is-active, #next.is-active) .brand-sub{ color:#B7C0CE; border-left-color:rgba(255,255,255,.2); }
+html.deck:has(#enter.is-active, #live.is-active, #next.is-active) .top .ghost{ color:#F4F7FB; border-color:rgba(255,255,255,.3); }
+
+/* Hero legibility: directional veil + vignette + text shadow */
+.stage-veil{
+  background:
+    radial-gradient(120% 90% at 50% 45%, transparent 55%, rgba(5,9,18,.5) 100%),
+    linear-gradient(90deg, rgba(8,14,26,.62) 0%, rgba(8,14,26,.22) 55%, transparent 80%),
+    linear-gradient(180deg, rgba(12,23,40,.12) 15%, rgba(12,23,40,.82) 92%);
+}
+.display.light, .lede.light, .stake.light, .eyebrow.light{ text-shadow:0 1px 18px rgba(5,9,18,.55); }
+.eyebrow.light{ color:#D5DCE8; }
+.story-beats{ color:#E3E9F2; }
+.story-beats b{ color:#C9D2E0; }
+
+/* Slow ken-burns on the hero film/poster */
+@media (prefers-reduced-motion: no-preference){
+  #enter .stage-bg{ animation:kenburns 32s ease-in-out infinite alternate; transform-origin:55% 60%; will-change:transform; }
+  @keyframes kenburns{ from{ transform:scale(1.02) translate3d(0,0,0) } to{ transform:scale(1.09) translate3d(-1.2%,-.8%,0) } }
+  /* pointer parallax (set by immersive.js) */
+  .hero-gl-wrap{ transform:translate3d(calc(var(--px,0) * -10px), calc(var(--py,0) * -8px), 0); transition:transform .5s cubic-bezier(.2,.7,.2,1); }
+  .enter-layout .stage-body{ transform:translate3d(calc(var(--px,0) * 5px), calc(var(--py,0) * 4px), 0); transition:transform .6s cubic-bezier(.2,.7,.2,1); }
+  html.deck #main > .chapter{ transition:opacity 520ms cubic-bezier(.2,.7,.2,1), transform 520ms cubic-bezier(.2,.7,.2,1); transform:translateY(14px) scale(.992); }
+  html.deck #main > .chapter.is-active{ transform:none; }
+}
+/* Soft light that follows the pointer over the hero */
+#enter::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(520px circle at calc(50% + var(--px,0) * 40%) calc(50% + var(--py,0) * 40%), rgba(255,226,180,.14), transparent 60%);
+  mix-blend-mode:screen;
+}
+
+/* Cards: image zoom + deeper lift */
+.card .img img, .feat-card .img img{ transition:transform .9s cubic-bezier(.2,.7,.2,1); }
+.card:hover .img img, .feat-card:hover .img img{ transform:scale(1.05); }
+.card:hover, .feat-card:hover{ box-shadow:0 18px 44px rgba(23,34,56,.14); }
+.feat-card.start-here{ box-shadow:0 0 0 1px rgba(201,162,39,.35), 0 14px 40px rgba(201,162,39,.12); }
+
+/* Overlay captions never sit on the embedded controls */
+.hero-gl-wrap .hero-gl-caption{ top:12px; bottom:auto; }
+.live-badge{ top:16px; bottom:auto; }
+
+/* Chapter rail: tidy hit areas */
+.deck-rail button{ position:relative; }
+.deck-rail button::before{ content:""; position:absolute; inset:-7px; }
+
+/* ── Phone portrait & narrow ─────────────────────────────────── */
+@media (max-width:700px){
+  .enter-layout{ padding-top:clamp(16px, 4vh, 40px); padding-bottom:72px; gap:var(--space-2); }
+  .hero-gl-wrap{ height:clamp(230px, 36dvh, 340px); }
+  .story-beats{ margin-top:var(--space-2); }
+  #enter .stage-meta{ display:none; }
+  .display.light{ font-size:clamp(32px, 9.5vw, 44px); }
+  html.deck .stage-live{ grid-template-rows:minmax(240px, 52%) auto; align-content:start; }
+  html.deck .stage-live .stage-body{ justify-content:flex-start; padding-top:var(--space-3); }
+  /* rail becomes a bottom dock so it never covers cards */
+  .deck-rail{
+    right:auto; left:50%; top:auto; bottom:max(10px, env(safe-area-inset-bottom));
+    transform:translateX(-50%); flex-direction:row; gap:9px; padding:8px 12px;
+  }
+  html.deck .wrap{ padding-bottom:calc(var(--space-5) + 40px); }
+  .deck-rail button{ width:9px; height:9px; }
+}
+
+/* ── Phone landscape: short viewports ────────────────────────── */
+@media (max-height:520px) and (orientation:landscape){
+  .top{ min-height:44px; }
+  html.deck #main{ top:44px; }
+  .chapter{ scroll-margin-top:48px; }
+  .brand-sub{ display:none; }
+  /* hero: copy left, lantern right, no scroll */
+  .enter-layout{
+    grid-template-columns:1.15fr .85fr; align-items:center;
+    padding:12px max(var(--pad), env(safe-area-inset-left)) 12px max(var(--pad), env(safe-area-inset-right));
+    padding-right:56px; gap:var(--space-3);
+  }
+  .display.light{ font-size:clamp(24px, 6.4vh, 34px); margin:4px 0; }
+  .lede.light{ font-size:13px; margin:0 0 6px; }
+  .stake.light, .story-beats, #enter .stage-meta{ display:none; }
+  .eyebrow.light{ margin-bottom:2px; }
+  .hero-gl-wrap{ width:100%; height:min(100%, 300px); justify-self:end; }
+  /* live: keep the two-column cinema layout */
+  html.deck .stage-live{ grid-template-columns:1.2fr .8fr; grid-template-rows:minmax(0,1fr); }
+  html.deck .stage-live .stage-body{ justify-content:center; padding:var(--space-2) 56px var(--space-2) var(--space-3); }
+  /* give chapter content room beside the rail */
+  html.deck .wrap{ padding-left:max(var(--pad), env(safe-area-inset-left)); padding-right:64px; padding-top:var(--space-3); }
+  .deck-rail{ right:max(8px, env(safe-area-inset-right)); }
+}
+
+/* ── Chapter rail v2: always legible on light and dark chapters ── */
+.deck-rail{
+  background:rgba(10,16,28,.82); backdrop-filter:blur(16px) saturate(1.3);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:0 10px 34px rgba(0,0,0,.35), 0 0 0 1px rgba(10,16,28,.25);
+  gap:11px; padding:14px 10px; right:16px;
+}
+.deck-rail button{
+  width:12px; height:12px; border:1.5px solid rgba(255,255,255,.6); background:rgba(255,255,255,.08);
+  transition:transform .2s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.deck-rail button:hover{ transform:scale(1.3); border-color:#fff; background:rgba(255,255,255,.35); }
+.deck-rail button[aria-current="true"]{
+  background:#fff; border-color:#fff; transform:scale(1.15);
+  box-shadow:0 0 0 4px rgba(120,160,255,.45), 0 0 14px rgba(140,180,255,.7);
+}
+/* label for the current chapter is always shown; hover shows any */
+html.deck .deck-rail button[aria-current="true"]::after,
+html.deck .deck-rail button:hover::after,
+html.deck .deck-rail button:focus-visible::after{
+  content:attr(title); position:absolute; right:26px; top:50%; transform:translateY(-50%);
+  white-space:nowrap; font-size:11px; font-weight:650; letter-spacing:.06em; text-transform:uppercase;
+  color:#fff; background:rgba(10,16,28,.88); border:1px solid rgba(255,255,255,.18);
+  padding:6px 10px; border-radius:999px; pointer-events:none; box-shadow:0 6px 18px rgba(0,0,0,.3);
+}
+@media (max-width:700px){
+  .deck-rail{ padding:10px 14px; gap:11px; }
+  html.deck .deck-rail button[aria-current="true"]::after,
+  html.deck .deck-rail button:hover::after{ right:auto; left:50%; top:auto; bottom:26px; transform:translateX(-50%); }
+}
+@media (max-height:520px) and (orientation:landscape){
+  .deck-rail{ gap:7px; padding:9px 8px; }
+  .deck-rail button{ width:10px; height:10px; }
+}
+
+/* ── Bike cards: showroom floor + tilt on hover ── */
+.bike-card .img{
+  background:radial-gradient(120% 90% at 50% 8%, #FBFAF6 0%, #E9E7DE 60%, #D9D6CA 100%);
+}
+.bike-card .img::after{
+  content:""; position:absolute; left:12%; right:12%; bottom:9%; height:12%;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(23,34,56,.2), transparent 70%); filter:blur(5px); pointer-events:none;
+}
+.bike-card .img img{ position:relative; z-index:1; mix-blend-mode:multiply; transform-origin:50% 70%; }
+.bike-card:hover .img img{ transform:scale(1.09) rotate(-1.6deg) translateY(-2px); }
+.bike-card .kicker{ color:var(--action); }
+.bike-card .t{ letter-spacing:-.01em; }
+
+/* ── Header menu (visible, labelled chapter navigation) ── */
+.menu-btn{ margin-left:auto; min-height:40px; padding:0 14px; gap:8px; font-size:13px; font-weight:650; }
+.top .menu-btn + .ghost{ margin-left:8px; }
+.menu-ico{ width:14px; height:10px; display:inline-block; background:linear-gradient(currentColor 0 0) 0 0/100% 2px no-repeat, linear-gradient(currentColor 0 0) 0 50%/100% 2px no-repeat, linear-gradient(currentColor 0 0) 0 100%/100% 2px no-repeat; }
+.chapter-menu{
+  position:fixed; z-index:60; top:calc(58px + 8px); right:max(12px, env(safe-area-inset-right)); width:min(320px, calc(100vw - 24px));
+  max-height:calc(100dvh - 90px); overflow:auto; padding:8px; border-radius:18px;
+  background:rgba(10,16,28,.94); color:#F4F7FB; border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(18px) saturate(1.3); box-shadow:0 24px 60px rgba(0,0,0,.45);
+}
+.chapter-menu ol{ list-style:none; margin:0; padding:0; display:grid; gap:2px; }
+.chapter-menu a{ display:flex; align-items:center; gap:14px; min-height:48px; padding:0 14px; border-radius:12px; color:inherit; text-decoration:none; font-weight:600; font-size:15px; }
+.chapter-menu a b{ font-size:11px; letter-spacing:.1em; color:#9FB0CC; width:20px; }
+.chapter-menu a:hover{ background:rgba(255,255,255,.1); }
+.chapter-menu a[aria-current="true"]{ background:rgba(120,160,255,.22); box-shadow:inset 0 0 0 1px rgba(160,190,255,.45); }
+.chapter-menu a:focus-visible{ outline:3px solid #fff; outline-offset:-3px; }
+html.deck:has(#enter.is-active, #live.is-active, #next.is-active) .menu-btn{ color:#F4F7FB; border-color:rgba(255,255,255,.3); }
+@media (max-height:520px) and (orientation:landscape){ .chapter-menu{ top:52px; max-height:calc(100dvh - 60px); } }
+
+/* ── Accessibility: touch targets, contrast, focus ── */
+.carousel-dots{ gap:10px; }
+.carousel-dots button{ position:relative; background:#7C8798; }
+.carousel-dots button::before{ content:""; position:absolute; inset:-9px -5px; }
+.carousel-dots button[aria-current="true"]{ background:var(--action); }
+.deck-rail{ gap:12px; }
+.deck-rail button::before{ inset:-6px; }
+.deck-rail button:focus-visible{ outline:3px solid #fff; outline-offset:3px; }
+.skiplink:focus{ outline:3px solid var(--focus); }
+.carousel-dots{ gap:14px; align-items:center; }
+.carousel-dots button{ width:10px; height:10px; }
+.carousel-dots button[aria-current="true"]{ width:24px; }
+.carousel-dots button::before{ inset:-8px -7px; }
+summary{ min-height:24px; padding-block:6px; cursor:pointer; }
+
+/* ── About lives on its own page (about.html); the deck chapter is a teaser ── */
+.about-career-disclosure{ display:none; }
+.chapter-menu a .menu-ext{ margin-left:auto; font-size:11px; font-weight:650; letter-spacing:.06em; text-transform:uppercase; color:#9FB0CC; }

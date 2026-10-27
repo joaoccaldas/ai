@@ -1,4 +1,5 @@
 // ond.ai Spatial Studio — flagship portfolio (chaptered, deduped).
+import { isKona, unlockKona, KONA_ORIGIN, UNLOCK_PAGE } from './kona-unlock.js';
 const $ = id => document.getElementById(id);
 const store = {
   get: k => { try { return localStorage.getItem(k); } catch { return null; } },
@@ -6,6 +7,8 @@ const store = {
 };
 
 const cat = await (await fetch('./catalog.json')).json();
+/** id -> destination index (tools/check-links.mjs keeps it unique and complete). */
+const REG = await fetch('./link-registry.json').then(r => r.ok ? r.json() : null).catch(() => null);
 const build = await fetch('./build.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
 
 const OURS = [
@@ -13,6 +16,9 @@ const OURS = [
   { id: 'lantern', section: 'library', kind: 'Object', category: 'Lighting', title: 'Lantern', subtitle: 'Fluted porcelain, brass lip', description: 'Glow where porcelain is thin. Film and live from one model.', status: 'Live · for review', image: 'v2/flagship/media/portfolio-lantern.jpg', url: 'v2/lantern/', rights: 'Original', external: true, useCases: ['objects', 'meeting-rooms'] },
   { id: 'arch', section: 'library', kind: 'Object', category: 'Architecture', title: 'Ribbed arch', subtitle: 'Pavilion study', description: 'Rendered film that cuts into the live object.', status: 'Live · for review', image: 'v2/flagship/media/portfolio-arch.jpg', url: 'v2/hybrid/', rights: 'Original', external: true, useCases: ['objects', 'vr'] }
 ];
+
+// Hand-authored pages live at /greatlinq-showcase/ in the Mac app and next to index.html on the web build.
+const LOCAL_BASE = OURS[0].url.replace(/v2\/flagship\/$/, '');
 
 const CAPTURES = new Set(['konam', 'noema-world', 'belong', 'blockscreate', 'noema-lab', 'caldaspace', 'sintra-ai', 'web-design', 'discovery-lab', 'kona-museum', 'canyon', 'st-george', 'island', 'kona-play']);
 
@@ -35,8 +41,7 @@ let audience = build.audienceLocked
 const PROJECT_URL = {
   ai: 'https://joaoccaldas.github.io/ai/',
   konam: 'https://joaoccaldas.github.io/konam/',
-  'studio-kona': 'https://joaoccaldas.github.io/studio-kona/',
-  gaudi: 'https://joaoccaldas.github.io/ai/',
+  'studio-kona': 'https://joaoccaldas.github.io/studio-kona/web/public/',
   noema: 'https://joaoccaldas.github.io/ai/projects/noema/site/human-meaning-atlas.html',
   'sintra-ai': 'https://joaoccaldas.github.io/sintra-ai/automate/',
   caldaspace: 'https://joaoccaldas.github.io/nasa-space-dashboard/',
@@ -72,6 +77,35 @@ let invFilter = 'All';
 
 const visible = i => audience === 'internal' || i.external;
 const sectionRank = { worlds: 0, games: 1, concepts: 2, library: 3, assets: 4, studios: 5, textures: 6 };
+
+/** Curated showcase order — strongest visuals first (lower = earlier). Weak/empty rooms drop back. */
+const SHOWCASE_ROOMS = ['nor', 'canyon', 'breitling', 'room-kona-room-hween', 'room-kona-room-room-alien', 'room-kona-room-sanctuary', 'room-kona-room-kona',
+  'room-kona-room-atlas-against-the-clock-hour', 'room-kona-room-atlas-against-the-clock-mono', 'room-kona-room-atlas-against-the-clock-tri',
+  'room-kona-room-room-horror', 'kona-museum', 'beast', 'norseman', 'room-kona-room-room-zombie', 'room-kona-room-pier'];
+const DEMOTE_ROOMS = new Set(['web-design', 'sintra-ai', 'discovery-lab', 'trek', 'room-kona-room-nike-running', 'room-kona-room-wing-against-the-clock',
+  'room-kona-room-wing-kona-light', 'room-kona-room-bay-kona', 'room-kona-room-bay-las-vegas']);
+const SHOWCASE_BIKES = ['asset-atlas-merckx-hour-1972', 'asset-atlas-lotus-108-1992', 'asset-atlas-obree-riverside', 'asset-canyon-speedmax-cf-2011',
+  'asset-canyon-speedmax-al-2011', 'asset-atlas-type-lowpro-650c', 'asset-atlas-type-aerobar-1989', 'asset-atlas-type-funny-1980s',
+  'asset-canyon-speedmax-2007', 'asset-canyon-speedmax-three-2005'];
+const showcaseBias = i => {
+  const r = SHOWCASE_ROOMS.indexOf(i.id);
+  if (r >= 0) return r - 1000;
+  return DEMOTE_ROOMS.has(i.id) ? 60 : 0;
+};
+const BIKE_META = {
+  'asset-atlas-merckx-hour-1972': { year: '1972', line: 'Eddy Merckx · Hour Record', tag: 'Rebuilt from photos' },
+  'asset-atlas-lotus-108-1992': { year: '1992', line: 'Lotus · Type 108', tag: 'Rebuilt from photos' },
+  'asset-atlas-obree-riverside': { year: '', line: 'Graeme Obree · Riverside', tag: 'Rebuilt from photos' },
+  'asset-canyon-speedmax-cf-2011': { year: '2011', line: 'Canyon · Speedmax CF 9.0 Pro', tag: 'Editable' },
+  'asset-canyon-speedmax-al-2011': { year: '2011', line: 'Canyon · Speedmax AL 9.0', tag: 'Editable' },
+  'asset-canyon-speedmax-2007': { year: '2007', line: 'Canyon · Speedmax 3.0', tag: 'Editable' },
+  'asset-canyon-speedmax-three-2005': { year: '2005', line: 'Canyon · Speedmax Three', tag: 'Editable' },
+  'asset-atlas-type-lowpro-650c': { year: '', line: 'Type study · triathlon, 650c', tag: 'Type study' },
+  'asset-atlas-type-aerobar-1989': { year: '1989', line: 'Type study · clip-on aero bars', tag: 'Type study' },
+  'asset-atlas-type-funny-1980s': { year: '1980s', line: 'Type study · funny bike', tag: 'Type study' }
+};
+const CAT_MAP = { bike: 'Bikes', Bicycles: 'Bikes', 'library object': 'Objects', Objects: 'Objects', 'featured asset': 'Featured', 'nature model': 'Nature' };
+const catOf = i => CAT_MAP[i.category] || i.category || 'Other';
 function itemUseCases(i) {
   if (i.useCases?.length) return i.useCases;
   if (i.section === 'library' || i.section === 'assets') return ['objects', 'meeting-rooms'];
@@ -85,7 +119,33 @@ function matchesUc(i) { return !ucFilter || itemUseCases(i).includes(ucFilter); 
 function projectMeta(i) {
   return (cat.projects || []).find(p => p.id === i.project || p.id === i.id) || null;
 }
+const KONA = 'https://joaoccaldas.github.io/konam/';
+/** Map areas the Kona museum accepts as ?room=<id> (docs/APP.md in the konam repo; ids from app/hall.js + museum-data.js). */
+const KONA_AREAS = new Set(['hall', 'kona', 'pier', 'nave', 'sanctuary', 'hween', 'nike-running', 'bay-kona', 'bay-las-vegas',
+  'room-alien', 'room-horror', 'room-zombie', 'wing-kona-light', 'wing-against-the-clock',
+  'atlas-against-the-clock-hour', 'atlas-against-the-clock-mono', 'atlas-against-the-clock-tri']);
+const KONA_PAGES = {
+  'asset-canyon-speedmax-three-2005': 'Speedmax_Three_2005_Museum.html',
+  'asset-canyon-speedmax-2007': 'Speedmax_2007_Museum.html',
+  'asset-canyon-speedmax-al-2011': 'Speedmax_AL_2011_Museum.html',
+  'asset-canyon-speedmax-cf-2011': 'Speedmax_CF_2011_Museum.html',
+  canyon: 'Canyon_Collection.html'
+};
+/** Land on the exact room / bike, not the museum front door. */
+function deepLink(i) {
+  if (KONA_PAGES[i.id]) return KONA + KONA_PAGES[i.id];
+  if (i.project !== 'konam' && i.id !== 'canyon') return null;
+  const room = i.id.startsWith('room-kona-room-') ? i.id.slice('room-kona-room-'.length)
+    : i.id.startsWith('asset-atlas-') ? 'atlas-' + i.id.slice('asset-atlas-'.length) : null;
+  if (!room) return null;
+  const known = KONA_AREAS.has(room) || room.startsWith('atlas-');
+  return known ? `${KONA}?room=${room}` : null;
+}
 function resolveUrl(i) {
+  const mapped = REG?.items?.[i.id];
+  if (mapped) return mapped.to ? (mapped.type === 'local' ? LOCAL_BASE + mapped.to : mapped.to) : null;
+  const deep = deepLink(i);
+  if (deep) return deep;
   if (i.url) return i.url;
   if (ITEM_URL[i.id]) return ITEM_URL[i.id];
   if (i.project && PROJECT_URL[i.project]) return PROJECT_URL[i.project];
@@ -95,8 +155,18 @@ function resolveUrl(i) {
 function inSite(url) {
   return typeof url === 'string' && (url.startsWith('/') || url.startsWith('v2/'));
 }
+/** KONA bikes/rooms are level-gated. On the web build (same origin as KONA) raise the level directly; from the Mac app route through the
+    published unlock page, if it is reachable (checked once at start so opening stays instant). */
+let unlockRelay = false;
+if (location.origin !== KONA_ORIGIN) fetch(UNLOCK_PAGE, { method: 'HEAD', cache: 'no-store' }).then(r => { unlockRelay = r.ok; }).catch(() => {});
+function konaUrl(url) {
+  if (!isKona(url)) return url;
+  if (location.origin === KONA_ORIGIN) { unlockKona(); return url; }
+  return unlockRelay ? UNLOCK_PAGE + '?to=' + encodeURIComponent(url) : url;
+}
 function openExperience(url) {
   if (!url) return;
+  url = konaUrl(url);
   if (inSite(url)) { location.assign(url); return; }
   const a = document.createElement('a');
   a.href = url; a.target = '_blank'; a.rel = 'noopener';
@@ -136,7 +206,7 @@ function portfolioItems() {
   });
 }
 
-const FEATURED_IDS = ['threshold', 'arch-world', 'bellagio', 'konam', 'island'];
+const FEATURED_IDS = ['threshold', 'asset-atlas-merckx-hour-1972', 'arch-world', 'bellagio', 'konam'];
 const FEATURED_BLOCK = new Set(['gaudi', 'gaudi-seating', 'gaudi-market-bay', 'gaudi-produce', 'gaudi-chair-study', 'gaudi-sofa-study', 'gaudi-table-study', 'gaudi-shelf-study', 'gaudi-holm-oak']);
 function featuredItems() {
   const byId = new Map(ITEMS.map(i => [i.id, i]));
@@ -196,14 +266,15 @@ function conceptItems() {
     const score = i => (
       (i.feature || 50) +
       (resolveUrl(i) ? 0 : 20) +
-      (i.image && !i.capture ? 0 : 8)
+      (i.image && !i.capture ? 0 : 8) +
+      showcaseBias(i)
     );
     return score(a) - score(b) || (a.title || '').localeCompare(b.title || '');
   });
 }
 
-const OBJECT_PRIORITY = ['lantern', 'arch', 'sokai-katana', 'kit-wall-mirror', 'kit-floor-mirror', 'kit-basin', 'kit-basin-fluted', 'kit-globe-stand', 'kit-cloud', 'stained-glass'];
-const OBJECT_CAP = 16;
+const OBJECT_PRIORITY = [...SHOWCASE_BIKES, 'lantern', 'arch', 'sokai-katana', 'kit-wall-mirror', 'kit-floor-mirror', 'kit-basin', 'kit-basin-fluted', 'kit-globe-stand', 'kit-cloud', 'stained-glass'];
+const OBJECT_CAP = 28;
 function objectItems() {
   const byId = new Map(ITEMS.map(i => [i.id, i]));
   const out = [];
@@ -237,6 +308,7 @@ function statusPills(i) {
   if (/film|keyframe|eevee|cycles/.test(st) || i.id === 'threshold') pills.push('Film');
   if (i.kind === 'Object' || i.section === 'library' || i.section === 'assets' || /\bkit\b/.test(st)) pills.push('Kit');
   if (i.rights === 'Original') pills.push('Rights clear');
+  if (REG?.items?.[i.id]?.weight === 'heavy' && REG.items[i.id].type === 'room') pills.unshift('Large 3D');
   return [...new Set(pills)].slice(0, 3);
 }
 
@@ -261,13 +333,15 @@ function card(i, { featured = false, startHere = false } = {}) {
       <div class="meta pills"></div>
       <div class="card-actions"></div>
     </div>`;
-  el.querySelector('.kicker').textContent = [i.kind || (i.section === 'games' ? 'Play' : i.section === 'concepts' ? 'Room' : 'World'), ...itemUseCases(i).slice(0, 1).map(u => UC_LABEL[u] || u)].filter(Boolean).join(' · ');
+  const bm = BIKE_META[i.id];
+  if (bm) el.classList.add('bike-card');
+  el.querySelector('.kicker').textContent = bm ? ['Bike', bm.year].filter(Boolean).join(' · ') : [i.kind || (i.section === 'games' ? 'Play' : i.section === 'concepts' ? 'Room' : 'World'), ...itemUseCases(i).slice(0, 1).map(u => UC_LABEL[u] || u)].filter(Boolean).join(' · ');
   el.querySelector('.t').textContent = i.title;
   const s = el.querySelector('.s');
-  s.textContent = line;
-  s.hidden = !line || line === i.title;
+  s.textContent = bm ? bm.line : line;
+  s.hidden = bm ? false : (!line || line === i.title);
   const meta = el.querySelector('.meta');
-  const pills = statusPills(i);
+  const pills = bm ? [bm.tag] : statusPills(i);
   if (pills.length) {
     for (const label of pills) {
       const st = document.createElement('span');
@@ -367,7 +441,8 @@ function openDetail(i) {
   const o = $('dOpen');
   o.hidden = !url;
   if (url) {
-    o.href = url;
+    o.href = isKona(url) && location.origin !== KONA_ORIGIN && unlockRelay ? UNLOCK_PAGE + '?to=' + encodeURIComponent(url) : url;
+    o.onclick = () => { if (isKona(url) && location.origin === KONA_ORIGIN) unlockKona(); };
     o.target = inSite(url) ? '_self' : '_blank';
     o.rel = 'noopener';
     o.textContent = 'Open experience';
@@ -445,7 +520,7 @@ function render() {
   const cc = $('conceptsCount');
   if (cc) cc.textContent = `${concepts.length} concepts · swipe the lane`;
 
-  const cats = ['All', ...new Set(objs.map(i => i.category || 'Other'))];
+  const cats = ['All', ...[...new Set(objs.map(catOf))].sort((a, b) => (b === 'Bikes') - (a === 'Bikes'))];
   if (!cats.includes(invFilter)) invFilter = 'All';
   const chips = $('chips');
   if (chips) {
@@ -458,7 +533,7 @@ function render() {
       return x;
     }));
   }
-  const filteredObjs = objs.filter(i => invFilter === 'All' || (i.category || 'Other') === invFilter);
+  const filteredObjs = objs.filter(i => invFilter === 'All' || catOf(i) === invFilter);
   const go = $('gridObjects');
   if (go) go.replaceChildren(...filteredObjs.map(i => card(i)));
   const oc = $('objCount');
@@ -1042,7 +1117,7 @@ async function setupAboutProfile() {
         </figure>
         <div class="about-chapter-body">
           <p class="eyebrow">${esc(c.period || '')}</p>
-          <h4>${esc(c.title || '')}</h4>
+          <h4 role="heading" aria-level="3">${esc(c.title || '')}</h4>
           <p>${esc(c.text || '')}</p>
           ${c.carry ? `<p class="carry">${esc(c.carry)}</p>` : ''}
         </div>
@@ -1205,6 +1280,6 @@ async function setupAboutProfile() {
 setupAboutProfile();
 
 window.__app = {
-  cat, ITEMS, render,
+  cat, ITEMS, render, resolveUrl, worldItems, conceptItems, objectItems, featuredItems,
   counts: () => ({ featured: featuredItems().length, worlds: worldItems().length, concepts: conceptItems().length, objects: objectItems().length, chapters: CHAPTER_IDS.slice() })
 };

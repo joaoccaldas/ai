@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0C1728">
   <title>ond.ai · Spatial Studio</title>
   <link rel="icon" href="mark.svg" type="image/svg+xml">
   <link rel="preload" href="./fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="v2/flagship/media/world-dawn.jpg" as="image">
   <link rel="stylesheet" href="./app.css">
     <script type="module" src="./app.js"></script>
+  <script defer src="./immersive.js"></script>
 </head>
 <body data-audience="internal">
   <a class="skiplink" href="#main">Skip to content</a>
@@ -174,7 +176,8 @@
             <p class="measure" id="aboutShort"></p>
             <div class="actions" id="aboutLinks"></div>
             <div class="actions" style="margin-top:12px">
-              <a class="btn primary" href="#next" data-chapter="next">See what happens next</a>
+              <a class="btn primary" href="about.html">Read the full story <span aria-hidden="true">→</span></a>
+              <a class="btn ghost" href="#next" data-chapter="next">See what happens next</a>
             </div>
           </div>
         </div>
@@ -256,19 +259,19 @@
         </ul>
         <div class="pilot-row">
           <article class="pilot-card">
-            <a href="v2/flagship/#place"><img src="v2/flagship/media/world-dawn.jpg" alt="" loading="lazy"></a>
+            <a href="v2/flagship/#place" aria-label="Open The Threshold world: the meeting has a room"><img src="v2/flagship/media/world-dawn.jpg" alt="" loading="lazy"></a>
             <p class="kicker">01 · Place</p>
             <h3>The meeting has a room</h3>
             <p>Threshold: five arches over water — a room they can import once the path is set.</p>
           </article>
           <article class="pilot-card">
-            <a href="v2/lantern/"><img src="v2/flagship/media/portfolio-lantern.jpg" alt="" loading="lazy"></a>
+            <a href="v2/lantern/" aria-label="Open the Lantern object"><img src="v2/flagship/media/portfolio-lantern.jpg" alt="" loading="lazy"></a>
             <p class="kicker">02 · Object</p>
             <h3>The object you brief from</h3>
             <p>Same lantern as the film — light it in the meeting, not in a slide.</p>
           </article>
           <article class="pilot-card">
-            <a href="v2/flagship/#together"><img src="v2/flagship/media/portfolio-arch.jpg" alt="" loading="lazy"></a>
+            <a href="v2/flagship/#together" aria-label="Open the Together chapter of The Threshold"><img src="v2/flagship/media/portfolio-arch.jpg" alt="" loading="lazy"></a>
             <p class="kicker">03 · Together</p>
             <h3>Walk, then decide</h3>
             <p>Walk once, brief once, decide in the room — one place + one object in a shared spatial meeting.</p>
@@ -277,7 +280,7 @@
         <div class="actions" style="margin-top:32px">
           <a class="btn primary" href="v2/flagship/">Open the pilot room</a>
           <a class="btn ghost-ink" href="mailto:joaoccaldas@gmail.com?subject=30-min%20spatial%20walkthrough&amp;body=Hi%20Jo%C3%A3o%2C%0A%0AI%27d%20like%20to%20book%20a%2030-minute%20walkthrough%20of%20the%20pilot%20room%20(place%20%2B%20object%20%2B%20together).%0A%0A">Book a 30-min walkthrough</a>
-          <a class="btn ghost-ink" href="#about">About João</a>
+          <a class="btn ghost-ink" href="about.html">About João</a>
           <button type="button" class="btn ghost-ink" id="again">Restart</button>
         </div>
       </div>
