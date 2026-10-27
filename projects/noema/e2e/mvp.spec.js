@@ -116,9 +116,14 @@ for (const file of LEGACY) {
   });
 }
 
+async function openBeat(page, name) {
+  await page.locator('nav.nm-beats').getByRole('link', { name }).click();
+}
+
 test('Odin journey shows a source and the seiðr gap', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('journey.html?id=odin-seidr', { waitUntil: 'domcontentloaded' });
+  await openBeat(page, 'Pages');
   const source = page.locator('#sources a[href="https://www.britannica.com/topic/Odin-Norse-deity"]');
   await expect(source).toBeVisible();
   await expect(page.locator('#sources [data-profile-status="REFERENCE_ONLY"]').first()).toBeAttached();
@@ -187,6 +192,7 @@ test('gods journey shows a rights-labelled reference image below the denominator
   await expectPlateBelowDenom(page, 'gods-pantheon', /zeus-hypsistos\.jpg/);
   await expect(page.locator('#journeyLead')).toHaveAttribute('data-profile-status', 'REFERENCE_ONLY');
   await expect(page.locator('#journeyLead')).toContainText('Resemblance is not causation');
+  await openBeat(page, 'Pages');
   await expect(page.locator('#sources a[href*="britannica.com/topic/Zeus"]')).toBeVisible();
   await expect(page.locator('#timeline')).toContainText('dated event');
 });
@@ -253,7 +259,12 @@ test('Odin chapter paces the reading without adding a claim', async ({ page }) =
   await page.goto('journey.html?id=odin-seidr', { waitUntil: 'domcontentloaded' });
   const beats = page.locator('nav.nm-beats');
   await expect(beats.getByRole('link', { name: 'The names' })).toBeVisible();
-  await expect(page.getByRole('button', { name: /Continue/ })).toBeVisible();
+  await expect(page.locator('#records')).toBeHidden();
+  const cont = page.getByRole('button', { name: /Continue/ });
+  await expect(cont).toBeVisible();
+  await cont.click();
+  await expect(page.locator('#records')).toBeVisible();
+  await expect(page.locator('#comparison')).toBeHidden();
   await expect(page.getByRole('button', { name: 'See the whole picture' })).toBeVisible();
   await page.getByRole('button', { name: 'See the whole picture' }).click();
   await expect(page.locator('#journeyFigure')).toHaveClass(/is-focus/);
@@ -293,6 +304,7 @@ test('denominator leads on Explore, the Odin journey, Compare, and Connections',
   await expect(denom).toContainText('26');
   await expect(denom).toContainText('not the same as false');
   await expect(denom).toHaveAttribute('data-locators', '2');
+  await openBeat(page, 'Side by side');
   await expect(page.locator('#comparison')).toBeVisible();
   const denomBox = await denom.boundingBox();
   const cmpBox = await page.locator('#comparison').boundingBox();
@@ -382,6 +394,9 @@ test('ancestors chapter names the limit and does not invent a picture', async ({
   await expect(page.locator('#denominator')).toContainText('not the same as false');
   await expect(page.locator('#journeyFigure')).toHaveCount(0);
   await expect(page.locator('#indexFindings')).toContainText('Osiris');
+  await openBeat(page, 'The gap');
+  await page.getByRole('button', { name: /Continue/ }).click();
+  await page.getByRole('button', { name: /Continue/ }).click();
   await expect(page.locator('#related a[href="drh.html"]')).toBeVisible();
   await expect(page.locator('#related')).toContainText('Religious history');
   const text = await page.locator('#journey').innerText();
@@ -394,6 +409,7 @@ test('shamanism chapter uses the records on file and no fake picture', async ({ 
   await expect(page.locator('#journeyLead')).toContainText('Ayahuasca');
   await expect(page.locator('#journeyLead')).toContainText('None of them is a single entry named shamanism');
   await expect(page.locator('#journeyFigure')).toHaveCount(0);
+  await openBeat(page, 'The gap');
   await expect(page.locator('#indexFindings')).toContainText('Korean shamanism');
   await expect(page.locator('#indexFindings a[href*="drh.html?q="]').first()).toBeVisible();
   await expect(page.locator('#comparison')).toContainText('Resemblance is not causation');
@@ -412,5 +428,60 @@ test('unexplained chapter stays a question', async ({ page }) => {
   await expect(page.locator('#candidates')).toContainText('We must not conclude');
   await expect(page.locator('#journeyFigure')).toHaveCount(0);
   await expect(page.locator('#indexFindings')).toContainText('unexplained');
+  await openBeat(page, 'The gap');
+  await page.getByRole('button', { name: /Continue/ }).click();
+  await page.getByRole('button', { name: /Continue/ }).click();
   await expect(page.locator('#related a[href="research.html"]')).toBeVisible();
+});
+
+test('mac shell hides the web nav and keeps the chapter controls', async ({ page }) => {
+  await page.setViewportSize({ width: 1100, height: 760 });
+  await page.goto('index.html?shell=mac');
+  await expect(page.locator('.home-top')).toBeHidden();
+  await expect(page.locator('h1')).toContainText('Understand what humans believe');
+  await expect(page.locator('.nm-go')).toBeVisible();
+  await page.goto('explore.html?shell=mac');
+  await expect(page.locator('#appNav')).toBeHidden();
+  await page.goto('journey.html?id=gods-pantheon&shell=mac');
+  await expect(page.locator('.home-top')).toBeHidden();
+  const beats = page.locator('nav.nm-beats');
+  await expect(beats).toBeVisible();
+  const box = await beats.boundingBox();
+  expect(box.y).toBeGreaterThan(0);
+  expect(box.y).toBeLessThan(520);
+  await expect(page.locator('#records')).toBeHidden();
+});
+
+test('gods continue opens the name roll, then one deity, then the comparison', async ({ page }) => {
+  await page.setViewportSize({ width: 1100, height: 760 });
+  await page.goto('journey.html?id=gods-pantheon&shell=mac');
+  await expect(page.locator('#records')).toBeHidden();
+  await page.getByRole('button', { name: /Continue/ }).click();
+  await expect(page.locator('#records')).toBeVisible();
+  await expect(page.locator('#comparison')).toBeHidden();
+  const zeus = page.locator('.nm-roll-toggle', { hasText: 'Zeus' });
+  await zeus.click();
+  await expect(zeus).toHaveAttribute('aria-expanded', 'true');
+  await expect(page.locator('.nm-roll-panel').filter({ hasText: 'Zeus' })).toBeVisible();
+  await openBeat(page, 'Side by side');
+  await expect(page.locator('#comparison')).toContainText('Zeus');
+  await expect(page.locator('#comparison')).toContainText('Osiris');
+  await expect(page.locator('#comparison table')).toBeVisible();
+});
+
+test('explore facet filters and the keyboard selects a result', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('explore.html?shell=mac', { waitUntil: 'domcontentloaded' });
+  await expect(page.locator('#appNav')).toBeHidden();
+  await expect(page.locator('#resultCount')).not.toHaveText('', { timeout: 15000 });
+  await page.getByRole('button', { name: 'Deities', exact: true }).click();
+  await expect(page.locator('#results .card').first()).toBeVisible();
+  const input = page.locator('#q');
+  await input.fill('Odin');
+  await input.press('ArrowDown');
+  const active = page.locator('#results a.title.is-active');
+  await expect(active).toBeFocused();
+  await expect(active).toContainText('Odin');
+  await page.locator('#results .nm-gist').first().click();
+  await expect(page.locator('#results .nm-gist-panel').first()).toBeVisible();
 });

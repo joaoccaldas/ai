@@ -135,4 +135,29 @@ body.nm-app .wb-nav{width:100%;max-width:100%;overflow-x:auto}
 @media(prefers-reduced-motion:reduce){
   .nm-beats a:hover,.nm-see:hover,.nm-plate-controls button:hover{background:var(--sunken)}
   .nm-beats a.is-current,.nm-beats a.is-current:hover{background:var(--accent);color:#fff}
+  .nm-paced.nm-enter,.nm-figure,.nm-roll-toggle,.nm-continue{animation:none;transition:none}
 }
+.nm-dock{position:sticky;top:64px;z-index:6;margin:4px 0 8px;padding:8px 0 4px;background:rgba(247,248,245,.94);backdrop-filter:blur(10px);max-width:100%;min-width:0}
+.nm-dock .nm-beats{position:static;top:auto;margin:0;padding:0;background:transparent;backdrop-filter:none}
+html.nm-mac .nm-dock,html.nm-mac .nm-beats,html.nm-mac .nm-scroll-accent{top:0}
+.nm-dock .nm-continue{position:static;left:auto;right:auto;bottom:auto;transform:none;display:flex;width:100%;max-width:none;margin:8px 0 0;box-sizing:border-box;justify-content:center}
+.nm-roll{list-style:none;margin:0;padding:0;display:grid}
+.nm-roll li{display:block;padding:0;border:0}
+.nm-roll-toggle{display:grid;gap:2px;width:100%;min-height:44px;padding:14px 2px;border:0;border-top:1px solid var(--border);background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit}
+.nm-roll-toggle b{font-family:var(--nm-serif);font-size:1.35rem;font-weight:500}
+.nm-roll-toggle span{color:var(--text2);font-size:15px;line-height:1.4}
+.nm-roll-toggle:hover,.nm-roll-toggle:focus-visible{background:var(--accent-soft)}
+.nm-roll-toggle[aria-expanded="true"]{box-shadow:inset 3px 0 0 var(--accent)}
+.nm-roll-panel{padding:0 0 8px 12px}
+.nm-table tr.nm-tick{cursor:pointer}
+.nm-table tr.is-focus th,.nm-table tr.is-focus td,.nm-tick.is-now{background:var(--accent-soft)}
+.nm-scrub{display:grid;gap:8px;margin:12px 0;font-size:14px;font-weight:600;color:var(--text)}
+.nm-scrub input{width:100%;accent-color:var(--accent);min-height:44px}
+.nm-scrub b{font-family:var(--nm-serif);font-size:1.35rem;font-weight:500}
+@media(prefers-reduced-motion:no-preference){
+  .nm-paced.nm-enter{animation:nm-enter 200ms ease}
+  .nm-figure,.nm-roll-toggle{transition:transform 180ms ease,background-color 180ms ease,box-shadow 180ms ease}
+  .nm-figure:hover{transform:translateY(-2px)}
+}
+@keyframes nm-enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.nm-journey .nm-block,.nm-journey .nm-see,.nm-journey .nm-roll-toggle,.nm-journey #how{scroll-margin-top:168px;scroll-margin-bottom:24px}
