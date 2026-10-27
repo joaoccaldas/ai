@@ -31,11 +31,9 @@ struct ContentView: View {
     private var shell: some View {
         NavigationSplitView {
             List(selection: $model.selection) {
-                Section("Begin") {
+                Section("Destinations") {
                     sidebarRow(.home)
                     sidebarRow(.explore)
-                }
-                Section("Chapters") {
                     sidebarRow(.odin)
                     sidebarRow(.witches)
                     sidebarRow(.gods)
@@ -51,8 +49,7 @@ struct ContentView: View {
                     .padding(16)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .background(Storyteller.sand)
-            .navigationTitle("NOEMA")
+            .background(Storyteller.porcelain)
         } detail: {
             ZStack {
                 SiteWebView(webView: model.webView)
@@ -110,19 +107,13 @@ struct ContentView: View {
                     .help("Forward")
                 }
                 ToolbarItem(placement: .principal) {
-                    VStack(spacing: 0) {
-                        Text("NOEMA")
-                            .font(.system(size: 13, weight: .medium, design: .serif))
-                            .tracking(1.6)
-                            .foregroundStyle(Storyteller.ink)
-                        Text(model.chromeTitle)
-                            .font(.system(size: 12))
-                            .foregroundStyle(Storyteller.secondary)
-                    }
-                    .accessibilityElement(children: .combine)
+                    Text("NOEMA")
+                        .font(.system(size: 17, weight: .medium, design: .serif))
+                        .foregroundStyle(Storyteller.ink)
+                        .accessibilityAddTraits(.isHeader)
                 }
             }
-            .navigationTitle(model.chromeTitle)
+            .navigationTitle("NOEMA")
         }
         .toolbarBackground(Storyteller.porcelain, for: .windowToolbar)
         .toolbarBackground(.visible, for: .windowToolbar)
@@ -134,6 +125,12 @@ struct ContentView: View {
 
     private func sidebarRow(_ destination: Destination) -> some View {
         Label(destination.title, systemImage: destination.symbol)
+            .foregroundStyle(Storyteller.ink)
+            .listRowBackground(
+                model.selection == destination
+                    ? Storyteller.violet.opacity(0.14)
+                    : Color.clear
+            )
             .tag(destination)
     }
 

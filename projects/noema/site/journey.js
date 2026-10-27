@@ -238,7 +238,7 @@
   }
 
   function denomHtml(model) {
-    return `<span class="nm-label">What we have so far</span><b>${esc(model.have)}</b><p><span class="nm-label">What we don't know yet</span> ${esc(model.missingText)} What we have not recorded is not the same as false.</p>`;
+    return `<div class="nm-denom-grid"><div class="nm-denom-card"><span class="nm-label">What we have so far</span><b>${esc(model.have)}</b></div><div class="nm-denom-card"><span class="nm-label">What we don't know yet</span><p>${esc(model.missingText)} What we have not recorded is not the same as false.</p></div></div>`;
   }
 
   function exactTitle(catalog, word) {

@@ -23,9 +23,9 @@ enum Destination: String, CaseIterable, Identifiable, Hashable {
         switch self {
         case .home: return "house"
         case .explore: return "magnifyingglass"
-        case .odin: return "book.closed"
-        case .witches: return "book.pages"
-        case .gods: return "books.vertical"
+        case .odin: return "person"
+        case .witches: return "book.closed"
+        case .gods: return "building.columns"
         }
     }
 
