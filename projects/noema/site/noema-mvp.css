@@ -214,9 +214,10 @@ body.home-v4 .home-state{color:var(--text2);font-size:13px;font-weight:500}
   body.home-v4 .nm-flag-row a:nth-child(2){animation-delay:40ms}
   body.home-v4 .nm-journeys a.nm-open:nth-of-type(1){animation-delay:60ms}
 }
-@keyframes nm-rise{from{transform:translateY(8px)}to{transform:none}}
+@keyframes nm-rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 body.home-v4 .nm-journeys a{transition:transform 180ms ease,box-shadow 180ms ease}
 body.home-v4 .nm-journeys a:hover,body.home-v4 .nm-journeys a:focus-visible{transform:translateY(-2px)}
+body.home-v4 .nm-journeys a:active,body.home-v4 .nm-shelf-row a:active{transform:translateY(1px)}
 
 /* ----- Explore and the other app pages that share this layer ----- */
 body.nm-app .app{padding:0 16px 56px;max-width:1180px}
@@ -313,6 +314,32 @@ header.topbar .nm-toggle{border-color:rgba(244,239,230,.2);color:#f4efe6;margin-
 header.topbar nav a{min-height:44px;display:inline-flex;align-items:center;font-size:14px;padding:0 10px}
 header.topbar .brand{min-height:44px}
 .webgl-note{margin:10px 0 0;font-size:13px;line-height:1.45;color:#f4efe6;max-width:42ch}
+html.nm-mac .home-top,
+html.nm-mac body.nm-app #appNav{display:none !important}
+html.nm-mac body[data-page="explore"] .searchbox{top:8px}
+.nm-go{display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;max-width:100%;min-height:48px;margin-top:14px;padding:8px 18px;border-radius:9px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;box-sizing:border-box}
+.nm-go small{font-weight:500;opacity:.92}
+.nm-go:hover{filter:brightness(1.06)}
+.nm-go:active{transform:translateY(1px)}
+.nm-go:focus-visible,.nm-facets button:focus-visible,body.home-v4 .nm-shelf-tools button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+body.home-v4 .nm-shelf-tools{display:flex;gap:8px;margin:0 0 8px}
+body.home-v4 .nm-shelf-tools button{min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text);font:600 14px/1 var(--nm-font);cursor:pointer}
+body.home-v4 .nm-shelf-row{display:flex;grid-template-columns:none;gap:8px;overflow-x:auto;max-width:100%;scroll-snap-type:x mandatory;padding-bottom:8px}
+body.home-v4 .nm-shelf-row a{flex:0 0 min(86%,280px);scroll-snap-align:start}
+.nm-facets{display:flex;gap:8px;overflow-x:auto;max-width:100%;padding:4px 0 10px}
+.nm-facets button{flex:0 0 auto;min-height:44px;padding:0 14px;border:0;border-radius:999px;background:var(--sunken);color:var(--text);font:600 14px/1 var(--nm-font);cursor:pointer}
+.nm-facets button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.nm-gist{min-height:44px;margin-top:8px;padding:0 12px;border:0;border-radius:9px;background:var(--sunken);color:var(--text);font:600 14px/1 var(--nm-font);cursor:pointer}
+.nm-gist-panel{margin-top:8px;color:var(--text2);font-size:15px;line-height:1.5}
+body.nm-app a.title.is-active,body.nm-app .card:focus-within{outline:2px solid var(--accent);outline-offset:3px}
+@media(prefers-reduced-motion:no-preference){
+  body.nm-app .card,.nm-go{transition:transform 180ms ease,box-shadow 180ms ease}
+  body.nm-app .card:hover{transform:translateY(-2px)}
+  body.home-v4 .clarity-hero h1,body.home-v4 .nm-go{animation:nm-rise 200ms ease both}
+}
+@media(prefers-reduced-motion:reduce){
+  body.nm-app .card,.nm-go,body.home-v4 .nm-journeys a{animation:none;transition:none}
+}
 @media(max-width:1100px){
   header.topbar .nm-toggle{display:inline-flex}
   header.topbar nav{display:none !important}

@@ -114,13 +114,13 @@
 
   function recordSection(focus, byId) {
     if (!focus.length) return gap('The records', 'No catalog entry was found for this chapter.');
-    if (focus.length <= 4) return focus.map(e => recordCard(e, byId)).join('');
     const roll = focus.map(e => {
       const place = (e.regions || [])[0] || '';
       const role = (e.roles || []).slice(0, 3).join(', ');
-      return `<li><b>${esc(e.name)}</b><span>${esc([place, role].filter(Boolean).join(' · '))}</span></li>`;
+      const meta = [place, role].filter(Boolean).join(' · ') || kindWord(e.kind);
+      return `<li><button type="button" class="nm-roll-toggle" aria-expanded="false"><b>${esc(e.name)}</b><span>${esc(meta)}</span></button><div class="nm-roll-panel" hidden>${recordCard(e, byId)}</div></li>`;
     }).join('');
-    return `<ul class="nm-roll">${roll}</ul><details class="nm-fold"><summary>Read each name</summary>${focus.map(e => recordCard(e, byId)).join('')}</details>`;
+    return `<ul class="nm-roll">${roll}</ul>`;
   }
 
   function sourceList(entities) {
@@ -150,13 +150,13 @@
     const body = keys.map(k => {
       const av = (a.dimensions?.[k] || []).map(humanCode).join(', ') || 'not written on this record';
       const bv = (b.dimensions?.[k] || []).map(humanCode).join(', ') || 'not written on this record';
-      return `<tr><th data-dimension="${esc(k)}">${esc(dimLabel(k))}</th><td>${esc(av)}</td><td>${esc(bv)}</td></tr>`;
+      return `<tr class="nm-tick" tabindex="0"><th data-dimension="${esc(k)}">${esc(dimLabel(k))}</th><td>${esc(av)}</td><td>${esc(bv)}</td></tr>`;
     }).join('');
     const uncoded = keys.filter(k => !(a.dimensions?.[k] || []).length || !(b.dimensions?.[k] || []).length).length;
     const sharedWords = shared.map(humanCode);
     const sharedLine = sharedWords.length ? naturalList(sharedWords) : 'no written label';
     return `<p>${esc(a.name)} and ${esc(b.name)} share ${esc(sharedLine)}. ${uncoded} of ${keys.length} themes are blank on at least one side. A blank is not a no.</p>
-      <details class="nm-fold"><summary>The labels, line by line</summary><div class="nm-scroll"><table class="nm-table">${head}${body}</table></div></details>
+      <div class="nm-scroll"><table class="nm-table">${head}${body}</table></div>
       <p><a href="compare.html?a=${encodeURIComponent(a.id)}&b=${encodeURIComponent(b.id)}">Compare ${esc(a.name)} and ${esc(b.name)}</a></p>
       ${withLine ? '<p class="nm-quiet">Resemblance is not causation.</p>' : ''}`;
   }
@@ -317,7 +317,8 @@
       const width = Math.max(6, Math.min(100 - left, ((b - a) / span) * 100));
       return `<li class="nm-tick" tabindex="0"><b>${esc(e.name)}</b><span class="nm-rail-track" aria-hidden="true"><i style="left:${left.toFixed(1)}%;width:${Math.min(100, width).toFixed(1)}%"></i></span><span class="nm-rail-years">${esc(String(a))}–${esc(String(b))}. A span on file, not a dated event.</span></li>`;
     }).join('');
-    return `${paragraph}<ol class="nm-rail" aria-label="Spans written on these records">${rails}</ol><p class="nm-quiet">The line uses only the years already written on these records.</p>`;
+    const scrub = `<label class="nm-scrub">A position on the spans already written<input type="range" min="${min}" max="${max}" value="${min}" step="1" aria-valuemin="${min}" aria-valuemax="${max}" aria-valuenow="${min}"><b>${min}</b></label><p class="nm-quiet">Moving this does not add a date. It only walks the years already on these records.</p>`;
+    return `${paragraph}${scrub}<ol class="nm-rail" aria-label="Spans written on these records">${rails}</ol><p class="nm-quiet">The line uses only the years already written on these records.</p>`;
   }
 
   function scanBlocks(value, catalog, focus) {
@@ -463,15 +464,73 @@
     syncSee(scope);
   }
 
+  const BEAT_ORDER = ['#records', '#comparison', '#sources', '#timeline', '#indexFindings', '#candidates', '#related'];
+
+  function revealThrough(scope, selector) {
+    const idx = BEAT_ORDER.indexOf(selector);
+    if (idx < 0) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    BEAT_ORDER.slice(0, idx + 1).forEach(id => {
+      const el = scope.querySelector(id);
+      if (!el || !el.hidden) return;
+      el.hidden = false;
+      if (!reduce) {
+        el.classList.remove('nm-enter');
+        void el.offsetWidth;
+        el.classList.add('nm-enter');
+      }
+    });
+    if (selector === '#candidates' || selector === '#related') {
+      const how = scope.querySelector('#how');
+      if (how && how.hidden) how.hidden = false;
+    }
+  }
+
+  function bindRoll(scope) {
+    scope.querySelectorAll('.nm-roll-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const panel = btn.nextElementSibling;
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+        if (panel) panel.hidden = open;
+      });
+    });
+  }
+
+  function bindScrub(scope) {
+    const input = scope.querySelector('.nm-scrub input');
+    if (!input) return;
+    const ticks = [...scope.querySelectorAll('#timeline .nm-tick')];
+    const read = text => {
+      const m = String(text || '').match(/(-?\d+)\s*[–-]\s*(-?\d+)/);
+      return m ? [Number(m[1]), Number(m[2])] : null;
+    };
+    const apply = () => {
+      const year = Number(input.value);
+      input.setAttribute('aria-valuenow', String(year));
+      const label = scope.querySelector('.nm-scrub b');
+      if (label) label.textContent = String(year);
+      ticks.forEach(li => {
+        const span = read(li.querySelector('.nm-rail-years')?.textContent);
+        const on = !!span && year >= Math.min(span[0], span[1]) && year <= Math.max(span[0], span[1]);
+        li.classList.toggle('is-now', on);
+      });
+    };
+    input.addEventListener('input', apply);
+    apply();
+  }
+
   function bindBeats(scope) {
     const links = [...scope.querySelectorAll('.nm-beats a')];
     if (!links.length) return;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     links.forEach(a => {
       a.addEventListener('click', event => {
-        const el = scope.querySelector(a.getAttribute('href'));
+        const href = a.getAttribute('href');
+        const el = scope.querySelector(href);
         if (!el) return;
         event.preventDefault();
+        revealThrough(scope, href);
         el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
         links.forEach(link => link.classList.toggle('is-current', link === a));
       });
@@ -609,47 +668,52 @@
     const exact = missingFocus.map(fid => gap(fid, 'That id is not in the catalog.')).join('') + (thinChapter ? '' : scan);
 
     const index = { epistemic_note: '' };
-    const beats = `<nav class="nm-beats" aria-label="In this chapter"><a href="#records">The names</a><a href="#comparison">Side by side</a><a href="#sources">Pages</a><a href="#timeline">Time</a><a href="#indexFindings">The gap</a></nav><button type="button" class="nm-continue">Continue</button>`;
-    rest.innerHTML = beats + `
-      <section class="nm-block" id="records">
+    const beatNav = `<nav class="nm-beats" aria-label="In this chapter"><a href="#records">The names</a><a href="#comparison">Side by side</a><a href="#sources">Pages</a><a href="#timeline">Time</a><a href="#indexFindings">The gap</a></nav><button type="button" class="nm-continue">Continue</button>`;
+    const dock = document.getElementById('journeyDock');
+    if (dock) {
+      dock.hidden = false;
+      dock.innerHTML = beatNav;
+    }
+    rest.innerHTML = `${dock ? '' : beatNav}
+      <section class="nm-block nm-paced" id="records" hidden>
         <p class="nm-label">Written down</p>
         <h2>The names</h2>
         ${recordSection(focus, byId)}
       </section>
-      <section class="nm-block" id="comparison">
+      <section class="nm-block nm-paced" id="comparison" hidden>
         <p class="nm-label">Beside each other</p>
         <h2>Where they meet</h2>
         ${compareTable(pair, journey.id !== 'gods-pantheon')}
       </section>
-      <section class="nm-block" id="sources">
+      <section class="nm-block nm-paced" id="sources" hidden>
         <p class="nm-label">Reading</p>
         <h2>Pages you can open</h2>
         ${sourceList(focus)}
       </section>
-      <section class="nm-block" id="timeline">
+      <section class="nm-block nm-paced" id="timeline" hidden>
         <p class="nm-label">Time</p>
         <h2>Dates, and what they are not</h2>
         ${timelineHtml(focus, reviewed, media)}
       </section>
-      <section class="nm-block" id="indexFindings">
+      <section class="nm-block nm-paced" id="indexFindings" hidden>
         <p class="nm-label">The gap</p>
         <h2>What we looked for</h2>
         <p id="indexNote">${esc(index.epistemic_note)}</p>
         ${thinChapter ? scan : ''}
       </section>
-      <section class="nm-block" id="candidates">
+      <section class="nm-block nm-paced" id="candidates" hidden>
         <p class="nm-label">Still open</p>
         <h2>Questions we are not ready to settle</h2>
         ${journey.candidate_match ? candidateBlocks(journey.candidate_match, hypotheses, pubmed, ontology) : gap('Research notes', 'This chapter stays with the catalog. The separate notes on mind and experience are not used as evidence here.')}
       </section>
-      <details class="nm-fold nm-how" id="how">
+      <details class="nm-fold nm-how nm-paced" id="how" hidden>
         <summary>How we know</summary>
         <p>${journey.progress === 'POPULATED_FROM_EXISTING_RECORDS' ? 'Drawn from records already on file. Empty fields are gaps in those records.' : 'In progress. Only records that already exist are shown.'} ${esc(catalogShare(catalog))}</p>
         <p>The catalog file says these limits, in its own words:</p>
         <ul>${rules.map(r => `<li>${esc(r)}</li>`).join('')}</ul>
         <div class="nm-exact">${exact}</div>
       </details>
-      <section class="nm-block" id="related">
+      <section class="nm-block nm-paced" id="related" hidden>
         <p class="nm-label">Continue</p>
         <h2>Other chapters</h2>
         <ul class="nm-next">${related.map(j => `<li><a href="journey.html?id=${encodeURIComponent(j.id)}" data-progress="${esc(j.progress || '')}">${esc(j.title)}</a></li>`).join('')}</ul>
@@ -659,6 +723,8 @@
       </section>`;
     bindFocus(root);
     bindPlates(root);
+    bindRoll(root);
+    bindScrub(root);
     bindBeats(root);
     bindContinue(root);
     if (window.noemaRememberChapter) {
@@ -696,11 +762,14 @@
       ['#candidates', 'Continue to what stays open'],
       ['#related', 'Continue to other chapters']
     ];
+    const rows = () => stops
+      .map(([id, text]) => ({ el: scope.querySelector(id), text, id }))
+      .filter(row => row.el);
     const nextStop = () => {
-      const y = window.scrollY + 96;
-      return stops
-        .map(([id, text]) => ({ el: scope.querySelector(id), text }))
-        .find(row => row.el && row.el.offsetTop > y) || null;
+      const pending = rows().find(row => row.el.hidden);
+      if (pending) return pending;
+      const y = window.scrollY + 120;
+      return rows().find(row => row.el.offsetTop > y) || null;
     };
     const label = () => {
       const next = nextStop();
@@ -712,7 +781,11 @@
     button.addEventListener('click', () => {
       const next = label();
       if (!next || !next.el) return;
+      if (next.el.hidden) revealThrough(scope, next.id);
       next.el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      const beat = scope.querySelector(`.nm-beats a[href="${next.id}"]`);
+      if (beat) scope.querySelectorAll('.nm-beats a').forEach(a => a.classList.toggle('is-current', a === beat));
+      label();
     });
   }
 

@@ -34,6 +34,13 @@ final class BrowserModel: NSObject, ObservableObject, WKNavigationDelegate, WKUI
             forMainFrameOnly: false
         )
         configuration.userContentController.addUserScript(console)
+        // The sidebar is the only navigation. The page must not paint a second bar.
+        let macShell = WKUserScript(
+            source: "document.documentElement.classList.add('nm-mac');",
+            injectionTime: .atDocumentStart,
+            forMainFrameOnly: true
+        )
+        configuration.userContentController.addUserScript(macShell)
         let view = WKWebView(frame: .zero, configuration: configuration)
         view.allowsBackForwardNavigationGestures = true
         view.allowsMagnification = true

@@ -41,7 +41,7 @@
     async function onQuery(){await loadSearch();renderSearch(input?.value||'')}
     function rememberQuery(q){const query=String(q||'').trim();if(query.length<2)return;try{const prev=JSON.parse(sessionStorage.getItem('noema-recent')||'[]').filter(x=>String(x).toLowerCase()!==query.toLowerCase());prev.unshift(query);sessionStorage.setItem('noema-recent',JSON.stringify(prev.slice(0,4)))}catch(e){}}
     function renderRecent(){const host=$('#recentSearches');if(!host)return;let items=[];try{items=JSON.parse(sessionStorage.getItem('noema-recent')||'[]')}catch(e){items=[]}if(!items.length||(input&&input.value.trim())){host.hidden=true;host.innerHTML='';return}host.hidden=false;host.innerHTML='<span>Recent</span>'+items.map(q=>`<button type="button">${esc(q)}</button>`).join('');host.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{if(!input)return;input.value=btn.textContent;onQuery()}))}
-    function renderContinue(){const host=$('#continueReading');if(!host||!window.noemaLastChapter)return;const chapter=window.noemaLastChapter();if(!chapter||!String(chapter.href||'').startsWith('journey.html?id=')||!chapter.title){host.hidden=true;return}host.hidden=false;host.innerHTML=`Continue <a href="${esc(chapter.href)}">${esc(chapter.title)}</a><small>${esc(chapter.question||'The chapter you had open.')}</small>`}
+    function renderContinue(){const host=$('#continueReading');if(!host||!window.noemaLastChapter)return;const chapter=window.noemaLastChapter();const go=document.querySelector('.nm-go');if(go&&chapter&&String(chapter.href||'').startsWith('journey.html?id=')&&chapter.title){go.setAttribute('href',chapter.href);const small=go.querySelector('small');if(small)small.textContent=chapter.title}if(!chapter||!String(chapter.href||'').startsWith('journey.html?id=')||!chapter.title){host.hidden=true;return}host.hidden=false;host.innerHTML=`Continue <a href="${esc(chapter.href)}">${esc(chapter.title)}</a><small>${esc(chapter.question||'The chapter you had open.')}</small>`}
     input?.addEventListener('input',()=>{onQuery();renderRecent()});
     input?.addEventListener('focus',()=>{loadSearch();renderRecent()});
     input?.addEventListener('change',()=>{rememberQuery(input.value);renderRecent()});
@@ -50,6 +50,11 @@
     $('#homeSearch').addEventListener('submit',e=>{e.preventDefault();const q=$('#homeQ').value.trim();if(!q){location.href='explore.html';return}rememberQuery(q);onQuery()});
     renderContinue();
     renderRecent();
+    const shelf=document.querySelector('.nm-shelf-row');
+    const shelfStep=()=>Math.max(180,Math.round((shelf?.clientWidth||240)*0.86));
+    const shelfMove=dir=>{if(!shelf)return;const reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;shelf.scrollBy({left:dir*shelfStep(),behavior:reduce?'auto':'smooth'})};
+    document.getElementById('shelfPrev')?.addEventListener('click',()=>shelfMove(-1));
+    document.getElementById('shelfNext')?.addEventListener('click',()=>shelfMove(1));
     if(window.noemaRestoreScroll)window.noemaRestoreScroll();
   }
   boot();
