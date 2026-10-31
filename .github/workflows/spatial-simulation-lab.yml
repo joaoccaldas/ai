@@ -1,0 +1,75 @@
+name: Spatial Simulation Lab Evidence
+on:
+  pull_request:
+    paths:
+      - 'studio/simulation-lab/**'
+      - '.github/workflows/spatial-simulation-lab.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'studio/simulation-lab/**'
+      - '.github/workflows/spatial-simulation-lab.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate evidence registry
+        run: node studio/simulation-lab/verify.mjs
+      - name: Verify current procedural asset inventory
+        run: node studio/simulation-lab/audit-assets.mjs
+      - name: Execute evidence contract tests
+        run: node --test studio/simulation-lab/test/*.test.mjs
+
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Chromium for dashboard regression tests
+        run: |
+          npm install --no-save --no-package-lock playwright@1.54.1
+          npx playwright install --with-deps chromium
+      - name: Start local site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/spatial-lab-server.log 2>&1 &
+          sleep 2
+      - name: Execute desktop and mobile dashboard checks
+        run: node studio/simulation-lab/test/browser-smoke.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: spatial-lab-browser-evidence
+          path: spatial-lab-evidence
+          if-no-files-found: warn
+
+  blender-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Blender
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq blender python3-numpy
+          blender -b --factory-startup --python-expr 'import numpy; print("numpy:", numpy.__version__)'
+      - name: Export two existing canonical assets
+        run: |
+          mkdir -p "$RUNNER_TEMP/spatial-glbs"
+          blender -b --factory-startup --python studio/shared/procedural-assets/export_glb.py -- "$RUNNER_TEMP/spatial-glbs" civic_bench sofa_two_seat
+          test -s "$RUNNER_TEMP/spatial-glbs/exported_manifest.json"
+      - name: Verify actual GLB outputs, bounding boxes and hashes
+        run: node studio/simulation-lab/verify-exports.mjs "$RUNNER_TEMP/spatial-glbs" civic_bench sofa_two_seat
