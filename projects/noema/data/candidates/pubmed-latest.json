@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-10-30T04:50:01.606781+00:00",
+  "generated_at": "2026-11-03T04:50:12.619802+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
@@ -11,8 +11,8 @@
     },
     "ecstatic_neurology": {
       "query": "((ecstatic[Title/Abstract]) OR (mystical[Title/Abstract]) OR (\"religious experience\"[Title/Abstract]) OR (\"spiritual experience\"[Title/Abstract])) AND ((epilepsy[Title/Abstract]) OR (seizure[Title/Abstract]) OR (insula[Title/Abstract]) OR (\"temporal lobe\"[Title/Abstract]) OR (neuro*[Title/Abstract]))",
-      "pmids_returned": 3,
-      "title_relevant": 1
+      "pmids_returned": 4,
+      "title_relevant": 0
     },
     "neurodiversity_religion": {
       "query": "((autism[Title/Abstract]) OR (autistic[Title/Abstract]) OR (ADHD[Title/Abstract]) OR (neurodiversity[Title/Abstract]) OR (neurodivergent[Title/Abstract])) AND ((religion[Title/Abstract]) OR (religiosity[Title/Abstract]) OR (religious[Title/Abstract]) OR (spirituality[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (faith[Title/Abstract]))",
@@ -36,37 +36,11 @@
     },
     "psychedelic_ritual": {
       "query": "((psychedelic[Title/Abstract]) OR (psilocybin[Title/Abstract]) OR (ayahuasca[Title/Abstract]) OR (entheogen*[Title/Abstract]) OR (hallucinogen*[Title/Abstract])) AND ((ritual[Title/Abstract]) OR (ceremony[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (mystical[Title/Abstract]))",
-      "pmids_returned": 13,
+      "pmids_returned": 14,
       "title_relevant": 1
     }
   },
   "records": [
-    {
-      "pmid": "42753166",
-      "queries": [
-        "ecstatic_neurology"
-      ],
-      "status": "CANDIDATE_UNREVIEWED",
-      "source_family": "PUBMED",
-      "candidate_only": true,
-      "relevance_gate": "TITLE_TWO_GROUP_MATCH",
-      "title": "Localizing value of ecstatic phenomenon in epilepsy surgery: A systematic review.",
-      "pubdate": "2026 Sep 17",
-      "source": "Epileptic Disord",
-      "authors": [
-        "Maliia MD",
-        "Bartolomei F",
-        "Picard F"
-      ],
-      "articleids": {
-        "pubmed": "42753166",
-        "doi": "10.1002/epd2.70392"
-      },
-      "pubtypes": [
-        "Journal Article",
-        "Review"
-      ]
-    },
     {
       "pmid": "42775190",
       "queries": [
@@ -101,10 +75,10 @@
     }
   ],
   "counts": {
-    "unique_candidates": 2,
+    "unique_candidates": 1,
     "query_count": 7,
-    "retrieved_before_title_gate": 17,
-    "rejected_by_title_gate": 15,
+    "retrieved_before_title_gate": 18,
+    "rejected_by_title_gate": 17,
     "summary_batches": 1
   }
 }

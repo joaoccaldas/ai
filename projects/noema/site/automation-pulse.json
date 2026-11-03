@@ -1,17 +1,17 @@
 {
   "report_id": "NOEMA-AUTOMATION-PULSE-V1",
-  "generated_at": "2026-10-30T04:50:01.747094+00:00",
+  "generated_at": "2026-11-03T04:50:12.785435+00:00",
   "registry_id": "NOEMA-AUTOMATION-REGISTRY-V2",
   "registry_version": "2.0.0",
   "status": "OBSERVABILITY_ONLY",
   "principle": "Automation output is research workflow state, not evidence. Promotion still requires explicit review gates.",
   "totals_recent": {
-    "runs": 152,
-    "new_candidates": 1823,
+    "runs": 159,
+    "new_candidates": 2212,
     "contradictions": 0,
     "dating_revisions": 0,
     "hypotheses_revisited": 0,
-    "review_items_created": 374,
+    "review_items_created": 340,
     "errors": 0
   },
   "latest_by_task": [
@@ -51,19 +51,19 @@
     },
     {
       "task_type": "GITHUB_DISCOVERY",
-      "run_id": "github-discovery-41002524945",
+      "run_id": "github-discovery-41577482853",
       "status": "COMPLETED",
-      "completed_at": "2026-10-30T04:22:42.363553+00:00",
+      "completed_at": "2026-11-03T04:20:11.547653+00:00",
       "max_epistemic_stage": null,
-      "summary": "Crossref discovery produced 105 unreviewed candidates and 30 priority items.",
+      "summary": "Crossref discovery produced 98 unreviewed candidates and 30 priority items.",
       "errors": [],
       "research_note": null
     },
     {
       "task_type": "PUBMED_DISCOVERY",
-      "run_id": "pubmed-discovery-41005044998",
+      "run_id": "pubmed-discovery-41580381129",
       "status": "COMPLETED_CANDIDATES_ONLY",
-      "completed_at": "2026-10-30T04:50:01.678911+00:00",
+      "completed_at": "2026-11-03T04:50:12.705063+00:00",
       "max_epistemic_stage": null,
       "summary": "PubMed biomedical/cognition discovery produced candidate-only records; no evidence, diagnosis or relationship was promoted.",
       "errors": [],
@@ -71,9 +71,9 @@
     },
     {
       "task_type": "DPLACE_BENCHMARK",
-      "run_id": "dplace-benchmark-40276665751",
+      "run_id": "dplace-benchmark-41396080302",
       "status": "COMPLETED",
-      "completed_at": "2026-10-26T05:53:23.996337+00:00",
+      "completed_at": "2026-11-02T05:47:58.519940+00:00",
       "max_epistemic_stage": null,
       "summary": "Rebuilt deterministic D-PLACE benchmark with 100 societies; focal years remain observation metadata, never origin dates.",
       "errors": [],
@@ -81,9 +81,9 @@
     },
     {
       "task_type": "RELIGION_FEDERATION",
-      "run_id": "religion-federation-40274909906",
+      "run_id": "religion-federation-41393662820",
       "status": "COMPLETED",
-      "completed_at": "2026-10-26T05:34:41.549718+00:00",
+      "completed_at": "2026-11-02T05:23:21.957973+00:00",
       "max_epistemic_stage": null,
       "summary": "Federation refreshed 1063 comparable profiles and 24452 accepted assertions; pattern outputs remain descriptive candidates.",
       "errors": [],
@@ -123,10 +123,10 @@
       "next_stage": "DAILY_INGEST",
       "expected_interval_hours": 26.0,
       "health": "HEALTHY",
-      "last_run_id": "github-discovery-41002524945",
+      "last_run_id": "github-discovery-41577482853",
       "last_status": "COMPLETED",
-      "last_completed_at": "2026-10-30T04:22:42.363553+00:00",
-      "age_hours": 0.46,
+      "last_completed_at": "2026-11-03T04:20:11.547653+00:00",
+      "age_hours": 0.5,
       "clock_skew_detected": false,
       "writes": [
         "Actions artifact: noema-crossref-candidates",
@@ -145,9 +145,9 @@
       "next_stage": "HUMAN_REVIEW",
       "expected_interval_hours": 96.0,
       "health": "HEALTHY",
-      "last_run_id": "pubmed-discovery-41005044998",
+      "last_run_id": "pubmed-discovery-41580381129",
       "last_status": "COMPLETED_CANDIDATES_ONLY",
-      "last_completed_at": "2026-10-30T04:50:01.678911+00:00",
+      "last_completed_at": "2026-11-03T04:50:12.705063+00:00",
       "age_hours": 0.0,
       "clock_skew_detected": false,
       "writes": [
@@ -171,7 +171,7 @@
       "last_run_id": "chatgpt-daily-2026-09-16",
       "last_status": "COMPLETED_WITH_LIMITATION",
       "last_completed_at": "2026-09-16T06:23:06+00:00",
-      "age_hours": 1054.45,
+      "age_hours": 1150.45,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/daily/YYYY-MM-DD.json",
@@ -190,10 +190,10 @@
       "next_stage": "RELIGION_FEDERATION",
       "expected_interval_hours": 190.0,
       "health": "HEALTHY",
-      "last_run_id": "dplace-benchmark-40276665751",
+      "last_run_id": "dplace-benchmark-41396080302",
       "last_status": "COMPLETED",
-      "last_completed_at": "2026-10-26T05:53:23.996337+00:00",
-      "age_hours": 94.94,
+      "last_completed_at": "2026-11-02T05:47:58.519940+00:00",
+      "age_hours": 23.04,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/societies.json",
@@ -212,10 +212,10 @@
       "next_stage": "PATTERN_REVIEW",
       "expected_interval_hours": 190.0,
       "health": "HEALTHY",
-      "last_run_id": "religion-federation-40274909906",
+      "last_run_id": "religion-federation-41393662820",
       "last_status": "COMPLETED",
-      "last_completed_at": "2026-10-26T05:34:41.549718+00:00",
-      "age_hours": 95.26,
+      "last_completed_at": "2026-11-02T05:23:21.957973+00:00",
+      "age_hours": 23.45,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/religion-decomposition.json",
@@ -244,7 +244,7 @@
       "last_run_id": "chatgpt-weekly-2026-09-13",
       "last_status": "COMPLETED_WITH_REVISION_CANDIDATES_NO_PROMOTION",
       "last_completed_at": "2026-09-13T06:47:43Z",
-      "age_hours": 1126.04,
+      "age_hours": 1222.04,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/research/reanalysis/YYYY-MM-DD-weekly-reanalysis.md",
@@ -266,7 +266,7 @@
       "last_run_id": "chatgpt-monthly-2026-09-01",
       "last_status": "COMPLETED",
       "last_completed_at": "2026-09-01T06:25:10+00:00",
-      "age_hours": 1414.41,
+      "age_hours": 1510.42,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/monthly/YYYY-MM-DD.json",
@@ -289,7 +289,7 @@
       "last_run_id": "media-discovery-40646247081",
       "last_status": "COMPLETED_PENDING_REVIEW",
       "last_completed_at": "2026-10-28T06:50:16.004525+00:00",
-      "age_hours": 46.0,
+      "age_hours": 142.0,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/data/candidates/wikimedia-media-candidates.json",
@@ -311,7 +311,7 @@
       "last_run_id": "museum-media-40649807315",
       "last_status": "COMPLETED_REFERENCE_ONLY",
       "last_completed_at": "2026-10-28T07:24:15.177209+00:00",
-      "age_hours": 45.43,
+      "age_hours": 141.43,
       "clock_skew_detected": false,
       "writes": [
         "projects/noema/site/museum-reference-media.json",
@@ -323,6 +323,233 @@
     "clock_skew": []
   },
   "recent_runs": [
+    {
+      "run_id": "pubmed-discovery-41580381129",
+      "task_type": "PUBMED_DISCOVERY",
+      "status": "COMPLETED_CANDIDATES_ONLY",
+      "started_at": "2026-11-03T04:50:12.705063+00:00",
+      "completed_at": "2026-11-03T04:50:12.705063+00:00",
+      "input_refs": [
+        "NCBI PubMed E-utilities",
+        "projects/noema/scripts/discover_pubmed.py"
+      ],
+      "artifact_digests": {
+        "pubmed-latest.json": "sha256:28f423281ac563892a37e2bf54b3f4ac14b55be7af6584ceee5acb08890c59fa"
+      },
+      "sources_examined": 1,
+      "new_candidates": 1,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 1,
+      "max_epistemic_stage": null,
+      "errors": [],
+      "summary": "PubMed biomedical/cognition discovery produced candidate-only records; no evidence, diagnosis or relationship was promoted.",
+      "research_note": "projects/noema/data/candidates/pubmed-latest.json",
+      "code_commit": "add161e8d807ff6993853392458ba9a8ef0535d5",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false,
+        "historical_diagnosis_from_resemblance": false
+      }
+    },
+    {
+      "run_id": "github-discovery-41577482853",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-11-03T04:20:11.547653+00:00",
+      "completed_at": "2026-11-03T04:20:11.547653+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:849a79668a8c0b50fe7c30d7e08c3b4cd7e83ea458d078522d59fd8e3066036d"
+      },
+      "sources_examined": 0,
+      "new_candidates": 98,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 98 unreviewed candidates and 30 priority items.",
+      "code_commit": "99ac117a6fa09b72a6dccac3cadc8deea3a4b5e4",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "dplace-benchmark-41396080302",
+      "task_type": "DPLACE_BENCHMARK",
+      "status": "COMPLETED",
+      "started_at": "2026-11-02T05:47:58.519940+00:00",
+      "completed_at": "2026-11-02T05:47:58.519940+00:00",
+      "input_refs": [
+        "https://raw.githubusercontent.com/D-PLACE/dplace-cldf/master/cldf/societies.csv"
+      ],
+      "artifact_digests": {
+        "noema-dplace-benchmark-100": "sha256:83ff1ed66402b284d0cf2cd3ff4433ea0e632be0cfb64819143345f803ffeeb2"
+      },
+      "sources_examined": 1,
+      "new_candidates": 0,
+      "candidate_updates": 1,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "Rebuilt deterministic D-PLACE benchmark with 100 societies; focal years remain observation metadata, never origin dates.",
+      "code_commit": "8a99be8e6494676bb673f9cfb7061d90e0f0bd56",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "religion-federation-41393662820",
+      "task_type": "RELIGION_FEDERATION",
+      "status": "COMPLETED",
+      "started_at": "2026-11-02T05:23:21.957973+00:00",
+      "completed_at": "2026-11-02T05:23:21.957973+00:00",
+      "input_refs": [
+        "Pulotu",
+        "DRH/SCCSR",
+        "D-PLACE audit"
+      ],
+      "sources_examined": 3,
+      "new_candidates": 526,
+      "candidate_updates": 24452,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 62,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 0,
+      "errors": [],
+      "summary": "Federation refreshed 1063 comparable profiles and 24452 accepted assertions; pattern outputs remain descriptive candidates.",
+      "code_commit": "e0a8863e94e873c750ac0674aada63f439cb4159",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "github-discovery-41387894931",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-11-02T04:20:42.349372+00:00",
+      "completed_at": "2026-11-02T04:20:42.349372+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:5f4d18a1697b8a6d2ca089de21bc3177890cb2ba1404f20ec0fc09732064ba2e"
+      },
+      "sources_examined": 0,
+      "new_candidates": 104,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 104 unreviewed candidates and 30 priority items.",
+      "code_commit": "6aa70c4f4798847ca69b1e2b6f9523dc3106a1ba",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "github-discovery-41272631562",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-11-01T04:19:37.868386+00:00",
+      "completed_at": "2026-11-01T04:19:37.868386+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:1625432ad5f3dd02049a371341fd2804f021f5c7b64a6e6f18d5ce38ac2862e9"
+      },
+      "sources_examined": 0,
+      "new_candidates": 105,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 105 unreviewed candidates and 30 priority items.",
+      "code_commit": "a2f9d1cb3da2947c84ee19e8f9208c72835a9f53",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
+    {
+      "run_id": "github-discovery-41168017263",
+      "task_type": "GITHUB_DISCOVERY",
+      "status": "COMPLETED",
+      "started_at": "2026-10-31T04:18:38.984852+00:00",
+      "completed_at": "2026-10-31T04:18:38.984852+00:00",
+      "input_refs": [
+        ".github/workflows/noema-discovery.yml"
+      ],
+      "artifact_digests": {
+        "noema-crossref-candidates": "sha256:fc00633ed33504f7502678392235c5061567cee591feb600e8d0b56ec3817f4d"
+      },
+      "sources_examined": 0,
+      "new_candidates": 106,
+      "candidate_updates": 0,
+      "contradictions": 0,
+      "dating_revisions": 0,
+      "relationships_generated": 0,
+      "hypotheses_revisited": 0,
+      "hypotheses_promoted": 0,
+      "confidence_or_scope_changes": 0,
+      "review_items_created": 30,
+      "errors": [],
+      "summary": "Crossref discovery produced 106 unreviewed candidates and 30 priority items.",
+      "code_commit": "a5079857843c31b897229e5af7ce0564a90d6c0b",
+      "epistemic_guards": {
+        "model_output_is_evidence": false,
+        "unknown_is_absent": false,
+        "similarity_implies_descent": false,
+        "automatic_claim_promotion": false
+      }
+    },
     {
       "run_id": "pubmed-discovery-41005044998",
       "task_type": "PUBMED_DISCOVERY",
@@ -746,237 +973,6 @@
       "errors": [],
       "summary": "Crossref discovery produced 121 unreviewed candidates and 30 priority items.",
       "code_commit": "6f38e0e47c8ab325a477b07f3ff2de3e29abd371",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "github-discovery-40062396902",
-      "task_type": "GITHUB_DISCOVERY",
-      "status": "COMPLETED",
-      "started_at": "2026-10-24T04:27:34.643586+00:00",
-      "completed_at": "2026-10-24T04:27:34.643586+00:00",
-      "input_refs": [
-        ".github/workflows/noema-discovery.yml"
-      ],
-      "artifact_digests": {
-        "noema-crossref-candidates": "sha256:e3eb3dadb6d9665896e783bb5674a988c8cbc50a78336dc18ac8d584209f5ad7"
-      },
-      "sources_examined": 0,
-      "new_candidates": 122,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 30,
-      "errors": [],
-      "summary": "Crossref discovery produced 122 unreviewed candidates and 30 priority items.",
-      "code_commit": "189444a3037ed73807ec3fff57707413c608e3c9",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "pubmed-discovery-39902758035",
-      "task_type": "PUBMED_DISCOVERY",
-      "status": "COMPLETED_CANDIDATES_ONLY",
-      "started_at": "2026-10-23T04:53:53.494534+00:00",
-      "completed_at": "2026-10-23T04:53:53.494534+00:00",
-      "input_refs": [
-        "NCBI PubMed E-utilities",
-        "projects/noema/scripts/discover_pubmed.py"
-      ],
-      "artifact_digests": {
-        "pubmed-latest.json": "sha256:60de07b529bca49dfbaf00a803ac3ab3304b1ea263ae5d62f0e35a4c25212e85"
-      },
-      "sources_examined": 2,
-      "new_candidates": 2,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 2,
-      "max_epistemic_stage": null,
-      "errors": [],
-      "summary": "PubMed biomedical/cognition discovery produced candidate-only records; no evidence, diagnosis or relationship was promoted.",
-      "research_note": "projects/noema/data/candidates/pubmed-latest.json",
-      "code_commit": "7961910c404ee56661352af73e76164f11f75282",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false,
-        "historical_diagnosis_from_resemblance": false
-      }
-    },
-    {
-      "run_id": "github-discovery-39900608317",
-      "task_type": "GITHUB_DISCOVERY",
-      "status": "COMPLETED",
-      "started_at": "2026-10-23T04:30:00.826347+00:00",
-      "completed_at": "2026-10-23T04:30:00.826347+00:00",
-      "input_refs": [
-        ".github/workflows/noema-discovery.yml"
-      ],
-      "artifact_digests": {
-        "noema-crossref-candidates": "sha256:4f95508ca80dd76227f0bcc1a450f0e755791601d1c42c9055867cd058a85efc"
-      },
-      "sources_examined": 0,
-      "new_candidates": 124,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 30,
-      "errors": [],
-      "summary": "Crossref discovery produced 124 unreviewed candidates and 30 priority items.",
-      "code_commit": "9a0c8eb959148b4363ae7366d62e6aa54ee59296",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "github-discovery-39722611013",
-      "task_type": "GITHUB_DISCOVERY",
-      "status": "COMPLETED",
-      "started_at": "2026-10-22T04:29:12.594350+00:00",
-      "completed_at": "2026-10-22T04:29:12.594350+00:00",
-      "input_refs": [
-        ".github/workflows/noema-discovery.yml"
-      ],
-      "artifact_digests": {
-        "noema-crossref-candidates": "sha256:41dd1b6e550ba202dc60e5ec16fd8e2f8ef39a405829bc44056a7c75278608d7"
-      },
-      "sources_examined": 0,
-      "new_candidates": 126,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 30,
-      "errors": [],
-      "summary": "Crossref discovery produced 126 unreviewed candidates and 30 priority items.",
-      "code_commit": "cf7e232d000ebdce64fa2270b41cb235b71985ab",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "museum-media-39563117876",
-      "task_type": "MUSEUM_MEDIA_DISCOVERY",
-      "status": "COMPLETED_REFERENCE_ONLY",
-      "started_at": "2026-10-21T07:36:16.349729+00:00",
-      "completed_at": "2026-10-21T07:36:16.349729+00:00",
-      "input_refs": [
-        "Art Institute of Chicago Open Access API",
-        "Cleveland Museum of Art Open Access API",
-        "projects/noema/data/reference/belief-catalog-v1.json"
-      ],
-      "artifact_digests": {
-        "museum-reference-media": "sha256:cb8d71eac13cab959050eb07d61176791ddcc7cf00bc360e2ab6f7670dd55aef"
-      },
-      "sources_examined": 22,
-      "new_candidates": 15,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 0,
-      "errors": [],
-      "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
-      "code_commit": "fb15d059e9cde36a9d1ab66e2e538bc70c5deb24",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "media-discovery-39559354580",
-      "task_type": "MEDIA_DISCOVERY",
-      "status": "COMPLETED_PENDING_REVIEW",
-      "started_at": "2026-10-21T07:03:43.837867+00:00",
-      "completed_at": "2026-10-21T07:03:43.837867+00:00",
-      "input_refs": [
-        "Wikimedia Commons",
-        "projects/noema/data/reference/belief-catalog-v1.json"
-      ],
-      "artifact_digests": {
-        "wikimedia-media-candidates": "sha256:0d02422a04ce49f0fa68eb6749b5299c20c9ffc2c89c8de28521d74c4e66f37d"
-      },
-      "sources_examined": 11,
-      "new_candidates": 33,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 33,
-      "errors": [],
-      "summary": "Discovered 33 Wikimedia Commons media candidates across 11 entities; none are public until identity and rights are approved.",
-      "code_commit": "d40036d18737aa5b5dd4443bd7ab46b334193b23",
-      "epistemic_guards": {
-        "model_output_is_evidence": false,
-        "unknown_is_absent": false,
-        "similarity_implies_descent": false,
-        "automatic_claim_promotion": false
-      }
-    },
-    {
-      "run_id": "github-discovery-39544312820",
-      "task_type": "GITHUB_DISCOVERY",
-      "status": "COMPLETED",
-      "started_at": "2026-10-21T04:29:44.410541+00:00",
-      "completed_at": "2026-10-21T04:29:44.410541+00:00",
-      "input_refs": [
-        ".github/workflows/noema-discovery.yml"
-      ],
-      "artifact_digests": {
-        "noema-crossref-candidates": "sha256:a2fb029707425434cead6eb4d998a4dad7de34c46b5c67dda6b1d867c06c98e7"
-      },
-      "sources_examined": 0,
-      "new_candidates": 129,
-      "candidate_updates": 0,
-      "contradictions": 0,
-      "dating_revisions": 0,
-      "relationships_generated": 0,
-      "hypotheses_revisited": 0,
-      "hypotheses_promoted": 0,
-      "confidence_or_scope_changes": 0,
-      "review_items_created": 30,
-      "errors": [],
-      "summary": "Crossref discovery produced 129 unreviewed candidates and 30 priority items.",
-      "code_commit": "c4f065fc1914f55e1f9c9dbeb035f92dac3a73a6",
       "epistemic_guards": {
         "model_output_is_evidence": false,
         "unknown_is_absent": false,
