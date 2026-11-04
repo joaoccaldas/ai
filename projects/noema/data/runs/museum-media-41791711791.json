@@ -1,0 +1,34 @@
+{
+  "run_id": "museum-media-41791711791",
+  "task_type": "MUSEUM_MEDIA_DISCOVERY",
+  "status": "COMPLETED_REFERENCE_ONLY",
+  "started_at": "2026-11-04T07:22:10.908827+00:00",
+  "completed_at": "2026-11-04T07:22:10.908827+00:00",
+  "input_refs": [
+    "Art Institute of Chicago Open Access API",
+    "Cleveland Museum of Art Open Access API",
+    "projects/noema/data/reference/belief-catalog-v1.json"
+  ],
+  "artifact_digests": {
+    "museum-reference-media": "sha256:652294f7b1865d93928c91be5f893ebc7d832619f39404a8e71d15cf6c69f1b6"
+  },
+  "sources_examined": 22,
+  "new_candidates": 15,
+  "candidate_updates": 0,
+  "contradictions": 0,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 0,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 0,
+  "errors": [],
+  "summary": "Published 15 provider-asserted public-domain museum reference images. These remain non-evidentiary visual context.",
+  "code_commit": "421caaf5a0b98a7e83280a26404f39ac925e0bcf",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false
+  }
+}
