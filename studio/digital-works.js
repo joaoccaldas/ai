@@ -7,6 +7,19 @@
 */
 window.STUDIO_DIGITAL_WORKS = [
   {
+    slug: 'wexla',
+    n: 'WEXLA AB',
+    room: 'Business & Services',
+    tag: 'Teknik som fungerar. A Nordic company website.',
+    url: 'wexla/',
+    img: 'gallery/wexla.svg',
+    accent: '#91b19b',
+    note: 'A clean, responsive Swedish company website for WEXLA AB, with service browsing, company information and a transparent contact concept.',
+    acquired: '2026',
+    featured: false,
+    physical: false
+  },
+  {
     slug: 'atoll-ascent',
     n: 'Atoll Ascent',
     room: 'Nature & Journeys',
