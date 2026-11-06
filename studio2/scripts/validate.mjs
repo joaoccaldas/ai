@@ -10,8 +10,19 @@ if(new Set(ids).size!==ids.length)throw new Error('duplicate project ids');
 const acts=[...registry.matchAll(/\{id:'(cave|workshop|cemetery|arcade|observatory|machine|horizon)',n:/g)].map(x=>x[1]);
 if(new Set(acts).size!==7)throw new Error('seven acts required');
 
+const {PROJECTS}=await import('../projects.js');
+for(const id of ['bellagio','gaudi-nexus','konam','spatial-lab','spatial-asset-factory']){
+ const p=PROJECTS.find(x=>x.id===id);
+ if(!p||!p.repo||!p.lesson||!p.built||!p.skills?.length)throw new Error('missing source-backed spatial project: '+id);
+}
+if(PROJECTS.find(x=>x.id==='canyonmuseum')?.status!=='archived')
+ throw new Error('Historical Canyon Museum must be archived and separate from current KONA.m');
+if(PROJECTS.find(x=>x.id==='konam')?.status!=='living')
+ throw new Error('Current KONA.m identity missing');
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 for(const id of ['world','opening','actRail','projectDrawer','projectModal','allProjectsBtn','prevBtn','nextBtn','worldStatus'])if(!html.includes(`id="${id}"`))throw new Error('missing #'+id);
+for(const destination of ['href="../studio/simulation-lab/"','Walk the project story','Browse project evidence'])
+ if(!html.includes(destination))throw new Error('Missing visitor story-to-evidence path '+destination);
 
 const app=fs.readFileSync(path.join(root,'app.js'),'utf8');
 if(!app.includes("await import('./world.js')"))throw new Error('3D must lazy-load so UI survives renderer/CDN failure');
