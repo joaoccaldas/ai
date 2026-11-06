@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-11-03T04:50:12.619802+00:00",
+  "generated_at": "2026-11-06T04:50:05.468983+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
@@ -11,12 +11,12 @@
     },
     "ecstatic_neurology": {
       "query": "((ecstatic[Title/Abstract]) OR (mystical[Title/Abstract]) OR (\"religious experience\"[Title/Abstract]) OR (\"spiritual experience\"[Title/Abstract])) AND ((epilepsy[Title/Abstract]) OR (seizure[Title/Abstract]) OR (insula[Title/Abstract]) OR (\"temporal lobe\"[Title/Abstract]) OR (neuro*[Title/Abstract]))",
-      "pmids_returned": 4,
+      "pmids_returned": 5,
       "title_relevant": 0
     },
     "neurodiversity_religion": {
       "query": "((autism[Title/Abstract]) OR (autistic[Title/Abstract]) OR (ADHD[Title/Abstract]) OR (neurodiversity[Title/Abstract]) OR (neurodivergent[Title/Abstract])) AND ((religion[Title/Abstract]) OR (religiosity[Title/Abstract]) OR (religious[Title/Abstract]) OR (spirituality[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (faith[Title/Abstract]))",
-      "pmids_returned": 2,
+      "pmids_returned": 3,
       "title_relevant": 0
     },
     "sleep_visions": {
@@ -77,8 +77,8 @@
   "counts": {
     "unique_candidates": 1,
     "query_count": 7,
-    "retrieved_before_title_gate": 18,
-    "rejected_by_title_gate": 17,
+    "retrieved_before_title_gate": 20,
+    "rejected_by_title_gate": 19,
     "summary_batches": 1
   }
 }
