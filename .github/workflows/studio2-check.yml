@@ -32,3 +32,28 @@ jobs:
         run: |
           test -f studio2/index.html
           ! grep -R "studio/rooms.js\|studio/museum/museum.js" studio2 --exclude='*.md'
+
+  visitor:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser
+        run: |
+          npm install --no-save --no-package-lock playwright@1.54.1
+          npx playwright install --with-deps chromium
+      - name: Serve branch content
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 >/tmp/studio2-server.log 2>&1 &
+          sleep 2
+      - name: Visit story, research, and project search
+        run: node studio2/scripts/visitor-story-smoke.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: studio2-story-visitor-screenshots
+          path: studio2-visitor-evidence
+          if-no-files-found: warn

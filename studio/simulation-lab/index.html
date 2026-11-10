@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Spatial Simulation Lab | Caldas Studio</title>
+<style>
+:root{font:16px/1.5 system-ui,-apple-system,sans-serif;color:#ecece8;background:#0e1012}
+*{box-sizing:border-box}body{margin:0}a{color:#b6e4d0}a:focus-visible,button:focus-visible,select:focus-visible{outline:3px solid #abdec6;outline-offset:3px}
+header,main,footer{width:min(1220px,calc(100% - 36px));margin:auto}header{padding:34px 0 22px;border-bottom:1px solid #394047}
+.kicker{color:#a6c6b9;text-transform:uppercase;letter-spacing:.15em;font-size:.77rem}
+h1{font-size:clamp(2rem,5vw,4.2rem);line-height:1.08;max-width:800px;margin:14px 0}
+.lead{color:#bac1c3;max-width:790px;font-size:1.05rem}
+nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding-top:12px}
+main{padding:28px 0 64px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:28px}
+.stat,.card,.panel{border:1px solid #343f43;background:#181d20;border-radius:12px;padding:20px}
+.stat strong{display:block;font-size:2rem;font-variant-numeric:tabular-nums}.stat span,.muted{color:#b9c3c4}
+.section-head{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin:24px 0 16px}
+select{color:inherit;border:1px solid #657575;background:#1b2225;border-radius:8px;padding:10px 12px;font:inherit;min-width:190px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.card{min-width:0}.card h3{margin:6px 0}.card p{color:#bac5c7}
+.pill{display:inline-block;font-size:.75rem;border:1px solid #617b72;color:#c1eedc;border-radius:100px;padding:2px 9px}
+.meta{display:flex;gap:7px;flex-wrap:wrap;color:#b3c1be;font-size:.84rem}
+.methods{margin:12px 0;padding-left:18px}.methods li{padding:2px 0}
+table{width:100%;border-collapse:collapse;font-size:.89rem}th,td{text-align:left;border-bottom:1px solid #344044;padding:9px 7px}
+th{color:#dce5e1}td{color:#ced8d6}th,td{overflow-wrap:anywhere}.table-scroll{max-width:100%;min-width:0;overflow-x:auto}
+details{margin-top:12px;border-top:1px solid #394247;padding-top:12px}
+summary{cursor:pointer;color:#cbf0dc}summary:hover{text-decoration:underline}
+.note{margin-top:20px;padding:14px 18px;border-left:3px solid #9ac6ac;background:#1a2423;color:#d1e4df}
+.error{background:#402222;border-color:#d28f8f}
+footer{padding:20px 0 40px;border-top:1px solid #394047;color:#a3b1b3;font-size:.88rem}
+.story{margin-bottom:30px}.story .section-head{align-items:flex-end}.story .section-head h2{margin:4px 0}.story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.story-card{min-width:0;border:1px solid #3d4d4a;border-radius:12px;padding:22px;background:linear-gradient(145deg,#1c2a29,#13191c)}
+.story-card h3{margin:8px 0;font-size:1.15rem}.story-card p{color:#c6d0ce;font-size:.91rem}
+.story-number{font-size:.76rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#c0e4ce}
+.story-card a{font-size:.9rem}.trace-note{border-left:3px solid #9ac6ac;background:#1b2424;padding:14px 18px;font-size:.88rem;color:#d3dfdb;line-height:1.6}
+.markets{margin:28px 0 30px}.markets .section-head h2{margin:4px 0}
+.market-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.market-grid>div{min-width:0;background:#181d20;border:1px solid #374244;border-radius:12px;padding:17px}
+.market-grid p{color:#bfcbca;font-size:.89rem;margin:8px 0 0}
+@media(max-width:750px){.story-grid,.market-grid{grid-template-columns:minmax(0,1fr)}.story-card{padding:16px}}
+@media(max-width:700px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:minmax(0,1fr)}.card,.panel{padding:16px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;scroll-behavior:auto!important}}
+</style></head><body>
+<header>
+<div class="kicker">Caldas Studio / R&D / Evidence</div>
+<h1>Spatial Simulation Lab</h1>
+<p class="lead">We turn existing designs, geometry and research into spatial experiences. Follow an asset from generation to a room, then inspect exactly what we have tested, what is still a hypothesis and how we learn.</p>
+<nav aria-label="Related projects"><a href="../../studio2/">Project story</a><a href="../effects/">Live effects</a><a href="../shared/procedural-assets/README.md">Procedural asset source</a><a href="https://github.com/joaoccaldas/ai/tree/main/studio/simulation-lab">Source and protocol</a></nav>
+</header>
+<main>
+<section class="metrics" aria-label="Research state">
+<div class="stat"><strong id="total">—</strong><span>Experiments tracked</span></div>
+<div class="stat"><strong id="measured">—</strong><span>With pinned measurements</span></div>
+<div class="stat"><strong id="independent">—</strong><span>Independently reviewed</span></div>
+<div class="stat"><strong id="comparisons">—</strong><span>Comparable metric pairs</span></div>
+</section>
+<section class="story" aria-labelledby="story-title">
+<div class="section-head"><div><p class="kicker">From idea to measurable experience</p><h2 id="story-title">The same technology. Different worlds.</h2></div><a href="../../studio2/">Walk the seven-act project story ↗</a></div>
+<div class="story-grid">
+<article class="story-card"><span class="story-number">01 · Create and reuse</span><h3>Architecture and furniture</h3><p>Parametric asset generators produce GLBs with dimensions, source hashes and geometry metadata. The registry contains 66 definitions; two real exports passed structural checks in CI. Visual and commercial acceptance remain separate.</p><a href="../shared/procedural-assets/README.md">Inspect the existing asset factory ↗</a></article>
+<article class="story-card"><span class="story-number">02 · Compose and experience</span><h3>Rooms, worlds and interactive sites</h3><p>Blender buildings, terrain systems, real-time Three.js experiences and ten lightweight web effects already exist in different projects. Their cross-project interoperability still needs a benchmark.</p><a href="../effects/">Try interactive website effects ↗</a></article>
+<article class="story-card"><span class="story-number">03 · Measure before claiming</span><h3>Make the next rendering decision</h3><p>Six protocols compare geometry, LOD, streaming, persistence, XR and production economics. Each starts as planned, not as proven performance improvement. The dashboard shows only results with traceable receipts.</p><a href="#experiments">Inspect the experiment questions ↓</a></article>
+</div>
+<p class="trace-note"><strong>Verified technical checkpoint:</strong> headless Blender generated a bench (344 triangles; 19,016 bytes) and sofa (848 triangles; 17,700 bytes), with hashes and nondegenerate bounds validated. No headset, visual-perception or client economics claims follow from this result. <a href="https://github.com/joaoccaldas/ai/actions/runs/39119275334">View the pinned CI evidence ↗</a></p>
+</section>
+<section class="markets" aria-labelledby="markets-title"><div class="section-head"><div><p class="kicker">Possible customer applications</p><h2 id="markets-title">What a pilot could deliver</h2></div></div>
+<div class="market-grid">
+<div><strong>Architecture</strong><p>A navigable design presentation with licensed geometry and clear distinctions between physical evidence and visual interpretation.</p></div>
+<div><strong>Furniture / retail</strong><p>A material and product configuration inside an interactive room, with dimensions and asset provenance checked.</p></div>
+<div><strong>Web and brands</strong><p>Embeddable real-time or pseudo-3D effects with responsive behavior, accessibility and measured loading performance.</p></div>
+</div><p class="muted">These are pilot hypotheses, not published customer engagements or guaranteed deliverables.</p></section>
+<section class="panel">
+<h2>What counts as evidence?</h2>
+<p>A planned experiment is not a result. Instrumented results require a commit, scene hash, reproducible protocol, device, date and source. Independent review additionally requires a review receipt. Environmental mismatches never produce percentage improvement claims.</p>
+<p class="muted">Image metrics, physical correctness, frame times, human preference and financial impact remain separate dimensions. No composite “realism percentage” is fabricated.</p>
+</section>
+<section aria-label="Research experiments">
+<div class="section-head"><h2>Research portfolio</h2>
+<label for="filter">Domain <select id="filter"><option value="all">All domains</option></select></label></div>
+<div id="experiments" class="grid" aria-live="polite"><p>Loading registered experiments…</p></div>
+</section>
+<div class="note"><strong>Release gate:</strong> No customer-facing superiority claim from an unmeasured or uncontrolled comparison. XR performance requires measurements on physical hardware, not headless browser estimates.</div>
+</main>
+<footer>Read-only experimental register. Numerical claims appear only with valid evidence receipts. Vendor names and referenced source repositories do not imply endorsements.</footer>
+<script type="module">
+import {inspectRegistry,summary} from './core.mjs';
+const $=id=>document.getElementById(id);
+const node=(tag,text,cls)=>{const el=document.createElement(tag);if(text!==undefined)el.textContent=String(text);if(cls)el.className=cls;return el;};
+function card(exp){
+ const box=node('article',undefined,'card');
+ const meta=node('div',undefined,'meta');meta.append(node('span',exp.id,'pill'),node('span',exp.domain),node('span',exp.status));box.append(meta);
+ box.append(node('h3',exp.title),node('p',exp.question));
+ const label=node('strong','Methods under evaluation');box.append(label);
+ const list=node('ul',undefined,'methods');
+ for(const method of exp.methods)list.append(node('li',method));box.append(list);
+ box.append(node('p','Fixture: '+exp.fixture,'muted'));
+ const details=document.createElement('details');details.append(node('summary','Measurements and traceability'));
+ const table=node('table');const h=node('thead');const tr=node('tr');
+ for(const title of ['Metric','Baseline','Candidate','Change'])tr.append(node('th',title));h.append(tr);table.append(h);
+ const body=node('tbody');
+ for(const m of exp.metrics){
+  const row=node('tr');
+  for(const val of [m.id+' ('+m.unit+')',m.baseline??'Not measured',m.candidate??'Not measured',m.comparable?m.improvement_percent+'%':'Not comparable']){
+   row.append(node('td',val));
+  }body.append(row);
+ }table.append(body);
+ const scroll=node('div',undefined,'table-scroll');scroll.append(table);details.append(scroll);
+ const src=node('p','Source repository: '+exp.source_repo,'muted');details.append(src);
+ if(exp.run?.evidence_url){const a=node('a','Open run evidence');a.href=exp.run.evidence_url;a.rel='noopener noreferrer';details.append(a)}
+ box.append(details);return box;
+}
+try{
+ const res=await fetch('./experiments.json',{cache:'no-store'});
+ if(!res.ok)throw Error('Evidence registry unavailable: HTTP '+res.status);
+ const report=inspectRegistry(await res.json());
+ if(report.errors.length)throw Error('Evidence validation failed: '+report.errors.join('; '));
+ const sum=summary(report);$('total').textContent=sum.experiments;
+ $('measured').textContent=sum.counts.measured+sum.counts['independently-reviewed'];
+ $('independent').textContent=sum.independently_reviewed;
+ $('comparisons').textContent=sum.comparable_metrics;
+ const domains=[...new Set(report.rows.map(r=>r.domain))].sort();
+ for(const d of domains){const opt=node('option',d);opt.value=d;$('filter').append(opt)}
+ const draw=()=>{const grid=$('experiments');grid.replaceChildren();
+  for(const r of report.rows.filter(r=>$('filter').value==='all'||r.domain===$('filter').value))grid.append(card(r));
+  if(!grid.childNodes.length)grid.append(node('p','No experiments match this filter.'));
+ };
+ $('filter').addEventListener('change',draw);draw();
+}catch(e){const p=node('p','Unable to load validated research: '+e.message,'error panel');$('experiments').replaceChildren(p);}
+</script></body></html>
