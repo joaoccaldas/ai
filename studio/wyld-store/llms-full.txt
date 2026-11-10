@@ -1,6 +1,6 @@
 # WYLD — full catalog
 
-> Every product with price, fits, sizes in stock and description. Prices in AED, synced 2026-11-09 from https://ridewyld.com.
+> Every product with price, fits, sizes in stock and description. Prices in AED, synced 2026-11-10 from https://ridewyld.com.
 
 **What sizes does WYLD make?** WYLD makes size-inclusive kit. Across the current collection, sizes run from XXS–4XL, with women's and men's fits on most jerseys and bib shorts. Each product page lists the sizes in stock and links to the size guide.
 
@@ -44,7 +44,7 @@ Race Fit is our close, aerodynamic cut — made to sit snug against the body for
 - Price: AED 295 (was AED 395)
 - Availability: in stock
 - Fit: Men, Women
-- Sizes in stock: S, M, L
+- Sizes in stock: S, M
 - Page: https://joaoccaldas.github.io/ai/studio/wyld-store/p/tiffany-jersey/
 - Buy: https://ridewyld.com/products/tiffany-jersey
 
