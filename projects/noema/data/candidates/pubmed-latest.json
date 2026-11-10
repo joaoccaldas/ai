@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-11-06T04:50:05.468983+00:00",
+  "generated_at": "2026-11-10T04:50:08.505527+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
@@ -36,49 +36,16 @@
     },
     "psychedelic_ritual": {
       "query": "((psychedelic[Title/Abstract]) OR (psilocybin[Title/Abstract]) OR (ayahuasca[Title/Abstract]) OR (entheogen*[Title/Abstract]) OR (hallucinogen*[Title/Abstract])) AND ((ritual[Title/Abstract]) OR (ceremony[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (mystical[Title/Abstract]))",
-      "pmids_returned": 14,
-      "title_relevant": 1
+      "pmids_returned": 12,
+      "title_relevant": 0
     }
   },
-  "records": [
-    {
-      "pmid": "42775190",
-      "queries": [
-        "psychedelic_ritual"
-      ],
-      "status": "CANDIDATE_UNREVIEWED",
-      "source_family": "PUBMED",
-      "candidate_only": true,
-      "relevance_gate": "TITLE_TWO_GROUP_MATCH",
-      "title": "Mystical but not challenging experiences predict symptom improvement after psilocybin for treatment-resistant OCD.",
-      "pubdate": "2026",
-      "source": "Front Psychiatry",
-      "authors": [
-        "Shnayder S",
-        "Agin-Liebes G",
-        "Hubert TJ",
-        "Ching THW",
-        "Hokanson J",
-        "Pittenger C",
-        "Kelmendi B",
-        "Adams T Jr"
-      ],
-      "articleids": {
-        "pubmed": "42775190",
-        "pmc": "PMC13595428",
-        "pmcid": "pmc-id: PMC13595428;",
-        "doi": "10.3389/fpsyt.2026.1799543"
-      },
-      "pubtypes": [
-        "Journal Article"
-      ]
-    }
-  ],
+  "records": [],
   "counts": {
-    "unique_candidates": 1,
+    "unique_candidates": 0,
     "query_count": 7,
-    "retrieved_before_title_gate": 20,
-    "rejected_by_title_gate": 19,
+    "retrieved_before_title_gate": 18,
+    "rejected_by_title_gate": 18,
     "summary_batches": 1
   }
 }
