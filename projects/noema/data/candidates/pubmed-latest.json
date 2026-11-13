@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-11-10T04:50:08.505527+00:00",
+  "generated_at": "2026-11-13T04:49:53.434942+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
@@ -11,7 +11,7 @@
     },
     "ecstatic_neurology": {
       "query": "((ecstatic[Title/Abstract]) OR (mystical[Title/Abstract]) OR (\"religious experience\"[Title/Abstract]) OR (\"spiritual experience\"[Title/Abstract])) AND ((epilepsy[Title/Abstract]) OR (seizure[Title/Abstract]) OR (insula[Title/Abstract]) OR (\"temporal lobe\"[Title/Abstract]) OR (neuro*[Title/Abstract]))",
-      "pmids_returned": 5,
+      "pmids_returned": 6,
       "title_relevant": 0
     },
     "neurodiversity_religion": {
@@ -36,7 +36,7 @@
     },
     "psychedelic_ritual": {
       "query": "((psychedelic[Title/Abstract]) OR (psilocybin[Title/Abstract]) OR (ayahuasca[Title/Abstract]) OR (entheogen*[Title/Abstract]) OR (hallucinogen*[Title/Abstract])) AND ((ritual[Title/Abstract]) OR (ceremony[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (mystical[Title/Abstract]))",
-      "pmids_returned": 12,
+      "pmids_returned": 13,
       "title_relevant": 0
     }
   },
@@ -44,8 +44,8 @@
   "counts": {
     "unique_candidates": 0,
     "query_count": 7,
-    "retrieved_before_title_gate": 18,
-    "rejected_by_title_gate": 18,
+    "retrieved_before_title_gate": 19,
+    "rejected_by_title_gate": 19,
     "summary_batches": 1
   }
 }
