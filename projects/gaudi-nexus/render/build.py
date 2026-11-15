@@ -263,7 +263,7 @@ from procassets import props as _props
 _dg=bpy.context.evaluated_depsgraph_get()
 _shade=bpy.data.materials.new('LampShade'); _shade.use_nodes=True; _sp=_shade.node_tree.nodes['Principled BSDF']; _sp.inputs['Base Color'].default_value=(0.05,0.045,0.04,1); _sp.inputs['Metallic'].default_value=0.8; _sp.inputs['Roughness'].default_value=0.35
 _cord=bpy.data.materials.new('LampCord'); _cord.use_nodes=True; _cord.node_tree.nodes['Principled BSDF'].inputs['Base Color'].default_value=(0.02,0.02,0.02,1)
-_bulb=bpy.data.materials.new('LampBulb'); _bulb.use_nodes=True; _bp=_bulb.node_tree.nodes['Principled BSDF']; _bp.inputs['Base Color'].default_value=(1,0.8,0.5,1); _bp.inputs['Emission Color'].default_value=(1.0,0.72,0.42,1); _bp.inputs['Emission Strength'].default_value=30.0
+_bulb=bpy.data.materials.new('LampBulb'); _bulb.use_nodes=True; _bp=_bulb.node_tree.nodes['Principled BSDF']; _bp.inputs['Base Color'].default_value=(1,0.8,0.5,1); _bp.inputs['Emission Color'].default_value=(1.0,0.72,0.42,1); _bp.inputs['Emission Strength'].default_value=14.0
 _nl=0
 for _i in range(8):
     for _h in (0.0,1.1):
@@ -276,6 +276,15 @@ for _i in range(8):
         _o.location=(_x,_y,_loc.z-0.005); sc.collection.objects.link(_o)
         _ld=bpy.data.lights.new(f'PendantLight_{_nl}','POINT'); _ld.energy=90.0; _ld.color=(1.0,0.72,0.42); _ld.shadow_soft_size=0.05
         _lo=bpy.data.objects.new(f'PendantLight_{_nl}',_ld); _lo.location=(_x,_y,_loc.z-_drop-0.03); sc.collection.objects.link(_lo); _nl+=1
+# Real, small pendant lamps inside the three glazed civic rooms: the warmth previously came from oversized fill emitters (now hidden from reflections).
+for _cx,_cy in ((-24.35,40.95),(-15.0,50.0),(-5.65,59.05)):
+    for _du,_dv in ((-1.7,0.0),(1.7,0.0),(0.0,-1.7),(0.0,1.7),(0.0,0.0)):
+        _x=_cx+(_du-_dv)*0.7071; _y=_cy+(_du+_dv)*0.7071
+        _o=bpy.data.objects.new(f'RoomLamp_{_nl}',bpy.data.meshes.new(f'RoomLamp_{_nl}')); _bm=_props.pendant_lamp(drop=0.95,d=0.42); _bm.to_mesh(_o.data); _bm.free()
+        for _m in (_shade,_cord,_bulb): _o.data.materials.append(_m)
+        _o.location=(_x,_y,3.6); sc.collection.objects.link(_o)
+        _ld=bpy.data.lights.new(f'RoomLight_{_nl}','POINT'); _ld.energy=130.0; _ld.color=(1.0,0.70,0.40); _ld.shadow_soft_size=0.04
+        _lo=bpy.data.objects.new(f'RoomLight_{_nl}',_ld); _lo.location=(_x,_y,3.6-0.98); sc.collection.objects.link(_lo); _nl+=1
 print('PENDANTS',_nl)
 # SURROUNDINGS: plane trees along the plaza edge for wide/aerial views (the hero keeps its designed composition)
 if CAM!='HERO_F3':
