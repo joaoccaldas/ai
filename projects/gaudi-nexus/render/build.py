@@ -306,6 +306,10 @@ if _gm and _gm.use_nodes:
 _cam=bpy.data.objects[CAM]
 for _o in bpy.data.objects:
     if _o.type=='MESH' and not _o.hide_render and max(_o.dimensions)<1.0 and (_o.matrix_world.translation-_cam.matrix_world.translation).length<1.0: _o.hide_render=True; print('NEARFIELD HIDDEN',_o.name)
+# The base scene's fill lights are big emitters (point lights up to 1.5 m radius, 2.2 m area lights). Glossy and transmission rays see
+# them as flat orange blobs in glass and wet-floor reflections. Keep their illumination, hide the emitter shape from those rays.
+for _o in bpy.data.objects:
+    if _o.type=='LIGHT' and (_o.data.type=='AREA' or (_o.data.type=='POINT' and _o.data.shadow_soft_size>0.2)): _o.visible_glossy=False; _o.visible_transmission=False
 # ---------- sky, exposure ----------
 w=sc.world or bpy.data.worlds.new('W'); sc.world=w; w.use_nodes=True; wt=w.node_tree; wt.nodes.clear()
 sky=wt.nodes.new('ShaderNodeTexSky')
