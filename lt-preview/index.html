@@ -29,6 +29,16 @@ iframe{width:100%;height:min(78vh,720px);border:1px solid var(--line);border-rad
   <p class="note">Sign in with an authorised Google account to continue.</p>
   <p><button id="signin">Sign in with Google</button></p>
   <p id="msg" class="note err"></p>
+  <div id="req" hidden>
+    <p>You are signed in as <b id="reqwho"></b>, but this account does not have access yet.</p>
+    <p><button id="request">Request access</button> <button id="reqout" class="ghost">Use another account</button></p>
+    <p class="note">Requesting sends your name and email address to the owner, who can approve or decline.</p>
+    <p id="reqmsg" class="note"></p>
+  </div>
+</section>
+<section id="decide" hidden>
+  <h1 id="dtitle">Access request</h1>
+  <p id="dmsg" class="note"></p>
 </section>
 <section id="app" hidden>
   <div class="bar"><h1>Preview</h1><span><span id="who" class="note"></span> <button id="signout" class="ghost">Sign out</button></span></div>
@@ -62,7 +72,7 @@ $("signout").onclick = async () => { await sb.auth.signOut(); location.replace(h
 async function load(session) {
   // Access is enforced server-side by a storage policy; a first download decides whether this account is allowed.
   const probe = await sb.storage.from(BUCKET).download("hero.jpg");
-  if (probe.error) { $("msg").textContent = "This Google account is not authorised for this preview."; await sb.auth.signOut(); return; }
+  if (probe.error) { await showRequest(session); return; }
   $("gate").hidden = true; $("app").hidden = false; $("who").textContent = session.user.email;
   for (const img of document.querySelectorAll("img[data-obj]")) {
     const name = img.dataset.obj;
@@ -72,8 +82,31 @@ async function load(session) {
   const w = await sb.storage.from(BUCKET).download("world.html");
   if (!w.error) $("world").src = URL.createObjectURL(new Blob([await w.data.text()], { type: "text/html" }));
 }
+async function showRequest(session) {
+  $("signin").hidden = true; $("req").hidden = false; $("reqwho").textContent = session.user.email;
+  $("reqout").onclick = async () => { await sb.auth.signOut(); location.replace(here); };
+  const cur = await sb.from("lt_access_requests").select("status,created_at").maybeSingle();
+  const say = st => { $("request").hidden = true; $("reqmsg").textContent = st === "denied" ? "Your request was declined." : "Request sent. You will get access once the owner approves; reload this page afterwards."; };
+  if (cur.data) { say(cur.data.status); return; }
+  $("request").onclick = async () => {
+    $("request").disabled = true;
+    const name = session.user.user_metadata?.full_name || session.user.user_metadata?.name || null;
+    const { error } = await sb.from("lt_access_requests").insert({ email: session.user.email, full_name: name });
+    if (error) { $("request").disabled = false; $("reqmsg").textContent = "Could not send the request: " + error.message; return; }
+    say("pending");
+  };
+}
+const q = new URLSearchParams(location.search), tok = q.get("approve") || q.get("deny");
+if (tok) {
+  // Owner's approve/deny link from the phone notification: the token is the credential.
+  $("gate").hidden = true; $("decide").hidden = false; $("dmsg").textContent = "Working...";
+  const { data, error } = await sb.rpc("lt_decide", { p_token: tok, p_approve: q.has("approve") });
+  $("dmsg").textContent = error ? "Failed: " + error.message : data === "approved" ? "Approved. They can now sign in and see the preview." : data === "denied" ? "Declined. They will not get access." : "This link is not valid.";
+  history.replaceState(null, "", here);
+} else {
 const { data: { session } } = await sb.auth.getSession();
 if (session) load(session);
+}
 sb.auth.onAuthStateChange((ev, s) => { if (ev === "SIGNED_IN" && s && $("app").hidden) load(s); });
 </script>
 </body>
