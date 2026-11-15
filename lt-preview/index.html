@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Private preview</title>
+<style>
+:root{--bg:#ece8e0;--ink:#1c1a18;--mute:#6f6a60;--line:#c4beb0;--card:#f6f3ec;--warn:#a03c28}
+@media (prefers-color-scheme:dark){:root{--bg:#161412;--ink:#ece8e0;--mute:#a39d90;--line:#3a352f;--card:#201d1a;--warn:#e08a70}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:clamp(24px,4vw,36px);margin:0 0 8px}h2{font-size:20px;margin:36px 0 12px;border-top:1px solid var(--line);padding-top:20px}
+button{font:inherit;padding:10px 18px;border-radius:8px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+button.ghost{background:transparent;color:var(--ink)}
+.note{color:var(--mute);font-size:14px}.err{color:var(--warn)}
+figure{margin:0 0 28px}img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+figcaption{font-size:14px;color:var(--mute);margin-top:6px}
+.hero{max-width:640px}.grid{display:grid;grid-template-columns:1fr;gap:20px}@media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+iframe{width:100%;height:min(78vh,720px);border:1px solid var(--line);border-radius:6px;background:#000}
+.bar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:20px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+<section id="gate">
+  <h1>Private preview</h1>
+  <p class="note">Sign in with an authorised Google account to continue.</p>
+  <p><button id="signin">Sign in with Google</button></p>
+  <p id="msg" class="note err"></p>
+</section>
+<section id="app" hidden>
+  <div class="bar"><h1>Preview</h1><span><span id="who" class="note"></span> <button id="signout" class="ghost">Sign out</button></span></div>
+  <p class="note">Work in progress. Not photoreal; internal review scores the hero about 8/10 against a 9/10 gate.</p>
+  <h2>Interactive 3D world</h2>
+  <iframe id="world" title="Interactive 3D world" allow="fullscreen"></iframe>
+  <p class="note">Drag to orbit, scroll to zoom. This is the browser scene study, a simplified model, not the rendered scene below.</p>
+  <h2>Renders</h2>
+  <figure class="hero"><img data-obj="hero.jpg" alt="Eye-level view across the plaza toward the basilica at low evening sun."><figcaption>Hero view, 19:15 CEST, 21 September 2026, 32 mm. Sun derived from location, date and time.</figcaption></figure>
+  <figure><img data-obj="vault.jpg" alt="View from under the market vault with brick vault, timber frame and glazed café interior."><figcaption>Under the vault, 16:00 CEST.</figcaption></figure>
+  <h2>Plan and section</h2>
+  <div class="grid">
+    <figure><img data-obj="plan.jpg" alt="Clay-style plan of the plaza, market strip, basilica and blocks."><figcaption>Plan, north up, context as massing.</figcaption></figure>
+    <figure><img data-obj="section.jpg" alt="Clay-style section looking north through the market pavilion."><figcaption>Section looking north, uncapped cut.</figcaption></figure>
+  </div>
+  <h2>Board draft</h2>
+  <figure><img data-obj="board.jpg" alt="Draft A1 board layout."><figcaption>Draft layout only.</figcaption></figure>
+  <p class="note">Disclosures: municipal basilica massing with shader-only enrichment (geometry unmodified); photographic finishing pass; procedural illustrative figures. Data: Ajuntament de Barcelona / Open Data BCN (CC BY 4.0); © OpenStreetMap contributors (ODbL); Poly Haven textures (CC0).</p>
+</section>
+</main>
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+const sb = createClient("https://ogdndkbvlebzqbnwaevm.supabase.co", "sb_publishable_C0ytVJ_UNLTIkr0vpPySPA_l3rsN08_");
+const BUCKET = "lt-preview", $ = id => document.getElementById(id);
+const here = location.origin + location.pathname;
+$("signin").onclick = async () => {
+  const { error } = await sb.auth.signInWithOAuth({ provider: "google", options: { redirectTo: here } });
+  if (error) $("msg").textContent = error.message;
+};
+$("signout").onclick = async () => { await sb.auth.signOut(); location.replace(here); };
+async function load(session) {
+  // Access is enforced server-side by a storage policy; a first download decides whether this account is allowed.
+  const probe = await sb.storage.from(BUCKET).download("hero.jpg");
+  if (probe.error) { $("msg").textContent = "This Google account is not authorised for this preview."; await sb.auth.signOut(); return; }
+  $("gate").hidden = true; $("app").hidden = false; $("who").textContent = session.user.email;
+  for (const img of document.querySelectorAll("img[data-obj]")) {
+    const name = img.dataset.obj;
+    const r = name === "hero.jpg" ? probe : await sb.storage.from(BUCKET).download(name);
+    if (!r.error) img.src = URL.createObjectURL(r.data);
+  }
+  const w = await sb.storage.from(BUCKET).download("world.html");
+  if (!w.error) $("world").src = URL.createObjectURL(new Blob([await w.data.text()], { type: "text/html" }));
+}
+const { data: { session } } = await sb.auth.getSession();
+if (session) load(session);
+sb.auth.onAuthStateChange((ev, s) => { if (ev === "SIGNED_IN" && s && $("app").hidden) load(s); });
+</script>
+</body>
+</html>
