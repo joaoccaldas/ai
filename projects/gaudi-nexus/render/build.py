@@ -285,6 +285,11 @@ for _cx,_cy in ((-24.35,40.95),(-15.0,50.0),(-5.65,59.05)):
         _o.location=(_x,_y,3.6); sc.collection.objects.link(_o)
         _ld=bpy.data.lights.new(f'RoomLight_{_nl}','POINT'); _ld.energy=130.0; _ld.color=(1.0,0.70,0.40); _ld.shadow_soft_size=0.04
         _lo=bpy.data.objects.new(f'RoomLight_{_nl}',_ld); _lo.location=(_x,_y,3.6-0.98); sc.collection.objects.link(_lo); _nl+=1
+# soft warm ceiling wash per room (camera/reflection-invisible): stands in for the bounce off a pale ceiling that small point lamps alone cannot give
+for _cx,_cy in ((-24.35,40.95),(-15.0,50.0),(-5.65,59.05)):
+    _ad=bpy.data.lights.new('RoomWash','AREA'); _ad.shape='DISK'; _ad.size=4.5; _ad.energy=520.0; _ad.color=(1.0,0.78,0.55)
+    _ao=bpy.data.objects.new('RoomWash',_ad); _ao.location=(_cx,_cy,3.45); sc.collection.objects.link(_ao)
+    _ao.visible_camera=False; _ao.visible_glossy=False; _ao.visible_transmission=False
 print('PENDANTS',_nl)
 # SURROUNDINGS: plane trees along the plaza edge for wide/aerial views (the hero keeps its designed composition)
 if CAM!='HERO_F3':
