@@ -44,7 +44,7 @@ def hand(bm,wr,s,side=1):
         x=(-0.019+k*0.0127)*s; L=(0.058 if k in (1,2) else 0.05)*s
         seg(bm,wr+Vector((x,0,-0.09*s)),wr+Vector((x,0.006*s,-0.09*s-L)),0.0075*s,0.0062*s,0,6)
     seg(bm,wr+Vector((side*0.03*s,0.004*s,-0.03*s)),wr+Vector((side*0.045*s,0.014*s,-0.075*s)),0.008*s,0.0065*s,0,6)
-def person(name,x,y,z,yaw,h=1.72,seed=0,pose='walk',child=False,carry=False):
+def person_tubes(name,x,y,z,yaw,h=1.72,seed=0,pose='walk',child=False,carry=False):   # legacy tube-and-ball figure, kept for comparison
     r=random.Random(seed); s=h/1.75; bm=bmesh.new()
     mats=[pmat(f's{seed}',r.choice(SKINS),0.55,sub=0.15),pmat(f'h{seed}',r.choice(HAIR),0.5),pmat(f't{seed}',r.choice(TOPS),0.85),pmat(f'b{seed}',r.choice(BOTS),0.8),pmat(f'sh{seed}',(0.05,0.045,0.04),0.6),pmat('bread',(0.55,0.32,0.12),0.75)]
     fem=(r.random()<0.45) and not child; skirt=fem and r.random()<0.5; ph=r.uniform(0,6.28) if pose=='walk' else 0.0; st=0.26*s if pose=='walk' else 0.02*s
@@ -91,6 +91,61 @@ def person(name,x,y,z,yaw,h=1.72,seed=0,pose='walk',child=False,carry=False):
     o=bpy.data.objects.new(name,me); o.location=(x,y,z); o.rotation_euler=(0,0,yaw); bpy.context.scene.collection.objects.link(o)
     sm=o.modifiers.new('Soften','SUBSURF'); sm.levels=1; sm.render_levels=1   # rounds the tube-and-ball primitives into organic limbs; overlapping segment radii hide the joins
     return o
+def person(name,x,y,z,yaw,h=1.72,seed=0,pose='walk',child=False,carry=False):
+    """Mannequin-style figure: a joint skeleton turned into one continuous body with Skin + Subdivision, then dressed by region.
+    Still illustrative (no face detail beyond the head form), but the silhouette is a single organic volume rather than stacked tubes."""
+    r=random.Random(seed); s=h/1.75; fem=(r.random()<0.45) and not child; hs=1.25 if child else 1.0
+    ph=r.uniform(0,6.28) if pose=='walk' else 0.0; st=0.26*s if pose=='walk' else 0.02*s; sw=math.sin(ph)
+    hw=(0.10 if fem else 0.095)*s; shw=(0.175 if fem else 0.205)*s
+    J={}; E=[]
+    def j(n,co,rx,ry=None): J[n]=(Vector(co),(rx*s,(ry if ry is not None else rx)*s))
+    j('pelvis',(0,0,0.95*s),0.125 if fem else 0.115,0.09); j('spine',(0,0.005*s,1.14*s),0.115 if fem else 0.125,0.09); j('chest',(0,0.01*s,1.36*s),0.135 if fem else 0.155,0.10)
+    j('neck',(0,0.005*s,1.50*s),0.045,0.045); j('head',(0,0.02*s,1.60*s),0.105*hs,0.12*hs); j('crown',(0,0.015*s,1.675*s),0.10*hs,0.115*hs)
+    E+= [('pelvis','spine'),('spine','chest'),('chest','neck'),('neck','head'),('head','crown')]
+    for sd,k,tag in ((-1,sw,'L'),(1,-sw,'R')):
+        fx=k*st
+        j('hip'+tag,(sd*hw,0,0.90*s),0.085,0.085); j('knee'+tag,(sd*hw*1.05,fx*0.5+0.04*s*(1 if k>0 else 0.3),0.50*s),0.056,0.058)
+        j('ank'+tag,(sd*hw*1.1,fx,0.085*s),0.04,0.042); j('toe'+tag,(sd*hw*1.1,fx+0.17*s,0.035*s),0.042,0.03)
+        E+= [('pelvis','hip'+tag),('hip'+tag,'knee'+tag),('knee'+tag,'ank'+tag),('ank'+tag,'toe'+tag)]
+    for sd,k,tag in ((-1,-sw,'L'),(1,sw,'R')):
+        j('sho'+tag,(sd*shw,0.005*s,1.43*s),0.058,0.055)
+        if pose=='photo': el=(sd*0.22*s,0.16*s,1.40*s); wr=(sd*0.09*s,0.30*s,1.58*s); hd=(sd*0.07*s,0.33*s,1.64*s)
+        elif carry and sd>0: el=(sd*0.23*s,0.12*s,1.13*s); wr=(sd*0.12*s,0.28*s,1.20*s); hd=(sd*0.10*s,0.34*s,1.22*s)
+        else: el=(sd*0.245*s,k*0.05*s,1.15*s); wr=(sd*0.24*s,k*0.14*s,0.90*s); hd=(sd*0.235*s,k*0.16*s,0.81*s)
+        j('elb'+tag,el,0.043,0.045); j('wri'+tag,wr,0.03,0.032); j('hand'+tag,hd,0.038,0.022)
+        E+= [('chest','sho'+tag),('sho'+tag,'elb'+tag),('elb'+tag,'wri'+tag),('wri'+tag,'hand'+tag)]
+    names=list(J); me0=bpy.data.meshes.new(name+'_skel'); me0.from_pydata([tuple(J[n][0]) for n in names],[(names.index(a_),names.index(b_)) for a_,b_ in E],[])
+    tmp=bpy.data.objects.new(name+'_skel',me0); bpy.context.scene.collection.objects.link(tmp)
+    sk=tmp.modifiers.new('Skin','SKIN'); sk.use_smooth_shade=True; sb=tmp.modifiers.new('Sub','SUBSURF'); sb.levels=2; sb.render_levels=2
+    for i,n in enumerate(names): me0.skin_vertices[0].data[i].radius=J[n][1]; me0.skin_vertices[0].data[i].use_root=(n=='pelvis')
+    dg=bpy.context.evaluated_depsgraph_get(); bm=bmesh.new(); bm.from_object(tmp,dg); bpy.data.objects.remove(tmp,do_unlink=True); bpy.data.meshes.remove(me0)
+    short=r.random()<0.45; skirt=fem and r.random()<0.4; hipz=0.97*s
+    for zc in (hipz,1.475*s,0.115*s,J['head'][0].z+0.055*s*hs):   # cut clean garment lines (hem, collar, shoe top) instead of a ragged per-face boundary
+        bmesh.ops.bisect_plane(bm,geom=bm.verts[:]+bm.edges[:]+bm.faces[:],plane_co=(0,0,zc),plane_no=(0,0,1))
+    def near(p,a_,b_,rad):
+        A,B=J[a_][0],J[b_][0]; ab=B-A; t=max(0.0,min(1.0,(p-A).dot(ab)/max(ab.length_squared,1e-9))); return (p-(A+ab*t)).length<rad
+    for f in bm.faces:
+        c=f.calc_center_median(); mi=2
+        if c.z>1.475*s and abs(c.x)<0.13*s*hs: mi=1 if (c.z>J['head'][0].z+0.055*s*hs or (c.y<J['head'][0].y-0.03*s*hs and c.z>1.54*s)) else 0
+        elif any(near(c,'wri'+t_,'hand'+t_,0.06*s) for t_ in 'LR'): mi=0
+        elif short and any(near(c,'elb'+t_,'wri'+t_,0.062*s) and (c-J['elb'+t_][0]).length>0.09*s for t_ in 'LR'): mi=0
+        elif c.z<0.115*s: mi=4
+        elif c.z<hipz and abs(c.x)<0.21*s and not any(near(c,'wri'+t_,'hand'+t_,0.09*s) or near(c,'elb'+t_,'wri'+t_,0.062*s) for t_ in 'LR'): mi=2 if (skirt and c.z>0.55*s) else (0 if (skirt and c.z>0.115*s) else 3)
+        f.material_index=mi; f.smooth=True
+    # head: a proper ellipsoid over the skin-modifier stub, with hair painted on its own surface (a separate hair shell left a dark cavity at the hairline)
+    hc=Vector((0,0.02*s,1.635*s)); g=bmesh.ops.create_uvsphere(bm,u_segments=22,v_segments=14,radius=0.112*s*hs)
+    for v in g['verts']: v.co=Vector((v.co.x*0.86,v.co.y*1.0,v.co.z*1.12))+hc
+    for f in {f for v in g['verts'] for f in v.link_faces}:
+        c=f.calc_center_median(); f.smooth=True
+        f.material_index=1 if (c.z>hc.z+0.045*s*hs or (c.y<hc.y-0.02*s*hs and c.z>hc.z-0.07*s*hs) or (abs(c.x)>0.07*s*hs and c.y<hc.y+0.03*s*hs and c.z>hc.z-0.02*s*hs)) else 0
+    if fem and r.random()<0.65: seg(bm,hc+Vector((0,-0.04*s,0.03*s)),hc+Vector((0,-0.095*s,-0.22*s)),0.10*s,0.075*s,1)
+    if skirt: seg(bm,Vector((0,0,hipz+0.04*s)),Vector((0,0,0.56*s)),0.15*s,0.25*s,2,14)
+    if carry: seg(bm,Vector((0.12*s,0.22*s,1.2*s)),Vector((0.1*s,0.5*s,1.28*s)),0.05*s,0.045*s,5)
+    mats=[pmat(f's{seed}',r.choice(SKINS),0.55,sub=0.15),pmat(f'h{seed}',r.choice(HAIR),0.5),pmat(f't{seed}',r.choice(TOPS),0.85),pmat(f'b{seed}',r.choice(BOTS),0.8),pmat(f'sh{seed}',(0.05,0.045,0.04),0.6),pmat('bread',(0.55,0.32,0.14),0.75)]
+    me=bpy.data.meshes.new(name); bm.to_mesh(me); bm.free()
+    for m in mats: me.materials.append(m)
+    for pl in me.polygons: pl.use_smooth=True
+    o=bpy.data.objects.new(name,me); o.location=(x,y,z); o.rotation_euler=(0,0,yaw); bpy.context.scene.collection.objects.link(o); return o
 def populate(cam_name,seed=7,dscale=1.0):
     sc=bpy.context.scene; dg=bpy.context.evaluated_depsgraph_get(); cam=bpy.data.objects[cam_name]; cx,cy=cam.location.x,cam.location.y
     fw=cam.matrix_world.to_3x3()@Vector((0,0,-1)); f=Vector((fw.x,fw.y)).normalized(); lf=Vector((-f.y,f.x)); r=random.Random(seed)
