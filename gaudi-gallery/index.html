@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Living Threshold Gallery</title>
+<meta name="description" content="Work-in-progress renders, plan, section and board draft for The Living Threshold, a Sagrada Família plaza proposal.">
+<style>
+:root{--bg:#ece8e0;--ink:#1c1a18;--mute:#6f6a60;--line:#c4beb0;--card:#f6f3ec;--warn:#a03c28}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161412;--ink:#ece8e0;--mute:#a39d90;--line:#3a352f;--card:#201d1a;--warn:#e08a70}}
+:root[data-theme="dark"]{--bg:#161412;--ink:#ece8e0;--mute:#a39d90;--line:#3a352f;--card:#201d1a;--warn:#e08a70}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:1080px;margin:0 auto;padding:32px 16px 64px}
+h1{font-size:clamp(28px,5vw,44px);letter-spacing:.02em;margin:0 0 8px;text-transform:uppercase}
+.lead{font-size:18px;max-width:62ch;margin:0 0 20px}
+.banner{border:1px solid var(--warn);color:var(--warn);padding:10px 14px;border-radius:8px;margin:0 0 28px;font-size:15px}
+figure{margin:0 0 36px}figure img{width:100%;height:auto;display:block;border:1px solid var(--line);border-radius:6px;background:var(--card)}
+figcaption{font-size:14px;color:var(--mute);margin-top:8px;max-width:80ch}figcaption b{color:var(--ink)}
+.grid{display:grid;grid-template-columns:1fr;gap:24px}@media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+.hero{max-width:640px}
+h2{font-size:20px;margin:40px 0 12px;border-top:1px solid var(--line);padding-top:20px}
+ul{padding-left:20px;margin:0}li{margin:4px 0}small{color:var(--mute)}
+</style>
+</head>
+<body>
+<main>
+<h1>The Living Threshold</h1>
+<p class="lead">The Living Threshold turns the Sagrada Família plaza from a tourist foreground into a daily civic market and meeting ground, using Gaudí's structural logic and evidence-driven AI iteration while preserving the basilica's visual primacy.</p>
+<p class="banner"><b>Work in progress.</b> These images are not photoreal and are not a final submission. Our own review scores the hero about 8/10 against a 9/10 gate that is not yet met.</p>
+
+<figure class="hero">
+<img src="hero.jpg" alt="Eye-level view across the plaza toward the Sagrada Família at low evening sun, with a trencadís-faced market on the left and a puddle reflecting café chairs." width="1200" height="1600">
+<figcaption><b>Hero view toward the basilica.</b> 19:15 CEST, 21 September 2026, 32 mm. Sun derived from the declared location, date and clock time.</figcaption>
+</figure>
+
+<figure>
+<img src="vault.jpg" alt="View from under the market vault: brick vault, timber frame, trencadís fins, and a glazed café interior with pendant lamps." width="1280" height="720">
+<figcaption><b>Under the vault.</b> 16:00 CEST.</figcaption>
+</figure>
+
+<h2>Plan and section</h2>
+<div class="grid">
+<figure><img src="plan.jpg" alt="Clay-style plan of the plaza, market strip, basilica and surrounding blocks." width="1000" height="1000"><figcaption><b>Plan</b> from the same scene as the hero. North up, municipal context as massing only.</figcaption></figure>
+<figure><img src="section.jpg" alt="Clay-style section looking north through the market pavilion." width="1280" height="720"><figcaption><b>Section</b> looking north, cut at y = 50 m, uncapped (no poché).</figcaption></figure>
+</div>
+
+<h2>Board draft</h2>
+<figure>
+<img src="board.jpg" alt="Draft A1 board layout with the hero, vault, plan, section, options-to-decision panel and an evidence strip." width="1400" height="1979">
+<figcaption>Draft layout only. The micro-detail panel is still empty. Evidence values are read from the project's own files and carry their filed status (design-development proxy, geometric baseline, centre-distance audit).</figcaption>
+</figure>
+
+<h2>Disclosures</h2>
+<ul>
+<li>The Sagrada Família massing is the municipal model; windows, string courses and stone tone are a shader-only visual enrichment, and the geometry is unmodified.</li>
+<li>A photographic finishing pass is applied (bloom, vignette, grain, tone curve).</li>
+<li>Figures are procedural and illustrative; no real or AI-generated people.</li>
+<li>Trencadís fins are a stylistic choice.</li>
+</ul>
+
+<h2>Attribution</h2>
+<ul>
+<li>Barcelona topographic base map and the 3D building model of the Sagrada Família: Ajuntament de Barcelona / Open Data BCN, licence CC BY 4.0.</li>
+<li>Plaza and basilica outline: &copy; OpenStreetMap contributors, ODbL.</li>
+<li>Stone, paving and roof-tile textures: Poly Haven, CC0.</li>
+</ul>
+<p><small>Rendered with Blender Cycles on CPU. Context buildings are massing only.</small></p>
+</main>
+</body>
+</html>
