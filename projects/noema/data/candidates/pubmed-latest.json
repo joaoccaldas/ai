@@ -1,6 +1,6 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-11-13T04:49:53.434942+00:00",
+  "generated_at": "2026-11-17T04:49:57.374374+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
@@ -16,8 +16,8 @@
     },
     "neurodiversity_religion": {
       "query": "((autism[Title/Abstract]) OR (autistic[Title/Abstract]) OR (ADHD[Title/Abstract]) OR (neurodiversity[Title/Abstract]) OR (neurodivergent[Title/Abstract])) AND ((religion[Title/Abstract]) OR (religiosity[Title/Abstract]) OR (religious[Title/Abstract]) OR (spirituality[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (faith[Title/Abstract]))",
-      "pmids_returned": 3,
-      "title_relevant": 0
+      "pmids_returned": 4,
+      "title_relevant": 1
     },
     "sleep_visions": {
       "query": "((\"sleep paralysis\"[Title/Abstract]) OR (hypnagog*[Title/Abstract]) OR (hypnopomp*[Title/Abstract]) OR (\"dream incubation\"[Title/Abstract])) AND ((religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (supernatural[Title/Abstract]) OR (spirit[Title/Abstract]) OR (demon[Title/Abstract]) OR (witch*[Title/Abstract]))",
@@ -36,16 +36,43 @@
     },
     "psychedelic_ritual": {
       "query": "((psychedelic[Title/Abstract]) OR (psilocybin[Title/Abstract]) OR (ayahuasca[Title/Abstract]) OR (entheogen*[Title/Abstract]) OR (hallucinogen*[Title/Abstract])) AND ((ritual[Title/Abstract]) OR (ceremony[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (mystical[Title/Abstract]))",
-      "pmids_returned": 13,
+      "pmids_returned": 11,
       "title_relevant": 0
     }
   },
-  "records": [],
+  "records": [
+    {
+      "pmid": "43031622",
+      "queries": [
+        "neurodiversity_religion"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "relevance_gate": "TITLE_TWO_GROUP_MATCH",
+      "title": "Traditional and religious treatments administered to children with autism spectrum disorder in South Africa: a qualitative study of practices, composition and risk.",
+      "pubdate": "2026",
+      "source": "Front Neurol",
+      "authors": [
+        "Simelane A",
+        "Mapaling C"
+      ],
+      "articleids": {
+        "pubmed": "43031622",
+        "pmc": "PMC13759395",
+        "pmcid": "pmc-id: PMC13759395;",
+        "doi": "10.3389/fneur.2026.1946904"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    }
+  ],
   "counts": {
-    "unique_candidates": 0,
+    "unique_candidates": 1,
     "query_count": 7,
-    "retrieved_before_title_gate": 19,
-    "rejected_by_title_gate": 19,
+    "retrieved_before_title_gate": 18,
+    "rejected_by_title_gate": 17,
     "summary_batches": 1
   }
 }
