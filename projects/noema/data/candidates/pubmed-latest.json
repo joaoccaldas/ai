@@ -1,12 +1,12 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-11-17T04:49:57.374374+00:00",
+  "generated_at": "2026-11-20T04:49:40.258863+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
     "trance_possession": {
       "query": "((\"trance\"[Title/Abstract]) OR (\"spirit possession\"[Title/Abstract]) OR (\"possession trance\"[Title/Abstract])) AND ((dissociation[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (culture[Title/Abstract]) OR (cultural[Title/Abstract]))",
-      "pmids_returned": 0,
+      "pmids_returned": 1,
       "title_relevant": 0
     },
     "ecstatic_neurology": {
@@ -36,11 +36,45 @@
     },
     "psychedelic_ritual": {
       "query": "((psychedelic[Title/Abstract]) OR (psilocybin[Title/Abstract]) OR (ayahuasca[Title/Abstract]) OR (entheogen*[Title/Abstract]) OR (hallucinogen*[Title/Abstract])) AND ((ritual[Title/Abstract]) OR (ceremony[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (mystical[Title/Abstract]))",
-      "pmids_returned": 11,
-      "title_relevant": 0
+      "pmids_returned": 13,
+      "title_relevant": 1
     }
   },
   "records": [
+    {
+      "pmid": "43048491",
+      "queries": [
+        "psychedelic_ritual"
+      ],
+      "status": "CANDIDATE_UNREVIEWED",
+      "source_family": "PUBMED",
+      "candidate_only": true,
+      "relevance_gate": "TITLE_TWO_GROUP_MATCH",
+      "title": "Ceremonial Psychedelic Experiences and Changes in Mental Health Outcomes in Those with Adverse Childhood Experiences.",
+      "pubdate": "2026 Dec",
+      "source": "Psychedelic Med (New Rochelle)",
+      "authors": [
+        "Mehmood MK",
+        "Bremler R",
+        "Spriggs MJ",
+        "Kettner H",
+        "Roseman L",
+        "Damgaard L",
+        "Carhart-Harris R",
+        "Erritzoe D",
+        "Zeifman RJ"
+      ],
+      "articleids": {
+        "pubmed": "43048491",
+        "pmc": "PMC13775915",
+        "pmcid": "pmc-id: PMC13775915;embargo-date: 2026/12/15;",
+        "doi": "10.1177/28314425251392251",
+        "pii": "10.1177_28314425251392251"
+      },
+      "pubtypes": [
+        "Journal Article"
+      ]
+    },
     {
       "pmid": "43031622",
       "queries": [
@@ -69,10 +103,10 @@
     }
   ],
   "counts": {
-    "unique_candidates": 1,
+    "unique_candidates": 2,
     "query_count": 7,
-    "retrieved_before_title_gate": 18,
-    "rejected_by_title_gate": 17,
+    "retrieved_before_title_gate": 21,
+    "rejected_by_title_gate": 19,
     "summary_batches": 1
   }
 }
