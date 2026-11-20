@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "description": "Planned representation experiments. No numerical results are asserted; add pinned evidence after execution.",
+  "experiments": [
+    {
+      "id": "EXP-01",
+      "title": "Representation Tournament",
+      "domain": "rendering",
+      "question": "Which scene representation maximizes visible quality under an equivalent compute and production budget?",
+      "methods": [
+        "full-mesh",
+        "meshopt-plus-baked-light",
+        "billboard-impostors",
+        "hybrid-splats"
+      ],
+      "fixture": "licensed-architecture-room-v1",
+      "source_repo": "joaoccaldas/ai",
+      "status": "planned",
+      "metrics": [
+        {
+          "id": "frame_time_p95",
+          "unit": "ms",
+          "direction": "lower"
+        },
+        {
+          "id": "visual_preference",
+          "unit": "share",
+          "direction": "higher"
+        },
+        {
+          "id": "production_minutes",
+          "unit": "min",
+          "direction": "lower"
+        }
+      ]
+    },
+    {
+      "id": "EXP-02",
+      "title": "Procedural Reuse",
+      "domain": "production",
+      "question": "How often can procedural assets be reused without corrective labor?",
+      "methods": [
+        "existing-generator",
+        "manual-remodel"
+      ],
+      "fixture": "procedural-assets-registry-v1",
+      "source_repo": "joaoccaldas/ai",
+      "status": "planned",
+      "metrics": [
+        {
+          "id": "repair_minutes",
+          "unit": "min",
+          "direction": "lower"
+        },
+        {
+          "id": "acceptance_rate",
+          "unit": "share",
+          "direction": "higher"
+        }
+      ]
+    },
+    {
+      "id": "EXP-03",
+      "title": "Persistent World Reconstruction",
+      "domain": "generation",
+      "question": "Do seed, version, edits and cache reconstruct identical output after reload?",
+      "methods": [
+        "full-snapshot",
+        "seed-plus-edit-log"
+      ],
+      "fixture": "synthetic-licensed-world-v1",
+      "source_repo": "joaoccaldas/studio-kona",
+      "status": "planned",
+      "metrics": [
+        {
+          "id": "rebuild_ms",
+          "unit": "ms",
+          "direction": "lower"
+        },
+        {
+          "id": "storage_bytes",
+          "unit": "bytes",
+          "direction": "lower"
+        }
+      ]
+    },
+    {
+      "id": "EXP-04",
+      "title": "Streaming and Cache Contest",
+      "domain": "delivery",
+      "question": "Which existing streaming policy performs best under matched cold/warm/network conditions?",
+      "methods": [
+        "kona-tiles",
+        "konam-lod-priority",
+        "reference-hierarchical"
+      ],
+      "fixture": "licensed-terrain-v1",
+      "source_repo": "joaoccaldas/konam",
+      "status": "planned",
+      "metrics": [
+        {
+          "id": "first-interactive_ms",
+          "unit": "ms",
+          "direction": "lower"
+        },
+        {
+          "id": "gpu_memory_peak_mb",
+          "unit": "MB",
+          "direction": "lower"
+        }
+      ]
+    },
+    {
+      "id": "EXP-05",
+      "title": "XR Parity and Comfort",
+      "domain": "xr",
+      "question": "How do scale, fidelity and interaction change between desktop and an actual headset?",
+      "methods": [
+        "desktop-browser",
+        "immersive-webxr"
+      ],
+      "fixture": "measured-room-v1",
+      "source_repo": "joaoccaldas/studio-kona",
+      "status": "planned",
+      "metrics": [
+        {
+          "id": "frame_time_p95",
+          "unit": "ms",
+          "direction": "lower"
+        },
+        {
+          "id": "task_completion_rate",
+          "unit": "share",
+          "direction": "higher"
+        }
+      ]
+    },
+    {
+      "id": "EXP-06",
+      "title": "Multi-Vertical Delivery Economics",
+      "domain": "business",
+      "question": "Can one factory serve architecture, furniture and product scenes with less labor than bespoke production?",
+      "methods": [
+        "reuse-first-factory",
+        "bespoke-pipeline"
+      ],
+      "fixture": "three-rights-cleared-cases-v1",
+      "source_repo": "joaoccaldas/ai",
+      "status": "planned",
+      "metrics": [
+        {
+          "id": "delivery_hours",
+          "unit": "hours",
+          "direction": "lower"
+        },
+        {
+          "id": "accepted_reuse_rate",
+          "unit": "share",
+          "direction": "higher"
+        }
+      ]
+    }
+  ]
+}
