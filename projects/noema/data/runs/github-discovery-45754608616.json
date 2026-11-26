@@ -1,0 +1,32 @@
+{
+  "run_id": "github-discovery-45754608616",
+  "task_type": "GITHUB_DISCOVERY",
+  "status": "COMPLETED",
+  "started_at": "2026-11-26T04:21:02.611876+00:00",
+  "completed_at": "2026-11-26T04:21:02.611876+00:00",
+  "input_refs": [
+    ".github/workflows/noema-discovery.yml"
+  ],
+  "artifact_digests": {
+    "noema-crossref-candidates": "sha256:87e1b584ae15d7eb92dddb43fd6d4cac830aff72dfe3086ec34ec94859ac04f9"
+  },
+  "sources_examined": 0,
+  "new_candidates": 135,
+  "candidate_updates": 0,
+  "contradictions": 0,
+  "dating_revisions": 0,
+  "relationships_generated": 0,
+  "hypotheses_revisited": 0,
+  "hypotheses_promoted": 0,
+  "confidence_or_scope_changes": 0,
+  "review_items_created": 30,
+  "errors": [],
+  "summary": "Crossref discovery produced 135 unreviewed candidates and 30 priority items.",
+  "code_commit": "1f1a908f28eb4b970ef7faac20963798349b681a",
+  "epistemic_guards": {
+    "model_output_is_evidence": false,
+    "unknown_is_absent": false,
+    "similarity_implies_descent": false,
+    "automatic_claim_promotion": false
+  }
+}
