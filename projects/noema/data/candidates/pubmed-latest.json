@@ -1,17 +1,17 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-11-24T04:49:52.424349+00:00",
+  "generated_at": "2026-11-27T04:50:00.724584+00:00",
   "status": "CANDIDATE_ONLY_HUMAN_REVIEW_REQUIRED",
   "principle": "PubMed metadata and search relevance are not evidence. Historical diagnosis is forbidden. Relevance gates optimize review precision and do not imply evidentiary quality.",
   "query_stats": {
     "trance_possession": {
       "query": "((\"trance\"[Title/Abstract]) OR (\"spirit possession\"[Title/Abstract]) OR (\"possession trance\"[Title/Abstract])) AND ((dissociation[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (culture[Title/Abstract]) OR (cultural[Title/Abstract]))",
-      "pmids_returned": 1,
+      "pmids_returned": 2,
       "title_relevant": 0
     },
     "ecstatic_neurology": {
       "query": "((ecstatic[Title/Abstract]) OR (mystical[Title/Abstract]) OR (\"religious experience\"[Title/Abstract]) OR (\"spiritual experience\"[Title/Abstract])) AND ((epilepsy[Title/Abstract]) OR (seizure[Title/Abstract]) OR (insula[Title/Abstract]) OR (\"temporal lobe\"[Title/Abstract]) OR (neuro*[Title/Abstract]))",
-      "pmids_returned": 6,
+      "pmids_returned": 7,
       "title_relevant": 0
     },
     "neurodiversity_religion": {
@@ -36,7 +36,7 @@
     },
     "psychedelic_ritual": {
       "query": "((psychedelic[Title/Abstract]) OR (psilocybin[Title/Abstract]) OR (ayahuasca[Title/Abstract]) OR (entheogen*[Title/Abstract]) OR (hallucinogen*[Title/Abstract])) AND ((ritual[Title/Abstract]) OR (ceremony[Title/Abstract]) OR (religion[Title/Abstract]) OR (religious[Title/Abstract]) OR (spiritual[Title/Abstract]) OR (mystical[Title/Abstract]))",
-      "pmids_returned": 14,
+      "pmids_returned": 16,
       "title_relevant": 1
     }
   },
@@ -134,8 +134,8 @@
   "counts": {
     "unique_candidates": 3,
     "query_count": 7,
-    "retrieved_before_title_gate": 23,
-    "rejected_by_title_gate": 20,
+    "retrieved_before_title_gate": 26,
+    "rejected_by_title_gate": 23,
     "summary_batches": 1
   }
 }
